@@ -1,0 +1,113 @@
+@font-face {
+  font-family: IranSans;
+  src: url(../font/IranSans.ttf);
+}
+* {
+  box-sizing: border-box;
+}
+
+.container {
+  display: flex;
+  flex: row;
+  width: 75%;
+  height: 80vh;
+  margin: 10vh auto;
+}
+.container .left-side {
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    180deg,
+    rgba(237, 182, 96, 0.75) 0%,
+    rgba(179, 121, 37, 0.75) 100%
+  );
+}
+.container .left-side .title {
+  width: 100%;
+  height: 25%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.container .left-side .title h2 {
+  font-family: IranSans;
+  font-size: 30px;
+  color: #fff;
+}
+.container .left-side .form-container {
+  width: 100%;
+  height: 60%;
+  display: flex;
+  justify-content: center;
+}
+
+.left-side .form-container .login-form {
+  width: 65%;
+  height: 100%;
+  background-color: white;
+  border-radius: 20px;
+  display: flex !important;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);
+}
+.left-side .form-container .login-form .title-form {
+  width: 80%;
+  height: 20%;
+  display: flex;
+  align-items: center;
+}
+.left-side .form-container .login-form h3 {
+  font-family: IranSans;
+  font-size: 1.2vw;
+}
+.left-side .form-container .login-form .input {
+  width: 80%;
+  height: 50px;
+  border-radius: 30px;
+  margin-bottom: 10px;
+  font-family: IranSans;
+  padding-right: 10px;
+  background-color: #fbd496;
+  border: none;
+}
+.container .left-side .form-container .login-form .username {
+}
+.container .left-side .form-container .login-form .password {
+}
+.container .left-side .form-container .login-form .option-row {
+  display: flex;
+  flex-direction: row;
+}
+.container .left-side .form-container .login-form .option-row .remember {
+}
+.container
+  .left-side
+  .form-container
+  .login-form
+  from
+  .option-row
+  .remember
+  .chk-remember {
+}
+.container
+  .left-side
+  .form-container
+  .login-form
+  from
+  .option-row
+  .remember
+  label {
+}
+.container .left-side .form-container .login-form from .option-row .forgot {
+}
+.container .left-side .form-container .login-form from .btn-login {
+}
+
+.container .right-side {
+  width: 50%;
+  height: 100%;
+  background-color: gray;
+}
+.container .right-side img {
+}

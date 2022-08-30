@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import "../style/loginStyle.css";
 
 class Login extends Component {
   state = {};
@@ -7,37 +8,39 @@ class Login extends Component {
       <>
         <div className="container">
           <div className="left-side">
-            <div className="title"></div>
+            <div className="title">
+              <h2>سعـادت پرتال</h2>
+            </div>
             <div className="form-container">
-              <div className="login-form">
-                <form>
+              <form className="login-form">
+                <div className="title-form">
                   <h3>ورود کاربر</h3>
-                  <input
-                    type="text"
-                    className="username"
-                    placeholder="نام کاربری"
-                  />
-                  <input
-                    type="password"
-                    className="password"
-                    placeholder="گذرواژه"
-                  />
-                  <div className="option-row">
-                    <div className="remember">
-                      <input
-                        type="checkbox"
-                        id="chk-remember"
-                        className="chk-remember"
-                      />
-                      <label htmlFor="chk-remember">مرا به خاطر بسپار</label>
-                    </div>
-                    <a href="#" className="forgot">
-                      فراموشی رمز؟
-                    </a>
+                </div>
+                <input
+                  type="text"
+                  className="username input"
+                  placeholder="نام کاربری"
+                />
+                <input
+                  type="password"
+                  className="password input"
+                  placeholder="گذرواژه"
+                />
+                <div className="option-row">
+                  <div className="remember">
+                    <input
+                      type="checkbox"
+                      id="chk-remember"
+                      className="chk-remember"
+                    />
+                    <label htmlFor="chk-remember">مرا به خاطر بسپار</label>
                   </div>
-                  <button className="btn-login">ورود</button>
-                </form>
-              </div>
+                  <a href="#" className="forgot">
+                    فراموشی رمز؟
+                  </a>
+                </div>
+                <button className="btn-login">ورود</button>
+              </form>
             </div>
           </div>
           <div className="right-side">
