@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
+import Login from './component/Login';
 
 class App extends Component {
-    state = {  } 
+    state = {} 
     render() { 
         return (
             <>
-            <h1>Hello World</h1>
+            <Login/>
             </>
         );
     }
