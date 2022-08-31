@@ -5,8 +5,7 @@ class HamburgerMenu extends Component {
     render() { 
         return (
             <>
-            <button onClick={sideBarOpenClose}>open</button>
-                <div className='sidenav'>
+                <div className={`sidenav ${this.props.status}`}>
                     <div>
                         <img src="" alt="لوگو" />
                     </div>
@@ -28,8 +27,13 @@ class HamburgerMenu extends Component {
             </>
         );
     }
+    toggleSidebar = () => {
+        console.log('yoyo')
+    }
 }
- function sideBarOpenClose() {
-    console.log('yoyo')
- }
+ 
+
+
+
 export default HamburgerMenu;
+

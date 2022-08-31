@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Login from './component/Login';
 import HamburgerMenu from './component/Dashboard/HamburgerMenu'
+import Header from './component/Dashboard/Header';
 
 class App extends Component {
     state = {} 
@@ -12,7 +13,8 @@ class App extends Component {
         return (
             <>
             <div style={mystyle}>
-                <HamburgerMenu/>
+                <Header/>
+                <HamburgerMenu status='close'/>
             </div>
             
             </>
