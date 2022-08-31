@@ -5,9 +5,16 @@ import HamburgerMenu from './component/Dashboard/HamburgerMenu'
 class App extends Component {
     state = {} 
     render() { 
+        const mystyle = {
+            backgroundColor:'#eee',
+            height:'100vh'
+        }
         return (
             <>
-            <HamburgerMenu/>
+            <div style={mystyle}>
+                <HamburgerMenu/>
+            </div>
+            
             </>
         );
     }

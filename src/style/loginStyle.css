@@ -4,6 +4,7 @@
 }
 * {
   box-sizing: border-box;
+  font-family: IranSans;
 }
 
 .container {
@@ -110,4 +111,28 @@
   background-color: gray;
 }
 .container .right-side img {
+}
+
+/*Style Sidebar */
+.sidenav {
+  background-color: #fff;
+    width: -moz-fit-content;
+    width: fit-content;
+    padding: 1rem;
+    font-size: 14px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-radius: 2rem 0 0 2rem;
+    box-shadow: 0px 0px 20px 0px #4c577d05;
+    position: fixed;
+    right: -100%;
+}
+.sidenav li.sidenav-item {
+  margin-bottom: 1rem;
+  cursor: pointer;
+}
+.sidenav li.sidenav-item i {
+  margin-left: .5rem;
 }
