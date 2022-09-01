@@ -4,22 +4,22 @@ import HamburgerMenu from './component/Dashboard/HamburgerMenu'
 import Header from './component/Dashboard/Header';
 
 class App extends Component {
-    state = {} 
-    render() { 
+    state = {}
+    render() {
         const mystyle = {
-            backgroundColor:'#eee',
-            height:'100vh'
+            backgroundColor: '#eee',
+            height: '100vh'
         }
         return (
             <>
-            <div style={mystyle}>
-                <Header/>
-                <HamburgerMenu status='close'/>
-            </div>
-            
+                <div style={mystyle}>
+                    <Header />
+                    <HamburgerMenu status='open' />
+                </div>
+
             </>
         );
     }
 }
- 
+
 export default App;

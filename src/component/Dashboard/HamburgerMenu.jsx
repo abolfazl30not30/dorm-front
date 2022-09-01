@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import logo from "../../img/sadat logo-png.png"
 
 class HamburgerMenu extends Component {
     state = {  } 
@@ -7,7 +8,7 @@ class HamburgerMenu extends Component {
             <>
                 <div className={`sidenav ${this.props.status}`}>
                     <div>
-                        <img src="" alt="لوگو" />
+                        <img src={logo} alt="لوگو" style={{width:"100px",height:"100px"}}/>
                     </div>
                     <ul>
                         <li className='sidenav-item'><i class="bi bi-people"></i>پرسنل</li>
