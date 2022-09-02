@@ -1,23 +1,23 @@
 import React, { Component } from 'react';
 import HamburgerMenu from './../Dashboard/HamburgerMenu';
-
+import "../../style/header.css";
 
 class Header extends Component {
-    state = {  } 
-    render() { 
+    state = {}
+    render() {
         console.log(this)
         return (
             <>
-            <div className='header'>
-                <button className='btn' onClick={this.toggleSidebar}><i class="bi bi-list"></i></button>
-                <div><i class="bi bi-person"></i></div>
-            </div>
+                <div className='header'>
+                    <button className='btn' onClick={this.toggleSidebar}><i class="bi bi-list"></i></button>
+                    <div><i class="bi bi-person"></i></div>
+                </div>
             </>
         );
     }
-    
+
 }
- 
+
 
 
 

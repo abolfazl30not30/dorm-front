@@ -1,0 +1,10 @@
+  /*Style Header */
+  .header {
+    background-color: #DB9B31;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    border-radius: 0 0 0.5rem 0.5rem;
+  }
+  
