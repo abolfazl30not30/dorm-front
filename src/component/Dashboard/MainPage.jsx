@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import Tab from 'react-bootstrap/Tab';
-import Tabs from 'react-bootstrap/Tabs';
+import Building from './Building/Building';
 import { Category, ChartComponent, ColumnSeries, DataLabel, Inject, Legend, LineSeries, SeriesCollectionDirective, SeriesDirective, Tooltip } from '@syncfusion/ej2-react-charts';
 import { AccumulationChartComponent, AccumulationSeriesCollectionDirective, AccumulationSeriesDirective } from '@syncfusion/ej2-react-charts';
 class MainPage extends Component {
@@ -34,8 +33,11 @@ class MainPage extends Component {
                                 <AccumulationSeriesCollectionDirective>
                                     <AccumulationSeriesDirective dataSource={this.data2} xName='x' yName='y' radius='90%' />
                                 </AccumulationSeriesCollectionDirective>
-                            </AccumulationChartComponent>;
+                            </AccumulationChartComponent>
                         </div>
+                    </div>
+                    <div>
+                        <Building />
                     </div>
                 </div>
             </>

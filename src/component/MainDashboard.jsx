@@ -23,7 +23,7 @@ class MainDashboard extends Component {
                         <HamburgerMenu />
                     </div>
 
-                    <div className="main-page" style={
+                    <div className="main-page-container" style={
                         this.state.activeMenu ? { width: "100%" } : { width: "82%" }
                     }>
                         <Header />
