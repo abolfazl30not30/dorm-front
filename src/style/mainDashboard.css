@@ -1,0 +1,20 @@
+@font-face {
+    font-family: IranSans;
+    src: url(../font/IranSans.ttf);
+}
+
+* {
+    box-sizing: border-box;
+    font-family: IranSans;
+}
+
+.main-container {
+    position: relative;
+}
+
+.main-page {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: 0.3s linear;
+}
