@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import logo from "../../img/sadat logo-png.png"
+import logo from "../../img/logo.png"
 import "../../style/hamburgerMenu.css";
 import { Link } from 'react-router-dom';
 import MainContext from '../../contexts/ContextProvider';
