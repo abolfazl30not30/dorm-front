@@ -1,5 +1,10 @@
   /*Style Header */
+  .mainPage {
+    width: 100%;
+  }
+
   .header {
+    width: 100%;
     background-color: #DB9B31;
     display: flex;
     justify-content: space-between;
@@ -7,4 +12,3 @@
     padding: 1rem;
     border-radius: 0 0 0.5rem 0.5rem;
   }
-  

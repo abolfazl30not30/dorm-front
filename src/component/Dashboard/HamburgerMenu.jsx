@@ -10,7 +10,9 @@ class HamburgerMenu extends Component {
 
     render() {
         return (
-            <>
+            <div style={
+                this.context.activeMenu ? { display: "none" } : { display: "block" }
+            }>
                 <div className='close-icon'>
                     <button onClick={() => { this.context.handleSidebar() }}>
                         <i className='bi bi-x'></i>
@@ -69,7 +71,7 @@ class HamburgerMenu extends Component {
                         </Link>
                     </li>
                 </ul>
-            </>
+            </div>
         );
     }
     toggleSidebar = () => {

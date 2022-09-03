@@ -1,27 +1,36 @@
 import React, { Component } from 'react';
 import Header from './Dashboard/Header';
-import "../style/hamburgerMenu.css"
+import "../style/hamburgerMenu.css";
+import "../style/mainDashboard.css";
 import MainContext from '../contexts/ContextProvider';
 import HamburgerMenu from './Dashboard/HamburgerMenu';
+import MainPage from './Dashboard/MainPage';
 
 class MainDashboard extends Component {
     state = {
         activeMenu: false
     }
+    componentWillUnmount() {
+        this.setState({ activeMenu: true })
+    }
     render() {
         return (
-            <MainContext.Provider value={{ handleSidebar: this.handleSidebar }}>
-                <Header />
-                {this.state.activeMenu ? (
-                    <div className='sidenav' style={{ animation: "open-sidebar 0.3s linear both" }}>
+            <MainContext.Provider value={{ activeMenu: this.state.activeMenu, handleSidebar: this.handleSidebar }}>
+                <div className="main-container">
+                    <div className="sidenav" style={
+                        this.state.activeMenu ? { width: "0" } : { width: "18%" }
+                    }>
                         <HamburgerMenu />
                     </div>
-                ) : (
-                    <div className="sidenav" style={{ animation: "close-sidebar 0.3s linear both" }}>
-                        <HamburgerMenu />
+
+                    <div className="main-page" style={
+                        this.state.activeMenu ? { width: "100%" } : { width: "82%" }
+                    }>
+                        <Header />
+                        <MainPage />
                     </div>
-                )}
-            </MainContext.Provider>
+                </div>
+            </MainContext.Provider >
 
 
         );
