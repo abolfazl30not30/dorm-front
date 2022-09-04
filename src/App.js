@@ -9,10 +9,6 @@ class App extends Component {
     state = {}
 
     render() {
-        const mystyle = {
-            backgroundColor: '#eee',
-            height: '100vh'
-        }
         return (
             <>
                 <MainDashboard />

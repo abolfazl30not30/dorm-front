@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import Building from './Building/Building';
+import Home from './pages/Home';
 import { Category, ChartComponent, ColumnSeries, DataLabel, Inject, Legend, LineSeries, SeriesCollectionDirective, SeriesDirective, Tooltip } from '@syncfusion/ej2-react-charts';
 import { AccumulationChartComponent, AccumulationSeriesCollectionDirective, AccumulationSeriesDirective } from '@syncfusion/ej2-react-charts';
-import { Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 class MainPage extends Component {
     state = {}
     constructor() {
@@ -38,7 +39,8 @@ class MainPage extends Component {
                         </div>
                     </div>
                     <Routes>
-                        <Route path="/" element={(<Ecommerce />)} />
+                        <Route path="/" element={(<Home />)} />
+                        <Route path="/booking" element={(<Building />)} />
                     </Routes>
                 </div>
             </>
