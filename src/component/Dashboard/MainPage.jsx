@@ -12,7 +12,7 @@ class MainPage extends Component {
     render() {
         return (
             <>
-                <div className='d-flex flex-column '>
+                <div className='d-flex flex-column pt-4 px-5'>
                     <BuildingContext.Provider value={{ unitNumber: this.state.unitNumber, handleUnitNumber: this.handleUnitNumber }}>
                         <Routes>
                             <Route path="/" element={(<Home />)} />

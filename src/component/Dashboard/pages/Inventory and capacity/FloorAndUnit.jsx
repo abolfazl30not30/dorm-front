@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { Link, Route, Routes } from "react-router-dom";
 import RoomAndBed from './RoomAndBed';
-import "../../../../style/floorAndUnit.css"
+import "../../../../style/floorAndUnit.css";
 import BuildingContext from "../../../../contexts/Building";
+import doorEmpty from "../../../../img/door-empty.png";
+import doorFull from "../../../../img/doot-full.png";
 
 class FloorAndUnit extends Component {
     static contextType = BuildingContext;
@@ -36,9 +38,20 @@ class FloorAndUnit extends Component {
                     { id: 311, unitName: "311", empty: false },
                     { id: 312, unitName: "312", empty: false },
                     { id: 313, unitName: "313", empty: false },
-                    { id: 314, unitName: "314", empty: false },
+                    { id: 314, unitName: "314", empty: true },
                     { id: 315, unitName: "315", empty: false },
                     { id: 316, unitName: "316", empty: false }
+                ]
+            },
+            {
+                id: 3, floorName: "طبقه چهارم",
+                unit: [
+                    { id: 311, unitName: "411", empty: false },
+                    { id: 312, unitName: "412", empty: false },
+                    { id: 313, unitName: "413", empty: false },
+                    { id: 314, unitName: "414", empty: false },
+                    { id: 315, unitName: "415", empty: false },
+                    { id: 316, unitName: "416", empty: false }
                 ]
             },
         ],
@@ -47,7 +60,7 @@ class FloorAndUnit extends Component {
     render() {
         return (
             <>
-                <div>
+                <div className='floorAndUnit'>
                     <div className="back-btn">
                         <Link to="/">
                             بازگشت
@@ -64,17 +77,21 @@ class FloorAndUnit extends Component {
 
                     <div className="floor-container row">
                         {this.state.floor.map((f) => (
-                            <div className="floor col-md-4 col-sm-6 col-xs-12">
-                                <h3 className='floor-name'>{f.floorName}</h3>
-                                <div className="unit-container row">
-                                    {f.unit.map((unit) => (
-                                        <div className="unit col-4">
-                                            <Link to="/RoomAndBed" onClick={() => { this.context.handleUnitNumber(unit.unitName) }}>
-                                                { }
-                                                <h5 className='unit-name'>{unit.unitName}</h5>
-                                            </Link>
-                                        </div>
-                                    ))}
+                            <div className="col-md-4 col-sm-6 col-xs-12 p-0">
+                                <div className='floor'>
+                                    <h3 className='floor-name'>{f.floorName}</h3>
+                                    <div className="unit-container row">
+                                        {f.unit.map((unit) => (
+                                            <div className="unit col-4">
+                                                <Link to="/RoomAndBed" onClick={() => { this.context.handleUnitNumber(unit.unitName) }}>
+                                                    <img src={
+                                                        unit.empty ? doorFull : doorEmpty
+                                                    } alt="door" />
+                                                    <h5 className='unit-name'>واحد {unit.unitName}</h5>
+                                                </Link>
+                                            </div>
+                                        ))}
+                                    </div>
                                 </div>
                             </div>
                         ))}
