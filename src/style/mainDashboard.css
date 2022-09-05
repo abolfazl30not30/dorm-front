@@ -22,4 +22,5 @@ body {
     left: 0;
     overflow: hidden;
     transition: 0.3s linear;
+    background-color: #f9f9f9;
 }

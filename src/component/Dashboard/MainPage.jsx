@@ -5,6 +5,7 @@ import { Routes, Route } from 'react-router-dom';
 import FloorAndUnit from './pages/Inventory and capacity/FloorAndUnit';
 import RoomAndBed from './pages/Inventory and capacity/RoomAndBed';
 import BuildingContext from '../../contexts/Building';
+import FullViewOfBed from './pages/Inventory and capacity/FullViewOfBed';
 class MainPage extends Component {
     state = {
         unitNumber: ""
@@ -18,6 +19,10 @@ class MainPage extends Component {
                             <Route path="/" element={(<Home />)} />
                             <Route path="/booking" element={(<FloorAndUnit />)} />
                             <Route path="/RoomAndBed" element={(<RoomAndBed />)} />
+                            <Route path="/" element={(<Home />)} />
+                            <Route path="/booking" element={(<FloorAndUnit />)} />
+                            <Route path="/RoomAndBed" element={(<RoomAndBed />)} />
+                            <Route path="/FullViewOfBed" element={(<FullViewOfBed />)} />
                         </Routes>
                     </BuildingContext.Provider>
                 </div>
