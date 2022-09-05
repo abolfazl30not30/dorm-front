@@ -5,6 +5,7 @@ import "../../../../style/floorAndUnit.css";
 import BuildingContext from "../../../../contexts/Building";
 import doorEmpty from "../../../../img/door-empty.png";
 import doorFull from "../../../../img/doot-full.png";
+import FloorAndBedLoading from '../../../loading/FloorAndBedLoading';
 
 class FloorAndUnit extends Component {
     static contextType = BuildingContext;
@@ -55,8 +56,13 @@ class FloorAndUnit extends Component {
                 ]
             },
         ],
+        isLoading: true
     }
-
+    componentDidMount() {
+        setInterval(() => {
+            this.setState({ isLoading: false })
+        }, 3000)
+    }
     render() {
         return (
             <>
@@ -74,28 +80,33 @@ class FloorAndUnit extends Component {
                             جایگاه تخت خود را برگزینید
                         </p>
                     </div>
-
-                    <div className="floor-container row">
-                        {this.state.floor.map((f) => (
-                            <div className="col-md-4 col-sm-6 col-xs-12 p-0">
-                                <div className='floor'>
-                                    <h3 className='floor-name'>{f.floorName}</h3>
-                                    <div className="unit-container row">
-                                        {f.unit.map((unit) => (
-                                            <div className="unit col-4">
-                                                <Link to="/RoomAndBed" onClick={() => { this.context.handleUnitNumber(unit.unitName) }}>
-                                                    <img src={
-                                                        unit.empty ? doorFull : doorEmpty
-                                                    } alt="door" />
-                                                    <h5 className='unit-name'>واحد {unit.unitName}</h5>
-                                                </Link>
-                                            </div>
-                                        ))}
+                    {this.state.isLoading ? (
+                        <div className='row' style={{ marginTop: "60px" }}>
+                            <FloorAndBedLoading />
+                        </div>
+                    ) : (
+                        <div className="floor-container row">
+                            {this.state.floor.map((f) => (
+                                <div className="col-md-4 col-sm-6 col-xs-12 p-0">
+                                    <div className='floor'>
+                                        <h3 className='floor-name'>{f.floorName}</h3>
+                                        <div className="unit-container row">
+                                            {f.unit.map((unit) => (
+                                                <div className="unit col-4">
+                                                    <Link to="/RoomAndBed" onClick={() => { this.context.handleUnitNumber(unit.unitName) }}>
+                                                        <img src={
+                                                            unit.empty ? doorFull : doorEmpty
+                                                        } alt="door" />
+                                                        <h5 className='unit-name'>واحد {unit.unitName}</h5>
+                                                    </Link>
+                                                </div>
+                                            ))}
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        ))}
-                    </div>
+                            ))}
+                        </div>
+                    )}
                 </div>
             </>
         );
