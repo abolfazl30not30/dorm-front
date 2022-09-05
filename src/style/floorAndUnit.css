@@ -1,0 +1,55 @@
+#root {
+    background-color: #f9f9f9;
+}
+
+.floorAndUnit {}
+
+.floorAndUnit .back-btn {}
+
+.floorAndUnit .back-btn a {}
+
+.floorAndUnit .back-btn a i {}
+
+.floorAndUnit .text {}
+
+.floorAndUnit .text h4 {}
+
+.floorAndUnit .text P {}
+
+.floorAndUnit .floor-container {}
+
+.floorAndUnit .floor-container .floor {}
+
+.floorAndUnit .floor-container .floor .floor-name {}
+
+.floorAndUnit .floor-container .floor .unit-container {}
+
+.floorAndUnit .floor-container .floor .unit-container {}
+
+.floorAndUnit .floor-container .floor .unit-container .unit {}
+
+.floorAndUnit .floor-container .floor .unit-container .unit a {}
+
+.floorAndUnit .floor-container .floor .unit-container .unit img {}
+
+.floorAndUnit .floor-container .floor .unit-container .unit .unit-name {}
+
+/* .floor {
+    background-color: #fff;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+}
+
+.floor .title {
+    font-size: 20px;
+    font-weight: 500;
+    text-align: center;
+}
+
+.floor .unit {
+    background-color: #f5f8fa;
+    margin: 0.5rem;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    font-size: 14px;
+} */

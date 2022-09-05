@@ -10,6 +10,7 @@ class HamburgerMenu extends Component {
 
     render() {
         return (
+
             <div style={
                 this.context.activeMenu ? { display: "none" } : { display: "block" }
             }>
