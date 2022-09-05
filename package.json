@@ -19,12 +19,8 @@
     "react": "^18.2.0",
     "react-bootstrap": "^2.5.0",
     "react-dom": "^18.2.0",
-    "react-icon": "^1.0.0",
-<<<<<<< HEAD
-    "react-loading-skeleton": "^3.1.0",
-=======
     "react-icons": "^4.4.0",
->>>>>>> a6754fa6828b4781516d7e07b5014cc522ec84f1
+    "react-loading-skeleton": "^3.1.0",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4"
