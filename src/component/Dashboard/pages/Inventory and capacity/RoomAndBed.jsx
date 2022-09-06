@@ -4,8 +4,10 @@ import { BiBed } from 'react-icons/bi'
 import { TbBuilding } from 'react-icons/tb'
 import { Link, Route, Routes } from "react-router-dom";
 import FullViewOfBed from './FullViewOfBed';
+import BuildingContext from '../../../../contexts/Building';
 
 class RoomAndBed extends Component {
+    static contextType = BuildingContext;
     state = {
         rooms: [
             {
@@ -77,13 +79,24 @@ class RoomAndBed extends Component {
         ]
     }
     render() {
-        console.log(this.state)
         return (
             <>
                 <div className='unit-box'>
-                    <h2 className='me-3'>
-                        <TbBuilding />
-                        <span className="me-3">واحد 101</span>
+                    <div className="back-btn">
+                        <Link to="/booking">
+                            بازگشت
+                            <i class="bi bi-caret-left-fill"></i>
+                        </Link>
+                    </div>
+                    <div className="text">
+                        <h4>انتخاب اتاق و تخت</h4>
+                        <p>
+                            در این قسمت تخت مدنظر خود را انتخاب نمایید تا وارد مرحله ی نهایی ثبت نام شوید.
+                        </p>
+                    </div>
+                    <h2 className='unit-name'>
+                        <TbBuilding className="mt-2" color='#555' fontSize="1.8rem" />
+                        <span className="unit-title">واحد {this.context.unitNumber}</span>
                     </h2>
                     <div className="d-flex flex-wrap">
                         {
@@ -96,7 +109,7 @@ class RoomAndBed extends Component {
                                                 {room.bed.map((bed) => (
                                                     <Link to='/FullViewOfBed' className="col-4 p-1">
                                                         <div className={`bed-box ${bed.empty ? "empty" : "full"}`}>
-                                                            <BiBed />
+                                                            <BiBed fontSize="2rem" />
                                                             <div className="title">{bed.bedName}</div>
                                                         </div>
                                                     </Link>

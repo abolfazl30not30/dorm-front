@@ -61,19 +61,35 @@
 .floorAndUnit .floor-container .floor .unit-container .unit {
     display: flex;
     justify-content: center;
+    margin: 0;
+    padding: 0;
 }
 
 .floorAndUnit .floor-container .floor .unit-container .unit a {
+    border: 1px dashed #ddd;
+    margin: 0.5rem;
+    padding: 0.5rem 0.8rem;
+    border-radius: 0.5rem;
     text-align: center;
+    margin: .5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     text-decoration: none;
-    color: #252525;
 }
 
-.floorAndUnit .floor-container .floor .unit-container .unit img {
-    width: 60px;
+.full-link {
+    color: #F1416C;
+    background-color: #FFEFF3;
+    border: none;
+}
+
+.empty-link {
+    color: #000;
 }
 
 .floorAndUnit .floor-container .floor .unit-container .unit .unit-name {
+    color: inherit;
     margin-top: 9px;
     font-size: 14px;
 }

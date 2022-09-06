@@ -6,7 +6,7 @@ import BuildingContext from "../../../../contexts/Building";
 import doorEmpty from "../../../../img/door-empty.png";
 import doorFull from "../../../../img/doot-full.png";
 import FloorAndBedLoading from '../../../loading/FloorAndBedLoading';
-
+import { TbBuilding } from 'react-icons/tb';
 class FloorAndUnit extends Component {
     static contextType = BuildingContext;
     state = {
@@ -61,7 +61,7 @@ class FloorAndUnit extends Component {
     componentDidMount() {
         setInterval(() => {
             this.setState({ isLoading: false })
-        }, 3000)
+        }, 1000)
     }
     render() {
         return (
@@ -92,11 +92,9 @@ class FloorAndUnit extends Component {
                                         <h3 className='floor-name'>{f.floorName}</h3>
                                         <div className="unit-container row">
                                             {f.unit.map((unit) => (
-                                                <div className="unit col-4">
-                                                    <Link to="/RoomAndBed" onClick={() => { this.context.handleUnitNumber(unit.unitName) }}>
-                                                        <img src={
-                                                            unit.empty ? doorFull : doorEmpty
-                                                        } alt="door" />
+                                                <div className={`unit col-4`}>
+                                                    <Link className={`${unit.empty ? "full-link" : "empty-link"}`} to="/RoomAndBed" onClick={() => { this.context.handleUnitNumber(unit.unitName) }}>
+                                                        <TbBuilding fontSize="2rem" />
                                                         <h5 className='unit-name'>واحد {unit.unitName}</h5>
                                                     </Link>
                                                 </div>

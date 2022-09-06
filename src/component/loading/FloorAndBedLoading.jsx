@@ -10,23 +10,24 @@ const FloorAndBedLoading = () => {
                     <Skeleton className='mb-4' width={120} height={35} />
                     <div className="row">
                         <div className="col-4">
-                            <Skeleton className='mb-2' height={50} width={65} />
+                            <Skeleton className='mb-2' height={82} width={82} />
                         </div>
                         <div className="col-4">
-                            <Skeleton className='mb-2' height={50} width={65} />
+                            <Skeleton className='mb-2' height={82} width={82} />
                         </div>
                         <div className="col-4">
-                            <Skeleton className='mb-2' height={50} width={65} />
+                            <Skeleton className='mb-2' height={82} width={82} />
                         </div>
                         <div className="col-4">
-                            <Skeleton className='mb-2' height={50} width={65} />
+                            <Skeleton className='mb-2' height={82} width={82} />
                         </div>
                         <div className="col-4">
-                            <Skeleton className='mb-2' height={50} width={65} />
+                            <Skeleton className='mb-2' height={82} width={82} />
                         </div>
                         <div className="col-4">
-                            <Skeleton className='mb-2' height={50} width={65} />
+                            <Skeleton className='mb-2' height={82} width={82} />
                         </div>
+
                     </div>
                 </div>
             </div>
