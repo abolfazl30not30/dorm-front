@@ -42,7 +42,6 @@ class MainDashboard extends Component {
         } else {
             this.setState({ activeMenu: true })
         }
-        console.log("hello")
     }
 }
 

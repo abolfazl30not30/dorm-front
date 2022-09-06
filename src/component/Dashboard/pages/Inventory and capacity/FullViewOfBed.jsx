@@ -1,16 +1,17 @@
+
 import React, { Component } from 'react';
 import './../../../../style/roomAndBed.css'
 
 class FullViewOfBed extends Component {
-    state = { 
-        person : {
-            id:1,
-            firstName:'میلاد',
-            lastName:'زارع',
-            image:'https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png'
+    state = {
+        person: {
+            id: 1,
+            firstName: 'میلاد',
+            lastName: 'زارع',
+            image: 'https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png'
         }
-      } 
-    render() { 
+    }
+    render() {
         console.log(this.state.person)
         return (
             <>
@@ -20,10 +21,10 @@ class FullViewOfBed extends Component {
                         <div className="name">{this.state.person.firstName} {this.state.person.lastName}</div>
                     </div>
                 </div>
-                
+
             </>
         );
     }
 }
- 
+
 export default FullViewOfBed;
