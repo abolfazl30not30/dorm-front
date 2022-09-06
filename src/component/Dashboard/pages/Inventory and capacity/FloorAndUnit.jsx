@@ -7,65 +7,66 @@ import doorEmpty from "../../../../img/door-empty.png";
 import doorFull from "../../../../img/doot-full.png";
 import FloorAndBedLoading from '../../../loading/FloorAndBedLoading';
 import { TbBuilding } from 'react-icons/tb';
+import { EditText, EditTextarea } from 'react-edit-text';
+import 'react-edit-text/dist/index.css';
+
 class FloorAndUnit extends Component {
     static contextType = BuildingContext;
     state = {
         floor1: [
             {
-                id: 1, floorName: "طبقه اول",
-                unit: [
-                    { id: 111, unitName: "111", empty: false },
-                    { id: 112, unitName: "112", empty: true },
-                    { id: 113, unitName: "113", empty: false },
-                    { id: 114, unitName: "114", empty: false },
-                    { id: 115, unitName: "115", empty: true },
-                    { id: 116, unitName: "116", empty: false }
+                id: 1, name: "طبقه اول",
+                units: [
+                    { id: 111, number: "111", empty: false },
+                    { id: 112, number: "112", empty: true },
+                    { id: 113, number: "113", empty: false },
+                    { id: 114, number: "114", empty: false },
+                    { id: 115, number: "115", empty: true },
+                    { id: 116, number: "116", empty: false }
                 ]
             },
             {
-                id: 2, floorName: "طبقه دوم",
-                unit: [
-                    { id: 211, unitName: "211", empty: false },
-                    { id: 212, unitName: "212", empty: true },
-                    { id: 213, unitName: "213", empty: false },
-                    { id: 214, unitName: "214", empty: false },
-                    { id: 215, unitName: "215", empty: false },
-                    { id: 216, unitName: "216", empty: false }
+                id: 2, name: "طبقه دوم",
+                units: [
+                    { id: 211, number: "211", empty: false },
+                    { id: 212, number: "212", empty: true },
+                    { id: 213, number: "213", empty: false },
+                    { id: 214, number: "214", empty: false },
+                    { id: 215, number: "215", empty: false },
+                    { id: 216, number: "216", empty: false }
                 ]
             },
             {
-                id: 3, floorName: "طبقه سوم",
-                unit: [
-                    { id: 311, unitName: "311", empty: false },
-                    { id: 312, unitName: "312", empty: false },
-                    { id: 313, unitName: "313", empty: false },
-                    { id: 314, unitName: "314", empty: true },
-                    { id: 315, unitName: "315", empty: false },
-                    { id: 316, unitName: "316", empty: false }
+                id: 3, name: "طبقه سوم",
+                units: [
+                    { id: 311, number: "311", empty: false },
+                    { id: 312, number: "312", empty: false },
+                    { id: 313, number: "313", empty: false },
+                    { id: 314, number: "314", empty: true },
+                    { id: 315, number: "315", empty: false },
+                    { id: 316, number: "316", empty: false }
                 ]
             },
             {
-                id: 3, floorName: "طبقه چهارم",
-                unit: [
-                    { id: 311, unitName: "411", empty: false },
-                    { id: 312, unitName: "412", empty: false },
-                    { id: 313, unitName: "413", empty: false },
-                    { id: 314, unitName: "414", empty: false },
-                    { id: 315, unitName: "415", empty: false },
-                    { id: 316, unitName: "416", empty: false }
+                id: 3, name: "طبقه چهارم",
+                units: [
+                    { id: 311, number: "411", empty: false },
+                    { id: 312, number: "412", empty: false },
+                    { id: 313, number: "413", empty: false },
+                    { id: 314, number: "414", empty: false },
+                    { id: 315, number: "415", empty: false },
+                    { id: 316, number: "416", empty: false }
                 ]
             },
         ],
-        isLoading: true,
+        isLoading: false,
         floor: []
     }
-    async componentDidMount() {
-        const response = await fetch('http://localhost:8089/api/v1/floor').then((response) => response.json())
-            .then((data) => this.setState({ floor: data, isLoading: false }));
-
-        console.log(this.state.floor)
-
-    }
+    // async componentDidMount() {
+    //     // const response = await fetch('http://localhost:8089/api/v1/floor').then((response) => response.json())
+    //     //     .then((data) => this.setState({ floor: data, isLoading: false }));
+    //     // console.log(this.state.floor)
+    // }
     render() {
         return (
             <>
@@ -89,7 +90,7 @@ class FloorAndUnit extends Component {
                         </div>
                     ) : (
                         <div className="floor-container row">
-                            {this.state.floor.map((f) => (
+                            {this.state.floor1.map((f) => (
                                 <div className="col-md-4 col-sm-6 col-xs-12 p-0">
                                     <div className='floor'>
                                         <h3 className='floor-name'>{f.name}</h3>

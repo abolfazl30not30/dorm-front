@@ -1,7 +1,10 @@
 import { Component } from "react";
-import './../../../../style/editBuilding.css'
-import {BsDoorClosed} from 'react-icons/bs'
-import {AiOutlinePlus} from 'react-icons/ai'
+import './../../../../style/editBuilding.css';
+import { BsDoorClosed } from 'react-icons/bs'
+import { AiOutlinePlus } from 'react-icons/ai'
+import { TbBuilding } from 'react-icons/tb';
+import { EditText, EditTextarea } from 'react-edit-text';
+import 'react-edit-text/dist/index.css';
 
 class EditFloorAndUnit extends Component {
     // state = { 
@@ -34,9 +37,9 @@ class EditFloorAndUnit extends Component {
     //         },
     //     ]
     //  } 
-     constructor(props) {
+    constructor(props) {
         super(props);
-        this.state = { 
+        this.state = {
             floor: [
                 {
                     id: 1, floorName: "طبقه اول",
@@ -65,62 +68,67 @@ class EditFloorAndUnit extends Component {
                     ]
                 },
             ]
-         } 
-     }
-     addFloor = () => {
+        }
+    }
+
+    addFloor = () => {
         const newFloor = this.state.floor.concat(
             {
-                id: 3, floorName: "طبقه سوم",
+                id: 3, floorName: "طبقه ....",
                 unit: []
             }
         )
-        this.setState({floor: newFloor})
-     }
-     addUnit = (e) => {
+        this.setState({ floor: newFloor })
+    }
+
+    addUnit = (e) => {
         const floorCurrent = e.target.getAttribute('floor')
         const newUnit = this.state.floor[floorCurrent].unit.concat(
             { id: 311, unitName: "new" }
         )
         const updateFloor = [...this.state.floor]
-        
+
         updateFloor[floorCurrent].unit = newUnit
-        console.log(updateFloor)
-        
-        this.setState({floor: updateFloor})
-     }
 
+        this.setState({ floor: updateFloor })
+    }
 
-    render() { 
+    editFloor = (e) => {
+        console.log("ello")
+    };
+    editUnit = (e) => {
+    }
+    render() {
         return (
             <>
                 <div className="row pb-5">
-                    {this.state.floor.map((f,i) => (
+                    {this.state.floor.map((f, i) => (
                         <div className="col-4 p-3" key={i}>
                             <div className="floor-box">
-                                <div className="title">{f.floorName}</div>
+                                <div className="title"><EditText ref="floorTitle" showEditButton defaultValue={f.floorName} onChange={(e) => editFloor(e)} /></div>
                                 <div className="d-flex flex-wrap">
                                     {f.unit.map((u) => (
                                         <div className="col-4" key={u.id}>
                                             <div className="unit-box">
-                                                <BsDoorClosed />
-                                                <div className="title">{u.unitName}</div>
+                                                <TbBuilding fontSize="2rem" />
+                                                <div className="title"><EditText className="editable" showEditButton defaultValue={u.unitName} /></div>
                                             </div>
                                         </div>
                                     ))}
-                                    <button onClick={this.addUnit} className="btn" floor={i}><AiOutlinePlus /></button>
+                                    <button onClick={this.addUnit} className="unit-add-btn" floor={i}><AiOutlinePlus /></button>
                                 </div>
                             </div>
                         </div>
                     ))}
                     <div className="col-4 p-3">
-                            <div className="floor-box add">
-                                <button onClick={this.addFloor} className="btn"><AiOutlinePlus /></button>
-                            </div>
+                        <div className="floor-box add">
+                            <button onClick={this.addFloor} className="btn"><AiOutlinePlus /></button>
                         </div>
+                    </div>
                 </div>
             </>
         );
     }
 }
- 
+
 export default EditFloorAndUnit;
