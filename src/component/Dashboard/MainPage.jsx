@@ -6,6 +6,7 @@ import { Routes, Route } from 'react-router-dom';
 import FloorAndUnit from './pages/Inventory and capacity/FloorAndUnit';
 import RoomAndBed from './pages/Inventory and capacity/RoomAndBed';
 import FullViewOfBed from './pages/Inventory and capacity/FullViewOfBed';
+import EditFloorAndUnit from './pages/edit building/edit floor and unit';
 class MainPage extends Component {
     state = {}
     render() {
@@ -15,6 +16,7 @@ class MainPage extends Component {
                     <Routes>
                         <Route path="/" element={(<Home />)} />
                         <Route path="/booking" element={(<FloorAndUnit />)} />
+                        <Route path="/edit" element={(<EditFloorAndUnit />)} />
                         <Route path="/RoomAndBed" element={(<RoomAndBed />)} />
                         <Route path="/FullViewOfBed" element={(<FullViewOfBed />)} />
                     </Routes>
