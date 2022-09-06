@@ -10,7 +10,7 @@ import { TbBuilding } from 'react-icons/tb';
 class FloorAndUnit extends Component {
     static contextType = BuildingContext;
     state = {
-        floor: [
+        floor1: [
             {
                 id: 1, floorName: "طبقه اول",
                 unit: [
@@ -56,12 +56,15 @@ class FloorAndUnit extends Component {
                 ]
             },
         ],
-        isLoading: true
+        isLoading: true,
+        floor: []
     }
-    componentDidMount() {
-        setInterval(() => {
-            this.setState({ isLoading: false })
-        }, 1000)
+    async componentDidMount() {
+        const response = await fetch('http://localhost:8089/api/v1/floor').then((response) => response.json())
+            .then((data) => this.setState({ floor: data, isLoading: false }));
+
+        console.log(this.state.floor)
+
     }
     render() {
         return (
@@ -89,13 +92,13 @@ class FloorAndUnit extends Component {
                             {this.state.floor.map((f) => (
                                 <div className="col-md-4 col-sm-6 col-xs-12 p-0">
                                     <div className='floor'>
-                                        <h3 className='floor-name'>{f.floorName}</h3>
+                                        <h3 className='floor-name'>{f.name}</h3>
                                         <div className="unit-container row">
-                                            {f.unit.map((unit) => (
+                                            {f.units.map((unit) => (
                                                 <div className={`unit col-4`}>
-                                                    <Link className={`${unit.empty ? "full-link" : "empty-link"}`} to="/RoomAndBed" onClick={() => { this.context.handleUnitNumber(unit.unitName) }}>
+                                                    <Link className={`${unit.empty ? "full-link" : "empty-link"}`} to="/RoomAndBed" onClick={() => { this.context.handleUnitNumber(unit.number) }}>
                                                         <TbBuilding fontSize="2rem" />
-                                                        <h5 className='unit-name'>واحد {unit.unitName}</h5>
+                                                        <h5 className='unit-name'>واحد {unit.number}</h5>
                                                     </Link>
                                                 </div>
                                             ))}

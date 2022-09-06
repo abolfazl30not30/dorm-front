@@ -50,6 +50,7 @@
 }
 
 .room-box .title {
+    margin-top: 10px;
     margin-bottom: 1rem;
     text-align: center;
     font-size: 17px;
