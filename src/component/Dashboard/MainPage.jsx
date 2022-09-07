@@ -6,7 +6,7 @@ import FloorAndUnit from './pages/Inventory and capacity/FloorAndUnit';
 import RoomAndBed from './pages/Inventory and capacity/RoomAndBed';
 import BuildingContext from '../../contexts/Building';
 import FullViewOfBed from './pages/Inventory and capacity/FullViewOfBed';
-import EditFloorAndUnit from './pages/edit building/edit floor and unit';
+import EditFloorAndUnit from './pages/edit building/EditFloorAndUnit';
 class MainPage extends Component {
     state = {
         unitNumber: ""
