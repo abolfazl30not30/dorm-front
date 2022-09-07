@@ -54,15 +54,13 @@ class EditFloorAndUnit extends Component {
         this.setState({ floor: newFloor })
     }
 
-    addUnit = (e) => {
-        const floorCurrent = e.target.getAttribute('floor')
-        const newUnit = this.state.floor[floorCurrent].unit.concat(
+    addUnit = (f) => {
+        const index = this.state.floor.indexOf(f);
+        const newUnit = this.state.floor[index].unit.concat(
             { id: 311, unitName: "new" }
         )
         const updateFloor = [...this.state.floor]
-
-        updateFloor[floorCurrent].unit = newUnit
-
+        updateFloor[index].unit = newUnit
         this.setState({ floor: updateFloor })
     }
 
@@ -71,8 +69,6 @@ class EditFloorAndUnit extends Component {
         const updatedState = [...this.state.floor];
         updatedState[index].floorName = value;
         this.setState({ floor: updatedState });
-        console.log(this.state.floor)
-
     };
 
     editUnitTitle = ({ value, previousValue }) => {
@@ -91,6 +87,7 @@ class EditFloorAndUnit extends Component {
         this.setState({ floor: updatedState });
         console.log(this.state.floor)
     }
+
     deleteFloor = (floor) => {
         const updateUsers = this.state.floor.filter(f => f !== floor);
         this.setState({ floor: updateUsers });
@@ -105,18 +102,19 @@ class EditFloorAndUnit extends Component {
         this.setState({ floor: updatedState });
         console.log(this.state.floor)
     }
+
     render() {
         return (
             <>
                 <div className="row pb-5">
                     {this.state.floor.map((f, i) => (
-                        <div className="col-4 p-3" key={i}>
+                        <div className="col-4 p-3">
                             <div className="floor-box">
                                 <button className="floor-close-btn" onClick={() => { this.deleteFloor(f) }}><AiFillCloseCircle color="#F1416C" /></button>
                                 <div className="title"><EditText ref="floorTitle" showEditButton defaultValue={f.floorName} onSave={this.editFloorTitle} /></div>
                                 <div className="d-flex flex-wrap">
                                     {f.unit.map((u) => (
-                                        <div className="col-4" key={u.id}>
+                                        <div className="col-4">
                                             <div className="unit-box">
                                                 <button className="unit-close-btn" onClick={() => { this.deleteUnit(u, i) }}><AiFillCloseCircle color="#F1416C" /></button>
                                                 <TbBuilding fontSize="2rem" />
@@ -124,7 +122,7 @@ class EditFloorAndUnit extends Component {
                                             </div>
                                         </div>
                                     ))}
-                                    <button onClick={this.addUnit} className="unit-add-btn" floor={i}><AiOutlinePlus /></button>
+                                    <button onClick={() => { this.addUnit(f) }} className="unit-add-btn"><AiOutlinePlus /></button>
                                 </div>
                             </div>
                         </div>

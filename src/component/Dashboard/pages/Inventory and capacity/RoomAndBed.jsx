@@ -5,6 +5,7 @@ import { TbBuilding } from 'react-icons/tb'
 import { Link, Route, Routes } from "react-router-dom";
 import FullViewOfBed from './FullViewOfBed';
 import BuildingContext from '../../../../contexts/Building';
+import FloorAndBedLoading from '../../../loading/FloorAndBedLoading';
 
 class RoomAndBed extends Component {
     static contextType = BuildingContext;
@@ -76,12 +77,13 @@ class RoomAndBed extends Component {
 
                 ]
             }
-        ]
+        ],
+        isLoading: false
     }
     render() {
         return (
             <>
-                <div className='unit-box'>
+                <div className='unitContainer'>
                     <div className="back-btn">
                         <Link to="/booking">
                             بازگشت
@@ -98,29 +100,38 @@ class RoomAndBed extends Component {
                         <TbBuilding className="mt-2" color='#555' fontSize="1.8rem" />
                         <span className="unit-title">واحد {this.context.unitNumber}</span>
                     </h2>
-                    <div className="d-flex flex-wrap">
-                        {
-                            this.state.rooms.map(
-                                (room) => (
-                                    <div className="col-4">
-                                        <div className="room-box">
-                                            <div className="title">{room.roomName}</div>
-                                            <div className='d-flex flex-wrap'>
-                                                {room.bed.map((bed) => (
-                                                    <Link to='/FullViewOfBed' className="col-4 p-1">
-                                                        <div className={`bed-box ${bed.empty ? "empty" : "full"}`}>
-                                                            <BiBed fontSize="2rem" />
-                                                            <div className="title">{bed.bedName}</div>
-                                                        </div>
-                                                    </Link>
-                                                ))}
+                    {
+                        this.state.isLoading ? (
+                            <div className='row' style={{ marginTop: "60px" }}>
+                                <FloorAndBedLoading />
+                            </div>
+                        ) : (
+                            <div className="d-flex flex-wrap">
+                                {
+                                    this.state.rooms.map(
+                                        (room) => (
+                                            <div className="col-4">
+                                                <div className="room-box">
+                                                    <div className="title">{room.roomName}</div>
+                                                    <div className='d-flex flex-wrap'>
+                                                        {room.bed.map((bed) => (
+                                                            <Link to='/FullViewOfBed' className="col-4 p-1">
+                                                                <div className={`bed-box ${bed.empty ? "empty" : "full"}`}>
+                                                                    <BiBed fontSize="2rem" />
+                                                                    <div className="title">{bed.bedName}</div>
+                                                                </div>
+                                                            </Link>
+                                                        ))}
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                )
-                            )
-                        }
-                    </div>
+                                        )
+                                    )
+                                }
+                            </div>
+                        )
+                    }
+
                 </div>
             </>
         );

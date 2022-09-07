@@ -1,40 +1,40 @@
-.unit-box {
+.unitContainer {
     background-image: none;
 }
 
-.unit-box .back-btn {
+.unitContainer .back-btn {
     display: flex;
     justify-content: end;
     padding-top: 10px;
 
 }
 
-.unit-box .back-btn a {
+.unitContainer .back-btn a {
     text-decoration: none;
     color: #676767;
 }
 
-.unit-box .text {
+.unitContainer .text {
     margin-top: 38px;
 }
 
-.unit-box .text h4 {
+.unitContainer .text h4 {
     font-weight: bold;
     color: #555;
 }
 
 
-.unit-box .text P {
+.unitContainer .text P {
     margin-top: 27px;
     width: 80%;
     color: #676767;
 }
 
-.unit-box .unit-name {
+.unitContainer .unit-name {
     margin: 50px 22px 27px 0;
 }
 
-.unit-box .unit-name .unit-title {
+.unitContainer .unit-name .unit-title {
     margin-right: 10px;
     font-size: 1.6rem;
     color: #555;
