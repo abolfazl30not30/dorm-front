@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { AiOutlinePlus, AiFillCloseCircle } from 'react-icons/ai';
 import { EditText, EditTextarea } from 'react-edit-text';
 import { BiBed } from 'react-icons/bi';
+import CounterInput from "react-counter-input";
 
 class EditRoomAndBed extends Component {
     state = {
@@ -87,7 +88,7 @@ class EditRoomAndBed extends Component {
                                                 <button onClick={() => { }} className="bed-add-btn"><AiOutlinePlus /></button>
                                             </div>
                                         </div>
-                                        <div className='col-6'>
+                                        <div className='col-6 d-flex justify-content-center align-items-center'>
                                             <div className='accessory-box'>
                                                 {room.accessory.map((accessory) => (
                                                     <div className="accessory row">
@@ -95,7 +96,11 @@ class EditRoomAndBed extends Component {
                                                             <h6>{accessory.name}</h6>
                                                         </div>
                                                         <div className="accessory-count col-6">
-                                                            <h6>{accessory.count}</h6>
+                                                            <CounterInput
+                                                                min={0}
+                                                                max={10}
+                                                                onCountChange={count => console.log(count)}
+                                                            />
                                                         </div>
                                                     </div>
                                                 ))}
