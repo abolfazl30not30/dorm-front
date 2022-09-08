@@ -1,0 +1,115 @@
+#root {
+    background-color: #f9f9f9;
+}
+
+.floorAndUnit {}
+
+.floorAndUnit .back-btn {
+    display: flex;
+    justify-content: end;
+    padding-top: 10px;
+
+}
+
+.floorAndUnit .back-btn a {
+    text-decoration: none;
+    color: #676767;
+}
+
+.floorAndUnit .back-btn a i {}
+
+
+.floorAndUnit .text {
+    margin-top: 38px;
+}
+
+.floorAndUnit .text h4 {
+    font-weight: bold;
+    color: #555;
+}
+
+
+.floorAndUnit .text P {
+    margin-top: 27px;
+    width: 80%;
+    color: #676767;
+}
+
+.floorAndUnit .floor-container {
+    margin-top: 60px;
+}
+
+.floorAndUnit .floor-container .floor {
+    background-color: #fff;
+    margin: 4%;
+    border-radius: 10px;
+    box-shadow: 0px 0px 4px rgb(0 0 0 / 10%);
+    padding: 2%;
+}
+
+.floorAndUnit .floor-container .floor .floor-name {
+    text-align: center;
+    font-size: 17px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.floorAndUnit .floor-container .floor .unit-container {
+    margin: 25px 0;
+}
+
+.floorAndUnit .floor-container .floor .unit-container .unit {
+    display: flex;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+}
+
+.floorAndUnit .floor-container .floor .unit-container .unit a {
+    border: 1px dashed #ddd;
+    margin: 0.5rem;
+    padding: 0.5rem 0.8rem;
+    border-radius: 0.5rem;
+    text-align: center;
+    margin: .5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+}
+
+.full-link {
+    color: #F1416C;
+    background-color: #FFEFF3;
+    border: none;
+}
+
+.empty-link {
+    color: #000;
+}
+
+.floorAndUnit .floor-container .floor .unit-container .unit .unit-name {
+    color: inherit;
+    margin-top: 9px;
+    font-size: 14px;
+}
+
+/* .floor {
+    background-color: #fff;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+}
+
+.floor .title {
+    font-size: 20px;
+    font-weight: 500;
+    text-align: center;
+}
+
+.floor .unit {
+    background-color: #f5f8fa;
+    margin: 0.5rem;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    font-size: 14px;
+} */

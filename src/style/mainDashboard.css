@@ -7,6 +7,13 @@
     box-sizing: border-box;
     font-family: IranSans;
 }
+body {
+    background-color: #f9f9f9;
+}
+
+body {
+    background-color: #f9f9f9 !important;
+}
 
 .main-container {
     position: relative;
@@ -16,6 +23,7 @@
     position: absolute;
     top: 0;
     left: 0;
-    overflow-x: hidden;
+    overflow: hidden;
     transition: 0.3s linear;
+    background-color: #f9f9f9;
 }

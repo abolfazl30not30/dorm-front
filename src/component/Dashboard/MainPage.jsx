@@ -1,47 +1,39 @@
 import React, { Component } from 'react';
-import Building from './Building/Building';
-import { Category, ChartComponent, ColumnSeries, DataLabel, Inject, Legend, LineSeries, SeriesCollectionDirective, SeriesDirective, Tooltip } from '@syncfusion/ej2-react-charts';
-import { AccumulationChartComponent, AccumulationSeriesCollectionDirective, AccumulationSeriesDirective } from '@syncfusion/ej2-react-charts';
+import Home from './pages/Home';
+
+import { Routes, Route } from 'react-router-dom';
+import FloorAndUnit from './pages/Inventory and capacity/FloorAndUnit';
+import RoomAndBed from './pages/Inventory and capacity/RoomAndBed';
+import BuildingContext from '../../contexts/Building';
+import FullViewOfBed from './pages/Inventory and capacity/FullViewOfBed';
+import EditFloorAndUnit from './pages/edit building/EditFloorAndUnit';
 class MainPage extends Component {
-    state = {}
-    constructor() {
-        super(...arguments);
-        this.data1 = [
-            { month: 'Jan', sales: 35 }, { month: 'Feb', sales: 28 },
-            { month: 'Mar', sales: 34 }, { month: 'Apr', sales: 32 },
-            { month: 'May', sales: 40 }, { month: 'Jun', sales: 32 },
-            { month: 'Jul', sales: 35 }, { month: 'Aug', sales: 55 },
-            { month: 'Sep', sales: 38 }, { month: 'Oct', sales: 30 },
-            { month: 'Nov', sales: 25 }, { month: 'Dec', sales: 32 }
-        ];
-        this.primaryxAxis = { valueType: 'Category' };
-        this.data2 = [
-            { x: 'Jan', y: 3, text: 'Jan: 3' }, { x: 'Feb', y: 3.5, text: 'Feb: 3.5' },
-            { x: 'Mar', y: 7, text: 'Mar: 7' }, { x: 'Apr', y: 13.5, text: 'Apr: 13.5' },
-            { x: 'May', y: 19, text: 'May: 19' }, { x: 'Jun', y: 23.5, text: 'Jun: 23.5' },
-            { x: 'Jul', y: 26, text: 'Jul: 26' }, { x: 'Aug', y: 25, text: 'Aug: 25' },
-            { x: 'Sep', y: 21, text: 'Sep: 21' }, { x: 'Oct', y: 15, text: 'Oct: 15' }
-        ];
+    state = {
+        unitNumber: ""
     }
     render() {
         return (
             <>
-                <div className='d-flex flex-column '>
-                    <div>
-                        <div >
-                            <AccumulationChartComponent id="charts">
-                                <AccumulationSeriesCollectionDirective>
-                                    <AccumulationSeriesDirective dataSource={this.data2} xName='x' yName='y' radius='90%' />
-                                </AccumulationSeriesCollectionDirective>
-                            </AccumulationChartComponent>
-                        </div>
-                    </div>
-                    <div>
-                        <Building />
-                    </div>
+                <div className='d-flex flex-column pt-4 px-5'>
+                    <BuildingContext.Provider value={{ unitNumber: this.state.unitNumber, handleUnitNumber: this.handleUnitNumber }}>
+                        <Routes>
+                            <Route path="/" element={(<Home />)} />
+                            <Route path="/booking" element={(<FloorAndUnit />)} />
+                            <Route path="/RoomAndBed" element={(<RoomAndBed />)} />
+                            <Route path="/" element={(<Home />)} />
+                            <Route path="/edit" element={(<EditFloorAndUnit />)} />
+                            <Route path="/booking" element={(<FloorAndUnit />)} />
+                            <Route path="/RoomAndBed" element={(<RoomAndBed />)} />
+                            <Route path="/FullViewOfBed" element={(<FullViewOfBed />)} />
+                        </Routes>
+                    </BuildingContext.Provider>
                 </div>
             </>
         );
+    }
+
+    handleUnitNumber = (unitNumber) => {
+        this.setState({ unitNumber: unitNumber });
     }
 }
 

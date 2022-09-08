@@ -10,6 +10,7 @@ class HamburgerMenu extends Component {
 
     render() {
         return (
+
             <div style={
                 this.context.activeMenu ? { display: "none" } : { display: "block" }
             }>
@@ -25,19 +26,25 @@ class HamburgerMenu extends Component {
                     <li className='sidenav-item'>
                         <Link to="/" className='sidenav-link'>
                             <i class="bi bi-people"></i>
-                            پرسنل
+                            خانه
                         </Link>
                     </li>
                     <li className='sidenav-item'>
                         <Link to="/" className='sidenav-link'>
-                            <i class="bi bi-check2-circle"></i>
-                            گزینش
+                            <i class="bi bi-person-plus"></i>
+                            پذیرش
                         </Link>
                     </li>
                     <li className='sidenav-item'>
-                        <Link to="/" className='sidenav-link'>
-                            <i class="bi bi-cup"></i>
-                            کافه رستوران
+                        <Link to="/booking" className='sidenav-link'>
+                            <i class="bi bi-journal-plus"></i>
+                            موجودی و ظرفیت
+                        </Link>
+                    </li>
+                    <li className='sidenav-item'>
+                        <Link to="/edit" className='sidenav-link'>
+                            <i class="bi bi-pencil"></i>
+                            ویرایش
                         </Link>
                     </li>
                     <li className='sidenav-item'>
@@ -74,13 +81,9 @@ class HamburgerMenu extends Component {
             </div>
         );
     }
-    toggleSidebar = () => {
-        console.log('yoyo')
-    }
 }
 
 
 
 
 export default HamburgerMenu;
-

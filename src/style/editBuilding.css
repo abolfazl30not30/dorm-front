@@ -1,0 +1,72 @@
+.floor-box {
+    background-color: #fff;
+    margin: 1rem;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 30px 50px 0 rgb(170 179 217 / 20%);
+    height: 100%;
+}
+
+.floor-box.add {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.floor-box.add button {
+    font-size: 48px;
+}
+
+.floor-box .title {
+    display: flex;
+    justify-content: center;
+    font-size: 17px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.floor-box .floor-close-btn {
+    background-color: transparent;
+    align-self: start;
+    padding: 0;
+    border: none;
+}
+
+.unit-box {
+    border: 1px dashed #ddd;
+    margin: 0.5rem;
+    padding: 0.5rem 0.8rem;
+    border-radius: 0.5rem;
+    text-align: center;
+    margin: .5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+}
+
+
+.unit-box .unit-close-btn {
+    background-color: transparent;
+    align-self: start;
+    padding: 0;
+    border: none;
+}
+
+.unit-box .title {
+    font-size: 13px;
+    margin: 0;
+}
+
+.unit-add-btn {
+    background-color: transparent;
+    border: 1px dashed #ddd;
+    margin: 0.5rem;
+    padding: 1.5rem 1.7rem;
+    border-radius: 0.5rem;
+    text-align: center;
+    margin: .5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

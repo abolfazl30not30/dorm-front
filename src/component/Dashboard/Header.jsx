@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import HamburgerMenu from './../Dashboard/HamburgerMenu';
+import HamburgerMenu from './HamburgerMenu.jsx';
 import "../../style/header.css";
 import MainContext from '../../contexts/ContextProvider';
 
