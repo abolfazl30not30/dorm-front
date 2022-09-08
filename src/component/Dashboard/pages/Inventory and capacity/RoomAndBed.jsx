@@ -6,7 +6,7 @@ import { Link, Route, Routes } from "react-router-dom";
 import FullViewOfBed from './FullViewOfBed';
 import BuildingContext from '../../../../contexts/Building';
 import FloorAndBedLoading from '../../../loading/FloorAndBedLoading';
-import { Button,Modal } from 'react-bootstrap'
+import { Button, Modal } from 'react-bootstrap'
 
 class RoomAndBed extends Component {
     static contextType = BuildingContext;
@@ -80,13 +80,13 @@ class RoomAndBed extends Component {
             }
         ],
         isLoading: false,
-        show:false
+        show: false
     }
     handleClose = () => {
-        this.setState({show: false })
+        this.setState({ show: false })
     };
     handleShow = () => {
-        this.setState({show: true })
+        this.setState({ show: true })
     };
     render() {
         return (
@@ -123,7 +123,7 @@ class RoomAndBed extends Component {
                                                     <div className="title">{room.roomName}</div>
                                                     <div className='d-flex flex-wrap'>
                                                         {room.bed.map((bed) => (
-                                                            
+
                                                             <div className="col-4 p-1">
                                                                 <div className={`bed-box ${bed.empty ? "empty" : "full"}`}>
                                                                     {/* {console.log(bed.empty)} */}
@@ -131,26 +131,7 @@ class RoomAndBed extends Component {
                                                                         <BiBed fontSize="2rem" />
                                                                         <div className="title">{bed.bedName}</div>
                                                                     </Button>
-                                                                    <Modal centered show={this.state.show} onHide={this.handleClose}>
-                                                                        <Modal.Header closeButton>
-                                                                        <Modal.Title>ثبت تخت</Modal.Title>
-                                                                        </Modal.Header>
-                                                                        <Modal.Body>
-                                                                            {
-                                                                                (bed.empty) ? (
-                                                                                    console.log(bed.empty)
-                                                                
-                                                                                ) : (
-                                                                                    console.log(bed.empty)
-                                                                                )
-                                                                            }
-                                                                        </Modal.Body>
-                                                                    </Modal>
                                                                 </div>
-
-
-
-
                                                             </div>
                                                         ))}
                                                     </div>
@@ -159,6 +140,21 @@ class RoomAndBed extends Component {
                                         )
                                     )
                                 }
+                                <Modal centered show={this.state.show} onHide={this.handleClose}>
+                                    <Modal.Header closeButton>
+                                        <Modal.Title>ثبت تخت</Modal.Title>
+                                    </Modal.Header>
+                                    <Modal.Body>
+                                        {
+                                            (bed.empty) ? (
+                                                console.log(bed.empty)
+
+                                            ) : (
+                                                console.log(bed.empty)
+                                            )
+                                        }
+                                    </Modal.Body>
+                                </Modal>
                             </div>
                         )
                     }
