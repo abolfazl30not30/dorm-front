@@ -6,6 +6,7 @@ import { Link, Route, Routes } from "react-router-dom";
 import FullViewOfBed from './FullViewOfBed';
 import BuildingContext from '../../../../contexts/Building';
 import FloorAndBedLoading from '../../../loading/FloorAndBedLoading';
+import { Button,Modal } from 'react-bootstrap'
 
 class RoomAndBed extends Component {
     static contextType = BuildingContext;
@@ -78,8 +79,15 @@ class RoomAndBed extends Component {
                 ]
             }
         ],
-        isLoading: false
+        isLoading: false,
+        show:false
     }
+    handleClose = () => {
+        this.setState({show: false })
+    };
+    handleShow = () => {
+        this.setState({show: true })
+    };
     render() {
         return (
             <>
@@ -115,12 +123,35 @@ class RoomAndBed extends Component {
                                                     <div className="title">{room.roomName}</div>
                                                     <div className='d-flex flex-wrap'>
                                                         {room.bed.map((bed) => (
-                                                            <Link to='/FullViewOfBed' className="col-4 p-1">
+                                                            
+                                                            <div className="col-4 p-1">
                                                                 <div className={`bed-box ${bed.empty ? "empty" : "full"}`}>
-                                                                    <BiBed fontSize="2rem" />
-                                                                    <div className="title">{bed.bedName}</div>
+                                                                    {/* {console.log(bed.empty)} */}
+                                                                    <Button onClick={this.handleShow}>
+                                                                        <BiBed fontSize="2rem" />
+                                                                        <div className="title">{bed.bedName}</div>
+                                                                    </Button>
+                                                                    <Modal centered show={this.state.show} onHide={this.handleClose}>
+                                                                        <Modal.Header closeButton>
+                                                                        <Modal.Title>ثبت تخت</Modal.Title>
+                                                                        </Modal.Header>
+                                                                        <Modal.Body>
+                                                                            {
+                                                                                (bed.empty) ? (
+                                                                                    console.log(bed.empty)
+                                                                
+                                                                                ) : (
+                                                                                    console.log(bed.empty)
+                                                                                )
+                                                                            }
+                                                                        </Modal.Body>
+                                                                    </Modal>
                                                                 </div>
-                                                            </Link>
+
+
+
+
+                                                            </div>
                                                         ))}
                                                     </div>
                                                 </div>
