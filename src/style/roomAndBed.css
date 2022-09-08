@@ -107,10 +107,20 @@ button.btn.btn-primary:hover {
     margin-left: 0;
 }
 
+.modal-info-bed {
+    border: 1px dashed #ddd;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    height: 100%;
+}
 
-
-
-
+.modal-info-bed.accessory .title {
+    border-bottom: 1px solid #eee;
+    padding-bottom: 4px;
+    margin-bottom: 8px;
+    font-size: 14px;
+    text-align: center;
+}
 
 
 /* FullViewOfBed */

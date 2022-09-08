@@ -65,6 +65,11 @@ class RoomAndBed extends Component {
                     { id: 54, bedName: '54 تخت', empty: true },
                     { id: 55, bedName: 'تخت 55', empty: true },
 
+                ],
+                accessory: [
+                    {id: 51, accName: 'وسایل سرمایشی', count: 2},
+                    {id: 51, accName: "یخچال", count: 1},
+                    {id: 51, accName: "چوب لباسی", count: 10}
                 ]
             },
             {
@@ -80,12 +85,18 @@ class RoomAndBed extends Component {
             }
         ],
         isLoading: false,
-        show:false
+        show:false,
+        bedOpen:[],
+        roomOpen:[]
     }
     handleClose = () => {
         this.setState({show: false })
     };
-    handleShow = () => {
+    handleShow = (room,bed) => {
+        const roomOpen = room
+        const bedShow = bed
+        this.setState({roomOpen: roomOpen})
+        this.setState({bedOpen: bedShow})
         this.setState({show: true })
     };
     render() {
@@ -123,34 +134,14 @@ class RoomAndBed extends Component {
                                                     <div className="title">{room.roomName}</div>
                                                     <div className='d-flex flex-wrap'>
                                                         {room.bed.map((bed) => (
-                                                            
                                                             <div className="col-4 p-1">
                                                                 <div className={`bed-box ${bed.empty ? "empty" : "full"}`}>
-                                                                    {/* {console.log(bed.empty)} */}
-                                                                    <Button onClick={this.handleShow}>
+                                                                    <Button onClick={() => {this.handleShow(room,bed)}}>
                                                                         <BiBed fontSize="2rem" />
                                                                         <div className="title">{bed.bedName}</div>
                                                                     </Button>
-                                                                    <Modal centered show={this.state.show} onHide={this.handleClose}>
-                                                                        <Modal.Header closeButton>
-                                                                        <Modal.Title>ثبت تخت</Modal.Title>
-                                                                        </Modal.Header>
-                                                                        <Modal.Body>
-                                                                            {
-                                                                                (bed.empty) ? (
-                                                                                    console.log(bed.empty)
-                                                                
-                                                                                ) : (
-                                                                                    console.log(bed.empty)
-                                                                                )
-                                                                            }
-                                                                        </Modal.Body>
-                                                                    </Modal>
+                                                                    
                                                                 </div>
-
-
-
-
                                                             </div>
                                                         ))}
                                                     </div>
@@ -164,6 +155,52 @@ class RoomAndBed extends Component {
                     }
 
                 </div>
+                <Modal centered show={this.state.show} onClick={() => {this.handleClose()}}>
+                    <Modal.Header closeButton>
+                    <Modal.Title>ثبت تخت</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        {
+                            <div className="d-flex flex-column">
+                                <div className='d-flex flex-row'>
+                                    <div className="mx-1">طبقه/</div>
+                                    <div className="mx-1">واحد/</div>
+                                    <div className="mx-1">{this.state.roomOpen.roomName}/</div>
+                                    <div className="mx-1">{this.state.bedOpen.bedName}</div>
+                                </div>
+                                <div className="d-flex flex-column flex-md-row">
+                                    <div className="col-md-6 col-12 p-3">
+                                        {
+                                            (this.state.bedOpen.empty) ? (
+                                                <div className='modal-info-bed person'>empty</div>
+                                            ) : (
+                                                <div className='modal-info-bed person'>full</div>
+                                            )
+                                        }
+                                    </div>
+                                    <div className="col-md-6 col-12 p-3">
+                                        <div className="d-flex flex-column modal-info-bed accessory">
+                                            <div className='title'>مشخصات تخت و اتاق</div>
+                                            <table>
+                                                <tr>
+                                                    <th>امکانات</th>
+                                                    <th>تعداد</th>
+                                                </tr>
+                                                {console.log(this.state.roomOpen.accessory)}
+                                                 {/* {this.state.roomOpen.accessory.map( (acc) => (
+                                                    <tr>
+                                                        <td>{acc.accName}</td>
+                                                        <td>{acc.count}</td>
+                                                    </tr>
+                                                 ))} */}
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </Modal.Body>
+                </Modal>
             </>
         );
     }
