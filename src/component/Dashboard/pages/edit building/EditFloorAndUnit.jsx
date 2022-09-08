@@ -4,6 +4,8 @@ import { BsDoorClosed } from 'react-icons/bs'
 import { AiOutlinePlus, AiFillCloseCircle } from 'react-icons/ai'
 import { TbBuilding } from 'react-icons/tb';
 import { EditText, EditTextarea } from 'react-edit-text';
+import { Link } from "react-router-dom";
+
 import 'react-edit-text/dist/index.css';
 
 class EditFloorAndUnit extends Component {
@@ -17,31 +19,65 @@ class EditFloorAndUnit extends Component {
             {
                 id: 1, floorName: "طبقه اول",
                 unit: [
-                    { id: 111, unitName: "111" },
-                    { id: 112, unitName: "112" },
-                    { id: 113, unitName: "113" },
-                    { id: 114, unitName: "114" },
-                    { id: 115, unitName: "115" },
-                ]
-            },
-            {
-                id: 2, floorName: "طبقه دوم",
-                unit: [
-                    { id: 211, unitName: "211" },
-                    { id: 212, unitName: "212" },
-                    { id: 213, unitName: "213" },
-                    { id: 214, unitName: "214" }
-                ]
-            },
-            {
-                id: 3, floorName: "طبقه سوم",
-                unit: [
-                    { id: 311, unitName: "311" },
-                    { id: 312, unitName: "312" }
+                    { id: 111, unitName: "111" }
                 ]
             },
         ]
         this.setState({ floor: floor });
+    }
+
+
+
+    render() {
+        return (
+            <>
+                <div className="p5">
+                    <div className="back-btn">
+                        <Link to="/">
+                            بازگشت
+                            <i class="bi bi-caret-left-fill"></i>
+                        </Link>
+                    </div>
+                    <div className="text">
+                        <h4>ثبت طبقه و واحد</h4>
+                        <p>
+                            در این بخش ابتدا تمام طبقات به همراه واحد های موجود در هر طبقه را با نام مدنظر خود وارد نمایید و پس از اتمام
+                            این مرحله در بخش بعدی اتاق ها و تخت های واقع در هر واحد را وارد می نمایید.
+                        </p>
+                    </div>
+                    <div className="row pb-5">
+                        {this.state.floor.map((f, i) => (
+                            <div className="col-4 p-3">
+                                <div className="floor-box">
+                                    <button className="floor-close-btn" onClick={() => { this.deleteFloor(f) }}><AiFillCloseCircle color="#F1416C" /></button>
+                                    <div className="title"><EditText ref="floorTitle" showEditButton defaultValue={f.floorName} onSave={this.editFloorTitle} /></div>
+                                    <div className="d-flex flex-wrap">
+                                        {f.unit.map((u) => (
+                                            <div className="col-4">
+                                                <div className="unit-box">
+                                                    <button className="unit-close-btn" onClick={() => { this.deleteUnit(u, i) }}><AiFillCloseCircle color="#F1416C" /></button>
+                                                    <TbBuilding fontSize="2rem" />
+                                                    <div className="title"><EditText className="editable" showEditButton onSave={this.editUnitTitle} defaultValue={u.unitName} /></div>
+                                                </div>
+                                            </div>
+                                        ))}
+                                        <button onClick={() => { this.addUnit(f) }} className="unit-add-btn"><AiOutlinePlus /></button>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                        <div className="col-4 p-3">
+                            <div className="floor-box add">
+                                <button onClick={this.addFloor} className="btn"><AiOutlinePlus /></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="register">
+                        <button className="register-btn">ثـبـت</button>
+                    </div>
+                </div>
+            </>
+        );
     }
 
     addFloor = () => {
@@ -101,40 +137,6 @@ class EditFloorAndUnit extends Component {
         updatedState[index].unit = updatedUnit;
         this.setState({ floor: updatedState });
         console.log(this.state.floor)
-    }
-
-    render() {
-        return (
-            <>
-                <div className="row pb-5">
-                    {this.state.floor.map((f, i) => (
-                        <div className="col-4 p-3">
-                            <div className="floor-box">
-                                <button className="floor-close-btn" onClick={() => { this.deleteFloor(f) }}><AiFillCloseCircle color="#F1416C" /></button>
-                                <div className="title"><EditText ref="floorTitle" showEditButton defaultValue={f.floorName} onSave={this.editFloorTitle} /></div>
-                                <div className="d-flex flex-wrap">
-                                    {f.unit.map((u) => (
-                                        <div className="col-4">
-                                            <div className="unit-box">
-                                                <button className="unit-close-btn" onClick={() => { this.deleteUnit(u, i) }}><AiFillCloseCircle color="#F1416C" /></button>
-                                                <TbBuilding fontSize="2rem" />
-                                                <div className="title"><EditText className="editable" showEditButton onSave={this.editUnitTitle} defaultValue={u.unitName} /></div>
-                                            </div>
-                                        </div>
-                                    ))}
-                                    <button onClick={() => { this.addUnit(f) }} className="unit-add-btn"><AiOutlinePlus /></button>
-                                </div>
-                            </div>
-                        </div>
-                    ))}
-                    <div className="col-4 p-3">
-                        <div className="floor-box add">
-                            <button onClick={this.addFloor} className="btn"><AiOutlinePlus /></button>
-                        </div>
-                    </div>
-                </div>
-            </>
-        );
     }
 }
 
