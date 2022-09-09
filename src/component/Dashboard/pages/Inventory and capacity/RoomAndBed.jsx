@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import './../../../../style/roomAndBed.css'
 import { BiBed } from 'react-icons/bi'
 import { TbBuilding } from 'react-icons/tb'
+import { MdDateRange } from 'react-icons/md'
+import {AiOutlineNumber} from 'react-icons/ai'
+import {AiOutlineUser} from 'react-icons/ai'
 import { Link, Route, Routes } from "react-router-dom";
 import FullViewOfBed from './FullViewOfBed';
 import BuildingContext from '../../../../contexts/Building';
@@ -16,7 +19,16 @@ class RoomAndBed extends Component {
                 id: 1, roomName: 'اتاق 1',
                 bed: [
                     { id: 11, bedName: 'تخت 11', empty: true },
-                    { id: 12, bedName: 'تخت 12', empty: false },
+                    { id: 12, bedName: 'تخت 12', empty: false,
+                    person:{
+                    id: 1,
+                    firstName:'ابوافضل',
+                    lastName: 'زارع',
+                    nationalCode:2500255252,
+                    StartOfStay:'12/34/56',
+                    age:21,
+                    image: 'https://docs.microsoft.com/answers/storage/attachments/209536-360-f-364211147-1qglvxv1tcq0ohz3fawufrtonzz8nq3e.jpg'
+                    } },
                     { id: 13, bedName: 'تخت 13', empty: true },
                     { id: 14, bedName: 'تخت 14', empty: true },
                     { id: 15, bedName: 'تخت 15', empty: true },
@@ -26,8 +38,17 @@ class RoomAndBed extends Component {
             {
                 id: 2, roomName: 'اتاق 2',
                 bed: [
-                    { id: 21, bedName: 'تخت 21', empty: true },
-                    { id: 22, bedName: 'تخت 22', empty: false },
+                    { id: 21, bedName: 'تخت 21', empty: true},
+                    { id: 22, bedName: 'تخت 22', empty: false,
+                    person:{
+                    id: 1,
+                    firstName: 'پوریا',
+                    lastName: 'زارع',
+                    nationalCode:2500255252,
+                    StartOfStay:'12/34/56',
+                    age:21,
+                    image: 'https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png'
+                    }   },
                     { id: 23, bedName: 'تخت 23', empty: true },
                     { id: 24, bedName: '24 تخت', empty: true },
                     { id: 25, bedName: 'تخت 25', empty: true },
@@ -38,7 +59,16 @@ class RoomAndBed extends Component {
                 id: 3, roomName: 'اتاق 3',
                 bed: [
                     { id: 31, bedName: '31 تخت', empty: true },
-                    { id: 32, bedName: 'تخت 32', empty: false },
+                    { id: 32, bedName: 'تخت 32', empty: false,
+                    person:{
+                    id: 1,
+                    firstName: 'فاضل',
+                    lastName: 'زارع',
+                    nationalCode:2500255252,
+                    StartOfStay:'12/34/56',
+                    age:21,
+                    image: 'https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png'
+                    } },
                     { id: 33, bedName: 'تخت 33', empty: true },
                     { id: 34, bedName: 'تخت 34', empty: true },
                     { id: 35, bedName: 'تخت 35', empty: true },
@@ -86,18 +116,24 @@ class RoomAndBed extends Component {
         ],
         isLoading: false,
         show:false,
-        bedOpen:[],
-        roomOpen:[]
+        bedOpen:
+            { id: 32, bedName: 'تخت 32', empty: false,
+            person:{
+            id: 1,
+            firstName: 'میلاد',
+            lastName: 'زارع',
+            nationalCode:2500255252,
+            StartOfStay:'12/34/56',
+            age:21,
+            image: 'https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png'
+            } }
     }
     handleClose = () => {
         this.setState({show: false })
     };
-    handleShow = (room,bed) => {
-        const roomOpen = room
-        const bedShow = bed
-        this.setState({roomOpen: roomOpen})
-        this.setState({bedOpen: bedShow})
-        this.setState({show: true })
+    handleShow = (bed) => {
+        this.setState({bedOpen: bed})
+        this.setState({show: true }) 
     };
     render() {
         return (
@@ -136,7 +172,7 @@ class RoomAndBed extends Component {
                                                         {room.bed.map((bed) => (
                                                             <div className="col-4 p-1">
                                                                 <div className={`bed-box ${bed.empty ? "empty" : "full"}`}>
-                                                                    <Button onClick={() => {this.handleShow(room,bed)}}>
+                                                                    <Button onClick={() => {this.handleShow(bed)}}>
                                                                         <BiBed fontSize="2rem" />
                                                                         <div className="title">{bed.bedName}</div>
                                                                     </Button>
@@ -157,47 +193,23 @@ class RoomAndBed extends Component {
                 </div>
                 <Modal centered show={this.state.show} onClick={() => {this.handleClose()}}>
                     <Modal.Header closeButton>
-                    <Modal.Title>ثبت تخت</Modal.Title>
+                    <Modal.Title>{this.state.bedOpen.bedName}</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        {
-                            <div className="d-flex flex-column">
-                                <div className='d-flex flex-row'>
-                                    <div className="mx-1">طبقه/</div>
-                                    <div className="mx-1">واحد/</div>
-                                    <div className="mx-1">{this.state.roomOpen.roomName}/</div>
-                                    <div className="mx-1">{this.state.bedOpen.bedName}</div>
-                                </div>
-                                <div className="d-flex flex-column flex-md-row">
-                                    <div className="col-md-6 col-12 p-3">
-                                        {
-                                            (this.state.bedOpen.empty) ? (
-                                                <div className='modal-info-bed person'>empty</div>
-                                            ) : (
-                                                <div className='modal-info-bed person'>full</div>
-                                            )
-                                        }
-                                    </div>
-                                    <div className="col-md-6 col-12 p-3">
-                                        <div className="d-flex flex-column modal-info-bed accessory">
-                                            <div className='title'>مشخصات تخت و اتاق</div>
-                                            <table>
-                                                <tr>
-                                                    <th>امکانات</th>
-                                                    <th>تعداد</th>
-                                                </tr>
-                                                {console.log(this.state.roomOpen.accessory)}
-                                                 {/* {this.state.roomOpen.accessory.map( (acc) => (
-                                                    <tr>
-                                                        <td>{acc.accName}</td>
-                                                        <td>{acc.count}</td>
-                                                    </tr>
-                                                 ))} */}
-                                            </table>
-                                        </div>
+                        { 
+                            (!this.state.bedOpen.empty) ? (
+                                <div className="d-flex justify-content-center">
+                                    <div className='profile-box'>
+                                        <img src={this.state.bedOpen.person.image} width='200' alt="" />
+                                        <div className="name">{this.state.bedOpen.person.firstName} {this.state.bedOpen.person.lastName}</div>
+                                        <div className='profile-item'><AiOutlineNumber className='ms-2' />کد ملی:  {this.state.bedOpen.person.nationalCode}</div>
+                                        <div className='profile-item'><MdDateRange className='ms-2' />شروع اقامت: {this.state.bedOpen.person.StartOfStay}</div>
+                                        <div className='profile-item'><AiOutlineUser className='ms-2' />سن: {this.state.bedOpen.person.age}</div>
                                     </div>
                                 </div>
-                            </div>
+                            ) : (                   
+                                <div className='text-center my-4'>تخت برای شخصی ثبت نشده است</div>
+                            )
                         }
                     </Modal.Body>
                 </Modal>
