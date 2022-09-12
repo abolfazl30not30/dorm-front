@@ -12,11 +12,19 @@
     border-radius: 10px;
 }
 
-.wrapperClass {}
+.wrapperClass {
+    background-color: blue;
+}
 
-.contentClass {
-    width: 80%;
-    background-color: white;
-    height: 100vh;
-    border-radius: 10px;
+.next-btn {
+    text-decoration: none;
+    width: 120px;
+    text-align: center;
+}
+
+.previous-btn {
+    text-decoration: none;
+    width: 120px;
+    text-align: center;
+
 }

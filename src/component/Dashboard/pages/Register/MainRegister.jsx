@@ -18,6 +18,9 @@ class MainRegister extends Component {
                         startingStep={0}
                         previousBtnName={"قبلی"}
                         nextBtnName={"بعدی"}
+                        submitBtnName={"ارسال"}
+                        primaryBtnClass="next-btn"
+                        secondaryBtnClass="previous-btn"
                         steps={[
                             {
                                 label: 'مشخصات اولیه',
