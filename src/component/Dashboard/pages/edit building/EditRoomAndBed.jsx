@@ -85,7 +85,7 @@ class EditRoomAndBed extends Component {
                                                 ))
                                             }
                                             <div className='col-4'>
-                                                <button onClick={() => { }} className="bed-add-btn"><AiOutlinePlus /></button>
+                                                <button onClick={() => { this.addBed(room) }} className="bed-add-btn"><AiOutlinePlus /></button>
                                             </div>
                                         </div>
                                         <div className='col-6'>
@@ -98,17 +98,18 @@ class EditRoomAndBed extends Component {
                                                             <EditText style={{ backgroundColor: "#f9f9f9" }} className="editable" showEditButton defaultValue={accessory.name} editButtonContent={<FaPencilAlt color="#f39c12" fontSize="15px" />} />
                                                         </div>
                                                         <div className="accessory-count col-5">
-                                                            <CounterInput min={0} max={10} onCountChange={count => console.log(count)} />
+                                                            <CounterInput min={0} max={10} count={accessory.count} onCountChange={count => console.log(count)} />
                                                         </div>
                                                     </div>
                                                 ))}
-                                                <button onClick={() => { }} className="accessory-add-btn"><AiOutlinePlus /></button>
+                                                <button onClick={() => { this.addAccessory(room) }} className="accessory-add-btn"><AiOutlinePlus /></button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         ))}
+                        <div className="col-12"><div className='room-add-btn' onClick={() => { this.addRoom() }}><AiOutlinePlus /></div></div>
                     </div>
                     <div className="register">
                         <button className="register-btn-room">ثـبـت</button>
@@ -118,23 +119,38 @@ class EditRoomAndBed extends Component {
         );
     }
     addRoom = () => {
-        // const newFloor = this.state.floor.concat(
-        //     {
-        //         id: 3, floorName: "طبقه ....",
-        //         unit: []
-        //     }
-        // )
-        // this.setState({ floor: newFloor })
+        const newRoom = this.state.rooms.concat(
+            {
+                id: 2, roomName: 'اتاق ....',
+                description: "",
+                accessory: [
+                ],
+                beds: [
+                    { id: 21, bedName: 'تخت ...', empty: true },
+                ]
+            }
+        )
+        this.setState({ rooms: newRoom })
     }
 
-    addBed = (f) => {
-        // const index = this.state.floor.indexOf(f);
-        // const newUnit = this.state.floor[index].unit.concat(
-        //     { id: 311, unitName: "new" }
-        // )
-        // const updateFloor = [...this.state.floor]
-        // updateFloor[index].unit = newUnit
-        // this.setState({ floor: updateFloor })
+    addBed = (r) => {
+        const index = this.state.rooms.indexOf(r);
+        const newBed = this.state.rooms[index].beds.concat(
+            { id: 311, bedName: "تخت ...", empty: true }
+        )
+        const updateRooms = [...this.state.rooms]
+        updateRooms[index].beds = newBed
+        this.setState({ rooms: updateRooms })
+    }
+
+    addAccessory = (r) => {
+        const index = this.state.rooms.indexOf(r);
+        const newAccessory = this.state.rooms[index].accessory.concat(
+            { name: "....", count: "0" }
+        )
+        const updateRooms = [...this.state.rooms]
+        updateRooms[index].accessory = newAccessory
+        this.setState({ rooms: updateRooms })
     }
 
     editRoomTitle = ({ value, previousValue }) => {
