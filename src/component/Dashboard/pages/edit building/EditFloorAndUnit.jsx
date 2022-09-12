@@ -138,6 +138,7 @@ class EditFloorAndUnit extends Component {
         this.setState({ floor: updatedState });
         console.log(this.state.floor)
     }
+
 }
 
 export default EditFloorAndUnit;

@@ -93,6 +93,7 @@ class EditRoomAndBed extends Component {
                                                 <div className="accessory-box-title"><h5>تجهیزات</h5><h5>تعداد</h5></div>
                                                 {room.accessory.map((accessory) => (
                                                     <div className="accessory row">
+                                                        <div><button className="close-btn" onClick={() => { this.deleteAccessory(accessory, i) }}><AiFillCloseCircle color="#F1416C" /></button></div>
                                                         <div className="accessory-title col-7">
                                                             <EditText style={{ backgroundColor: "#f9f9f9" }} className="editable" showEditButton defaultValue={accessory.name} editButtonContent={<FaPencilAlt color="#f39c12" fontSize="15px" />} />
                                                         </div>
@@ -171,6 +172,15 @@ class EditRoomAndBed extends Component {
         let updatedBed = this.state.rooms[index].beds;
         updatedBed = updatedBed.filter(b => b !== bed);
         updatedState[index].beds = updatedBed;
+        this.setState({ rooms: updatedState });
+        console.log(this.state.rooms)
+    }
+
+    deleteAccessory = (accessory, index) => {
+        let updatedState = [...this.state.rooms];
+        let updatedAccessory = this.state.rooms[index].accessory;
+        updatedAccessory = updatedAccessory.filter(a => a !== accessory);
+        updatedState[index].accessory = updatedAccessory;
         this.setState({ rooms: updatedState });
         console.log(this.state.rooms)
     }
