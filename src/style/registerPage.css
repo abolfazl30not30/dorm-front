@@ -1,0 +1,47 @@
+.register-step-box {
+    background-color: #fff;
+    padding: 1rem;
+    margin-top: 2rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 0 20px 0 #4c577d05;
+    direction: rtl;
+}
+.register-step-box h2 {
+    font-size: 24px;
+    margin-bottom: 2rem;
+}
+
+.input-group-register{
+    position: relative;
+    padding: 8px;
+}
+.input{
+    padding: 10px;
+    border-radius: 8px !important;
+    outline: none;
+    color: #2a2e32b3;
+    background-color: #fff;
+    border: 1px solid #bec6cc;
+    width: 100%;
+}
+.placeholder{
+    position: absolute;
+    top: 14px;
+    right: 12px;
+    font-size: 14px;
+    padding: 0px 5px;
+    color: #2b2f33;
+    transition: 0.3s;
+    pointer-events: none;
+}
+label.placeholder {
+    background-color: #fff;
+    color: #2b2f33;
+}
+.input:focus + .placeholder, .input:not(:placeholder-shown) +.placeholder{
+    top: -5px;
+    background-color: #fff;
+    color: #2a2e32b3;
+    padding: 0 6px;
+    opacity: 1;
+}
