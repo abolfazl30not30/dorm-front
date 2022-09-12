@@ -10,21 +10,15 @@ class MainRegister extends Component {
     render() {
         return (
             <>
-                {/* <div className='register-container'>
-                    <div className="progress-bar">
-                    </div>
-                    <div className="page-container">
-                        <UploadPage />
-                    </div>
-                </div> */}
                 <div style={{ direction: "ltr" }}>
                     <StepProgressBar
                         startingStep={0}
+                        previousBtnName={"قبلی"}
+                        nextBtnName={"بعدی"}
                         steps={[
                             {
                                 label: 'مشخصات اولیه',
                                 name: 'step 1',
-                                content: <UploadPage />
                             },
                             {
                                 label: 'مشخصات بستگان',
