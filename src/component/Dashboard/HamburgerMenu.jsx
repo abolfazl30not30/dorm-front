@@ -30,7 +30,7 @@ class HamburgerMenu extends Component {
                         </Link>
                     </li>
                     <li className='sidenav-item'>
-                        <Link to="/" className='sidenav-link'>
+                        <Link to="/Register" className='sidenav-link'>
                             <i class="bi bi-person-plus"></i>
                             پذیرش
                         </Link>

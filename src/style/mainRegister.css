@@ -1,0 +1,22 @@
+.register-container {
+    display: flex;
+    justify-content: center;
+}
+
+.register-container .progress-bar {}
+
+.register-container .page-container {
+    width: 80%;
+    background-color: white;
+    height: 100vh;
+    border-radius: 10px;
+}
+
+.wrapperClass {}
+
+.contentClass {
+    width: 80%;
+    background-color: white;
+    height: 100vh;
+    border-radius: 10px;
+}
