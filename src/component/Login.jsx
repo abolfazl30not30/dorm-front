@@ -93,7 +93,6 @@ class Login extends Component {
     e.preventDefault();
     const result =  this.validate();
     console.log(result);
-    this.props.history.replace('/MainDashboard')
   }
   
 }
