@@ -18,7 +18,7 @@ class InformationPage extends Component {
             <>
                 <div className="register-step-box">
                     <h2>مشخصات</h2>
-                    <div className='d-flex flex-wrap justify-content-between'>
+                    <div className='d-flex flex-wrap justify-content-start'>
                         <div className="input-group-register col-4">
                             <input type="text" className="input" placeholder=" "/>
                             <label className="placeholder">نام</label>    
