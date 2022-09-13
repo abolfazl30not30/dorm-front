@@ -9,6 +9,7 @@ import InformationFamilyPage from './InformationFamilyPage'
 
 class MainRegister extends Component {
     state = {
+        typeofResident: ""
     }
     render() {
         return (
@@ -22,6 +23,34 @@ class MainRegister extends Component {
                         primaryBtnClass="next-btn"
                         secondaryBtnClass="previous-btn"
                         steps={[
+                            {
+                                label: 'نوع اقامتگر',
+                                name: 'step 1',
+                                content:
+                                    <div className='typeofResident'>
+                                        <div class="">
+                                            <input className="" type="radio" name="flexRadioDefault" id="Radio1" />
+                                            <label class="" for="Radio1">
+                                                اقامتگر ثابت
+                                            </label>
+                                        </div>
+                                        <h6>مهمان</h6>
+                                        <div>
+                                            <div class="">
+                                                <input className="" type="radio" name="flexRadioDefault" id="Radio2" checked />
+                                                <label class="" for="Radio2">
+                                                    متفرقه
+                                                </label>
+                                            </div>
+                                            <div class="">
+                                                <input className="" type="radio" name="flexRadioDefault" id="Radio3" checked />
+                                                <label class="" for="Radio3">
+                                                    بستگان درجه یک
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                            },
                             {
                                 label: 'مشخصات اولیه',
                                 name: 'step 1',

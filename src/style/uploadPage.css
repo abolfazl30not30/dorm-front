@@ -1,24 +1,21 @@
 .upload-container {
-    margin-top: 5%;
-    width: 75%;
-    margin-left: 7%;
-    position: center;
-    background-color: #f9f9f9;
-    height: 700px;
-    border-radius: 10px;
+    background-color: #fff;
+    padding: 1rem;
+    margin-top: 2rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 0 20px 0 #4c577d05;
 }
 
 .upload-logo-container {
-    background-color: #555555;
-    opacity: 0.5;
-    width: 100%;
-    height: 30%;
-    border-radius: 10px;
+    background-color: #f2f6ff;
+    opacity: 0.68;
+    border-radius: 15px;
+    border: 1px dashed #3483E2;
     text-align: center;
 }
 
 .upload-icon {
-    width: 100px;
+    width: 70%;
     margin-top: 50px;
 }
 
@@ -27,7 +24,7 @@
     margin-left: 2%;
 }
 
-.png-icon{
+.png-icon {
     width: 30px;
     margin-left: 2%;
 }
@@ -43,7 +40,7 @@
 
 /* Style the buttons that are used to open and close the accordion panel */
 .accordion {
-    background-color: #eee;
+    /* background-color: #eee; */
     color: #444;
     cursor: pointer;
     padding: 18px;
