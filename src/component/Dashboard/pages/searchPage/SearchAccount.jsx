@@ -5,6 +5,9 @@ import png_icon from "../../../../img/png_icon.png";
 import pdf_icon from "../../../../img/pdf_icon.png";
 import { IoIosSearch } from "react-icons/io";
 import { FiUser } from "react-icons/fi";
+import {AiOutlineBarcode, AiOutlineUser} from "react-icons/ai";
+import {BsTelephone} from "react-icons/bs";
+import {HiOutlineMailOpen} from "react-icons/hi";
 
 
 class SearchAccount extends Component {
@@ -14,22 +17,26 @@ class SearchAccount extends Component {
             {
                 "name" : "ali",
                 "phone" : "09123231",
-                "email" : "asd@gmail.com"
+                "email" : "asd@gmail.com",
+                "nationalCode" : "12312313"
             },
             {
                 "name" : "ali",
                 "phone" : "09123231",
-                "email" : "asd@gmail.com"
+                "email" : "asd@gmail.com",
+                "nationalCode" : "12312313"
             },
             {
                 "name" : "ali",
                 "phone" : "09123231",
-                "email" : "asd@gmail.com"
+                "email" : "asd@gmail.com",
+                "nationalCode" : "12312313"
             },
             {
                 "name" : "ali",
                 "phone" : "09123231",
-                "email" : "asd@gmail.com"
+                "email" : "asd@gmail.com",
+                "nationalCode" : "12312313"
             }
         ]
     }
@@ -69,13 +76,37 @@ class SearchAccount extends Component {
                 <div className='result'>
                     {this.state.accountFound.map(accountFound => (
                         <>
-                            <div className='account-found shadow mb-3 row'>
-                                <div className='col'>نام:&nbsp;{accountFound.name}</div>
-                                <div className='col'>ایمیل:&nbsp;{accountFound.email}</div>
-                                <div className='col'>تلفن:&nbsp;{accountFound.phone}</div>
-                                <div className='col'>تلفن:&nbsp;{accountFound.phone}</div>
-                                <div className='col'>تلفن:&nbsp;{accountFound.phone}</div>
-                                <FiUser size={50} />
+                            <div className='account-found shadow mb-3 d-flex flex-row'>
+                                <FiUser size={80} style={{marginLeft: '5%', marginTop: '1%'}}/>
+                                <div className='ms-5'>
+                                    <div className='col p-2'>
+                                        <AiOutlineUser className='ms-2' />
+                                        <label> نام :</label>
+                                        {accountFound.name}
+                                    </div>
+                                    <div className='col p-2'>
+                                        <AiOutlineUser className='ms-2' />
+                                        <label> نام خانوادگی :</label>
+                                        {accountFound.name}
+                                    </div>
+                                    <div className='col p-2'>
+                                        <AiOutlineBarcode className='ms-2' />
+                                        <label> کد ملی :</label>
+                                        {accountFound.nationalCode}
+                                    </div>
+                                </div>
+                                <div>
+                                    <div className='col p-2'>
+                                        <BsTelephone className='ms-2' />
+                                        <label> شماره تلفن :</label>
+                                        {accountFound.phone}
+                                    </div>
+                                    <div className='col p-2'>
+                                        <HiOutlineMailOpen className='ms-2' />
+                                        <label> ایمیل :</label>
+                                        {accountFound.email}
+                                    </div>
+                                </div>
                             </div>
                         </>
                     ))}

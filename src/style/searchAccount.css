@@ -35,7 +35,7 @@
 
 .account-found {
     display: flex;
-    justify-content: left;
+    justify-content: right;
     height: 150px;
     box-shadow: black;
     border-style: solid;
