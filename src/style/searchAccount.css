@@ -1,0 +1,51 @@
+.search-container {
+    text-align: left;
+    background-color: #fff;
+    padding: 1rem;
+    margin-top: 2rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 0 20px 0 #4c577d05;
+}
+
+.search-container > div {
+    display: flex;
+}
+
+.search-logo {
+    /*margin-left: 20px;*/
+}
+
+.search-container > div > button {
+    float: left;
+    animation: fadeIn 0.5s;
+    /*border: none;*/
+    border-radius: 10px;
+    background-color: transparent;
+    margin-right: 1%;
+}
+
+.search-container > div > input {
+    width: 100%;
+    height: 40px;
+}
+
+.search-container > div > Accordion {
+    width: 10%;
+}
+
+.account-found {
+    display: flex;
+    justify-content: left;
+    height: 150px;
+    box-shadow: black;
+    border-style: solid;
+    border-color: white;
+    border-radius: 20px;
+    background-color: #f9f9f9;
+    padding: 20px;
+    margin-top: 3%;
+}
+
+.account-found > FiUser {
+
+}

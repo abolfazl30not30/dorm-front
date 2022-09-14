@@ -36,6 +36,18 @@ class HamburgerMenu extends Component {
                         </Link>
                     </li>
                     <li className='sidenav-item'>
+                        <Link to="/Profile" className='sidenav-link'>
+                            <i className="bi bi-person-plus"></i>
+                            profile
+                        </Link>
+                    </li>
+                    <li className='sidenav-item'>
+                        <Link to="/Search" className='sidenav-link'>
+                            <i className="bi bi-person-plus"></i>
+                            search
+                        </Link>
+                    </li>
+                    <li className='sidenav-item'>
                         <Link to="/booking" className='sidenav-link'>
                             <i class="bi bi-journal-plus"></i>
                             موجودی و ظرفیت

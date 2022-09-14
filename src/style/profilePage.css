@@ -1,0 +1,49 @@
+.profile-container {
+    display: flex;
+    justify-content: left;
+    width: 100%;
+    height: 600px;
+    background-color: #fff;
+    border-radius: 10px;
+}
+
+.profile-image {
+    margin-right: 5%;
+    width: 100px;
+    height: 100px;
+}
+
+.image-container {
+    background-color: #bec6cc;
+    border-radius: 10px;
+    height: 50%;
+}
+
+.image {
+    margin-bottom: 15%;
+}
+
+.image-container > FiUser {
+    margin-bottom: 10%;
+}
+
+.image-container > img {
+    display: inline-block;
+    float: right;
+}
+
+.tab-container {
+    background-color: darkgoldenrod;
+    border-radius: 10px;
+    height: 49%;
+}
+
+.information {
+    display: inline-block;
+    margin-right: 10%;
+    margin-top: 5%;
+}
+
+.test{
+    width: 5%;
+}
