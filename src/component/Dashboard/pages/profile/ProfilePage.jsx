@@ -6,6 +6,11 @@ import Tabs from 'react-bootstrap/Tabs';
 import pdf_icon from '../../../../img/pdf_icon.png'
 import png_icon from '../../../../img/png_icon.png'
 import { FiUser } from "react-icons/fi";
+import { AiOutlineLeft } from "react-icons/ai";
+import {HiOutlineMailOpen} from 'react-icons/hi';
+import {BsTelephone} from 'react-icons/bs';
+import {AiOutlineBarcode} from 'react-icons/ai'
+import {AiOutlineUser} from 'react-icons/ai'
 
 class ProfilePage extends Component {
     state = {
@@ -63,28 +68,38 @@ class ProfilePage extends Component {
                 <div className='profile-container row'> {/*given photo*/}
                     <div className='image-container'>
                         {/*<img src={default_photo} className='profile-image mt-5'/>*/}
-                        <FiUser size={80} className='image'/>
+                        {/* <FiUser size={80} className='image'/> */}
+                        <img src="https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png" alt="profile" />
                         {this.state.people.map(p => (
-                            <div className='information'>
-                                <div className='col p-2'>
-                                    <label> نام :</label>
-                                    {p.firstName}
+                            <div className='information d-flex flex-row'>
+                                <div className='ms-5'>
+                                    <div className='col p-2'>
+                                        <AiOutlineUser className='ms-2' />
+                                        <label> نام :</label>
+                                        {p.firstName}
+                                    </div>
+                                    <div className='col p-2'>
+                                        <AiOutlineUser className='ms-2' />
+                                        <label> نام خانوادگی :</label>
+                                        {p.lastName}
+                                    </div>
+                                    <div className='col p-2'>
+                                        <AiOutlineBarcode className='ms-2' />
+                                        <label> کد ملی :</label>
+                                        {p.nationalCode}
+                                    </div>
                                 </div>
-                                <div className='col p-2'>
-                                    <label> نام خانوادگی :</label>
-                                    {p.lastName}
-                                </div>
-                                <div className='col p-2'>
-                                    <label> کد ملی :</label>
-                                    {p.nationalCode}
-                                </div>
-                                <div className='col p-2'>
-                                    <label> شماره تلفن :</label>
-                                    {p.phoneNumber}
-                                </div>
-                                <div className='col p-2'>
-                                    <label> ایمیل :</label>
-                                    {p.email}
+                                <div>
+                                    <div className='col p-2'>
+                                        <BsTelephone className='ms-2' />
+                                        <label> شماره تلفن :</label>
+                                        {p.phoneNumber}
+                                    </div>
+                                    <div className='col p-2'>
+                                        <HiOutlineMailOpen className='ms-2' />
+                                        <label> ایمیل :</label>
+                                        {p.email}
+                                    </div>
                                 </div>
                             </div>
                         ))}
@@ -108,19 +123,51 @@ class ProfilePage extends Component {
                             </Tab>
                             <Tab eventKey="more-information" title="اطلاعات بیشتر">
                                 {this.state.people.map(p => (
-                                    <div className='information'>
-                                        <p>
-                                            <label> نام :</label>
-                                            {p.firstName}
-                                        </p>
-                                        <p>
-                                            <label> نام خانوادگی :</label>
-                                            {p.lastName}
-                                        </p>
-                                        <p>
-                                            <label> کد ملی :</label>
-                                            {p.nationalCode}
-                                        </p>
+                                    <div className='information d-flex flex-row'>
+                                        <div className='ms-5'>
+                                            <p>
+                                                <label> نام :</label>
+                                                {p.firstName}
+                                            </p>
+                                            <p>
+                                                <label> نام خانوادگی :</label>
+                                                {p.lastName}
+                                            </p>
+                                            <p>
+                                                <label> کد ملی :</label>
+                                                {p.nationalCode}
+                                            </p>
+                                            <p>
+                                                <label> تاریخ شروع پذیرش :</label>
+                                                11/22/3333
+                                            </p>
+                                            <p>
+                                                <label> تاریخ اتمام پذیرش :</label>
+                                                11/22/3333
+                                            </p>
+                                        </div>
+                                        <div>
+                                            <p>
+                                                <label> دانشگاه محل تحصیل :</label>
+                                                {p.firstName}
+                                            </p>
+                                            <p>
+                                                <label>  شماره دانشجویی :</label>
+                                                {p.lastName}
+                                            </p>
+                                            <p>
+                                                <label> نام پدر :</label>
+                                                {p.nationalCode}
+                                            </p>
+                                            <p>
+                                                <label> شغل پدر   :</label>
+                                                11/22/3333
+                                            </p>
+                                            <p>
+                                                <label> وضعیت تاهل :</label>
+                                                مجرد
+                                            </p>
+                                        </div>
                                     </div>
                                 ))}
                             </Tab>

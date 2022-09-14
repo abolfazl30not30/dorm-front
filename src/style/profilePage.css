@@ -1,11 +1,11 @@
-.profile-container {
+/* .profile-container {
     display: flex;
     justify-content: left;
     width: 100%;
     height: 600px;
     background-color: #fff;
     border-radius: 10px;
-}
+} */
 
 .profile-image {
     margin-right: 5%;
@@ -14,36 +14,56 @@
 }
 
 .image-container {
-    background-color: #bec6cc;
-    border-radius: 10px;
-    height: 50%;
+    background-color: #fff;
+    border-radius: 16px;
+    margin-bottom: 32px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 24px;
 }
 
-.image {
-    margin-bottom: 15%;
+.image-container img {
+    width: 200px;
+    height: 200px;
+    border-radius: 100%;
 }
 
 .image-container > FiUser {
     margin-bottom: 10%;
 }
 
-.image-container > img {
+/* .image-container > img {
     display: inline-block;
     float: right;
-}
+} */
 
 .tab-container {
-    background-color: darkgoldenrod;
-    border-radius: 10px;
-    height: 49%;
+    background-color: #fff;
+    border-radius: 16px;
+    padding: 16px;
 }
 
 .information {
-    display: inline-block;
+    /* display: inline-block;
     margin-right: 10%;
-    margin-top: 5%;
+    margin-top: 5%; */
+    font-size: 14px;
 }
-
+.information label,
+.information svg
+{
+    color: #7c7c7c;
+}
 .test{
-    width: 5%;
+    width: 40px;
+}
+.nav-tabs .nav-link {
+    color: #000;
+    font-size: 15px;
+}
+.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+    border: none;
+    border-bottom: 2px solid #db9b31;
+    border-color: #db9b31 !important;
 }
