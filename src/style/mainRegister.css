@@ -1,0 +1,40 @@
+.register-container {
+    display: flex;
+    justify-content: center;
+}
+
+.register-container .progress-bar {}
+
+.register-container .page-container {
+    width: 80%;
+    background-color: white;
+    height: 100vh;
+    border-radius: 10px;
+}
+
+.typeofResident {
+    margin-top: 50px;
+    direction: rtl;
+    height: 200px;
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 30px 50px 0 rgb(170 179 217 / 20%);
+
+}
+
+.wrapperClass {
+    background-color: blue;
+}
+
+.next-btn {
+    text-decoration: none;
+    width: 120px;
+    text-align: center;
+}
+
+.previous-btn {
+    text-decoration: none;
+    width: 120px;
+    text-align: center;
+
+}

@@ -1,0 +1,57 @@
+.upload-container {
+    background-color: #fff;
+    padding: 1rem;
+    margin-top: 2rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 0 20px 0 #4c577d05;
+}
+
+.upload-logo-container {
+    background-color: #f2f6ff;
+    opacity: 0.68;
+    border-radius: 15px;
+    border: 1px dashed #3483E2;
+    text-align: center;
+}
+
+.upload-icon {
+    width: 70%;
+    margin-top: 50px;
+}
+
+.pdf-icon {
+    width: 30px;
+    margin-left: 2%;
+}
+
+.png-icon {
+    width: 30px;
+    margin-left: 2%;
+}
+
+.sections {
+    /*margin-left: 10%;*/
+    /*display: inline-block;*/
+}
+
+.inputs {
+    margin-left: 2%;
+}
+
+/* Style the buttons that are used to open and close the accordion panel */
+.accordion {
+    /* background-color: #eee; */
+    color: #444;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    text-align: left;
+    border: none;
+    outline: none;
+    transition: 0.4s;
+    border-radius: 10px;
+}
+
+.tab {
+    margin-left: 2%;
+}
