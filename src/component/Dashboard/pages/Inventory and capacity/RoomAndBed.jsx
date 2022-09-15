@@ -11,7 +11,7 @@ import { Button, Modal } from 'react-bootstrap'
 class RoomAndBed extends Component {
     static contextType = BuildingContext;
     state = {
-        rooms1: [
+        rooms: [
             {
                 id: 1, roomName: 'اتاق 1',
                 bed: [
@@ -80,14 +80,22 @@ class RoomAndBed extends Component {
             }
         ],
         isLoading: true,
-        rooms: []
+        rooms1: [],
+        show: false
     }
 
-    async componentDidMount() {
-        const response = await fetch(`http://api.saadatportal.com/api/v1/unit/${this.context.unitId}`).then((response) => response.json())
-            .then((data) => this.setState({ rooms: data, isLoading: false }));
-        console.log(this.state.rooms)
-    }
+    // async componentDidMount() {
+    //     const response = await fetch(`http://api.saadatportal.com/api/v1/unit/${this.context.unitId}`).then((response) => response.json())
+    //         .then((data) => this.setState({ rooms: data, isLoading: false }));
+    //     console.log(this.state.rooms)
+    // }
+
+    handleClose = () => {
+        this.setState({ show: false })
+    };
+    handleShow = () => {
+        this.setState({ show: true })
+    };
 
     render() {
         return (
@@ -123,51 +131,41 @@ class RoomAndBed extends Component {
                                                 <div className="room-box">
                                                     <div className="title">{room.number}</div>
                                                     <div className='d-flex flex-wrap'>
-<<<<<<< HEAD
-        {
-            room.beds.map((bed) => (
-                <Link to='/FullViewOfBed' className="col-4 p-1">
-                    <div className={`bed-box ${bed.empty ? "empty" : "full"}`}>
-                        <BiBed fontSize="2rem" />
-                        <div className="title">{bed.name}</div>
-=======
                                                         {room.bed.map((bed) => (
-
-                            <div className="col-4 p-1">
-                                <div className={`bed-box ${bed.empty ? "empty" : "full"}`}>
-                                    {/* {console.log(bed.empty)} */}
-                                    <Button onClick={this.handleShow}>
-                                        <BiBed fontSize="2rem" />
-                                        <div className="title">{bed.bedName}</div>
-                                    </Button>
->>>>>>> modalPage
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-                                            </div >
+                                                            <div className="col-4 p-1">
+                                                                <div className={`bed-box ${bed.empty ? "empty" : "full"}`}>
+                                                                    {/* {console.log(bed.empty)} */}
+                                                                    <Button onClick={this.handleShow}>
+                                                                        <BiBed fontSize="2rem" />
+                                                                        <div className="title">{bed.bedName}</div>
+                                                                    </Button>
+                                                                </div>
+                                                            </div>
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                            </div>
                                         )
                                     )
-        }
-        <Modal centered show={this.state.show} onHide={this.handleClose}>
-            <Modal.Header closeButton>
-                <Modal.Title>ثبت تخت</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-                {
-                    (bed.empty) ? (
-                        console.log(bed.empty)
+                                }
+                                <Modal centered show={this.state.show} onHide={this.handleClose}>
+                                    <Modal.Header closeButton>
+                                        <Modal.Title>ثبت تخت</Modal.Title>
+                                    </Modal.Header>
+                                    <Modal.Body>
+                                        {
+                                            (bed.empty) ? (
+                                                console.log(bed.empty)
 
-                    ) : (
-                        console.log(bed.empty)
-                    )
-                }
-            </Modal.Body>
-        </Modal>
-                            </div >
+                                            ) : (
+                                                console.log(bed.empty)
+                                            )
+                                        }
+                                    </Modal.Body>
+                                </Modal>
+                            </div>
                         )
-    }
+                    }
 
                 </div>
             </>
