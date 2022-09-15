@@ -114,6 +114,12 @@ button.btn.btn-primary:hover {
 .modal-header .btn-close {
     margin: 0 !important;
 }
+.accessory-box {
+    background-color: #f9f9f9;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    font-size: 14px;
+}
 
 /* FullViewOfBed */
 .profile-box {
