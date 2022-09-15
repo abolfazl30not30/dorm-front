@@ -24,7 +24,7 @@ class EditFloorAndUnit extends Component {
             <>
                 <div className="p5">
                     <div className="back-btn">
-                        <Link to="/">
+                        <Link to="/booking">
                             بازگشت
                             <i class="bi bi-caret-left-fill"></i>
                         </Link>
@@ -103,22 +103,19 @@ class EditFloorAndUnit extends Component {
         this.setState({ floor: updateFloor })
     }
 
-    editFloorTitle = ({ value, previousValue }) => {
+    editFloorTitle = async ({ value, previousValue }) => {
         const floor = this.state.floor.find(({ name }) => name === previousValue);
         const index = this.state.floor.findIndex(({ name }) => name === previousValue);
-
-        (async () => {
-            const rawResponse = await fetch(`http://api.saadatportal.com/api/v1/floor/${floor.id}`, {
-                method: 'PATCH',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ name: value, empty: "true" })
-            });
-            const content = await rawResponse.json();
-            console.log(content);
-        })();
+        const rawResponse = await fetch(`http://api.saadatportal.com/api/v1/floor/${floor.id}`, {
+            method: 'PATCH',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ name: value, empty: "true" })
+        });
+        const content = await rawResponse.json();
+        console.log(content);
 
         const updatedState = [...this.state.floor];
         updatedState[index].name = value;
@@ -143,14 +140,12 @@ class EditFloorAndUnit extends Component {
         console.log(this.state.floor)
     }
 
-    deleteFloor = (floor) => {
-        (async () => {
-            await fetch(`http://api.saadatportal.com/api/v1/floor/${floor.id}`, {
-                method: 'DELETE',
-            })
-                .then(res => res.text()) // or res.json()
-                .then(res => console.log(res))
-        })();
+    deleteFloor = async (floor) => {
+        await fetch(`http://api.saadatportal.com/api/v1/floor/${floor.id}`, {
+            method: 'DELETE',
+        })
+            .then(res => res.text()) // or res.json()
+            .then(res => console.log(res))
 
         const updateUsers = this.state.floor.filter(f => f !== floor);
         this.setState({ floor: updateUsers });
