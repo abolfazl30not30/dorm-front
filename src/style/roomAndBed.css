@@ -77,7 +77,9 @@
     background-color: #FFEFF3;
     border: none;
 }
-
+.bed-box.full button.btn.btn-primary {
+    color: #f1416c;
+}
 .bed-box .title {
     font-size: 14px;
     margin: 0;
@@ -106,15 +108,15 @@ button.btn.btn-primary:hover {
 .modal-header .btn-close {
     margin-left: 0;
 }
-
-
-
-
-
-
+.modal-header {
+    border: none !important;
+}
+.modal-header .btn-close {
+    margin: 0 !important;
+}
 
 /* FullViewOfBed */
-/* .profile-box {
+.profile-box {
     background-color: #fff;
     margin: 2rem;
     padding: 1rem;
@@ -125,14 +127,22 @@ button.btn.btn-primary:hover {
     justify-content: center;
     flex-direction: column;
     align-items: center;
-    box-shadow: 0 30px 50px 0 rgb(170 179 217 / 20%);
 }
 
 .profile-box img {
     border-radius: 100%;
+    width: 200px;
+    height: 200px;
 }
 
 .profile-box .name {
-    margin-top: 2rem;
-    font-size: 20px;
-} */
+    margin: 32px 0 16px 0;
+    font-size: 24px;
+    color: #3F4254;
+}
+.profile-box .profile-item {
+    font-size: 14px;
+    font-weight: 500;
+    margin: 4px 0;
+    color: #555760;
+}
