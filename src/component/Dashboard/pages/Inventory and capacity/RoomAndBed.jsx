@@ -120,7 +120,7 @@ class RoomAndBed extends Component {
                 ]
             }
         ],
-        isLoading: true,
+        isLoading: false,
         rooms1: [],
         show: false,
         bedOpen:
