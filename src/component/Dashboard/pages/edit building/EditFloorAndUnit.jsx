@@ -14,18 +14,11 @@ class EditFloorAndUnit extends Component {
         indexOfFloor: null,
     }
 
-    componentDidMount() {
-        const floor = [
-            {
-                id: 1, floorName: "طبقه اول",
-                unit: [
-                    { id: 111, unitName: "111" }
-                ]
-            },
-        ]
-        this.setState({ floor: floor });
-    }
+    async componentDidMount() {
+        const response = await fetch('').then((response) => response.json())
+            .then((data) => this.setState({ floor: data, isLoading: false }));
 
+    }
 
 
     render() {

@@ -10,7 +10,7 @@ import FloorAndBedLoading from '../../../loading/FloorAndBedLoading';
 class RoomAndBed extends Component {
     static contextType = BuildingContext;
     state = {
-        rooms: [
+        rooms1: [
             {
                 id: 1, roomName: 'اتاق 1',
                 bed: [
@@ -78,8 +78,16 @@ class RoomAndBed extends Component {
                 ]
             }
         ],
-        isLoading: false
+        isLoading: true,
+        rooms: []
     }
+
+    async componentDidMount() {
+        const response = await fetch(`http://api.saadatportal.com/api/v1/unit/${this.context.unitId}`).then((response) => response.json())
+            .then((data) => this.setState({ rooms: data, isLoading: false }));
+        console.log(this.state.rooms)
+    }
+
     render() {
         return (
             <>
@@ -112,13 +120,13 @@ class RoomAndBed extends Component {
                                         (room) => (
                                             <div className="col-4">
                                                 <div className="room-box">
-                                                    <div className="title">{room.roomName}</div>
+                                                    <div className="title">{room.number}</div>
                                                     <div className='d-flex flex-wrap'>
-                                                        {room.bed.map((bed) => (
+                                                        {room.beds.map((bed) => (
                                                             <Link to='/FullViewOfBed' className="col-4 p-1">
                                                                 <div className={`bed-box ${bed.empty ? "empty" : "full"}`}>
                                                                     <BiBed fontSize="2rem" />
-                                                                    <div className="title">{bed.bedName}</div>
+                                                                    <div className="title">{bed.name}</div>
                                                                 </div>
                                                             </Link>
                                                         ))}
