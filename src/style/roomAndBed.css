@@ -90,8 +90,31 @@
     text-decoration: none;
 }
 
+
+button.btn.btn-primary {
+    padding: 0;
+    background-color: transparent;
+    color: #000;
+    border: none;
+}
+button.btn.btn-primary:hover {
+    padding: 0;
+    background-color: transparent;
+    color: #000;
+    border: none;
+}
+.modal-header .btn-close {
+    margin-left: 0;
+}
+
+
+
+
+
+
+
 /* FullViewOfBed */
-.profile-box {
+/* .profile-box {
     background-color: #fff;
     margin: 2rem;
     padding: 1rem;
@@ -112,4 +135,4 @@
 .profile-box .name {
     margin-top: 2rem;
     font-size: 20px;
-}
+} */

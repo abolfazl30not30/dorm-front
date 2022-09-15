@@ -6,6 +6,7 @@ import { Link, Route, Routes } from "react-router-dom";
 import FullViewOfBed from './FullViewOfBed';
 import BuildingContext from '../../../../contexts/Building';
 import FloorAndBedLoading from '../../../loading/FloorAndBedLoading';
+import { Button, Modal } from 'react-bootstrap'
 
 class RoomAndBed extends Component {
     static contextType = BuildingContext;
@@ -122,23 +123,51 @@ class RoomAndBed extends Component {
                                                 <div className="room-box">
                                                     <div className="title">{room.number}</div>
                                                     <div className='d-flex flex-wrap'>
-                                                        {room.beds.map((bed) => (
-                                                            <Link to='/FullViewOfBed' className="col-4 p-1">
-                                                                <div className={`bed-box ${bed.empty ? "empty" : "full"}`}>
-                                                                    <BiBed fontSize="2rem" />
-                                                                    <div className="title">{bed.name}</div>
-                                                                </div>
-                                                            </Link>
-                                                        ))}
-                                                    </div>
-                                                </div>
-                                            </div>
+<<<<<<< HEAD
+        {
+            room.beds.map((bed) => (
+                <Link to='/FullViewOfBed' className="col-4 p-1">
+                    <div className={`bed-box ${bed.empty ? "empty" : "full"}`}>
+                        <BiBed fontSize="2rem" />
+                        <div className="title">{bed.name}</div>
+=======
+                                                        {room.bed.map((bed) => (
+
+                            <div className="col-4 p-1">
+                                <div className={`bed-box ${bed.empty ? "empty" : "full"}`}>
+                                    {/* {console.log(bed.empty)} */}
+                                    <Button onClick={this.handleShow}>
+                                        <BiBed fontSize="2rem" />
+                                        <div className="title">{bed.bedName}</div>
+                                    </Button>
+>>>>>>> modalPage
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+                                            </div >
                                         )
                                     )
-                                }
-                            </div>
+        }
+        <Modal centered show={this.state.show} onHide={this.handleClose}>
+            <Modal.Header closeButton>
+                <Modal.Title>ثبت تخت</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                {
+                    (bed.empty) ? (
+                        console.log(bed.empty)
+
+                    ) : (
+                        console.log(bed.empty)
+                    )
+                }
+            </Modal.Body>
+        </Modal>
+                            </div >
                         )
-                    }
+    }
 
                 </div>
             </>
