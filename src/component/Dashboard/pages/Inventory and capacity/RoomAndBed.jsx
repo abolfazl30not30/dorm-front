@@ -244,6 +244,7 @@ class RoomAndBed extends Component {
                         )
                     }
                 </div>
+
                 <Modal centered show={this.state.show} onClick={() => {
                     this.handleClose()
                 }}>

@@ -17,9 +17,8 @@ class EditFloorAndUnit extends Component {
     async componentDidMount() {
         const response = await fetch('http://api.saadatportal.com/api/v1/floor').then((response) => response.json())
             .then((data) => this.setState({ floor: data, isLoading: false }));
+        console.log(this.state.floor)
     }
-
-
     render() {
         return (
             <>
@@ -72,30 +71,26 @@ class EditFloorAndUnit extends Component {
         );
     }
 
-    addFloor = () => {
-        var content;
-        (async () => {
-            const rawResponse = await fetch('http://api.saadatportal.com/api/v1/floor', {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ name: "طبقه", empty: "true" })
-            });
-            content = await rawResponse.json();
-            console.log(content);
-        })();
-
+    addFloor = async () => {
+        var count = Math.floor(Math.random() * 100) + 1;
+        const rawResponse = await fetch('http://api.saadatportal.com/api/v1/floor', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ name: `${count}طبقه`, empty: "true" })
+        });
+        var content = await rawResponse.json();
         const newFloor = this.state.floor.concat(
             {
                 empty: true,
-                name: "طبقه ....",
+                id: content.id,
+                name: `${count}طبقه`,
                 units: []
             }
         )
-        this.setState({ floor: newFloor })
-        console.log(this.state.floor)
+        this.setState({ floor: newFloor }, () => { console.log(this.state.floor) });
     }
 
     addUnit = (f) => {
@@ -128,6 +123,7 @@ class EditFloorAndUnit extends Component {
         const updatedState = [...this.state.floor];
         updatedState[index].name = value;
         this.setState({ floor: updatedState });
+        console.log(this.state.floor);
     };
 
     editUnitTitle = ({ value, previousValue }) => {
