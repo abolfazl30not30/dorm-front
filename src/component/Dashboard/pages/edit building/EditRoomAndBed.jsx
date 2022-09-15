@@ -5,12 +5,8 @@ import { FaPencilAlt } from 'react-icons/fa';
 import { EditText, EditTextarea } from 'react-edit-text';
 import { BiBed } from 'react-icons/bi';
 import CounterInput from "react-counter-input";
-<<<<<<< HEAD
 import "../../../../style/editBuilding.css";
 import { Padding } from '@syncfusion/ej2-react-charts';
-=======
->>>>>>> room-and-bed-page
-
 class EditRoomAndBed extends Component {
     state = {
         rooms: [
@@ -100,17 +96,8 @@ class EditRoomAndBed extends Component {
                                                         <div className="accessory-title col-7">
                                                             <EditText style={{ backgroundColor: "#f9f9f9" }} className="editable" showEditButton defaultValue={accessory.name} editButtonContent={<FaPencilAlt color="#f39c12" fontSize="15px" />} />
                                                         </div>
-<<<<<<< HEAD
                                                         <div className="accessory-count col-5">
                                                             <CounterInput min={0} max={10} count={accessory.count} onCountChange={count => console.log(count)} />
-=======
-                                                        <div className="accessory-count col-6">
-                                                            <CounterInput
-                                                                min={0}
-                                                                max={10}
-                                                                onCountChange={count => console.log(count)}
-                                                            />
->>>>>>> room-and-bed-page
                                                         </div>
                                                     </div>
                                                 ))}
