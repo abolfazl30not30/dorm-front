@@ -5,6 +5,7 @@ import { AiOutlinePlus, AiFillCloseCircle } from 'react-icons/ai'
 import { TbBuilding } from 'react-icons/tb';
 import { EditText, EditTextarea } from 'react-edit-text';
 import { Link } from "react-router-dom";
+import { Button, Modal } from 'react-bootstrap';
 
 import 'react-edit-text/dist/index.css';
 
@@ -12,6 +13,11 @@ class EditFloorAndUnit extends Component {
     state = {
         floor: [],
         indexOfFloor: null,
+        showDeleteModalUnit: false,
+        showDeleteModalFloor: false,
+        unitTemp: {},
+        floorTemp: {},
+        floorIndex: 0
     }
 
     async componentDidMount() {
@@ -40,13 +46,13 @@ class EditFloorAndUnit extends Component {
                         {this.state.floor.map((f, i) => (
                             <div className="col-4 p-3">
                                 <div className="floor-box">
-                                    <button className="floor-close-btn" onClick={() => { this.deleteFloor(f) }}><AiFillCloseCircle color="#F1416C" /></button>
+                                    <button className="floor-close-btn" onClick={() => { this.handleDeleteShowFloor(f) }}><AiFillCloseCircle color="#F1416C" /></button>
                                     <div className="title"><EditText ref="floorTitle" showEditButton defaultValue={f.name} onSave={this.editFloorTitle} /></div>
                                     <div className="d-flex flex-wrap">
                                         {f.units.map((u) => (
                                             <div className="col-4">
                                                 <div className="unit-box">
-                                                    <button className="unit-close-btn" onClick={() => { this.deleteUnit(u, i) }}><AiFillCloseCircle color="#F1416C" /></button>
+                                                    <button className="unit-close-btn" onClick={() => { this.handleDeleteShowUnit(u, i) }}><AiFillCloseCircle color="#F1416C" /></button>
                                                     <TbBuilding fontSize="2rem" />
                                                     <div className="title"><EditText className="editable" showEditButton onSave={this.editUnitTitle} defaultValue={u.number} /></div>
                                                 </div>
@@ -67,6 +73,33 @@ class EditFloorAndUnit extends Component {
                         <button className="register-btn">ثـبـت</button>
                     </div>
                 </div>
+
+                <Modal centered show={this.state.showDeleteModalFloor} onClick={() => { this.handleDeleteCloseFloor(false) }}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>حذف طبقه</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <h6>آيا از حذف اين طبقه مطمئن هستيد؟</h6>
+                    </Modal.Body>
+                    <Modal.Footer className="justify-content-start">
+                        <button className="btn btn-danger" onClick={() => this.handleDeleteCloseFloor(true)}>حذف</button>
+                        <button className="btn btn-light" onClick={() => this.handleDeleteCloseFloor(false)}>بستن</button>
+                    </Modal.Footer>
+                </Modal>
+
+                <Modal centered show={this.state.showDeleteModalUnit} onClick={() => { this.handleDeleteCloseUnit(false) }}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>حذف واحد</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <h6>آيا از حذف اين واحد مطمئن هستيد؟</h6>
+                    </Modal.Body>
+                    <Modal.Footer className="justify-content-start">
+                        <button className="btn btn-danger" onClick={() => this.handleDeleteCloseUnit(true)}>حذف</button>
+                        <button className="btn btn-light" onClick={() => this.handleDeleteCloseUnit(false)}>بستن</button>
+                    </Modal.Footer>
+                </Modal>
+
             </>
         );
     }
@@ -93,14 +126,26 @@ class EditFloorAndUnit extends Component {
         this.setState({ floor: newFloor }, () => { console.log(this.state.floor) });
     }
 
-    addUnit = (f) => {
+    addUnit = async (f) => {
+        var count = Math.floor(Math.random() * 1000) + 1;
+
+        const rawResponse = await fetch('http://api.saadatportal.com/api/v1/unit', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ number: count, empty: "true", floorId: f.id })
+        });
+        const content = await rawResponse.json();
         const index = this.state.floor.indexOf(f);
         const newUnit = this.state.floor[index].units.concat(
-            { number: "new" }
+            { id: content.id, empty: "true", number: count }
         )
         const updateFloor = [...this.state.floor]
         updateFloor[index].units = newUnit
         this.setState({ floor: updateFloor })
+
     }
 
     editFloorTitle = async ({ value, previousValue }) => {
@@ -123,7 +168,8 @@ class EditFloorAndUnit extends Component {
         console.log(this.state.floor);
     };
 
-    editUnitTitle = ({ value, previousValue }) => {
+    editUnitTitle = async ({ value, previousValue }) => {
+
         let indexOfFloor = -1;
         let indexOfUnit = -1;
 
@@ -134,17 +180,37 @@ class EditFloorAndUnit extends Component {
                 break;
             }
         }
+
         const updatedState = [...this.state.floor];
+
+        const floorId = updatedState[indexOfFloor].id;
+        const unitId = updatedState[indexOfFloor].units[indexOfUnit].id;
+        const number = parseInt(value)
+
+        const rawResponse = await fetch(`http://api.saadatportal.com/api/v1/unit/${unitId}`, {
+            method: 'PATCH',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ floorId: floorId, number: number, empty: "true" })
+        });
+        const content = await rawResponse.json();
+        console.log(content);
+
+
+
         updatedState[indexOfFloor].units[indexOfUnit].number = value;
         this.setState({ floor: updatedState });
         console.log(this.state.floor)
     }
-
     deleteFloor = async (floor) => {
+        this.setState({ showDeleteModal: true });
+
         await fetch(`http://api.saadatportal.com/api/v1/floor/${floor.id}`, {
             method: 'DELETE',
         })
-            .then(res => res.text()) // or res.json()
+            .then(res => res.text())
             .then(res => console.log(res))
 
         const updateUsers = this.state.floor.filter(f => f !== floor);
@@ -152,7 +218,14 @@ class EditFloorAndUnit extends Component {
         console.log(this.state.floor)
     }
 
-    deleteUnit = (unit, index) => {
+    deleteUnit = async (unit, index) => {
+
+        await fetch(`http://api.saadatportal.com/api/v1/unit/${unit.id}`, {
+            method: 'DELETE',
+        })
+            .then(res => res.text())
+            .then(res => console.log(res))
+
         let updatedState = [...this.state.floor];
         let updatedUnit = this.state.floor[index].units;
         updatedUnit = updatedUnit.filter(u => u !== unit);
@@ -161,6 +234,29 @@ class EditFloorAndUnit extends Component {
         console.log(this.state.floor)
     }
 
+    handleDeleteShowUnit = (unit, index) => {
+        this.setState({ showDeleteModalUnit: true });
+        this.setState({ unitTemp: unit });
+        this.setState({ floorIndex: index });
+    }
+
+    handleDeleteShowFloor = (floor) => {
+        this.setState({ showDeleteModalFloor: true });
+        this.setState({ floorTemp: floor });
+    }
+
+    handleDeleteCloseUnit = (bool) => {
+        this.setState({ showDeleteModalUnit: false });
+        if (bool) {
+            this.deleteUnit(this.state.unitTemp, this.state.floorIndex);
+        }
+    }
+    handleDeleteCloseFloor = (bool) => {
+        this.setState({ showDeleteModalFloor: false });
+        if (bool) {
+            this.deleteFloor(this.state.floorTemp);
+        }
+    }
 }
 
 export default EditFloorAndUnit;
