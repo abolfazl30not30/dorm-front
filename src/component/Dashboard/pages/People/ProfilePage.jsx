@@ -11,6 +11,7 @@ import {HiOutlineMailOpen} from 'react-icons/hi';
 import {BsTelephone} from 'react-icons/bs';
 import {AiOutlineBarcode} from 'react-icons/ai'
 import {AiOutlineUser} from 'react-icons/ai'
+import { Modal } from 'react-bootstrap'
 
 class ProfilePage extends Component {
     state = {
@@ -60,49 +61,68 @@ class ProfilePage extends Component {
                 "cvv2": null,
                 "placeOfIssue": null
             },
-        ]
+        ],
+        show: false,
+        reportType:'cleaning'
     }
+
+    handleClose = () => {
+        this.setState({ show: true })
+    };
+
+    handleShow = () => {
+        this.setState({ show: true })
+    };
+    reportType = (e) => {
+        const type = e.target.value
+        this.setState({reportType: type})
+    }
+    recordReport = () => {
+        console.log('done')
+    }
+
     render() {
         return (
             <>
                 <div className='profile-container row'> {/*given photo*/}
                     <div className='image-container'>
-                        {/*<img src={default_photo} className='profile-image mt-5'/>*/}
-                        {/* <FiUser size={80} className='image'/> */}
-                        <img src="https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png" alt="profile" />
-                        {this.state.people.map(p => (
-                            <div className='information d-flex flex-row'>
-                                <div className='ms-5'>
-                                    <div className='col p-2'>
-                                        <AiOutlineUser className='ms-2' />
-                                        <label> نام :</label>
-                                        {p.firstName}
+                        <button className='btn-add-report' onClick={() => {this.handleShow()}}>ثبت گزارش</button>
+                        <div className="d-flex flex-row justify-content-around align-items-center w-100">
+                            <img src="https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png" alt="profile" />
+                            {this.state.people.map(p => (
+                                <div className='information d-flex flex-row'>
+                                    <div className='ms-5'>
+                                        <div className='col p-2'>
+                                            <AiOutlineUser className='ms-2' />
+                                            <label> نام :</label>
+                                            {p.firstName}
+                                        </div>
+                                        <div className='col p-2'>
+                                            <AiOutlineUser className='ms-2' />
+                                            <label> نام خانوادگی :</label>
+                                            {p.lastName}
+                                        </div>
+                                        <div className='col p-2'>
+                                            <AiOutlineBarcode className='ms-2' />
+                                            <label> کد ملی :</label>
+                                            {p.nationalCode}
+                                        </div>
                                     </div>
-                                    <div className='col p-2'>
-                                        <AiOutlineUser className='ms-2' />
-                                        <label> نام خانوادگی :</label>
-                                        {p.lastName}
-                                    </div>
-                                    <div className='col p-2'>
-                                        <AiOutlineBarcode className='ms-2' />
-                                        <label> کد ملی :</label>
-                                        {p.nationalCode}
+                                    <div>
+                                        <div className='col p-2'>
+                                            <BsTelephone className='ms-2' />
+                                            <label> شماره تلفن :</label>
+                                            {p.phoneNumber}
+                                        </div>
+                                        <div className='col p-2'>
+                                            <HiOutlineMailOpen className='ms-2' />
+                                            <label> ایمیل :</label>
+                                            {p.email}
+                                        </div>
                                     </div>
                                 </div>
-                                <div>
-                                    <div className='col p-2'>
-                                        <BsTelephone className='ms-2' />
-                                        <label> شماره تلفن :</label>
-                                        {p.phoneNumber}
-                                    </div>
-                                    <div className='col p-2'>
-                                        <HiOutlineMailOpen className='ms-2' />
-                                        <label> ایمیل :</label>
-                                        {p.email}
-                                    </div>
-                                </div>
-                            </div>
-                        ))}
+                            ))}
+                        </div>
                     </div>
                     <div className='tab-container'>
                         <Tabs
@@ -174,7 +194,164 @@ class ProfilePage extends Component {
                         </Tabs>
                     </div>
                 </div>
+                <Modal className='report-modal' centered show={this.state.show} onClick={() => {this.handleClose()}}>
+                    <Modal.Header closeButton>
+                        <Modal.Title><span>ثبت گزارش</span></Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <div className="my-3 mx-2">
+                            <div className='input-report-box'>
+                                <select className='input' onChange={this.reportType}>
+                                    <option value='cleaning'>نوبت نظافت شبانه</option>
+                                    <option value='delayInArrival'>تأخیر در ورود</option>
+                                    <option value='exit'>خروج</option>
+                                    <option value='violation'>ثبت تخلف</option>
+                                    <option value='penalty'>ثبت جریمه</option>
+                                    <option value='discharge'>اعلام تخلیه</option>
+                                    <option value='cancelContract'>لغو قرارداد</option>
+                                </select>
+                                <label className="placeholder">نوع گزارش</label>
+                            </div>
+                            {(() => {
+                                switch(this.state.reportType) {
+                                    case 'cleaning':
+                                        return <>
+                                            <div className='input-report-box'>
+                                                <input type="text" className="input" placeholder=" "/>
+                                                <label className="placeholder">روز</label>
+                                            </div>
+                                            <div className='input-report-box'>
+                                                <input type="text" className="input" placeholder=" "/>
+                                                <label className="placeholder">تاریخ</label>
+                                            </div>
+                                            <div className='input-report-box'>
+                                                <input type="text" className="input" placeholder=" "/>
+                                                <label className="placeholder">توضیحات</label>
+                                            </div>
+                                        </>;
+                                    case 'delayInArrival':
+                                        return <>
+                                            <div className='input-report-box'>
+                                                <input type="text" className="input" placeholder=" "/>
+                                                <label className="placeholder">تاریخ</label>
+                                            </div>
+                                            <div className='input-report-box'>
+                                                <input type="text" className="input" placeholder=" "/>
+                                                <label className="placeholder">ساعت</label>
+                                            </div>
+                                        </>;
+                                    case 'exit':
+                                        return <>
+                                            <div className='input-report-box'>
+                                                <input type="text" className="input" placeholder=" "/>
+                                                <label className="placeholder">از تاريخ</label>
+                                            </div>
+                                            <div className='input-report-box'>
+                                                <input type="text" className="input" placeholder=" "/>
+                                                <label className="placeholder">تا تاريخ</label>
+                                            </div>
+                                            <div className='input-report-box'>
+                                                <input type="text" className="input" placeholder=" "/>
+                                                <label className="placeholder">آدرس مقصد</label>
+                                            </div>
+                                            <div className='input-report-box'>
+                                                <input type="text" className="input" placeholder=" "/>
+                                                <label className="placeholder">شماره تماس مقصد</label>
+                                            </div>
+                                            <div className='input-report-box'>
+                                                <input type="text" className="input" placeholder=" "/>
+                                                <label className="placeholder">نسبت</label>
+                                            </div>
+                                        </>;
+                                    case 'violation':
+                                        return <>
+                                            <div className='input-report-box'>
+                                                <input type="text" className="input" placeholder=" "/>
+                                                <label className="placeholder">گزارش تخلف</label>
+                                            </div>
+                                            <div className='input-report-box'>
+                                                <input type="text" className="input" placeholder=" "/>
+                                                <label className="placeholder">تاریخ</label>
+                                            </div>
+                                            <div className='input-report-box'>
+                                                <input type="text" className="input" placeholder=" "/>
+                                                <label className="placeholder">ساعت</label>
+                                            </div>
+                                        </>;
+                                    case 'penalty':
+                                        return <>
+                                            <div className='input-report-box'>
+                                                <input type="text" className="input" placeholder=" "/>
+                                                <label className="placeholder">دلیل جریمه</label>
+                                            </div>
+                                            <div className='input-report-box'>
+                                                <select className='input'>
+                                                    <option>نقدی</option>
+                                                    <option>تنبیهی</option>
+                                                </select>
+                                                <label className="placeholder">نوع جریمه</label>
+                                            </div>
+                                        </>;
+                                    case 'discharge':
+                                        return <>
+                                            <div className='input-report-box'>
+                                                <input type="text" className="input" placeholder=" "/>
+                                                <label className="placeholder">تاریخ اعلام تخلیه</label>
+                                            </div>
+                                            <div className='input-report-box'>
+                                                <input type="text" className="input" placeholder=" "/>
+                                                <label className="placeholder">تاریخ تخلیه</label>
+                                            </div>
+                                            <div className='input-report-box'>
+                                                <input type="text" className="input" placeholder=" "/>
+                                                <label className="placeholder">تاریخ عودت ودیعه</label>
+                                            </div>
+                                            <div className='input-report-box'>
+                                                <input type="text" className="input" placeholder=" "/>
+                                                <label className="placeholder">کسر ضرر و زیان</label>
+                                            </div>
+                                            <div className='input-report-box'>
+                                                <input type="text" className="input" placeholder=" "/>
+                                                <label className="placeholder">علت کسر ضر و زیان</label>
+                                            </div>
+                                            <div className='input-report-box'>
+                                                <input type="text" className="input" placeholder=" "/>
+                                                <label className="placeholder">مبلغ قابل عودت</label>
+                                            </div>
+                                        </>;
+                                    case 'cancelContract':
+                                        return <>
+                                            <div className='input-report-box'>
+                                                <input type="text" className="input" placeholder=" "/>
+                                                <label className="placeholder">روز</label>
+                                            </div>
+                                            <div className='input-report-box'>
+                                                <input type="text" className="input" placeholder=" "/>
+                                                <label className="placeholder">تاریخ</label>
+                                            </div>
+                                            <div className='input-report-box'>
+                                                <input type="text" className="input" placeholder=" "/>
+                                                <label className="placeholder">علت</label>
+                                            </div>
+                                            <div className='input-report-box'>
+                                                <input type="text" className="input" placeholder=" "/>
+                                                <label className="placeholder">کسر ضرر و زیان</label>
+                                            </div>
+                                            <div className='input-report-box'>
+                                                <input type="text" className="input" placeholder=" "/>
+                                                <label className="placeholder">مبلغ قابل عودت</label>
+                                            </div>
+                                        </>
+                                }
+                            })()}
+                            <div className="input-report-box">
+                                <button className='btn btn-record-report' onClick={this.recordReport()}>ثبت</button>
+                            </div>
+                        </div>
+                    </Modal.Body>
+                </Modal>
             </>
+
         );
     }
 }

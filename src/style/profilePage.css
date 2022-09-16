@@ -18,8 +18,7 @@
     border-radius: 16px;
     margin-bottom: 32px;
     display: flex;
-    justify-content: space-around;
-    align-items: center;
+    flex-direction: column;
     padding: 24px;
 }
 
@@ -70,4 +69,63 @@
     border: none;
     border-bottom: 2px solid #db9b31;
     border-color: #db9b31 !important;
+}
+.btn-add-report {
+    border: none;
+    text-align: right;
+    width: fit-content;
+    padding: 8px;
+    margin-bottom: 16px;
+    border-radius: 4px;
+    font-size: 14px;
+    background-color: #eee;
+    color: #444;
+}
+.report-modal .modal-header .btn-close {
+    margin: 0 !important;
+}
+.input-report-box {
+    position: relative;
+    padding: 8px;
+}
+.report-modal .input{
+    padding: 10px;
+    border-radius: 8px !important;
+    outline: none;
+    color: #2a2e32b3;
+    background-color: #fff;
+    border: 1px solid #bec6cc;
+    width: 100%;
+    text-align: center;
+}
+.report-modal .placeholder{
+    position: absolute;
+    top: 18px;
+    right: 20px;
+    font-size: 16px;
+    padding: 0px 5px;
+    color: #2b2f33;
+    transition: 0.3s;
+    pointer-events: none;
+}
+.report-modal label.placeholder {
+    background-color: #fff;
+    color: #2b2f33;
+}
+.report-modal .input:focus + .placeholder, .input:not(:placeholder-shown) +.placeholder{
+    top: -8px;
+    background-color: #fff;
+    color: #2a2e32b3;
+    padding: 0 6px;
+    opacity: 1;
+}
+.report-modal button.btn-record-report {
+    width: 100%;
+    background-color: #0052cc;
+    color: #fff;
+}
+.report-modal button.btn-record-report:hover {
+    width: 100%;
+    background-color: #1963d1;
+    color: #fff;
 }
