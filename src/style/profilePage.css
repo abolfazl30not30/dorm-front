@@ -29,7 +29,7 @@
     border-radius: 100%;
 }
 
-.image-container > FiUser {
+.image-container>FiUser {
     margin-bottom: 10%;
 }
 
@@ -50,19 +50,23 @@
     margin-top: 5%; */
     font-size: 14px;
 }
+
 .information label,
-.information svg
-{
+.information svg {
     color: #7c7c7c;
 }
-.test{
+
+.test {
     width: 40px;
 }
+
 .nav-tabs .nav-link {
     color: #000;
     font-size: 15px;
 }
-.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+
+.nav-tabs .nav-item.show .nav-link,
+.nav-tabs .nav-link.active {
     border: none;
     border-bottom: 2px solid #db9b31;
     border-color: #db9b31 !important;
