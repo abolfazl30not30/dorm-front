@@ -1,3 +1,29 @@
+.back-btn {
+    display: flex;
+    justify-content: end;
+    padding-top: 10px;
+}
+
+.back-btn a {
+    text-decoration: none;
+    color: #676767;
+}
+
+.text {
+    margin-top: 38px;
+}
+
+.text h4 {
+    font-weight: bold;
+    color: #555;
+}
+
+.text p {
+    margin-top: 27px;
+    width: 80%;
+    color: #676767;
+}
+
 .floor-box {
     background-color: #fff;
     margin: 1rem;
@@ -69,4 +95,198 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.register {
+    display: flex;
+    justify-content: center;
+}
+
+.register .register-btn {
+    border: none;
+    border-radius: 15px;
+    width: 20%;
+    height: 48px;
+    background-color: #2ecc71;
+    font-size: 15px;
+    font-weight: bold;
+    box-shadow: 0px 0px 6px rgb(0 0 0 / 20%);
+    margin-bottom: 30px;
+}
+
+.register .register-btn:hover {
+    background-color: #27ae60;
+    box-shadow: none;
+}
+
+/*Room and Bed*/
+
+.RoomAndBed {}
+
+.RoomAndBed .room-box {
+    background-color: #fff;
+    margin: 4%;
+    padding: 3%;
+    border-radius: 15px;
+    box-shadow: 0px 0px 4px rgb(0 0 0 / 10%);
+}
+
+.RoomAndBed .room-box .title-container {}
+
+.RoomAndBed .room-box .title-container .firstTitle {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    font-size: 20px;
+}
+
+.RoomAndBed .room-box .title-container .firstTitle label {
+
+    font-size: 15px;
+    margin-left: 2rem;
+    color: #676767;
+}
+
+.RoomAndBed .room-box .title-container .description {
+    display: flex;
+    align-items: center;
+}
+
+.RoomAndBed .room-box .title-container .description label {
+    font-size: 15px;
+    margin-left: 2rem;
+    color: #676767;
+}
+
+.RoomAndBed .room-box .bed-container {}
+
+.RoomAndBed .room-box .bed-container .bed-box {}
+
+.RoomAndBed .room-box .bed-container .title {}
+
+.RoomAndBed .room-box .bed-container .bed-add-btn {
+    background-color: transparent;
+    border: 1px dashed #ddd;
+    padding: 57px 50px;
+    border-radius: 0.5rem;
+    text-align: center;
+    margin: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.RoomAndBed .room-box .bed-container .bed-add-btn:hover {
+    background-color: #f9f9f9;
+}
+
+.RoomAndBed .room-box .accessory-box {
+    background-color: #fff;
+    margin: 4%;
+    padding: 3%;
+    border-radius: 15px;
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.RoomAndBed .room-box .accessory-box .accessory-box-title {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+.RoomAndBed .room-box .accessory-box .accessory-box-title h5 {
+    font-size: 17px;
+    color: #676767;
+}
+
+.RoomAndBed .room-box .accessory-box .accessory-box-title h5:first-child {
+    flex: 2;
+    padding-right: 44px;
+}
+
+.RoomAndBed .room-box .accessory-box .accessory-box-title h5:last-child {
+    flex: 1.1
+}
+
+.RoomAndBed .room-box .accessory-box .accessory {
+    width: 85%;
+    padding: 5px;
+    margin: 10px 0;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0px 0px 4px rgb(0 0 0 / 10%);
+}
+
+.RoomAndBed .room-box .accessory-box .accessory .accessory-title {
+    display: flex;
+    align-items: center;
+}
+
+.RoomAndBed .room-box .accessory-box .accessory .accessory-count {}
+
+
+.RoomAndBed .room-box .accessory-box .accessory-add-btn {
+    border: 1px dashed #ddd;
+    border-radius: 10px;
+    width: 85%;
+    padding: 22px 0;
+    text-align: center;
+    margin: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f9f9f9;
+}
+
+.RoomAndBed .room-box .accessory-box .accessory-add-btn:hover {
+    background-color: #ebebeb;
+}
+
+.RoomAndBed .room-add-btn {
+    background-color: #fff;
+    margin: 4%;
+    margin-top: 1%;
+    padding: 2.5%;
+    border-radius: 15px;
+    box-shadow: 0px 0px 4px rgb(0 0 0 / 10%);
+    text-align: center;
+    font-size: 37px;
+    cursor: pointer;
+}
+
+.RoomAndBed .room-add-btn:hover {
+    background-color: #ebebeb;
+}
+
+.register .register-btn-room {
+    border: none;
+    border-radius: 15px;
+    width: 30%;
+    height: 50px;
+    background-color: #2ecc71;
+    font-size: 15px;
+    font-weight: bold;
+    box-shadow: 0px 0px 6px rgb(0 0 0 / 20%);
+    margin-bottom: 50px;
+}
+
+
+.register .register-btn-room:hover {
+    background-color: #27ae60;
+    box-shadow: none;
+}
+
+.close-btn {
+    background-color: transparent;
+    align-self: start;
+    padding: 0;
+    border: none;
+}
+
+._NGZSv {
+    background-color: transparent;
 }

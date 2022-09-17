@@ -7,24 +7,27 @@ import RoomAndBed from './pages/Inventory and capacity/RoomAndBed';
 import BuildingContext from '../../contexts/Building';
 import FullViewOfBed from './pages/Inventory and capacity/FullViewOfBed';
 import EditFloorAndUnit from './pages/edit building/EditFloorAndUnit';
+import EditRoomAndBed from './pages/edit building/EditRoomAndBed';
 import MainRegister from './pages/Register/MainRegister';
 import ProfilePage from './pages/People/ProfilePage'
 import SearchAccount from './pages/People/SearchAccount'
+
 class MainPage extends Component {
     state = {
-        unitNumber: ""
+        unitNumber: "",
+        unitId: ""
     }
     render() {
         return (
             <>
                 <div className='d-flex flex-column pt-4 px-5'>
-                    <BuildingContext.Provider value={{ unitNumber: this.state.unitNumber, handleUnitNumber: this.handleUnitNumber }}>
+                    <BuildingContext.Provider value={{ unitId: this.state.unitId, unitNumber: this.state.unitNumber, handleUnitNumber: this.handleUnitNumber }}>
                         <Routes>
                             <Route path="/" element={(<Home />)} />
-                            <Route path="/booking" element={(<FloorAndUnit />)} />
-                            <Route path="/RoomAndBed" element={(<RoomAndBed />)} />
                             <Route path="/people" element={(<SearchAccount />)} />
                             <Route path="/people/profile" element={(<ProfilePage />)} />
+                            <Route path="/booking/edit-floor-and-unit" element={(<EditFloorAndUnit />)} />
+                            <Route path='/editRoomAndBed' element={(<EditRoomAndBed />)} />
                             <Route path="/Register" element={(<MainRegister />)} />
                             <Route path="/edit" element={(<EditFloorAndUnit />)} />
                             <Route path="/booking" element={(<FloorAndUnit />)} />
@@ -37,8 +40,9 @@ class MainPage extends Component {
         );
     }
 
-    handleUnitNumber = (unitNumber) => {
+    handleUnitNumber = (unitNumber, unitId) => {
         this.setState({ unitNumber: unitNumber });
+        this.setState({ unitId: unitId });
     }
 }
 

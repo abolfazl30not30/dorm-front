@@ -48,12 +48,6 @@ class HamburgerMenu extends Component {
                         </Link>
                     </li>
                     <li className='sidenav-item'>
-                        <Link to="/edit" className='sidenav-link'>
-                            <i class="bi bi-pencil"></i>
-                            ویرایش
-                        </Link>
-                    </li>
-                    <li className='sidenav-item'>
                         <Link to="/" className='sidenav-link'>
                             <i class="bi bi-hand-thumbs-up"></i>
                             باشگاه
