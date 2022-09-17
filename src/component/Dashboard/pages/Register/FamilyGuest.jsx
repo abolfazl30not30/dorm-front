@@ -43,7 +43,7 @@ class FamilyGuest extends Component {
         const {admission_start_date, admission_end_date, payment_date} = this.state.fields;
         return (
             <>
-                <div className="register-step-box">
+                <form className="register-step-box" onSubmit={this.handleSubmit}>
                     <h2>مهمان (بستگان درجه یک)</h2>
                     <div className='d-flex flex-wrap justify-content-start'>
                         <div className="input-group-register col-4">
@@ -113,7 +113,7 @@ class FamilyGuest extends Component {
                             <label className="placeholder">شماره تماس</label>    
                         </div>
                     </div>
-                </div>
+                </form>
             </>
         );
     }
