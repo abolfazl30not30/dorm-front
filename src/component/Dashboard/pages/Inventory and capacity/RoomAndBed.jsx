@@ -136,7 +136,7 @@ class RoomAndBed extends Component {
 
         bedOpen:
         {
-            id: 32, bedName: 'تخت 32', empty: false,
+            id: 32, name: 'تخت 32', empty: false,
             person: {
                 id: 1,
                 firstName: 'میلاد',
