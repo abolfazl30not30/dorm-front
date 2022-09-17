@@ -54,6 +54,7 @@ class EditRoomAndBed extends Component {
                             <i class="bi bi-caret-left-fill"></i>
                         </Link>
                     </div>
+
                     <div className="text">
                         <h4>ثبت اتاق و تخت</h4>
                         <p>
@@ -61,6 +62,7 @@ class EditRoomAndBed extends Component {
                             این مرحله در بخش بعدی اتاق ها و تخت های واقع در هر واحد را وارد می نمایید.
                         </p>
                     </div>
+
                     <div className="row pb-5">
                         {this.state.rooms.map((room, i) => (
                             <div className='col-12'>

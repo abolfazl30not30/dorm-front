@@ -16,13 +16,13 @@ import { BiChevronLeft } from 'react-icons/bi'
 class RoomAndBed extends Component {
     static contextType = BuildingContext;
     state = {
-        rooms1: [
+        rooms: [
             {
-                id: 1, roomName: 'اتاق 1',
-                bed: [
-                    { id: 11, bedName: 'تخت 11', empty: true },
+                id: 1, name: 'اتاق 1',
+                beds: [
+                    { id: 11, name: 'تخت 11', empty: true },
                     {
-                        id: 12, bedName: 'تخت 12', empty: false,
+                        id: 12, name: 'تخت 12', empty: false,
                         person: {
                             id: 1,
                             firstName: 'ابوافضل',
@@ -33,18 +33,18 @@ class RoomAndBed extends Component {
                             image: 'https://docs.microsoft.com/answers/storage/attachments/209536-360-f-364211147-1qglvxv1tcq0ohz3fawufrtonzz8nq3e.jpg'
                         }
                     },
-                    { id: 13, bedName: 'تخت 13', empty: true },
-                    { id: 14, bedName: 'تخت 14', empty: true },
-                    { id: 15, bedName: 'تخت 15', empty: true },
+                    { id: 13, name: 'تخت 13', empty: true },
+                    { id: 14, name: 'تخت 14', empty: true },
+                    { id: 15, name: 'تخت 15', empty: true },
 
                 ]
             },
             {
-                id: 2, roomName: 'اتاق 2',
-                bed: [
-                    { id: 21, bedName: 'تخت 21', empty: true },
+                id: 2, name: 'اتاق 2',
+                beds: [
+                    { id: 21, name: 'تخت 21', empty: true },
                     {
-                        id: 22, bedName: 'تخت 22', empty: false,
+                        id: 22, name: 'تخت 22', empty: false,
                         person: {
                             id: 1,
                             firstName: 'پوریا',
@@ -55,18 +55,18 @@ class RoomAndBed extends Component {
                             image: 'https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png'
                         }
                     },
-                    { id: 23, bedName: 'تخت 23', empty: true },
-                    { id: 24, bedName: '24 تخت', empty: true },
-                    { id: 25, bedName: 'تخت 25', empty: true },
+                    { id: 23, name: 'تخت 23', empty: true },
+                    { id: 24, name: '24 تخت', empty: true },
+                    { id: 25, name: 'تخت 25', empty: true },
 
                 ]
             },
             {
-                id: 3, roomName: 'اتاق 3',
-                bed: [
-                    { id: 31, bedName: '31 تخت', empty: true },
+                id: 3, name: 'اتاق 3',
+                beds: [
+                    { id: 31, name: '31 تخت', empty: true },
                     {
-                        id: 32, bedName: 'تخت 32', empty: false,
+                        id: 32, name: 'تخت 32', empty: false,
                         person: {
                             id: 1,
                             firstName: 'فاضل',
@@ -77,31 +77,31 @@ class RoomAndBed extends Component {
                             image: 'https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png'
                         }
                     },
-                    { id: 33, bedName: 'تخت 33', empty: true },
-                    { id: 34, bedName: 'تخت 34', empty: true },
-                    { id: 35, bedName: 'تخت 35', empty: true },
+                    { id: 33, name: 'تخت 33', empty: true },
+                    { id: 34, name: 'تخت 34', empty: true },
+                    { id: 35, name: 'تخت 35', empty: true },
 
                 ]
             },
             {
-                id: 4, roomName: 'اتاق 4',
-                bed: [
-                    { id: 41, bedName: '41 تخت', empty: true },
-                    { id: 42, bedName: '42 تخت', empty: true },
-                    { id: 43, bedName: 'تخت 43', empty: true },
-                    { id: 44, bedName: 'تخت 44', empty: true },
-                    { id: 45, bedName: 'تخت 45', empty: true },
+                id: 4, name: 'اتاق 4',
+                beds: [
+                    { id: 41, name: '41 تخت', empty: true },
+                    { id: 42, name: '42 تخت', empty: true },
+                    { id: 43, name: 'تخت 43', empty: true },
+                    { id: 44, name: 'تخت 44', empty: true },
+                    { id: 45, name: 'تخت 45', empty: true },
 
                 ]
             },
             {
-                id: 4, roomName: 'اتاق 5',
-                bed: [
-                    { id: 51, bedName: '51 تخت', empty: true },
-                    { id: 52, bedName: '52 تخت', empty: true },
-                    { id: 53, bedName: 'تخت 53', empty: true },
-                    { id: 54, bedName: '54 تخت', empty: true },
-                    { id: 55, bedName: 'تخت 55', empty: true },
+                id: 4, name: 'اتاق 5',
+                beds: [
+                    { id: 51, name: '51 تخت', empty: true },
+                    { id: 52, name: '52 تخت', empty: true },
+                    { id: 53, name: 'تخت 53', empty: true },
+                    { id: 54, name: '54 تخت', empty: true },
+                    { id: 55, name: 'تخت 55', empty: true },
 
                 ],
                 accessory: [
@@ -111,23 +111,22 @@ class RoomAndBed extends Component {
                 ]
             },
             {
-                id: 6, roomName: 'اتاق 6',
-                bed: [
-                    { id: 61, bedName: '61 تخت', empty: true },
-                    { id: 62, bedName: '62 تخت', empty: true },
-                    { id: 63, bedName: '63 تخت', empty: true },
-                    { id: 64, bedName: 'تخت 64', empty: true },
-                    { id: 65, bedName: 'تخت 65', empty: true },
+                id: 6, name: 'اتاق 6',
+                beds: [
+                    { id: 61, name: '61 تخت', empty: true },
+                    { id: 62, name: '62 تخت', empty: true },
+                    { id: 63, name: '63 تخت', empty: true },
+                    { id: 64, name: 'تخت 64', empty: true },
+                    { id: 65, name: 'تخت 65', empty: true },
 
                 ]
             }
         ],
         isLoading: false,
 
-        rooms: [],
+        rooms1: [],
         show: false,
         showAccessory: false,
-
         unit: {
             accessories: [
                 { name: 'یخچال', count: 1 },
@@ -156,15 +155,15 @@ class RoomAndBed extends Component {
         }
     }
 
-    async componentDidMount() {
-        const response = await fetch(`http://api.saadatportal.com/api/v1/unit/room/${this.context.unitId}`).then((response) => response.json())
-            .then((data) => this.setState({ rooms: data, isLoading: false }));
-        const responseUnit = await fetch(`http://api.saadatportal.com/api/v1/unit/${this.context.unitId}`).then((response) => response.json())
-            .then((data) => this.setState({ unit: data, isLoading: false }));
+    // async componentDidMount() {
+    //     const response = await fetch(`http://api.saadatportal.com/api/v1/unit/room/${this.context.unitId}`).then((response) => response.json())
+    //         .then((data) => this.setState({ rooms: data, isLoading: false }));
+    //     const responseUnit = await fetch(`http://api.saadatportal.com/api/v1/unit/${this.context.unitId}`).then((response) => response.json())
+    //         .then((data) => this.setState({ unit: data, isLoading: false }));
 
-        console.log(this.state.rooms);
-        console.log(this.state.unit);
-    }
+    //     console.log(this.state.rooms);
+    //     console.log(this.state.unit);
+    // }
 
     handleClose = () => {
         this.setState({ show: false })
