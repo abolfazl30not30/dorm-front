@@ -93,34 +93,37 @@ class FloorAndUnit extends Component {
                             جایگاه تخت خود را برگزینید
                         </p>
                     </div>
-                    <div className={this.state.isFull ? "edit-btn-container" : "register-btn-container"}>
-                        <Link to="edit-floor-and-unit" className={this.state.isFull ? "edit-btn" : "register-btn"}>
-                            {this.state.isFull ? (<h6>ویرایش</h6>) : (<h6> ثبت طبقه و واحد</h6>)}
-                        </Link>
-                    </div>
+
                     {this.state.isLoading ? (
                         <div className='row' style={{ marginTop: "60px" }}>
                             <FloorAndBedLoading />
                         </div>
                     ) : (
-                        <div className="floor-container row">
-                            {this.state.floor.map((f) => (
-                                <div className="col-md-4 col-sm-6 col-xs-12 p-0">
-                                    <div className='floor'>
-                                        <h3 className='floor-name'>{f.name}</h3>
-                                        <div className="unit-container row">
-                                            {f.units.map((unit) => (
-                                                <div className={`unit col-4`}>
-                                                    <Link className={`${unit.empty ? "empty-link" : "full-link"}`} to="/RoomAndBed" onClick={() => { this.context.handleUnitNumber(unit.number, unit.id) }}>
-                                                        <TbBuilding fontSize="2rem" />
-                                                        <h5 className='unit-name'>واحد {unit.number}</h5>
-                                                    </Link>
-                                                </div>
-                                            ))}
+                        <div>
+                            <div className={this.state.isFull ? "edit-btn-container" : "register-btn-container"}>
+                                <Link to="edit-floor-and-unit" className={this.state.isFull ? "edit-btn" : "register-btn"}>
+                                    {this.state.isFull ? (<h6>ویرایش</h6>) : (<h6> ثبت طبقه و واحد</h6>)}
+                                </Link>
+                            </div>
+                            <div className="floor-container row">
+                                {this.state.floor.map((f) => (
+                                    <div className="col-md-4 col-sm-6 col-xs-12 p-0">
+                                        <div className='floor'>
+                                            <h3 className='floor-name'>{f.name}</h3>
+                                            <div className="unit-container row">
+                                                {f.units.map((unit) => (
+                                                    <div className={`unit col-4`}>
+                                                        <Link className={`${unit.empty ? "empty-link" : "full-link"}`} to="/RoomAndBed" onClick={() => { this.context.handleUnitNumber(unit.number, unit.id) }}>
+                                                            <TbBuilding fontSize="2rem" />
+                                                            <h5 className='unit-name'>واحد {unit.number}</h5>
+                                                        </Link>
+                                                    </div>
+                                                ))}
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            ))}
+                                ))}
+                            </div>
                         </div>
                     )}
                 </div>

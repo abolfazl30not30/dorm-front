@@ -32,12 +32,14 @@ class EditFloorAndUnit extends Component {
         return (
             <>
                 <div className="p5">
+
                     <div className="back-btn">
                         <Link to="/booking">
                             بازگشت
                             <i class="bi bi-caret-left-fill"></i>
                         </Link>
                     </div>
+
                     <div className="text">
                         <h4>ثبت طبقه و واحد</h4>
                         <p>
@@ -45,6 +47,7 @@ class EditFloorAndUnit extends Component {
                             این مرحله در بخش بعدی اتاق ها و تخت های واقع در هر واحد را وارد می نمایید.
                         </p>
                     </div>
+
                     <div className="row pb-5">
                         {this.state.floor.map((f, i) => (
                             <div className="col-4 p-3">
