@@ -6,7 +6,9 @@ import { TbBuilding } from 'react-icons/tb';
 import { EditText, EditTextarea } from 'react-edit-text';
 import { Link } from "react-router-dom";
 import { Button, Modal } from 'react-bootstrap';
-
+import CounterInput from "react-counter-input";
+import { FaPencilAlt } from "react-icons/fa";
+import { MdAddCircle } from "react-icons/md"
 import 'react-edit-text/dist/index.css';
 
 class EditFloorAndUnit extends Component {
@@ -15,6 +17,7 @@ class EditFloorAndUnit extends Component {
         indexOfFloor: null,
         showDeleteModalUnit: false,
         showDeleteModalFloor: false,
+        showَFloorAccessory: false,
         unitTemp: {},
         floorTemp: {},
         floorIndex: 0
@@ -47,7 +50,18 @@ class EditFloorAndUnit extends Component {
                             <div className="col-4 p-3">
                                 <div className="floor-box">
                                     <button className="floor-close-btn" onClick={() => { this.handleDeleteShowFloor(f) }}><AiFillCloseCircle color="#F1416C" /></button>
-                                    <div className="title"><EditText ref="floorTitle" showEditButton defaultValue={f.name} onSave={this.editFloorTitle} /></div>
+                                    <div className="row">
+                                        <div className="col-7 p-0">
+                                            <div className="title">
+                                                <EditText ref="floorTitle" showEditButton defaultValue={f.name} onSave={this.editFloorTitle} />
+                                            </div>
+                                        </div>
+                                        <div className="col-5">
+                                            <div className="addAccessory">
+                                                <button className="addAccessoryBtn" onClick={() => { this.hanldeFloorAccShow() }}>امکانات طبقه <MdAddCircle fontSize="15px" /> </button>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div className="d-flex flex-wrap">
                                         {f.units.map((u) => (
                                             <div className="col-4">
@@ -97,6 +111,27 @@ class EditFloorAndUnit extends Component {
                     <Modal.Footer className="justify-content-start">
                         <button className="btn btn-danger" onClick={() => this.handleDeleteCloseUnit(true)}>حذف</button>
                         <button className="btn btn-light" onClick={() => this.handleDeleteCloseUnit(false)}>بستن</button>
+                    </Modal.Footer>
+                </Modal>
+
+                <Modal centered show={this.state.showَFloorAccessory} onClick={() => { this.handleFloorAccClose() }}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>اضافه کردن امکانات طبقه</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body className="justify-content-center">
+                        <div className="accessory row">
+                            <div><button className="close-btn" onClick={() => { }}><AiFillCloseCircle color="#F1416C" /></button></div>
+                            <div className="accessory-title col-7">
+                                <EditText style={{ backgroundColor: "#f9f9f9" }} className="editable" showEditButton defaultValue="یخچال" editButtonContent={<FaPencilAlt fontSize="15px" />} />
+                            </div>
+                            <div className="accessory-count col-5">
+                                <CounterInput min={0} max={10} count="1" onCountChange={count => console.log(count)} />
+                            </div>
+                        </div>
+                    </Modal.Body>
+                    <Modal.Footer className="justify-content-start">
+                        <button className="btn btn-success" onClick={() => { }}>ثبت</button>
+                        <button className="btn btn-light" onClick={() => { this.handleFloorAccClose() }}>بستن</button>
                     </Modal.Footer>
                 </Modal>
 
@@ -256,6 +291,16 @@ class EditFloorAndUnit extends Component {
         if (bool) {
             this.deleteFloor(this.state.floorTemp);
         }
+    }
+
+    hanldeFloorAccShow = () => {
+        this.setState({ showَFloorAccessory: true })
+    }
+    handleFloorAccSubmit = () => {
+        this.setState({ showَFloorAccessory: false })
+    }
+    handleFloorAccClose = () => {
+        this.setState({ showَFloorAccessory: false })
     }
 }
 

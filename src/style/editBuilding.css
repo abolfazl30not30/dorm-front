@@ -51,6 +51,24 @@
     margin-top: 10px;
 }
 
+.floor-box .addAccessory {
+    display: flex;
+    justify-content: center;
+    margin-top: 22px;
+}
+
+.floor-box .addAccessory .addAccessoryBtn {
+    background-color: transparent;
+    border: none;
+    font-size: 12px;
+    width: 100%;
+    color: #2980b9;
+}
+
+.floor-box .addAccessory .addAccessoryBtn:hover {
+    color: #296d9a;
+}
+
 .floor-box .floor-close-btn {
     background-color: transparent;
     align-self: start;
