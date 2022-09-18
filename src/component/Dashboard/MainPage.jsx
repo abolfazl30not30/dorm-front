@@ -9,6 +9,7 @@ import FullViewOfBed from './pages/Inventory and capacity/FullViewOfBed';
 import EditFloorAndUnit from './pages/edit building/EditFloorAndUnit';
 import EditRoomAndBed from './pages/edit building/EditRoomAndBed';
 import MainRegister from './pages/Register/MainRegister';
+import PaymentPage from './pages/paymentPage/PaymentPage'
 
 class MainPage extends Component {
     state = {
@@ -24,6 +25,7 @@ class MainPage extends Component {
                             <Route path="/" element={(<Home />)} />
                             <Route path="/booking/edit-floor-and-unit" element={(<EditFloorAndUnit />)} />
                             <Route path='/editRoomAndBed' element={(<EditRoomAndBed />)} />
+                            <Route path='/payment' element={(<PaymentPage />)} />
                             <Route path="/Register" element={(<MainRegister />)} />
                             <Route path="/edit" element={(<EditFloorAndUnit />)} />
                             <Route path="/booking" element={(<FloorAndUnit />)} />

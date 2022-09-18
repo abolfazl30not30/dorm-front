@@ -42,6 +42,12 @@ class HamburgerMenu extends Component {
                         </Link>
                     </li>
                     <li className='sidenav-item'>
+                        <Link to="/payment" className='sidenav-link'>
+                            <i className="bi bi-journal-plus"></i>
+                            ثبت فاکتور
+                        </Link>
+                    </li>
+                    <li className='sidenav-item'>
                         <Link to="/" className='sidenav-link'>
                             <i class="bi bi-hand-thumbs-up"></i>
                             باشگاه
