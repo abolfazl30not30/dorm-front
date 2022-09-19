@@ -233,6 +233,7 @@ class EditFloorAndUnit extends Component {
             },
             body: JSON.stringify({ floorId: floorId, number: number, empty: "true" })
         });
+
         const content = await rawResponse.json();
         console.log(content);
 
@@ -242,6 +243,7 @@ class EditFloorAndUnit extends Component {
         this.setState({ floor: updatedState });
         console.log(this.state.floor)
     }
+
     deleteFloor = async (floor) => {
         this.setState({ showDeleteModal: true });
 

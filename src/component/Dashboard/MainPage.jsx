@@ -23,7 +23,7 @@ class MainPage extends Component {
                         <Routes>
                             <Route path="/" element={(<Home />)} />
                             <Route path="/booking/edit-floor-and-unit" element={(<EditFloorAndUnit />)} />
-                            <Route path='/editRoomAndBed' element={(<EditRoomAndBed />)} />
+                            <Route path='/RoomAndBed/edit-room-and-bed' element={(<EditRoomAndBed />)} />
                             <Route path="/Register" element={(<MainRegister />)} />
                             <Route path="/edit" element={(<EditFloorAndUnit />)} />
                             <Route path="/booking" element={(<FloorAndUnit />)} />

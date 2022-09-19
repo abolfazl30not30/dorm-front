@@ -141,6 +141,17 @@
 
 .RoomAndBed {}
 
+.RoomAndBed .unit-name {
+    margin: 50px 22px 27px 0;
+}
+
+.RoomAndBed .unit-name .unit-title {
+    margin-right: 10px;
+    font-size: 1.6rem;
+    color: #555;
+
+}
+
 .RoomAndBed .room-box {
     background-color: #fff;
     margin: 4%;

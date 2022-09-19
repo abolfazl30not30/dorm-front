@@ -16,7 +16,7 @@ import { BiChevronLeft } from 'react-icons/bi'
 class RoomAndBed extends Component {
     static contextType = BuildingContext;
     state = {
-        rooms: [
+        rooms1: [
             {
                 id: 1, name: 'اتاق 1',
                 beds: [
@@ -122,9 +122,10 @@ class RoomAndBed extends Component {
                 ]
             }
         ],
-        isLoading: false,
 
-        rooms1: [],
+        isLoading: false,
+        isFull: true,
+        rooms: [],
         show: false,
         showAccessory: false,
         unit: {
@@ -155,15 +156,13 @@ class RoomAndBed extends Component {
         }
     }
 
-    // async componentDidMount() {
-    //     const response = await fetch(`http://api.saadatportal.com/api/v1/unit/room/${this.context.unitId}`).then((response) => response.json())
-    //         .then((data) => this.setState({ rooms: data, isLoading: false }));
-    //     const responseUnit = await fetch(`http://api.saadatportal.com/api/v1/unit/${this.context.unitId}`).then((response) => response.json())
-    //         .then((data) => this.setState({ unit: data, isLoading: false }));
+    async componentDidMount() {
+        const response = await fetch(`http://api.saadatportal.com/api/v1/unit/room/${this.context.unitId}`).then((response) => response.json())
+            .then((data) => this.setState({ rooms: data, isLoading: false }));
 
-    //     console.log(this.state.rooms);
-    //     console.log(this.state.unit);
-    // }
+        const responseUnit = await fetch(`http://api.saadatportal.com/api/v1/unit/${this.context.unitId}`).then((response) => response.json())
+            .then((data) => this.setState({ unit: data, isLoading: false }));
+    }
 
     handleClose = () => {
         this.setState({ show: false })
@@ -212,33 +211,40 @@ class RoomAndBed extends Component {
                                 <FloorAndBedLoading />
                             </div>
                         ) : (
-                            <div className="d-flex flex-wrap">
-                                {
-                                    this.state.rooms.map(
-                                        (room) => (
-                                            <div className="col-4">
-                                                <div className="room-box">
-                                                    <div className="title">{room.description}({room.concatName})</div>
-                                                    <div className='d-flex flex-wrap'>
-                                                        {room.beds.map((bed) => (
-                                                            <div className="col-4 p-1">
-                                                                <div
-                                                                    className={`bed-box ${bed.empty ? "empty" : "full"}`}>
-                                                                    <Button onClick={() => {
-                                                                        this.handleShow(bed, room)
-                                                                    }}>
-                                                                        <BiBed fontSize="2rem" />
-                                                                        <div className="title">{bed.name}</div>
-                                                                    </Button>
+                            <div>
+                                <div className={this.state.isFull ? "edit-btn-container" : "register-btn-container"}>
+                                    <Link to="edit-room-and-bed" className={this.state.isFull ? "edit-btn" : "register-btn"}>
+                                        {this.state.isFull ? (<h6>ویرایش</h6>) : (<h6> ثبت طبقه و واحد</h6>)}
+                                    </Link>
+                                </div>
+                                <div className="d-flex flex-wrap">
+                                    {
+                                        this.state.rooms.map(
+                                            (room) => (
+                                                <div className="col-4">
+                                                    <div className="room-box">
+                                                        <div className="title">اتاق {room.number}</div>
+                                                        <div className='d-flex flex-wrap'>
+                                                            {room.beds.map((bed) => (
+                                                                <div className="col-4 p-1">
+                                                                    <div
+                                                                        className={`bed-box ${bed.empty ? "empty" : "full"}`}>
+                                                                        <Button onClick={() => {
+                                                                            this.handleShow(bed, room)
+                                                                        }}>
+                                                                            <BiBed fontSize="2rem" />
+                                                                            <div className="title">{bed.name}</div>
+                                                                        </Button>
+                                                                    </div>
                                                                 </div>
-                                                            </div>
-                                                        ))}
+                                                            ))}
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            )
                                         )
-                                    )
-                                }
+                                    }
+                                </div>
                             </div>
                         )
                     }
