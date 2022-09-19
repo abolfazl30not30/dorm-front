@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, {Component, createRef} from 'react'
 import '../../../../style/profilePage.css'
 import default_photo from '../../../../img/default_photo.png'
 import Tab from 'react-bootstrap/Tab';
@@ -65,11 +65,26 @@ class ProfilePage extends Component {
         show: false,
         reportType:'cleaning'
     }
+    date = createRef();
+    description = createRef();
+    time = createRef();
+    startDate = createRef();
+    endDate = createRef();
+    destinationAddress = createRef();
+    destinationPhoneNumber = createRef();
+    relation = createRef();
+    typePenalty = createRef();
+    dischargeDateAnnounce = createRef();
+    dischargeDate = createRef();
+    depositReturnDate = createRef();
+    deductionOfLosses = createRef();
+    deductionOfLossesReason = createRef();
+    refundableAmount = createRef();
+    reason = createRef();
 
     handleClose = () => {
         this.setState({ show: true })
     };
-
     handleShow = () => {
         this.setState({ show: true })
     };
@@ -77,8 +92,113 @@ class ProfilePage extends Component {
         const type = e.target.value
         this.setState({reportType: type})
     }
-    recordReport = () => {
-        console.log('done')
+    handleSubmit = (e) => {
+        e.preventDefault();
+        const type = this.state.reportType;
+        this.setState({reports: type})
+        switch (type) {
+            case 'cleaning':
+                return (() => {
+                    const date = this.date.current.value;
+                    const description = this.description.current.value;
+                    const result = {
+                        'title' : this.state.reportType,
+                        'date' : date,
+                        'description' : description
+                    }
+                    console.log(result)
+                })();
+            case 'delayInArrival':
+                return (() => {
+                    const date = this.date.current.value;
+                    const time = this.time.current.value;
+                    const result = {
+                        'title' : this.state.reportType,
+                        'date' : date,
+                        'time' : time
+                    }
+                    console.log(result)
+                })();
+            case 'exit':
+                return (() => {
+                    const startDate = this.startDate.current.value;
+                    const endDate = this.endDate.current.value;
+                    const destinationAddress = this.destinationAddress.current.value;
+                    const destinationPhoneNumber = this.destinationPhoneNumber.current.value;
+                    const relation = this.relation.current.value;
+                    const result = {
+                        'title' : this.state.reportType,
+                        'timePeriod' : {
+                            "startDate": startDate,
+                            "endDate": endDate
+                        },
+                        'destinationAddress' : destinationAddress,
+                        'destinationPhoneNumber' : destinationPhoneNumber,
+                        'relation' : relation
+                    }
+                    console.log(result)
+                })();
+            case 'violation':
+                return (() => {
+                    const date = this.date.current.value;
+                    const time = this.time.current.value;
+                    const description = this.description.current.value;
+                    const result = {
+                        'title' : this.state.reportType,
+                        'date' : date,
+                        'time' : time,
+                        'description' : description
+                    }
+                    console.log(result)
+                })();
+            case 'penalty':
+                return (() => {
+                    const description = this.description.current.value;
+                    const typePenalty = this.typePenalty.current.value;
+                    const result = {
+                        'title' : this.state.reportType,
+                        'typePenalty' : typePenalty,
+                        'description' : description
+                    }
+                    console.log(result)
+                })();
+            case 'discharge':
+                return (() => {
+                    const dischargeDateAnnounce = this.dischargeDateAnnounce.current.value;
+                    const dischargeDate = this.dischargeDate.current.value;
+                    const depositReturnDate = this.depositReturnDate.current.value;
+                    const deductionOfLosses = this.deductionOfLosses.current.value;
+                    const deductionOfLossesReason = this.deductionOfLossesReason.current.value;
+                    const refundableAmount = this.refundableAmount.current.value;
+
+                    const result = {
+                        'title' : this.state.reportType,
+                        'dischargeDateAnnounce' : dischargeDateAnnounce,
+                        'dischargeDate' : dischargeDate,
+                        'depositReturnDate' : depositReturnDate,
+                        'deductionOfLosses' : deductionOfLosses,
+                        'deductionOfLossesReason' : deductionOfLossesReason,
+                        'refundableAmount' : refundableAmount
+                    }
+                    console.log(result)
+                })();
+            case 'cancelContract':
+                return (() => {
+                    const date = this.date.current.value;
+                    const reason = this.reason.current.value;
+                    const deductionOfLosses = this.deductionOfLosses.current.value;
+                    const refundableAmount = this.refundableAmount.current.value;
+
+                    const result = {
+                        'title' : this.state.reportType,
+                        'data' : date,
+                        'reason' : reason,
+                        'deductionOfLosses' : deductionOfLosses,
+                        'refundableAmount' : refundableAmount
+                    }
+                    console.log(result)
+                })();
+        }
     }
 
     render() {
@@ -199,7 +319,7 @@ class ProfilePage extends Component {
                         <Modal.Title><span>ثبت گزارش</span></Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <div className="my-3 mx-2">
+                        <form className="my-3 mx-2" onSubmit={this.handleSubmit}>
                             <div className='input-report-box'>
                                 <select className='input' onChange={this.reportType}>
                                     <option value='cleaning'>نوبت نظافت شبانه</option>
@@ -216,78 +336,78 @@ class ProfilePage extends Component {
                                 switch(this.state.reportType) {
                                     case 'cleaning':
                                         return <>
-                                            <div className='input-report-box'>
-                                                <input type="text" className="input" placeholder=" "/>
+                                            {/*<div className='input-report-box'>
+                                                <input type="text"  className="input" placeholder=" "/>
                                                 <label className="placeholder">روز</label>
-                                            </div>
+                                            </div>*/}
                                             <div className='input-report-box'>
-                                                <input type="text" className="input" placeholder=" "/>
+                                                <input type="text" ref={this.date} className="input" placeholder=" "/>
                                                 <label className="placeholder">تاریخ</label>
                                             </div>
                                             <div className='input-report-box'>
-                                                <input type="text" className="input" placeholder=" "/>
+                                                <input type="text" ref={this.description} className="input" placeholder=" "/>
                                                 <label className="placeholder">توضیحات</label>
                                             </div>
                                         </>;
                                     case 'delayInArrival':
                                         return <>
                                             <div className='input-report-box'>
-                                                <input type="text" className="input" placeholder=" "/>
+                                                <input type="text" ref={this.date} className="input" placeholder=" "/>
                                                 <label className="placeholder">تاریخ</label>
                                             </div>
                                             <div className='input-report-box'>
-                                                <input type="text" className="input" placeholder=" "/>
+                                                <input type="text" ref={this.time} className="input" placeholder=" "/>
                                                 <label className="placeholder">ساعت</label>
                                             </div>
                                         </>;
                                     case 'exit':
                                         return <>
                                             <div className='input-report-box'>
-                                                <input type="text" className="input" placeholder=" "/>
+                                                <input type="text" ref={this.startDate} className="input" placeholder=" "/>
                                                 <label className="placeholder">از تاريخ</label>
                                             </div>
                                             <div className='input-report-box'>
-                                                <input type="text" className="input" placeholder=" "/>
+                                                <input type="text" ref={this.endDate} className="input" placeholder=" "/>
                                                 <label className="placeholder">تا تاريخ</label>
                                             </div>
                                             <div className='input-report-box'>
-                                                <input type="text" className="input" placeholder=" "/>
+                                                <input type="text" ref={this.destinationAddress} className="input" placeholder=" "/>
                                                 <label className="placeholder">آدرس مقصد</label>
                                             </div>
                                             <div className='input-report-box'>
-                                                <input type="text" className="input" placeholder=" "/>
+                                                <input type="text" ref={this.destinationPhoneNumber} className="input" placeholder=" "/>
                                                 <label className="placeholder">شماره تماس مقصد</label>
                                             </div>
                                             <div className='input-report-box'>
-                                                <input type="text" className="input" placeholder=" "/>
+                                                <input type="text" ref={this.relation} className="input" placeholder=" "/>
                                                 <label className="placeholder">نسبت</label>
                                             </div>
                                         </>;
                                     case 'violation':
                                         return <>
                                             <div className='input-report-box'>
-                                                <input type="text" className="input" placeholder=" "/>
+                                                <input type="text" ref={this.description} className="input" placeholder=" "/>
                                                 <label className="placeholder">گزارش تخلف</label>
                                             </div>
                                             <div className='input-report-box'>
-                                                <input type="text" className="input" placeholder=" "/>
+                                                <input type="text" ref={this.date} className="input" placeholder=" "/>
                                                 <label className="placeholder">تاریخ</label>
                                             </div>
                                             <div className='input-report-box'>
-                                                <input type="text" className="input" placeholder=" "/>
+                                                <input type="text" ref={this.time} className="input" placeholder=" "/>
                                                 <label className="placeholder">ساعت</label>
                                             </div>
                                         </>;
                                     case 'penalty':
                                         return <>
                                             <div className='input-report-box'>
-                                                <input type="text" className="input" placeholder=" "/>
+                                                <input type="text" ref={this.description} className="input" placeholder=" "/>
                                                 <label className="placeholder">دلیل جریمه</label>
                                             </div>
                                             <div className='input-report-box'>
-                                                <select className='input'>
-                                                    <option>نقدی</option>
-                                                    <option>تنبیهی</option>
+                                                <select ref={this.typePenalty} className='input'>
+                                                    <option value='cash'>نقدی</option>
+                                                    <option value='punishment'>تنبیهی</option>
                                                 </select>
                                                 <label className="placeholder">نوع جریمه</label>
                                             </div>
@@ -295,59 +415,59 @@ class ProfilePage extends Component {
                                     case 'discharge':
                                         return <>
                                             <div className='input-report-box'>
-                                                <input type="text" className="input" placeholder=" "/>
+                                                <input type="text" ref={this.dischargeDateAnnounce} className="input" placeholder=" "/>
                                                 <label className="placeholder">تاریخ اعلام تخلیه</label>
                                             </div>
                                             <div className='input-report-box'>
-                                                <input type="text" className="input" placeholder=" "/>
+                                                <input type="text" ref={this.dischargeDate} className="input" placeholder=" "/>
                                                 <label className="placeholder">تاریخ تخلیه</label>
                                             </div>
                                             <div className='input-report-box'>
-                                                <input type="text" className="input" placeholder=" "/>
+                                                <input type="text" ref={this.depositReturnDate} className="input" placeholder=" "/>
                                                 <label className="placeholder">تاریخ عودت ودیعه</label>
                                             </div>
                                             <div className='input-report-box'>
-                                                <input type="text" className="input" placeholder=" "/>
+                                                <input type="text" ref={this.deductionOfLosses} className="input" placeholder=" "/>
                                                 <label className="placeholder">کسر ضرر و زیان</label>
                                             </div>
                                             <div className='input-report-box'>
-                                                <input type="text" className="input" placeholder=" "/>
+                                                <input type="text" ref={this.deductionOfLossesReason} className="input" placeholder=" "/>
                                                 <label className="placeholder">علت کسر ضر و زیان</label>
                                             </div>
                                             <div className='input-report-box'>
-                                                <input type="text" className="input" placeholder=" "/>
+                                                <input type="text" ref={this.refundableAmount} className="input" placeholder=" "/>
                                                 <label className="placeholder">مبلغ قابل عودت</label>
                                             </div>
                                         </>;
                                     case 'cancelContract':
                                         return <>
-                                            <div className='input-report-box'>
+                                            {/*<div className='input-report-box'>
                                                 <input type="text" className="input" placeholder=" "/>
                                                 <label className="placeholder">روز</label>
-                                            </div>
+                                            </div>*/}
                                             <div className='input-report-box'>
-                                                <input type="text" className="input" placeholder=" "/>
+                                                <input type="text" ref={this.date} className="input" placeholder=" "/>
                                                 <label className="placeholder">تاریخ</label>
                                             </div>
                                             <div className='input-report-box'>
-                                                <input type="text" className="input" placeholder=" "/>
+                                                <input type="text" ref={this.reason} className="input" placeholder=" "/>
                                                 <label className="placeholder">علت</label>
                                             </div>
                                             <div className='input-report-box'>
-                                                <input type="text" className="input" placeholder=" "/>
+                                                <input type="text" ref={this.deductionOfLosses} className="input" placeholder=" "/>
                                                 <label className="placeholder">کسر ضرر و زیان</label>
                                             </div>
                                             <div className='input-report-box'>
-                                                <input type="text" className="input" placeholder=" "/>
+                                                <input type="text" ref={this.refundableAmount} className="input" placeholder=" "/>
                                                 <label className="placeholder">مبلغ قابل عودت</label>
                                             </div>
                                         </>
                                 }
                             })()}
                             <div className="input-report-box">
-                                <button className='btn btn-record-report' onClick={this.recordReport()}>ثبت</button>
+                                <button className='btn btn-record-report'>ثبت</button>
                             </div>
-                        </div>
+                        </form>
                     </Modal.Body>
                 </Modal>
             </>
