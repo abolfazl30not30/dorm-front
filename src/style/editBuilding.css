@@ -122,8 +122,13 @@
 
 .register .register-btn {
     border: none;
+    color: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
     border-radius: 15px;
-    width: 20%;
+    width: 25%;
     height: 48px;
     background-color: #2ecc71;
     font-size: 15px;
@@ -160,17 +165,18 @@
     box-shadow: 0px 0px 4px rgb(0 0 0 / 10%);
 }
 
-.RoomAndBed .room-box .title-container {}
+.RoomAndBed .room-box .title-container {
+    margin-right: 6px;
+}
+
 
 .RoomAndBed .room-box .title-container .firstTitle {
     display: flex;
     align-items: center;
     padding: 10px;
-    font-size: 20px;
 }
 
 .RoomAndBed .room-box .title-container .firstTitle label {
-
     font-size: 15px;
     margin-left: 2rem;
     color: #676767;
@@ -179,12 +185,28 @@
 .RoomAndBed .room-box .title-container .description {
     display: flex;
     align-items: center;
+    padding: 10px;
 }
 
 .RoomAndBed .room-box .title-container .description label {
     font-size: 15px;
     margin-left: 2rem;
     color: #676767;
+}
+
+.RoomAndBed .room-box .title-container .addAccessory {
+    padding: 10px;
+    font-size: 13px;
+}
+
+.RoomAndBed .room-box .title-container .addAccessoryBtn {
+    background-color: transparent;
+    border: none;
+    color: #2980b9;
+}
+
+.RoomAndBed .room-box .title-container .addAccessoryBtn:hover {
+    color: #2f6e97;
 }
 
 .RoomAndBed .room-box .bed-container {}
@@ -209,7 +231,7 @@
     background-color: #f9f9f9;
 }
 
-.RoomAndBed .room-box .accessory-box {
+.modal-body {
     background-color: #fff;
     margin: 4%;
     padding: 3%;
@@ -220,28 +242,28 @@
     align-items: center;
 }
 
-.RoomAndBed .room-box .accessory-box .accessory-box-title {
+.modal-body .accessory-box-title {
     display: flex;
     justify-content: space-around;
     margin-bottom: 15px;
     width: 100%;
 }
 
-.RoomAndBed .room-box .accessory-box .accessory-box-title h5 {
+.modal-body .accessory-box-title h5 {
     font-size: 17px;
     color: #676767;
 }
 
-.RoomAndBed .room-box .accessory-box .accessory-box-title h5:first-child {
+.modal-body .accessory-box-title h5:first-child {
     flex: 2;
     padding-right: 44px;
 }
 
-.RoomAndBed .room-box .accessory-box .accessory-box-title h5:last-child {
+.modal-body .accessory-box-title h5:last-child {
     flex: 1.1
 }
 
-.RoomAndBed .room-box .accessory-box .accessory {
+.modal-body .accessory {
     width: 85%;
     padding: 5px;
     margin: 10px 0;
@@ -250,15 +272,15 @@
     box-shadow: 0px 0px 4px rgb(0 0 0 / 10%);
 }
 
-.RoomAndBed .room-box .accessory-box .accessory .accessory-title {
+.modal-body .accessory .accessory-title {
     display: flex;
     align-items: center;
 }
 
-.RoomAndBed .room-box .accessory-box .accessory .accessory-count {}
+.accessory-box .accessory .accessory-count {}
 
 
-.RoomAndBed .room-box .accessory-box .accessory-add-btn {
+.modal-body .accessory-add-btn {
     border: 1px dashed #ddd;
     border-radius: 10px;
     width: 85%;
@@ -271,7 +293,7 @@
     background-color: #f9f9f9;
 }
 
-.RoomAndBed .room-box .accessory-box .accessory-add-btn:hover {
+.modal-body .accessory-add-btn:hover {
     background-color: #ebebeb;
 }
 
@@ -293,14 +315,19 @@
 
 .register .register-btn-room {
     border: none;
+    color: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
     border-radius: 15px;
-    width: 30%;
-    height: 50px;
+    width: 25%;
+    height: 48px;
     background-color: #2ecc71;
     font-size: 15px;
     font-weight: bold;
     box-shadow: 0px 0px 6px rgb(0 0 0 / 20%);
-    margin-bottom: 50px;
+    margin-bottom: 30px;
 }
 
 

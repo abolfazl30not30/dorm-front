@@ -87,7 +87,7 @@ class EditFloorAndUnit extends Component {
                         </div>
                     </div>
                     <div className="register">
-                        <button className="register-btn">ثـبـت</button>
+                        <Link to="/booking" className="register-btn">ثـبـت</Link>
                     </div>
                 </div>
 

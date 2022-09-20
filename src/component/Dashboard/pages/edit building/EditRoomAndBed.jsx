@@ -124,20 +124,18 @@ class EditRoomAndBed extends Component {
 
                     <div className="row pb-5">
                         {this.state.rooms.map((room, i) => (
-                            <div className='col-12'>
+                            <div className='col-6'>
                                 <div className='room-box'>
                                     <button className="close-btn" onClick={() => { this.deleteRoom(room) }}><AiFillCloseCircle color="#F1416C" /></button>
-                                    <div className="title-container row">
-                                        <div className="col-6 d-flex align-item-center"><div className="firstTitle"><label>شماره اتاق:</label><EditText showEditButton defaultValue={room.number} editButtonContent={<FaPencilAlt color="#f39c12" fontSize="16px" />} /></div></div>
-                                        <div className='col-6  d-flex align-item-center'><div className="description"><label>توضیحات:</label><EditText showEditButton defaultValue={room.description} editButtonContent={<FaPencilAlt color="#f39c12" fontSize="15px" />} /></div></div>
-                                    </div>
-                                    <div className="col-5">
+                                    <div className="title-container">
+                                        <div className="firstTitle d-flex"><label>شماره اتاق:</label><EditText showEditButton defaultValue={room.number} editButtonContent={<FaPencilAlt color="#f39c12" fontSize="16px" />} /></div>
+                                        <div className="description d-flex "><label>توضیحات:</label><EditText showEditButton defaultValue={room.description} editButtonContent={<FaPencilAlt color="#f39c12" fontSize="15px" />} /></div>
                                         <div className="addAccessory">
                                             <button className="addAccessoryBtn" onClick={() => { this.handleRoomAccShow(room) }}>امکانات اتاق <MdAddCircle fontSize="15px" /> </button>
                                         </div>
                                     </div>
                                     <div className='row'>
-                                        <div className='col-6 row bed-container'>
+                                        <div className='col-12 row bed-container'>
                                             {
                                                 room.beds.map((bed) => (
                                                     <div className='col-4'>
@@ -153,33 +151,15 @@ class EditRoomAndBed extends Component {
                                             <div className='col-4'>
                                                 <button onClick={() => { this.addBed(room) }} className="bed-add-btn"><AiOutlinePlus /></button>
                                             </div>
-
-                                        </div>
-                                        <div className='col-6 d-flex justify-content-center align-items-center'>
-                                            <div className='accessory-box'>
-                                                <div className="accessory-box-title"><h5>تجهیزات</h5><h5>تعداد</h5></div>
-                                                {room.accessories.map((accessory) => (
-                                                    <div className="accessory row">
-                                                        <div><button className="close-btn" onClick={() => { this.deleteAccessory(accessory, i) }}><AiFillCloseCircle color="#F1416C" /></button></div>
-                                                        <div className="accessory-title col-7">
-                                                            <EditText style={{ backgroundColor: "#f9f9f9" }} className="editable" showEditButton defaultValue={accessory.name} editButtonContent={<FaPencilAlt color="#f39c12" fontSize="15px" />} />
-                                                        </div>
-                                                        <div className="accessory-count col-5">
-                                                            <CounterInput min={0} max={10} count={accessory.count} onCountChange={count => console.log(count)} />
-                                                        </div>
-                                                    </div>
-                                                ))}
-                                                <button onClick={() => { this.addAccessory(room) }} className="accessory-add-btn"><AiOutlinePlus /></button>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         ))}
-                        <div className="col-12"><div className='room-add-btn' onClick={() => { this.addRoom() }}><AiOutlinePlus /></div></div>
+                        <div className="col-6"><div className='room-add-btn' onClick={() => { this.addRoom() }}><AiOutlinePlus /></div></div>
                     </div>
                     <div className="register">
-                        <button className="register-btn-room">ثـبـت</button>
+                        <Link to="/RoomAndBed" className="register-btn-room">ثـبـت</Link>
                     </div>
                 </div>
 
@@ -209,15 +189,15 @@ class EditRoomAndBed extends Component {
                     </Modal.Footer>
                 </Modal> */}
 
-                <Modal centered show={this.state.showَRoomAccessory} onClick={() => { this.handleRoomAccClose() }}>
+                <Modal centered show={this.state.showَRoomAccessory} onHide={() => { this.handleRoomAccClose() }}>
                     <Modal.Header closeButton>
-                        <Modal.Title>اضافه کردن امکانات اتاق</Modal.Title>
+                        <Modal.Title>افزودن امکانات اتاق</Modal.Title>
                     </Modal.Header>
                     <Modal.Body className="justify-content-center">
-                        <div className="accessory-box-title"><h5>تجهیزات</h5><h5>تعداد</h5></div>
+                        <div className="accessory-box-title d-flex"><h5>تجهیزات</h5><h5>تعداد</h5></div>
                         {this.state.tempRoom.accessories.map((accessory) => (
                             <div className="accessory row">
-                                <div><button className="close-btn" onClick={() => { }}><AiFillCloseCircle color="#F1416C" /></button></div>
+                                <div><button className="close-btn" onClick={() => { this.deleteAccessory(accessory, this.state.tempRoom) }}><AiFillCloseCircle color="#F1416C" /></button></div>
                                 <div className="accessory-title col-7">
                                     <EditText style={{ backgroundColor: "#f9f9f9" }} className="editable" showEditButton defaultValue={accessory.name} editButtonContent={<FaPencilAlt color="#f39c12" fontSize="15px" />} />
                                 </div>
@@ -226,7 +206,7 @@ class EditRoomAndBed extends Component {
                                 </div>
                             </div>
                         ))}
-                        <button onClick={() => { this.addAccessory() }} className="accessory-add-btn"><AiOutlinePlus /></button>
+                        <button onClick={() => { this.addAccessory(this.state.tempRoom) }} className="accessory-add-btn"><AiOutlinePlus /></button>
                     </Modal.Body>
                     <Modal.Footer className="justify-content-start">
                         <button className="btn btn-success" onClick={() => { }}>ثبت</button>
@@ -245,7 +225,9 @@ class EditRoomAndBed extends Component {
     }
 
     handleRoomAccShow = (room) => {
-        this.setState({ showَRoomAccessory: true })
+        this.setState({ showَRoomAccessory: true });
+        this.setState({ tempRoom: room });
+        console.log(room)
     }
 
     handleDeleteCloseRoom = () => {
@@ -295,11 +277,11 @@ class EditRoomAndBed extends Component {
 
     addAccessory = (r) => {
         const index = this.state.rooms.indexOf(r);
-        const newAccessory = this.state.rooms[index].accessory.concat(
+        const newAccessory = this.state.rooms[index].accessories.concat(
             { name: "....", count: "0" }
         )
         const updateRooms = [...this.state.rooms]
-        updateRooms[index].accessory = newAccessory
+        updateRooms[index].accessories = newAccessory
         this.setState({ rooms: updateRooms })
     }
 
@@ -349,11 +331,14 @@ class EditRoomAndBed extends Component {
         console.log(this.state.rooms)
     }
 
-    deleteAccessory = (accessory, index) => {
+    deleteAccessory = (accessory, room) => {
+
         let updatedState = [...this.state.rooms];
-        let updatedAccessory = this.state.rooms[index].accessory;
+        let index = this.state.rooms.indexOf(room);
+        let updatedAccessory = this.state.rooms[index].accessories;
+        console.log(updatedAccessory)
         updatedAccessory = updatedAccessory.filter(a => a !== accessory);
-        updatedState[index].accessory = updatedAccessory;
+        updatedState[index].accessories = updatedAccessory;
         this.setState({ rooms: updatedState });
         console.log(this.state.rooms)
     }
