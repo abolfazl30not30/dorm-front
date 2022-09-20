@@ -12,6 +12,8 @@ import {BsTelephone} from 'react-icons/bs';
 import {AiOutlineBarcode} from 'react-icons/ai'
 import {AiOutlineUser} from 'react-icons/ai'
 import { Modal } from 'react-bootstrap'
+import {AiOutlineClose} from 'react-icons/ai'
+import {Accordion} from 'react-bootstrap';
 
 class ProfilePage extends Component {
     state = {
@@ -63,7 +65,8 @@ class ProfilePage extends Component {
             },
         ],
         show: false,
-        reportType:'cleaning'
+        reportType:'cleaning',
+        report:[]
     }
     date = createRef();
     description = createRef();
@@ -83,7 +86,7 @@ class ProfilePage extends Component {
     reason = createRef();
 
     handleClose = () => {
-        this.setState({ show: true })
+        this.setState({ show: false })
     };
     handleShow = () => {
         this.setState({ show: true })
@@ -106,7 +109,9 @@ class ProfilePage extends Component {
                         'date' : date,
                         'description' : description
                     }
-                    console.log(result)
+                    const newReports = this.state.report.concat(result)
+                    this.setState({report: newReports})
+                    this.setState({ show: false })
                 })();
             case 'delayInArrival':
                 return (() => {
@@ -117,7 +122,9 @@ class ProfilePage extends Component {
                         'date' : date,
                         'time' : time
                     }
-                    console.log(result)
+                    const newReports = this.state.report.concat(result)
+                    this.setState({report: newReports})
+                    this.setState({ show: false })
                 })();
             case 'exit':
                 return (() => {
@@ -136,7 +143,9 @@ class ProfilePage extends Component {
                         'destinationPhoneNumber' : destinationPhoneNumber,
                         'relation' : relation
                     }
-                    console.log(result)
+                    const newReports = this.state.report.concat(result)
+                    this.setState({report: newReports})
+                    this.setState({ show: false })
                 })();
             case 'violation':
                 return (() => {
@@ -149,7 +158,9 @@ class ProfilePage extends Component {
                         'time' : time,
                         'description' : description
                     }
-                    console.log(result)
+                    const newReports = this.state.report.concat(result)
+                    this.setState({report: newReports})
+                    this.setState({ show: false })
                 })();
             case 'penalty':
                 return (() => {
@@ -160,7 +171,9 @@ class ProfilePage extends Component {
                         'typePenalty' : typePenalty,
                         'description' : description
                     }
-                    console.log(result)
+                    const newReports = this.state.report.concat(result)
+                    this.setState({report: newReports})
+                    this.setState({ show: false })
                 })();
             case 'discharge':
                 return (() => {
@@ -170,7 +183,6 @@ class ProfilePage extends Component {
                     const deductionOfLosses = this.deductionOfLosses.current.value;
                     const deductionOfLossesReason = this.deductionOfLossesReason.current.value;
                     const refundableAmount = this.refundableAmount.current.value;
-
                     const result = {
                         'title' : this.state.reportType,
                         'dischargeDateAnnounce' : dischargeDateAnnounce,
@@ -180,7 +192,9 @@ class ProfilePage extends Component {
                         'deductionOfLossesReason' : deductionOfLossesReason,
                         'refundableAmount' : refundableAmount
                     }
-                    console.log(result)
+                    const newReports = this.state.report.concat(result)
+                    this.setState({report: newReports})
+                    this.setState({ show: false })
                 })();
             case 'cancelContract':
                 return (() => {
@@ -188,7 +202,6 @@ class ProfilePage extends Component {
                     const reason = this.reason.current.value;
                     const deductionOfLosses = this.deductionOfLosses.current.value;
                     const refundableAmount = this.refundableAmount.current.value;
-
                     const result = {
                         'title' : this.state.reportType,
                         'data' : date,
@@ -196,7 +209,9 @@ class ProfilePage extends Component {
                         'deductionOfLosses' : deductionOfLosses,
                         'refundableAmount' : refundableAmount
                     }
-                    console.log(result)
+                    const newReports = this.state.report.concat(result)
+                    this.setState({report: newReports})
+                    this.setState({ show: false })
                 })();
         }
     }
@@ -206,7 +221,6 @@ class ProfilePage extends Component {
             <>
                 <div className='profile-container row'> {/*given photo*/}
                     <div className='image-container'>
-                        <button className='btn-add-report' onClick={() => {this.handleShow()}}>ثبت گزارش</button>
                         <div className="d-flex flex-row justify-content-around align-items-center w-100">
                             <img src="https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png" alt="profile" />
                             {this.state.people.map(p => (
@@ -251,7 +265,89 @@ class ProfilePage extends Component {
                             className="mb-3"
                         >
                             <Tab eventKey="records" title="سوابق">
-                                <p>records</p>
+                                <button className='btn-add-report' onClick={() => {this.handleShow()}}>ثبت گزارش</button>
+                                <Accordion defaultActiveKey="0">
+                                    <Accordion.Item eventKey="0">
+                                        <Accordion.Header>نوبت نظافت شبانه</Accordion.Header>
+                                        <Accordion.Body>
+                                            {
+
+                                            }
+                                        </Accordion.Body>
+                                    </Accordion.Item>
+                                    <Accordion.Item eventKey="1">
+                                        <Accordion.Header>تأخیر در ورود</Accordion.Header>
+                                        <Accordion.Body>
+                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                                            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+                                            minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+                                            aliquip ex ea commodo consequat. Duis aute irure dolor in
+                                            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+                                            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+                                            culpa qui officia deserunt mollit anim id est laborum.
+                                        </Accordion.Body>
+                                    </Accordion.Item>
+                                    <Accordion.Item eventKey="2">
+                                        <Accordion.Header>خروج</Accordion.Header>
+                                        <Accordion.Body>
+                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                                            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+                                            minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+                                            aliquip ex ea commodo consequat. Duis aute irure dolor in
+                                            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+                                            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+                                            culpa qui officia deserunt mollit anim id est laborum.
+                                        </Accordion.Body>
+                                    </Accordion.Item>
+                                    <Accordion.Item eventKey="3">
+                                        <Accordion.Header>ثبت تخلف</Accordion.Header>
+                                        <Accordion.Body>
+                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                                            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+                                            minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+                                            aliquip ex ea commodo consequat. Duis aute irure dolor in
+                                            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+                                            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+                                            culpa qui officia deserunt mollit anim id est laborum.
+                                        </Accordion.Body>
+                                    </Accordion.Item>
+                                    <Accordion.Item eventKey="4">
+                                        <Accordion.Header>ثبت جریمه</Accordion.Header>
+                                        <Accordion.Body>
+                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                                            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+                                            minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+                                            aliquip ex ea commodo consequat. Duis aute irure dolor in
+                                            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+                                            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+                                            culpa qui officia deserunt mollit anim id est laborum.
+                                        </Accordion.Body>
+                                    </Accordion.Item>
+                                    <Accordion.Item eventKey="5">
+                                        <Accordion.Header>اعلام تخلیه</Accordion.Header>
+                                        <Accordion.Body>
+                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                                            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+                                            minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+                                            aliquip ex ea commodo consequat. Duis aute irure dolor in
+                                            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+                                            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+                                            culpa qui officia deserunt mollit anim id est laborum.
+                                        </Accordion.Body>
+                                    </Accordion.Item>
+                                    <Accordion.Item eventKey="6">
+                                        <Accordion.Header>لغو قرارداد</Accordion.Header>
+                                        <Accordion.Body>
+                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                                            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+                                            minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+                                            aliquip ex ea commodo consequat. Duis aute irure dolor in
+                                            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+                                            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+                                            culpa qui officia deserunt mollit anim id est laborum.
+                                        </Accordion.Body>
+                                    </Accordion.Item>
+                                </Accordion>
                             </Tab>
                             <Tab eventKey="documents" title="مدارک">
                                 <img className='test' src={pdf_icon}/> {/*test*/}
@@ -314,9 +410,10 @@ class ProfilePage extends Component {
                         </Tabs>
                     </div>
                 </div>
-                <Modal className='report-modal' centered show={this.state.show} onClick={() => {this.handleClose()}}>
-                    <Modal.Header closeButton>
+                <Modal className='report-modal' centered show={this.state.show} >
+                    <Modal.Header>
                         <Modal.Title><span>ثبت گزارش</span></Modal.Title>
+                        <button className='btn' onClick={() => {this.handleClose()}}><AiOutlineClose /></button>
                     </Modal.Header>
                     <Modal.Body>
                         <form className="my-3 mx-2" onSubmit={this.handleSubmit}>
