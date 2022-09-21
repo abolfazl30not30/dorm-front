@@ -62,19 +62,23 @@ class EditRoomAndBed extends Component {
                 { name: "کمد", count: "2" },
             ],
             beds: [
-                { id: 21, name: 'تخت 21', empty: true },
-                { id: 22, name: 'تخت 22', empty: false },
-                { id: 23, name: 'تخت 23', empty: true },
-                { id: 24, name: '24 تخت', empty: true },
-                { id: 25, name: 'تخت 25', empty: true },
-                { id: 26, name: 'تخت 26', empty: true },
+                {  name: 'تخت 21', empty: true },
+                {  name: 'تخت 22', empty: false },
+                {  name: 'تخت 23', empty: true },
+                {  name: '24 تخت', empty: true },
+                {  name: 'تخت 25', empty: true },
+                {  name: 'تخت 26', empty: true },
             ]
         }
         ,
+
         showDeleteModalRoom: false,
         showDeleteModalBed: false,
         showَRoomAccessory: false,
         showَUnitAccessory:false,
+        roomTemp:{},
+        bedTemp:{},
+        roomIndex:-1
 
     }
 
@@ -92,6 +96,7 @@ class EditRoomAndBed extends Component {
         return (
             <>
                 <div className="RoomAndBed">
+
                     <div className="back-btn">
                         <Link to="/RoomAndBed">
                             بازگشت
@@ -119,10 +124,10 @@ class EditRoomAndBed extends Component {
                         {this.state.rooms.map((room, i) => (
                             <div className='col-6'>
                                 <div className='room-box'>
-                                    <button className="close-btn" onClick={() => { this.deleteRoom(room) }}><AiFillCloseCircle color="#F1416C" /></button>
+                                    <button className="close-btn" onClick={() => { this.handleDeleteShowRoom(room) }}><AiFillCloseCircle color="#F1416C" /></button>
                                     <div className="title-container">
-                                        <div className="firstTitle d-flex"><label>شماره اتاق:</label><EditText showEditButton defaultValue={room.number} editButtonContent={<FaPencilAlt color="#f39c12" fontSize="16px" />} /></div>
-                                        <div className="description d-flex "><label>توضیحات:</label><EditText showEditButton defaultValue={room.description} editButtonContent={<FaPencilAlt color="#f39c12" fontSize="15px" />} /></div>
+                                        <div className="firstTitle d-flex"><label>شماره اتاق:</label><EditText showEditButton defaultValue={room.number} editButtonContent={<FaPencilAlt color="#f39c12" fontSize="16px" />} onSave={this.editRoomTitle} /></div>
+                                        <div className="description d-flex "><label>توضیحات:</label><EditText showEditButton defaultValue={room.description} editButtonContent={<FaPencilAlt color="#f39c12" fontSize="15px" />} onSave={this.editRoomDescription}/></div>
                                         <div className="addAccessory">
                                             <button className="addAccessoryBtn" onClick={() => { this.handleRoomAccShow(room) }}>افزودن امکانات اتاق <MdAddCircle fontSize="15px" /> </button>
                                         </div>
@@ -133,14 +138,13 @@ class EditRoomAndBed extends Component {
                                                 room.beds.map((bed) => (
                                                     <div className='col-4'>
                                                         <div className='bed-box'>
-                                                            <button className="close-btn" onClick={() => { this.deleteBed(bed, i) }}><AiFillCloseCircle color="#F1416C" /></button>
+                                                            <button className="close-btn" onClick={() => { this.handleDeleteShowBed(bed,i) }}><AiFillCloseCircle color="#F1416C" /></button>
                                                             <BiBed fontSize="2rem" />
-                                                            <div className="title"><EditText className="editable" showEditButton defaultValue={bed.name} editButtonContent={<FaPencilAlt color="#f39c12" fontSize="15px" />} /></div>
+                                                            <div className="title"><EditText className="editable" showEditButton defaultValue={bed.name} editButtonContent={<FaPencilAlt color="#f39c12" fontSize="15px" />} onSave={this.editBedTitle} /></div>
                                                         </div>
                                                     </div>
                                                 ))
                                             }
-
                                             <div className='col-4'>
                                                 <button onClick={() => { this.addBed(room) }} className="bed-add-btn"><AiOutlinePlus /></button>
                                             </div>
@@ -156,7 +160,7 @@ class EditRoomAndBed extends Component {
                     </div>
                 </div>
 
-                {/* <Modal centered show={this.state.showDeleteModalRoom} onClick={() => { this.handleDeleteCloseRoom(false) }}>
+                <Modal centered show={this.state.showDeleteModalRoom} onClick={() => { this.handleDeleteCloseRoom(false) }}>
                     <Modal.Header closeButton>
                         <Modal.Title>حذف اتاق</Modal.Title>
                     </Modal.Header>
@@ -180,13 +184,13 @@ class EditRoomAndBed extends Component {
                         <button className="btn btn-danger" onClick={() => this.handleDeleteCloseBed(true)}>حذف</button>
                         <button className="btn btn-light" onClick={() => this.handleDeleteCloseBed(false)}>بستن</button>
                     </Modal.Footer>
-                </Modal> */}
+                </Modal>
 
                 <Modal centered show={this.state.showَRoomAccessory} onHide={() => { this.handleRoomAccClose() }}>
                     <Modal.Header closeButton>
                         <Modal.Title>افزودن امکانات اتاق</Modal.Title>
                     </Modal.Header>
-                    <Modal.Body className="justify-content-center">
+                    <Modal.Body className="accessoryModal justify-content-center">
                         <div className="accessory-box-title d-flex"><h5>تجهیزات</h5><h5>تعداد</h5></div>
                         {this.state.tempRoom.accessories.map((accessory) => (
                             <div className="accessory row">
@@ -211,7 +215,7 @@ class EditRoomAndBed extends Component {
                     <Modal.Header closeButton>
                         <Modal.Title>افزودن امکانات واحد</Modal.Title>
                     </Modal.Header>
-                    <Modal.Body className="justify-content-center">
+                    <Modal.Body className="accessoryModal justify-content-center">
                         <div className="accessory-box-title d-flex"><h5>تجهیزات</h5><h5>تعداد</h5></div>
                         {this.state.tempRoom.accessories.map((accessory) => (
                             <div className="accessory row">
@@ -236,13 +240,7 @@ class EditRoomAndBed extends Component {
             </>
         );
     }
-    handleDeleteShowRoom = () => {
-        this.setState({ showDeleteModalRoom: true })
-    }
 
-    handleDeleteShowBed = () => {
-        this.setState({ showDeleteModalBed: true })
-    }
     handleUnitAccClose = () =>{
         this.setState({showَUnitAccessory: false});
     }
@@ -255,10 +253,31 @@ class EditRoomAndBed extends Component {
         this.setState({ tempRoom: room });
     }
 
-    handleDeleteCloseRoom = () => {
-
+    handleDeleteShowRoom = (Room) => {
+        this.setState({ showDeleteModalRoom: true });
+        this.setState({roomTemp: Room});
     }
-    handleDeleteCloseBed = () => { }
+
+    handleDeleteShowBed = (bed,index) => {
+        this.setState({ showDeleteModalBed: true });
+        this.setState({bedTemp :bed});
+        this.setState({roomIndex:index});
+    }
+
+    handleDeleteCloseRoom = (bool) => {
+        this.setState({showDeleteModalRoom : false});
+        if(bool){
+            this.deleteRoom(this.state.roomTemp);
+        }
+    }
+
+    handleDeleteCloseBed = (bool) => {
+        this.setState({showDeleteModalBed:false});
+        if(bool){
+            this.deleteBed(this.state.bedTemp,this.state.roomIndex);
+        }
+    }
+
     handleRoomAccClose = () => {
         this.setState({ showَRoomAccessory: false })
     }
@@ -290,11 +309,22 @@ class EditRoomAndBed extends Component {
         this.setState({ rooms: newRoom })
     }
 
-    addBed = (r) => {
+    addBed = async (r) => {
+
+        const rawResponse = await fetch('http://api.saadatportal.com/api/v1/bed', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ name: "A", empty: "true", roomId: r.id })
+        });
+        const content = await rawResponse.json();
         const index = this.state.rooms.indexOf(r);
         const newBed = this.state.rooms[index].beds.concat(
-            { id: 311, bedName: "تخت ...", empty: true }
+            {id:content.id ,name: "تخت ...", empty: true }
         )
+
         const updateRooms = [...this.state.rooms]
         updateRooms[index].beds = newBed
         this.setState({ rooms: updateRooms })
@@ -310,28 +340,58 @@ class EditRoomAndBed extends Component {
         this.setState({ rooms: updateRooms })
     }
 
-    editRoomTitle = ({ value, previousValue }) => {
-        // const index = this.state.floor.findIndex(({ floorName }) => floorName === previousValue);
-        // const updatedState = [...this.state.floor];
-        // updatedState[index].floorName = value;
-        // this.setState({ floor: updatedState });
+    editRoomTitle = async ({ value, previousValue }) => {
+        const room = this.state.rooms.find(({name}) => name === previousValue);
+        const index = this.state.rooms.findIndex(({ number }) => number === previousValue);
+        const number = parseInt(value);
+
+        const rawResponse = await fetch(`http://api.saadatportal.com/api/v1/room/${room.id}`, {
+            method: 'PATCH',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ number: number, empty: "true" })
+        });
+        const content = await rawResponse.json();
+
+        const updatedState = [...this.state.rooms];
+        updatedState[index].number = value;
+        this.setState({ rooms: updatedState });
+        console.log(this.state.rooms);
     };
 
-    editBedTitle = ({ value, previousValue }) => {
-        // let indexOfFloor = -1;
-        // let indexOfUnit = -1;
+    editBedTitle = async ({ value, previousValue }) => {
+        let indexOfRoom = -1;
+        let indexOfBed = -1;
 
-        // for (let x = 0; x < this.state.floor.length; x++) {
-        //     indexOfUnit = this.state.floor[x].unit.findIndex(({ unitName }) => unitName === previousValue);
-        //     if (indexOfUnit !== -1) {
-        //         indexOfFloor = x;
-        //         break;
-        //     }
-        // }
-        // const updatedState = [...this.state.floor];
-        // updatedState[indexOfFloor].unit[indexOfUnit].unitName = value;
-        // this.setState({ floor: updatedState });
-        // console.log(this.state.floor)
+        for (let x = 0; x < this.state.rooms.length; x++) {
+            indexOfBed = this.state.rooms[x].beds.findIndex(({ name }) => name === previousValue);
+            if (indexOfBed !== -1) {
+                indexOfRoom = x;
+                break;
+            }
+        }
+
+        const updatedState = [...this.state.rooms];
+        const roomId = updatedState[indexOfRoom].id;
+        const bedId = updatedState[indexOfBed].beds[indexOfBed].id;
+
+        const rawResponse = await fetch(`http://api.saadatportal.com/api/v1/bed/${bedId}`, {
+            method: 'PATCH',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ roomId: roomId, name: value, empty: "true" })
+        });
+        const content = await rawResponse.json();
+
+        updatedState[indexOfRoom].beds[indexOfBed].name = value;
+        this.setState({ rooms: updatedState });
+    }
+    editRoomDescription = ({value,previousValue}) =>{
+
     }
 
     handleCount = (count,acc,room) =>{
@@ -360,7 +420,12 @@ class EditRoomAndBed extends Component {
         console.log(this.state.rooms)
     }
 
-    deleteBed = (bed, index) => {
+    deleteBed = async (bed, index) => {
+        await fetch(`http://api.saadatportal.com/api/v1/bed/${bed.id}`, {
+            method: 'DELETE',
+        })
+            .then(res => res.text())
+            .then(res => console.log(res))
 
         let updatedState = [...this.state.rooms];
         let updatedBed = this.state.rooms[index].beds;
