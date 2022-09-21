@@ -26,7 +26,6 @@ class EditFloorAndUnit extends Component {
     async componentDidMount() {
         const response = await fetch('http://api.saadatportal.com/api/v1/floor').then((response) => response.json())
             .then((data) => this.setState({ floor: data, isLoading: false }));
-        console.log(this.state.floor)
     }
     render() {
         return (
@@ -198,12 +197,12 @@ class EditFloorAndUnit extends Component {
             body: JSON.stringify({ name: value, empty: "true" })
         });
         const content = await rawResponse.json();
-        console.log(content);
+
 
         const updatedState = [...this.state.floor];
         updatedState[index].name = value;
         this.setState({ floor: updatedState });
-        console.log(this.state.floor);
+
     };
 
     editUnitTitle = async ({ value, previousValue }) => {
@@ -235,13 +234,9 @@ class EditFloorAndUnit extends Component {
         });
 
         const content = await rawResponse.json();
-        console.log(content);
-
-
 
         updatedState[indexOfFloor].units[indexOfUnit].number = value;
         this.setState({ floor: updatedState });
-        console.log(this.state.floor)
     }
 
     deleteFloor = async (floor) => {
@@ -255,7 +250,6 @@ class EditFloorAndUnit extends Component {
 
         const updateUsers = this.state.floor.filter(f => f !== floor);
         this.setState({ floor: updateUsers });
-        console.log(this.state.floor)
     }
 
     deleteUnit = async (unit, index) => {
@@ -271,7 +265,6 @@ class EditFloorAndUnit extends Component {
         updatedUnit = updatedUnit.filter(u => u !== unit);
         updatedState[index].units = updatedUnit;
         this.setState({ floor: updatedState });
-        console.log(this.state.floor)
     }
 
     handleDeleteShowUnit = (unit, index) => {

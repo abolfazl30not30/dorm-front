@@ -68,14 +68,13 @@ class EditRoomAndBed extends Component {
                 { id: 24, name: '24 تخت', empty: true },
                 { id: 25, name: 'تخت 25', empty: true },
                 { id: 26, name: 'تخت 26', empty: true },
-
             ]
         }
         ,
         showDeleteModalRoom: false,
         showDeleteModalBed: false,
         showَRoomAccessory: false,
-
+        showَUnitAccessory:false,
 
     }
 
@@ -86,14 +85,13 @@ class EditRoomAndBed extends Component {
 
         const responseUnit = await fetch(`http://api.saadatportal.com/api/v1/unit/${this.context.unitId}`).then((response) => response.json())
             .then((data) => this.setState({ unit: data }));
-        console.log(this.state.rooms)
+
     }
 
     render() {
         return (
             <>
                 <div className="RoomAndBed">
-
                     <div className="back-btn">
                         <Link to="/RoomAndBed">
                             بازگشت
@@ -109,18 +107,13 @@ class EditRoomAndBed extends Component {
                         </p>
                     </div>
 
-                    <h2 className='unit-name'>
+                    <h2 className='unit-name d-flex align-items-center'>
                         <TbBuilding className="mt-2" color='#555' fontSize="1.8rem" />
                         <span className="unit-title">واحد {this.context.unitNumber}</span>
-                        <div className="col-5">
-                            <div className="addAccessory">
-                                <button className="addAccessoryBtn" onClick={() => { this.hanldeFloorAccShow() }}>امکانات طبقه <MdAddCircle fontSize="15px" /> </button>
-                            </div>
+                        <div className="addAccessory">
+                            <button className="addAccessoryBtn" onClick={() => { this.handleUnitAccShow() }}>افزودن امکانات واحد  <MdAddCircle fontSize="16px" /></button>
                         </div>
-
                     </h2>
-
-
 
                     <div className="row pb-5">
                         {this.state.rooms.map((room, i) => (
@@ -131,7 +124,7 @@ class EditRoomAndBed extends Component {
                                         <div className="firstTitle d-flex"><label>شماره اتاق:</label><EditText showEditButton defaultValue={room.number} editButtonContent={<FaPencilAlt color="#f39c12" fontSize="16px" />} /></div>
                                         <div className="description d-flex "><label>توضیحات:</label><EditText showEditButton defaultValue={room.description} editButtonContent={<FaPencilAlt color="#f39c12" fontSize="15px" />} /></div>
                                         <div className="addAccessory">
-                                            <button className="addAccessoryBtn" onClick={() => { this.handleRoomAccShow(room) }}>امکانات اتاق <MdAddCircle fontSize="15px" /> </button>
+                                            <button className="addAccessoryBtn" onClick={() => { this.handleRoomAccShow(room) }}>افزودن امکانات اتاق <MdAddCircle fontSize="15px" /> </button>
                                         </div>
                                     </div>
                                     <div className='row'>
@@ -202,7 +195,7 @@ class EditRoomAndBed extends Component {
                                     <EditText style={{ backgroundColor: "#f9f9f9" }} className="editable" showEditButton defaultValue={accessory.name} editButtonContent={<FaPencilAlt color="#f39c12" fontSize="15px" />} />
                                 </div>
                                 <div className="accessory-count col-5">
-                                    <CounterInput min={0} max={10} count={accessory.count} onCountChange={count => console.log(count)} />
+                                    <CounterInput min={0} max={10} count={accessory.count} onCountChange={count => {this.handleCount(count,accessory,this.state.tempRoom)}} />
                                 </div>
                             </div>
                         ))}
@@ -213,6 +206,33 @@ class EditRoomAndBed extends Component {
                         <button className="btn btn-light" onClick={() => { this.handleRoomAccClose() }}>بستن</button>
                     </Modal.Footer>
                 </Modal>
+
+                <Modal centered show={this.state.showَUnitAccessory} onHide={() => { this.handleUnitAccClose() }}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>افزودن امکانات واحد</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body className="justify-content-center">
+                        <div className="accessory-box-title d-flex"><h5>تجهیزات</h5><h5>تعداد</h5></div>
+                        {this.state.tempRoom.accessories.map((accessory) => (
+                            <div className="accessory row">
+                                <div><button className="close-btn" onClick={() => { this.deleteAccessory(accessory, this.state.tempRoom) }}><AiFillCloseCircle color="#F1416C" /></button></div>
+                                <div className="accessory-title col-7">
+                                    <EditText style={{ backgroundColor: "#f9f9f9" }} className="editable" showEditButton defaultValue={accessory.name} editButtonContent={<FaPencilAlt color="#f39c12" fontSize="15px" />} />
+                                </div>
+                                <div className="accessory-count col-5">
+                                    <CounterInput min={0} max={10} count={accessory.count} onCountChange={count => {this.handleCount(count,accessory,this.state.tempRoom)}} />
+                                </div>
+                            </div>
+                        ))}
+                        <button onClick={() => { this.addAccessory(this.state.tempRoom) }} className="accessory-add-btn"><AiOutlinePlus /></button>
+                    </Modal.Body>
+                    <Modal.Footer className="justify-content-start">
+                        <button className="btn btn-success" onClick={() => { }}>ثبت</button>
+                        <button className="btn btn-light" onClick={() => { this.handleUnitAccClose() }}>بستن</button>
+                    </Modal.Footer>
+                </Modal>
+
+
             </>
         );
     }
@@ -223,11 +243,16 @@ class EditRoomAndBed extends Component {
     handleDeleteShowBed = () => {
         this.setState({ showDeleteModalBed: true })
     }
+    handleUnitAccClose = () =>{
+        this.setState({showَUnitAccessory: false});
+    }
+    handleUnitAccShow = () => {
+        this.setState({ showَUnitAccessory: true });
 
+    }
     handleRoomAccShow = (room) => {
         this.setState({ showَRoomAccessory: true });
         this.setState({ tempRoom: room });
-        console.log(room)
     }
 
     handleDeleteCloseRoom = () => {
@@ -309,6 +334,19 @@ class EditRoomAndBed extends Component {
         // console.log(this.state.floor)
     }
 
+    handleCount = (count,acc,room) =>{
+        console.log(count,acc,room);
+        const roomIndex = this.state.rooms.indexOf(room);
+        const accIndex = this.state.tempRoom.accessories.indexOf(acc)
+
+        const updatedState = [...this.state.rooms];
+        updatedState[roomIndex].accessories[accIndex].count = count;
+        this.setState({rooms : updatedState});
+        console.log(this.state.rooms)
+
+    }
+
+
     deleteRoom = async (room) => {
         console.log(room.id)
         await fetch(`http://api.saadatportal.com/api/v1/room/${room.id}`, {
@@ -323,6 +361,7 @@ class EditRoomAndBed extends Component {
     }
 
     deleteBed = (bed, index) => {
+
         let updatedState = [...this.state.rooms];
         let updatedBed = this.state.rooms[index].beds;
         updatedBed = updatedBed.filter(b => b !== bed);
@@ -332,7 +371,6 @@ class EditRoomAndBed extends Component {
     }
 
     deleteAccessory = (accessory, room) => {
-
         let updatedState = [...this.state.rooms];
         let index = this.state.rooms.indexOf(room);
         let updatedAccessory = this.state.rooms[index].accessories;
