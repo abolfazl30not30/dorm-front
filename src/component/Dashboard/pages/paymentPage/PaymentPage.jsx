@@ -27,6 +27,11 @@ class PaymentPage extends Component {
 
     }
 
+    handleClick(e) {
+        e.preventDefault();
+        // console.log(this.state.inputText)
+    }
+
     render() {
         return (
             <>
@@ -85,25 +90,33 @@ class PaymentPage extends Component {
                         {/*<DatePicker selected={this.state.startDate} onChange={(date) => this.setStartDate(date)} />*/}
                         {/*<Calendar format='DD/MM/YYYY' date='4-12-2014' />*/}
 
-                        {/*<p>*/}
-                        {/*    {*/}
-                        {/*        this.state.date*/}
-                        {/*    }*/}
-                        {/*</p>*/}
+                        <div>
+                            <TextField
+                                id="standard-read-only-input"
+                                // label="Read Only"
+                                defaultValue={this.state.date}
+                                InputProps={{
+                                    readOnly: true,
+                                }}
+                                variant="standard"
+                                style={{width: '100%'}}
+                            />
+                        </div>
+
                         <JCalendar
                             locale={'fa'}
                             color={'#000066'}
                             size={28}
-                            onClick={console.log}
+                            onClick={() => this.setState({date: "onclick"})}
                             itemRender={(key, item, children) => children}
                         />
                         {/*<Calendar value={this.state.value} />*/}
                     </div>
-                    <div className='col' style={{width: '30%'}}>
+                    <div className='col'>
                         <Form>
                             <Form.Group className="mb-3 mt-5" controlId="exampleForm.ControlTextarea1">
-                                <Form.Label>توضیحات: </Form.Label>
-                                <Form.Control as="textarea" rows={10} />
+                                <Form.Label style={{marginRight: '30px'}}>توضیحات: </Form.Label>
+                                <Form.Control as="textarea" rows={13} style={{marginRight: '30px', width: '95%'}}  />
                             </Form.Group>
                         </Form>
                     </div>
@@ -115,7 +128,10 @@ class PaymentPage extends Component {
                 </div>
 
                 <div className='fourth-section mb-5 mt-2' style={{width: '100%'}}>
-                    <button type="button" className="btn btn-success btn-lg btn-block mr-2" style={{width: '100%'}}>
+                    <button type="button"
+                            className="btn btn-success btn-lg btn-block mr-2"
+                            style={{width: '100%'}}
+                    >
                         ثبت
                     </button>
                 </div>

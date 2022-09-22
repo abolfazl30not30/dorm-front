@@ -14,17 +14,11 @@ export default class ToggleButtons extends Component{
                 'بیمه',
             ]
         }
-        this.updateChoices = this.updateChoices.bind(this)
-        this.handleAlignment = this.handleAlignment.bind(this)
     }
 
-    handleAlignment(event, newAlignment) {
+    handleAlignment = (event, newAlignment) => {
         this.setState({alignment : newAlignment});
     };
-
-    handleClick() {
-        alert("selected!")
-    }
 
     updateChoices = (text) => {
         var newArr = this.state.choices;
@@ -42,12 +36,9 @@ export default class ToggleButtons extends Component{
             >
                 {
                     this.state.choices.map((c) =>
-                        <>
-                            <ToggleButton value={c} aria-label={c}>
-                                {/*{console.log(c)}*/}
-                                {c}
-                            </ToggleButton>
-                        </>
+                        <ToggleButton value={c} aria-label={c}>
+                            {c}
+                        </ToggleButton>
                     )
                 }
                 <PopUpAdd updateChoices={this.updateChoices}/>
