@@ -11,6 +11,7 @@ import { FaPencilAlt } from "react-icons/fa";
 import { MdAddCircle } from "react-icons/md"
 import 'react-edit-text/dist/index.css';
 
+
 class EditFloorAndUnit extends Component {
     state = {
         floor: [],
@@ -19,7 +20,11 @@ class EditFloorAndUnit extends Component {
         showDeleteModalFloor: false,
         showَFloorAccessory: false,
         unitTemp: {},
-        floorTemp: {},
+        floorTemp: {
+            name:"طبقه",
+            empty:"true",
+            accessories:[]
+        },
         floorIndex: 0
     }
 
@@ -60,7 +65,7 @@ class EditFloorAndUnit extends Component {
                                         </div>
                                         <div className="col-5">
                                             <div className="addAccessory">
-                                                <button className="addAccessoryBtn" onClick={() => { this.hanldeFloorAccShow() }}>امکانات طبقه <MdAddCircle fontSize="15px" /> </button>
+                                                <button className="addAccessoryBtn" onClick={() => { this.hanldeFloorAccShow(f) }}>امکانات طبقه <MdAddCircle fontSize="15px" /> </button>
                                             </div>
                                         </div>
                                     </div>
@@ -116,23 +121,27 @@ class EditFloorAndUnit extends Component {
                     </Modal.Footer>
                 </Modal>
 
-                <Modal centered show={this.state.showَFloorAccessory} onClick={() => { this.handleFloorAccClose() }}>
+                <Modal centered show={this.state.showَFloorAccessory} onHide={() => { this.handleFloorAccClose() }}>
                     <Modal.Header closeButton>
                         <Modal.Title>اضافه کردن امکانات طبقه</Modal.Title>
                     </Modal.Header>
-                    <Modal.Body className="justify-content-center">
-                        <div className="accessory row">
-                            <div><button className="close-btn" onClick={() => { }}><AiFillCloseCircle color="#F1416C" /></button></div>
-                            <div className="accessory-title col-7">
-                                <EditText style={{ backgroundColor: "#f9f9f9" }} className="editable" showEditButton defaultValue="یخچال" editButtonContent={<FaPencilAlt fontSize="15px" />} />
+                    <Modal.Body className="accessoryModal justify-content-center">
+                        <div className="accessory-box-title d-flex"><h5>تجهیزات</h5><h5>تعداد</h5></div>
+                        {this.state.floorTemp.accessories.map((accessory) => (
+                            <div className="accessory row">
+                                <div><button className="close-btn" onClick={() => { this.deleteAccessory(accessory, this.state.floorTemp) }}><AiFillCloseCircle color="#F1416C" /></button></div>
+                                <div className="accessory-title col-7">
+                                    <EditText style={{ backgroundColor: "#f9f9f9" }} className="editable" showEditButton defaultValue={accessory.name} editButtonContent={<FaPencilAlt color="#f39c12" fontSize="15px" />} />
+                                </div>
+                                <div className="accessory-count col-5">
+                                    <CounterInput min={0} max={10} count={accessory.count} onCountChange={count => {this.handleCount(count,accessory,this.state.floorTemp)}} />
+                                </div>
                             </div>
-                            <div className="accessory-count col-5">
-                                <CounterInput min={0} max={10} count="1" onCountChange={count => console.log(count)} />
-                            </div>
-                        </div>
+                        ))}
+                        <button onClick={() => { this.addAccessory(this.state.floorTemp) }} className="accessory-add-btn"><AiOutlinePlus /></button>
                     </Modal.Body>
                     <Modal.Footer className="justify-content-start">
-                        <button className="btn btn-success" onClick={() => { }}>ثبت</button>
+                        <button className="btn btn-success" onClick={() => {}}>ثبت</button>
                         <button className="btn btn-light" onClick={() => { this.handleFloorAccClose() }}>بستن</button>
                     </Modal.Footer>
                 </Modal>
@@ -151,6 +160,7 @@ class EditFloorAndUnit extends Component {
             },
             body: JSON.stringify({ name: `${count}طبقه`, empty: "true" })
         });
+
         var content = await rawResponse.json();
         const newFloor = this.state.floor.concat(
             {
@@ -267,6 +277,37 @@ class EditFloorAndUnit extends Component {
         this.setState({ floor: updatedState });
     }
 
+    addAccessory = (r) => {
+        const index = this.state.floor.indexOf(r);
+        const newAccessory = this.state.floor[index].accessories.concat(
+            { name: "....", count: 0 }
+        )
+        const updateState = [...this.state.floor]
+        updateState[index].accessories = newAccessory
+        this.setState({ floor: updateState })
+    }
+
+    handleCount = (count,acc,floor) =>{
+
+        const floorIndex = this.state.floor.indexOf(floor);
+        const accIndex = this.state.floorTemp.accessories.indexOf(acc)
+
+        const updatedState = [...this.state.floor];
+        updatedState[floorIndex].accessories[accIndex].count = count;
+        this.setState({floor : updatedState});
+
+    }
+
+    deleteAccessory = (accessory, floor) => {
+        let updatedState = [...this.state.floor];
+        let index = this.state.floor.indexOf(floor);
+        let updatedAccessory = this.state.floor[index].accessories;
+
+        updatedAccessory = updatedAccessory.filter(a => a !== accessory);
+        updatedState[index].accessories = updatedAccessory;
+        this.setState({ floor: updatedState });
+    }
+
     handleDeleteShowUnit = (unit, index) => {
         this.setState({ showDeleteModalUnit: true });
         this.setState({ unitTemp: unit });
@@ -291,8 +332,9 @@ class EditFloorAndUnit extends Component {
         }
     }
 
-    hanldeFloorAccShow = () => {
-        this.setState({ showَFloorAccessory: true })
+    hanldeFloorAccShow = (floor) => {
+        this.setState({ showَFloorAccessory: true });
+        this.setState({floorTemp:floor})
     }
     handleFloorAccSubmit = () => {
         this.setState({ showَFloorAccessory: false })

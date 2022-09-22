@@ -192,21 +192,21 @@ class EditRoomAndBed extends Component {
                     </Modal.Header>
                     <Modal.Body className="accessoryModal justify-content-center">
                         <div className="accessory-box-title d-flex"><h5>تجهیزات</h5><h5>تعداد</h5></div>
-                        {this.state.tempRoom.accessories.map((accessory) => (
+                        {this.state.floorTemp.accessories.map((accessory) => (
                             <div className="accessory row">
-                                <div><button className="close-btn" onClick={() => { this.deleteAccessory(accessory, this.state.tempRoom) }}><AiFillCloseCircle color="#F1416C" /></button></div>
+                                <div><button className="close-btn" onClick={() => { this.deleteAccessory(accessory, this.state.floorTemp) }}><AiFillCloseCircle color="#F1416C" /></button></div>
                                 <div className="accessory-title col-7">
                                     <EditText style={{ backgroundColor: "#f9f9f9" }} className="editable" showEditButton defaultValue={accessory.name} editButtonContent={<FaPencilAlt color="#f39c12" fontSize="15px" />} />
                                 </div>
                                 <div className="accessory-count col-5">
-                                    <CounterInput min={0} max={10} count={accessory.count} onCountChange={count => {this.handleCount(count,accessory,this.state.tempRoom)}} />
+                                    <CounterInput min={0} max={10} count={accessory.count} onCountChange={count => {this.handleCount(count,accessory,this.state.floorTemp)}} />
                                 </div>
                             </div>
                         ))}
-                        <button onClick={() => { this.addAccessory(this.state.tempRoom) }} className="accessory-add-btn"><AiOutlinePlus /></button>
+                        <button onClick={() => { this.addAccessory(this.state.floorTemp) }} className="accessory-add-btn"><AiOutlinePlus /></button>
                     </Modal.Body>
                     <Modal.Footer className="justify-content-start">
-                        <button className="btn btn-success" onClick={() => { }}>ثبت</button>
+                        <button className="btn btn-success" onClick={() => {}}>ثبت</button>
                         <button className="btn btn-light" onClick={() => { this.handleRoomAccClose() }}>بستن</button>
                     </Modal.Footer>
                 </Modal>
@@ -333,7 +333,7 @@ class EditRoomAndBed extends Component {
     addAccessory = (r) => {
         const index = this.state.rooms.indexOf(r);
         const newAccessory = this.state.rooms[index].accessories.concat(
-            { name: "....", count: "0" }
+            { name: "....", count: 0 }
         )
         const updateRooms = [...this.state.rooms]
         updateRooms[index].accessories = newAccessory
