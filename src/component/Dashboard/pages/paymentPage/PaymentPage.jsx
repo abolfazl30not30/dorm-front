@@ -1,6 +1,11 @@
 import { Component } from "react";
 import {Link} from "react-router-dom";
 import Accordion from "react-bootstrap/Accordion";
+import ToggleButtons from "./ToggleGroup";
+import BasicModal from "./PopUpAdd";
+import TextField from "@material-ui/core/TextField";
+import { styled } from '@mui/material/styles';
+
 import png_icon from "../../../../img/png_icon.png";
 import pdf_icon from "../../../../img/pdf_icon.png";
 import Form from 'react-bootstrap/Form';
@@ -18,8 +23,10 @@ import "react-datepicker/dist/react-datepicker.css";
 
 class PaymentPage extends Component {
     state = {
-        date: ''
+        date: '',
+
     }
+
     render() {
         return (
             <>
@@ -38,35 +45,36 @@ class PaymentPage extends Component {
                 </div>
 
                 <div className='first-section row'>
-                    <div className='col-6'>
+                    <div className='col-5'>
                         <div className='form-group col-10'>
                             <input type='text' className='form-control mt-3 input'/>
+                            {/*<TextField id="filled-basic" label="قیمت" variant="filled" />*/}
                         </div>
                         <div className='col-2'>
-                            <select className='form-select'>
+                            <select className='form-select' style={{width: '100px'}}>
                                 <option>IRR</option>
                                 <option>USD</option>
                             </select>
                         </div>
                     </div>
-                    <div className='col-6 d-flex'>
-                        <div className='col-1 mt-3'>
-                            نوع:
-                        </div>
-                        <div className='col-11'>
-                            {/*<Accordion defaultActiveKey="0">*/}
-                            {/*    <Accordion.Item eventKey="0">*/}
-                            {/*        <Accordion.Header>آپلود شناسنامه</Accordion.Header>*/}
-                            {/*        <Accordion.Body>*/}
-
-                            {/*        </Accordion.Body>*/}
-                            {/*    </Accordion.Item>*/}
-                            {/*</Accordion>*/}
-                            <select className='form-select mt-3' name="order" form="order-form">
-                                <option>محصولات بهداشتی</option>
-                                <option>بیمه</option>
-                                <option>+</option>
-                            </select>
+                    <div className='col-7'>
+                        {/*<label className='mt-3'>نوع: </label>*/}
+                        <div style={{width: '100%'}}>
+                            <Accordion defaultActiveKey="0">
+                                <Accordion.Item eventKey="0">
+                                    <Accordion.Header>نوع&nbsp;</Accordion.Header>
+                                    <Accordion.Body>
+                                        <div>
+                                            <ToggleButtons />
+                                        </div>
+                                    </Accordion.Body>
+                                </Accordion.Item>
+                            </Accordion>
+                            {/*<select className='form-select mt-3' name="order" form="order-form">*/}
+                            {/*    <option>محصولات بهداشتی</option>*/}
+                            {/*    <option>بیمه</option>*/}
+                            {/*    <option>+</option>*/}
+                            {/*</select>*/}
                         </div>
                     </div>
                 </div>
