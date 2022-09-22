@@ -9,7 +9,7 @@ import FullViewOfBed from './pages/Inventory and capacity/FullViewOfBed';
 import EditFloorAndUnit from './pages/edit building/EditFloorAndUnit';
 import EditRoomAndBed from './pages/edit building/EditRoomAndBed';
 import MainRegister from './pages/Register/MainRegister';
-import PaymentPage from './pages/paymentPage/PaymentPage'
+import PaymentPage from './pages/paymentPage/PaymentPage';
 
 class MainPage extends Component {
     state = {
