@@ -57,7 +57,7 @@ export default class PopUpAdd extends Component {
         return (
             <>
                 <div>
-                    <ToggleButton value="b" aria-label="b" onClick={this.handleOpen}>
+                    <ToggleButton value="b" aria-label="b" onClick={this.handleOpen} className='col' style={{marginLeft: '45%'}}>
                         <IoIosAddCircleOutline size={25}/>
                     </ToggleButton>
                     <Modal

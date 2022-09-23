@@ -28,21 +28,26 @@ export default class ToggleGroup extends Component{
 
     render() {
         return (
-            <ToggleButtonGroup
-                value={this.state.alignment}
-                exclusive
-                onChange={this.handleAlignment}
-                aria-label="text alignment"
-            >
-                {
-                    this.state.choices.map((c) =>
-                        <ToggleButton value={c} aria-label={c}>
-                            {c}
-                        </ToggleButton>
-                    )
-                }
-                <PopUpAdd updateChoices={this.updateChoices}/>
-            </ToggleButtonGroup>
+            <>
+                <div className=' row flex-wrap'>
+                    <ToggleButtonGroup
+                        orientation="vertical"
+                        value={this.state.alignment}
+                        exclusive
+                        onChange={this.handleAlignment}
+                        aria-label="text alignment"
+                    >
+                        {
+                            this.state.choices.map((c) =>
+                                <ToggleButton value={c} className='col'>
+                                    {c}
+                                </ToggleButton>
+                            )
+                        }
+                        <PopUpAdd updateChoices={this.updateChoices}/>
+                    </ToggleButtonGroup>
+                </div>
+             </>
         );
     }
 }
