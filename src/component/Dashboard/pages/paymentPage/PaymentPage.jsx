@@ -1,10 +1,8 @@
 import { Component } from "react";
 import {Link} from "react-router-dom";
 import Accordion from "react-bootstrap/Accordion";
-import ToggleButtons from "./ToggleGroup";
-import BasicModal from "./PopUpAdd";
+import ToggleGroup from "./ToggleGroup";
 import TextField from "@material-ui/core/TextField";
-import { styled } from '@mui/material/styles';
 
 import png_icon from "../../../../img/png_icon.png";
 import pdf_icon from "../../../../img/pdf_icon.png";
@@ -70,16 +68,12 @@ class PaymentPage extends Component {
                                     <Accordion.Header>نوع&nbsp;</Accordion.Header>
                                     <Accordion.Body>
                                         <div>
-                                            <ToggleButtons />
+                                            <ToggleGroup />
                                         </div>
                                     </Accordion.Body>
                                 </Accordion.Item>
                             </Accordion>
-                            {/*<select className='form-select mt-3' name="order" form="order-form">*/}
-                            {/*    <option>محصولات بهداشتی</option>*/}
-                            {/*    <option>بیمه</option>*/}
-                            {/*    <option>+</option>*/}
-                            {/*</select>*/}
+
                         </div>
                     </div>
                 </div>
@@ -91,23 +85,24 @@ class PaymentPage extends Component {
                         {/*<Calendar format='DD/MM/YYYY' date='4-12-2014' />*/}
 
                         <div>
-                            <TextField
-                                id="standard-read-only-input"
-                                // label="Read Only"
-                                defaultValue={this.state.date}
-                                InputProps={{
-                                    readOnly: true,
-                                }}
-                                variant="standard"
-                                style={{width: '100%'}}
-                            />
+                            {/*<TextField*/}
+                            {/*    id="standard-read-only-input"*/}
+                            {/*    defaultValue={this.state.date}*/}
+                            {/*    InputProps={{*/}
+                            {/*        readOnly: true,*/}
+                            {/*    }}*/}
+                            {/*    variant="standard"*/}
+                            {/*    style={{width: '100%'}}*/}
+                            {/*/>*/}
+                            <input type='text' value={this.state.date} style={{textAlign: 'center', width: '100%'}} disabled />
                         </div>
 
                         <JCalendar
                             locale={'fa'}
                             color={'#000066'}
                             size={28}
-                            onClick={() => this.setState({date: "onclick"})}
+                            // How???
+                            onClick={() => this.setState({date: "date"})}
                             itemRender={(key, item, children) => children}
                         />
                         {/*<Calendar value={this.state.value} />*/}

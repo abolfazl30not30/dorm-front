@@ -28,20 +28,14 @@ export default class PopUpAdd extends Component {
         super(props)
 
         this.state = {open : false}
-
-        this.handleOpen = this.handleOpen.bind(this)
-
-        this.handleClose = this.handleClose.bind(this)
-
-        this.handleClick = this.handleClick.bind(this)
     }
 
 
-    handleOpen() {
+    handleOpen = () => {
         this.setState({open : true});
     }
 
-    handleClose() {
+    handleClose = () => {
         this.setState({open : false});
     }
 
@@ -54,7 +48,9 @@ export default class PopUpAdd extends Component {
     handleClick(e) {
         e.preventDefault();
         // console.log(this.state.inputText)
-        this.props.updateChoices(this.state.inputText);
+        if (typeof this.state.inputText != 'undefined') {
+            this.props.updateChoices(this.state.inputText);
+        }
     }
 
     render () {

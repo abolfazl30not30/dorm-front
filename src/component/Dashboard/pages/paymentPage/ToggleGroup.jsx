@@ -3,7 +3,7 @@ import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import PopUpAdd from "./PopUpAdd";
 
-export default class ToggleButtons extends Component{
+export default class ToggleGroup extends Component{
 
     constructor(props) {
         super(props)
