@@ -48,16 +48,25 @@ export default class PopUpAdd extends Component {
     handleClick(e) {
         e.preventDefault();
         // console.log(this.state.inputText)
-        if (typeof this.state.inputText != 'undefined') {
+
+        // if (typeof this.state.inputText != 'undefined') {
+        //     this.props.updateChoices(this.state.inputText);
+        // }
+
+        let regEmail =  /^\s*$/ ;
+        if(!regEmail.test(this.state.inputText)){
             this.props.updateChoices(this.state.inputText);
         }
     }
-
     render () {
         return (
             <>
                 <div>
-                    <ToggleButton value="b" aria-label="b" onClick={this.handleOpen} className='col' style={{marginLeft: '45%'}}>
+                    <ToggleButton value="add"
+                                  onClick={() => {this.handleOpen(); this.setState({inputText: ''})}}
+                                  className='col'
+                                  style={{marginLeft: '45%'}}
+                    >
                         <IoIosAddCircleOutline size={25}/>
                     </ToggleButton>
                     <Modal
@@ -72,7 +81,7 @@ export default class PopUpAdd extends Component {
                                 <input type='text'
                                        className='form-control mt-3 mb-3 input'
                                        onChange={(e) => this.handleInputChange(e, 'inputText')}/>
-                                <button className='btn btn-success col' onClick={(event) => { this.handleClick(event); this.handleClose();}}>
+                                <button className='btn btn-success col' onClick={(event) => { this.handleClick(event); this.handleClose()}}>
                                     <IoIosCheckmark size={30}/>
                                 </button>
                                 <button className='btn btn-danger col' onClick={this.handleClose}>
