@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import UploadPage from './UploadPage';
 import "../../../../style/mainRegister.css";
 import "../../../../style/registerPage.css";
@@ -9,9 +9,13 @@ import InformationFurtherPage from './InformationFurtherPage'
 import InformationFamilyPage from './InformationFamilyPage'
 import FamilyGuest from './FamilyGuest'
 import OtherGuest from './OtherGuest'
+import * as yup from 'yup';
 
 class MainRegister extends Component {
     state = {
+        admission_start_date : '',
+        admission_end_date : '',
+        payment_date : '',
         typeofResident: "Constant",
         steps: [
             {
@@ -45,7 +49,8 @@ class MainRegister extends Component {
             {
                 label: 'مشخصات اولیه',
                 name: 'step 1',
-                content: ""
+                content: "",
+                validator: this.Validation,
             },
             {
                 label: 'مشخصات تکمیلی',
@@ -63,8 +68,28 @@ class MainRegister extends Component {
                 name: 'step 4',
                 content: <UploadPage />
             }
-        ]
+        ],
+        errors : [],
     }
+
+    Validation = async () => {
+        // const [errors, setErrors] = useState([])
+
+        const schema = yup.object().shape({
+            admission_start_date: yup.string().required('فیلد "تاریخ شروع پذیرش" نمیتواند خالی باشد'),
+            admission_end_date: yup.string().required('فیلد "تاریخ اتمام پذیرش" نمیتواند خالی باشد'),
+            payment_date: yup.string().required('فیلد "تاریخ پرداخت" نمیتواند خالی باشد')
+        })
+
+        try {
+            const result = await schema.validate(this.state.admission_start_date, {abortEarly: false});
+            return result;
+        } catch (error) {
+            console.log(this.state.errors.errors);
+            this.setState({error: error.errors});
+        }
+    }
+
 
     checked = (e) => {
         const type = e.target.value
