@@ -12,7 +12,9 @@ import {EditText, EditTextarea} from 'react-edit-text';
 import 'react-edit-text/dist/index.css';
 
 class FloorAndUnit extends Component {
+
     static contextType = BuildingContext;
+
     state = {
         floor1: [
             {

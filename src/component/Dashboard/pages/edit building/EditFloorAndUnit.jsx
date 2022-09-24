@@ -25,7 +25,8 @@ class EditFloorAndUnit extends Component {
             empty:"true",
             accessories:[]
         },
-        floorIndex: 0
+        floorIndex: 0,
+        accIndex: -1
     }
 
     async componentDidMount() {
@@ -127,11 +128,11 @@ class EditFloorAndUnit extends Component {
                     </Modal.Header>
                     <Modal.Body className="accessoryModal justify-content-center">
                         <div className="accessory-box-title d-flex"><h5>تجهیزات</h5><h5>تعداد</h5></div>
-                        {this.state.floorTemp.accessories.map((accessory) => (
+                        {this.state.floorTemp.accessories.map((accessory, i) => (
                             <div className="accessory row">
                                 <div><button className="close-btn" onClick={() => { this.deleteAccessory(accessory, this.state.floorTemp) }}><AiFillCloseCircle color="#F1416C" /></button></div>
                                 <div className="accessory-title col-7">
-                                    <EditText style={{ backgroundColor: "#f9f9f9" }} className="editable" showEditButton defaultValue={accessory.name} editButtonContent={<FaPencilAlt color="#f39c12" fontSize="15px" />} />
+                                    <EditText style={{ backgroundColor: "#f9f9f9" }} className="editable" showEditButton defaultValue={accessory.name} onSave={this.editAccTitle} onEditMode={()=>{this.setState({accIndex : i})}} editButtonContent={<FaPencilAlt color="#f39c12" fontSize="15px" />} />
                                 </div>
                                 <div className="accessory-count col-5">
                                     <CounterInput min={0} max={10} count={accessory.count} onCountChange={count => {this.handleCount(count,accessory,this.state.floorTemp)}} />
@@ -142,7 +143,7 @@ class EditFloorAndUnit extends Component {
                     </Modal.Body>
                     <Modal.Footer className="justify-content-start">
                         <button className="btn btn-success" onClick={() => {this.handleSubmitAcc(this.state.floorTemp)}}>ثبت</button>
-                        <button className="btn btn-light" onClick={() => { this.handleFloorAccClose() }}>بستن</button>
+                        <button className="btn btn-light" onClick={() => { this.handleFloorAccClose()}}>بستن</button>
                     </Modal.Footer>
                 </Modal>
 
@@ -192,7 +193,6 @@ class EditFloorAndUnit extends Component {
         const updateFloor = [...this.state.floor]
         updateFloor[index].units = newUnit
         this.setState({ floor: updateFloor })
-
     }
 
     editFloorTitle = async ({ value, previousValue }) => {
@@ -216,7 +216,6 @@ class EditFloorAndUnit extends Component {
     };
 
     editUnitTitle = async ({ value, previousValue }) => {
-
         let indexOfFloor = -1;
         let indexOfUnit = -1;
 
@@ -287,6 +286,12 @@ class EditFloorAndUnit extends Component {
         this.setState({ floor: updateState })
     }
 
+    editAccTitle = async ({value}) =>{
+        const index = this.state.floor.indexOf(this.state.floorTemp);
+        const updateState = [...this.state.floor];
+        updateState[index].accessories[this.state.accIndex].name = value;
+        this.setState({floor : updateState});
+    }
     handleCount = (count,acc,floor) =>{
 
         const floorIndex = this.state.floor.indexOf(floor);
@@ -308,9 +313,19 @@ class EditFloorAndUnit extends Component {
         this.setState({ floor: updatedState });
     }
 
-    handleSubmitAcc = (name) =>{
+    handleSubmitAcc = async (floor) =>{
         const index = this.state.floor.indexOf(floor);
-        console.log(accessories);
+        const assessories = this.state.floor[index].accessories;
+        console.log(assessories);
+        const rawResponse = await fetch(`http://api.saadatportal.com/api/v1/floor/${floor.id}`, {
+            method: 'PATCH',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({accessory : assessories})
+        });
+        this.setState({showَFloorAccessory:false});
     }
 
     handleDeleteShowUnit = (unit, index) => {
@@ -344,8 +359,11 @@ class EditFloorAndUnit extends Component {
     handleFloorAccSubmit = () => {
         this.setState({ showَFloorAccessory: false })
     }
-    handleFloorAccClose = () => {
+    handleFloorAccClose = async () => {
+        const response = await fetch('http://api.saadatportal.com/api/v1/floor').then((response) => response.json())
+            .then((data) => this.setState({ floor: data}));
         this.setState({ showَFloorAccessory: false })
+
     }
 }
 

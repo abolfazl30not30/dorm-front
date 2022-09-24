@@ -14,7 +14,12 @@ import PaymentPage from './pages/paymentPage/PaymentPage';
 class MainPage extends Component {
     state = {
         unitNumber: "",
-        unitId: ""
+        unitId: "",
+
+        familyGuest:{
+            name:"",
+            lastName:"",
+        }
     }
     render() {
         return (
@@ -42,6 +47,13 @@ class MainPage extends Component {
     handleUnitNumber = (unitNumber, unitId) => {
         this.setState({ unitNumber: unitNumber });
         this.setState({ unitId: unitId });
+    }
+
+    hanldleFamilyGuest = (name,lastName)=>{
+        let updatedState = [...this.state.familyGuest]
+        updatedState.name = name;
+        updatedState.lastName = lastName;
+        this.setState({famllyGuset : updatedState});
     }
 }
 
