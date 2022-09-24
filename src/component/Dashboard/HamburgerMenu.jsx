@@ -16,7 +16,7 @@ class HamburgerMenu extends Component {
             }>
                 <div className='close-icon'>
                     <button onClick={() => { this.context.handleSidebar() }}>
-                        <i className='bi bi-x'></i>
+                        <i className='bi bi-x'/>
                     </button>
                 </div>
                 <div className='logo-container'>
@@ -25,55 +25,55 @@ class HamburgerMenu extends Component {
                 <ul>
                     <li className='sidenav-item'>
                         <Link to="/" className='sidenav-link'>
-                            <i class="bi bi-people"></i>
+                            <i class="bi bi-people"/>
                             خانه
                         </Link>
                     </li>
                     <li className='sidenav-item'>
                         <Link to="/Register" className='sidenav-link'>
-                            <i class="bi bi-person-plus"></i>
+                            <i class="bi bi-person-plus"/>
                             پذیرش
                         </Link>
                     </li>
                     <li className='sidenav-item'>
                         <Link to="/People" className='sidenav-link'>
-                            <i className="bi bi-person-plus"></i>
+                            <i className="bi bi-person-plus" />
                             اشخاص
                         </Link>
                     </li>
                     <li className='sidenav-item'>
                         <Link to="/booking" className='sidenav-link'>
-                            <i class="bi bi-journal-plus"></i>
+                            <i class="bi bi-journal-plus" />
                             موجودی و ظرفیت
                         </Link>
                     </li>
                     <li className='sidenav-item'>
                         <Link to="/" className='sidenav-link'>
-                            <i class="bi bi-hand-thumbs-up"></i>
+                            <i class="bi bi-hand-thumbs-up" />
                             باشگاه
                         </Link>
                     </li>
                     <li className='sidenav-item'>
                         <Link to="/" className='sidenav-link'>
-                            <i class="bi bi-file-earmark-text"></i>
+                            <i class="bi bi-file-earmark-text" />
                             ملزومات اداری
                         </Link>
                     </li>
                     <li className='sidenav-item'>
                         <Link to="/" className='sidenav-link'>
-                            <i class="bi bi-person-circle"></i>
+                            <i class="bi bi-person-circle" />
                             کادر مدیریت
                         </Link>
                     </li>
                     <li className='sidenav-item'>
                         <Link to="/" className='sidenav-link'>
-                            <i class="bi bi-gear"></i>
+                            <i class="bi bi-gear" />
                             تنظیمات
                         </Link>
                     </li>
                     <li className='sidenav-item'>
                         <Link to="/" className='sidenav-link'>
-                            <i class="bi bi-telephone"></i>
+                            <i class="bi bi-telephone" />
                             تماس با ما
                         </Link>
                     </li>

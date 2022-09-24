@@ -15,13 +15,25 @@ import SearchAccount from './pages/People/SearchAccount'
 class MainPage extends Component {
     state = {
         unitNumber: "",
-        unitId: ""
+        unitId: "",
+        fields: {
+            admission_start_date: '',
+            admission_end_date: '',
+            payment_date: '',
+        },
     }
     render() {
         return (
             <>
                 <div className='d-flex flex-column pt-4 px-5'>
-                    <BuildingContext.Provider value={{ unitId: this.state.unitId, unitNumber: this.state.unitNumber, handleUnitNumber: this.handleUnitNumber }}>
+                    <BuildingContext.Provider value={{ unitId: this.state.unitId,
+                        unitNumber: this.state.unitNumber,
+                        admission_start_date: this.state.fields.admission_start_date,
+                        admission_end_date: this.state.fields.admission_end_date,
+                        payment_date: this.state.fields.payment_date,
+                        handleUnitNumber: this.handleUnitNumber,
+                        handleFields: this.handleFields}}
+                    >
                         <Routes>
                             <Route path="/" element={(<Home />)} />
                             <Route path="/people" element={(<SearchAccount />)} />
@@ -43,6 +55,12 @@ class MainPage extends Component {
     handleUnitNumber = (unitNumber, unitId) => {
         this.setState({ unitNumber: unitNumber });
         this.setState({ unitId: unitId });
+    }
+
+    handleFields = (e, field) => {
+        let newFields = {...this.state.fields};
+        newFields[field] = e.target.value
+        this.setState({ fields: newFields });
     }
 }
 

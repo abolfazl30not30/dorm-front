@@ -83,7 +83,7 @@ class FloorAndUnit extends Component {
                     <div className="back-btn">
                         <Link to="/">
                             بازگشت
-                            <i class="bi bi-caret-left-fill"></i>
+                            <i class="bi bi-caret-left-fill"/>
                         </Link>
                     </div>
                     <div className="text">

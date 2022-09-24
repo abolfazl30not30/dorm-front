@@ -10,12 +10,31 @@ import InformationFamilyPage from './InformationFamilyPage'
 import FamilyGuest from './FamilyGuest'
 import OtherGuest from './OtherGuest'
 import * as yup from 'yup';
+import BuildingContext from '../../../../contexts/Building'
 
 class MainRegister extends Component {
+
+    static contextType = BuildingContext;
+
+    validation = () => {
+
+        let reg = /^\s*$/;
+        let result;
+
+        result = !this.state.fields.admission_start_date.match(reg) &&
+            !this.state.fields.admission_end_date.match(reg) &&
+            !this.state.fields.payment_date.match(reg);
+
+        return result;
+    }
+
     state = {
-        admission_start_date : '',
-        admission_end_date : '',
-        payment_date : '',
+        fields: {
+            admission_start_date: '',
+            admission_end_date: '',
+            payment_date: '',
+        },
+
         typeofResident: "Constant",
         steps: [
             {
@@ -23,23 +42,23 @@ class MainRegister extends Component {
                 name: 'step 1',
                 content:
                     <div className='typeofResident'>
-                        <div class="">
+                        <div className="">
                             <input className="" type="radio" name="flexRadioDefault" value='constant' onChange={(e) => { this.checked(e) }} />
-                            <label class="" for="Radio1">
+                            <label className="" htmlFor="Radio1">
                                 اقامتگر ثابت
                             </label>
                         </div>
                         <h6>مهمان</h6>
                         <div>
-                            <div class="">
+                            <div className="">
                                 <input className="" type="radio" name="flexRadioDefault" value='otherGuest' onChange={(e) => { this.checked(e) }} />
-                                <label class="" for="Radio2">
+                                <label className="" htmlFor="Radio2">
                                     متفرقه
                                 </label>
                             </div>
-                            <div class="">
+                            <div className="">
                                 <input className="" type="radio" name="flexRadioDefault" value='familyGuest' onChange={(e) => { this.checked(e) }} />
-                                <label class="" for="Radio3">
+                                <label className="" htmlFor="Radio3">
                                     بستگان درجه یک
                                 </label>
                             </div>
@@ -50,7 +69,7 @@ class MainRegister extends Component {
                 label: 'مشخصات اولیه',
                 name: 'step 1',
                 content: "",
-                validator: this.Validation,
+                validator: this.validation,
             },
             {
                 label: 'مشخصات تکمیلی',
@@ -72,24 +91,13 @@ class MainRegister extends Component {
         errors : [],
     }
 
-    Validation = async () => {
-        // const [errors, setErrors] = useState([])
 
-        const schema = yup.object().shape({
-            admission_start_date: yup.string().required('فیلد "تاریخ شروع پذیرش" نمیتواند خالی باشد'),
-            admission_end_date: yup.string().required('فیلد "تاریخ اتمام پذیرش" نمیتواند خالی باشد'),
-            payment_date: yup.string().required('فیلد "تاریخ پرداخت" نمیتواند خالی باشد')
-        })
+    updateField = (e, name) => {
+        let newFields = {...this.state.fields};
+        newFields[name] = e.target.value
+        this.setState({ fields: newFields });
 
-        try {
-            const result = await schema.validate(this.state.admission_start_date, {abortEarly: false});
-            return result;
-        } catch (error) {
-            console.log(this.state.errors.errors);
-            this.setState({error: error.errors});
-        }
     }
-
 
     checked = (e) => {
         const type = e.target.value
@@ -104,7 +112,7 @@ class MainRegister extends Component {
             }
             case 'otherGuest': {
                 let updatedState = [...this.state.steps];
-                updatedState[1].content = <FamilyGuest />;
+                updatedState[1].content = <FamilyGuest updateData={this.updateField}/>;
                 this.setState({ steps: updatedState })
                 break;
             }

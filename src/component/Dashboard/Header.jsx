@@ -10,8 +10,8 @@ class Header extends Component {
         return (
             <>
                 <div className='header'>
-                    <button className='btn' onClick={() => { this.context.handleSidebar() }}><i class="bi bi-list"></i></button>
-                    <div><i class="bi bi-person"></i></div>
+                    <button className='btn' onClick={() => { this.context.handleSidebar() }}><i className="bi bi-list"></i></button>
+                    <div><i className="bi bi-person"></i></div>
                 </div>
             </>
         );

@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import * as yup from 'yup';
+import BuildingContext from "../../../../contexts/Building";
 
 class FamilyGuest extends Component {
+    static contextType = BuildingContext;
+
     state = {
         fields : {
             admission_start_date : '',
@@ -11,56 +14,75 @@ class FamilyGuest extends Component {
         errors : []
     }
 
-    schema = yup.object().shape({
-        admission_start_date: yup.string().required('فیلد "تاریخ شروع پذیرش" نمیتواند خالی باشد'),
-        admission_end_date: yup.string().required('فیلد "تاریخ اتمام پذیرش" نمیتواند خالی باشد'),
-        payment_date: yup.string().required('فیلد "تاریخ پرداخت" نمیتواند خالی باشد')
-    })
+    // schema = yup.object().shape({
+    //     admission_start_date: yup.string().required('فیلد "تاریخ شروع پذیرش" نمیتواند خالی باشد'),
+    //     admission_end_date: yup.string().required('فیلد "تاریخ اتمام پذیرش" نمیتواند خالی باشد'),
+    //     payment_date: yup.string().required('فیلد "تاریخ پرداخت" نمیتواند خالی باشد')
+    // })
 
-    handleSubmit = async (e) => {
-        e.preventDefault();
-        const result = await this.validate();
-        console.log(result);
-    }
+    // handleSubmit = async (e) => {
+    //     e.preventDefault();
+    //     const result = await this.validate();
+    //     console.log(result);
+    // }
+    //
+    // validate = async () => {
+    //     try {
+    //         const result = await this.schema.validate(this.state.fields, {abortEarly : false});
+    //         return result;
+    //     } catch (error){
+    //         console.log(error.errors);
+    //         this.setState({error: error.errors});
+    //     }
+    // }
 
-    validate = async () => {
-        try {
-            const result = await this.schema.validate(this.state.fields, {abortEarly : false});
-            return result;
-        } catch (error){
-            console.log(error.errors);
-            this.setState({error: error.errors});
-        }
-    }
+    handleChange = (e, name) => {
+        // this.setState({
+        //     [name] : e.target.value
+        // });
 
-    handleChange = async ({currentTarget : input}) => {
-        const fields = {...this.state.fields};
-        fields[input.name] = input.value;
-        this.setState({fields});
+        this.context.handleFields(e, name)
+
+        // console.log(this.state.admission_start_date)
     }
 
     render() {
-        const {admission_start_date, admission_end_date, payment_date} = this.state.fields;
+        // const {admission_start_date, admission_end_date, payment_date} = this.state.fields;
         return (
             <>
                 <form className="register-step-box" onSubmit={this.handleSubmit}>
                     <h2>مهمان (بستگان درجه یک)</h2>
                     <div className='d-flex flex-wrap justify-content-start'>
                         <div className="input-group-register col-4">
-                            <input type="text" className="input" placeholder=" " name='admission_start_date'
-                                   value={admission_start_date} onChange={this.handleChange}/>
+                            <input type="text"
+                                   className="input"
+                                   placeholder=" "
+                                   name='admission_start_date'
+                                   value={this.context.admission_start_date}
+                                   onChange={(e) => {this.props.updateData(e, 'admission_start_date'); this.handleChange(e, 'admission_start_date')}}/>
+                                    {/*this.props.updateData*/}
                             <label className="placeholder">تاریخ شروع پذیرش<span style={{color : 'red'}}>*</span></label>
 
                         </div>
                         <div className="input-group-register col-4">
-                            <input type="text" className="input" placeholder=" " name='admission_end_date'
-                                   value={admission_end_date} onChange={this.handleChange}/>
+                            <input type="text"
+                                   className="input"
+                                   placeholder=" "
+                                   name='admission_end_date'
+                                   value={this.context.admission_end_date}
+                                   onChange={(e) => {this.props.updateData(e, 'admission_end_date'); this.handleChange(e, 'admission_end_date')}}/>
                             <label className="placeholder">تاریخ اتمام پذیرش<span style={{color : 'red'}}>*</span></label>
                         </div>
                         <div className="input-group-register col-4">
-                            <input type="text" className="input" placeholder=" " name='payment_date'
-                                   value={payment_date} onChange={this.handleChange}/>
+                            <input type="text"
+                                   className="input"
+                                   placeholder=" "
+                                   name='payment_date'
+                                   value={this.context.payment_date}
+                                   onChange={(e) => {this.props.updateData(e, 'payment_date'); this.handleChange(e, 'payment_date')}}/>
                             <label className="placeholder">تاریخ پرداخت<span style={{color : 'red'}}>*</span></label>
+                        </div>
+                        <div>
                         </div>
                         <div className="input-group-register col-4">
                             <input type="text" className="input" placeholder=" "/>
