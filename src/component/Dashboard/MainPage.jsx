@@ -21,6 +21,7 @@ class MainPage extends Component {
             admission_end_date: '',
             payment_date: '',
         },
+        errors : [],
     }
     render() {
         return (
@@ -31,8 +32,10 @@ class MainPage extends Component {
                         admission_start_date: this.state.fields.admission_start_date,
                         admission_end_date: this.state.fields.admission_end_date,
                         payment_date: this.state.fields.payment_date,
+                        errors: this.state.errors,
                         handleUnitNumber: this.handleUnitNumber,
-                        handleFields: this.handleFields}}
+                        handleFields: this.handleFields,
+                        handleErrors: this.handleErrors}}
                     >
                         <Routes>
                             <Route path="/" element={(<Home />)} />
@@ -61,6 +64,21 @@ class MainPage extends Component {
         let newFields = {...this.state.fields};
         newFields[field] = e.target.value
         this.setState({ fields: newFields });
+    }
+
+    handleErrors = (result) => {
+        let newErrors = [...this.state.errors];
+        if (result === false) {
+            if (!newErrors.includes('فیلد های ستاره دار را پر کنید!')) {
+                newErrors.push('فیلد های ستاره دار را پر کنید!');
+            }
+        } else {
+            newErrors = newErrors.filter(item => item !== 'فیلد های ستاره دار را پر کنید!');
+        }
+
+        this.setState({errors : newErrors});
+
+        // console.log(this.state.errors);
     }
 }
 

@@ -11,7 +11,7 @@ class FamilyGuest extends Component {
             admission_end_date : '',
             payment_date : '',
         },
-        errors : []
+        errors : [],
     }
 
     // schema = yup.object().shape({
@@ -52,6 +52,18 @@ class FamilyGuest extends Component {
             <>
                 <form className="register-step-box" onSubmit={this.handleSubmit}>
                     <h2>مهمان (بستگان درجه یک)</h2>
+
+                    {
+
+                        this.context.errors.length !== 0
+                            ? <div className="errors alert alert-danger" role="alert">
+                                {this.context.errors.map((e) => (
+                                <li>{e}</li>
+                                ))}
+                            </div>
+                            : <p></p>
+                    }
+
                     <div className='d-flex flex-wrap justify-content-start'>
                         <div className="input-group-register col-4">
                             <input type="text"
@@ -90,7 +102,7 @@ class FamilyGuest extends Component {
                         </div>
                         <div className="input-group-register col-4">
                             <input type="text" className="input" placeholder=" "/>
-                            <label className="placeholder">مبلغ پرداخت ودیعه</label>    
+                            <label className="placeholder">مبلغ پرداخت ودیعه</label>
                         </div>
                         <div className="input-group-register col-4">
                             <input type="text" className="input" placeholder=" "/>

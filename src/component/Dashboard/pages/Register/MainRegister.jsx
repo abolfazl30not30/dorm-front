@@ -25,6 +25,9 @@ class MainRegister extends Component {
             !this.state.fields.admission_end_date.match(reg) &&
             !this.state.fields.payment_date.match(reg);
 
+        this.context.handleErrors(result);
+
+
         return result;
     }
 
@@ -110,15 +113,17 @@ class MainRegister extends Component {
                 this.setState({ steps: updatedState })
                 break;
             }
+
             case 'otherGuest': {
                 let updatedState = [...this.state.steps];
-                updatedState[1].content = <FamilyGuest updateData={this.updateField}/>;
+                updatedState[1].content = <OtherGuest />;
                 this.setState({ steps: updatedState })
                 break;
             }
-            case 'otherGuest': {
+
+            case 'familyGuest': {
                 let updatedState = [...this.state.steps];
-                updatedState[1].content = <OtherGuest />;;
+                updatedState[1].content = <FamilyGuest updateData={this.updateField} errors={this.state.errors}/>;
                 this.setState({ steps: updatedState })
                 break;
             }
