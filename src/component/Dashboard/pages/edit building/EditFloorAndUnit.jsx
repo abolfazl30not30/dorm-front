@@ -141,7 +141,7 @@ class EditFloorAndUnit extends Component {
                         <button onClick={() => { this.addAccessory(this.state.floorTemp) }} className="accessory-add-btn"><AiOutlinePlus /></button>
                     </Modal.Body>
                     <Modal.Footer className="justify-content-start">
-                        <button className="btn btn-success" onClick={() => {}}>ثبت</button>
+                        <button className="btn btn-success" onClick={() => {this.handleSubmitAcc(this.state.floorTemp)}}>ثبت</button>
                         <button className="btn btn-light" onClick={() => { this.handleFloorAccClose() }}>بستن</button>
                     </Modal.Footer>
                 </Modal>
@@ -277,7 +277,7 @@ class EditFloorAndUnit extends Component {
         this.setState({ floor: updatedState });
     }
 
-    addAccessory = (r) => {
+    addAccessory = async (r) => {
         const index = this.state.floor.indexOf(r);
         const newAccessory = this.state.floor[index].accessories.concat(
             { name: "....", count: 0 }
@@ -306,6 +306,11 @@ class EditFloorAndUnit extends Component {
         updatedAccessory = updatedAccessory.filter(a => a !== accessory);
         updatedState[index].accessories = updatedAccessory;
         this.setState({ floor: updatedState });
+    }
+
+    handleSubmitAcc = (name) =>{
+        const index = this.state.floor.indexOf(floor);
+        console.log(accessories);
     }
 
     handleDeleteShowUnit = (unit, index) => {

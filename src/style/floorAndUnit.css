@@ -86,7 +86,14 @@
     font-weight: bold;
     margin-top: 10px;
 }
-
+.floorAndUnit .floor-container .floor .show-acc-btn{
+    border:none;
+    font-size: 12px;
+    color:#3498db ;
+}
+.floorAndUnit .floor-container .floor .show-acc-btn:hover {
+    color: #2980b9 ;
+}
 .floorAndUnit .floor-container .floor .unit-container {
     margin: 25px 0;
 }

@@ -88,7 +88,6 @@ class EditRoomAndBed extends Component {
 
         const responseUnit = await fetch(`http://api.saadatportal.com/api/v1/unit/${this.context.unitId}`).then((response) => response.json())
             .then((data) => this.setState({unit: data}));
-        console.log(this.state.unit)
     }
 
     render() {
@@ -381,7 +380,7 @@ class EditRoomAndBed extends Component {
     }
 
     editRoomTitle = async ({value, previousValue}) => {
-        const room = this.state.rooms.find(({name}) => name === previousValue);
+        const room = this.state.rooms.find(({number}) => number === previousValue);
         const index = this.state.rooms.findIndex(({number}) => number === previousValue);
         const number = parseInt(value);
 
@@ -427,14 +426,14 @@ class EditRoomAndBed extends Component {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({name: "A", empty: "true", roomId: r.id})
+            body: JSON.stringify({name:"تخت...", empty: "true", roomId: r.id})
+
         });
-        const content = await rawResponse.json();
+        const content = await rawResponse.json()
         const index = this.state.rooms.indexOf(r);
         const newBed = this.state.rooms[index].beds.concat(
-            {id: content.id, name: "تخت ...", empty: true}
+            {id:content.id, name: "تخت...", empty: "true"}
         )
-
         const updateRooms = [...this.state.rooms]
         updateRooms[index].beds = newBed
         this.setState({rooms: updateRooms})
@@ -454,8 +453,7 @@ class EditRoomAndBed extends Component {
 
         const updatedState = [...this.state.rooms];
         const roomId = updatedState[indexOfRoom].id;
-        const bedId = updatedState[indexOfBed].beds[indexOfBed].id;
-
+        const bedId = updatedState[indexOfRoom].beds[indexOfBed].id;
         const rawResponse = await fetch(`http://api.saadatportal.com/api/v1/bed/${bedId}`, {
             method: 'PATCH',
             headers: {
@@ -475,14 +473,12 @@ class EditRoomAndBed extends Component {
             method: 'DELETE',
         })
             .then(res => res.text())
-            .then(res => console.log(res))
 
         let updatedState = [...this.state.rooms];
         let updatedBed = this.state.rooms[index].beds;
         updatedBed = updatedBed.filter(b => b !== bed);
         updatedState[index].beds = updatedBed;
         this.setState({rooms: updatedState});
-        console.log(this.state.rooms)
     }
 
     //Room Accessory
