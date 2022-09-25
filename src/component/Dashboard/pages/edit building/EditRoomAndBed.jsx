@@ -52,7 +52,9 @@ class EditRoomAndBed extends Component {
         //     },
         // ],
         rooms: [],
-        unit: {},
+        unit: {
+            accessories:[]
+        },
         tempRoom:
             {
                 id: 2, number: 'اتاق 2',
@@ -78,7 +80,9 @@ class EditRoomAndBed extends Component {
         roomTemp: {},
         bedTemp: {},
         unitTemp: {},
-        roomIndex: -1
+        roomIndex: -1,
+        unitAccIndex:-1,
+        roomAccIndex:-1
 
     }
 
@@ -88,6 +92,7 @@ class EditRoomAndBed extends Component {
 
         const responseUnit = await fetch(`http://api.saadatportal.com/api/v1/unit/${this.context.unitId}`).then((response) => response.json())
             .then((data) => this.setState({unit: data}));
+        console.log(this.state.rooms[0]);
     }
 
     render() {
@@ -226,7 +231,7 @@ class EditRoomAndBed extends Component {
                     </Modal.Header>
                     <Modal.Body className="accessoryModal justify-content-center">
                         <div className="accessory-box-title d-flex"><h5>تجهیزات</h5><h5>تعداد</h5></div>
-                        {this.state.tempRoom.accessories.map((accessory) => (
+                        {this.state.tempRoom.accessories.map((accessory,i) => (
                             <div className="accessory row">
                                 <div>
                                     <button className="close-btn" onClick={() => {
@@ -237,7 +242,7 @@ class EditRoomAndBed extends Component {
                                     <EditText style={{backgroundColor: "#f9f9f9"}} className="editable" showEditButton
                                               defaultValue={accessory.name}
                                               editButtonContent={<FaPencilAlt color="#f39c12" fontSize="15px"/>}
-                                              onSave={this.handleRoomAccTitle}/>
+                                              onSave={this.handleRoomAccTitle} onSave={this.handleRoomAccTitle} onEditMode={()=>{this.setState({roomAccIndex:i})}}/>
                                 </div>
                                 <div className="accessory-count col-5">
                                     <CounterInput min={0} max={10} count={accessory.count} onCountChange={count => {
@@ -248,11 +253,12 @@ class EditRoomAndBed extends Component {
                             </div>
                         ))}
                         <button onClick={() => {
-                            this.addAccessory(this.state.floorTemp)
+                            this.addAccessory(this.state.tempRoom)
                         }} className="accessory-add-btn"><AiOutlinePlus/></button>
                     </Modal.Body>
                     <Modal.Footer className="justify-content-start">
                         <button className="btn btn-success" onClick={() => {
+                            this.handleSubmitRoomAcc(this.state.tempRoom)
                         }}>ثبت
                         </button>
                         <button className="btn btn-light" onClick={() => {
@@ -270,33 +276,34 @@ class EditRoomAndBed extends Component {
                     </Modal.Header>
                     <Modal.Body className="accessoryModal justify-content-center">
                         <div className="accessory-box-title d-flex"><h5>تجهیزات</h5><h5>تعداد</h5></div>
-                        {/*{this.state.unit.accessories.map((accessory) => (*/}
-                        {/*    <div className="accessory row">*/}
-                        {/*        <div>*/}
-                        {/*            <button className="close-btn" onClick={() => {*/}
-                        {/*                this.deleteUnitAccessory(accessory)*/}
-                        {/*            }}><AiFillCloseCircle color="#F1416C"/></button>*/}
-                        {/*        </div>*/}
+                        {this.state.unit.accessories.map((accessory,i) => (
+                            <div className="accessory row">
+                                <div>
+                                    <button className="close-btn" onClick={() => {
+                                        this.deleteUnitAccessory(accessory)
+                                    }}><AiFillCloseCircle color="#F1416C"/></button>
+                                </div>
 
-                        {/*        <div className="accessory-title col-7">*/}
-                        {/*            <EditText style={{backgroundColor: "#f9f9f9"}} className="editable" showEditButton*/}
-                        {/*                      defaultValue={accessory.name}*/}
-                        {/*                      editButtonContent={<FaPencilAlt color="#f39c12" fontSize="15px"/>}*/}
-                        {/*                      onSave={this.handleUnitAccTitle}/>*/}
-                        {/*        </div>*/}
-                        {/*        <div className="accessory-count col-5">*/}
-                        {/*            <CounterInput min={0} max={10} count={accessory.count} onCountChange={count => {*/}
-                        {/*                this.handleUnitCount(count, accessory)*/}
-                        {/*            }}/>*/}
-                        {/*        </div>*/}
-                        {/*    </div>*/}
-                        {/*))}*/}
+                                <div className="accessory-title col-7">
+                                    <EditText style={{backgroundColor: "#f9f9f9"}} className="editable" showEditButton
+                                              defaultValue={accessory.name}
+                                              editButtonContent={<FaPencilAlt color="#f39c12" fontSize="15px"/>}
+                                              onSave={this.handleUnitAccTitle} onEditMode={()=>{this.setState({unitAccIndex:i})}} editButtonProps={{}} />
+                                </div>
+                                <div className="accessory-count col-5">
+                                    <CounterInput min={0} max={10} count={accessory.count} onCountChange={count => {
+                                        this.handleUnitCount(count, accessory)
+                                    }}/>
+                                </div>
+                            </div>
+                        ))}
                         <button onClick={() => {
                             this.addUnitAccessory()
                         }} className="accessory-add-btn"><AiOutlinePlus/></button>
                     </Modal.Body>
                     <Modal.Footer className="justify-content-start">
                         <button className="btn btn-success" onClick={() => {
+                            this.handleSubmitUnitAcc()
                         }}>ثبت
                         </button>
                         <button className="btn btn-light" onClick={() => {
@@ -311,17 +318,8 @@ class EditRoomAndBed extends Component {
         );
     }
 
-    handleUnitAccClose = () => {
-        this.setState({showَUnitAccessory: false});
-    }
-    handleUnitAccShow = () => {
-        this.setState({showَUnitAccessory: true});
 
-    }
-    handleRoomAccShow = (room) => {
-        this.setState({showَRoomAccessory: true});
-        this.setState({tempRoom: room});
-    }
+
 
     handleDeleteShowRoom = (Room) => {
         this.setState({showDeleteModalRoom: true});
@@ -348,9 +346,7 @@ class EditRoomAndBed extends Component {
         }
     }
 
-    handleRoomAccClose = () => {
-        this.setState({showَRoomAccessory: false})
-    }
+
 
 //room
     addRoom = async () => {
@@ -416,6 +412,7 @@ class EditRoomAndBed extends Component {
         this.setState({rooms: updateState});
         console.log(this.state.rooms)
     }
+
 
     //bed
     addBed = async (r) => {
@@ -493,19 +490,32 @@ class EditRoomAndBed extends Component {
     }
 
     handleCount = (count, acc, room) => {
-        console.log(count, acc, room);
         const roomIndex = this.state.rooms.indexOf(room);
         const accIndex = this.state.tempRoom.accessories.indexOf(acc)
 
         const updatedState = [...this.state.rooms];
         updatedState[roomIndex].accessories[accIndex].count = count;
         this.setState({rooms: updatedState});
-        console.log(this.state.rooms)
+    }
+
+    handleRoomAccTitle = ({value}) => {
+        const index = this.state.rooms.indexOf(this.state.tempRoom);
+        const updateState = [...this.state.rooms];
+        updateState[index].accessories[this.state.roomAccIndex].name = value;
+        this.setState({rooms:updateState});
 
     }
 
-    handleRoomAccTitle = ({value, previousValue}) => {
+    handleRoomAccShow = (room) => {
+        this.setState({showَRoomAccessory: true});
+        this.setState({tempRoom: room});
+    }
 
+    handleRoomAccClose = async () => {
+        const response = await fetch(`http://api.saadatportal.com/api/v1/unit/room/${this.context.unitId}`).then((response) => response.json())
+            .then((data) => this.setState({rooms: data}));
+
+        this.setState({showَRoomAccessory: false})
     }
 
     deleteAccessory = (accessory, room) => {
@@ -516,7 +526,22 @@ class EditRoomAndBed extends Component {
         updatedAccessory = updatedAccessory.filter(a => a !== accessory);
         updatedState[index].accessories = updatedAccessory;
         this.setState({rooms: updatedState});
-        console.log(this.state.rooms)
+
+    }
+
+    handleSubmitRoomAcc = async (room) =>{
+        const index = this.state.rooms.indexOf(room);
+        const assessories = this.state.rooms[index].accessories;
+
+        const rawResponse = await fetch(`http://api.saadatportal.com/api/v1/room/${room.id}`, {
+            method: 'PATCH',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({accessory : assessories})
+        });
+        this.setState({showَRoomAccessory:false});
     }
 
     //Unit Accessory
@@ -525,30 +550,59 @@ class EditRoomAndBed extends Component {
         const newAccessory = this.state.unit.accessories.concat(
             {name: "....", count: 0}
         )
-        const updateUnit = [...this.state.unit]
+
+        const updateUnit = this.state.unit;
         updateUnit.accessories = newAccessory
         this.setState({unit: updateUnit})
-        console.log(this.state.unit)
+
     }
 
     handleUnitCount = (count, acc) => {
         const accIndex = this.state.unit.accessories.indexOf(acc)
-        const updatedState = [...this.state.unit];
+        const updatedState = this.state.unit;
         updatedState.accessories[accIndex].count = count;
         this.setState({unit: updatedState});
-        console.log(this.state.unit)
     }
 
-    handleUnitAccTitle = ({value, previousValue}) => {
-
+    handleUnitAccTitle = ({value}) => {
+        const updateState = this.state.unit;
+        console.log(this.state.unitAccIndex)
+        updateState.accessories[this.state.unitAccIndex].name = value;
+        this.setState({unit : updateState});
+        console.log(this.state.unit)
     }
 
     deleteUnitAccessory = (accessory) => {
-        let updatedState = [...this.state.unit];
-        updatedState = updatedState.accessories.filter(a => a !== accessory);
-        this.setState({unit: updatedState});
-        console.log(this.state.unit)
+        let updateUnit = this.state.unit;
+        let updateAccessory = this.state.unit.accessories;
+        updateAccessory = updateAccessory.filter(a => a !== accessory);
+        updateUnit.accessories = updateAccessory;
+        this.setState({unit: updateUnit});
     }
+
+    handleSubmitUnitAcc = async ()=>{
+        const assessories = this.state.unit.accessories;
+        const rawResponse = await fetch(`http://api.saadatportal.com/api/v1/unit/${this.state.unit.id}`, {
+            method: 'PATCH',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({accessory : assessories})
+        });
+        this.setState({showَUnitAccessory:false});
+    }
+    handleUnitAccClose = async () => {
+        const responseUnit = await fetch(`http://api.saadatportal.com/api/v1/unit/${this.context.unitId}`).then((response) => response.json())
+            .then((data) => this.setState({unit: data}));
+        this.setState({showَUnitAccessory: false});
+    }
+
+    handleUnitAccShow = () => {
+        this.setState({showَUnitAccessory: true});
+
+    }
+
 
 }
 
