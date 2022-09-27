@@ -307,7 +307,7 @@ class ProfilePage extends Component {
             }
         ],
         showDeleteModalReport : false,
-        reportTemp:[]
+        reportIndex : -1
     }
     date = createRef();
     description = createRef();
@@ -403,7 +403,7 @@ class ProfilePage extends Component {
                                                                     {/*<td>{a+1}</td>*/}
                                                                     <td>{c.date}</td>
                                                                     <td>{c.description}</td>
-                                                                    <td><button className='btn floor-close-btn' onClick={ () => this.handleOpenModalReport(c) }><AiFillCloseCircle color="#F1416C" /></button></td>
+                                                                    <td><button className='btn floor-close-btn' onClick={ () => this.handleOpenModalReport(i) }><AiFillCloseCircle color="#F1416C" /></button></td>
                                                                 </tr>
                                                         ) : (
                                                                 console.log()
@@ -946,7 +946,7 @@ class ProfilePage extends Component {
                     <Modal.Body>
                         <h6>آيا از حذف اين گزارش مطمئن هستيد؟</h6>
                     </Modal.Body>
-                    <Modal.Footer className="justify-content-around">
+                    <Modal.Footer className="justify-content-start">
                         <button className="btn btn-danger" onClick={() => this.handleDeleteReport()}>حذف</button>
                         <button className="btn btn-light" onClick={() => this.handleCloseModalReport()}>بستن</button>
                     </Modal.Footer>
@@ -997,6 +997,7 @@ class ProfilePage extends Component {
                     this.setState({show: false})
                     console.log(this.state.report);
                 })();
+
             case 'exit':
                 return (() => {
                     const startDate = this.startDate.current.value;
@@ -1067,6 +1068,7 @@ class ProfilePage extends Component {
                     this.setState({report: newReports})
                     this.setState({show: false})
                 })();
+
             case 'cancelContract':
                 return (() => {
                     const date = this.date.current.value;
@@ -1086,18 +1088,21 @@ class ProfilePage extends Component {
                 })();
         }
     }
-    handleOpenModalReport = (report) => {
-        const index = this.state.report.indexOf(report)
-        this.setState({ showDeleteModalReport: true })
-        this.setState({ reportTemp: report })
-        console.log(this.state.reportTemp)
-        // this.handleDeleteReport(report,index)
+    handleOpenModalReport = (i) => {
+
+        this.setState({ showDeleteModalReport: true });
+        this.setState({ reportIndex: i });
+
     }
     handleCloseModalReport = () => {
         this.setState({ showDeleteModalReport: false });
     }
+
     handleDeleteReport = () => {
-        console.log('u')
+        let updatedReport = [...this.state.report];
+        updatedReport.splice(this.state.reportIndex,1);
+        this.setState({report : updatedReport});
+        this.setState({showDeleteModalReport:false})
     }
 }
 
