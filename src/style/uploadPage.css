@@ -1,3 +1,6 @@
+.text{
+    margin-bottom: 50px;
+}
 .upload-container {
     background-color: #fff;
     padding: 1rem;
@@ -72,4 +75,18 @@
 }
 .addBtn:hover{
     background-color: rgba(0, 0, 0, 0.04);
+}
+.date-container input{
+    display: block;
+    width: 100%;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    appearance: none;
+    border-radius: 0.375rem;
 }

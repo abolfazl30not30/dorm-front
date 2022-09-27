@@ -15,7 +15,7 @@ import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import ToggleButton from "@mui/material/ToggleButton";
 import {Modal} from "react-bootstrap";
 import {IoIosAddCircleOutline} from "react-icons/io";
-
+import "../../../../style/evan-calender-style.css";
 class PaymentPage extends Component {
     state = {
         date: '',
@@ -26,6 +26,18 @@ class PaymentPage extends Component {
         ],
         inputType:"",
         showType:false,
+        styles : {
+            calendarContainer: "calendarContainer",
+            dayPickerContainer: "dayPickerContainer",
+            monthsList: "monthsList",
+            daysOfWeek: "daysOfWeek",
+            dayWrapper: "dayWrapper",
+            selected: "selected",
+            heading: "heading",
+            next: "next",
+            prev: "prev",
+            title: "title",
+        }
     }
 
     handleClick(e) {
@@ -53,13 +65,10 @@ class PaymentPage extends Component {
 
                 <div className="text">
                     <h4>ثبت فاکتور</h4>
-                    <p>
-                        توضیحات توضیحات توضیحات توضیحات توضیحات
-                    </p>
                 </div>
 
                 <div className='first-section row'>
-                    <div className='col-5'>
+                    <div className='col-4'>
                         <label for="price">مبلغ :</label>
                         <div className="row mt-2">
                             <div className='col-3 m-0 p-0'>
@@ -74,7 +83,7 @@ class PaymentPage extends Component {
                             </div>
                         </div>
                     </div>
-                    <div className='col-7'>
+                    <div className='col-8'>
                         <label>نوع: </label>
                         <div style={{width: '100%'}}>
                             <Accordion defaultActiveKey="0">
@@ -114,40 +123,16 @@ class PaymentPage extends Component {
                         </div>
                     </div>
                 </div>
-                <div className='second-section d-flex flex-wrap justify-content-start mr-3' style={{height: '50%'}}>
-                    <div className='mt-5 mb-3'>
+                <div className='second-section d-flex flex-wrap justify-content-start mr-3 row' style={{height: '50%'}}>
+                    <div className='col-4 mt-5 mb-3 date-container'>
                         <label className='mb-3'>تاریخ: </label>
-                        {/*<DatePicker selected={this.state.startDate} onChange={(date) => this.setStartDate(date)} />*/}
-                        {/*<Calendar format='DD/MM/YYYY' date='4-12-2014' />*/}
-
-                        <div>
-                            {/*<TextField*/}
-                            {/*    id="standard-read-only-input"*/}
-                            {/*    defaultValue={this.state.date}*/}
-                            {/*    InputProps={{*/}
-                            {/*        readOnly: true,*/}
-                            {/*    }}*/}
-                            {/*    variant="standard"*/}
-                            {/*    style={{width: '100%'}}*/}
-                            {/*/>*/}
-                            <input type='text' value={this.state.date} style={{textAlign: 'center', width: '100%'}} disabled />
-                        </div>
-                        <DatePicker/>
-                        {/*<JCalendar*/}
-                        {/*    locale={'fa'}*/}
-                        {/*    color={'#000066'}*/}
-                        {/*    size={28}*/}
-                        {/*    // How???*/}
-                        {/*    onClick={() => this.setState({date: "date"})}*/}
-                        {/*    itemRender={(key, item, children) => children}*/}
-                        {/*/>*/}
-                        {/*<Calendar value={this.state.value} />*/}
+                        <DatePicker calendarStyles={this.state.styles}/>
                     </div>
-                    <div className='col'>
+                    <div className='col-8'>
                         <Form>
                             <Form.Group className="mb-3 mt-5" controlId="exampleForm.ControlTextarea1">
                                 <Form.Label style={{marginRight: '30px'}}>توضیحات: </Form.Label>
-                                <Form.Control as="textarea" rows={13} style={{marginRight: '30px', width: '95%'}}  />
+                                <Form.Control as="textarea" rows={8} style={{marginRight: '30px', width: '95%'}}  />
                             </Form.Group>
                         </Form>
                     </div>

@@ -22,6 +22,7 @@
     "bootstrap": "^5.2.1",
     "bootstrap-icons": "^1.9.1",
     "jalali-react-datepicker": "^1.2.1",
+    "moment-jalali": "^0.3.9",
     "react": "^18.2.0",
     "react-advance-jalaali-datepicker": "^1.4.0",
     "react-bootstrap": "^2.5.0",
