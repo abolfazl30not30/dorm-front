@@ -5,19 +5,21 @@ import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import pdf_icon from '../../../../img/pdf_icon.png'
 import png_icon from '../../../../img/png_icon.png'
-import { FiUser } from "react-icons/fi";
-import { AiOutlineLeft } from "react-icons/ai";
+import {FiUser} from "react-icons/fi";
+import {AiOutlineLeft} from "react-icons/ai";
 import {HiOutlineMailOpen} from 'react-icons/hi';
 import {BsTelephone} from 'react-icons/bs';
 import {AiOutlineBarcode} from 'react-icons/ai'
 import {AiOutlineUser} from 'react-icons/ai'
-import { Modal } from 'react-bootstrap'
+import {Modal} from 'react-bootstrap'
 import {AiOutlineClose} from 'react-icons/ai'
 import {Accordion} from 'react-bootstrap';
+import {Table} from 'react-bootstrap';
+
 
 class ProfilePage extends Component {
     state = {
-        people : [
+        people: [
             {
                 "id": "bf767aa7ebfd47e79183c99f82ac9c85",
                 "firstName": "Fazel",
@@ -65,8 +67,244 @@ class ProfilePage extends Component {
             },
         ],
         show: false,
-        reportType:'cleaning',
-        report:[]
+        reportType: 'cleaning',
+        report: [
+            {
+                "title": "cleaning",
+                "date": "1",
+                "description": "2"
+            },
+            {
+                "title": "delayInArrival",
+                "date": "2",
+                "time": "0"
+            },
+            {
+                "title": "exit",
+                "timePeriod": {
+                    "startDate": "0",
+                    "endDate": ""
+                },
+                "destinationAddress": "0",
+                "destinationPhoneNumber": "",
+                "relation": ""
+            },
+            {
+                "title": "violation",
+                "date": "0",
+                "time": "0",
+                "description": "0"
+            },
+            {
+                "title": "penalty",
+                "typePenalty": "cash",
+                "description": "0"
+            },
+            {
+                "title": "discharge",
+                "dischargeDateAnnounce": "",
+                "dischargeDate": "0",
+                "depositReturnDate": "",
+                "deductionOfLosses": "",
+                "deductionOfLossesReason": "",
+                "refundableAmount": ""
+            },
+            {
+                "title": "cancelContract",
+                "data": "0",
+                "reason": "0",
+                "deductionOfLosses": "",
+                "refundableAmount": "0"
+            },
+            {
+                "title": "cleaning",
+                "date": "1",
+                "description": "2"
+            },
+            {
+                "title": "delayInArrival",
+                "date": "2",
+                "time": "0"
+            },
+            {
+                "title": "exit",
+                "timePeriod": {
+                    "startDate": "0",
+                    "endDate": ""
+                },
+                "destinationAddress": "0",
+                "destinationPhoneNumber": "",
+                "relation": ""
+            },
+            {
+                "title": "violation",
+                "date": "0",
+                "time": "0",
+                "description": "0"
+            },
+            {
+                "title": "penalty",
+                "typePenalty": "cash",
+                "description": "0"
+            },
+            {
+                "title": "discharge",
+                "dischargeDateAnnounce": "",
+                "dischargeDate": "0",
+                "depositReturnDate": "",
+                "deductionOfLosses": "",
+                "deductionOfLossesReason": "",
+                "refundableAmount": ""
+            },
+            {
+                "title": "cancelContract",
+                "data": "0",
+                "reason": "0",
+                "deductionOfLosses": "",
+                "refundableAmount": "0"
+            },
+            {
+                "title": "cleaning",
+                "date": "1",
+                "description": "2"
+            },
+            {
+                "title": "delayInArrival",
+                "date": "2",
+                "time": "0"
+            },
+            {
+                "title": "exit",
+                "timePeriod": {
+                    "startDate": "0",
+                    "endDate": ""
+                },
+                "destinationAddress": "0",
+                "destinationPhoneNumber": "",
+                "relation": ""
+            },
+            {
+                "title": "violation",
+                "date": "0",
+                "time": "0",
+                "description": "0"
+            },
+            {
+                "title": "penalty",
+                "typePenalty": "cash",
+                "description": "0"
+            },
+            {
+                "title": "discharge",
+                "dischargeDateAnnounce": "",
+                "dischargeDate": "0",
+                "depositReturnDate": "",
+                "deductionOfLosses": "",
+                "deductionOfLossesReason": "",
+                "refundableAmount": ""
+            },
+            {
+                "title": "cancelContract",
+                "data": "0",
+                "reason": "0",
+                "deductionOfLosses": "",
+                "refundableAmount": "0"
+            },
+            {
+                "title": "cleaning",
+                "date": "1",
+                "description": "2"
+            },
+            {
+                "title": "delayInArrival",
+                "date": "2",
+                "time": "0"
+            },
+            {
+                "title": "exit",
+                "timePeriod": {
+                    "startDate": "0",
+                    "endDate": ""
+                },
+                "destinationAddress": "0",
+                "destinationPhoneNumber": "",
+                "relation": ""
+            },
+            {
+                "title": "violation",
+                "date": "0",
+                "time": "0",
+                "description": "0"
+            },
+            {
+                "title": "penalty",
+                "typePenalty": "cash",
+                "description": "0"
+            },
+            {
+                "title": "discharge",
+                "dischargeDateAnnounce": "",
+                "dischargeDate": "0",
+                "depositReturnDate": "",
+                "deductionOfLosses": "",
+                "deductionOfLossesReason": "",
+                "refundableAmount": ""
+            },
+            {
+                "title": "cancelContract",
+                "data": "0",
+                "reason": "0",
+                "deductionOfLosses": "",
+                "refundableAmount": "0"
+            },
+            {
+                "title": "cleaning",
+                "date": "1",
+                "description": "2"
+            },
+            {
+                "title": "delayInArrival",
+                "date": "2",
+                "time": "0"
+            },
+            {
+                "title": "exit",
+                "timePeriod": {
+                    "startDate": "0",
+                    "endDate": ""
+                },
+                "destinationAddress": "0",
+                "destinationPhoneNumber": "",
+                "relation": ""
+            },
+            {
+                "title": "violation",
+                "date": "0",
+                "time": "0",
+                "description": "0"
+            },
+            {
+                "title": "penalty",
+                "typePenalty": "cash",
+                "description": "0"
+            },
+            {
+                "title": "discharge",
+                "dischargeDateAnnounce": "",
+                "dischargeDate": "0",
+                "depositReturnDate": "",
+                "deductionOfLosses": "",
+                "deductionOfLossesReason": "",
+                "refundableAmount": ""
+            },
+            {
+                "title": "cancelContract",
+                "data": "0",
+                "reason": "0",
+                "deductionOfLosses": "",
+                "refundableAmount": "0"
+            }
+        ]
     }
     date = createRef();
     description = createRef();
@@ -86,10 +324,10 @@ class ProfilePage extends Component {
     reason = createRef();
 
     handleClose = () => {
-        this.setState({ show: false })
+        this.setState({show: false})
     };
     handleShow = () => {
-        this.setState({ show: true })
+        this.setState({show: true})
     };
     reportType = (e) => {
         const type = e.target.value
@@ -105,26 +343,27 @@ class ProfilePage extends Component {
                     const date = this.date.current.value;
                     const description = this.description.current.value;
                     const result = {
-                        'title' : this.state.reportType,
-                        'date' : date,
-                        'description' : description
+                        'title': this.state.reportType,
+                        'date': date,
+                        'description': description
                     }
-                    const newReports = this.state.report.concat(result)
-                    this.setState({report: newReports})
-                    this.setState({ show: false })
+                    const newReports = this.state.report.concat(result);
+                    this.setState({report: newReports});
+                    this.setState({show: false});
                 })();
             case 'delayInArrival':
                 return (() => {
                     const date = this.date.current.value;
                     const time = this.time.current.value;
                     const result = {
-                        'title' : this.state.reportType,
-                        'date' : date,
-                        'time' : time
+                        'title': this.state.reportType,
+                        'date': date,
+                        'time': time
                     }
                     const newReports = this.state.report.concat(result)
                     this.setState({report: newReports})
-                    this.setState({ show: false })
+                    this.setState({show: false})
+                    console.log(this.state.report);
                 })();
             case 'exit':
                 return (() => {
@@ -134,18 +373,18 @@ class ProfilePage extends Component {
                     const destinationPhoneNumber = this.destinationPhoneNumber.current.value;
                     const relation = this.relation.current.value;
                     const result = {
-                        'title' : this.state.reportType,
-                        'timePeriod' : {
+                        'title': this.state.reportType,
+                        'timePeriod': {
                             "startDate": startDate,
                             "endDate": endDate
                         },
-                        'destinationAddress' : destinationAddress,
-                        'destinationPhoneNumber' : destinationPhoneNumber,
-                        'relation' : relation
+                        'destinationAddress': destinationAddress,
+                        'destinationPhoneNumber': destinationPhoneNumber,
+                        'relation': relation
                     }
                     const newReports = this.state.report.concat(result)
                     this.setState({report: newReports})
-                    this.setState({ show: false })
+                    this.setState({show: false})
                 })();
             case 'violation':
                 return (() => {
@@ -153,27 +392,27 @@ class ProfilePage extends Component {
                     const time = this.time.current.value;
                     const description = this.description.current.value;
                     const result = {
-                        'title' : this.state.reportType,
-                        'date' : date,
-                        'time' : time,
-                        'description' : description
+                        'title': this.state.reportType,
+                        'date': date,
+                        'time': time,
+                        'description': description
                     }
                     const newReports = this.state.report.concat(result)
                     this.setState({report: newReports})
-                    this.setState({ show: false })
+                    this.setState({show: false})
                 })();
             case 'penalty':
                 return (() => {
                     const description = this.description.current.value;
                     const typePenalty = this.typePenalty.current.value;
                     const result = {
-                        'title' : this.state.reportType,
-                        'typePenalty' : typePenalty,
-                        'description' : description
+                        'title': this.state.reportType,
+                        'typePenalty': typePenalty,
+                        'description': description
                     }
                     const newReports = this.state.report.concat(result)
                     this.setState({report: newReports})
-                    this.setState({ show: false })
+                    this.setState({show: false})
                 })();
             case 'discharge':
                 return (() => {
@@ -184,17 +423,17 @@ class ProfilePage extends Component {
                     const deductionOfLossesReason = this.deductionOfLossesReason.current.value;
                     const refundableAmount = this.refundableAmount.current.value;
                     const result = {
-                        'title' : this.state.reportType,
-                        'dischargeDateAnnounce' : dischargeDateAnnounce,
-                        'dischargeDate' : dischargeDate,
-                        'depositReturnDate' : depositReturnDate,
-                        'deductionOfLosses' : deductionOfLosses,
-                        'deductionOfLossesReason' : deductionOfLossesReason,
-                        'refundableAmount' : refundableAmount
+                        'title': this.state.reportType,
+                        'dischargeDateAnnounce': dischargeDateAnnounce,
+                        'dischargeDate': dischargeDate,
+                        'depositReturnDate': depositReturnDate,
+                        'deductionOfLosses': deductionOfLosses,
+                        'deductionOfLossesReason': deductionOfLossesReason,
+                        'refundableAmount': refundableAmount
                     }
                     const newReports = this.state.report.concat(result)
                     this.setState({report: newReports})
-                    this.setState({ show: false })
+                    this.setState({show: false})
                 })();
             case 'cancelContract':
                 return (() => {
@@ -203,15 +442,15 @@ class ProfilePage extends Component {
                     const deductionOfLosses = this.deductionOfLosses.current.value;
                     const refundableAmount = this.refundableAmount.current.value;
                     const result = {
-                        'title' : this.state.reportType,
-                        'data' : date,
-                        'reason' : reason,
-                        'deductionOfLosses' : deductionOfLosses,
-                        'refundableAmount' : refundableAmount
+                        'title': this.state.reportType,
+                        'data': date,
+                        'reason': reason,
+                        'deductionOfLosses': deductionOfLosses,
+                        'refundableAmount': refundableAmount
                     }
                     const newReports = this.state.report.concat(result)
                     this.setState({report: newReports})
-                    this.setState({ show: false })
+                    this.setState({show: false})
                 })();
         }
     }
@@ -222,34 +461,36 @@ class ProfilePage extends Component {
                 <div className='profile-container row'> {/*given photo*/}
                     <div className='image-container'>
                         <div className="d-flex flex-row justify-content-around align-items-center w-100">
-                            <img src="https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png" alt="profile" />
+                            <img
+                                src="https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png"
+                                alt="profile"/>
                             {this.state.people.map(p => (
                                 <div className='information d-flex flex-row'>
                                     <div className='ms-5'>
                                         <div className='col p-2'>
-                                            <AiOutlineUser className='ms-2' />
+                                            <AiOutlineUser className='ms-2'/>
                                             <label> نام :</label>
                                             {p.firstName}
                                         </div>
                                         <div className='col p-2'>
-                                            <AiOutlineUser className='ms-2' />
+                                            <AiOutlineUser className='ms-2'/>
                                             <label> نام خانوادگی :</label>
                                             {p.lastName}
                                         </div>
                                         <div className='col p-2'>
-                                            <AiOutlineBarcode className='ms-2' />
+                                            <AiOutlineBarcode className='ms-2'/>
                                             <label> کد ملی :</label>
                                             {p.nationalCode}
                                         </div>
                                     </div>
                                     <div>
                                         <div className='col p-2'>
-                                            <BsTelephone className='ms-2' />
+                                            <BsTelephone className='ms-2'/>
                                             <label> شماره تلفن :</label>
                                             {p.phoneNumber}
                                         </div>
                                         <div className='col p-2'>
-                                            <HiOutlineMailOpen className='ms-2' />
+                                            <HiOutlineMailOpen className='ms-2'/>
                                             <label> ایمیل :</label>
                                             {p.email}
                                         </div>
@@ -265,86 +506,239 @@ class ProfilePage extends Component {
                             className="mb-3"
                         >
                             <Tab eventKey="records" title="سوابق">
-                                <button className='btn-add-report' onClick={() => {this.handleShow()}}>ثبت گزارش</button>
+                                <button className='btn-add-report' onClick={() => {
+                                    this.handleShow()
+                                }}>ثبت گزارش
+                                </button>
                                 <Accordion defaultActiveKey="0">
                                     <Accordion.Item eventKey="0">
                                         <Accordion.Header>نوبت نظافت شبانه</Accordion.Header>
                                         <Accordion.Body>
-                                            {
-
-                                            }
+                                            <Table>
+                                                <thead>
+                                                <tr>
+                                                    {/*<th>شماره</th>*/}
+                                                    <th>تاریخ</th>
+                                                    <th>توضیحات</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                {
+                                                    this.state.report.map((c,a) => (
+                                                        // console.log(a.title)
+                                                        c.title === 'cleaning' ? (
+                                                                <tr>
+                                                                    {/*<td>{a+1}</td>*/}
+                                                                    <td>{c.date}</td>
+                                                                    <td>{c.description}</td>
+                                                                </tr>
+                                                    ) : (
+                                                    console.log('n')
+                                                    )
+                                                    ))
+                                                }
+                                                </tbody>
+                                            </Table>
                                         </Accordion.Body>
                                     </Accordion.Item>
                                     <Accordion.Item eventKey="1">
                                         <Accordion.Header>تأخیر در ورود</Accordion.Header>
                                         <Accordion.Body>
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                                            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-                                            minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                                            aliquip ex ea commodo consequat. Duis aute irure dolor in
-                                            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-                                            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-                                            culpa qui officia deserunt mollit anim id est laborum.
+                                            <Table>
+                                                <thead>
+                                                <tr>
+                                                    {/*<th>شماره</th>*/}
+                                                    <th>تاریخ</th>
+                                                    <th>ساعت</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                {
+                                                    this.state.report.map((d,i) => (
+
+                                                        d.title === 'delayInArrival' ? (
+                                                            <tr>
+                                                                {/*<td>{i+1}</td>*/}
+                                                                <td>{d.date}</td>
+                                                                <td>{d.time}</td>
+                                                            </tr>
+                                                        ) : (
+                                                            console.log('n')
+                                                        )
+                                                    ))
+                                                }
+                                                </tbody>
+                                            </Table>
                                         </Accordion.Body>
                                     </Accordion.Item>
                                     <Accordion.Item eventKey="2">
                                         <Accordion.Header>خروج</Accordion.Header>
                                         <Accordion.Body>
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                                            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-                                            minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                                            aliquip ex ea commodo consequat. Duis aute irure dolor in
-                                            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-                                            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-                                            culpa qui officia deserunt mollit anim id est laborum.
+                                            <Table>
+                                                <thead>
+                                                <tr>
+                                                    {/*<th>شماره</th>*/}
+                                                    <th>از تاريخ</th>
+                                                    <th>تا تاريخ</th>
+                                                    <th>آدرس مقصد</th>
+                                                    <th>شماره تماس مقصد</th>
+                                                    <th>نسبت</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                {
+                                                    this.state.report.map((e,i) => (
+
+                                                        e.title === 'exit' ? (
+                                                            <tr>
+                                                                {/*<td>{i+1}</td>*/}
+                                                                <td>{e.startDate}</td>
+                                                                <td>{e.endDate}</td>
+                                                                <td>{e.destinationAddress}</td>
+                                                                <td>{e.destinationPhoneNumber}</td>
+                                                                <td>{e.relation}</td>
+                                                            </tr>
+                                                        ) : (
+                                                            console.log('n')
+                                                        )
+                                                    ))
+                                                }
+                                                </tbody>
+                                            </Table>
                                         </Accordion.Body>
                                     </Accordion.Item>
                                     <Accordion.Item eventKey="3">
                                         <Accordion.Header>ثبت تخلف</Accordion.Header>
                                         <Accordion.Body>
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                                            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-                                            minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                                            aliquip ex ea commodo consequat. Duis aute irure dolor in
-                                            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-                                            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-                                            culpa qui officia deserunt mollit anim id est laborum.
+                                            <Table>
+                                                <thead>
+                                                <tr>
+                                                    {/*<th>شماره</th>*/}
+                                                    <th>گزارش تخلف</th>
+                                                    <th>تاریخ</th>
+                                                    <th>ساعت</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                {
+                                                    this.state.report.map((v,i) => (
+
+                                                        v.title === 'violation' ? (
+                                                            <tr>
+                                                                {/*<td>{i+1}</td>*/}
+                                                                <td>{v.description}</td>
+                                                                <td>{v.date}</td>
+                                                                <td>{v.time}</td>
+                                                            </tr>
+                                                        ) : (
+                                                            console.log('n')
+                                                        )
+                                                    ))
+                                                }
+                                                </tbody>
+                                            </Table>
                                         </Accordion.Body>
                                     </Accordion.Item>
                                     <Accordion.Item eventKey="4">
                                         <Accordion.Header>ثبت جریمه</Accordion.Header>
                                         <Accordion.Body>
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                                            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-                                            minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                                            aliquip ex ea commodo consequat. Duis aute irure dolor in
-                                            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-                                            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-                                            culpa qui officia deserunt mollit anim id est laborum.
+                                            <Table>
+                                                <thead>
+                                                <tr>
+                                                    {/*<th>شماره</th>*/}
+                                                    <th>دلیل جریمه</th>
+                                                    <th>نوع جریمه</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                {
+                                                    this.state.report.map((p,i) => (
+
+                                                        p.title === 'penalty' ? (
+                                                            <tr>
+                                                                {/*<td>{i+1}</td>*/}
+                                                                <td>{p.description}</td>
+                                                                <td>{p.typePenalty}</td>
+                                                            </tr>
+                                                        ) : (
+                                                            console.log('n')
+                                                        )
+                                                    ))
+                                                }
+                                                </tbody>
+                                            </Table>
                                         </Accordion.Body>
                                     </Accordion.Item>
                                     <Accordion.Item eventKey="5">
                                         <Accordion.Header>اعلام تخلیه</Accordion.Header>
                                         <Accordion.Body>
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                                            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-                                            minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                                            aliquip ex ea commodo consequat. Duis aute irure dolor in
-                                            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-                                            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-                                            culpa qui officia deserunt mollit anim id est laborum.
+                                            <Table>
+                                                <thead>
+                                                <tr>
+                                                    {/*<th>شماره</th>*/}
+                                                    <th>تاریخ اعلام تخلیه</th>
+                                                    <th>تاریخ تخلیه</th>
+                                                    <th>تاریخ عودت ودیعه</th>
+                                                    <th>کسر ضرر و زیان</th>
+                                                    <th>علت کسر ضر و زیان</th>
+                                                    <th>مبلغ قابل عودت</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                {
+                                                    this.state.report.map((d,i) => (
+
+                                                        d.title === 'discharge' ? (
+                                                            <tr>
+                                                                {/*<td>{i+1}</td>*/}
+                                                                <td>{d.dischargeDateAnnounce}</td>
+                                                                <td>{d.dischargeDate}</td>
+                                                                <td>{d.depositReturnDate}</td>
+                                                                <td>{d.deductionOfLosses}</td>
+                                                                <td>{d.deductionOfLossesReason}</td>
+                                                                <td>{d.refundableAmount}</td>
+                                                            </tr>
+                                                        ) : (
+                                                            console.log('n')
+                                                        )
+                                                    ))
+                                                }
+                                                </tbody>
+                                            </Table>
                                         </Accordion.Body>
                                     </Accordion.Item>
                                     <Accordion.Item eventKey="6">
                                         <Accordion.Header>لغو قرارداد</Accordion.Header>
                                         <Accordion.Body>
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                                            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-                                            minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                                            aliquip ex ea commodo consequat. Duis aute irure dolor in
-                                            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-                                            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-                                            culpa qui officia deserunt mollit anim id est laborum.
+                                            <Table>
+                                                <thead>
+                                                <tr>
+                                                    {/*<th>شماره</th>*/}
+                                                    <th>تاریخ</th>
+                                                    <th>علت</th>
+                                                    <th>کسر ضرر و زیان</th>
+                                                    <th>مبلغ قابل عودت</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                {
+                                                    this.state.report.map((cc,i) => (
+
+                                                        cc.title === 'cancelContract' ? (
+                                                            <tr>
+                                                                {/*<td>{i+1}</td>*/}
+                                                                <td>{cc.date}</td>
+                                                                <td>{cc.reason}</td>
+                                                                <td>{cc.deductionOfLosses}</td>
+                                                                <td>{cc.refundableAmount}</td>
+                                                            </tr>
+                                                        ) : (
+                                                            console.log('n')
+                                                        )
+                                                    ))
+                                                }
+                                                </tbody>
+                                            </Table>
                                         </Accordion.Body>
                                     </Accordion.Item>
                                 </Accordion>
@@ -388,7 +782,7 @@ class ProfilePage extends Component {
                                                 {p.firstName}
                                             </p>
                                             <p>
-                                                <label>  شماره دانشجویی :</label>
+                                                <label> شماره دانشجویی :</label>
                                                 {p.lastName}
                                             </p>
                                             <p>
@@ -396,7 +790,7 @@ class ProfilePage extends Component {
                                                 {p.nationalCode}
                                             </p>
                                             <p>
-                                                <label> شغل پدر   :</label>
+                                                <label> شغل پدر :</label>
                                                 11/22/3333
                                             </p>
                                             <p>
@@ -410,10 +804,12 @@ class ProfilePage extends Component {
                         </Tabs>
                     </div>
                 </div>
-                <Modal className='report-modal' centered show={this.state.show} >
+                <Modal className='report-modal' centered show={this.state.show}>
                     <Modal.Header>
                         <Modal.Title><span>ثبت گزارش</span></Modal.Title>
-                        <button className='btn' onClick={() => {this.handleClose()}}><AiOutlineClose /></button>
+                        <button className='btn' onClick={() => {
+                            this.handleClose()
+                        }}><AiOutlineClose/></button>
                     </Modal.Header>
                     <Modal.Body>
                         <form className="my-3 mx-2" onSubmit={this.handleSubmit}>
@@ -430,7 +826,7 @@ class ProfilePage extends Component {
                                 <label className="placeholder">نوع گزارش</label>
                             </div>
                             {(() => {
-                                switch(this.state.reportType) {
+                                switch (this.state.reportType) {
                                     case 'cleaning':
                                         return <>
                                             {/*<div className='input-report-box'>
@@ -442,7 +838,8 @@ class ProfilePage extends Component {
                                                 <label className="placeholder">تاریخ</label>
                                             </div>
                                             <div className='input-report-box'>
-                                                <input type="text" ref={this.description} className="input" placeholder=" "/>
+                                                <input type="text" ref={this.description} className="input"
+                                                       placeholder=" "/>
                                                 <label className="placeholder">توضیحات</label>
                                             </div>
                                         </>;
@@ -460,30 +857,36 @@ class ProfilePage extends Component {
                                     case 'exit':
                                         return <>
                                             <div className='input-report-box'>
-                                                <input type="text" ref={this.startDate} className="input" placeholder=" "/>
+                                                <input type="text" ref={this.startDate} className="input"
+                                                       placeholder=" "/>
                                                 <label className="placeholder">از تاريخ</label>
                                             </div>
                                             <div className='input-report-box'>
-                                                <input type="text" ref={this.endDate} className="input" placeholder=" "/>
+                                                <input type="text" ref={this.endDate} className="input"
+                                                       placeholder=" "/>
                                                 <label className="placeholder">تا تاريخ</label>
                                             </div>
                                             <div className='input-report-box'>
-                                                <input type="text" ref={this.destinationAddress} className="input" placeholder=" "/>
+                                                <input type="text" ref={this.destinationAddress} className="input"
+                                                       placeholder=" "/>
                                                 <label className="placeholder">آدرس مقصد</label>
                                             </div>
                                             <div className='input-report-box'>
-                                                <input type="text" ref={this.destinationPhoneNumber} className="input" placeholder=" "/>
+                                                <input type="text" ref={this.destinationPhoneNumber} className="input"
+                                                       placeholder=" "/>
                                                 <label className="placeholder">شماره تماس مقصد</label>
                                             </div>
                                             <div className='input-report-box'>
-                                                <input type="text" ref={this.relation} className="input" placeholder=" "/>
+                                                <input type="text" ref={this.relation} className="input"
+                                                       placeholder=" "/>
                                                 <label className="placeholder">نسبت</label>
                                             </div>
                                         </>;
                                     case 'violation':
                                         return <>
                                             <div className='input-report-box'>
-                                                <input type="text" ref={this.description} className="input" placeholder=" "/>
+                                                <input type="text" ref={this.description} className="input"
+                                                       placeholder=" "/>
                                                 <label className="placeholder">گزارش تخلف</label>
                                             </div>
                                             <div className='input-report-box'>
@@ -498,7 +901,8 @@ class ProfilePage extends Component {
                                     case 'penalty':
                                         return <>
                                             <div className='input-report-box'>
-                                                <input type="text" ref={this.description} className="input" placeholder=" "/>
+                                                <input type="text" ref={this.description} className="input"
+                                                       placeholder=" "/>
                                                 <label className="placeholder">دلیل جریمه</label>
                                             </div>
                                             <div className='input-report-box'>
@@ -512,27 +916,33 @@ class ProfilePage extends Component {
                                     case 'discharge':
                                         return <>
                                             <div className='input-report-box'>
-                                                <input type="text" ref={this.dischargeDateAnnounce} className="input" placeholder=" "/>
+                                                <input type="text" ref={this.dischargeDateAnnounce} className="input"
+                                                       placeholder=" "/>
                                                 <label className="placeholder">تاریخ اعلام تخلیه</label>
                                             </div>
                                             <div className='input-report-box'>
-                                                <input type="text" ref={this.dischargeDate} className="input" placeholder=" "/>
+                                                <input type="text" ref={this.dischargeDate} className="input"
+                                                       placeholder=" "/>
                                                 <label className="placeholder">تاریخ تخلیه</label>
                                             </div>
                                             <div className='input-report-box'>
-                                                <input type="text" ref={this.depositReturnDate} className="input" placeholder=" "/>
+                                                <input type="text" ref={this.depositReturnDate} className="input"
+                                                       placeholder=" "/>
                                                 <label className="placeholder">تاریخ عودت ودیعه</label>
                                             </div>
                                             <div className='input-report-box'>
-                                                <input type="text" ref={this.deductionOfLosses} className="input" placeholder=" "/>
+                                                <input type="text" ref={this.deductionOfLosses} className="input"
+                                                       placeholder=" "/>
                                                 <label className="placeholder">کسر ضرر و زیان</label>
                                             </div>
                                             <div className='input-report-box'>
-                                                <input type="text" ref={this.deductionOfLossesReason} className="input" placeholder=" "/>
+                                                <input type="text" ref={this.deductionOfLossesReason} className="input"
+                                                       placeholder=" "/>
                                                 <label className="placeholder">علت کسر ضر و زیان</label>
                                             </div>
                                             <div className='input-report-box'>
-                                                <input type="text" ref={this.refundableAmount} className="input" placeholder=" "/>
+                                                <input type="text" ref={this.refundableAmount} className="input"
+                                                       placeholder=" "/>
                                                 <label className="placeholder">مبلغ قابل عودت</label>
                                             </div>
                                         </>;
@@ -551,11 +961,13 @@ class ProfilePage extends Component {
                                                 <label className="placeholder">علت</label>
                                             </div>
                                             <div className='input-report-box'>
-                                                <input type="text" ref={this.deductionOfLosses} className="input" placeholder=" "/>
+                                                <input type="text" ref={this.deductionOfLosses} className="input"
+                                                       placeholder=" "/>
                                                 <label className="placeholder">کسر ضرر و زیان</label>
                                             </div>
                                             <div className='input-report-box'>
-                                                <input type="text" ref={this.refundableAmount} className="input" placeholder=" "/>
+                                                <input type="text" ref={this.refundableAmount} className="input"
+                                                       placeholder=" "/>
                                                 <label className="placeholder">مبلغ قابل عودت</label>
                                             </div>
                                         </>

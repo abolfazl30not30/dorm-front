@@ -129,3 +129,21 @@
     background-color: #1963d1;
     color: #fff;
 }
+.table {
+    border: 1px solid #eee !important;
+    border-radius: 0.5rem;
+    text-align: right;
+}
+.table tbody tr:nth-child(odd)>* {
+    background-color: #f9f9f9 !important;
+}
+.table tr,.table th,.table td {
+    border: none;
+}
+.table th {
+    font-weight: 600;
+    font-size: 13px;
+}
+.table td {
+    font-size: 14px;
+}
