@@ -15,7 +15,7 @@ class InformationFurtherPage extends Component {
                             <input type="text"
                                    className={`input form-control ${this.context.specificValidations.ifp_address_requiredReg === false ? "is-invalid" : ""}`}
                                    value={this.context.fields.ifp_address}
-                                   onChange={(e) => {this.props.updateData(e, 'ifp_address'); this.context.handleFields(e, 'ifp_address')}}
+                                   onChange={(e) =>  this.context.handleFields(e, 'ifp_address')}
                                    placeholder=" "/>
                             <label className="placeholder"
                                    style={{right: this.context.specificValidations.ifp_address_requiredReg === false ? '35px' : '12px'}}>
@@ -32,12 +32,14 @@ class InformationFurtherPage extends Component {
                         </div>
                         <div className="input-group-register col-4">
                             <input type="text"
-                                   className={`input form-control ${(this.context.specificValidations.ifp_home_tel_requiredReg && this.context.specificValidations.ifp_home_tel_telephoneReg) === false ? "is-invalid" : ""}`}
+                                   className={`input form-control ${(this.context.specificValidations.ifp_home_tel_requiredReg &&
+                                       this.context.specificValidations.ifp_home_tel_telephoneReg) === false ? "is-invalid" : ""}`}
                                    value={this.context.fields.ifp_home_tel}
-                                   onChange={(e) => {this.props.updateData(e, 'ifp_home_tel'); this.context.handleFields(e, 'ifp_home_tel')}}
+                                   onChange={(e) =>  this.context.handleFields(e, 'ifp_home_tel')}
                                    placeholder=" "/>
                             <label className="placeholder"
-                                   style={{right: (this.context.specificValidations.ifp_home_tel_requiredReg && this.context.specificValidations.ifp_home_tel_telephoneReg) === false ? '35px' : '12px'}}>
+                                   style={{right: (this.context.specificValidations.ifp_home_tel_requiredReg &&
+                                           this.context.specificValidations.ifp_home_tel_telephoneReg) === false ? '35px' : '12px'}}>
                                 شماره تلفن منزل
                                 <span style={{color : 'red'}}>*</span>
                             </label>
@@ -61,7 +63,7 @@ class InformationFurtherPage extends Component {
                             <input type="text"
                                    className={`input form-control ${this.context.specificValidations.ifp_father_tel_telephoneReg === false ? "is-invalid" : ""}`}
                                    value={this.context.fields.ifp_father_tel}
-                                   onChange={(e) => {this.props.updateData(e, 'ifp_father_tel'); this.context.handleFields(e, 'ifp_father_tel')}}
+                                   onChange={(e) =>  this.context.handleFields(e, 'ifp_father_tel')}
                                    placeholder=" "/>
                             <label className="placeholder" style={{right: this.context.specificValidations.ifp_father_tel_telephoneReg === false ? '35px' : '12px'}}>شماره تماس پدر</label>
 
@@ -77,7 +79,7 @@ class InformationFurtherPage extends Component {
                             <input type="text"
                                    className={`input form-control ${this.context.specificValidations.ifp_mother_tel_telephoneReg === false ? "is-invalid" : ""}`}
                                    value={this.context.fields.ifp_mother_tel}
-                                   onChange={(e) => {this.props.updateData(e, 'ifp_mother_tel'); this.context.handleFields(e, 'ifp_mother_tel')}}
+                                   onChange={(e) => this.context.handleFields(e, 'ifp_mother_tel')}
                                    placeholder=" "/>
                             <label className="placeholder" style={{right: this.context.specificValidations.ifp_mother_tel_telephoneReg === false ? '35px' : '12px'}}>شماره تماس مادر</label>
 
@@ -91,11 +93,15 @@ class InformationFurtherPage extends Component {
                         </div>
                         <div className="input-group-register col-4">
                             <input type="text"
-                                   className={`input form-control ${(this.context.specificValidations.ifp_resident_tel_telephoneReg && this.context.specificValidations.ifp_resident_tel_requiredReg) === false ? "is-invalid" : ""}`}
+                                   className={`input form-control ${(this.context.specificValidations.ifp_resident_tel_telephoneReg &&
+                                       this.context.specificValidations.ifp_resident_tel_requiredReg) === false ? "is-invalid" : ""}`}
                                    value={this.context.fields.ifp_resident_tel}
-                                   onChange={(e) => {this.props.updateData(e, 'ifp_resident_tel'); this.context.handleFields(e, 'ifp_resident_tel')}}
+                                   onChange={(e) =>  this.context.handleFields(e, 'ifp_resident_tel')}
                                    placeholder=" "/>
-                            <label className="placeholder" style={{right: (this.context.specificValidations.ifp_resident_tel_telephoneReg && this.context.specificValidations.ifp_resident_tel_requiredReg) === false ? '35px' : '12px'}}>شماره تماس اقامتگر <span style={{color : 'red'}}>*</span></label>
+                            <label className="placeholder" style={{right: (this.context.specificValidations.ifp_resident_tel_telephoneReg &&
+                                    this.context.specificValidations.ifp_resident_tel_requiredReg) === false ? '35px' : '12px'}}>شماره تماس اقامتگر
+                                <span style={{color : 'red'}}>*</span>
+                            </label>
 
                             {
                                 this.context.specificValidations.ifp_resident_tel_requiredReg === false

@@ -56,7 +56,7 @@ class FamilyGuest extends Component {
                                    placeholder=" "
                                    name='admission_start_date'
                                    value={this.context.fields.admission_start_date}
-                                   onChange={(e) => {this.props.updateData(e, 'admission_start_date'); this.context.handleFields(e, 'admission_start_date')}}/>
+                                   onChange={(e) => this.context.handleFields(e, 'admission_start_date')}/>
                                     {/*this.props.updateData*/}
                             <label className="placeholder" style={{right: (this.context.specificValidations.asd_numberReg && this.context.specificValidations.asd_requiredReg) === false ? '35px' : '12px'}}>تاریخ شروع پذیرش<span style={{color : 'red'}}>*</span></label>
 
@@ -81,7 +81,7 @@ class FamilyGuest extends Component {
                                    placeholder=" "
                                    name='admission_end_date'
                                    value={this.context.fields.admission_end_date}
-                                   onChange={(e) => {this.props.updateData(e, 'admission_end_date'); this.context.handleFields(e, 'admission_end_date')}}/>
+                                   onChange={(e) =>  this.context.handleFields(e, 'admission_end_date')}/>
                             <label className="placeholder" style={{right: (this.context.specificValidations.aed_numberReg && this.context.specificValidations.aed_requiredReg) === false ? '35px' : '12px'}}>تاریخ اتمام پذیرش<span style={{color : 'red'}}>*</span></label>
 
                             {
@@ -105,7 +105,7 @@ class FamilyGuest extends Component {
                                    placeholder=" "
                                    name='payment_date'
                                    value={this.context.fields.payment_date}
-                                   onChange={(e) => {this.props.updateData(e, 'payment_date'); this.context.handleFields(e, 'payment_date')}}/>
+                                   onChange={(e) => this.context.handleFields(e, 'payment_date')}/>
                             <label className="placeholder" style={{right: (this.context.specificValidations.pd_numberReg && this.context.specificValidations.pd_requiredReg) === false ? '35px' : '12px'}}>تاریخ پرداخت<span style={{color : 'red'}}>*</span></label>
 
                             {

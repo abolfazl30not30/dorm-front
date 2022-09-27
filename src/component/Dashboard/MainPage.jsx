@@ -23,16 +23,39 @@ class MainPage extends Component {
             payment_date: '',
 
             // InformationFurtherPage
+
             ifp_address: '',
             ifp_home_tel: '',
             ifp_father_tel: '',
             ifp_mother_tel: '',
             ifp_resident_tel: '',
+
+            // constant resident information
+            c_firstName: '',
+            c_lastName: '',
+            c_nickName: '',
+            c_nationalCode: '',
+            c_certificateNumber: '',
+            c_placeOfIssue: '',
+            c_birthDate: '',
+            c_nationality: '',
+            c_fatherName: '',
+            c_religion: '',
+            c_subReligion: '',
+            c_university: '',
+            c_studentNumber: '',
+            c_fatherJob: '',
+            c_maritalStatus: '',
+            c_spouseFullName: '',
+            c_spouseJob: '',
+            c_health: 'false',
+            c_healthDescription: '',
+
         },
         errors : {
             required: 'این فیلد را پر کنید!',
             numberRequired: 'عدد وارد کنید!',
-            homeTelephoneReg: 'شماره تلفن همراه با کد وارد کنید (۳۴۵۶۷۸۹۰-۰۱۲) ',
+            homeTelephoneReg: 'شماره تلفن ثابت با کد وارد کنید (۳۴۵۶۷۸۹۰-۰۱۲) ',
             telephoneRegex: 'شماره تلفن همراه وارد کنید! (۰۹۱۲۳۴۵۶۷۸۹)',
             emailRegex: 'ایمیل وارد کنید!',
         },
@@ -53,7 +76,21 @@ class MainPage extends Component {
             ifp_resident_tel_requiredReg: '',
             ifp_resident_tel_telephoneReg: '',
 
-            // InformationFamilyPage
+            // constant resident information
+            c_firstName_requiredReg: '',
+            c_lastName_requiredReg: '',
+            c_nationalCode_requiredReg: '',
+            c_nationalCode_numberReg: '',
+            c_certificateNumber_requiredReg: '',
+            c_certificateNumber_numberReg: '',
+            c_placeOfIssue_requiredReg: '',
+            // c_placeOfIssue_dateReg: '',
+            c_birthDate_requiredReg: '',
+            c_nationality_requiredReg: '',
+            c_fatherName_requiredReg: '',
+            c_studentNumber_numberReg: '',
+            c_spouseFullName_requiredReg: '',
+            c_healthDescription_requiredReg: '',
         },
     }
     render() {
@@ -125,7 +162,13 @@ class MainPage extends Component {
         // newValidations[name] = field;
         this.setState({specificValidations : newSpecificValidations});
 
-        // console.log(newSpecificValidations)
+        console.log(newSpecificValidations)
+    }
+
+    getStatusConstantResident = (e) => {
+        let newFields = {...this.state.fields};
+        newFields['c_maritalStatus'] = e.target.value
+        this.setState({ fields: newFields });
     }
 }
 

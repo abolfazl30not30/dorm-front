@@ -16,13 +16,6 @@ class MainRegister extends Component {
 
     static contextType = BuildingContext;
 
-    updateField = (e, name) => {
-        let newFields = {...this.state.fields};
-        newFields[name] = e.target.value
-        this.setState({ fields: newFields });
-
-    }
-
     familyGuestValidation = () => {
 
         let requiredReg = /^\s*$/;
@@ -34,14 +27,14 @@ class MainRegister extends Component {
 
         // constant
 
-        let asd_requiredReg = !requiredReg.test(this.state.fields.admission_start_date);
-        let asd_numberReg = numberReg.test(this.state.fields.admission_start_date);
+        let asd_requiredReg = !requiredReg.test(this.context.fields.admission_start_date);
+        let asd_numberReg = numberReg.test(this.context.fields.admission_start_date);
 
-        let aed_requiredReg = !requiredReg.test(this.state.fields.admission_end_date);
-        let aed_numberReg = numberReg.test(this.state.fields.admission_end_date);
+        let aed_requiredReg = !requiredReg.test(this.context.fields.admission_end_date);
+        let aed_numberReg = numberReg.test(this.context.fields.admission_end_date);
 
-        let pd_requiredReg = !requiredReg.test(this.state.fields.payment_date);
-        let pd_numberReg = numberReg.test(this.state.fields.payment_date);
+        let pd_requiredReg = !requiredReg.test(this.context.fields.payment_date);
+        let pd_numberReg = numberReg.test(this.context.fields.payment_date);
 
         this.context.handleSpecificValidations([asd_requiredReg, asd_numberReg,
             aed_requiredReg, aed_numberReg, pd_requiredReg,
@@ -60,17 +53,17 @@ class MainRegister extends Component {
         let homeTelephoneReg = /^\d{3}-\d{8}$/;
         let telephoneOrEmptyReg = /^(\s*09\d{9}\s*|\s*)$/;
 
-        let ifp_address_requiredReg = !requiredReg.test(this.state.fields.ifp_address);
+        let ifp_address_requiredReg = !requiredReg.test(this.context.fields.ifp_address);
 
-        let ifp_home_tel_requiredReg = !requiredReg.test(this.state.fields.ifp_home_tel);
-        let ifp_home_tel_telephoneReg = homeTelephoneReg.test(this.state.fields.ifp_home_tel);
+        let ifp_home_tel_requiredReg = !requiredReg.test(this.context.fields.ifp_home_tel);
+        let ifp_home_tel_telephoneReg = homeTelephoneReg.test(this.context.fields.ifp_home_tel);
 
-        let ifp_father_tel_telephoneReg = telephoneOrEmptyReg.test(this.state.fields.ifp_father_tel);
+        let ifp_father_tel_telephoneReg = telephoneOrEmptyReg.test(this.context.fields.ifp_father_tel);
 
-        let ifp_mother_tel_telephoneReg = telephoneOrEmptyReg.test(this.state.fields.ifp_mother_tel);
+        let ifp_mother_tel_telephoneReg = telephoneOrEmptyReg.test(this.context.fields.ifp_mother_tel);
 
-        let ifp_resident_tel_requiredReg = !requiredReg.test(this.state.fields.ifp_resident_tel);
-        let ifp_resident_tel_telephoneReg = telephoneReg.test(this.state.fields.ifp_resident_tel);
+        let ifp_resident_tel_requiredReg = !requiredReg.test(this.context.fields.ifp_resident_tel);
+        let ifp_resident_tel_telephoneReg = telephoneReg.test(this.context.fields.ifp_resident_tel);
 
         this.context.handleSpecificValidations([ifp_address_requiredReg, ifp_home_tel_requiredReg, ifp_home_tel_telephoneReg,
                 ifp_father_tel_telephoneReg, ifp_mother_tel_telephoneReg, ifp_resident_tel_requiredReg, ifp_resident_tel_telephoneReg],
@@ -88,25 +81,46 @@ class MainRegister extends Component {
 
     }
 
-    informationPageValidation = () => {
+    constantInformationPageValidation = () => {
+        let requiredReg = /^\s*$/;
+        let numberReg = /^[0-9]*$/;
 
+        let c_firstName_requiredReg = !requiredReg.test(this.context.fields.c_firstName);
+        let c_lastName_requiredReg = !requiredReg.test(this.context.fields.c_lastName);
+        let c_nationalCode_requiredReg = !requiredReg.test(this.context.fields.c_nationalCode);
+        let c_certificateNumber_requiredReg = !requiredReg.test(this.context.fields.c_certificateNumber);
+        let c_placeOfIssue_requiredReg = !requiredReg.test(this.context.fields.c_placeOfIssue);
+        let c_birthDate_requiredReg = !requiredReg.test(this.context.fields.c_birthDate);
+        let c_nationality_requiredReg = !requiredReg.test(this.context.fields.c_nationality);
+        let c_fatherName_requiredReg = !requiredReg.test(this.context.fields.c_fatherName);
+        let c_spouseFullName_requiredReg = !requiredReg.test(this.context.fields.c_spouseFullName);
+        let c_healthDescription_requiredReg = !requiredReg.test(this.context.fields.c_healthDescription);
+
+        let c_nationalCode_numberReg = numberReg.test(this.context.fields.c_nationalCode);
+        let c_certificateNumber_numberReg = numberReg.test(this.context.fields.c_certificateNumber);
+        let c_studentNumber_numberReg = numberReg.test(this.context.fields.c_studentNumber);
+
+        if (this.context.fields.c_maritalStatus !== 'married') {
+            c_spouseFullName_requiredReg = true;
+        }
+
+        if (this.context.fields.c_health === 'false') {
+            c_healthDescription_requiredReg = true;
+        }
+
+        this.context.handleSpecificValidations([c_firstName_requiredReg, c_lastName_requiredReg, c_nationalCode_requiredReg, c_certificateNumber_requiredReg,
+                c_placeOfIssue_requiredReg, c_birthDate_requiredReg, c_nationality_requiredReg, c_fatherName_requiredReg, c_spouseFullName_requiredReg,
+                c_healthDescription_requiredReg, c_nationalCode_numberReg, c_certificateNumber_numberReg, c_studentNumber_numberReg],
+            ['c_firstName_requiredReg', 'c_lastName_requiredReg', 'c_nationalCode_requiredReg', 'c_certificateNumber_requiredReg',
+                'c_placeOfIssue_requiredReg', 'c_birthDate_requiredReg', 'c_nationality_requiredReg', 'c_fatherName_requiredReg', 'c_spouseFullName_requiredReg',
+                'c_healthDescription_requiredReg', 'c_nationalCode_numberReg', 'c_certificateNumber_numberReg', 'c_studentNumber_numberReg']);
+
+        return c_firstName_requiredReg && c_lastName_requiredReg && c_nationalCode_requiredReg && c_certificateNumber_requiredReg &&
+            c_placeOfIssue_requiredReg && c_birthDate_requiredReg && c_nationality_requiredReg && c_fatherName_requiredReg && c_spouseFullName_requiredReg &&
+            c_healthDescription_requiredReg && c_nationalCode_numberReg && c_certificateNumber_numberReg && c_studentNumber_numberReg;
     }
 
     state = {
-        fields: {
-            admission_start_date: '',
-            admission_end_date: '',
-            payment_date: '',
-
-            // InformationFurtherPage
-
-            ifp_address: '',
-            ifp_home_tel: '',
-            ifp_father_tel: '',
-            ifp_mother_tel: '',
-            ifp_resident_tel: '',
-        },
-
         typeofResident: this.context.typeofResident,
         steps: [
             {
@@ -152,12 +166,14 @@ class MainRegister extends Component {
                 content: "",
                 // validator: this.context.typeofResident === 'familyGuest' ? this.familyGuestValidation :
                 //     (this.context.typeofResident === 'otherGuest' ? this.otherGuestValidation :
-                //         (this.context.typeofResident === 'constant' ? this.informationPageValidation : null)),
+                //         (this.context.typeofResident === 'constant' ? this.constantInformationPageValidation : null)),
+
+                validator: this.constantInformationPageValidation,
             },
             {
                 label: 'مشخصات تکمیلی',
                 name: 'step 2',
-                content: <InformationFurtherPage updateData={this.updateField}/>,
+                content: <InformationFurtherPage />,
                 // validator: this.informationFurtherPageValidation,
             },
             {
@@ -200,7 +216,7 @@ class MainRegister extends Component {
 
             case 'familyGuest': {
                 let updatedState = [...this.state.steps];
-                updatedState[1].content = <FamilyGuest updateData={this.updateField}/>;
+                updatedState[1].content = <FamilyGuest />;
                 this.setState({ steps: updatedState })
                 break;
             }
