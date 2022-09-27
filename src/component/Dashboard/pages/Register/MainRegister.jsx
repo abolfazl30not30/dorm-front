@@ -16,19 +16,80 @@ class MainRegister extends Component {
 
     static contextType = BuildingContext;
 
-    validation = () => {
+    updateField = (e, name) => {
+        let newFields = {...this.state.fields};
+        newFields[name] = e.target.value
+        this.setState({ fields: newFields });
 
-        let reg = /^\s*$/;
+    }
+
+    familyGuestValidation = () => {
+
+        let requiredReg = /^\s*$/;
+        let numberReg = /^[0-9]*$/;
+        let telephoneReg = /^[0][9]\d{9}/; // iranian telephone number '09---------'
+        let emailReg = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
+
         let result;
 
-        result = !this.state.fields.admission_start_date.match(reg) &&
-            !this.state.fields.admission_end_date.match(reg) &&
-            !this.state.fields.payment_date.match(reg);
+        // constant
 
-        this.context.handleErrors(result);
+        let asd_requiredReg = !requiredReg.test(this.state.fields.admission_start_date);
+        let asd_numberReg = numberReg.test(this.state.fields.admission_start_date);
 
+        let aed_requiredReg = !requiredReg.test(this.state.fields.admission_end_date);
+        let aed_numberReg = numberReg.test(this.state.fields.admission_end_date);
+
+        let pd_requiredReg = !requiredReg.test(this.state.fields.payment_date);
+        let pd_numberReg = numberReg.test(this.state.fields.payment_date);
+
+        this.context.handleSpecificValidations([asd_requiredReg, asd_numberReg,
+            aed_requiredReg, aed_numberReg, pd_requiredReg,
+            pd_numberReg], ['asd_requiredReg', 'asd_numberReg', 'aed_requiredReg',
+            'aed_numberReg', 'pd_requiredReg', 'pd_numberReg']);
+
+
+        result = pd_requiredReg && pd_numberReg && aed_requiredReg && aed_numberReg && asd_requiredReg && asd_numberReg;
 
         return result;
+    }
+
+    informationFurtherPageValidation = () => {
+        let requiredReg = /^\s*$/;
+        let telephoneReg = /^09\d{9}$/; // iranian telephone number '09---------'
+        let homeTelephoneReg = /^\d{3}-\d{8}$/;
+        let telephoneOrEmptyReg = /^(\s*09\d{9}\s*|\s*)$/;
+
+        let ifp_address_requiredReg = !requiredReg.test(this.state.fields.ifp_address);
+
+        let ifp_home_tel_requiredReg = !requiredReg.test(this.state.fields.ifp_home_tel);
+        let ifp_home_tel_telephoneReg = homeTelephoneReg.test(this.state.fields.ifp_home_tel);
+
+        let ifp_father_tel_telephoneReg = telephoneOrEmptyReg.test(this.state.fields.ifp_father_tel);
+
+        let ifp_mother_tel_telephoneReg = telephoneOrEmptyReg.test(this.state.fields.ifp_mother_tel);
+
+        let ifp_resident_tel_requiredReg = !requiredReg.test(this.state.fields.ifp_resident_tel);
+        let ifp_resident_tel_telephoneReg = telephoneReg.test(this.state.fields.ifp_resident_tel);
+
+        this.context.handleSpecificValidations([ifp_address_requiredReg, ifp_home_tel_requiredReg, ifp_home_tel_telephoneReg,
+                ifp_father_tel_telephoneReg, ifp_mother_tel_telephoneReg, ifp_resident_tel_requiredReg, ifp_resident_tel_telephoneReg],
+            ['ifp_address_requiredReg', 'ifp_home_tel_requiredReg', 'ifp_home_tel_telephoneReg', 'ifp_father_tel_telephoneReg',
+                'ifp_mother_tel_telephoneReg', 'ifp_resident_tel_requiredReg', 'ifp_resident_tel_telephoneReg']);
+
+        return ifp_address_requiredReg && ifp_home_tel_requiredReg && ifp_home_tel_telephoneReg && ifp_father_tel_telephoneReg && ifp_mother_tel_telephoneReg && ifp_resident_tel_requiredReg && ifp_resident_tel_telephoneReg;
+    }
+
+    informationFamilyPageValidation = () => {
+
+    }
+
+    otherGuestValidation = () => {
+
+    }
+
+    informationPageValidation = () => {
+
     }
 
     state = {
@@ -36,9 +97,17 @@ class MainRegister extends Component {
             admission_start_date: '',
             admission_end_date: '',
             payment_date: '',
+
+            // InformationFurtherPage
+
+            ifp_address: '',
+            ifp_home_tel: '',
+            ifp_father_tel: '',
+            ifp_mother_tel: '',
+            ifp_resident_tel: '',
         },
 
-        typeofResident: "Constant",
+        typeofResident: this.context.typeofResident,
         steps: [
             {
                 label: 'نوع اقامتگر',
@@ -46,7 +115,10 @@ class MainRegister extends Component {
                 content:
                     <div className='typeofResident'>
                         <div className="">
-                            <input className="" type="radio" name="flexRadioDefault" value='constant' onChange={(e) => { this.checked(e) }} />
+                            <input className="" type="radio" name="flexRadioDefault" value='constant'
+                                   // checked={this.context.typeofResident === 'constant'}
+                                   onChange={(e) => { this.checked(e); this.context.handleTypeofResident('constant')}}
+                            />
                             <label className="" htmlFor="Radio1">
                                 اقامتگر ثابت
                             </label>
@@ -54,13 +126,19 @@ class MainRegister extends Component {
                         <h6>مهمان</h6>
                         <div>
                             <div className="">
-                                <input className="" type="radio" name="flexRadioDefault" value='otherGuest' onChange={(e) => { this.checked(e) }} />
+                                <input className="" type="radio" name="flexRadioDefault" value='otherGuest'
+                                       // checked={this.context.typeofResident === 'otherGuest'}
+                                       onChange={(e) => { this.checked(e); this.context.handleTypeofResident('otherGuest') }}
+                                />
                                 <label className="" htmlFor="Radio2">
                                     متفرقه
                                 </label>
                             </div>
                             <div className="">
-                                <input className="" type="radio" name="flexRadioDefault" value='familyGuest' onChange={(e) => { this.checked(e) }} />
+                                <input className="" type="radio" name="flexRadioDefault" value='familyGuest'
+                                       // checked={this.context.typeofResident === 'familyGuest'}
+                                       onChange={(e) => { this.checked(e); this.context.handleTypeofResident('familyGuest') }}
+                                />
                                 <label className="" htmlFor="Radio3">
                                     بستگان درجه یک
                                 </label>
@@ -72,18 +150,21 @@ class MainRegister extends Component {
                 label: 'مشخصات اولیه',
                 name: 'step 1',
                 content: "",
-                validator: this.validation,
+                // validator: this.context.typeofResident === 'familyGuest' ? this.familyGuestValidation :
+                //     (this.context.typeofResident === 'otherGuest' ? this.otherGuestValidation :
+                //         (this.context.typeofResident === 'constant' ? this.informationPageValidation : null)),
             },
             {
                 label: 'مشخصات تکمیلی',
                 name: 'step 2',
-                content: <InformationFurtherPage />
-
+                content: <InformationFurtherPage updateData={this.updateField}/>,
+                // validator: this.informationFurtherPageValidation,
             },
             {
                 label: 'مشخصات بستگان',
                 name: 'step 3',
-                content: <InformationFamilyPage />
+                content: <InformationFamilyPage />,
+                // validator: this.InformationFamilyPageValidation
             },
             {
                 label: 'آپلود مدارک',
@@ -91,20 +172,16 @@ class MainRegister extends Component {
                 content: <UploadPage />
             }
         ],
-        errors : [],
-    }
-
-
-    updateField = (e, name) => {
-        let newFields = {...this.state.fields};
-        newFields[name] = e.target.value
-        this.setState({ fields: newFields });
-
     }
 
     checked = (e) => {
         const type = e.target.value
         this.setState({ typeofResident: type })
+
+        // console.log(this.context.typeofResident === 'constant')
+        // this.context.handleTypeofResident(type);
+
+        // console.log(type)
 
         switch (type) {
             case 'constant': {
@@ -123,7 +200,7 @@ class MainRegister extends Component {
 
             case 'familyGuest': {
                 let updatedState = [...this.state.steps];
-                updatedState[1].content = <FamilyGuest updateData={this.updateField} errors={this.state.errors}/>;
+                updatedState[1].content = <FamilyGuest updateData={this.updateField}/>;
                 this.setState({ steps: updatedState })
                 break;
             }

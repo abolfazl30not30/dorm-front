@@ -25,13 +25,13 @@ class HamburgerMenu extends Component {
                 <ul>
                     <li className='sidenav-item'>
                         <Link to="/" className='sidenav-link'>
-                            <i class="bi bi-people"/>
+                            <i className="bi bi-people"/>
                             خانه
                         </Link>
                     </li>
                     <li className='sidenav-item'>
                         <Link to="/Register" className='sidenav-link'>
-                            <i class="bi bi-person-plus"/>
+                            <i className="bi bi-person-plus"/>
                             پذیرش
                         </Link>
                     </li>
@@ -43,37 +43,37 @@ class HamburgerMenu extends Component {
                     </li>
                     <li className='sidenav-item'>
                         <Link to="/booking" className='sidenav-link'>
-                            <i class="bi bi-journal-plus" />
+                            <i className="bi bi-journal-plus" />
                             موجودی و ظرفیت
                         </Link>
                     </li>
                     <li className='sidenav-item'>
                         <Link to="/" className='sidenav-link'>
-                            <i class="bi bi-hand-thumbs-up" />
+                            <i className="bi bi-hand-thumbs-up" />
                             باشگاه
                         </Link>
                     </li>
                     <li className='sidenav-item'>
                         <Link to="/" className='sidenav-link'>
-                            <i class="bi bi-file-earmark-text" />
+                            <i className="bi bi-file-earmark-text" />
                             ملزومات اداری
                         </Link>
                     </li>
                     <li className='sidenav-item'>
                         <Link to="/" className='sidenav-link'>
-                            <i class="bi bi-person-circle" />
+                            <i className="bi bi-person-circle" />
                             کادر مدیریت
                         </Link>
                     </li>
                     <li className='sidenav-item'>
                         <Link to="/" className='sidenav-link'>
-                            <i class="bi bi-gear" />
+                            <i className="bi bi-gear" />
                             تنظیمات
                         </Link>
                     </li>
                     <li className='sidenav-item'>
                         <Link to="/" className='sidenav-link'>
-                            <i class="bi bi-telephone" />
+                            <i className="bi bi-telephone" />
                             تماس با ما
                         </Link>
                     </li>

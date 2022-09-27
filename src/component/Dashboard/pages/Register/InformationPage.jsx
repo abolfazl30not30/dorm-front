@@ -20,12 +20,16 @@ class InformationPage extends Component {
                     <h2>مشخصات</h2>
                     <div className='d-flex flex-wrap justify-content-start'>
                         <div className="input-group-register col-4">
-                            <input type="text" className="input" placeholder=" "/>
-                            <label className="placeholder">نام</label>    
+                            <input type="text"
+                                   className="input"
+                                   // value={}
+                                   // onChange={}
+                                   placeholder=" "/>
+                            <label className="placeholder">نام <span style={{color : 'red'}}>*</span></label>
                         </div>
                         <div className="input-group-register col-4">
                             <input type="text" className="input" placeholder=" "/>
-                            <label className="placeholder">نام خانوادگی</label>    
+                            <label className="placeholder">نام خانوادگی <span style={{color : 'red'}}>*</span></label>
                         </div>
                         <div className="input-group-register col-4">
                             <input type="text" className="input" placeholder=" "/>
