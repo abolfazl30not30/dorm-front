@@ -13,6 +13,7 @@ import {AiOutlineBarcode} from 'react-icons/ai'
 import {AiOutlineUser} from 'react-icons/ai'
 import {Modal} from 'react-bootstrap'
 import {AiOutlineClose} from 'react-icons/ai'
+import { AiFillCloseCircle } from 'react-icons/ai'
 import {Accordion} from 'react-bootstrap';
 import {Table} from 'react-bootstrap';
 
@@ -304,7 +305,9 @@ class ProfilePage extends Component {
                 "deductionOfLosses": "",
                 "refundableAmount": "0"
             }
-        ]
+        ],
+        showDeleteModalReport : false,
+        reportTemp:[]
     }
     date = createRef();
     description = createRef();
@@ -323,137 +326,6 @@ class ProfilePage extends Component {
     refundableAmount = createRef();
     reason = createRef();
 
-    handleClose = () => {
-        this.setState({show: false})
-    };
-    handleShow = () => {
-        this.setState({show: true})
-    };
-    reportType = (e) => {
-        const type = e.target.value
-        this.setState({reportType: type})
-    }
-    handleSubmit = (e) => {
-        e.preventDefault();
-        const type = this.state.reportType;
-        this.setState({reports: type})
-        switch (type) {
-            case 'cleaning':
-                return (() => {
-                    const date = this.date.current.value;
-                    const description = this.description.current.value;
-                    const result = {
-                        'title': this.state.reportType,
-                        'date': date,
-                        'description': description
-                    }
-                    const newReports = this.state.report.concat(result);
-                    this.setState({report: newReports});
-                    this.setState({show: false});
-                })();
-            case 'delayInArrival':
-                return (() => {
-                    const date = this.date.current.value;
-                    const time = this.time.current.value;
-                    const result = {
-                        'title': this.state.reportType,
-                        'date': date,
-                        'time': time
-                    }
-                    const newReports = this.state.report.concat(result)
-                    this.setState({report: newReports})
-                    this.setState({show: false})
-                    console.log(this.state.report);
-                })();
-            case 'exit':
-                return (() => {
-                    const startDate = this.startDate.current.value;
-                    const endDate = this.endDate.current.value;
-                    const destinationAddress = this.destinationAddress.current.value;
-                    const destinationPhoneNumber = this.destinationPhoneNumber.current.value;
-                    const relation = this.relation.current.value;
-                    const result = {
-                        'title': this.state.reportType,
-                        'timePeriod': {
-                            "startDate": startDate,
-                            "endDate": endDate
-                        },
-                        'destinationAddress': destinationAddress,
-                        'destinationPhoneNumber': destinationPhoneNumber,
-                        'relation': relation
-                    }
-                    const newReports = this.state.report.concat(result)
-                    this.setState({report: newReports})
-                    this.setState({show: false})
-                })();
-            case 'violation':
-                return (() => {
-                    const date = this.date.current.value;
-                    const time = this.time.current.value;
-                    const description = this.description.current.value;
-                    const result = {
-                        'title': this.state.reportType,
-                        'date': date,
-                        'time': time,
-                        'description': description
-                    }
-                    const newReports = this.state.report.concat(result)
-                    this.setState({report: newReports})
-                    this.setState({show: false})
-                })();
-            case 'penalty':
-                return (() => {
-                    const description = this.description.current.value;
-                    const typePenalty = this.typePenalty.current.value;
-                    const result = {
-                        'title': this.state.reportType,
-                        'typePenalty': typePenalty,
-                        'description': description
-                    }
-                    const newReports = this.state.report.concat(result)
-                    this.setState({report: newReports})
-                    this.setState({show: false})
-                })();
-            case 'discharge':
-                return (() => {
-                    const dischargeDateAnnounce = this.dischargeDateAnnounce.current.value;
-                    const dischargeDate = this.dischargeDate.current.value;
-                    const depositReturnDate = this.depositReturnDate.current.value;
-                    const deductionOfLosses = this.deductionOfLosses.current.value;
-                    const deductionOfLossesReason = this.deductionOfLossesReason.current.value;
-                    const refundableAmount = this.refundableAmount.current.value;
-                    const result = {
-                        'title': this.state.reportType,
-                        'dischargeDateAnnounce': dischargeDateAnnounce,
-                        'dischargeDate': dischargeDate,
-                        'depositReturnDate': depositReturnDate,
-                        'deductionOfLosses': deductionOfLosses,
-                        'deductionOfLossesReason': deductionOfLossesReason,
-                        'refundableAmount': refundableAmount
-                    }
-                    const newReports = this.state.report.concat(result)
-                    this.setState({report: newReports})
-                    this.setState({show: false})
-                })();
-            case 'cancelContract':
-                return (() => {
-                    const date = this.date.current.value;
-                    const reason = this.reason.current.value;
-                    const deductionOfLosses = this.deductionOfLosses.current.value;
-                    const refundableAmount = this.refundableAmount.current.value;
-                    const result = {
-                        'title': this.state.reportType,
-                        'data': date,
-                        'reason': reason,
-                        'deductionOfLosses': deductionOfLosses,
-                        'refundableAmount': refundableAmount
-                    }
-                    const newReports = this.state.report.concat(result)
-                    this.setState({report: newReports})
-                    this.setState({show: false})
-                })();
-        }
-    }
 
     render() {
         return (
@@ -520,21 +392,22 @@ class ProfilePage extends Component {
                                                     {/*<th>شماره</th>*/}
                                                     <th>تاریخ</th>
                                                     <th>توضیحات</th>
+                                                    <th>عملیات</th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
                                                 {
-                                                    this.state.report.map((c,a) => (
-                                                        // console.log(a.title)
+                                                    this.state.report.map((c,i) => (
                                                         c.title === 'cleaning' ? (
                                                                 <tr>
                                                                     {/*<td>{a+1}</td>*/}
                                                                     <td>{c.date}</td>
                                                                     <td>{c.description}</td>
+                                                                    <td><button className='btn floor-close-btn' onClick={ () => this.handleOpenModalReport(c) }><AiFillCloseCircle color="#F1416C" /></button></td>
                                                                 </tr>
-                                                    ) : (
-                                                    console.log('n')
-                                                    )
+                                                        ) : (
+                                                                console.log()
+                                                        )
                                                     ))
                                                 }
                                                 </tbody>
@@ -563,7 +436,7 @@ class ProfilePage extends Component {
                                                                 <td>{d.time}</td>
                                                             </tr>
                                                         ) : (
-                                                            console.log('n')
+                                                            console.log()
                                                         )
                                                     ))
                                                 }
@@ -599,7 +472,7 @@ class ProfilePage extends Component {
                                                                 <td>{e.relation}</td>
                                                             </tr>
                                                         ) : (
-                                                            console.log('n')
+                                                            console.log()
                                                         )
                                                     ))
                                                 }
@@ -631,7 +504,7 @@ class ProfilePage extends Component {
                                                                 <td>{v.time}</td>
                                                             </tr>
                                                         ) : (
-                                                            console.log('n')
+                                                            console.log()
                                                         )
                                                     ))
                                                 }
@@ -661,7 +534,7 @@ class ProfilePage extends Component {
                                                                 <td>{p.typePenalty}</td>
                                                             </tr>
                                                         ) : (
-                                                            console.log('n')
+                                                            console.log()
                                                         )
                                                     ))
                                                 }
@@ -699,7 +572,7 @@ class ProfilePage extends Component {
                                                                 <td>{d.refundableAmount}</td>
                                                             </tr>
                                                         ) : (
-                                                            console.log('n')
+                                                            console.log()
                                                         )
                                                     ))
                                                 }
@@ -733,7 +606,7 @@ class ProfilePage extends Component {
                                                                 <td>{cc.refundableAmount}</td>
                                                             </tr>
                                                         ) : (
-                                                            console.log('n')
+                                                            console.log()
                                                         )
                                                     ))
                                                 }
@@ -744,7 +617,7 @@ class ProfilePage extends Component {
                                 </Accordion>
                             </Tab>
                             <Tab eventKey="documents" title="مدارک">
-                                <img className='test' src={pdf_icon}/> {/*test*/}
+                                <img className='test' src={pdf_icon}/>
                                 <img className='test' src={pdf_icon}/>
                                 <img className='test' src={pdf_icon}/>
                                 <img className='test' src={png_icon}/>
@@ -753,8 +626,92 @@ class ProfilePage extends Component {
                             </Tab>
                             <Tab eventKey="more-information" title="اطلاعات بیشتر">
                                 {this.state.people.map(p => (
-                                    <div className='information d-flex flex-row'>
-                                        <div className='ms-5'>
+                                    <div className='information d-flex flex-row flex-wrap'>
+                                        <p className='col-4'>
+                                            <label> نام :</label>
+                                            {p.firstName}
+                                        </p>
+                                        <p className='col-4'>
+                                            <label> نام خانوادگی :</label>
+                                            {p.lastName}
+                                        </p>
+                                        <p className='col-4'>
+                                            <label> کد ملی :</label>
+                                            {p.nationalCode}
+                                        </p>
+                                        <p className='col-4'>
+                                            <label> شماره گواهی :</label>
+                                            {p.certificateNumber}
+                                        </p>
+                                        <p className='col-4'>
+                                            <label> شماره تماس :</label>
+                                            {p.phoneNumber}
+                                        </p>
+                                        <p className='col-4'>
+                                            <label> آدرس :</label>
+                                            {p.address}
+                                        </p>
+                                        <p className='col-4'>
+                                            <label> شماره تلفن :</label>
+                                            {p.telephoneNumber}
+                                        </p>
+                                        <p className='col-4'>
+                                            <label> نام پدر :</label>
+                                            {p.fatherName}
+                                        </p>
+                                        <p className='col-4'>
+                                            <label> شماره تلفن اضطراری :</label>
+                                            {p.emergencyNumber}
+                                        </p>
+                                        <p className='col-4'>
+                                            <label> محل تولد :</label>
+                                            {p.birthPlace}
+                                        </p>
+                                        <p className='col-4'>
+                                            <label> تاریخ تولد :</label>
+                                            {p.birthDate}
+                                        </p>
+                                        <p className='col-4'>
+                                            <label> شغل :</label>
+                                            {p.job}
+                                        </p>
+                                        <p className='col-4'>
+                                            <label> تحصیلات :</label>
+                                            {p.education}
+                                        </p>
+                                        <p className='col-4'>
+                                            <label> کد پستی :</label>
+                                            {p.postalCode}
+                                        </p>
+                                        <p className='col-4'>
+                                            <label> ایمیل :</label>
+                                            {p.email}
+                                        </p>
+                                        <p className='col-4'>
+                                            <label>  ملیت :</label>
+                                            {p.nationality}
+                                        </p>
+                                        <p className='col-4'>
+                                            <label> وضعیت تاهل :</label>
+                                            {p.maritalStatus}
+                                        </p>
+                                        <p className='col-4'>
+                                            <label> دین :</label>
+                                            {p.religion}
+                                        </p>
+                                        <p className='col-4'>
+                                            <label> مذهب :</label>
+                                            {p.subReligion}
+                                        </p>
+                                        <p className='col-4'>
+                                            <label> وضعیت سلامتی :</label>
+                                            {p.healthyStatus}
+                                        </p>
+                                        <p className='col-4'>
+                                            <label> نام مستعار :</label>
+                                            {p.alias}
+                                        </p>
+                                       {/* <div className='ms-5'>
                                             <p>
                                                 <label> نام :</label>
                                                 {p.firstName}
@@ -797,7 +754,7 @@ class ProfilePage extends Component {
                                                 <label> وضعیت تاهل :</label>
                                                 مجرد
                                             </p>
-                                        </div>
+                                        </div>*/}
                                     </div>
                                 ))}
                             </Tab>
@@ -979,9 +936,168 @@ class ProfilePage extends Component {
                         </form>
                     </Modal.Body>
                 </Modal>
+                <Modal centered show={this.state.showDeleteModalReport}>
+                    <Modal.Header>
+                        <Modal.Title>حذف گزارش</Modal.Title>
+                        <button className='btn' onClick={() => {
+                            this.handleCloseModalReport()
+                        }}><AiOutlineClose/></button>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <h6>آيا از حذف اين گزارش مطمئن هستيد؟</h6>
+                    </Modal.Body>
+                    <Modal.Footer className="justify-content-around">
+                        <button className="btn btn-danger" onClick={() => this.handleDeleteReport()}>حذف</button>
+                        <button className="btn btn-light" onClick={() => this.handleCloseModalReport()}>بستن</button>
+                    </Modal.Footer>
+                </Modal>
             </>
-
         );
+    }
+
+    handleClose = () => {
+        this.setState({show: false})
+    };
+    handleShow = () => {
+        this.setState({show: true})
+    };
+    reportType = (e) => {
+        const type = e.target.value
+        this.setState({reportType: type})
+    }
+    handleSubmit = (e) => {
+        e.preventDefault();
+        const type = this.state.reportType;
+        this.setState({reports: type})
+        switch (type) {
+            case 'cleaning':
+                return (() => {
+                    const date = this.date.current.value;
+                    const description = this.description.current.value;
+                    const result = {
+                        'title': this.state.reportType,
+                        'date': date,
+                        'description': description
+                    }
+                    const newReports = this.state.report.concat(result);
+                    this.setState({report: newReports});
+                    this.setState({show: false});
+                })();
+            case 'delayInArrival':
+                return (() => {
+                    const date = this.date.current.value;
+                    const time = this.time.current.value;
+                    const result = {
+                        'title': this.state.reportType,
+                        'date': date,
+                        'time': time
+                    }
+                    const newReports = this.state.report.concat(result)
+                    this.setState({report: newReports})
+                    this.setState({show: false})
+                    console.log(this.state.report);
+                })();
+            case 'exit':
+                return (() => {
+                    const startDate = this.startDate.current.value;
+                    const endDate = this.endDate.current.value;
+                    const destinationAddress = this.destinationAddress.current.value;
+                    const destinationPhoneNumber = this.destinationPhoneNumber.current.value;
+                    const relation = this.relation.current.value;
+                    const result = {
+                        'title': this.state.reportType,
+                        'timePeriod': {
+                            "startDate": startDate,
+                            "endDate": endDate
+                        },
+                        'destinationAddress': destinationAddress,
+                        'destinationPhoneNumber': destinationPhoneNumber,
+                        'relation': relation
+                    }
+                    const newReports = this.state.report.concat(result)
+                    this.setState({report: newReports})
+                    this.setState({show: false})
+                })();
+            case 'violation':
+                return (() => {
+                    const date = this.date.current.value;
+                    const time = this.time.current.value;
+                    const description = this.description.current.value;
+                    const result = {
+                        'title': this.state.reportType,
+                        'date': date,
+                        'time': time,
+                        'description': description
+                    }
+                    const newReports = this.state.report.concat(result)
+                    this.setState({report: newReports})
+                    this.setState({show: false})
+                })();
+            case 'penalty':
+                return (() => {
+                    const description = this.description.current.value;
+                    const typePenalty = this.typePenalty.current.value;
+                    const result = {
+                        'title': this.state.reportType,
+                        'typePenalty': typePenalty,
+                        'description': description
+                    }
+                    const newReports = this.state.report.concat(result)
+                    this.setState({report: newReports})
+                    this.setState({show: false})
+                })();
+            case 'discharge':
+                return (() => {
+                    const dischargeDateAnnounce = this.dischargeDateAnnounce.current.value;
+                    const dischargeDate = this.dischargeDate.current.value;
+                    const depositReturnDate = this.depositReturnDate.current.value;
+                    const deductionOfLosses = this.deductionOfLosses.current.value;
+                    const deductionOfLossesReason = this.deductionOfLossesReason.current.value;
+                    const refundableAmount = this.refundableAmount.current.value;
+                    const result = {
+                        'title': this.state.reportType,
+                        'dischargeDateAnnounce': dischargeDateAnnounce,
+                        'dischargeDate': dischargeDate,
+                        'depositReturnDate': depositReturnDate,
+                        'deductionOfLosses': deductionOfLosses,
+                        'deductionOfLossesReason': deductionOfLossesReason,
+                        'refundableAmount': refundableAmount
+                    }
+                    const newReports = this.state.report.concat(result)
+                    this.setState({report: newReports})
+                    this.setState({show: false})
+                })();
+            case 'cancelContract':
+                return (() => {
+                    const date = this.date.current.value;
+                    const reason = this.reason.current.value;
+                    const deductionOfLosses = this.deductionOfLosses.current.value;
+                    const refundableAmount = this.refundableAmount.current.value;
+                    const result = {
+                        'title': this.state.reportType,
+                        'data': date,
+                        'reason': reason,
+                        'deductionOfLosses': deductionOfLosses,
+                        'refundableAmount': refundableAmount
+                    }
+                    const newReports = this.state.report.concat(result)
+                    this.setState({report: newReports})
+                    this.setState({show: false})
+                })();
+        }
+    }
+    handleOpenModalReport = (report) => {
+        const index = this.state.report.indexOf(report)
+        this.setState({ showDeleteModalReport: true })
+        this.setState({ reportTemp: report })
+        console.log(this.state.reportTemp)
+        // this.handleDeleteReport(report,index)
+    }
+    handleCloseModalReport = () => {
+        this.setState({ showDeleteModalReport: false });
+    }
+    handleDeleteReport = () => {
+        console.log('u')
     }
 }
 
