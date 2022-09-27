@@ -16,6 +16,7 @@ import ToggleButton from "@mui/material/ToggleButton";
 import {Modal} from "react-bootstrap";
 import {IoIosAddCircleOutline} from "react-icons/io";
 import "../../../../style/evan-calender-style.css";
+
 class PaymentPage extends Component {
     state = {
         date: '',
@@ -56,13 +57,13 @@ class PaymentPage extends Component {
     render() {
         return (
             <>
+
                 <div className="back-btn">
                     <Link to="/">
                         بازگشت
                         <i className="bi bi-caret-left-fill"/>
                     </Link>
                 </div>
-
                 <div className="text">
                     <h4>ثبت فاکتور</h4>
                 </div>
@@ -85,7 +86,7 @@ class PaymentPage extends Component {
                     </div>
                     <div className='col-8'>
                         <label style={{marginRight:"33px"}}>نوع: </label>
-                        <div style={{width: '100%',marginRight:"33px"}}>
+                        <div style={{width: '100%',marginRight:"16px"}}>
                             <Accordion defaultActiveKey="0">
                                 <Accordion.Item eventKey="0">
                                     <Accordion.Header>{this.state.selectedType}&nbsp;</Accordion.Header>

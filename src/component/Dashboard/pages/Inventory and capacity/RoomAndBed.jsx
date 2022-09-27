@@ -6,12 +6,16 @@ import {MdDateRange} from 'react-icons/md'
 import {AiOutlineNumber} from 'react-icons/ai'
 import {AiOutlineUser} from 'react-icons/ai'
 import {IoMdMore} from "react-icons/io";
+import {BsPersonCircle} from "react-icons/bs"
 import {Link, Route, Routes} from "react-router-dom";
 import FullViewOfBed from './FullViewOfBed';
 import BuildingContext from '../../../../contexts/Building';
 import FloorAndBedLoading from '../../../loading/FloorAndBedLoading';
 import {Button, Modal} from 'react-bootstrap'
-import {BiChevronLeft} from 'react-icons/bi'
+import Form from 'react-bootstrap/Form';
+import {BiChevronLeft,BiSearch} from 'react-icons/bi'
+import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
+import ToggleButton from "@mui/material/ToggleButton";
 
 class RoomAndBed extends Component {
     static contextType = BuildingContext;
@@ -129,6 +133,7 @@ class RoomAndBed extends Component {
         show: false,
         showAccessory: false,
         showَRoomAccessory: false,
+        selectedPeople:"",
         unit: {
             accessories: []
         },
@@ -152,8 +157,8 @@ class RoomAndBed extends Component {
                 {name: 'چوب لباسی', count: 4}
             ]
         },
-        tempRoom:{
-            accessories:[]
+        tempRoom: {
+            accessories: []
         }
     }
 
@@ -182,14 +187,16 @@ class RoomAndBed extends Component {
     handleShowAccessory = () => {
         this.setState({showAccessory: true})
     };
-    handleCloseRoomAcc =() =>{
-        this.setState({showRoomAccessory:false})
+    handleCloseRoomAcc = () => {
+        this.setState({showRoomAccessory: false})
     }
-    handleShowRoomAcc = (room) =>{
-        this.setState({showRoomAccessory:true})
-        this.setState({tempRoom:room})
+    handleShowRoomAcc = (room) => {
+        this.setState({showRoomAccessory: true})
+        this.setState({tempRoom: room})
     }
-
+    handleChange = (event,newAlignment) =>{
+        this.setState({selectedPeople:newAlignment})
+    }
     render() {
         return (
             <>
@@ -236,7 +243,9 @@ class RoomAndBed extends Component {
                                                         <div className="row">
                                                             <div className="col-7 title">اتاق {room.number}</div>
                                                             <div className="col-5">
-                                                                <button className="btn show-acc-btn" onClick={()=>{this.handleShowRoomAcc(room)}}> <IoMdMore/> امکانات
+                                                                <button className="btn show-acc-btn" onClick={() => {
+                                                                    this.handleShowRoomAcc(room)
+                                                                }}><IoMdMore/> امکانات
                                                                     اتاق
                                                                 </button>
                                                             </div>
@@ -267,11 +276,11 @@ class RoomAndBed extends Component {
                     }
                 </div>
 
-                <Modal centered show={this.state.show} onClick={() => {
+                <Modal size="lg" centered show={this.state.show} onHide={() => {
                     this.handleClose()
                 }}>
                     <Modal.Header closeButton>
-                        <Modal.Title>{this.state.bedOpen.bedName}</Modal.Title>
+                        <Modal.Title>اتاق {this.state.bedOpen.name}</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                         {
@@ -290,7 +299,63 @@ class RoomAndBed extends Component {
                                     </div>
                                 </div>
                             ) : (
-                                <div className='text-center my-4'>تخت برای شخصی ثبت نشده است</div>
+                                <div className="search-container">
+                                    <div className="input-container row">
+                                        <div className="col-1"><label>براساس:</label></div>
+                                        <div className="col-3 " style={{paddingLeft:"0"}}>
+                                            <Form.Select aria-label="Default select example">
+                                                <option value="1">کد ملی</option>
+                                                <option value="2">نام و نام خانوادگی</option>
+                                            </Form.Select>
+                                        </div>
+                                        <div className="col-7 px-0" style={{paddingRight:"0"}}>
+                                            <Form.Control type="text" id="inputSearch"/>
+                                        </div>
+                                        <div className="col-1" style={{paddingRight:"0"}}>
+                                            <button className="btn outline-secondary"><BiSearch fontSize="25px"/></button>
+                                        </div>
+                                    </div>
+                                    <div className="people-container">
+                                        <ToggleButtonGroup
+                                            orientation="vertical"
+                                            value={this.state.selectedPeople}
+                                            exclusive
+                                            onChange={this.handleChange}
+                                            aria-label="text alignment"
+                                            style={{width:"100%"}}
+                                        >
+                                            <ToggleButton value="hello" style={{display:"block"}}>
+                                                <div className="row">
+                                                    <div className="col-3 profile-img d-flex align-items-center justify-content-center">
+                                                        <BsPersonCircle fontSize="60px"/>
+                                                    </div>
+                                                    <div className="col-9 people-info row">
+                                                        <div className="col-6">
+                                                            <div className="d-flex">
+                                                                <label>نام و نام خانوادگی:  </label>
+                                                                <p>علی محمدی</p>
+                                                            </div>
+                                                            <div className="d-flex">
+                                                                <label>نام پدر:   </label>
+                                                                <p>حسن </p>
+                                                            </div>
+                                                        </div>
+                                                        <div className="col-6">
+                                                            <div className="d-flex">
+                                                                <label >کد ملی :</label>
+                                                                <p>1250711762</p>
+                                                            </div>
+                                                            <div className="d-flex">
+                                                                <label >تاریخ پذیرش  :</label>
+                                                                <p>1401/05/01</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </ToggleButton>
+                                        </ToggleButtonGroup>
+                                    </div>
+                                </div>
                             )
                         }
                     </Modal.Body>
