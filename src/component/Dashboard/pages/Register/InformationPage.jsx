@@ -202,7 +202,7 @@ class InformationPage extends Component {
 
                         </div>
                         <div className="input-group-register col-4">
-                            <select className='input '>
+                            <select className='input'>
                                 <option>اسلام</option>
                                 <option>مسیحیت</option>
                                 <option>هندوئیسم</option>
@@ -273,7 +273,7 @@ class InformationPage extends Component {
                                            className={`input form-control ${(this.context.specificValidations.c_spouseFullName_requiredReg === false &&
                                                this.context.fields.c_maritalStatus === 'married') ? "is-invalid" : ""}`}
                                            value={this.context.fields.c_spouseFullName}
-                                   onChange={(e) =>  this.context.handleFields(e, 'c_spouseFullName')}
+                                           onChange={(e) =>  this.context.handleFields(e, 'c_spouseFullName')}
                                            placeholder=" "
                                     />
                                     <label className="placeholder" style={{right: (this.context.specificValidations.c_spouseFullName_requiredReg === false &&
@@ -294,7 +294,7 @@ class InformationPage extends Component {
                                     <input type="text"
                                            className={`input form-control`}
                                            value={this.context.fields.c_spouseJob}
-                                   onChange={(e) =>  this.context.handleFields(e, 'c_spouseJob')}
+                                           onChange={(e) =>  this.context.handleFields(e, 'c_spouseJob')}
                                            placeholder=" "
                                     />
                                     <label className="placeholder">شغل همسر</label>    

@@ -80,7 +80,26 @@ class MainRegister extends Component {
     }
 
     informationFamilyPageValidation = () => {
+        let requiredReg = /^\s*$/;
+        let telephoneReg = /^09\d{9}$/;
 
+        let firstPerson_FullName_requiredReg = !requiredReg.test(this.context.fields.firstPerson_FullName);
+        let firstPerson_PhoneNumber_requiredReg = !requiredReg.test(this.context.fields.firstPerson_PhoneNumber);
+        let secondPerson_FullName_requiredReg = !requiredReg.test(this.context.fields.secondPerson_FullName);
+        let secondPerson_PhoneNumber_requiredReg = !requiredReg.test(this.context.fields.secondPerson_PhoneNumber);
+
+        let firstPerson_PhoneNumber_telephoneReg = telephoneReg.test(this.context.fields.firstPerson_PhoneNumber);
+        let secondPerson_PhoneNumber_telephoneReg = telephoneReg.test(this.context.fields.secondPerson_PhoneNumber);
+
+        this.context.handleSpecificValidations([firstPerson_FullName_requiredReg, firstPerson_PhoneNumber_requiredReg,
+            secondPerson_FullName_requiredReg, secondPerson_PhoneNumber_requiredReg, firstPerson_PhoneNumber_telephoneReg,
+            secondPerson_PhoneNumber_telephoneReg], ['firstPerson_FullName_requiredReg', 'firstPerson_PhoneNumber_requiredReg',
+            'secondPerson_FullName_requiredReg', 'secondPerson_PhoneNumber_requiredReg', 'firstPerson_PhoneNumber_telephoneReg',
+            'secondPerson_PhoneNumber_telephoneReg']);
+
+        return firstPerson_FullName_requiredReg && firstPerson_PhoneNumber_requiredReg &&
+            secondPerson_FullName_requiredReg && secondPerson_PhoneNumber_requiredReg && firstPerson_PhoneNumber_telephoneReg &&
+            secondPerson_PhoneNumber_telephoneReg
     }
 
     otherGuestValidation = () => {
@@ -198,7 +217,7 @@ class MainRegister extends Component {
                 //     (this.context.typeofResident === 'otherGuest' ? this.otherGuestValidation :
                 //         (this.context.typeofResident === 'constant' ? this.constantInformationPageValidation : null)),
 
-                validator: this.otherGuestValidation,
+                // validator: this.constantInformationPageValidation,
             },
             {
                 label: 'مشخصات تکمیلی',
@@ -210,7 +229,7 @@ class MainRegister extends Component {
                 label: 'مشخصات بستگان',
                 name: 'step 3',
                 content: <InformationFamilyPage />,
-                // validator: this.InformationFamilyPageValidation
+                // validator: this.informationFamilyPageValidation
             },
             {
                 label: 'آپلود مدارک',
