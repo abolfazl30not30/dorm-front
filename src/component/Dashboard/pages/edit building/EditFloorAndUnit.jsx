@@ -21,8 +21,6 @@ class EditFloorAndUnit extends Component {
         showَFloorAccessory: false,
         unitTemp: {},
         floorTemp: {
-            name:"طبقه",
-            empty:"true",
             accessories:[]
         },
         floorIndex: 0,

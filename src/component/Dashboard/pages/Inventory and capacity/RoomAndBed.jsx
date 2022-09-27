@@ -128,11 +128,9 @@ class RoomAndBed extends Component {
         rooms: [],
         show: false,
         showAccessory: false,
+        showَRoomAccessory: false,
         unit: {
-            accessories: [
-                {name: 'یخچال', count: 1},
-                {name: 'چوب لباسی', count: 4}
-            ]
+            accessories: []
         },
 
         bedOpen:
@@ -153,6 +151,9 @@ class RoomAndBed extends Component {
                 {name: 'یخچال', count: 1},
                 {name: 'چوب لباسی', count: 4}
             ]
+        },
+        tempRoom:{
+            accessories:[]
         }
     }
 
@@ -181,6 +182,13 @@ class RoomAndBed extends Component {
     handleShowAccessory = () => {
         this.setState({showAccessory: true})
     };
+    handleCloseRoomAcc =() =>{
+        this.setState({showRoomAccessory:false})
+    }
+    handleShowRoomAcc = (room) =>{
+        this.setState({showRoomAccessory:true})
+        this.setState({tempRoom:room})
+    }
 
     render() {
         return (
@@ -228,7 +236,7 @@ class RoomAndBed extends Component {
                                                         <div className="row">
                                                             <div className="col-7 title">اتاق {room.number}</div>
                                                             <div className="col-5">
-                                                                <button className="btn show-acc-btn"><IoMdMore/> امکانات
+                                                                <button className="btn show-acc-btn" onClick={()=>{this.handleShowRoomAcc(room)}}> <IoMdMore/> امکانات
                                                                     اتاق
                                                                 </button>
                                                             </div>
@@ -266,17 +274,6 @@ class RoomAndBed extends Component {
                         <Modal.Title>{this.state.bedOpen.bedName}</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <div className="accessory-box">
-                            <div className='text-center mb-3 fw-bold'>لوازم جانبی</div>
-                            <div className="d-flex flex-column">
-                                {this.state.roomAccessory.accessories.map((acc) => (
-                                    <div className='d-flex flex-row my-2 w-50'>
-                                        <div className='ms-3'><BiChevronLeft/>{acc.name}</div>
-                                        <div className='me-auto'>{acc.count} عدد</div>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
                         {
                             (!this.state.bedOpen.empty) ? (
                                 <div className="d-flex justify-content-center">
@@ -304,11 +301,29 @@ class RoomAndBed extends Component {
                     this.handleCloseAccessory()
                 }}>
                     <Modal.Header closeButton>
-                        <Modal.Title>لوازم جانبی</Modal.Title>
+                        <Modal.Title>امکانات واحد</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                         {
                             this.state.unit.accessories.map((acc) => (
+                                <div className='d-flex flex-row my-2 w-50'>
+                                    <div className='ms-3'><BiChevronLeft/>{acc.name}</div>
+                                    <div className='me-auto'>{acc.count} عدد</div>
+                                </div>
+                            ))
+                        }
+                    </Modal.Body>
+                </Modal>
+
+                <Modal centered show={this.state.showRoomAccessory} onClick={() => {
+                    this.handleCloseRoomAcc()
+                }}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>امکانات اتاق</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        {
+                            this.state.tempRoom.accessories.map((acc) => (
                                 <div className='d-flex flex-row my-2 w-50'>
                                     <div className='ms-3'><BiChevronLeft/>{acc.name}</div>
                                     <div className='me-auto'>{acc.count} عدد</div>

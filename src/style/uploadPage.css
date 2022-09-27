@@ -55,3 +55,21 @@
 .tab {
     margin-left: 2%;
 }
+.addBtn{
+    font-size: 0.875rem;
+    border-radius: 4px;
+    padding: 11px;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    color: rgba(0, 0, 0, 0.54);
+    text-decoration: none;
+    background-color: transparent;
+    justify-content: center;
+    align-items: center;
+    margin-top: -1px;
+    border-top: 1px solid transparent;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+.addBtn:hover{
+    background-color: rgba(0, 0, 0, 0.04);
+}

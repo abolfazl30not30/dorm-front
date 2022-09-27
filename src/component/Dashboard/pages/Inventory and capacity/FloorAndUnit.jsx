@@ -10,6 +10,9 @@ import {TbBuilding} from 'react-icons/tb';
 import {IoMdMore} from "react-icons/io";
 import {EditText, EditTextarea} from 'react-edit-text';
 import 'react-edit-text/dist/index.css';
+import {Button, Modal} from 'react-bootstrap'
+import {BiChevronLeft} from 'react-icons/bi'
+
 
 class FloorAndUnit extends Component {
 
@@ -64,7 +67,11 @@ class FloorAndUnit extends Component {
         ],
         isLoading: true,
         isFull: false,
-        floor: []
+        floor: [],
+        showFloorAccessory:false,
+        tempFloor:{
+            accessories:[]
+        },
     }
 
     async componentDidMount() {
@@ -117,7 +124,7 @@ class FloorAndUnit extends Component {
                                             <div className="floor-title row ">
                                                 <div className="col-7"><h3 className='floor-name'>{f.name}</h3></div>
                                                 <div className="col-5 ">
-                                                    <button className="btn show-acc-btn"><IoMdMore/> امکانات طبقه</button>
+                                                    <button className="btn show-acc-btn" onClick={()=>{this.handleShowFloorAcc(f)}}><IoMdMore/> امکانات طبقه</button>
                                                 </div>
                                             </div>
                                             <div className="unit-container row">
@@ -140,9 +147,36 @@ class FloorAndUnit extends Component {
                         </div>
                     )}
                 </div>
+
+                <Modal centered show={this.state.showFloorAccessory} onClick={() => {
+                    this.handleCloseFloorAcc()
+                }}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>امکانات طبقه</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        {
+                            this.state.tempFloor.accessories.map((acc) => (
+                                <div className='d-flex flex-row my-2 w-50'>
+                                    <div className='ms-3'><BiChevronLeft/>{acc.name}</div>
+                                    <div className='me-auto'>{acc.count} عدد</div>
+                                </div>
+                            ))
+                        }
+                    </Modal.Body>
+                </Modal>
             </>
         );
     }
+    handleCloseFloorAcc = () =>{
+        this.setState({showFloorAccessory : false});
+    }
+
+    handleShowFloorAcc = (floor) =>{
+        this.setState({showFloorAccessory : true});
+        this.setState({tempFloor:floor});
+    }
+
 }
 
 export default FloorAndUnit;

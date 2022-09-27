@@ -1,35 +1,46 @@
 import { Component } from "react";
 import {Link} from "react-router-dom";
 import Accordion from "react-bootstrap/Accordion";
-import ToggleGroup from "./ToggleGroup";
-import TextField from "@material-ui/core/TextField";
-
-import png_icon from "../../../../img/png_icon.png";
-import pdf_icon from "../../../../img/pdf_icon.png";
 import Form from 'react-bootstrap/Form';
-// import { Calendar, DatePicker } from 'react-persian-datepicker';
+import { Calendar, DatePicker } from 'react-persian-datepicker';
 // import { DatePicker } from "jalali-react-datepicker";
 import 'react-persian-datepicker/lib/styles/basic.css'
 // import Calendar from 'react-input-calendar';
-import Calendar from 'react-calendar'
+// import Calendar from 'react-calendar'
 import JCalendar from 'reactjs-persian-calendar'
 import 'react-calendar/dist/Calendar.css';
-
-import DatePicker from "react-datepicker";
-
+// import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
+import ToggleButton from "@mui/material/ToggleButton";
+import {Modal} from "react-bootstrap";
+import {IoIosAddCircleOutline} from "react-icons/io";
 
 class PaymentPage extends Component {
     state = {
         date: '',
-
+        selectedType: '',
+        choices: [
+            'محصولات بهداشتی',
+            'بیمه',
+        ],
+        inputType:"",
+        showType:false,
     }
 
     handleClick(e) {
         e.preventDefault();
         // console.log(this.state.inputText)
     }
+    handleAlignment = (event, newAlignment) => {
+        this.setState({selectedType : newAlignment});
+    };
 
+    updateChoices = (text) => {
+        var newArr = this.state.choices;
+        newArr.push(text);
+        this.setState({choices:newArr})
+    }
     render() {
         return (
             <>
@@ -49,26 +60,52 @@ class PaymentPage extends Component {
 
                 <div className='first-section row'>
                     <div className='col-5'>
-                        <div className='form-group col-10'>
-                            <input type='text' className='form-control mt-3 input'/>
-                            {/*<TextField id="filled-basic" label="قیمت" variant="filled" />*/}
-                        </div>
-                        <div className='col-2'>
-                            <select className='form-select' style={{width: '100px'}}>
-                                <option>IRR</option>
-                                <option>USD</option>
-                            </select>
+                        <label for="price">مبلغ :</label>
+                        <div className="row mt-2">
+                            <div className='col-3 m-0 p-0'>
+                                <select className='form-select'>
+                                    <option>ریال</option>
+                                    <option>دلار</option>
+                                </select>
+                            </div>
+                            <div className='form-group col-9 m-0 p-0'>
+                                <input  id="price" type='text' className='form-control  input '/>
+                                {/*<TextField id="filled-basic" label="قیمت" variant="filled" />*/}
+                            </div>
                         </div>
                     </div>
                     <div className='col-7'>
-                        {/*<label className='mt-3'>نوع: </label>*/}
+                        <label>نوع: </label>
                         <div style={{width: '100%'}}>
                             <Accordion defaultActiveKey="0">
                                 <Accordion.Item eventKey="0">
-                                    <Accordion.Header>نوع&nbsp;</Accordion.Header>
+                                    <Accordion.Header>{this.state.selectedType}&nbsp;</Accordion.Header>
                                     <Accordion.Body>
                                         <div>
-                                            <ToggleGroup />
+                                            <div className=' row flex-wrap'>
+                                                <ToggleButtonGroup
+                                                    orientation="vertical"
+                                                    value={this.state.selectedType}
+                                                    exclusive
+                                                    onChange={this.handleAlignment}
+                                                    aria-label="text alignment"
+                                                >
+                                                    {
+                                                        this.state.choices.map((c) =>
+                                                            <ToggleButton value={c} className='col'>
+                                                                {c}
+                                                            </ToggleButton>
+                                                        )
+                                                    }
+                                                    <button value="add"
+                                                                  onClick={() => {this.handleOpenType()}}
+                                                                  className='col addBtn'
+                                                    >
+                                                        <IoIosAddCircleOutline size={25}/>
+                                                    </button>
+                                                </ToggleButtonGroup>
+
+                                            </div>
                                         </div>
                                     </Accordion.Body>
                                 </Accordion.Item>
@@ -77,7 +114,6 @@ class PaymentPage extends Component {
                         </div>
                     </div>
                 </div>
-
                 <div className='second-section d-flex flex-wrap justify-content-start mr-3' style={{height: '50%'}}>
                     <div className='mt-5 mb-3'>
                         <label className='mb-3'>تاریخ: </label>
@@ -96,15 +132,15 @@ class PaymentPage extends Component {
                             {/*/>*/}
                             <input type='text' value={this.state.date} style={{textAlign: 'center', width: '100%'}} disabled />
                         </div>
-
-                        <JCalendar
-                            locale={'fa'}
-                            color={'#000066'}
-                            size={28}
-                            // How???
-                            onClick={() => this.setState({date: "date"})}
-                            itemRender={(key, item, children) => children}
-                        />
+                        <DatePicker/>
+                        {/*<JCalendar*/}
+                        {/*    locale={'fa'}*/}
+                        {/*    color={'#000066'}*/}
+                        {/*    size={28}*/}
+                        {/*    // How???*/}
+                        {/*    onClick={() => this.setState({date: "date"})}*/}
+                        {/*    itemRender={(key, item, children) => children}*/}
+                        {/*/>*/}
                         {/*<Calendar value={this.state.value} />*/}
                     </div>
                     <div className='col'>
@@ -130,9 +166,44 @@ class PaymentPage extends Component {
                         ثبت
                     </button>
                 </div>
-
+                <Modal centered show={this.state.showType} onHide={() => { this.handleCloseType() }}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>افزودن نوع جدید</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body className="justify-content-center">
+                        <input type='text'
+                               className='form-control mt-3 mb-3 input'
+                               onChange={(e) => this.handleInputChange(e)} placeholder="نوع جدید"/>
+                    </Modal.Body>
+                    <Modal.Footer className="justify-content-start">
+                        <button className="btn btn-success" onClick={(event) => {this.handleSubmitType(event)}}>ثبت</button>
+                        <button className="btn btn-light" onClick={() => {this.handleCloseType()}}>بستن</button>
+                    </Modal.Footer>
+                </Modal>
             </>
         );
+    }
+    handleOpenType = ()=>{
+        this.setState({showType:true});
+    }
+
+    handleCloseType = () =>{
+        this.setState({showType:false})
+    }
+
+    handleInputChange = (e) =>{
+        this.setState({inputType:e.target.value});
+    }
+
+    handleSubmitType = (e) => {
+        e.preventDefault();
+        let regCheck =  /^\s*$/ ;
+        if(!regCheck.test(this.state.inputType)){
+            let updateChoice = [...this.state.choices];
+            updateChoice.push(this.state.inputType);
+            this.setState({choices:updateChoice});
+        }
+        this.setState({showType:false})
     }
 }
 
