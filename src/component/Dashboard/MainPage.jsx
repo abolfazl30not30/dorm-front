@@ -51,6 +51,18 @@ class MainPage extends Component {
             c_health: 'false',
             c_healthDescription: '',
 
+            // other guest information
+            o_fullName: '',
+            o_nationalCode: '',
+            o_certificateNumber: '',
+            o_placeOfIssue: '',
+            o_admissionStartDate: '',
+            o_admissionEndDate: '',
+            o_paymentDate: '',
+            o_rentPaymentAmount: '',
+            o_depositPaymentAmount: '',
+            o_discountPaymentAmount: '',
+            o_birthDate: '',
         },
         errors : {
             required: 'این فیلد را پر کنید!',
@@ -67,7 +79,7 @@ class MainPage extends Component {
             pd_requiredReg : '',
             pd_numberReg : '',
 
-            // InformationFurtherPage
+            // InformationFurtherPage validations
             ifp_address_requiredReg: '',
             ifp_home_tel_requiredReg: '',
             ifp_home_tel_telephoneReg: '',
@@ -76,7 +88,7 @@ class MainPage extends Component {
             ifp_resident_tel_requiredReg: '',
             ifp_resident_tel_telephoneReg: '',
 
-            // constant resident information
+            // -----------------------constant resident information validations
             c_firstName_requiredReg: '',
             c_lastName_requiredReg: '',
             c_nationalCode_requiredReg: '',
@@ -91,6 +103,22 @@ class MainPage extends Component {
             c_studentNumber_numberReg: '',
             c_spouseFullName_requiredReg: '',
             c_healthDescription_requiredReg: '',
+
+            // -----------------------other guest information validations
+            o_fullName_requiredReg: '',
+            o_nationalCode_requiredReg: '',
+            o_nationalCode_numberReg: '',
+            o_certificateNumber_requiredReg: '',
+            o_certificateNumber_numberReg: '',
+            o_admissionStartDate_requiredReg: '',
+            // o_admissionStartDate_dateReg: '',
+            o_admissionEndDate_requiredReg: '',
+            // o_admissionStartDate_dateReg: '',
+            // o_paymentDate_dateReg: '',
+            o_rentPaymentAmount_numberReg: '',
+            o_depositPaymentAmount_numberReg: '',
+            o_discountPaymentAmount_numberReg: '',
+            // o_birthDate_dateReg: '',
         },
     }
     render() {

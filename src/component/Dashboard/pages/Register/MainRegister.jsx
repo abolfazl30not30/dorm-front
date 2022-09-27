@@ -70,7 +70,13 @@ class MainRegister extends Component {
             ['ifp_address_requiredReg', 'ifp_home_tel_requiredReg', 'ifp_home_tel_telephoneReg', 'ifp_father_tel_telephoneReg',
                 'ifp_mother_tel_telephoneReg', 'ifp_resident_tel_requiredReg', 'ifp_resident_tel_telephoneReg']);
 
-        return ifp_address_requiredReg && ifp_home_tel_requiredReg && ifp_home_tel_telephoneReg && ifp_father_tel_telephoneReg && ifp_mother_tel_telephoneReg && ifp_resident_tel_requiredReg && ifp_resident_tel_telephoneReg;
+        return ifp_address_requiredReg &&
+            ifp_home_tel_requiredReg &&
+            ifp_home_tel_telephoneReg &&
+            ifp_father_tel_telephoneReg &&
+            ifp_mother_tel_telephoneReg &&
+            ifp_resident_tel_requiredReg &&
+            ifp_resident_tel_telephoneReg;
     }
 
     informationFamilyPageValidation = () => {
@@ -78,7 +84,31 @@ class MainRegister extends Component {
     }
 
     otherGuestValidation = () => {
+        let requiredReg = /^\s*$/;
+        let numberReg = /^[0-9]*$/;
 
+        let o_fullName_requiredReg = !requiredReg.test(this.context.fields.o_fullName);
+        let o_nationalCode_requiredReg = !requiredReg.test(this.context.fields.o_nationalCode);
+        let o_certificateNumber_requiredReg = !requiredReg.test(this.context.fields.o_certificateNumber);
+        let o_admissionStartDate_requiredReg = !requiredReg.test(this.context.fields.o_admissionStartDate);
+        let o_admissionEndDate_requiredReg = !requiredReg.test(this.context.fields.o_admissionEndDate);
+
+        let o_nationalCode_numberReg = numberReg.test(this.context.fields.o_nationalCode);
+        let o_certificateNumber_numberReg = numberReg.test(this.context.fields.o_certificateNumber);
+        let o_rentPaymentAmount_numberReg = numberReg.test(this.context.fields.o_rentPaymentAmount);
+        let o_depositPaymentAmount_numberReg = numberReg.test(this.context.fields.o_depositPaymentAmount);
+        let o_discountPaymentAmount_numberReg = numberReg.test(this.context.fields.o_discountPaymentAmount);
+
+        this.context.handleSpecificValidations([o_fullName_requiredReg, o_nationalCode_requiredReg, o_certificateNumber_requiredReg,
+                o_admissionStartDate_requiredReg, o_admissionEndDate_requiredReg, o_nationalCode_numberReg, o_certificateNumber_numberReg,
+                o_rentPaymentAmount_numberReg, o_depositPaymentAmount_numberReg, o_discountPaymentAmount_numberReg],
+            ['o_fullName_requiredReg', 'o_nationalCode_requiredReg', 'o_certificateNumber_requiredReg',
+                'o_admissionStartDate_requiredReg', 'o_admissionEndDate_requiredReg', 'o_nationalCode_numberReg', 'o_certificateNumber_numberReg',
+                'o_rentPaymentAmount_numberReg', 'o_depositPaymentAmount_numberReg', 'o_discountPaymentAmount_numberReg']);
+
+        return o_fullName_requiredReg && o_nationalCode_requiredReg && o_certificateNumber_requiredReg &&
+            o_admissionStartDate_requiredReg && o_admissionEndDate_requiredReg && o_nationalCode_numberReg && o_certificateNumber_numberReg &&
+            o_rentPaymentAmount_numberReg && o_depositPaymentAmount_numberReg && o_discountPaymentAmount_numberReg;
     }
 
     constantInformationPageValidation = () => {
@@ -168,7 +198,7 @@ class MainRegister extends Component {
                 //     (this.context.typeofResident === 'otherGuest' ? this.otherGuestValidation :
                 //         (this.context.typeofResident === 'constant' ? this.constantInformationPageValidation : null)),
 
-                validator: this.constantInformationPageValidation,
+                validator: this.otherGuestValidation,
             },
             {
                 label: 'مشخصات تکمیلی',

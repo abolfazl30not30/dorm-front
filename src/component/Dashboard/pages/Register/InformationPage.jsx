@@ -4,18 +4,10 @@ import BuildingContext from "../../../../contexts/Building";
 class InformationPage extends Component {
     static contextType = BuildingContext;
 
-    state = { 
-        haveWife: 'single',
-        sickness: 'false'
-     } 
-    getStatus = (e) => {
-        const status = e.target.value;
-        this.setState({haveWife: status})
-    }
-    sickness = (e) => {
-        const status = e.target.value;
-        this.setState({sickness: status})
-    }
+    state = {
+
+     }
+
     render() { 
         return (
             <>
