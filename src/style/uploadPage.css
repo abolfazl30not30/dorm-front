@@ -78,7 +78,8 @@
 }
 .date-container input{
     display: block;
-    width: 100%;
+    width: 96%;
+    height: 50px;
     padding: 0.375rem 0.75rem;
     font-size: 1rem;
     font-weight: 400;

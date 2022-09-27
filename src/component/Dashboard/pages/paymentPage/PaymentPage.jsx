@@ -70,22 +70,22 @@ class PaymentPage extends Component {
                 <div className='first-section row'>
                     <div className='col-4'>
                         <label for="price">مبلغ :</label>
-                        <div className="row mt-2">
+                        <div className="row" style={{marginTop:"20px"}}>
                             <div className='col-3 m-0 p-0'>
-                                <select className='form-select'>
+                                <select className='form-select' style={{height:"50px"}}>
                                     <option>ریال</option>
                                     <option>دلار</option>
                                 </select>
                             </div>
                             <div className='form-group col-9 m-0 p-0'>
-                                <input  id="price" type='text' className='form-control  input '/>
+                                <input  id="price" type='text' className='form-control  input ' style={{height:"50px",width:"90%"}}/>
                                 {/*<TextField id="filled-basic" label="قیمت" variant="filled" />*/}
                             </div>
                         </div>
                     </div>
                     <div className='col-8'>
-                        <label>نوع: </label>
-                        <div style={{width: '100%'}}>
+                        <label style={{marginRight:"33px"}}>نوع: </label>
+                        <div style={{width: '100%',marginRight:"33px"}}>
                             <Accordion defaultActiveKey="0">
                                 <Accordion.Item eventKey="0">
                                     <Accordion.Header>{this.state.selectedType}&nbsp;</Accordion.Header>
