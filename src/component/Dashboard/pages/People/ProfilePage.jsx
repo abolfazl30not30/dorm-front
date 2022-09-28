@@ -16,6 +16,8 @@ import {AiOutlineClose} from 'react-icons/ai'
 import { AiFillCloseCircle } from 'react-icons/ai'
 import {Accordion} from 'react-bootstrap';
 import {Table} from 'react-bootstrap';
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import Tooltip from 'react-bootstrap/Tooltip';
 
 
 class ProfilePage extends Component {
@@ -307,7 +309,7 @@ class ProfilePage extends Component {
             }
         ],
         showDeleteModalReport : false,
-        reportIndex : -1
+        reportTemp : {}
     }
     date = createRef();
     description = createRef();
@@ -403,7 +405,20 @@ class ProfilePage extends Component {
                                                                     {/*<td>{a+1}</td>*/}
                                                                     <td>{c.date}</td>
                                                                     <td>{c.description}</td>
-                                                                    <td><button className='btn floor-close-btn' onClick={ () => this.handleOpenModalReport(i) }><AiFillCloseCircle color="#F1416C" /></button></td>
+
+                                                                    <td>
+                                                                    <OverlayTrigger
+                                                                        placement="bottom"
+                                                                        overlay={
+                                                                            <Tooltip className="deleteTooltip" >
+                                                                                حذف
+                                                                            </Tooltip>
+                                                                        }
+                                                                    >
+                                                                        <button className='btn floor-close-btn' onClick={ () => this.handleOpenModalReport(c) }>
+                                                                            <AiFillCloseCircle color="#F1416C" /></button>
+                                                                    </OverlayTrigger>
+                                                                    </td>
                                                                 </tr>
                                                         ) : (
                                                                 console.log()
@@ -434,6 +449,7 @@ class ProfilePage extends Component {
                                                                 {/*<td>{i+1}</td>*/}
                                                                 <td>{d.date}</td>
                                                                 <td>{d.time}</td>
+
                                                             </tr>
                                                         ) : (
                                                             console.log()
@@ -1088,10 +1104,9 @@ class ProfilePage extends Component {
                 })();
         }
     }
-    handleOpenModalReport = (i) => {
-
+    handleOpenModalReport = (c) => {
         this.setState({ showDeleteModalReport: true });
-        this.setState({ reportIndex: i });
+        this.setState({reportTemp: c });
 
     }
     handleCloseModalReport = () => {
@@ -1099,8 +1114,9 @@ class ProfilePage extends Component {
     }
 
     handleDeleteReport = () => {
+        let index = this.state.report.indexOf(this.state.reportTemp)
         let updatedReport = [...this.state.report];
-        updatedReport.splice(this.state.reportIndex,1);
+        updatedReport.splice(index,1);
         this.setState({report : updatedReport});
         this.setState({showDeleteModalReport:false})
     }

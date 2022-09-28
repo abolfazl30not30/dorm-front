@@ -147,3 +147,11 @@
 .table td {
     font-size: 14px;
 }
+.deleteTooltip > .tooltip-inner {
+    background-color: #d7d7d7;
+    color: #727272;
+    border: 1px solid #d7d7d7;
+}
+.deleteTooltip > .tooltip-arrow::before {
+   border-bottom: 5px solid #d7d7d7 !important;
+}
