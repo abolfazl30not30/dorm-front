@@ -8,12 +8,13 @@ import png_icon from '../../../../img/png_icon.png'
 import {FiUser} from "react-icons/fi";
 import {AiOutlineLeft} from "react-icons/ai";
 import {HiOutlineMailOpen} from 'react-icons/hi';
-import {BsTelephone} from 'react-icons/bs';
+import {BsTelephone,BsFile} from 'react-icons/bs';
 import {AiOutlineBarcode} from 'react-icons/ai'
 import {AiOutlineUser} from 'react-icons/ai'
 import {Modal} from 'react-bootstrap'
 import {AiOutlineClose} from 'react-icons/ai'
 import { AiFillCloseCircle } from 'react-icons/ai'
+import {RiDownloadCloud2Fill} from 'react-icons/ri'
 import {Accordion} from 'react-bootstrap';
 import {Table} from 'react-bootstrap';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
@@ -405,7 +406,6 @@ class ProfilePage extends Component {
                                                                     {/*<td>{a+1}</td>*/}
                                                                     <td>{c.date}</td>
                                                                     <td>{c.description}</td>
-
                                                                     <td>
                                                                     <OverlayTrigger
                                                                         placement="bottom"
@@ -438,6 +438,7 @@ class ProfilePage extends Component {
                                                     {/*<th>شماره</th>*/}
                                                     <th>تاریخ</th>
                                                     <th>ساعت</th>
+                                                    <th>عملیات</th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
@@ -449,7 +450,19 @@ class ProfilePage extends Component {
                                                                 {/*<td>{i+1}</td>*/}
                                                                 <td>{d.date}</td>
                                                                 <td>{d.time}</td>
-
+                                                                <td>
+                                                                    <OverlayTrigger
+                                                                        placement="bottom"
+                                                                        overlay={
+                                                                            <Tooltip className="deleteTooltip" >
+                                                                                حذف
+                                                                            </Tooltip>
+                                                                        }
+                                                                    >
+                                                                        <button className='btn floor-close-btn' onClick={ () => this.handleOpenModalReport(d) }>
+                                                                            <AiFillCloseCircle color="#F1416C" /></button>
+                                                                    </OverlayTrigger>
+                                                                </td>
                                                             </tr>
                                                         ) : (
                                                             console.log()
@@ -472,6 +485,7 @@ class ProfilePage extends Component {
                                                     <th>آدرس مقصد</th>
                                                     <th>شماره تماس مقصد</th>
                                                     <th>نسبت</th>
+                                                    <th>عملیات</th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
@@ -486,6 +500,19 @@ class ProfilePage extends Component {
                                                                 <td>{e.destinationAddress}</td>
                                                                 <td>{e.destinationPhoneNumber}</td>
                                                                 <td>{e.relation}</td>
+                                                                <td>
+                                                                    <OverlayTrigger
+                                                                        placement="bottom"
+                                                                        overlay={
+                                                                            <Tooltip className="deleteTooltip" >
+                                                                                حذف
+                                                                            </Tooltip>
+                                                                        }
+                                                                    >
+                                                                        <button className='btn floor-close-btn' onClick={ () => this.handleOpenModalReport(e) }>
+                                                                            <AiFillCloseCircle color="#F1416C" /></button>
+                                                                    </OverlayTrigger>
+                                                                </td>
                                                             </tr>
                                                         ) : (
                                                             console.log()
@@ -506,6 +533,7 @@ class ProfilePage extends Component {
                                                     <th>گزارش تخلف</th>
                                                     <th>تاریخ</th>
                                                     <th>ساعت</th>
+                                                    <th>عملیات</th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
@@ -518,6 +546,19 @@ class ProfilePage extends Component {
                                                                 <td>{v.description}</td>
                                                                 <td>{v.date}</td>
                                                                 <td>{v.time}</td>
+                                                                <td>
+                                                                    <OverlayTrigger
+                                                                        placement="bottom"
+                                                                        overlay={
+                                                                            <Tooltip className="deleteTooltip" >
+                                                                                حذف
+                                                                            </Tooltip>
+                                                                        }
+                                                                    >
+                                                                        <button className='btn floor-close-btn' onClick={ () => this.handleOpenModalReport(v) }>
+                                                                            <AiFillCloseCircle color="#F1416C" /></button>
+                                                                    </OverlayTrigger>
+                                                                </td>
                                                             </tr>
                                                         ) : (
                                                             console.log()
@@ -537,6 +578,7 @@ class ProfilePage extends Component {
                                                     {/*<th>شماره</th>*/}
                                                     <th>دلیل جریمه</th>
                                                     <th>نوع جریمه</th>
+                                                    <th>عملیات</th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
@@ -548,6 +590,19 @@ class ProfilePage extends Component {
                                                                 {/*<td>{i+1}</td>*/}
                                                                 <td>{p.description}</td>
                                                                 <td>{p.typePenalty}</td>
+                                                                <td>
+                                                                    <OverlayTrigger
+                                                                        placement="bottom"
+                                                                        overlay={
+                                                                            <Tooltip className="deleteTooltip" >
+                                                                                حذف
+                                                                            </Tooltip>
+                                                                        }
+                                                                    >
+                                                                        <button className='btn floor-close-btn' onClick={ () => this.handleOpenModalReport(p) }>
+                                                                            <AiFillCloseCircle color="#F1416C" /></button>
+                                                                    </OverlayTrigger>
+                                                                </td>
                                                             </tr>
                                                         ) : (
                                                             console.log()
@@ -571,6 +626,7 @@ class ProfilePage extends Component {
                                                     <th>کسر ضرر و زیان</th>
                                                     <th>علت کسر ضر و زیان</th>
                                                     <th>مبلغ قابل عودت</th>
+                                                    <th>عملیات</th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
@@ -586,6 +642,19 @@ class ProfilePage extends Component {
                                                                 <td>{d.deductionOfLosses}</td>
                                                                 <td>{d.deductionOfLossesReason}</td>
                                                                 <td>{d.refundableAmount}</td>
+                                                                <td>
+                                                                    <OverlayTrigger
+                                                                        placement="bottom"
+                                                                        overlay={
+                                                                            <Tooltip className="deleteTooltip" >
+                                                                                حذف
+                                                                            </Tooltip>
+                                                                        }
+                                                                    >
+                                                                        <button className='btn floor-close-btn' onClick={ () => this.handleOpenModalReport(d) }>
+                                                                            <AiFillCloseCircle color="#F1416C" /></button>
+                                                                    </OverlayTrigger>
+                                                                </td>
                                                             </tr>
                                                         ) : (
                                                             console.log()
@@ -607,6 +676,7 @@ class ProfilePage extends Component {
                                                     <th>علت</th>
                                                     <th>کسر ضرر و زیان</th>
                                                     <th>مبلغ قابل عودت</th>
+                                                    <th>عملیات</th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
@@ -620,6 +690,19 @@ class ProfilePage extends Component {
                                                                 <td>{cc.reason}</td>
                                                                 <td>{cc.deductionOfLosses}</td>
                                                                 <td>{cc.refundableAmount}</td>
+                                                                <td>
+                                                                    <OverlayTrigger
+                                                                        placement="bottom"
+                                                                        overlay={
+                                                                            <Tooltip className="deleteTooltip" >
+                                                                                حذف
+                                                                            </Tooltip>
+                                                                        }
+                                                                    >
+                                                                        <button className='btn floor-close-btn' onClick={ () => this.handleOpenModalReport(cc) }>
+                                                                            <AiFillCloseCircle color="#F1416C" /></button>
+                                                                    </OverlayTrigger>
+                                                                </td>
                                                             </tr>
                                                         ) : (
                                                             console.log()
@@ -632,13 +715,160 @@ class ProfilePage extends Component {
                                     </Accordion.Item>
                                 </Accordion>
                             </Tab>
-                            <Tab eventKey="documents" title="مدارک">
-                                <img className='test' src={pdf_icon}/>
+                            <Tab eventKey="documents" title="مدارک" className='records'>
+
+
+                                <Accordion defaultActiveKey="0">
+                                    <Accordion.Item eventKey="0">
+                                        <Accordion.Header>شناسنامه</Accordion.Header>
+                                        <Accordion.Body>
+                                            <div className="d-flex flex-column">
+                                                <OverlayTrigger
+                                                    placement="bottom"
+                                                    overlay={
+                                                        <Tooltip className="deleteTooltip" >
+                                                            دانلود
+                                                        </Tooltip>
+                                                    }
+                                                >
+                                                    <div className="record-item" onClick={ () => this.downloadFile() }>
+                                                        <div className='ms-2'>صفحه اول</div>
+                                                        <RiDownloadCloud2Fill />
+                                                    </div>
+                                                </OverlayTrigger>
+                                                <OverlayTrigger
+                                                    placement="bottom"
+                                                    overlay={
+                                                        <Tooltip className="deleteTooltip" >
+                                                            دانلود
+                                                        </Tooltip>
+                                                    }
+                                                >
+                                                    <div className="record-item" onClick={ () => this.downloadFile() }>
+                                                        <div className='ms-2'>صفحه دوم</div>
+                                                        <RiDownloadCloud2Fill />
+                                                    </div>
+                                                </OverlayTrigger>
+                                                <OverlayTrigger
+                                                    placement="bottom"
+                                                    overlay={
+                                                        <Tooltip className="deleteTooltip" >
+                                                            دانلود
+                                                        </Tooltip>
+                                                    }
+                                                >
+                                                    <div className="record-item" onClick={ () => this.downloadFile() }>
+                                                        <div className='ms-2'>صفحه سوم</div>
+                                                        <RiDownloadCloud2Fill />
+                                                    </div>
+                                                </OverlayTrigger>
+                                                <OverlayTrigger
+                                                    placement="bottom"
+                                                    overlay={
+                                                        <Tooltip className="deleteTooltip" >
+                                                            دانلود
+                                                        </Tooltip>
+                                                    }
+                                                >
+                                                    <div className="record-item" onClick={ () => this.downloadFile() }>
+                                                        <div className='ms-2'>صفحه چهارم</div>
+                                                        <RiDownloadCloud2Fill />
+                                                    </div>
+                                                </OverlayTrigger>
+                                                <OverlayTrigger
+                                                    placement="bottom"
+                                                    overlay={
+                                                        <Tooltip className="deleteTooltip" >
+                                                            دانلود
+                                                        </Tooltip>
+                                                    }
+                                                >
+                                                    <div className="record-item" onClick={ () => this.downloadFile() }>
+                                                        <div className='ms-2'>کل صفحات</div>
+                                                        <RiDownloadCloud2Fill />
+                                                    </div>
+                                                </OverlayTrigger>
+
+                                            </div>
+                                        </Accordion.Body>
+                                    </Accordion.Item>
+                                    <Accordion.Item eventKey="1">
+                                        <Accordion.Header>کارت ملی</Accordion.Header>
+                                        <Accordion.Body>
+                                            <OverlayTrigger
+                                                placement="bottom"
+                                                overlay={
+                                                    <Tooltip className="deleteTooltip" >
+                                                        دانلود
+                                                    </Tooltip>
+                                                }
+                                            >
+                                                <div className="record-item" onClick={ () => this.downloadFile() }>
+                                                    <div className='ms-2'>صفحه اول</div>
+                                                    <RiDownloadCloud2Fill />
+                                                </div>
+                                            </OverlayTrigger>
+                                            <OverlayTrigger
+                                                placement="bottom"
+                                                overlay={
+                                                    <Tooltip className="deleteTooltip" >
+                                                        دانلود
+                                                    </Tooltip>
+                                                }
+                                            >
+                                                <div className="record-item" onClick={ () => this.downloadFile() }>
+                                                    <div className='ms-2'>صفحه دوم</div>
+                                                    <RiDownloadCloud2Fill />
+                                                </div>
+                                            </OverlayTrigger>
+                                        </Accordion.Body>
+                                    </Accordion.Item>
+                                    <Accordion.Item eventKey="2">
+                                        <Accordion.Header>عکس پرسنلی</Accordion.Header>
+                                        <Accordion.Body>
+                                            <OverlayTrigger
+                                                placement="bottom"
+                                                overlay={
+                                                    <Tooltip className="deleteTooltip" >
+                                                        دانلود
+                                                    </Tooltip>
+                                                }
+                                            >
+                                                <div className="record-item" onClick={ () => this.downloadFile() }>
+                                                    <div className='ms-2'>عکس پرسنلی</div>
+                                                    <RiDownloadCloud2Fill />
+                                                </div>
+                                            </OverlayTrigger>
+                                        </Accordion.Body>
+                                    </Accordion.Item>
+                                    <Accordion.Item eventKey="3">
+                                        <Accordion.Header>پرینت ثبت نام دانشگاه</Accordion.Header>
+                                        <Accordion.Body>
+                                            <OverlayTrigger
+                                                placement="bottom"
+                                                overlay={
+                                                    <Tooltip className="deleteTooltip" >
+                                                        دانلود
+                                                    </Tooltip>
+                                                }
+                                            >
+                                                <div className="record-item" onClick={ () => this.downloadFile() }>
+                                                    <div className='ms-2'>پرینت ثبت نام دانشگاه</div>
+                                                    <RiDownloadCloud2Fill />
+                                                </div>
+                                            </OverlayTrigger>
+                                        </Accordion.Body>
+                                    </Accordion.Item>
+                                </Accordion>
+
+
+
+                                {/*<img className='test' src={pdf_icon}/>
                                 <img className='test' src={pdf_icon}/>
                                 <img className='test' src={pdf_icon}/>
                                 <img className='test' src={png_icon}/>
                                 <img className='test' src={png_icon}/>
-                                <img className='test' src={png_icon}/>
+                                <img className='test' src={png_icon}/>*/}
                             </Tab>
                             <Tab eventKey="more-information" title="اطلاعات بیشتر">
                                 {this.state.people.map(p => (
@@ -1119,6 +1349,9 @@ class ProfilePage extends Component {
         updatedReport.splice(index,1);
         this.setState({report : updatedReport});
         this.setState({showDeleteModalReport:false})
+    }
+    downloadFile = () => {
+        console.log('Download')
     }
 }
 

@@ -155,3 +155,15 @@
 .deleteTooltip > .tooltip-arrow::before {
    border-bottom: 5px solid #d7d7d7 !important;
 }
+.record-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: #f9f9f9;
+    width: 125px;
+    justify-content: center;
+    padding: 8px;
+    margin-bottom: 0.5rem;
+    border-radius: 0.5rem;
+    font-size: 14px;
+}
