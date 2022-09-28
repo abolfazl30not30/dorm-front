@@ -337,7 +337,7 @@ class ProfilePage extends Component {
                     <div className='image-container'>
                         <div className="d-flex flex-column flex-md-row justify-content-around align-items-center w-100">
                             <img
-                                src="https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png"
+                                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBnUckFxDVe5FOT5vuVfWCvWWY1pUrOPBOFPu9CNZYpABJSYPCigxy9rEc32E6mBamw3c&usqp=CAU"
                                 alt="profile"/>
                             {this.state.people.map(p => (
                                 <div className='information d-flex flex-md-row flex-column'>
