@@ -7,7 +7,7 @@ import RoomAndBed from './pages/Inventory and capacity/RoomAndBed';
 import BuildingContext from '../../contexts/Building';
 import EditFloorAndUnit from './pages/edit building/EditFloorAndUnit';
 import EditRoomAndBed from './pages/edit building/EditRoomAndBed';
-import MainRegister from './pages/Register/MainRegister';D
+import MainRegister from './pages/Register/MainRegister';
 import ProfilePage from './pages/People/ProfilePage';
 import SearchAccount from './pages/People/SearchAccount';
 import PaymentPage from './pages/paymentPage/PaymentPage';
