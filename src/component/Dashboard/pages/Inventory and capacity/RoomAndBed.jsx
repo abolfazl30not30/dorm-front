@@ -1,26 +1,30 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import './../../../../style/roomAndBed.css'
-import { BiBed } from 'react-icons/bi'
-import { TbBuilding } from 'react-icons/tb'
-import { MdDateRange } from 'react-icons/md'
-import { AiOutlineNumber } from 'react-icons/ai'
-import { AiOutlineUser } from 'react-icons/ai'
-import { AiOutlineMore } from 'react-icons/ai'
-import { Link, Route, Routes } from "react-router-dom";
+import {BiBed} from 'react-icons/bi'
+import {TbBuilding} from 'react-icons/tb'
+import {MdDateRange} from 'react-icons/md'
+import {AiOutlineNumber} from 'react-icons/ai'
+import {AiOutlineUser} from 'react-icons/ai'
+import {IoMdMore} from "react-icons/io";
+import {BsPersonCircle} from "react-icons/bs"
+import {Link, Route, Routes} from "react-router-dom";
 import FullViewOfBed from './FullViewOfBed';
 import BuildingContext from '../../../../contexts/Building';
 import FloorAndBedLoading from '../../../loading/FloorAndBedLoading';
-import { Button, Modal } from 'react-bootstrap'
-import { BiChevronLeft } from 'react-icons/bi'
+import {Button, Modal} from 'react-bootstrap'
+import Form from 'react-bootstrap/Form';
+import {BiChevronLeft,BiSearch} from 'react-icons/bi'
+import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
+import ToggleButton from "@mui/material/ToggleButton";
 
 class RoomAndBed extends Component {
     static contextType = BuildingContext;
     state = {
-        rooms: [
+        rooms1: [
             {
                 id: 1, name: 'اتاق 1',
                 beds: [
-                    { id: 11, name: 'تخت 11', empty: true },
+                    {id: 11, name: 'تخت 11', empty: true},
                     {
                         id: 12, name: 'تخت 12', empty: false,
                         person: {
@@ -33,16 +37,16 @@ class RoomAndBed extends Component {
                             image: 'https://docs.microsoft.com/answers/storage/attachments/209536-360-f-364211147-1qglvxv1tcq0ohz3fawufrtonzz8nq3e.jpg'
                         }
                     },
-                    { id: 13, name: 'تخت 13', empty: true },
-                    { id: 14, name: 'تخت 14', empty: true },
-                    { id: 15, name: 'تخت 15', empty: true },
+                    {id: 13, name: 'تخت 13', empty: true},
+                    {id: 14, name: 'تخت 14', empty: true},
+                    {id: 15, name: 'تخت 15', empty: true},
 
                 ]
             },
             {
                 id: 2, name: 'اتاق 2',
                 beds: [
-                    { id: 21, name: 'تخت 21', empty: true },
+                    {id: 21, name: 'تخت 21', empty: true},
                     {
                         id: 22, name: 'تخت 22', empty: false,
                         person: {
@@ -55,16 +59,16 @@ class RoomAndBed extends Component {
                             image: 'https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png'
                         }
                     },
-                    { id: 23, name: 'تخت 23', empty: true },
-                    { id: 24, name: '24 تخت', empty: true },
-                    { id: 25, name: 'تخت 25', empty: true },
+                    {id: 23, name: 'تخت 23', empty: true},
+                    {id: 24, name: '24 تخت', empty: true},
+                    {id: 25, name: 'تخت 25', empty: true},
 
                 ]
             },
             {
                 id: 3, name: 'اتاق 3',
                 beds: [
-                    { id: 31, name: '31 تخت', empty: true },
+                    {id: 31, name: '31 تخت', empty: true},
                     {
                         id: 32, name: 'تخت 32', empty: false,
                         person: {
@@ -77,112 +81,122 @@ class RoomAndBed extends Component {
                             image: 'https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png'
                         }
                     },
-                    { id: 33, name: 'تخت 33', empty: true },
-                    { id: 34, name: 'تخت 34', empty: true },
-                    { id: 35, name: 'تخت 35', empty: true },
+                    {id: 33, name: 'تخت 33', empty: true},
+                    {id: 34, name: 'تخت 34', empty: true},
+                    {id: 35, name: 'تخت 35', empty: true},
 
                 ]
             },
             {
                 id: 4, name: 'اتاق 4',
                 beds: [
-                    { id: 41, name: '41 تخت', empty: true },
-                    { id: 42, name: '42 تخت', empty: true },
-                    { id: 43, name: 'تخت 43', empty: true },
-                    { id: 44, name: 'تخت 44', empty: true },
-                    { id: 45, name: 'تخت 45', empty: true },
+                    {id: 41, name: '41 تخت', empty: true},
+                    {id: 42, name: '42 تخت', empty: true},
+                    {id: 43, name: 'تخت 43', empty: true},
+                    {id: 44, name: 'تخت 44', empty: true},
+                    {id: 45, name: 'تخت 45', empty: true},
 
                 ]
             },
             {
                 id: 4, name: 'اتاق 5',
                 beds: [
-                    { id: 51, name: '51 تخت', empty: true },
-                    { id: 52, name: '52 تخت', empty: true },
-                    { id: 53, name: 'تخت 53', empty: true },
-                    { id: 54, name: '54 تخت', empty: true },
-                    { id: 55, name: 'تخت 55', empty: true },
+                    {id: 51, name: '51 تخت', empty: true},
+                    {id: 52, name: '52 تخت', empty: true},
+                    {id: 53, name: 'تخت 53', empty: true},
+                    {id: 54, name: '54 تخت', empty: true},
+                    {id: 55, name: 'تخت 55', empty: true},
 
                 ],
                 accessory: [
-                    { id: 51, accName: 'وسایل سرمایشی', count: 2 },
-                    { id: 51, accName: "یخچال", count: 1 },
-                    { id: 51, accName: "چوب لباسی", count: 10 }
+                    {id: 51, accName: 'وسایل سرمایشی', count: 2},
+                    {id: 51, accName: "یخچال", count: 1},
+                    {id: 51, accName: "چوب لباسی", count: 10}
                 ]
             },
             {
                 id: 6, name: 'اتاق 6',
                 beds: [
-                    { id: 61, name: '61 تخت', empty: true },
-                    { id: 62, name: '62 تخت', empty: true },
-                    { id: 63, name: '63 تخت', empty: true },
-                    { id: 64, name: 'تخت 64', empty: true },
-                    { id: 65, name: 'تخت 65', empty: true },
+                    {id: 61, name: '61 تخت', empty: true},
+                    {id: 62, name: '62 تخت', empty: true},
+                    {id: 63, name: '63 تخت', empty: true},
+                    {id: 64, name: 'تخت 64', empty: true},
+                    {id: 65, name: 'تخت 65', empty: true},
 
                 ]
             }
         ],
-        isLoading: false,
 
-        rooms1: [],
+        isLoading: false,
+        isFull: true,
+        rooms: [],
         show: false,
         showAccessory: false,
+        showَRoomAccessory: false,
+        selectedPeople:"",
         unit: {
-            accessories: [
-                { name: 'یخچال', count: 1 },
-                { name: 'چوب لباسی', count: 4 }
-            ]
+            accessories: []
         },
 
         bedOpen:
-        {
-            id: 32, name: 'تخت 32', empty: false,
-            person: {
-                id: 1,
-                firstName: 'میلاد',
-                lastName: 'زارع',
-                nationalCode: 2500255252,
-                StartOfStay: '12/34/56',
-                age: 21,
-                image: 'https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png'
-            }
-        },
+            {
+                id: 32, name: 'تخت 32', empty: false,
+                person: {
+                    id: 1,
+                    firstName: 'میلاد',
+                    lastName: 'زارع',
+                    nationalCode: 2500255252,
+                    StartOfStay: '12/34/56',
+                    age: 21,
+                    image: 'https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png'
+                }
+            },
         roomAccessory: {
             accessories: [
-                { name: 'یخچال', count: 1 },
-                { name: 'چوب لباسی', count: 4 }
+                {name: 'یخچال', count: 1},
+                {name: 'چوب لباسی', count: 4}
             ]
+        },
+        tempRoom: {
+            accessories: []
         }
     }
 
-    // async componentDidMount() {
-    //     const response = await fetch(`http://api.saadatportal.com/api/v1/unit/room/${this.context.unitId}`).then((response) => response.json())
-    //         .then((data) => this.setState({ rooms: data, isLoading: false }));
-    //     const responseUnit = await fetch(`http://api.saadatportal.com/api/v1/unit/${this.context.unitId}`).then((response) => response.json())
-    //         .then((data) => this.setState({ unit: data, isLoading: false }));
+    async componentDidMount() {
+        const response = await fetch(`http://api.saadatportal.com/api/v1/unit/room/${this.context.unitId}`).then((response) => response.json())
+            .then((data) => this.setState({rooms: data, isLoading: false}));
 
-    //     console.log(this.state.rooms);
-    //     console.log(this.state.unit);
-    // }
+        const responseUnit = await fetch(`http://api.saadatportal.com/api/v1/unit/${this.context.unitId}`).then((response) => response.json())
+            .then((data) => this.setState({unit: data, isLoading: false}));
+    }
 
     handleClose = () => {
-        this.setState({ show: false })
+        this.setState({show: false})
     };
 
     handleShow = (bed, room) => {
-        this.setState({ roomAccessory: room })
-        this.setState({ bedOpen: bed })
-        this.setState({ show: true })
+        this.setState({roomAccessory: room})
+        this.setState({bedOpen: bed})
+        this.setState({show: true})
     };
 
     handleCloseAccessory = () => {
-        this.setState({ showAccessory: false })
+        this.setState({showAccessory: false})
     };
 
     handleShowAccessory = () => {
-        this.setState({ showAccessory: true })
+        this.setState({showAccessory: true})
     };
-
+    handleCloseRoomAcc = () => {
+        this.setState({showRoomAccessory: false})
+    }
+    handleShowRoomAcc = (room) => {
+        this.setState({showRoomAccessory: true})
+        this.setState({tempRoom: room})
+    }
+    handleChange = (event,newAlignment) =>{
+        this.setState({selectedPeople:newAlignment})
+    }
     render() {
         return (
             <>
@@ -200,85 +214,148 @@ class RoomAndBed extends Component {
                         </p>
                     </div>
                     <h2 className='unit-name'>
-                        <button className='btn' onClick={() => {
-                            this.handleShowAccessory(this.context.unitNumber)
-                        }}><AiOutlineMore className="mt-2" color='#555' fontSize="1.8rem" /></button>
-                        <TbBuilding className="mt-2" color='#555' fontSize="1.8rem" />
+                        <TbBuilding className="mt-2" color='#555' fontSize="1.8rem"/>
                         <span className="unit-title">واحد {this.context.unitNumber}</span>
+                        <button className='btn show-acc-btn' onClick={() => {
+                            this.handleShowAccessory(this.context.unitNumber)
+                        }}><IoMdMore/>امکانات واحد
+                        </button>
                     </h2>
                     {
                         this.state.isLoading ? (
-                            <div className='row' style={{ marginTop: "60px" }}>
-                                <FloorAndBedLoading />
+                            <div className='row' style={{marginTop: "60px"}}>
+                                <FloorAndBedLoading/>
                             </div>
                         ) : (
-                            <div className="d-flex flex-wrap">
-                                {
-                                    this.state.rooms.map(
-                                        (room) => (
-                                            <div className="col-4">
-                                                <div className="room-box">
-                                                    <div className="title">{room.description}({room.concatName})</div>
-                                                    <div className='d-flex flex-wrap'>
-                                                        {room.beds.map((bed) => (
-                                                            <div className="col-4 p-1">
-                                                                <div
-                                                                    className={`bed-box ${bed.empty ? "empty" : "full"}`}>
-                                                                    <Button onClick={() => {
-                                                                        this.handleShow(bed, room)
-                                                                    }}>
-                                                                        <BiBed fontSize="2rem" />
-                                                                        <div className="title">{bed.name}</div>
-                                                                    </Button>
-                                                                </div>
+                            <div>
+                                <div className={this.state.isFull ? "edit-btn-container" : "register-btn-container"}>
+                                    <Link to="edit-room-and-bed"
+                                          className={this.state.isFull ? "edit-btn" : "register-btn"}>
+                                        {this.state.isFull ? (<h6>ویرایش</h6>) : (<h6> ثبت طبقه و واحد</h6>)}
+                                    </Link>
+                                </div>
+                                <div className="d-flex flex-wrap">
+                                    {
+                                        this.state.rooms.map(
+                                            (room) => (
+                                                <div className="col-4">
+                                                    <div className="room-box">
+                                                        <div className="row">
+                                                            <div className="col-7 title">اتاق {room.number}</div>
+                                                            <div className="col-5">
+                                                                <button className="btn show-acc-btn" onClick={() => {
+                                                                    this.handleShowRoomAcc(room)
+                                                                }}><IoMdMore/> امکانات
+                                                                    اتاق
+                                                                </button>
                                                             </div>
-                                                        ))}
+                                                        </div>
+                                                        <div className='d-flex flex-wrap'>
+                                                            {room.beds.map((bed) => (
+                                                                <div className="col-4 p-1">
+                                                                    <div
+                                                                        className={`bed-box ${bed.empty ? "empty" : "full"}`}>
+                                                                        <Button onClick={() => {
+                                                                            this.handleShow(bed, room)
+                                                                        }}>
+                                                                            <BiBed fontSize="2rem"/>
+                                                                            <div className="title">{bed.name}</div>
+                                                                        </Button>
+                                                                    </div>
+                                                                </div>
+                                                            ))}
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            )
                                         )
-                                    )
-                                }
+                                    }
+                                </div>
                             </div>
                         )
                     }
                 </div>
 
-                <Modal centered show={this.state.show} onClick={() => {
+                <Modal size="lg" centered show={this.state.show} onHide={() => {
                     this.handleClose()
                 }}>
                     <Modal.Header closeButton>
-                        <Modal.Title>{this.state.bedOpen.bedName}</Modal.Title>
+                        <Modal.Title>اتاق {this.state.bedOpen.name}</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <div className="accessory-box">
-                            <div className='text-center mb-3 fw-bold'>لوازم جانبی</div>
-                            <div className="d-flex flex-column">
-                                {this.state.roomAccessory.accessories.map((acc) => (
-                                    <div className='d-flex flex-row my-2 w-50'>
-                                        <div className='ms-3'><BiChevronLeft />{acc.name}</div>
-                                        <div className='me-auto'>{acc.count} عدد</div>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
                         {
                             (!this.state.bedOpen.empty) ? (
                                 <div className="d-flex justify-content-center">
                                     <div className='profile-box'>
-                                        <img src={this.state.bedOpen.person.image} width='200' alt="" />
+                                        <img src={this.state.bedOpen.person.image} width='200' alt=""/>
                                         <div
                                             className="name">{this.state.bedOpen.person.firstName} {this.state.bedOpen.person.lastName}</div>
-                                        <div className='profile-item'><AiOutlineNumber className='ms-2' />کد
+                                        <div className='profile-item'><AiOutlineNumber className='ms-2'/>کد
                                             ملی: {this.state.bedOpen.person.nationalCode}</div>
-                                        <div className='profile-item'><MdDateRange className='ms-2' />شروع
+                                        <div className='profile-item'><MdDateRange className='ms-2'/>شروع
                                             اقامت: {this.state.bedOpen.person.StartOfStay}</div>
                                         <div className='profile-item'><AiOutlineUser
-                                            className='ms-2' />سن: {this.state.bedOpen.person.age}</div>
+                                            className='ms-2'/>سن: {this.state.bedOpen.person.age}</div>
                                     </div>
                                 </div>
                             ) : (
-                                <div className='text-center my-4'>تخت برای شخصی ثبت نشده است</div>
+                                <div className="search-container">
+                                    <div className="input-container row">
+                                        <div className="col-1"><label>براساس:</label></div>
+                                        <div className="col-3 " style={{paddingLeft:"0"}}>
+                                            <Form.Select aria-label="Default select example">
+                                                <option value="1">کد ملی</option>
+                                                <option value="2">نام و نام خانوادگی</option>
+                                            </Form.Select>
+                                        </div>
+                                        <div className="col-7 px-0" style={{paddingRight:"0"}}>
+                                            <Form.Control type="text" id="inputSearch"/>
+                                        </div>
+                                        <div className="col-1" style={{paddingRight:"0"}}>
+                                            <button className="btn outline-secondary"><BiSearch fontSize="25px"/></button>
+                                        </div>
+                                    </div>
+                                    <div className="people-container">
+                                        <ToggleButtonGroup
+                                            orientation="vertical"
+                                            value={this.state.selectedPeople}
+                                            exclusive
+                                            onChange={this.handleChange}
+                                            aria-label="text alignment"
+                                            style={{width:"100%"}}
+                                        >
+                                            <ToggleButton value="hello" style={{display:"block"}}>
+                                                <div className="row">
+                                                    <div className="col-3 profile-img d-flex align-items-center justify-content-center">
+                                                        <BsPersonCircle fontSize="60px"/>
+                                                    </div>
+                                                    <div className="col-9 people-info row">
+                                                        <div className="col-6">
+                                                            <div className="d-flex">
+                                                                <label>نام و نام خانوادگی:  </label>
+                                                                <p>علی محمدی</p>
+                                                            </div>
+                                                            <div className="d-flex">
+                                                                <label>نام پدر:   </label>
+                                                                <p>حسن </p>
+                                                            </div>
+                                                        </div>
+                                                        <div className="col-6">
+                                                            <div className="d-flex">
+                                                                <label >کد ملی :</label>
+                                                                <p>1250711762</p>
+                                                            </div>
+                                                            <div className="d-flex">
+                                                                <label >تاریخ پذیرش  :</label>
+                                                                <p>1401/05/01</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </ToggleButton>
+                                        </ToggleButtonGroup>
+                                    </div>
+                                </div>
                             )
                         }
                     </Modal.Body>
@@ -289,20 +366,35 @@ class RoomAndBed extends Component {
                     this.handleCloseAccessory()
                 }}>
                     <Modal.Header closeButton>
-                        <Modal.Title>لوازم جانبی</Modal.Title>
+                        <Modal.Title>امکانات واحد</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                         {
                             this.state.unit.accessories.map((acc) => (
                                 <div className='d-flex flex-row my-2 w-50'>
-                                    <div className='ms-3'><BiChevronLeft />{acc.name}</div>
+                                    <div className='ms-3'><BiChevronLeft/>{acc.name}</div>
                                     <div className='me-auto'>{acc.count} عدد</div>
                                 </div>
                             ))
                         }
-                        {console.log(
-                            this.state.unit.accessories.map((acc) => (acc.name))
-                        )}
+                    </Modal.Body>
+                </Modal>
+
+                <Modal centered show={this.state.showRoomAccessory} onClick={() => {
+                    this.handleCloseRoomAcc()
+                }}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>امکانات اتاق</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        {
+                            this.state.tempRoom.accessories.map((acc) => (
+                                <div className='d-flex flex-row my-2 w-50'>
+                                    <div className='ms-3'><BiChevronLeft/>{acc.name}</div>
+                                    <div className='me-auto'>{acc.count} عدد</div>
+                                </div>
+                            ))
+                        }
                     </Modal.Body>
                 </Modal>
             </>

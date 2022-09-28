@@ -1,3 +1,6 @@
+.text{
+    margin-bottom: 50px;
+}
 .upload-container {
     background-color: #fff;
     padding: 1rem;
@@ -55,3 +58,5 @@
 .tab {
     margin-left: 2%;
 }
+
+

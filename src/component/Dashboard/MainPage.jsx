@@ -7,14 +7,20 @@ import RoomAndBed from './pages/Inventory and capacity/RoomAndBed';
 import BuildingContext from '../../contexts/Building';
 import EditFloorAndUnit from './pages/edit building/EditFloorAndUnit';
 import EditRoomAndBed from './pages/edit building/EditRoomAndBed';
-import MainRegister from './pages/Register/MainRegister';
+import MainRegister from './pages/Register/MainRegister';D
 import ProfilePage from './pages/People/ProfilePage';
 import SearchAccount from './pages/People/SearchAccount';
+import PaymentPage from './pages/paymentPage/PaymentPage';
 
 class MainPage extends Component {
     state = {
         unitNumber: "",
-        unitId: ""
+        unitId: "",
+
+        familyGuest:{
+            name:"",
+            lastName:"",
+        }
     }
     render() {
         return (
@@ -25,10 +31,11 @@ class MainPage extends Component {
                             <Route path="/" element={(<Home />)} />
                             <Route path="/booking" element={(<FloorAndUnit />)} />
                             <Route path="/booking/edit-floor-and-unit" element={(<EditFloorAndUnit />)} />
-                            <Route path='/editRoomAndBed' element={(<EditRoomAndBed />)} />
                             <Route path="/RoomAndBed" element={(<RoomAndBed />)} />
+                            <Route path='/RoomAndBed/edit-room-and-bed' element={(<EditRoomAndBed />)} />
                             <Route path="/people" element={(<SearchAccount />)} />
                             <Route path="/people/profile" element={(<ProfilePage />)} />
+                            <Route path='/payment' element={(<PaymentPage />)} />
                             <Route path="/Register" element={(<MainRegister />)} />
                             <Route path="/edit" element={(<EditFloorAndUnit />)} />
                         </Routes>
@@ -41,6 +48,13 @@ class MainPage extends Component {
     handleUnitNumber = (unitNumber, unitId) => {
         this.setState({ unitNumber: unitNumber });
         this.setState({ unitId: unitId });
+    }
+
+    hanldleFamilyGuest = (name,lastName)=>{
+        let updatedState = [...this.state.familyGuest]
+        updatedState.name = name;
+        updatedState.lastName = lastName;
+        this.setState({famllyGuset : updatedState});
     }
 }
 
