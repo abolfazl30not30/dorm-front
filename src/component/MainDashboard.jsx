@@ -8,23 +8,32 @@ import MainPage from './Dashboard/MainPage';
 
 class MainDashboard extends Component {
     state = {
-        activeMenu: false
+        activeMenu: true,
+        widthWindow:0,
     }
     componentWillUnmount() {
         this.setState({ activeMenu: true })
+        this.setState({widthWindow:window.innerWidth})
     }
+    componentDidMount() {
+
+    }
+
     render() {
         return (
             <MainContext.Provider value={{ activeMenu: this.state.activeMenu, handleSidebar: this.handleSidebar }}>
                 <div className="main-container">
                     <div className="sidenav" style={
-                        this.state.activeMenu ? { width: "0" } : { width: "18%" }
+                        window.innerWidth <= 426 ? (this.state.activeMenu ? {width : "0"} :{ width : "75%"}):
+                            (window.innerWidth <= 768 ? (this.state.activeMenu ? {width : "0"} :{ width : "40%"}) :
+                                (this.state.activeMenu ? { width: "0" } : { width: "22%" }))
                     }>
                         <HamburgerMenu />
                     </div>
 
                     <div className="main-page-container" style={
-                        this.state.activeMenu ? { width: "100%" } : { width: "82%" }
+                        window.innerWidth <= 768 ? ({zIndex:"-1",width:"100%"}):
+                        (this.state.activeMenu ? { width: "100%" } : { width: "78%" })
                     }>
                         <Header />
                         <MainPage />
