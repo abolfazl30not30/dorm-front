@@ -19,71 +19,128 @@ class MainPage extends Component {
         unitId: "",
         fields: {
 
-            // ----------------------- <FamilyGuest /> information
-            fg_fullName: '',
-            fg_nationalCode: '',
-            fg_certificateNumber: '',
-            fg_placeOfIssue: '',
-            fg_birthDate: '',
-            fg_admissionStartDate: '',
-            fg_admissionEndDate: '',
-            fg_paymentDate: '',
-            fg_rentPaymentAmount: '',
-            fg_depositPaymentAmount: '',
-            fg_discountPaymentAmount: '',
-            fg_relationshipWithResident: 'father', // default value (first option)
-            fg_address: '',
-            fg_phoneNumber: '',
+            //############################################################################## first page
 
-            // ----------------------- InformationFurtherPage
-            ifp_address: '',
-            ifp_home_tel: '',
-            ifp_resident_tel: '',
+            // ----------------------- <CInformationPage /> information
+            constantInformationPage : {
+                firstName: '',
+                lastName: '',
+                nickName: '',
+                nationalCode: '',
+                certificateNumber: '',
+                placeOfIssue: '',
+                birthDate: '',
+                nationality: '',
+                fatherName: '',
+                religion: 'islam',
+                subReligion: '',
+                university: '',
+                studentNumber: '',
+                fatherJob: '',
+                maritalStatus: 'single', // default value (first option)
+                spouseFullName: '',
+                spouseJob: '',
+                health: 'false', // default value (first option)
+                healthDescription: '',
+            },
 
-            // ----------------------- constant resident information
-            c_firstName: '',
-            c_lastName: '',
-            c_nickName: '',
-            c_nationalCode: '',
-            c_certificateNumber: '',
-            c_placeOfIssue: '',
-            c_birthDate: '',
-            c_nationality: '',
-            c_fatherName: '',
-            c_religion: 'islam',
-            c_subReligion: '',
-            c_university: '',
-            c_studentNumber: '',
-            c_fatherJob: '',
-            c_maritalStatus: 'single', // default value (first option)
-            c_spouseFullName: '',
-            c_spouseJob: '',
-            c_health: 'false', // default value (first option)
-            c_healthDescription: '',
+            // ----------------------- <FGInformationPage /> information
+            familyGuestInformation : { // مهمان بستگان درجه یک -- صفحه مشخصات اولیه
+                fullName: '',
+                nationalCode: '',
+                certificateNumber: '',
+                placeOfIssue: '',
+                birthDate: '',
+                admissionStartDate: '',
+                admissionEndDate: '',
+                paymentDate: '',
+                rentPaymentAmount: '',
+                depositPaymentAmount: '',
+                discountPaymentAmount: '',
+                relationshipWithResident: 'father', // default value (first option)
+                address: '',
+                phoneNumber: '',
+            },
 
-            // ----------------------- <OtherGuest /> information
-            o_fullName: '',
-            o_nationalCode: '',
-            o_certificateNumber: '',
-            o_placeOfIssue: '',
-            o_admissionStartDate: '',
-            o_admissionEndDate: '',
-            o_paymentDate: '',
-            o_rentPaymentAmount: '',
-            o_depositPaymentAmount: '',
-            o_discountPaymentAmount: '',
-            o_birthDate: '',
+            // ----------------------- <OGInformationPage /> information
+            otherGuestInformation: {
+                fullName: '',
+                nationalCode: '',
+                certificateNumber: '',
+                placeOfIssue: '',
+                admissionStartDate: '',
+                admissionEndDate: '',
+                paymentDate: '',
+                rentPaymentAmount: '',
+                depositPaymentAmount: '',
+                discountPaymentAmount: '',
+                birthDate: '',
+            },
 
-            // ----------------------- <InformationFamilyPage /> information
-            firstPerson_FullName : '',
-            firstPerson_PhoneNumber : '',
-            firstPerson_FatherName : '',
-            firstPerson_relationshipWithResident : 'father', // default value (first option)
+            //##############################################################################
 
-            secondPerson_FullName : '',
-            secondPerson_PhoneNumber : '',
-            secondPerson_FatherName : '',
-            secondPerson_relationshipWithResident : 'father', // default value (first option)
+            //############################################################################## second page
+            // ----------------------- <CInformationFurtherPage /> information
+            constantInformationFurther: {
+                address: '',
+                home_tel: '',
+                resident_tel: '',
+            },
+
+            // ----------------------- <FGInformationFurtherPage /> information
+            familyGuestInformationFurther: {
+                address: '',
+                home_tel: '',
+                resident_tel: '',
+            },
+            // ----------------------- <OGInformationFurtherPage /> information
+            otherGuestInformationFurther: {
+                address: '',
+                home_tel: '',
+                resident_tel: '',
+            },
+            //##############################################################################
+
+
+            //############################################################################## third page
+            // ----------------------- <CInformationFamilyPage /> information
+            constantInformationFamily: {
+                firstPerson_FullName : '',
+                firstPerson_PhoneNumber : '',
+                firstPerson_FatherName : '',
+                firstPerson_relationshipWithResident : 'father', // default value (first option)
+
+                secondPerson_FullName : '',
+                secondPerson_PhoneNumber : '',
+                secondPerson_FatherName : '',
+                secondPerson_relationshipWithResident : 'father', // default value (first option)
+            },
+            // ----------------------- <FGIInformationFamilyPage /> information
+            familyGuestInformationFamily: {
+                firstPerson_FullName : '',
+                firstPerson_PhoneNumber : '',
+                firstPerson_FatherName : '',
+                firstPerson_relationshipWithResident : 'father', // default value (first option)
+
+                secondPerson_FullName : '',
+                secondPerson_PhoneNumber : '',
+                secondPerson_FatherName : '',
+                secondPerson_relationshipWithResident : 'father', // default value (first option)
+            },
+            // ----------------------- <OGIInformationFamilyPage /> information
+            otherGuestInformationFamily: {
+                firstPerson_FullName : '',
+                firstPerson_PhoneNumber : '',
+                firstPerson_FatherName : '',
+                firstPerson_relationshipWithResident : 'father', // default value (first option)
+
+                secondPerson_FullName : '',
+                secondPerson_PhoneNumber : '',
+                secondPerson_FatherName : '',
+                secondPerson_relationshipWithResident : 'father', // default value (first option)
+            },
+            //##############################################################################
+
         },
         errors : {
             required: 'این فیلد الزامی است!',
@@ -92,68 +149,121 @@ class MainPage extends Component {
             telephoneRegex: 'شماره تلفن همراه وارد کنید! (۰۹۱۲۳۴۵۶۷۸۹)',
             emailRegex: 'ایمیل وارد کنید!',
         },
+
         specificValidations : {
-            // ----------------------- <FamilyGuest /> information validation
-            fg_fullName_requiredReg: '',
-            fg_nationalCode_requiredReg: '',
-            fg_nationalCode_numberReg: '',
-            fg_certificateNumber_requiredReg: '',
-            fg_certificateNumber_numberReg: '',
-            fg_admissionStartDate_requiredReg: '',
-            fg_admissionEndDate_requiredReg: '',
-            fg_paymentDate_requiredReg: '',
+            //############################################################################## first page
 
-            // fg_admissionStartDate_dateReg: '',
-            // fg_admissionEndDate_dateReg: '',
-            // fg_paymentDate_dateReg: '',
+            // ----------------------- <CInformationPage /> information validations
+            constantInformationPageValidation : {
+                firstName_requiredReg: '',
+                lastName_requiredReg: '',
+                nationalCode_requiredReg: '',
+                nationalCode_numberReg: '',
+                certificateNumber_requiredReg: '',
+                certificateNumber_numberReg: '',
+                placeOfIssue_requiredReg: '',
+                // placeOfIssue_dateReg: '',
+                birthDate_requiredReg: '',
+                nationality_requiredReg: '',
+                fatherName_requiredReg: '',
+                studentNumber_numberReg: '',
+                spouseFullName_requiredReg: '',
+                healthDescription_requiredReg: '',
+            },
 
-            // ----------------------- InformationFurtherPage validations
-            ifp_address_requiredReg: '',
-            ifp_home_tel_requiredReg: '',
-            ifp_home_tel_telephoneReg: '',
-            ifp_resident_tel_requiredReg: '',
-            ifp_resident_tel_telephoneReg: '',
+            // ----------------------- <FGInformationPage /> information validation
+            familyGuestInformationValidation : {
+                fullName_requiredReg: '',
+                nationalCode_requiredReg: '',
+                nationalCode_numberReg: '',
+                certificateNumber_requiredReg: '',
+                certificateNumber_numberReg: '',
+                admissionStartDate_requiredReg: '',
+                admissionEndDate_requiredReg: '',
+                paymentDate_requiredReg: '',
+            },
 
-            // ----------------------- constant resident information validations
-            c_firstName_requiredReg: '',
-            c_lastName_requiredReg: '',
-            c_nationalCode_requiredReg: '',
-            c_nationalCode_numberReg: '',
-            c_certificateNumber_requiredReg: '',
-            c_certificateNumber_numberReg: '',
-            c_placeOfIssue_requiredReg: '',
-            // c_placeOfIssue_dateReg: '',
-            c_birthDate_requiredReg: '',
-            c_nationality_requiredReg: '',
-            c_fatherName_requiredReg: '',
-            c_studentNumber_numberReg: '',
-            c_spouseFullName_requiredReg: '',
-            c_healthDescription_requiredReg: '',
+            // ----------------------- <OGInformationPage /> information validations
+            otherGuestInformationValidation: {
+                fullName_requiredReg: '',
+                nationalCode_requiredReg: '',
+                nationalCode_numberReg: '',
+                certificateNumber_requiredReg: '',
+                certificateNumber_numberReg: '',
+                admissionStartDate_requiredReg: '',
+                // admissionStartDate_dateReg: '',
+                admissionEndDate_requiredReg: '',
+                // admissionStartDate_dateReg: '',
+                // paymentDate_dateReg: '',
+                rentPaymentAmount_numberReg: '',
+                depositPaymentAmount_numberReg: '',
+                discountPaymentAmount_numberReg: '',
+                // birthDate_dateReg: '',
+            },
 
-            // ----------------------- <OtherGuest /> information validations
-            o_fullName_requiredReg: '',
-            o_nationalCode_requiredReg: '',
-            o_nationalCode_numberReg: '',
-            o_certificateNumber_requiredReg: '',
-            o_certificateNumber_numberReg: '',
-            o_admissionStartDate_requiredReg: '',
-            // o_admissionStartDate_dateReg: '',
-            o_admissionEndDate_requiredReg: '',
-            // o_admissionStartDate_dateReg: '',
-            // o_paymentDate_dateReg: '',
-            o_rentPaymentAmount_numberReg: '',
-            o_depositPaymentAmount_numberReg: '',
-            o_discountPaymentAmount_numberReg: '',
-            // o_birthDate_dateReg: '',
+            //##############################################################################
 
-            // ----------------------- <InformationFamilyPage /> information
-            firstPerson_FullName_requiredReg : '',
-            firstPerson_PhoneNumber_requiredReg : '',
-            firstPerson_PhoneNumber_telephoneReg : '',
+            //############################################################################## second page
+            // ----------------------- <CInformationFurtherPage /> information validations
+            constantInformationFurtherValidation: {
+                address_requiredReg: '',
+                home_tel_requiredReg: '',
+                home_tel_telephoneReg: '',
+                resident_tel_requiredReg: '',
+                resident_tel_telephoneReg: '',
+            },
 
-            secondPerson_FullName_requiredReg : '',
-            secondPerson_PhoneNumber_requiredReg : '',
-            secondPerson_PhoneNumber_telephoneReg : '',
+            // ----------------------- <FGInformationFurtherPage /> information validations
+            familyGuestInformationFurtherValidation: {
+                address_requiredReg: '',
+                home_tel_requiredReg: '',
+                home_tel_telephoneReg: '',
+                resident_tel_requiredReg: '',
+                resident_tel_telephoneReg: '',
+            },
+            // ----------------------- <OGInformationFurtherPage /> information validations
+            otherGuestInformationFurtherValidation: {
+                address_requiredReg: '',
+                home_tel_requiredReg: '',
+                home_tel_telephoneReg: '',
+                resident_tel_requiredReg: '',
+                resident_tel_telephoneReg: '',
+            },
+            //##############################################################################
+
+
+            //############################################################################## third page
+            // ----------------------- <CInformationFamilyPage /> information validations
+            constantInformationFamilyValidation: {
+                firstPerson_FullName_requiredReg : '',
+                firstPerson_PhoneNumber_requiredReg : '',
+                firstPerson_PhoneNumber_telephoneReg : '',
+
+                secondPerson_FullName_requiredReg : '',
+                secondPerson_PhoneNumber_requiredReg : '',
+                secondPerson_PhoneNumber_telephoneReg : '',
+            },
+            // ----------------------- <FGIInformationFamilyPage /> information validations
+            familyGuestInformationFamilyValidation: {
+                firstPerson_FullName_requiredReg : '',
+                firstPerson_PhoneNumber_requiredReg : '',
+                firstPerson_PhoneNumber_telephoneReg : '',
+
+                secondPerson_FullName_requiredReg : '',
+                secondPerson_PhoneNumber_requiredReg : '',
+                secondPerson_PhoneNumber_telephoneReg : '',
+            },
+            // ----------------------- <OGIInformationFamilyPage /> information validations
+            otherGuestInformationFamilyValidation: {
+                firstPerson_FullName_requiredReg : '',
+                firstPerson_PhoneNumber_requiredReg : '',
+                firstPerson_PhoneNumber_telephoneReg : '',
+
+                secondPerson_FullName_requiredReg : '',
+                secondPerson_PhoneNumber_requiredReg : '',
+                secondPerson_PhoneNumber_telephoneReg : '',
+            },
+            //##############################################################################
         },
     }
     render() {
@@ -165,6 +275,33 @@ class MainPage extends Component {
                         unitNumber: this.state.unitNumber,
                         fields: this.state.fields,
                         errors: this.state.errors,
+                        constantInformationPage: this.state.fields.constantInformationPage,
+                        constantInformationPageValidation: this.state.specificValidations.constantInformationPageValidation,
+
+                        familyGuestInformation: this.state.fields.familyGuestInformation,
+                        familyGuestInformationValidation: this.state.specificValidations.familyGuestInformationValidation,
+
+                        otherGuestInformation: this.state.fields.otherGuestInformation,
+                        otherGuestInformationValidation: this.state.specificValidations.otherGuestInformationValidation,
+
+                        constantInformationFurther: this.state.fields.constantInformationFurther,
+                        constantInformationFurtherValidation: this.state.specificValidations.constantInformationFurtherValidation,
+
+                        familyGuestInformationFurther: this.state.fields.familyGuestInformationFurther,
+                        familyGuestInformationFurtherValidation: this.state.specificValidations.familyGuestInformationFurtherValidation,
+
+                        otherGuestInformationFurther: this.state.fields.otherGuestInformationFurther,
+                        otherGuestInformationFurtherValidation: this.state.specificValidations.otherGuestInformationFurtherValidation,
+
+                        constantInformationFamily: this.state.fields.constantInformationFamily,
+                        constantInformationFamilyValidation: this.state.specificValidations.constantInformationFamilyValidation,
+
+                        familyGuestInformationFamily: this.state.fields.familyGuestInformationFamily,
+                        familyGuestInformationFamilyValidation: this.state.specificValidations.familyGuestInformationFamilyValidation,
+
+                        otherGuestInformationFamily: this.state.fields.otherGuestInformationFamily,
+                        otherGuestInformationFamilyValidation: this.state.specificValidations.otherGuestInformationFamilyValidation,
+
                         specificValidations : this.state.specificValidations,
                         handleTypeofResident: this.handleTypeofResident,
                         handleUnitNumber: this.handleUnitNumber,
@@ -200,9 +337,9 @@ class MainPage extends Component {
         this.setState({ unitId: unitId });
     }
 
-    handleFields = (e, field) => {
+    handleFields = (e, residentType, field) => {
         let newFields = {...this.state.fields};
-        newFields[field] = e.target.value
+        newFields[residentType][field] = e.target.value
         this.setState({ fields: newFields });
     }
 
@@ -217,15 +354,16 @@ class MainPage extends Component {
         // console.log(newValidations)
     }
 
-    handleSpecificValidations = (fields, names) => {
+    handleSpecificValidations = (fields, names, residentType) => {
         let newSpecificValidations = {...this.state.specificValidations};
         for (let i = 0; i < names.length; i++) {
-            newSpecificValidations[names[i]] = fields[i];
+            newSpecificValidations[residentType][names[i]] = fields[i];
         }
         // newValidations[name] = field;
         this.setState({specificValidations : newSpecificValidations});
 
-        console.log(this.state.fields)
+        // console.log(this.state.fields)
+        // console.log(this.state.fields.otherGuestInformationFurther)
     }
 
 }
