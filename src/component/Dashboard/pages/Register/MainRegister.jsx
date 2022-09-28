@@ -23,28 +23,26 @@ class MainRegister extends Component {
         let telephoneReg = /^[0][9]\d{9}/; // iranian telephone number '09---------'
         let emailReg = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
 
-        let result;
+        let fg_fullName_requiredReg = !requiredReg.test(this.context.fields.fg_fullName);
+        let fg_nationalCode_requiredReg = !requiredReg.test(this.context.fields.fg_nationalCode);
+        let fg_certificateNumber_requiredReg = !requiredReg.test(this.context.fields.fg_certificateNumber);
+        let fg_admissionStartDate_requiredReg = !requiredReg.test(this.context.fields.fg_admissionStartDate);
+        let fg_admissionEndDate_requiredReg = !requiredReg.test(this.context.fields.fg_admissionEndDate);
+        let fg_paymentDate_requiredReg = !requiredReg.test(this.context.fields.fg_paymentDate);
 
-        // constant
+        let fg_nationalCode_numberReg = numberReg.test(this.context.fields.fg_nationalCode);
+        let fg_certificateNumber_numberReg = numberReg.test(this.context.fields.fg_certificateNumber);
 
-        let asd_requiredReg = !requiredReg.test(this.context.fields.admission_start_date);
-        let asd_numberReg = numberReg.test(this.context.fields.admission_start_date);
+        this.context.handleSpecificValidations([fg_fullName_requiredReg, fg_nationalCode_requiredReg, fg_certificateNumber_requiredReg,
+                fg_admissionStartDate_requiredReg, fg_admissionEndDate_requiredReg, fg_paymentDate_requiredReg, fg_nationalCode_numberReg,
+                fg_certificateNumber_numberReg],
+            ['fg_fullName_requiredReg', 'fg_nationalCode_requiredReg', 'fg_certificateNumber_requiredReg',
+                'fg_admissionStartDate_requiredReg', 'fg_admissionEndDate_requiredReg', 'fg_paymentDate_requiredReg',
+            'fg_nationalCode_numberReg', 'fg_certificateNumber_numberReg']);
 
-        let aed_requiredReg = !requiredReg.test(this.context.fields.admission_end_date);
-        let aed_numberReg = numberReg.test(this.context.fields.admission_end_date);
-
-        let pd_requiredReg = !requiredReg.test(this.context.fields.payment_date);
-        let pd_numberReg = numberReg.test(this.context.fields.payment_date);
-
-        this.context.handleSpecificValidations([asd_requiredReg, asd_numberReg,
-            aed_requiredReg, aed_numberReg, pd_requiredReg,
-            pd_numberReg], ['asd_requiredReg', 'asd_numberReg', 'aed_requiredReg',
-            'aed_numberReg', 'pd_requiredReg', 'pd_numberReg']);
-
-
-        result = pd_requiredReg && pd_numberReg && aed_requiredReg && aed_numberReg && asd_requiredReg && asd_numberReg;
-
-        return result;
+        return fg_fullName_requiredReg && fg_nationalCode_requiredReg && fg_certificateNumber_requiredReg &&
+            fg_admissionStartDate_requiredReg && fg_admissionEndDate_requiredReg && fg_paymentDate_requiredReg &&
+            fg_nationalCode_numberReg && fg_certificateNumber_numberReg;
     }
 
     informationFurtherPageValidation = () => {
@@ -58,23 +56,17 @@ class MainRegister extends Component {
         let ifp_home_tel_requiredReg = !requiredReg.test(this.context.fields.ifp_home_tel);
         let ifp_home_tel_telephoneReg = homeTelephoneReg.test(this.context.fields.ifp_home_tel);
 
-        let ifp_father_tel_telephoneReg = telephoneOrEmptyReg.test(this.context.fields.ifp_father_tel);
-
-        let ifp_mother_tel_telephoneReg = telephoneOrEmptyReg.test(this.context.fields.ifp_mother_tel);
-
         let ifp_resident_tel_requiredReg = !requiredReg.test(this.context.fields.ifp_resident_tel);
         let ifp_resident_tel_telephoneReg = telephoneReg.test(this.context.fields.ifp_resident_tel);
 
         this.context.handleSpecificValidations([ifp_address_requiredReg, ifp_home_tel_requiredReg, ifp_home_tel_telephoneReg,
-                ifp_father_tel_telephoneReg, ifp_mother_tel_telephoneReg, ifp_resident_tel_requiredReg, ifp_resident_tel_telephoneReg],
+                 ifp_resident_tel_requiredReg, ifp_resident_tel_telephoneReg],
             ['ifp_address_requiredReg', 'ifp_home_tel_requiredReg', 'ifp_home_tel_telephoneReg', 'ifp_father_tel_telephoneReg',
-                'ifp_mother_tel_telephoneReg', 'ifp_resident_tel_requiredReg', 'ifp_resident_tel_telephoneReg']);
+                'ifp_resident_tel_telephoneReg']);
 
         return ifp_address_requiredReg &&
             ifp_home_tel_requiredReg &&
             ifp_home_tel_telephoneReg &&
-            ifp_father_tel_telephoneReg &&
-            ifp_mother_tel_telephoneReg &&
             ifp_resident_tel_requiredReg &&
             ifp_resident_tel_telephoneReg;
     }
@@ -217,7 +209,7 @@ class MainRegister extends Component {
                 //     (this.context.typeofResident === 'otherGuest' ? this.otherGuestValidation :
                 //         (this.context.typeofResident === 'constant' ? this.constantInformationPageValidation : null)),
 
-                // validator: this.constantInformationPageValidation,
+                // validator: this.familyGuestValidation,
             },
             {
                 label: 'مشخصات تکمیلی',
@@ -242,11 +234,6 @@ class MainRegister extends Component {
     checked = (e) => {
         const type = e.target.value
         this.setState({ typeofResident: type })
-
-        // console.log(this.context.typeofResident === 'constant')
-        // this.context.handleTypeofResident(type);
-
-        // console.log(type)
 
         switch (type) {
             case 'constant': {

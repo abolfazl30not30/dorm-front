@@ -87,38 +87,6 @@ class InformationFurtherPage extends Component {
                             }
 
                         </div>
-                        {/*<div className="input-group-register col-4">*/}
-                        {/*    <input type="text"*/}
-                        {/*           className={`input form-control ${this.context.specificValidations.ifp_father_tel_telephoneReg === false ? "is-invalid" : ""}`}*/}
-                        {/*           value={this.context.fields.ifp_father_tel}*/}
-                        {/*           onChange={(e) =>  this.context.handleFields(e, 'ifp_father_tel')}*/}
-                        {/*           placeholder=" "/>*/}
-                        {/*    <label className="placeholder" style={{right: this.context.specificValidations.ifp_father_tel_telephoneReg === false ? '35px' : '12px'}}>شماره تماس پدر</label>*/}
-
-                        {/*    {*/}
-                        {/*        this.context.specificValidations.ifp_father_tel_telephoneReg === false*/}
-                        {/*            ? <small*/}
-                        {/*                className="text-danger">{this.context.errors['telephoneRegex']}</small>*/}
-                        {/*            : <div/>*/}
-                        {/*    }*/}
-
-                        {/*</div>*/}
-                        {/*<div className="input-group-register col-4">*/}
-                        {/*    <input type="text"*/}
-                        {/*           className={`input form-control ${this.context.specificValidations.ifp_mother_tel_telephoneReg === false ? "is-invalid" : ""}`}*/}
-                        {/*           value={this.context.fields.ifp_mother_tel}*/}
-                        {/*           onChange={(e) => this.context.handleFields(e, 'ifp_mother_tel')}*/}
-                        {/*           placeholder=" "/>*/}
-                        {/*    <label className="placeholder" style={{right: this.context.specificValidations.ifp_mother_tel_telephoneReg === false ? '35px' : '12px'}}>شماره تماس مادر</label>*/}
-
-                        {/*    {*/}
-                        {/*        this.context.specificValidations.ifp_mother_tel_telephoneReg === false*/}
-                        {/*            ? <small*/}
-                        {/*                className="text-danger">{this.context.errors['telephoneRegex']}</small>*/}
-                        {/*            : <div/>*/}
-                        {/*    }*/}
-
-                        {/*</div>*/}
                     </div>
                 </div>
             </>

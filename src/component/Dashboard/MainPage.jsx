@@ -18,16 +18,29 @@ class MainPage extends Component {
         unitNumber: "",
         unitId: "",
         fields: {
-            admission_start_date: '',
-            admission_end_date: '',
-            payment_date: '',
 
-            // InformationFurtherPage
+            // ----------------------- <FamilyGuest /> information
+            fg_fullName: '',
+            fg_nationalCode: '',
+            fg_certificateNumber: '',
+            fg_placeOfIssue: '',
+            fg_birthDate: '',
+            fg_admissionStartDate: '',
+            fg_admissionEndDate: '',
+            fg_paymentDate: '',
+            fg_rentPaymentAmount: '',
+            fg_depositPaymentAmount: '',
+            fg_discountPaymentAmount: '',
+            fg_relationshipWithResident: 'father', // default value (first option)
+            fg_address: '',
+            fg_phoneNumber: '',
+
+            // ----------------------- InformationFurtherPage
             ifp_address: '',
             ifp_home_tel: '',
             ifp_resident_tel: '',
 
-            // constant resident information
+            // ----------------------- constant resident information
             c_firstName: '',
             c_lastName: '',
             c_nickName: '',
@@ -37,7 +50,7 @@ class MainPage extends Component {
             c_birthDate: '',
             c_nationality: '',
             c_fatherName: '',
-            c_religion: '',
+            c_religion: 'islam',
             c_subReligion: '',
             c_university: '',
             c_studentNumber: '',
@@ -48,7 +61,7 @@ class MainPage extends Component {
             c_health: 'false', // default value (first option)
             c_healthDescription: '',
 
-            // other guest information
+            // ----------------------- <OtherGuest /> information
             o_fullName: '',
             o_nationalCode: '',
             o_certificateNumber: '',
@@ -61,7 +74,7 @@ class MainPage extends Component {
             o_discountPaymentAmount: '',
             o_birthDate: '',
 
-            // <InformationFamilyPage /> information
+            // ----------------------- <InformationFamilyPage /> information
             firstPerson_FullName : '',
             firstPerson_PhoneNumber : '',
             firstPerson_FatherName : '',
@@ -73,21 +86,28 @@ class MainPage extends Component {
             secondPerson_relationshipWithResident : 'father', // default value (first option)
         },
         errors : {
-            required: 'این فیلد را پر کنید!',
+            required: 'این فیلد الزامی است!',
             numberRequired: 'عدد وارد کنید!',
             homeTelephoneReg: 'شماره تلفن ثابت با کد وارد کنید (۳۴۵۶۷۸۹۰-۰۱۲) ',
             telephoneRegex: 'شماره تلفن همراه وارد کنید! (۰۹۱۲۳۴۵۶۷۸۹)',
             emailRegex: 'ایمیل وارد کنید!',
         },
         specificValidations : {
-            asd_requiredReg : '',
-            asd_numberReg : '',
-            aed_requiredReg : '',
-            aed_numberReg : '',
-            pd_requiredReg : '',
-            pd_numberReg : '',
+            // ----------------------- <FamilyGuest /> information validation
+            fg_fullName_requiredReg: '',
+            fg_nationalCode_requiredReg: '',
+            fg_nationalCode_numberReg: '',
+            fg_certificateNumber_requiredReg: '',
+            fg_certificateNumber_numberReg: '',
+            fg_admissionStartDate_requiredReg: '',
+            fg_admissionEndDate_requiredReg: '',
+            fg_paymentDate_requiredReg: '',
 
-            // InformationFurtherPage validations
+            // fg_admissionStartDate_dateReg: '',
+            // fg_admissionEndDate_dateReg: '',
+            // fg_paymentDate_dateReg: '',
+
+            // ----------------------- InformationFurtherPage validations
             ifp_address_requiredReg: '',
             ifp_home_tel_requiredReg: '',
             ifp_home_tel_telephoneReg: '',
@@ -110,7 +130,7 @@ class MainPage extends Component {
             c_spouseFullName_requiredReg: '',
             c_healthDescription_requiredReg: '',
 
-            // ----------------------- other guest information validations
+            // ----------------------- <OtherGuest /> information validations
             o_fullName_requiredReg: '',
             o_nationalCode_requiredReg: '',
             o_nationalCode_numberReg: '',
@@ -208,11 +228,6 @@ class MainPage extends Component {
         console.log(this.state.fields)
     }
 
-    getStatusConstantResident = (e) => {
-        let newFields = {...this.state.fields};
-        newFields['c_maritalStatus'] = e.target.value
-        this.setState({ fields: newFields });
-    }
 }
 
 export default MainPage;

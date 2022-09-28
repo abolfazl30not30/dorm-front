@@ -73,6 +73,7 @@ class InformationFamilyPage extends Component {
                         </div>
                         <div className="input-group-register col-3">
                             <select className='input'
+                                    value={this.context.fields.firstPerson_relationshipWithResident}
                                     onChange={(e) =>  this.context.handleFields(e, 'firstPerson_relationshipWithResident')}
                             >
                                 <option value='father'>پدر</option>
@@ -147,6 +148,7 @@ class InformationFamilyPage extends Component {
                         </div>
                         <div className="input-group-register col-3">
                             <select className='input'
+                                    value={this.context.fields.secondPerson_relationshipWithResident}
                                     onChange={(e) =>  this.context.handleFields(e, 'secondPerson_relationshipWithResident')}
                             >
                                 <option>پدر</option>

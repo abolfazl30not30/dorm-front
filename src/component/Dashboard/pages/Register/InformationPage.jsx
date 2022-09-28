@@ -202,12 +202,15 @@ class InformationPage extends Component {
 
                         </div>
                         <div className="input-group-register col-4">
-                            <select className='input'>
-                                <option>اسلام</option>
-                                <option>مسیحیت</option>
-                                <option>هندوئیسم</option>
-                                <option>آیین بودایی</option>
-                                <option>فاقد دین</option>
+                            <select className='input'
+                                    value={this.context.fields.c_religion}
+                                    onChange={(e) =>  this.context.handleFields(e, 'c_religion')}
+                            >
+                                <option value='islam'>اسلام</option>
+                                <option value='christianity'>مسیحیت</option>
+                                <option value='hinduism'>هندوئیسم</option>
+                                <option value='buddhism'>آیین بودایی</option>
+                                <option value='other'>سایر</option>
                             </select>
                             <label className="placeholder">دین</label>    
                         </div>
@@ -258,7 +261,8 @@ class InformationPage extends Component {
                         <div className="input-group-register col-4">
                             <select className='input'
                                     name='maritalStatus'
-                                    onChange={(e) => {this.context.handleFields(e, 'c_maritalStatus');}}>
+                                    value={this.context.fields.c_maritalStatus}
+                                    onChange={(e) => this.context.handleFields(e, 'c_maritalStatus')}>
                                 <option value='single' >مجرد</option>
                                 <option value='married'>متاهل</option>
                                 <option value='divorced'>متارکه</option>
@@ -306,6 +310,7 @@ class InformationPage extends Component {
                         }
                         <div className="input-group-register col-4">
                             <select className='input'
+                                    value={this.context.fields.c_health}
                                     onChange={(e) => this.context.handleFields(e, 'c_health')}>
                                 <option value='false'>خیر</option>
                                 <option value='true'>بله</option>
