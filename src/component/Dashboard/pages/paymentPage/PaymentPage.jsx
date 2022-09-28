@@ -3,19 +3,16 @@ import {Link} from "react-router-dom";
 import Accordion from "react-bootstrap/Accordion";
 import Form from 'react-bootstrap/Form';
 import { Calendar, DatePicker } from 'react-persian-datepicker';
-// import { DatePicker } from "jalali-react-datepicker";
 import 'react-persian-datepicker/lib/styles/basic.css'
-// import Calendar from 'react-input-calendar';
-// import Calendar from 'react-calendar'
-import JCalendar from 'reactjs-persian-calendar'
 import 'react-calendar/dist/Calendar.css';
-// import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import ToggleButton from "@mui/material/ToggleButton";
 import {Modal} from "react-bootstrap";
 import {IoIosAddCircleOutline} from "react-icons/io";
 import "../../../../style/evan-calender-style.css";
+import '../../../../style/paymentPage.css';
+
 
 class PaymentPage extends Component {
     state = {
@@ -109,12 +106,11 @@ class PaymentPage extends Component {
                                                     }
                                                     <button value="add"
                                                                   onClick={() => {this.handleOpenType()}}
-                                                                  className='col addBtn'
+                                                                  className='col addTypeBtn'
                                                     >
                                                         <IoIosAddCircleOutline size={25}/>
                                                     </button>
                                                 </ToggleButtonGroup>
-
                                             </div>
                                         </div>
                                     </Accordion.Body>
@@ -141,7 +137,7 @@ class PaymentPage extends Component {
 
                 <div className='third-section'>
                     <label htmlFor="formFileLg" className="form-label">آپلود فاکتور :</label>
-                    <input className="form-control form-control-lg" id="formFileLg" type="file" />
+                    <input className="form-control form-control" id="formFileLg" type="file" />
                 </div>
 
                 <div className='fourth-section mb-5 mt-2' style={{width: '100%'}}>
