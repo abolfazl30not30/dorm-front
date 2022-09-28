@@ -43,41 +43,38 @@ class SearchAccount extends Component {
     render() {
         return (
             <>
-                <div className='search-container row'>
-                    <div>
-                        <label htmlFor="orders" className='m-2'>براساس:</label>
-                        <select className='form-select' style={{ width: '20%' }} name="order" form="order-form" onChange={this.handlePlaceHolder}>
-                            <option value="national-code">کدملی</option>
-                            <option value="name" >نام</option>
-                            <option value="phone-number">شماره تلفن</option>
-                        </select>
+                <div className='search-container'>
+                    <label htmlFor="orders" className='m-2'>براساس:</label>
+                    <select className='form-select ms-3' style={{ width: '20%' }} name="order" form="order-form" onChange={this.handlePlaceHolder}>
+                        <option value="national-code">کدملی</option>
+                        <option value="name" >نام</option>
+                        <option value="phone-number">شماره تلفن</option>
+                    </select>
 
-                        <input className="form-control" type='text' placeholder='search' /> {/*placeholder = {this.state.placeholder}*/}
-                        {/*<Accordion defaultActiveKey="0" className='col-3'>*/}
-                        {/*    <Accordion.Item eventKey="0">*/}
-                        {/*        <Accordion.Header>بر اساس</Accordion.Header>*/}
-                        {/*        <Accordion.Body>*/}
-                        {/*            <form>*/}
-                        {/*                <input type="radio" name="order" value="national-code" className='m-2'/>*/}
-                        {/*                    <label>کدملی</label><br />*/}
-                        {/*                <input type="radio" name="order" value="name" className='m-2'/>*/}
-                        {/*                    <label>نام</label><br />*/}
-                        {/*                <input type="radio" name="order" value="phone-number" className='m-2'/>*/}
-                        {/*                    <label>شماره تلفن</label>*/}
-                        {/*            </form>*/}
+                    <input className="form-control ms-3" type='text' placeholder='جستجو' /> {/*placeholder = {this.state.placeholder}*/}
+                    {/*<Accordion defaultActiveKey="0" className='col-3'>
+                            <Accordion.Item eventKey="0">
+                                <Accordion.Header>بر اساس</Accordion.Header>
+                                <Accordion.Body>
+                                    <form>
+                                        <input type="radio" name="order" value="national-code" className='m-2'/>
+                                            <label>کدملی</label><br />
+                                        <input type="radio" name="order" value="name" className='m-2'/>
+                                            <label>نام</label><br />
+                                        <input type="radio" name="order" value="phone-number" className='m-2'/>
+                                            <label>شماره تلفن</label>
+                                    </form>
 
-                        {/*        </Accordion.Body>*/}
-                        {/*    </Accordion.Item>*/}
-                        {/*</Accordion>*/}
-
-                        <button className='btn btn-outline-primary'><IoIosSearch size={30} className='search-logo' /></button>
-                    </div>
+                                </Accordion.Body>
+                            </Accordion.Item>
+                        </Accordion>*/}
+                    <button className='btn btn-outline-primary ms-3'><IoIosSearch size={30} className='search-logo' /></button>
                 </div>
                 <div className='result'>
                     {this.state.accountFound.map(accountFound => (
                         <>
                             <Link to="profile" className='account-found-link'>
-                                <div className='account-found shadow mb-3 d-flex flex-row'>
+                                <div className='account-found mb-3 d-flex flex-column flex-md-row'>
                                     <FiUser size={80} style={{ marginLeft: '5%', marginTop: '1%' }} />
                                     <div className='ms-5'>
                                         <div className='col p-2'>

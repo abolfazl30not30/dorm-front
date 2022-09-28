@@ -1,4 +1,5 @@
 .search-container {
+    display: flex;
     text-align: left;
     background-color: #fff;
     padding: 1rem;
@@ -44,16 +45,15 @@
 }
 
 .account-found {
-    display: flex;
     justify-content: right;
-    height: 150px;
-    box-shadow: black;
-    border-style: solid;
-    border-color: white;
-    border-radius: 20px;
-    background-color: #f9f9f9;
-    padding: 20px;
-    margin-top: 3%;
+    align-items: center;
+    border-radius: 8px;
+    padding: 16px;
+    margin-top: 16px;
+    background-color: #fff;
+    box-shadow: 0 0 20px 0 #4c577d05;
 }
-
+.search-container input {
+    max-width: 200px;
+}
 .account-found>FiUser {}

@@ -335,12 +335,12 @@ class ProfilePage extends Component {
             <>
                 <div className='profile-container row'> {/*given photo*/}
                     <div className='image-container'>
-                        <div className="d-flex flex-row justify-content-around align-items-center w-100">
+                        <div className="d-flex flex-column flex-md-row justify-content-around align-items-center w-100">
                             <img
                                 src="https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png"
                                 alt="profile"/>
                             {this.state.people.map(p => (
-                                <div className='information d-flex flex-row'>
+                                <div className='information d-flex flex-md-row flex-column'>
                                     <div className='ms-5'>
                                         <div className='col p-2'>
                                             <AiOutlineUser className='ms-2'/>
@@ -873,134 +873,90 @@ class ProfilePage extends Component {
                             <Tab eventKey="more-information" title="اطلاعات بیشتر">
                                 {this.state.people.map(p => (
                                     <div className='information d-flex flex-row flex-wrap'>
-                                        <p className='col-4'>
+                                        <p className='col-12 col-md-4'>
                                             <label> نام :</label>
                                             {p.firstName}
                                         </p>
-                                        <p className='col-4'>
+                                        <p className='col-12 col-md-4'>
                                             <label> نام خانوادگی :</label>
                                             {p.lastName}
                                         </p>
-                                        <p className='col-4'>
+                                        <p className='col-12 col-md-4'>
                                             <label> کد ملی :</label>
                                             {p.nationalCode}
                                         </p>
-                                        <p className='col-4'>
+                                        <p className='col-12 col-md-4'>
                                             <label> شماره گواهی :</label>
                                             {p.certificateNumber}
                                         </p>
-                                        <p className='col-4'>
+                                        <p className='col-12 col-md-4'>
                                             <label> شماره تماس :</label>
                                             {p.phoneNumber}
                                         </p>
-                                        <p className='col-4'>
+                                        <p className='col-12 col-md-4'>
                                             <label> آدرس :</label>
                                             {p.address}
                                         </p>
-                                        <p className='col-4'>
+                                        <p className='col-12 col-md-4'>
                                             <label> شماره تلفن :</label>
                                             {p.telephoneNumber}
                                         </p>
-                                        <p className='col-4'>
+                                        <p className='col-12 col-md-4'>
                                             <label> نام پدر :</label>
                                             {p.fatherName}
                                         </p>
-                                        <p className='col-4'>
+                                        <p className='col-12 col-md-4'>
                                             <label> شماره تلفن اضطراری :</label>
                                             {p.emergencyNumber}
                                         </p>
-                                        <p className='col-4'>
+                                        <p className='col-12 col-md-4'>
                                             <label> محل تولد :</label>
                                             {p.birthPlace}
                                         </p>
-                                        <p className='col-4'>
+                                        <p className='col-12 col-md-4'>
                                             <label> تاریخ تولد :</label>
                                             {p.birthDate}
                                         </p>
-                                        <p className='col-4'>
+                                        <p className='col-12 col-md-4'>
                                             <label> شغل :</label>
                                             {p.job}
                                         </p>
-                                        <p className='col-4'>
+                                        <p className='col-12 col-md-4'>
                                             <label> تحصیلات :</label>
                                             {p.education}
                                         </p>
-                                        <p className='col-4'>
+                                        <p className='col-12 col-md-4'>
                                             <label> کد پستی :</label>
                                             {p.postalCode}
                                         </p>
-                                        <p className='col-4'>
+                                        <p className='col-12 col-md-4'>
                                             <label> ایمیل :</label>
                                             {p.email}
                                         </p>
-                                        <p className='col-4'>
+                                        <p className='col-12 col-md-4'>
                                             <label>  ملیت :</label>
                                             {p.nationality}
                                         </p>
-                                        <p className='col-4'>
+                                        <p className='col-12 col-md-4'>
                                             <label> وضعیت تاهل :</label>
                                             {p.maritalStatus}
                                         </p>
-                                        <p className='col-4'>
+                                        <p className='col-12 col-md-4'>
                                             <label> دین :</label>
                                             {p.religion}
                                         </p>
-                                        <p className='col-4'>
+                                        <p className='col-12 col-md-4'>
                                             <label> مذهب :</label>
                                             {p.subReligion}
                                         </p>
-                                        <p className='col-4'>
+                                        <p className='col-12 col-md-4'>
                                             <label> وضعیت سلامتی :</label>
                                             {p.healthyStatus}
                                         </p>
-                                        <p className='col-4'>
+                                        <p className='col-12 col-md-4'>
                                             <label> نام مستعار :</label>
                                             {p.alias}
                                         </p>
-                                       {/* <div className='ms-5'>
-                                            <p>
-                                                <label> نام :</label>
-                                                {p.firstName}
-                                            </p>
-                                            <p>
-                                                <label> نام خانوادگی :</label>
-                                                {p.lastName}
-                                            </p>
-                                            <p>
-                                                <label> کد ملی :</label>
-                                                {p.nationalCode}
-                                            </p>
-                                            <p>
-                                                <label> تاریخ شروع پذیرش :</label>
-                                                11/22/3333
-                                            </p>
-                                            <p>
-                                                <label> تاریخ اتمام پذیرش :</label>
-                                                11/22/3333
-                                            </p>
-                                        </div>
-                                        <div>
-                                            <p>
-                                                <label> دانشگاه محل تحصیل :</label>
-                                                {p.firstName}
-                                            </p>
-                                            <p>
-                                                <label> شماره دانشجویی :</label>
-                                                {p.lastName}
-                                            </p>
-                                            <p>
-                                                <label> نام پدر :</label>
-                                                {p.nationalCode}
-                                            </p>
-                                            <p>
-                                                <label> شغل پدر :</label>
-                                                11/22/3333
-                                            </p>
-                                            <p>
-                                                <label> وضعیت تاهل :</label>
-                                                مجرد
-                                            </p>
-                                        </div>*/}
                                     </div>
                                 ))}
                             </Tab>
