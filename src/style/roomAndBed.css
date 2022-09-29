@@ -47,7 +47,7 @@
     text-decoration: none;
     color: #000;
     background: #f1c40f;
-    padding: 15px 44px;
+    padding: 10px 34px;
     border-radius: 12px;
 }
 
@@ -122,13 +122,18 @@
 .bed-box.full {
     color: #F1416C;
     background-color: #FFEFF3;
-    border: none;
+}
+.bed-box.empty {
+    color: #0e8c46;
+    background-color: #f4fff8;
 }
 
 .bed-box.full button.btn.btn-primary {
     color: #f1416c;
 }
-
+.bed-box.empty button.btn.btn-primary {
+    color: #0e8c46;
+}
 .bed-box .title {
     font-size: 14px;
     margin: 0;

@@ -50,7 +50,7 @@
     text-decoration: none;
     color: #000;
     background: #f1c40f;
-    padding: 15px 44px;
+    padding: 10px 34px;
     border-radius: 12px;
 }
 
@@ -121,11 +121,11 @@
 .full-link {
     color: #F1416C;
     background-color: #FFEFF3;
-    border: none;
 }
 
 .empty-link {
-    color: #000;
+    color: #0e8c46;
+    background-color: #f4fff8;
 }
 
 .floorAndUnit .floor-container .floor .unit-container .unit .unit-name {

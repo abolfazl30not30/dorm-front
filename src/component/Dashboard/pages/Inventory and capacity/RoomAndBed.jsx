@@ -264,7 +264,7 @@ class RoomAndBed extends Component {
                                                                 </button>
                                                             </div>
                                                         </div>
-                                                        <div className='d-flex flex-wrap'>
+                                                        <div className='d-flex flex-wrap justify-content-around'>
                                                             {room.beds.map((bed) => (
                                                                 <div className="col-4 p-1">
                                                                     <div

@@ -157,7 +157,7 @@ class EditFloorAndUnit extends Component {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ name: `${count}طبقه`, empty: "true" })
+            body: JSON.stringify({ name: `${count}`, empty: "true" })
         });
 
         var content = await rawResponse.json();
@@ -165,7 +165,7 @@ class EditFloorAndUnit extends Component {
             {
                 empty: true,
                 id: content.id,
-                name: `${count}طبقه`,
+                name: "طبقه...",
                 units: []
             }
         )

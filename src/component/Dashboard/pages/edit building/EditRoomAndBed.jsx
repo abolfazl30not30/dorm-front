@@ -363,7 +363,7 @@ class EditRoomAndBed extends Component {
 
         const newRoom = this.state.rooms.concat(
             {
-                id: content.id, number: content.number,
+                id: content.id, number: 0 ,
                 description: "",
                 accessories: [],
                 beds: [
