@@ -17,6 +17,7 @@
 }
 .input{
     padding: 10px;
+    height: 50px;
     border-radius: 8px !important;
     outline: none;
     color: #2a2e32b3;
@@ -26,7 +27,7 @@
 }
 .placeholder{
     position: absolute;
-    top: 14px;
+    top: 20px;
     right: 12px;
     font-size: 14px;
     padding: 0px 5px;

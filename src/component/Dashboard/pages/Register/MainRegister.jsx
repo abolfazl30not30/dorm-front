@@ -1,41 +1,315 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import UploadPage from './UploadPage';
 import "../../../../style/mainRegister.css";
 import "../../../../style/registerPage.css";
 import StepProgressBar from 'react-step-progress';
 import 'react-step-progress/dist/index.css';
-import InformationPage from './InformationPage';
-import InformationFurtherPage from './InformationFurtherPage'
-import InformationFamilyPage from './InformationFamilyPage'
-import FamilyGuest from './FamilyGuest'
-import OtherGuest from './OtherGuest'
+
+import CInformationPage from "./ConstantResident/CInformationPage";
+import CInformationFurtherPage from "./ConstantResident/CInformationFurtherPage";
+import CInformationFamilyPage from "./ConstantResident/CInformationFamilyPage";
+import CUploadPage from "./ConstantResident/CUploadPage";
+
+import FGInformationPage from "./FamilyGuest/FGInformationPage";
+import FGInformationFurtherPage from "./FamilyGuest/FGInformationFurtherPage";
+import FGInformationFamilyPage from "./FamilyGuest/FGInformationFamilyPage";
+import FGUploadPage from "./FamilyGuest/FGUploadPage";
+
+import OGInformationPage from "./OtherGuest/OGInformationPage";
+import OGInformationFurtherPage from "./OtherGuest/OGInformationFurtherPage";
+import OGInformationFamilyPage from "./OtherGuest/OGInformationFamilyPage";
+import OGUploadPage from "./OtherGuest/OGUploadPage";
+
+import BuildingContext from '../../../../contexts/Building'
 
 class MainRegister extends Component {
+
+    static contextType = BuildingContext;
+
+
+    //######################################################## first pages
+    constantInformationPageValidation = () => {
+        let requiredReg = /^\s*$/;
+        let numberReg = /^[0-9]*$/;
+
+        let firstName_requiredReg = !requiredReg.test(this.context.constantInformationPage.firstName);
+        let lastName_requiredReg = !requiredReg.test(this.context.constantInformationPage.lastName);
+        let nationalCode_requiredReg = !requiredReg.test(this.context.constantInformationPage.nationalCode);
+        let certificateNumber_requiredReg = !requiredReg.test(this.context.constantInformationPage.certificateNumber);
+        let placeOfIssue_requiredReg = !requiredReg.test(this.context.constantInformationPage.placeOfIssue);
+        let birthDate_requiredReg = !requiredReg.test(this.context.constantInformationPage.birthDate);
+        let nationality_requiredReg = !requiredReg.test(this.context.constantInformationPage.nationality);
+        let fatherName_requiredReg = !requiredReg.test(this.context.constantInformationPage.fatherName);
+        let spouseFullName_requiredReg = !requiredReg.test(this.context.constantInformationPage.spouseFullName);
+        let healthDescription_requiredReg = !requiredReg.test(this.context.constantInformationPage.healthDescription);
+
+        let nationalCode_numberReg = numberReg.test(this.context.constantInformationPage.nationalCode);
+        let certificateNumber_numberReg = numberReg.test(this.context.constantInformationPage.certificateNumber);
+        let studentNumber_numberReg = numberReg.test(this.context.constantInformationPage.studentNumber);
+
+        if (this.context.constantInformationPage.maritalStatus !== 'married') {
+            spouseFullName_requiredReg = true;
+        }
+
+        if (this.context.constantInformationPage.health === 'false') {
+            healthDescription_requiredReg = true;
+        }
+
+        this.context.handleSpecificValidations([firstName_requiredReg, lastName_requiredReg, nationalCode_requiredReg, certificateNumber_requiredReg,
+                placeOfIssue_requiredReg, birthDate_requiredReg, nationality_requiredReg, fatherName_requiredReg, spouseFullName_requiredReg,
+                healthDescription_requiredReg, nationalCode_numberReg, certificateNumber_numberReg, studentNumber_numberReg],
+            ['firstName_requiredReg', 'lastName_requiredReg', 'nationalCode_requiredReg', 'certificateNumber_requiredReg',
+                'placeOfIssue_requiredReg', 'birthDate_requiredReg', 'nationality_requiredReg', 'fatherName_requiredReg', 'spouseFullName_requiredReg',
+                'healthDescription_requiredReg', 'nationalCode_numberReg', 'certificateNumber_numberReg', 'studentNumber_numberReg'], 'constantInformationPageValidation');
+
+        return firstName_requiredReg && lastName_requiredReg && nationalCode_requiredReg && certificateNumber_requiredReg &&
+            placeOfIssue_requiredReg && birthDate_requiredReg && nationality_requiredReg && fatherName_requiredReg && spouseFullName_requiredReg &&
+            healthDescription_requiredReg && nationalCode_numberReg && certificateNumber_numberReg && studentNumber_numberReg;
+    }
+
+    familyGuestValidation = () => {
+
+        let requiredReg = /^\s*$/;
+        let numberReg = /^[0-9]*$/;
+        let telephoneReg = /^[0][9]\d{9}/; // iranian telephone number '09---------'
+        let emailReg = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
+
+        let fullName_requiredReg = !requiredReg.test(this.context.familyGuestInformation.fullName);
+        let nationalCode_requiredReg = !requiredReg.test(this.context.familyGuestInformation.nationalCode);
+        let certificateNumber_requiredReg = !requiredReg.test(this.context.familyGuestInformation.certificateNumber);
+        let admissionStartDate_requiredReg = !requiredReg.test(this.context.familyGuestInformation.admissionStartDate);
+        let admissionEndDate_requiredReg = !requiredReg.test(this.context.familyGuestInformation.admissionEndDate);
+        let paymentDate_requiredReg = !requiredReg.test(this.context.familyGuestInformation.paymentDate);
+
+        let nationalCode_numberReg = numberReg.test(this.context.familyGuestInformation.nationalCode);
+        let certificateNumber_numberReg = numberReg.test(this.context.familyGuestInformation.certificateNumber);
+
+        this.context.handleSpecificValidations([fullName_requiredReg, nationalCode_requiredReg, certificateNumber_requiredReg,
+                admissionStartDate_requiredReg, admissionEndDate_requiredReg, paymentDate_requiredReg, nationalCode_numberReg,
+                certificateNumber_numberReg],
+            ['fullName_requiredReg', 'nationalCode_requiredReg', 'certificateNumber_requiredReg',
+                'admissionStartDate_requiredReg', 'admissionEndDate_requiredReg', 'paymentDate_requiredReg',
+            'nationalCode_numberReg', 'certificateNumber_numberReg'], 'familyGuestInformationValidation');
+
+        return fullName_requiredReg && nationalCode_requiredReg && certificateNumber_requiredReg &&
+            admissionStartDate_requiredReg && admissionEndDate_requiredReg && paymentDate_requiredReg &&
+            nationalCode_numberReg && certificateNumber_numberReg;
+    }
+
+    otherGuestValidation = () => {
+        let requiredReg = /^\s*$/;
+        let numberReg = /^[0-9]*$/;
+
+        let fullName_requiredReg = !requiredReg.test(this.context.otherGuestInformation.fullName);
+        let nationalCode_requiredReg = !requiredReg.test(this.context.otherGuestInformation.nationalCode);
+        let certificateNumber_requiredReg = !requiredReg.test(this.context.otherGuestInformation.certificateNumber);
+        let admissionStartDate_requiredReg = !requiredReg.test(this.context.otherGuestInformation.admissionStartDate);
+        let admissionEndDate_requiredReg = !requiredReg.test(this.context.otherGuestInformationValidation.admissionEndDate);
+
+        let nationalCode_numberReg = numberReg.test(this.context.otherGuestInformation.nationalCode);
+        let certificateNumber_numberReg = numberReg.test(this.context.otherGuestInformation.certificateNumber);
+        let rentPaymentAmount_numberReg = numberReg.test(this.context.otherGuestInformation.rentPaymentAmount);
+        let depositPaymentAmount_numberReg = numberReg.test(this.context.otherGuestInformation.depositPaymentAmount);
+        let discountPaymentAmount_numberReg = numberReg.test(this.context.otherGuestInformation.discountPaymentAmount);
+
+        this.context.handleSpecificValidations([fullName_requiredReg, nationalCode_requiredReg, certificateNumber_requiredReg,
+                admissionStartDate_requiredReg, admissionEndDate_requiredReg, nationalCode_numberReg, certificateNumber_numberReg,
+                rentPaymentAmount_numberReg, depositPaymentAmount_numberReg, discountPaymentAmount_numberReg],
+            ['fullName_requiredReg', 'nationalCode_requiredReg', 'certificateNumber_requiredReg',
+                'admissionStartDate_requiredReg', 'admissionEndDate_requiredReg', 'nationalCode_numberReg', 'certificateNumber_numberReg',
+                'rentPaymentAmount_numberReg', 'depositPaymentAmount_numberReg', 'discountPaymentAmount_numberReg'], 'otherGuestInformationValidation');
+
+        return fullName_requiredReg && nationalCode_requiredReg && certificateNumber_requiredReg &&
+            admissionStartDate_requiredReg && admissionEndDate_requiredReg && nationalCode_numberReg && certificateNumber_numberReg &&
+            rentPaymentAmount_numberReg && depositPaymentAmount_numberReg && discountPaymentAmount_numberReg;
+    }
+
+
+
+    //######################################################## second pages
+    cInformationFurtherPageValidation = () => {
+        let requiredReg = /^\s*$/;
+        let telephoneReg = /^09\d{9}$/; // iranian telephone number '09---------'
+        let homeTelephoneReg = /^\d{3}-\d{8}$/;
+        let telephoneOrEmptyReg = /^(\s*09\d{9}\s*|\s*)$/;
+
+        let address_requiredReg = !requiredReg.test(this.context.constantInformationFurther.address);
+
+        let home_tel_requiredReg = !requiredReg.test(this.context.constantInformationFurther.home_tel);
+        let home_tel_telephoneReg = homeTelephoneReg.test(this.context.constantInformationFurther.home_tel);
+
+        let resident_tel_requiredReg = !requiredReg.test(this.context.constantInformationFurther.resident_tel);
+        let resident_tel_telephoneReg = telephoneReg.test(this.context.constantInformationFurther.resident_tel);
+
+        this.context.handleSpecificValidations([address_requiredReg, home_tel_requiredReg, home_tel_telephoneReg,
+                 resident_tel_requiredReg, resident_tel_telephoneReg],
+            ['address_requiredReg', 'home_tel_requiredReg', 'home_tel_telephoneReg', 'resident_tel_requiredReg',
+                'resident_tel_telephoneReg'], 'constantInformationFurtherValidation');
+
+        return address_requiredReg &&
+            home_tel_requiredReg &&
+            home_tel_telephoneReg &&
+            resident_tel_requiredReg &&
+            resident_tel_telephoneReg;
+    }
+
+    fgInformationFurtherPageValidation = () => {
+        let requiredReg = /^\s*$/;
+        let telephoneReg = /^09\d{9}$/; // iranian telephone number '09---------'
+        let homeTelephoneReg = /^\d{3}-\d{8}$/;
+        let telephoneOrEmptyReg = /^(\s*09\d{9}\s*|\s*)$/;
+
+        let address_requiredReg = !requiredReg.test(this.context.familyGuestInformationFurther.address);
+
+        let home_tel_requiredReg = !requiredReg.test(this.context.familyGuestInformationFurther.home_tel);
+        let home_tel_telephoneReg = homeTelephoneReg.test(this.context.familyGuestInformationFurther.home_tel);
+
+        let resident_tel_requiredReg = !requiredReg.test(this.context.familyGuestInformationFurther.resident_tel);
+        let resident_tel_telephoneReg = telephoneReg.test(this.context.familyGuestInformationFurther.resident_tel);
+
+        this.context.handleSpecificValidations([address_requiredReg, home_tel_requiredReg, home_tel_telephoneReg,
+                resident_tel_requiredReg, resident_tel_telephoneReg],
+            ['address_requiredReg', 'home_tel_requiredReg', 'home_tel_telephoneReg', 'resident_tel_requiredReg',
+                'resident_tel_telephoneReg'], 'familyGuestInformationFurtherValidation');
+
+        return address_requiredReg &&
+            home_tel_requiredReg &&
+            home_tel_telephoneReg &&
+            resident_tel_requiredReg &&
+            resident_tel_telephoneReg;
+    }
+
+    ogInformationFurtherPageValidation = () => {
+        let requiredReg = /^\s*$/;
+        let telephoneReg = /^09\d{9}$/; // iranian telephone number '09---------'
+        let homeTelephoneReg = /^\d{3}-\d{8}$/;
+        let telephoneOrEmptyReg = /^(\s*09\d{9}\s*|\s*)$/;
+
+        let address_requiredReg = !requiredReg.test(this.context.otherGuestInformationFurther.address);
+
+        let home_tel_requiredReg = !requiredReg.test(this.context.otherGuestInformationFurther.home_tel);
+        let home_tel_telephoneReg = homeTelephoneReg.test(this.context.otherGuestInformationFurther.home_tel);
+
+        let resident_tel_requiredReg = !requiredReg.test(this.context.otherGuestInformationFurther.resident_tel);
+        let resident_tel_telephoneReg = telephoneReg.test(this.context.otherGuestInformationFurther.resident_tel);
+
+        this.context.handleSpecificValidations([address_requiredReg, home_tel_requiredReg, home_tel_telephoneReg,
+                resident_tel_requiredReg, resident_tel_telephoneReg],
+            ['address_requiredReg', 'home_tel_requiredReg', 'home_tel_telephoneReg', 'resident_tel_requiredReg',
+                'resident_tel_telephoneReg'], 'otherGuestInformationFurtherValidation');
+
+        return address_requiredReg &&
+            home_tel_requiredReg &&
+            home_tel_telephoneReg &&
+            resident_tel_requiredReg &&
+            resident_tel_telephoneReg;
+    }
+
+
+    //######################################################## third pages
+    cInformationFamilyPageValidation = () => {
+        let requiredReg = /^\s*$/;
+        let telephoneReg = /^09\d{9}$/;
+
+        let firstPerson_FullName_requiredReg = !requiredReg.test(this.context.constantInformationFamily.firstPerson_FullName);
+        let firstPerson_PhoneNumber_requiredReg = !requiredReg.test(this.context.constantInformationFamily.firstPerson_PhoneNumber);
+        let secondPerson_FullName_requiredReg = !requiredReg.test(this.context.constantInformationFamily.secondPerson_FullName);
+        let secondPerson_PhoneNumber_requiredReg = !requiredReg.test(this.context.constantInformationFamily.secondPerson_PhoneNumber);
+
+        let firstPerson_PhoneNumber_telephoneReg = telephoneReg.test(this.context.constantInformationFamily.firstPerson_PhoneNumber);
+        let secondPerson_PhoneNumber_telephoneReg = telephoneReg.test(this.context.constantInformationFamily.secondPerson_PhoneNumber);
+
+        this.context.handleSpecificValidations([firstPerson_FullName_requiredReg, firstPerson_PhoneNumber_requiredReg,
+            secondPerson_FullName_requiredReg, secondPerson_PhoneNumber_requiredReg, firstPerson_PhoneNumber_telephoneReg,
+            secondPerson_PhoneNumber_telephoneReg], ['firstPerson_FullName_requiredReg', 'firstPerson_PhoneNumber_requiredReg',
+            'secondPerson_FullName_requiredReg', 'secondPerson_PhoneNumber_requiredReg', 'firstPerson_PhoneNumber_telephoneReg',
+            'secondPerson_PhoneNumber_telephoneReg'], 'constantInformationFamilyValidation');
+
+        return firstPerson_FullName_requiredReg && firstPerson_PhoneNumber_requiredReg &&
+            secondPerson_FullName_requiredReg && secondPerson_PhoneNumber_requiredReg && firstPerson_PhoneNumber_telephoneReg &&
+            secondPerson_PhoneNumber_telephoneReg;
+    }
+
+    fgInformationFamilyPageValidation = () => {
+        let requiredReg = /^\s*$/;
+        let telephoneReg = /^09\d{9}$/;
+
+        let firstPerson_FullName_requiredReg = !requiredReg.test(this.context.familyGuestInformationFamily.firstPerson_FullName);
+        let firstPerson_PhoneNumber_requiredReg = !requiredReg.test(this.context.familyGuestInformationFamily.firstPerson_PhoneNumber);
+        let secondPerson_FullName_requiredReg = !requiredReg.test(this.context.familyGuestInformationFamily.secondPerson_FullName);
+        let secondPerson_PhoneNumber_requiredReg = !requiredReg.test(this.context.familyGuestInformationFamily.secondPerson_PhoneNumber);
+
+        let firstPerson_PhoneNumber_telephoneReg = telephoneReg.test(this.context.familyGuestInformationFamily.firstPerson_PhoneNumber);
+        let secondPerson_PhoneNumber_telephoneReg = telephoneReg.test(this.context.familyGuestInformationFamily.secondPerson_PhoneNumber);
+
+        this.context.handleSpecificValidations([firstPerson_FullName_requiredReg, firstPerson_PhoneNumber_requiredReg,
+            secondPerson_FullName_requiredReg, secondPerson_PhoneNumber_requiredReg, firstPerson_PhoneNumber_telephoneReg,
+            secondPerson_PhoneNumber_telephoneReg], ['firstPerson_FullName_requiredReg', 'firstPerson_PhoneNumber_requiredReg',
+            'secondPerson_FullName_requiredReg', 'secondPerson_PhoneNumber_requiredReg', 'firstPerson_PhoneNumber_telephoneReg',
+            'secondPerson_PhoneNumber_telephoneReg'], 'familyGuestInformationFamilyValidation');
+
+        return firstPerson_FullName_requiredReg && firstPerson_PhoneNumber_requiredReg &&
+            secondPerson_FullName_requiredReg && secondPerson_PhoneNumber_requiredReg && firstPerson_PhoneNumber_telephoneReg &&
+            secondPerson_PhoneNumber_telephoneReg;
+    }
+
+    ogInformationFamilyPageValidation = () => {
+        let requiredReg = /^\s*$/;
+        let telephoneReg = /^09\d{9}$/;
+
+        let firstPerson_FullName_requiredReg = !requiredReg.test(this.context.otherGuestInformationFamily.firstPerson_FullName);
+        let firstPerson_PhoneNumber_requiredReg = !requiredReg.test(this.context.otherGuestInformationFamily.firstPerson_PhoneNumber);
+        let secondPerson_FullName_requiredReg = !requiredReg.test(this.context.otherGuestInformationFamily.secondPerson_FullName);
+        let secondPerson_PhoneNumber_requiredReg = !requiredReg.test(this.context.otherGuestInformationFamily.secondPerson_PhoneNumber);
+
+        let firstPerson_PhoneNumber_telephoneReg = telephoneReg.test(this.context.otherGuestInformationFamily.firstPerson_PhoneNumber);
+        let secondPerson_PhoneNumber_telephoneReg = telephoneReg.test(this.context.otherGuestInformationFamily.secondPerson_PhoneNumber);
+
+        this.context.handleSpecificValidations([firstPerson_FullName_requiredReg, firstPerson_PhoneNumber_requiredReg,
+            secondPerson_FullName_requiredReg, secondPerson_PhoneNumber_requiredReg, firstPerson_PhoneNumber_telephoneReg,
+            secondPerson_PhoneNumber_telephoneReg], ['firstPerson_FullName_requiredReg', 'firstPerson_PhoneNumber_requiredReg',
+            'secondPerson_FullName_requiredReg', 'secondPerson_PhoneNumber_requiredReg', 'firstPerson_PhoneNumber_telephoneReg',
+            'secondPerson_PhoneNumber_telephoneReg'], 'otherGuestInformationFamilyValidation');
+
+        return firstPerson_FullName_requiredReg && firstPerson_PhoneNumber_requiredReg &&
+            secondPerson_FullName_requiredReg && secondPerson_PhoneNumber_requiredReg && firstPerson_PhoneNumber_telephoneReg &&
+            secondPerson_PhoneNumber_telephoneReg;
+    }
+
     state = {
-        typeofResident: "Constant",
+        typeofResident: this.context.typeofResident,
         steps: [
             {
                 label: 'نوع اقامتگر',
                 name: 'step 1',
                 content:
                     <div className='typeofResident'>
-                        <div class="">
-                            <input className="" type="radio" name="flexRadioDefault" value='constant' onChange={(e) => { this.checked(e) }} />
-                            <label class="" for="Radio1">
+                        <div className="">
+                            <input className="" type="radio" name="flexRadioDefault" value='constant'
+                                   // checked={this.context.typeofResident === 'constant'}
+                                   onChange={(e) => { this.checked(e); this.context.handleTypeofResident('constant')}}
+                            />
+                            <label className="" htmlFor="Radio1">
                                 اقامتگر ثابت
                             </label>
                         </div>
                         <h6>مهمان</h6>
                         <div>
-                            <div class="">
-                                <input className="" type="radio" name="flexRadioDefault" value='otherGuest' onChange={(e) => { this.checked(e) }} />
-                                <label class="" for="Radio2">
+                            <div className="">
+                                <input className="" type="radio" name="flexRadioDefault" value='otherGuest'
+                                       // checked={this.context.typeofResident === 'otherGuest'}
+                                       onChange={(e) => { this.checked(e); this.context.handleTypeofResident('otherGuest') }}
+                                />
+                                <label className="" htmlFor="Radio2">
                                     متفرقه
                                 </label>
                             </div>
-                            <div class="">
-                                <input className="" type="radio" name="flexRadioDefault" value='familyGuest' onChange={(e) => { this.checked(e) }} />
-                                <label class="" for="Radio3">
+                            <div className="">
+                                <input className="" type="radio" name="flexRadioDefault" value='familyGuest'
+                                       // checked={this.context.typeofResident === 'familyGuest'}
+                                       onChange={(e) => { this.checked(e); this.context.handleTypeofResident('familyGuest') }}
+                                />
+                                <label className="" htmlFor="Radio3">
                                     بستگان درجه یک
                                 </label>
                             </div>
@@ -45,25 +319,34 @@ class MainRegister extends Component {
             {
                 label: 'مشخصات اولیه',
                 name: 'step 1',
-                content: ""
+                content: "",
+                // validator: this.context.typeofResident === 'familyGuest' ? this.familyGuestValidation :
+                //     (this.context.typeofResident === 'otherGuest' ? this.otherGuestValidation :
+                //         (this.context.typeofResident === 'constant' ? this.constantInformationPageValidation : null)),
+
+                // validator: this.constantInformationPageValidation,
             },
             {
                 label: 'مشخصات تکمیلی',
                 name: 'step 2',
-                content: <InformationFurtherPage />
-
+                // content: <InformationFurtherPage />,
+                content: "",
+                // validator: this.fgInformationFurtherPageValidation,
             },
             {
                 label: 'مشخصات بستگان',
                 name: 'step 3',
-                content: <InformationFamilyPage />
+                // content: <InformationFamilyPage />,
+                content: "",
+                // validator: this.cInformationFamilyPageValidation,
             },
             {
                 label: 'آپلود مدارک',
                 name: 'step 4',
-                content: <UploadPage />
+                // content: <UploadPage />
+                content: "",
             }
-        ]
+        ],
     }
 
     checked = (e) => {
@@ -73,19 +356,47 @@ class MainRegister extends Component {
         switch (type) {
             case 'constant': {
                 let updatedState = [...this.state.steps];
-                updatedState[1].content = <InformationPage />;
+                updatedState[1].content = <CInformationPage />;
+                updatedState[2].content = <CInformationFurtherPage />;
+                updatedState[3].content = <CInformationFamilyPage />;
+                updatedState[4].content = <CUploadPage />;
+
+                updatedState[1].validator = this.constantInformationPageValidation;
+                updatedState[2].validator = this.cInformationFurtherPageValidation;
+                updatedState[3].validator = this.cInformationFamilyPageValidation;
+
                 this.setState({ steps: updatedState })
                 break;
             }
+
             case 'otherGuest': {
                 let updatedState = [...this.state.steps];
-                updatedState[1].content = <FamilyGuest />;
+
+                updatedState[1].content = <OGInformationPage />;
+                updatedState[2].content = <OGInformationFurtherPage />;
+                updatedState[3].content = <OGInformationFamilyPage />;
+                updatedState[4].content = <OGUploadPage />;
+
+                updatedState[1].validator = this.otherGuestValidation;
+                updatedState[2].validator = this.ogInformationFurtherPageValidation;
+                updatedState[3].validator = this.ogInformationFamilyPageValidation;
+
                 this.setState({ steps: updatedState })
                 break;
             }
-            case 'otherGuest': {
+
+            case 'familyGuest': {
                 let updatedState = [...this.state.steps];
-                updatedState[1].content = <OtherGuest />;;
+
+                updatedState[1].content = <FGInformationPage />;
+                updatedState[2].content = <FGInformationFurtherPage />;
+                updatedState[3].content = <FGInformationFamilyPage />;
+                updatedState[4].content = <FGUploadPage />;
+
+                updatedState[1].validator = this.familyGuestValidation;
+                updatedState[2].validator = this.fgInformationFurtherPageValidation;
+                updatedState[3].validator = this.fgInformationFamilyPageValidation;
+
                 this.setState({ steps: updatedState })
                 break;
             }

@@ -39,7 +39,7 @@ class EditFloorAndUnit extends Component {
                     <div className="back-btn">
                         <Link to="/booking">
                             بازگشت
-                            <i class="bi bi-caret-left-fill"></i>
+                            <i class="bi bi-caret-left-fill"/>
                         </Link>
                     </div>
 
