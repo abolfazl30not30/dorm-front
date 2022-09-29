@@ -85,6 +85,8 @@ class MainPage extends Component {
                 address: '',
                 home_tel: '',
                 resident_tel: '',
+                admissionStartDate: '',
+                admissionEndDate: '',
             },
 
             // ----------------------- <FGInformationFurtherPage /> information
@@ -211,6 +213,8 @@ class MainPage extends Component {
                 home_tel_telephoneReg: '',
                 resident_tel_requiredReg: '',
                 resident_tel_telephoneReg: '',
+                admissionStartDate_requiredReg: '',
+                admissionEndDate_requiredReg: '',
             },
 
             // ----------------------- <FGInformationFurtherPage /> information validations

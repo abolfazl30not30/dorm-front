@@ -1,10 +1,24 @@
 import React, { Component } from 'react'
 import "../../../../../style/registerPage.css"
 import BuildingContext from "../../../../../contexts/Building";
+import {DatePicker} from "react-persian-datepicker";
 class CInformationFurtherPage extends Component {
     static contextType = BuildingContext;
 
-    state = {  }
+    state = {
+        calStyles : {
+            calendarContainer: "calendarContainer",
+            dayPickerContainer: "dayPickerContainer",
+            monthsList: "monthsList",
+            daysOfWeek: "daysOfWeek",
+            dayWrapper: "dayWrapper",
+            selected: "selected",
+            heading: "heading",
+            next: "next",
+            prev: "prev",
+            title: "title",
+        }
+    }
     render() {
         return (
             <>
@@ -65,6 +79,47 @@ class CInformationFurtherPage extends Component {
                                 (this.context.constantInformationFurtherValidation.home_tel_telephoneReg === false && this.context.constantInformationFurtherValidation.home_tel_requiredReg === true)
                                     ? <small
                                         className="text-danger">{this.context.errors['homeTelephoneReg']}</small>
+                                    : <div/>
+                            }
+
+                        </div>
+                        <div className="input-group-register col-6">
+                            <DatePicker calendarStyles={this.state.calStyles}
+                                        inputFormat="jYYYY/jM/jD"
+                                        className={`input form-control ${this.context.constantInformationFurtherValidation.admissionStartDate_requiredReg === false ? "is-invalid" : ""}`}
+                                        value={this.context.constantInformationFurther.admissionStartDate}
+                                        onChange={(value) =>  this.context.handleDates(value, 'constantInformationFurther', 'admissionStartDate')}
+                            />
+                            <label className="placeholder" style={{right: this.context.constantInformationFurtherValidation.admissionStartDate_requiredReg === false ? '35px' : '12px'}}>
+                                تاریخ شروع پذیرش
+                                <span style={{color : 'red'}}>*</span>
+                            </label>
+
+                            {
+                                this.context.constantInformationFurtherValidation.admissionStartDate_requiredReg === false
+                                    ? <small
+                                        className="text-danger">{this.context.errors['required']}</small>
+                                    : <div/>
+                            }
+
+                        </div>
+
+                        <div className="input-group-register col-6">
+                            <DatePicker calendarStyles={this.state.calStyles}
+                                        inputFormat="jYYYY/jM/jD"
+                                        className={`input form-control ${this.context.constantInformationFurtherValidation.admissionEndDate_requiredReg === false ? "is-invalid" : ""}`}
+                                        value={this.context.constantInformationFurther.admissionEndDate}
+                                        onChange={(value) =>  this.context.handleDates(value, 'constantInformationFurther', 'admissionEndDate')}
+                            />
+                            <label className="placeholder" style={{right: this.context.constantInformationFurtherValidation.admissionEndDate_requiredReg === false ? '35px' : '12px'}}>
+                                تاریخ اتمام پذیرش
+                                <span style={{color : 'red'}}>*</span>
+                            </label>
+
+                            {
+                                this.context.constantInformationFurtherValidation.admissionEndDate_requiredReg === false
+                                    ? <small
+                                        className="text-danger">{this.context.errors['required']}</small>
                                     : <div/>
                             }
 
