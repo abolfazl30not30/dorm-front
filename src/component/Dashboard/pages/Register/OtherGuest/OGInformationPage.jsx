@@ -1,10 +1,24 @@
 import React, { Component } from 'react';
 import BuildingContext from "../../../../../contexts/Building";
+import {DatePicker} from "react-persian-datepicker";
 
 class OGInformationPage extends Component {
     static contextType = BuildingContext;
 
-    state = {  }
+    state = {
+        calStyles : {
+            calendarContainer: "calendarContainer",
+            dayPickerContainer: "dayPickerContainer",
+            monthsList: "monthsList",
+            daysOfWeek: "daysOfWeek",
+            dayWrapper: "dayWrapper",
+            selected: "selected",
+            heading: "heading",
+            next: "next",
+            prev: "prev",
+            title: "title",
+        }
+    }
     render() {
         return (
             <>
@@ -99,13 +113,22 @@ class OGInformationPage extends Component {
                             <label className="placeholder">محل صدور</label>
                         </div>
                         <div className="input-group-register col-4">
-                            <input type="text"
-                                   className={`input form-control ${this.context.otherGuestInformationValidation.admissionStartDate_requiredReg === false ? "is-invalid" : ""}`}
-                                   value={this.context.otherGuestInformation.admissionStartDate}
-                                   onChange={(e) =>  this.context.handleFields(e, 'otherGuestInformation', 'admissionStartDate')}
-                                   placeholder=" "
+                            {/*<input type="text"*/}
+                            {/*       className={`input form-control ${this.context.otherGuestInformationValidation.admissionStartDate_requiredReg === false ? "is-invalid" : ""}`}*/}
+                            {/*       value={this.context.otherGuestInformation.admissionStartDate}*/}
+                            {/*       onChange={(e) =>  this.context.handleFields(e, 'otherGuestInformation', 'admissionStartDate')}*/}
+                            {/*       placeholder=" "*/}
+                            {/*/>*/}
+                            <DatePicker calendarStyles={this.state.calStyles}
+                                        inputFormat="jYYYY/jM/jD"
+                                        className={`input form-control ${this.context.otherGuestInformationValidation.admissionStartDate_requiredReg === false ? "is-invalid" : ""}`}
+                                        value={this.context.otherGuestInformation.admissionStartDate}
+                                        onChange={(value) =>  this.context.handleDates(value, 'otherGuestInformation', 'admissionStartDate')}
                             />
-                            <label className="placeholder" style={{right: this.context.otherGuestInformationValidation.admissionStartDate_requiredReg === false ? '35px' : '12px'}}>تاریخ شروع پذیرش<span style={{color : 'red'}}>*</span></label>
+                            <label className="placeholder" style={{right: this.context.otherGuestInformationValidation.admissionStartDate_requiredReg === false ? '35px' : '12px'}}>
+                                تاریخ شروع پذیرش
+                                <span style={{color : 'red'}}>*</span>
+                            </label>
 
                             {
                                 this.context.otherGuestInformationValidation.admissionStartDate_requiredReg === false
@@ -116,11 +139,11 @@ class OGInformationPage extends Component {
 
                         </div>
                         <div className="input-group-register col-4">
-                            <input type="text"
-                                   className={`input form-control ${this.context.otherGuestInformationValidation.admissionEndDate_requiredReg === false ? "is-invalid" : ""}`}
-                                   value={this.context.otherGuestInformation.admissionEndDate}
-                                   onChange={(e) =>  this.context.handleFields(e, 'otherGuestInformation', 'admissionEndDate')}
-                                   placeholder=" "
+                            <DatePicker calendarStyles={this.state.calStyles}
+                                        inputFormat="jYYYY/jM/jD"
+                                        className={`input form-control ${this.context.otherGuestInformationValidation.admissionEndDate_requiredReg === false ? "is-invalid" : ""}`}
+                                        value={this.context.otherGuestInformation.admissionEndDate}
+                                        onChange={(value) =>  this.context.handleDates(value, 'otherGuestInformation', 'admissionEndDate')}
                             />
                             <label className="placeholder" style={{right: this.context.otherGuestInformationValidation.admissionEndDate_requiredReg === false ? '35px' : '12px'}}>
                                 تاریخ اتمام پذیرش
@@ -136,11 +159,11 @@ class OGInformationPage extends Component {
 
                         </div>
                         <div className="input-group-register col-4">
-                            <input type="text"
-                                   className={`input form-control`}
-                                   value={this.context.otherGuestInformation.paymentDate}
-                                   onChange={(e) =>  this.context.handleFields(e, 'otherGuestInformation', 'paymentDate')}
-                                   placeholder=" "
+                            <DatePicker calendarStyles={this.state.calStyles}
+                                        inputFormat="jYYYY/jM/jD"
+                                        className={`input form-control`}
+                                        value={this.context.otherGuestInformation.paymentDate}
+                                        onChange={(value) =>  this.context.handleDates(value, 'otherGuestInformation', 'paymentDate')}
                             />
                             <label className="placeholder">تاریخ پرداخت</label>
                         </div>
@@ -202,11 +225,11 @@ class OGInformationPage extends Component {
 
                         </div>
                         <div className="input-group-register col-4">
-                            <input type="text"
-                                   className={`input form-control`}
-                                   value={this.context.otherGuestInformation.birthDate}
-                                   onChange={(e) =>  this.context.handleFields(e, 'otherGuestInformation', 'birthDate')}
-                                   placeholder=" "
+                            <DatePicker calendarStyles={this.state.calStyles}
+                                        inputFormat="jYYYY/jM/jD"
+                                        className={`input form-control`}
+                                        value={this.context.otherGuestInformation.birthDate}
+                                        onChange={(value) =>  this.context.handleDates(value, 'otherGuestInformation', 'birthDate')}
                             />
                             <label className="placeholder">تاریخ تولد</label>
                         </div>

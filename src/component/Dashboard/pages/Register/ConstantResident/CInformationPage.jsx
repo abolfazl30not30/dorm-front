@@ -1,12 +1,24 @@
 import React, { Component } from 'react'
 import "../../../../../style/registerPage.css"
 import BuildingContext from "../../../../../contexts/Building";
+import {DatePicker} from "react-persian-datepicker";
 
 class CInformationPage extends Component {
     static contextType = BuildingContext;
 
     state = {
-
+        calStyles : {
+            calendarContainer: "calendarContainer",
+            dayPickerContainer: "dayPickerContainer",
+            monthsList: "monthsList",
+            daysOfWeek: "daysOfWeek",
+            dayWrapper: "dayWrapper",
+            selected: "selected",
+            heading: "heading",
+            next: "next",
+            prev: "prev",
+            title: "title",
+        }
     }
 
     render() {
@@ -142,13 +154,19 @@ class CInformationPage extends Component {
                             }
 
                         </div>
-                        <div className="input-group-register col-4">
-                            <input type="text"
-                                   className={`input form-control ${this.context.constantInformationPageValidation.birthDate_requiredReg === false ? "is-invalid" : ""}`}
-                                   value={this.context.constantInformationPage.birthDate} // فقعلا فقط required
-                                   onChange={(e) =>  this.context.handleFields(e, 'constantInformationPage', 'birthDate')}
-                                   placeholder=" "
+                        <div className="input-group-register col-4 date-container">
+                            <DatePicker calendarStyles={this.state.calStyles}
+                                        inputFormat="jYYYY/jM/jD"
+                                        className={`input form-control ${this.context.constantInformationPageValidation.birthDate_requiredReg === false ? "is-invalid" : ""}`}
+                                        value={this.context.constantInformationPage.birthDate}
+                                        onChange={(value) =>  this.context.handleDates(value, 'constantInformationPage', 'birthDate')}
                             />
+                            {/*<input type="text"*/}
+                            {/*       className={`input form-control ${this.context.constantInformationPageValidation.birthDate_requiredReg === false ? "is-invalid" : ""}`}*/}
+                            {/*       value={this.context.constantInformationPage.birthDate} // فقعلا فقط required*/}
+                            {/*       onChange={(e) =>  this.context.handleFields(e, 'constantInformationPage', 'birthDate')}*/}
+                            {/*       placeholder=" "*/}
+                            {/*/>*/}
                             <label className="placeholder" style={{right: this.context.constantInformationPageValidation.birthDate_requiredReg === false ? '35px' : '12px'}}>
                                 تاریخ تولد
                                 <span style={{color : 'red'}}>*</span>

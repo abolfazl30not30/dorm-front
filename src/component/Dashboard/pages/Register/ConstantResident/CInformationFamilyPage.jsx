@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
 import "../../../../../style/registerPage.css"
 import BuildingContext from "../../../../../contexts/Building";
+import { Calendar, DatePicker } from 'react-persian-datepicker';
 
 class CInformationFamilyPage extends Component {
     static contextType = BuildingContext;
 
-    state = {  }
+    state = {}
+
     render() {
         return (
             <>

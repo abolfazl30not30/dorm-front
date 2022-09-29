@@ -306,6 +306,7 @@ class MainPage extends Component {
                         handleTypeofResident: this.handleTypeofResident,
                         handleUnitNumber: this.handleUnitNumber,
                         handleFields: this.handleFields,
+                        handleDates: this.handleDates,
                         handleValidations: this.handleValidations,
                         handleSpecificValidations: this.handleSpecificValidations,}}
                     >
@@ -343,6 +344,12 @@ class MainPage extends Component {
         this.setState({ fields: newFields });
     }
 
+    handleDates = (value, residentType, field) => {
+        let newFields = {...this.state.fields};
+        newFields[residentType][field] = value
+        this.setState({ fields: newFields });
+    }
+
     handleValidations = (fields, names) => {
         let newValidations = {...this.state.validations};
         for (let i = 0; i < names.length; i++) {
@@ -362,7 +369,7 @@ class MainPage extends Component {
         // newValidations[name] = field;
         this.setState({specificValidations : newSpecificValidations});
 
-        // console.log(this.state.fields)
+        console.log(this.state.fields)
         // console.log(this.state.fields.otherGuestInformationFurther)
     }
 

@@ -104,7 +104,7 @@ class MainRegister extends Component {
         let nationalCode_requiredReg = !requiredReg.test(this.context.otherGuestInformation.nationalCode);
         let certificateNumber_requiredReg = !requiredReg.test(this.context.otherGuestInformation.certificateNumber);
         let admissionStartDate_requiredReg = !requiredReg.test(this.context.otherGuestInformation.admissionStartDate);
-        let admissionEndDate_requiredReg = !requiredReg.test(this.context.otherGuestInformationValidation.admissionEndDate);
+        let admissionEndDate_requiredReg = !requiredReg.test(this.context.otherGuestInformation.admissionEndDate);
 
         let nationalCode_numberReg = numberReg.test(this.context.otherGuestInformation.nationalCode);
         let certificateNumber_numberReg = numberReg.test(this.context.otherGuestInformation.certificateNumber);
