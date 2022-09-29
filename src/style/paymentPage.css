@@ -31,3 +31,37 @@
     appearance: none;
     border-radius: 0.375rem;
 }
+.close-btn-div{
+    position: absolute;
+    top:0;
+    left: 0;
+}
+.third-section .uploadBtn{
+    background-color: transparent;
+    border:none;
+    color: #86b7fe;
+}
+.third-section .uploadBtn:hover{
+    color:#0c63e4;
+}
+.third-section .file-container{
+    background-color: #fff;
+    width: 35%;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    border-radius: 10px;
+    box-shadow: 0 0 3px  rgba(0, 0, 0, 0.25);
+    justify-content: space-around;
+}
+.third-section .file-container h6{
+    margin-top: 10px;
+}
+.third-section .deleteBtn{
+    background-color: transparent;
+    border:none;
+    color: rgb(241 65 108);
+}
+.third-section .deleteBtn:hover{
+    color: rgb(245, 40, 92);
+}

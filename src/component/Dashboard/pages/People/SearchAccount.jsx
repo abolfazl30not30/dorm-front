@@ -9,70 +9,37 @@ import {AiOutlineBarcode, AiOutlineUser} from "react-icons/ai";
 import {BsTelephone} from "react-icons/bs";
 import {HiOutlineMailOpen} from "react-icons/hi";
 import {Link} from "react-router-dom"
+import Form from "react-bootstrap/Form";
+import {BiSearch} from "react-icons/bi";
 
 class SearchAccount extends Component {
     state = {
         placeholder: '',
-        accountFound: [
-            {
-                "name": "ali",
-                "phone": "09123231",
-                "email": "asd@gmail.com",
-                "nationalCode": "12312313"
-            },
-            {
-                "name": "ali",
-                "phone": "09123231",
-                "email": "asd@gmail.com",
-                "nationalCode": "12312313"
-            },
-            {
-                "name": "ali",
-                "phone": "09123231",
-                "email": "asd@gmail.com",
-                "nationalCode": "12312313"
-            },
-            {
-                "name": "ali",
-                "phone": "09123231",
-                "email": "asd@gmail.com",
-                "nationalCode": "12312313"
-            }
-        ]
+        accountFound: [],
+        searchInput:"",
+        searchType:"firstName",
     }
 
     render() {
         return (
             <>
-                <div className='search-container'>
-                    <label htmlFor="orders" className='m-2'>براساس:</label>
-                    <select className='form-select ms-3' style={{width: '20%'}} name="order" form="order-form"
-                            onChange={this.handlePlaceHolder}>
-                        <option value="national-code">کدملی</option>
-                        <option value="name">نام</option>
-                        <option value="phone-number">شماره تلفن</option>
-                    </select>
-
-                    <input className="form-control ms-3" type='text'
-                           placeholder='جستجو'/> {/*placeholder = {this.state.placeholder}*/}
-                    {/*<Accordion defaultActiveKey="0" className='col-3'>
-                            <Accordion.Item eventKey="0">
-                                <Accordion.Header>بر اساس</Accordion.Header>
-                                <Accordion.Body>
-                                    <form>
-                                        <input type="radio" name="order" value="national-code" className='m-2'/>
-                                            <label>کدملی</label><br />
-                                        <input type="radio" name="order" value="name" className='m-2'/>
-                                            <label>نام</label><br />
-                                        <input type="radio" name="order" value="phone-number" className='m-2'/>
-                                            <label>شماره تلفن</label>
-                                    </form>
-
-                                </Accordion.Body>
-                            </Accordion.Item>
-                        </Accordion>*/}
-                    <button className='btn btn-outline-primary ms-3'><IoIosSearch size={30} className='search-logo'/>
-                    </button>
+                <div className="row align-items-center">
+                    <div className="col-1"><label>براساس:</label></div>
+                    <div className="col-3 " style={{paddingLeft: "0"}}>
+                        <Form.Select aria-label="Default select example" value={this.state.searchType} onChange={(e)=>{this.setState({searchType:e.target.value})}}>
+                            <option value="firstName">نام و نام خانوادگی</option>
+                            <option value="nationalCode">کد ملی</option>
+                            <option value="phoneNumber">شماره تلفن</option>
+                        </Form.Select>
+                    </div>
+                    <div className="input-group-register col-7 px-0" style={{paddingRight: "0"}}>
+                        <input type="text" id="inputSearch" className="input" placeholder=" " style={{padding:"6px"}} onChange={(e)=>{this.handleSearchInput(e)}}/>
+                        <label className="placeholder">جستوجـو</label>
+                    </div>
+                    <div className="col-1" style={{paddingRight: "0"}}>
+                        <button className="btn outline-secondary"><BiSearch fontSize="25px" onClick={this.handleSearchBtn}/>
+                        </button>
+                    </div>
                 </div>
                 <div className='result'>
                     {this.state.accountFound.map(accountFound => (
@@ -94,29 +61,29 @@ class SearchAccount extends Component {
                                         <div className='col p-2'>
                                             <AiOutlineUser className='ms-2'/>
                                             <label> نام :</label>
-                                            {accountFound.name}
+                                            {accountFound.firstName}
                                         </div>
                                         <div className='col p-2'>
                                             <AiOutlineUser className='ms-2'/>
                                             <label> نام خانوادگی :</label>
-                                            {accountFound.name}
+                                            {accountFound.lastName}
                                         </div>
+                                        <div className='col p-2'>
+                                            <HiOutlineMailOpen className='ms-2'/>
+                                            <label> نام پدر :</label>
+                                            {accountFound.fatherName}
+                                        </div>
+                                    </div>
+                                    <div>
                                         <div className='col p-2'>
                                             <AiOutlineBarcode className='ms-2'/>
                                             <label> کد ملی :</label>
                                             {accountFound.nationalCode}
                                         </div>
-                                    </div>
-                                    <div>
                                         <div className='col p-2'>
                                             <BsTelephone className='ms-2'/>
                                             <label> شماره تلفن :</label>
-                                            {accountFound.phone}
-                                        </div>
-                                        <div className='col p-2'>
-                                            <HiOutlineMailOpen className='ms-2'/>
-                                            <label> ایمیل :</label>
-                                            {accountFound.email}
+                                            {accountFound.phoneNumber}
                                         </div>
                                     </div>
                                 </div>
@@ -129,9 +96,14 @@ class SearchAccount extends Component {
         );
     }
 
-    handlePlaceHolder = () => {
-        this.setState({placeHolder: '123'})
-        console.log(this.state.placeholder)
+    //search
+    handleSearchInput = (e) =>{
+        const value = e.target.value;
+        this.setState({searchInput:value});
+    }
+    handleSearchBtn = async () =>{
+        const response = await fetch(`http://api.saadatportal.com/api/v1/characteristic/search?${this.state.searchType}=${this.state.searchInput}`).then((response) => response.json())
+            .then((data) => this.setState({accountFound: data}));
     }
 }
 
