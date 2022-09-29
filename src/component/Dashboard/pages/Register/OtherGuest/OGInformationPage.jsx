@@ -113,12 +113,6 @@ class OGInformationPage extends Component {
                             <label className="placeholder">محل صدور</label>
                         </div>
                         <div className="input-group-register col-4">
-                            {/*<input type="text"*/}
-                            {/*       className={`input form-control ${this.context.otherGuestInformationValidation.admissionStartDate_requiredReg === false ? "is-invalid" : ""}`}*/}
-                            {/*       value={this.context.otherGuestInformation.admissionStartDate}*/}
-                            {/*       onChange={(e) =>  this.context.handleFields(e, 'otherGuestInformation', 'admissionStartDate')}*/}
-                            {/*       placeholder=" "*/}
-                            {/*/>*/}
                             <DatePicker calendarStyles={this.state.calStyles}
                                         inputFormat="jYYYY/jM/jD"
                                         className={`input form-control ${this.context.otherGuestInformationValidation.admissionStartDate_requiredReg === false ? "is-invalid" : ""}`}

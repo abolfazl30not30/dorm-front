@@ -118,12 +118,6 @@ class FGInformationPage extends Component {
                             <label className="placeholder">محل صدور</label>
                         </div>
                         <div className="input-group-register col-4">
-                            {/*<input type="text"*/}
-                            {/*       className="input form-control"*/}
-                            {/*       value={this.context.familyGuestInformation.birthDate}*/}
-                            {/*       onChange={(e) => this.context.handleFields(e, 'familyGuestInformation', 'birthDate')}*/}
-                            {/*       placeholder=" "*/}
-                            {/*/>*/}
                             <DatePicker calendarStyles={this.state.calStyles}
                                         inputFormat="jYYYY/jM/jD"
                                         className="input form-control"
