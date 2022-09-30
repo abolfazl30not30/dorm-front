@@ -21,8 +21,6 @@ import {containerClasses} from "@mui/material";
 
 class PaymentPage extends Component {
     state = {
-        date: '',
-        selectedType: '',
         choices: [
             'محصولات بهداشتی',
             'بیمه',
@@ -57,6 +55,11 @@ class PaymentPage extends Component {
         },
         isUpload: false,
         uploadFile: [],
+        date: '',
+        selectedType: '',
+        price:"",
+        description: "",
+        priceType:"IRR",
 
 
     }
@@ -65,7 +68,6 @@ class PaymentPage extends Component {
         e.preventDefault();
         // console.log(this.state.inputText)
     }
-
     render() {
         return (
             <>
@@ -84,14 +86,14 @@ class PaymentPage extends Component {
                         <label for="price">مبلغ :</label>
                         <div className="row" style={{marginTop: "20px"}}>
                             <div className='col-3 m-0 p-0'>
-                                <select className='form-select' style={{height: "50px"}}>
+                                <select className='form-select' style={{height: "50px"}} value={this.state.priceType} onChange={(e)=>{this.handlePriceType(e)}}>
                                     <option value="IRR">ریال</option>
                                     <option value="USD">دلار</option>
                                 </select>
                             </div>
                             <div className='form-group col-9 m-0 p-0'>
                                 <input id="price" type='text' className='form-control  input '
-                                       style={{height: "50px", width: "90%"}} onChange={(e)=>{this.setState({price:e.target.value})}}/>
+                                       style={{height: "50px", width: "90%"}} onChange={(e)=>{this.handlePriceInput(e)}}/>
                                 {/*<TextField id="filled-basic" label="قیمت" variant="filled" />*/}
                             </div>
                         </div>
@@ -155,13 +157,13 @@ class PaymentPage extends Component {
                 <div className='second-section d-flex flex-wrap justify-content-start mr-3 row' style={{height: '50%'}}>
                     <div className='col-4 mt-5 mb-3 date-container'>
                         <label className='mb-3'>تاریخ: </label>
-                        <DatePicker calendarStyles={this.state.styles} onChange={value =>{this.setState({date:value})}}/>
+                        <DatePicker calendarStyles={this.state.styles} onChange={value=>{this.handleDateInput(value)}}/>
                     </div>
                     <div className='col-8'>
                         <Form>
                             <Form.Group className="mb-3 mt-5" controlId="exampleForm.ControlTextarea1">
                                 <Form.Label style={{marginRight: '30px'}}>توضیحات: </Form.Label>
-                                <Form.Control as="textarea" rows={8} style={{marginRight: '30px', width: '95%'}} onChange={(e)=>{this.setState({description:e.target.value})}}/>
+                                <Form.Control as="textarea" rows={8} style={{marginRight: '30px', width: '95%'}} onChange={(e)=>{this.handleDescriptionInput(e)}}/>
                             </Form.Group>
                         </Form>
                     </div>
@@ -204,6 +206,7 @@ class PaymentPage extends Component {
                     <button type="button"
                             className="btn btn-success btn-lg btn-block mr-2"
                             style={{width: '100%'}}
+                            onClick={this.handleSubmitPayment}
                     >
                         ثبت
                     </button>
@@ -239,11 +242,12 @@ class PaymentPage extends Component {
     }
 
     handleCloseType = () => {
-        this.setState({showType: false})
+        this.setState({showType: false});
     }
 
     handleAlignment = (event, newAlignment) => {
         this.setState({selectedType: newAlignment});
+
     };
     handleInputChange = (e) => {
         this.setState({inputType: e.target.value});
@@ -269,8 +273,9 @@ class PaymentPage extends Component {
     handleUpload = async () =>{
         let formData = new FormData();
         console.log(this.state.uploadFile[0]);
+
         formData.append('file',this.state.uploadFile[0]);
-        let paymentFileId ;
+
         await fetch('http://localhost:8089/api/v1/file', {
             method: 'POST',
             // headers: {
@@ -281,7 +286,7 @@ class PaymentPage extends Component {
         }).then((response) => response.json())
             .then((result) => {
                 console.log('Success:', result);
-                paymentFileId = result.message.id;
+                this.setState({fileId : result.message.id})
                 this.setState({isUpload:true})
             })
             .catch((error) => {
@@ -300,11 +305,40 @@ class PaymentPage extends Component {
     }
 
     handleDescriptionInput = (event)=>{
-        this.setState({descriptino:event.target.value})
+        this.setState({description:event.target.value})
     }
 
-    handleDateInput =(value)=>{
+    handleDateInput = (value)=>{
         this.setState({date:value})
+        let date = new Date(value._d);
+        console.log(date.getDate())
+    }
+    handlePriceType = (event) =>{
+        this.setState({priceType:event.target.value})
+    }
+
+    handleSubmitPayment = async()=>{
+        const rawResponse = await fetch('http://api.saadatportal.com/api/v1/paymentHistory', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(
+                {
+                    date: "1400/01/01 00:00:00",
+                    unit: this.state.priceType,
+                    value: this.state.price,
+                    type: this.state.selectedType,
+                    paymentType:"receive",
+                    description: this.state.description,
+                    parentId: "",
+                    parentType:"Personnel",
+                }
+            )
+        });
+        var content = await rawResponse.json();
+        console.log(content);
     }
 }
 
