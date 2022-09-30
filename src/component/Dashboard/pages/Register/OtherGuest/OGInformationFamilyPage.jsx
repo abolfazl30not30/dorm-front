@@ -23,24 +23,6 @@ class OGInformationFamilyPage extends Component {
                                 required={true}
                                 label={'نام و نام خانوادگی'}
                             />
-                            {/*<input type="text"*/}
-                            {/*       className={`input form-control ${this.context.otherGuestInformationFamilyValidation.firstPerson_FullName_requiredReg === false ? "is-invalid" : ""}`}*/}
-                            {/*       value={this.context.otherGuestInformationFamily.firstPerson_FullName}*/}
-                            {/*       onChange={(e) =>  this.context.handleFields(e, 'otherGuestInformationFamily', 'firstPerson_FullName')}*/}
-                            {/*       placeholder=" "*/}
-                            {/*/>*/}
-                            {/*<label className="placeholder"  style={{right: this.context.otherGuestInformationFamilyValidation.firstPerson_FullName_requiredReg === false ? '35px' : '12px'}}>*/}
-                            {/*    نام و نام خانوادگی*/}
-                            {/*    <span style={{color : 'red'}}>*</span>*/}
-                            {/*</label>*/}
-
-                            {/*{*/}
-                            {/*    this.context.otherGuestInformationFamilyValidation.firstPerson_FullName_requiredReg === false*/}
-                            {/*        ? <small*/}
-                            {/*            className="text-danger">{this.context.errors['required']}</small>*/}
-                            {/*        : <div/>*/}
-                            {/*}*/}
-
                         </div>
                         <div className="input-group-register col-3">
                             <CustomInput
@@ -52,33 +34,6 @@ class OGInformationFamilyPage extends Component {
                                 required={true}
                                 label={'شماره تماس'}
                             />
-                            {/*<input type="text"*/}
-                            {/*       className={`input form-control ${(this.context.otherGuestInformationFamilyValidation.firstPerson_PhoneNumber_requiredReg &&*/}
-                            {/*           this.context.otherGuestInformationFamilyValidation.firstPerson_PhoneNumber_telephoneReg) === false ? "is-invalid" : ""}`}*/}
-                            {/*       value={this.context.otherGuestInformationFamily.firstPerson_PhoneNumber}*/}
-                            {/*       onChange={(e) =>  this.context.handleFields(e, 'otherGuestInformationFamily', 'firstPerson_PhoneNumber')}*/}
-                            {/*       placeholder=" "*/}
-                            {/*/>*/}
-                            {/*<label className="placeholder" style={{right: (this.context.otherGuestInformationFamilyValidation.firstPerson_PhoneNumber_requiredReg &&*/}
-                            {/*        this.context.otherGuestInformationFamilyValidation.firstPerson_PhoneNumber_telephoneReg) === false ? '35px' : '12px'}}>*/}
-                            {/*    شماره تماس*/}
-                            {/*    <span style={{color : 'red'}}>*</span>*/}
-                            {/*</label>*/}
-
-                            {/*{*/}
-                            {/*    this.context.otherGuestInformationFamilyValidation.firstPerson_PhoneNumber_requiredReg === false*/}
-                            {/*        ? <small*/}
-                            {/*            className="text-danger">{this.context.errors['required']}</small>*/}
-                            {/*        : <div/>*/}
-                            {/*}*/}
-                            {/*{*/}
-                            {/*    (this.context.otherGuestInformationFamilyValidation.firstPerson_PhoneNumber_requiredReg === true &&*/}
-                            {/*        this.context.otherGuestInformationFamilyValidation.firstPerson_PhoneNumber_telephoneReg === false)*/}
-                            {/*        ? <small*/}
-                            {/*            className="text-danger">{this.context.errors['telephoneRegex']}</small>*/}
-                            {/*        : <div/>*/}
-                            {/*}*/}
-
                         </div>
                         <div className="input-group-register col-3">
                             <CustomInput
@@ -87,14 +42,6 @@ class OGInformationFamilyPage extends Component {
                                 valueOfInputString={'firstPerson_FatherName'}
                                 label={'نام  پدر'}
                             />
-                            {/*<input type="text"*/}
-                            {/*       className={`input form-control`}*/}
-                            {/*       value={this.context.otherGuestInformationFamily.firstPerson_FatherName}*/}
-                            {/*       onChange={(e) =>  this.context.handleFields(e, 'otherGuestInformationFamily', 'firstPerson_FatherName')}*/}
-                            {/*       placeholder=" "*/}
-                            {/*/>*/}
-                            {/*<label className="placeholder">نام  پدر</label>*/}
-
                         </div>
                         <div className="input-group-register col-3">
                             <select className='input'

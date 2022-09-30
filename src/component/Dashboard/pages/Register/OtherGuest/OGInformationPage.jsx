@@ -27,91 +27,41 @@ class OGInformationPage extends Component {
                     <h2>مهمان (متفرقه)</h2>
                     <div className='d-flex flex-wrap justify-content-start'>
                         <div className="input-group-register col-4">
-                            <input type="text"
-                                   className={`input form-control ${this.context.otherGuestInformationValidation.fullName_requiredReg === false ? "is-invalid" : ""}`}
-                                   value={this.context.otherGuestInformation.fullName}
-                                   onChange={(e) =>  this.context.handleFields(e, 'otherGuestInformation', 'fullName')}
-                                   placeholder=" "
+                            <CustomInput
+                                condition1={this.context.otherGuestInformationValidation.fullName_requiredReg}
+                                value={this.context.otherGuestInformation.fullName}
+                                fieldNameString={'otherGuestInformation'}
+                                valueOfInputString={'fullName'}
+                                label={'نام و نام خانوادگی'}
                             />
-                            <label className="placeholder" style={{right: this.context.otherGuestInformationValidation.fullName_requiredReg === false ? '35px' : '12px'}}>
-                                نام و نام خانوادگی
-                                <span style={{color : 'red'}}>*</span>
-                            </label>
-
-                            {
-                                this.context.otherGuestInformationValidation.fullName_requiredReg === false
-                                    ? <small
-                                        className="text-danger">{this.context.errors['required']}</small>
-                                    : <div/>
-                            }
-
                         </div>
                         <div className="input-group-register col-4">
-                            <input type="text"
-                                   className={`input form-control ${(this.context.otherGuestInformationValidation.nationalCode_requiredReg &&
-                                       this.context.otherGuestInformationValidation.nationalCode_numberReg) === false ? "is-invalid" : ""}`}
-                                   value={this.context.otherGuestInformation.nationalCode}
-                                   onChange={(e) =>  this.context.handleFields(e, 'otherGuestInformation', 'nationalCode')}
-                                   placeholder=" "
+                            <CustomInput
+                                condition1={this.context.otherGuestInformationValidation.nationalCode_requiredReg}
+                                condition4={this.context.otherGuestInformationValidation.nationalCode_numberReg}
+                                value={this.context.otherGuestInformation.nationalCode}
+                                fieldNameString={'otherGuestInformation'}
+                                valueOfInputString={'nationalCode'}
+                                label={'کد ملی'}
                             />
-                            <label className="placeholder" style={{right: (this.context.otherGuestInformationValidation.nationalCode_requiredReg &&
-                                    this.context.otherGuestInformationValidation.nationalCode_numberReg) === false ? '35px' : '12px'}}>
-                                کد ملی
-                                <span style={{color : 'red'}}>*</span>
-                            </label>
-
-                            {
-                                this.context.otherGuestInformationValidation.nationalCode_requiredReg === false
-                                    ? <small
-                                        className="text-danger">{this.context.errors['required']}</small>
-                                    : <div/>
-                            }
-                            {
-                                (this.context.otherGuestInformationValidation.nationalCode_numberReg === false &&
-                                    this.context.otherGuestInformationValidation.nationalCode_requiredReg === true)
-                                    ? <small
-                                        className="text-danger">{this.context.errors['numberRequired']}</small>
-                                    : <div/>
-                            }
-
                         </div>
                         <div className="input-group-register col-4">
-                            <input type="text"
-                                   className={`input form-control ${(this.context.otherGuestInformationValidation.certificateNumber_requiredReg &&
-                                       this.context.otherGuestInformationValidation.certificateNumber_numberReg) === false ? "is-invalid" : ""}`}
-                                   value={this.context.otherGuestInformation.certificateNumber}
-                                   onChange={(e) =>  this.context.handleFields(e, 'otherGuestInformation', 'certificateNumber')}
-                                   placeholder=" "
+                            <CustomInput
+                                condition1={this.context.otherGuestInformationValidation.certificateNumber_requiredReg}
+                                condition4={this.context.otherGuestInformationValidation.certificateNumber_numberReg}
+                                value={this.context.otherGuestInformation.certificateNumber}
+                                fieldNameString={'otherGuestInformation'}
+                                valueOfInputString={'certificateNumber'}
+                                label={'شماره شناسنامه'}
                             />
-                            <label className="placeholder" style={{right: (this.context.otherGuestInformationValidation.certificateNumber_requiredReg &&
-                                    this.context.otherGuestInformationValidation.certificateNumber_numberReg) === false ? '35px' : '12px'}}>
-                                شماره شناسنامه
-                                <span style={{color : 'red'}}>*</span>
-                            </label>
-
-                            {
-                                this.context.otherGuestInformationValidation.certificateNumber_requiredReg === false
-                                    ? <small
-                                        className="text-danger">{this.context.errors['required']}</small>
-                                    : <div/>
-                            }
-                            {
-                                (this.context.otherGuestInformationValidation.certificateNumber_numberReg === false &&
-                                    this.context.otherGuestInformationValidation.certificateNumber_requiredReg === true)
-                                    ? <small
-                                        className="text-danger">{this.context.errors['numberRequired']}</small>
-                                    : <div/>
-                            }
-
                         </div>
                         <div className="input-group-register col-4">
-                            <input type="text"
-                                   className={`input form-control`}
-                                   value={this.context.otherGuestInformation.placeOfIssue}
-                                   onChange={(e) =>  this.context.handleFields(e, 'otherGuestInformation', 'placeOfIssue')}
-                                   placeholder=" "
+                            <CustomInput
+                                value={this.context.otherGuestInformation.placeOfIssue}
+                                fieldNameString={'otherGuestInformation'}
+                                valueOfInputString={'placeOfIssue'}
+                                label={'محل صدور'}
                             />
-                            <label className="placeholder">محل صدور</label>
                         </div>
                         <div className="input-group-register col-4">
                             <DatePicker calendarStyles={this.state.calStyles}
@@ -168,46 +118,27 @@ class OGInformationPage extends Component {
                                 value={this.context.otherGuestInformation.rentPaymentAmount}
                                 fieldNameString={'otherGuestInformation'}
                                 valueOfInputString={'rentPaymentAmount'}
+                                // required={true}
                                 label={'مبلغ پرداخت اجاره'}
                             />
                         </div>
                         <div className="input-group-register col-4">
-                            <input type="text"
-                                   className={`input form-control ${this.context.otherGuestInformationValidation.depositPaymentAmount_numberReg === false ? "is-invalid" : ""}`}
-                                   value={this.context.otherGuestInformation.depositPaymentAmount}
-                                   onChange={(e) =>  this.context.handleFields(e, 'otherGuestInformation', 'depositPaymentAmount')}
-                                   placeholder=" "
+                            <CustomInput
+                                condition4={this.context.otherGuestInformationValidation.depositPaymentAmount_numberReg}
+                                value={this.context.otherGuestInformation.depositPaymentAmount}
+                                fieldNameString={'otherGuestInformation'}
+                                valueOfInputString={'depositPaymentAmount'}
+                                label={'مبلغ پرداخت ودیعه'}
                             />
-                            <label className="placeholder" style={{right: this.context.otherGuestInformationValidation.depositPaymentAmount_numberReg === false ? '35px' : '12px'}}>
-                                مبلغ پرداخت ودیعه
-                            </label>
-
-                            {
-                                this.context.otherGuestInformationValidation.depositPaymentAmount_numberReg === false
-                                    ? <small
-                                        className="text-danger">{this.context.errors['numberRequired']}</small>
-                                    : <div/>
-                            }
-
                         </div>
                         <div className="input-group-register col-4">
-                            <input type="text"
-                                   className={`input form-control ${this.context.otherGuestInformationValidation.discountPaymentAmount_numberReg === false ? "is-invalid" : ""}`}
-                                   value={this.context.otherGuestInformation.discountPaymentAmount}
-                                   onChange={(e) =>  this.context.handleFields(e, 'otherGuestInformation', 'discountPaymentAmount')}
-                                   placeholder=" "
+                            <CustomInput
+                                condition4={this.context.otherGuestInformationValidation.discountPaymentAmount_numberReg}
+                                value={this.context.otherGuestInformation.discountPaymentAmount}
+                                fieldNameString={'otherGuestInformation'}
+                                valueOfInputString={'discountPaymentAmount'}
+                                label={' مبلغ پرداخت تخفیف'}
                             />
-                            <label className="placeholder" style={{right: this.context.otherGuestInformationValidation.discountPaymentAmount_numberReg === false ? '35px' : '12px'}}>
-                                مبلغ پرداخت تخفیف
-                            </label>
-
-                            {
-                                this.context.otherGuestInformationValidation.discountPaymentAmount_numberReg === false
-                                    ? <small
-                                        className="text-danger">{this.context.errors['numberRequired']}</small>
-                                    : <div/>
-                            }
-
                         </div>
                         <div className="input-group-register col-4">
                             <DatePicker calendarStyles={this.state.calStyles}

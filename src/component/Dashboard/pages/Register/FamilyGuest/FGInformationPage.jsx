@@ -34,8 +34,8 @@ class FGInformationPage extends Component {
                             <CustomInput
                                 condition1={this.context.familyGuestInformationValidation.fullName_requiredReg}
                                 value={this.context.familyGuestInformation.fullName}
-                                fieldNameString={'familyGuestInformation'} // this.context.fieldsNAmeString
-                                valueOfInputString={'fullName'} // this.context.fieldsNAmeString.valueOfInputString
+                                fieldNameString={'familyGuestInformation'}
+                                valueOfInputString={'fullName'}
                                 required={true}
                                 label={'نام و نام خانوادگی'}
                             />
@@ -45,8 +45,8 @@ class FGInformationPage extends Component {
                                 condition1={this.context.familyGuestInformationValidation.nationalCode_requiredReg}
                                 condition4={this.context.familyGuestInformationValidation.nationalCode_numberReg}
                                 value={this.context.familyGuestInformation.nationalCode}
-                                fieldNameString={'familyGuestInformation'} // this.context.fieldsNAmeString
-                                valueOfInputString={'nationalCode'} // this.context.fieldsNAmeString.valueOfInputString
+                                fieldNameString={'familyGuestInformation'}
+                                valueOfInputString={'nationalCode'}
                                 required={true}
                                 label={'کد ملی'}
                             />
@@ -56,8 +56,8 @@ class FGInformationPage extends Component {
                                 condition1={this.context.familyGuestInformationValidation.certificateNumber_requiredReg}
                                 condition4={this.context.familyGuestInformationValidation.certificateNumber_numberReg}
                                 value={this.context.familyGuestInformation.certificateNumber}
-                                fieldNameString={'familyGuestInformation'} // this.context.fieldsNAmeString
-                                valueOfInputString={'certificateNumber'} // this.context.fieldsNAmeString.valueOfInputString
+                                fieldNameString={'familyGuestInformation'}
+                                valueOfInputString={'certificateNumber'}
                                 required={true}
                                 label={'شماره شناسنامه'}
                             />
