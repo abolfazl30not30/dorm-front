@@ -16,6 +16,7 @@ class MainPage extends Component {
         typeofResident: '',
         unitNumber: "",
         unitId: "",
+        personId:"",
         fields: {
 
             //############################################################################## first page
@@ -264,12 +265,14 @@ class MainPage extends Component {
             },
             //##############################################################################
         },
+
     }
     render() {
         return (
             <>
                 <div className='d-flex flex-column pt-4 px-5'>
                     <BuildingContext.Provider value={{ unitId: this.state.unitId,
+                        personId:this.state.personId,
                         typeofResident: this.state.typeofResident,
                         unitNumber: this.state.unitNumber,
                         fields: this.state.fields,
@@ -304,6 +307,7 @@ class MainPage extends Component {
                         specificValidations : this.state.specificValidations,
                         handleTypeofResident: this.handleTypeofResident,
                         handleUnitNumber: this.handleUnitNumber,
+                        handlePersonId : this.handlePersonId,
                         handleFields: this.handleFields,
                         handleValidations: this.handleValidations,
                         handleSpecificValidations: this.handleSpecificValidations,}}
@@ -334,6 +338,9 @@ class MainPage extends Component {
     handleUnitNumber = (unitNumber, unitId) => {
         this.setState({ unitNumber: unitNumber });
         this.setState({ unitId: unitId });
+    }
+    handlePersonId = (personId) =>{
+        this.setState({personId : personId});
     }
 
     handleFields = (e, residentType, field) => {

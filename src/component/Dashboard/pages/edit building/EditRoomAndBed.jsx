@@ -128,7 +128,7 @@ class EditRoomAndBed extends Component {
 
                     <div className="row pb-5">
                         {this.state.rooms.map((room, i) => (
-                            <div className='col-6'>
+                            <div className='col-md-6 col-sm-6 col-xs-12'>
                                 <div className='room-box'>
                                     <button className="close-btn" onClick={() => {
                                         this.handleDeleteShowRoom(room)
@@ -366,9 +366,7 @@ class EditRoomAndBed extends Component {
                 id: content.id, number: 0 ,
                 description: "",
                 accessories: [],
-                beds: [
-                    {id: 21, name: 'تخت ...', empty: true},
-                ]
+                beds:[]
             }
         )
         this.setState({rooms: newRoom});

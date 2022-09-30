@@ -53,7 +53,7 @@ class EditFloorAndUnit extends Component {
 
                     <div className="row pb-5">
                         {this.state.floor.map((f, i) => (
-                            <div className="col-4 p-3">
+                            <div className="col-md-4 col-sm-6 col-xs-12 p-3">
                                 <div className="floor-box">
                                     <button className="floor-close-btn" onClick={() => { this.handleDeleteShowFloor(f) }}><AiFillCloseCircle color="#F1416C" /></button>
                                     <div className="row">
@@ -186,7 +186,7 @@ class EditFloorAndUnit extends Component {
         const content = await rawResponse.json();
         const index = this.state.floor.indexOf(f);
         const newUnit = this.state.floor[index].units.concat(
-            { id: content.id, empty: "true", number: count }
+            { id: content.id, empty: "true", number: 0 }
         )
         const updateFloor = [...this.state.floor]
         updateFloor[index].units = newUnit

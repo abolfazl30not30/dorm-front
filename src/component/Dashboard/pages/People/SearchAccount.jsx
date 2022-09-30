@@ -11,40 +11,42 @@ import {HiOutlineMailOpen} from "react-icons/hi";
 import {Link} from "react-router-dom"
 import Form from "react-bootstrap/Form";
 import {BiSearch} from "react-icons/bi";
+import BuildingContext from "../../../../contexts/Building";
 
 class SearchAccount extends Component {
+    static contextType = BuildingContext;
+
     state = {
         placeholder: '',
         accountFound: [],
         searchInput:"",
         searchType:"firstName",
     }
-
     render() {
         return (
             <>
-                <div className="row align-items-center">
-                    <div className="col-1"><label>براساس:</label></div>
-                    <div className="col-3 " style={{paddingLeft: "0"}}>
-                        <Form.Select aria-label="Default select example" value={this.state.searchType} onChange={(e)=>{this.setState({searchType:e.target.value})}}>
+                <div className="row align-items-center ">
+                    <div className="col-md-1 col-sm-2 px-0"><label>براساس:</label></div>
+                    <div className="col-md-3 col-sm-6 px-0" style={{paddingLeft: "0"}}>
+                        <Form.Select aria-label="Default select example" style={{height:"50px",fontSize:"14px"}} value={this.state.searchType} onChange={(e)=>{this.setState({searchType:e.target.value})}}>
                             <option value="firstName">نام و نام خانوادگی</option>
                             <option value="nationalCode">کد ملی</option>
                             <option value="phoneNumber">شماره تلفن</option>
                         </Form.Select>
                     </div>
-                    <div className="input-group-register col-7 px-0" style={{paddingRight: "0"}}>
-                        <input type="text" id="inputSearch" className="input" placeholder=" " style={{padding:"6px"}} onChange={(e)=>{this.handleSearchInput(e)}}/>
-                        <label className="placeholder">جستوجـو</label>
-                    </div>
-                    <div className="col-1" style={{paddingRight: "0"}}>
+                    <div className="input-group-register col-md-7 col-sm-11 px-0 d-flex" style={{paddingRight: "0"}}>
+                        <input type="text" id="inputSearch" className="input" placeholder="جسـتوجـو" style={{padding:"6px"}} onChange={(e)=>{this.handleSearchInput(e)}}/>
                         <button className="btn outline-secondary"><BiSearch fontSize="25px" onClick={this.handleSearchBtn}/>
                         </button>
                     </div>
+                    {/*<div className="col-md-1 col-sm-1" style={{paddingRight: "0"}}>*/}
+
+                    {/*</div>*/}
                 </div>
                 <div className='result'>
                     {this.state.accountFound.map(accountFound => (
                         <>
-                            <Link to="profile" className='account-found-link'>
+                            <Link to="profile" className='account-found-link' onClick={()=>{this.context.handlePersonId(accountFound.personId)}}>
                                 <div className='account-found mb-3 d-flex flex-column flex-md-row'>
                                     {/*<FiUser size={80} style={{ marginLeft: '5%', marginTop: '1%' }} />*/}
                                     <img

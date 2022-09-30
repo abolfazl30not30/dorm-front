@@ -128,7 +128,7 @@ class RoomAndBed extends Component {
         ],
 
         isLoading: false,
-        isFull: true,
+        isFull: false,
         rooms: [],
         show: false,
         showAccessory: false,
@@ -167,10 +167,17 @@ class RoomAndBed extends Component {
 
     async componentDidMount() {
         const response = await fetch(`http://api.saadatportal.com/api/v1/unit/room/${this.context.unitId}`).then((response) => response.json())
-            .then((data) => this.setState({rooms: data, isLoading: false}));
+            .then((data) => this.setState({rooms: data, isLoading: false},()=>{
+                if (data.length == 0) {
+                    this.setState({isFull: false})
+                } else {
+                    this.setState({isFull: true})
+                }
+            }));
 
         const responseUnit = await fetch(`http://api.saadatportal.com/api/v1/unit/${this.context.unitId}`).then((response) => response.json())
             .then((data) => this.setState({unit: data, isLoading: false}));
+
     }
 
     handleClose = () => {
@@ -245,15 +252,15 @@ class RoomAndBed extends Component {
                                 <div className={this.state.isFull ? "edit-btn-container" : "register-btn-container"}>
                                     <Link to="edit-room-and-bed"
                                           className={this.state.isFull ? "edit-btn" : "register-btn"}>
-                                        {this.state.isFull ? (<h6>ویرایش</h6>) : (<h6> ثبت طبقه و واحد</h6>)}
+                                        {this.state.isFull ? (<h6>ویرایش</h6>) : (<h6> ثبت اتاق و تخت</h6>)}
                                     </Link>
                                 </div>
-                                <div className="d-flex flex-wrap">
+                                <div className="d-flex flex-wrap row">
                                     {
                                         this.state.rooms.map(
                                             (room) => (
-                                                <div className="col-4">
-                                                    <div className="room-box">
+                                                <div className="col-md-4 col-sm-6 col-xs-12">
+                                                    <div className="room-box ">
                                                         <div className="row">
                                                             <div className="col-7 title">اتاق {room.number}</div>
                                                             <div className="col-5">

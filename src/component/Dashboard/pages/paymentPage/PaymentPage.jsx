@@ -58,6 +58,7 @@ class PaymentPage extends Component {
         isUpload: false,
         uploadFile: [],
 
+
     }
 
     handleClick(e) {
@@ -65,11 +66,9 @@ class PaymentPage extends Component {
         // console.log(this.state.inputText)
     }
 
-
     render() {
         return (
             <>
-
                 <div className="back-btn">
                     <Link to="/">
                         بازگشت
@@ -86,13 +85,13 @@ class PaymentPage extends Component {
                         <div className="row" style={{marginTop: "20px"}}>
                             <div className='col-3 m-0 p-0'>
                                 <select className='form-select' style={{height: "50px"}}>
-                                    <option>ریال</option>
-                                    <option>دلار</option>
+                                    <option value="IRR">ریال</option>
+                                    <option value="USD">دلار</option>
                                 </select>
                             </div>
                             <div className='form-group col-9 m-0 p-0'>
                                 <input id="price" type='text' className='form-control  input '
-                                       style={{height: "50px", width: "90%"}}/>
+                                       style={{height: "50px", width: "90%"}} onChange={(e)=>{this.setState({price:e.target.value})}}/>
                                 {/*<TextField id="filled-basic" label="قیمت" variant="filled" />*/}
                             </div>
                         </div>
@@ -150,20 +149,19 @@ class PaymentPage extends Component {
                                     </Accordion.Body>
                                 </Accordion.Item>
                             </Accordion>
-
                         </div>
                     </div>
                 </div>
                 <div className='second-section d-flex flex-wrap justify-content-start mr-3 row' style={{height: '50%'}}>
                     <div className='col-4 mt-5 mb-3 date-container'>
                         <label className='mb-3'>تاریخ: </label>
-                        <DatePicker calendarStyles={this.state.styles}/>
+                        <DatePicker calendarStyles={this.state.styles} onChange={value =>{this.setState({date:value})}}/>
                     </div>
                     <div className='col-8'>
                         <Form>
                             <Form.Group className="mb-3 mt-5" controlId="exampleForm.ControlTextarea1">
                                 <Form.Label style={{marginRight: '30px'}}>توضیحات: </Form.Label>
-                                <Form.Control as="textarea" rows={8} style={{marginRight: '30px', width: '95%'}}/>
+                                <Form.Control as="textarea" rows={8} style={{marginRight: '30px', width: '95%'}} onChange={(e)=>{this.setState({description:e.target.value})}}/>
                             </Form.Group>
                         </Form>
                     </div>
@@ -261,11 +259,13 @@ class PaymentPage extends Component {
         }
         this.setState({showType: false})
     }
+
     handleDeleteType = (index) => {
         let updateChoice = [...this.state.tempChoices];
         updateChoice.splice(index, 1);
         this.setState({tempChoices: updateChoice});
     }
+
     handleUpload = async () =>{
         let formData = new FormData();
         console.log(this.state.uploadFile[0]);
@@ -282,14 +282,29 @@ class PaymentPage extends Component {
             .then((result) => {
                 console.log('Success:', result);
                 paymentFileId = result.message.id;
+                this.setState({isUpload:true})
             })
             .catch((error) => {
                 console.error('Error:', error);
+                this.setState({isUpload:false})
             });
 
     }
+
     handleInputFile = (event) =>{
         this.setState({uploadFile : event.target.files})
+    }
+
+    handlePriceInput = (event) =>{
+        this.setState({price:event.target.value})
+    }
+
+    handleDescriptionInput = (event)=>{
+        this.setState({descriptino:event.target.value})
+    }
+
+    handleDateInput =(value)=>{
+        this.setState({date:value})
     }
 }
 

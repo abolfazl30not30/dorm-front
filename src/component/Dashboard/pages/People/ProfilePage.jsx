@@ -329,6 +329,9 @@ class ProfilePage extends Component {
     refundableAmount = createRef();
     reason = createRef();
 
+    componentDidMount() {
+
+    }
 
     render() {
         return (

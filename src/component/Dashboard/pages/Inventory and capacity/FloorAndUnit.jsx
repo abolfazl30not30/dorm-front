@@ -66,25 +66,27 @@ class FloorAndUnit extends Component {
             },
         ],
         isLoading: true,
-        isFull: false,
+        isFullUnit: false,
         floor: [],
-        showFloorAccessory:false,
-        tempFloor:{
-            accessories:[]
+        showFloorAccessory: false,
+        tempFloor: {
+            accessories: []
         },
     }
 
     async componentDidMount() {
+        let data;
         const response = await fetch('http://api.saadatportal.com/api/v1/floor').then((response) => response.json())
-            .then((data) => this.setState({floor: data, isLoading: false}));
-
-        if (this.state.floor.length == 0) {
-            this.setState({isFull: false})
-        } else {
-            this.setState({isFull: true})
-        }
+            .then((data) => this.setState({floor: data, isLoading: false},()=>{
+                if (data.length == 0) {
+                    this.setState({isFullUnit: false})
+                } else {
+                    this.setState({isFullUnit: true})
+                }
+            }));
 
     }
+
 
     render() {
         return (
@@ -111,10 +113,10 @@ class FloorAndUnit extends Component {
                         </div>
                     ) : (
                         <div>
-                            <div className={this.state.isFull ? "edit-btn-container" : "register-btn-container"}>
+                            <div className={this.state.isFullUnit ? "edit-btn-container" : "register-btn-container"}>
                                 <Link to="edit-floor-and-unit"
-                                      className={this.state.isFull ? "edit-btn" : "register-btn"}>
-                                    {this.state.isFull ? (<h6>ویرایش</h6>) : (<h6> ثبت طبقه و واحد</h6>)}
+                                      className={this.state.isFullUnit ? "edit-btn" : "register-btn"}>
+                                    {this.state.isFullUnit ? (<h6>ویرایش</h6>) : (<h6> ثبت طبقه و واحد</h6>)}
                                 </Link>
                             </div>
                             <div className="floor-container row">
@@ -124,10 +126,13 @@ class FloorAndUnit extends Component {
                                             <div className="floor-title row ">
                                                 <div className="col-7"><h3 className='floor-name'>{f.name}</h3></div>
                                                 <div className="col-5 ">
-                                                    <button className="btn show-acc-btn" onClick={()=>{this.handleShowFloorAcc(f)}}><IoMdMore/> امکانات طبقه</button>
+                                                    <button className="btn show-acc-btn" onClick={() => {
+                                                        this.handleShowFloorAcc(f)
+                                                    }}><IoMdMore/> امکانات طبقه
+                                                    </button>
                                                 </div>
                                             </div>
-                                            <div className="unit-container row">
+                                            <div className="unit-container row justify-content-around">
                                                 {f.units.map((unit) => (
                                                     <div className={`unit col-4`}>
                                                         <Link className={`${unit.empty ? "empty-link" : "full-link"}`}
@@ -168,13 +173,14 @@ class FloorAndUnit extends Component {
             </>
         );
     }
-    handleCloseFloorAcc = () =>{
-        this.setState({showFloorAccessory : false});
+
+    handleCloseFloorAcc = () => {
+        this.setState({showFloorAccessory: false});
     }
 
-    handleShowFloorAcc = (floor) =>{
-        this.setState({showFloorAccessory : true});
-        this.setState({tempFloor:floor});
+    handleShowFloorAcc = (floor) => {
+        this.setState({showFloorAccessory: true});
+        this.setState({tempFloor: floor});
     }
 
 }
