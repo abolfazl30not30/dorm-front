@@ -284,34 +284,37 @@ class MainRegister extends Component {
                 name: 'step 1',
                 content:
                     <div className='typeofResident'>
-                        <div className="">
-                            <input className="" type="radio" name="flexRadioDefault" value='constant'
-                                   // checked={this.context.typeofResident === 'constant'}
-                                   onChange={(e) => { this.checked(e); this.context.handleTypeofResident('constant')}}
-                            />
-                            <label className="" htmlFor="Radio1">
-                                اقامتگر ثابت
-                            </label>
-                        </div>
-                        <h6>مهمان</h6>
-                        <div>
-                            <div className="">
-                                <input className="" type="radio" name="flexRadioDefault" value='otherGuest'
-                                       // checked={this.context.typeofResident === 'otherGuest'}
-                                       onChange={(e) => { this.checked(e); this.context.handleTypeofResident('otherGuest') }}
+                        <div className="mx-5">
+                            <h5 className="mb-5">نوع اقامتگر</h5>
+                            <div className="constant-container">
+                                <input className="radioInput" id="constant" type="radio" name="flexRadioDefault" value='constant'
+                                    // checked={this.context.typeofResident === 'constant'}
+                                       onChange={(e) => { this.checked(e); this.context.handleTypeofResident('constant')}}
                                 />
-                                <label className="" htmlFor="Radio2">
-                                    متفرقه
+                                <label className="mx-1" htmlFor="constant">
+                                    اقامتگر ثابت
                                 </label>
                             </div>
-                            <div className="">
-                                <input className="" type="radio" name="flexRadioDefault" value='familyGuest'
-                                       // checked={this.context.typeofResident === 'familyGuest'}
-                                       onChange={(e) => { this.checked(e); this.context.handleTypeofResident('familyGuest') }}
-                                />
-                                <label className="" htmlFor="Radio3">
-                                    بستگان درجه یک
-                                </label>
+                            <div className="guest-container mt-2">
+                                <label className="guestText">مهمان : </label>
+                                <div className="mx-4 my-1">
+                                    <input className="radioInput" id="familyGuest" type="radio" name="flexRadioDefault" value='familyGuest'
+                                        // checked={this.context.typeofResident === 'familyGuest'}
+                                           onChange={(e) => { this.checked(e); this.context.handleTypeofResident('familyGuest') }}
+                                    />
+                                    <label className="mx-1" htmlFor="familyGuest">
+                                        بستگان درجه یک
+                                    </label>
+                                </div>
+                                <div className=" mx-4 my-1">
+                                    <input className="radioInput" id="otherGuest" type="radio" name="flexRadioDefault" value='otherGuest'
+                                        // checked={this.context.typeofResident === 'otherGuest'}
+                                           onChange={(e) => { this.checked(e); this.context.handleTypeofResident('otherGuest') }}
+                                    />
+                                    <label  className="mx-1" htmlFor="otherGuest">
+                                        متفرقه
+                                    </label>
+                                </div>
                             </div>
                         </div>
                     </div>

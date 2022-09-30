@@ -11,7 +11,9 @@
     height: 100vh;
     border-radius: 10px;
 }
-
+.step{
+    background-color:#DB9B31 !important;
+}
 .typeofResident {
     margin-top: 50px;
     direction: rtl;
@@ -30,11 +32,20 @@
     text-decoration: none;
     width: 120px;
     text-align: center;
+    color:#000;
+    background-color: #DB9B31 !important;
+    border:none !important;
 }
-
+.next-btn:hover{
+    color: #000 !important;
+}
 .previous-btn {
     text-decoration: none;
     width: 120px;
     text-align: center;
-
+    color: #DB9B31 !important;
+}
+.previous-btn:hover{
+    color: #000 !important;
+    background-color: #f3c885 !important; ;
 }

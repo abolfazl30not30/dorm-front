@@ -46,7 +46,13 @@ label.placeholder {
     padding: 0 6px;
     opacity: 1;
 }
-
+.typeofResident{
+    height: 400px;
+    font-size: 18px;
+    padding-top:20px;
+}
+.typeofResident .radioInput{
+}
 ._1hzhf {
     font-size: 14px;
     width: 100%;
