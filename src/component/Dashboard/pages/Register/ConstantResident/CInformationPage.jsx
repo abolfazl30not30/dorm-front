@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import "../../../../../style/registerPage.css"
 import BuildingContext from "../../../../../contexts/Building";
 import {DatePicker} from "react-persian-datepicker";
+import CustomInput from "../../../../CustomInput";
 
 class CInformationPage extends Component {
     static contextType = BuildingContext;
@@ -28,131 +29,64 @@ class CInformationPage extends Component {
                     <h2>مشخصات</h2>
                     <div className='d-flex flex-wrap justify-content-start'>
                         <div className="input-group-register col-4">
-                            <input type="text"
-                                   className={`input form-control ${this.context.constantInformationPageValidation.firstName_requiredReg === false ? "is-invalid" : ""}`}
-                                   value={this.context.constantInformationPage.firstName}
-                                   onChange={(e) =>  this.context.handleFields(e, 'constantInformationPage', 'firstName')}
-                                   placeholder=" "
-                                   name='admission_start_date'
+                            <CustomInput
+                                condition1={this.context.constantInformationPageValidation.firstName_requiredReg}
+                                value={this.context.constantInformationPage.firstName}
+                                fieldNameString={'constantInformationPage'}
+                                valueOfInputString={'firstName'}
+                                required={true}
+                                label={'نام'}
                             />
-                            <label className="placeholder"  style={{right: this.context.constantInformationPageValidation.firstName_requiredReg === false ? '35px' : '12px'}}>
-                                نام
-                                <span style={{color : 'red'}}>*</span></label>
-
-                            {
-                                this.context.constantInformationPageValidation.firstName_requiredReg === false
-                                    ? <small
-                                        className="text-danger">{this.context.errors['required']}</small>
-                                    : <div/>
-                            }
-
                         </div>
                         <div className="input-group-register col-4">
-                            <input type="text"
-                                   className={`input form-control ${this.context.constantInformationPageValidation.lastName_requiredReg === false ? "is-invalid" : ""}`}
-                                   value={this.context.constantInformationPage.lastName}
-                                   onChange={(e) =>  this.context.handleFields(e, 'constantInformationPage', 'lastName')}
-                                   placeholder=" "
+                            <CustomInput
+                                condition1={this.context.constantInformationPageValidation.lastName_requiredReg}
+                                value={this.context.constantInformationPage.lastName}
+                                fieldNameString={'constantInformationPage'}
+                                valueOfInputString={'lastName'}
+                                required={true}
+                                label={'نام خانوادگی'}
                             />
-                            <label className="placeholder" style={{right: this.context.constantInformationPageValidation.lastName_requiredReg === false ? '35px' : '12px'}}>
-                                نام خانوادگی
-                                <span style={{color : 'red'}}>*</span>
-                            </label>
-
-                            {
-                                this.context.constantInformationPageValidation.lastName_requiredReg === false
-                                    ? <small
-                                        className="text-danger">{this.context.errors['required']}</small>
-                                    : <div/>
-                            }
-
                         </div>
                         <div className="input-group-register col-4">
-                            <input type="text"
-                                   className={`input form-control`}
-                                   value={this.context.constantInformationPage.nickName}
-                                   onChange={(e) =>  this.context.handleFields(e, 'constantInformationPage', 'nickName')}
-                                   placeholder=" "
+                            <CustomInput
+                                value={this.context.constantInformationPageValidation.nickName}
+                                fieldNameString={'constantInformationPage'}
+                                valueOfInputString={'nickName'}
+                                label={'نام مستعار'}
                             />
-                            <label className="placeholder">نام مستعار</label>
                         </div>
                         <div className="input-group-register col-4">
-                            <input type="text"
-                                   className={`input form-control ${(this.context.constantInformationPageValidation.nationalCode_requiredReg &&
-                                       this.context.constantInformationPageValidation.nationalCode_numberReg) === false ? "is-invalid" : ""}`}
-                                   value={this.context.constantInformationPage.nationalCode}
-                                   onChange={(e) =>  this.context.handleFields(e, 'constantInformationPage', 'nationalCode')}
-                                   placeholder=" "
+                            <CustomInput
+                                condition1={this.context.constantInformationPageValidation.nationalCode_requiredReg}
+                                condition4={this.context.constantInformationPageValidation.nationalCode_numberReg}
+                                value={this.context.constantInformationPage.nationalCode}
+                                fieldNameString={'constantInformationPage'}
+                                valueOfInputString={'nationalCode'}
+                                required={true}
+                                label={'کد ملی'}
                             />
-                            <label className="placeholder" style={{right: (this.context.constantInformationPageValidation.nationalCode_requiredReg &&
-                                    this.context.constantInformationPageValidation.nationalCode_numberReg) === false ? '35px' : '12px'}}>
-                                کد ملی
-                                <span style={{color : 'red'}}>*</span>
-                            </label>
-
-                            {
-                                this.context.constantInformationPageValidation.nationalCode_requiredReg === false
-                                    ? <small
-                                        className="text-danger">{this.context.errors['required']}</small>
-                                    : <div/>
-                            }
-
-                            {
-                                (this.context.constantInformationPageValidation.nationalCode_numberReg === false && this.context.constantInformationPageValidation.nationalCode_requiredReg === true)
-                                    ? <small
-                                        className="text-danger">{this.context.errors['numberRequired']}</small>
-                                    : <div/>
-                            }
-
                         </div>
                         <div className="input-group-register col-4">
-                            <input type="text"
-                                   className={`input form-control ${(this.context.constantInformationPageValidation.certificateNumber_requiredReg &&
-                                       this.context.constantInformationPageValidation.certificateNumber_numberReg) === false ? "is-invalid" : ""}`}
-                                   value={this.context.constantInformationPage.certificateNumber}
-                                   onChange={(e) =>  this.context.handleFields(e, 'constantInformationPage', 'certificateNumber')}
-                                   placeholder=" "
+                            <CustomInput
+                                condition1={this.context.constantInformationPageValidation.certificateNumber_requiredReg}
+                                condition4={this.context.constantInformationPageValidation.certificateNumber_numberReg}
+                                value={this.context.constantInformationPage.certificateNumber}
+                                fieldNameString={'constantInformationPage'}
+                                valueOfInputString={'certificateNumber'}
+                                required={true}
+                                label={'شماره شناسنامه'}
                             />
-                            <label className="placeholder" style={{right: (this.context.constantInformationPageValidation.certificateNumber_requiredReg &&
-                                    this.context.constantInformationPageValidation.certificateNumber_numberReg) === false ? '35px' : '12px'}}>
-                                شماره شناسنامه
-                                <span style={{color : 'red'}}>*</span>
-                            </label>
-
-                            {
-                                this.context.constantInformationPageValidation.certificateNumber_requiredReg === false
-                                    ? <small
-                                        className="text-danger">{this.context.errors['required']}</small>
-                                    : <div/>
-                            }
-
-                            {
-                                (this.context.constantInformationPageValidation.certificateNumber_numberReg === false && this.context.constantInformationPageValidation.certificateNumber_requiredReg === true)
-                                    ? <small
-                                        className="text-danger">{this.context.errors['numberRequired']}</small>
-                                    : <div/>
-                            }
-
                         </div>
                         <div className="input-group-register col-4">
-                            <input type="text"
-                                   className={`input form-control ${this.context.constantInformationPageValidation.placeOfIssue_requiredReg === false ? "is-invalid" : ""}`}
-                                   value={this.context.constantInformationPage.placeOfIssue}
-                                   onChange={(e) =>  this.context.handleFields(e, 'constantInformationPage', 'placeOfIssue')}
-                                   placeholder=" "
+                            <CustomInput
+                                condition1={this.context.constantInformationPageValidation.placeOfIssue_requiredReg}
+                                value={this.context.constantInformationPage.placeOfIssue}
+                                fieldNameString={'constantInformationPage'}
+                                valueOfInputString={'placeOfIssue'}
+                                required={true}
+                                label={' محل صدور'}
                             />
-                            <label className="placeholder" style={{right: this.context.constantInformationPageValidation.placeOfIssue_requiredReg === false ? '35px' : '12px'}}>
-                                محل صدور
-                                <span style={{color : 'red'}}>*</span>
-                            </label>
-
-                            {
-                                this.context.constantInformationPageValidation.placeOfIssue_requiredReg === false
-                                    ? <small
-                                        className="text-danger">{this.context.errors['required']}</small>
-                                    : <div/>
-                            }
-
                         </div>
                         <div className="input-group-register col-4 date-container">
                             <DatePicker calendarStyles={this.state.calStyles}
@@ -175,44 +109,24 @@ class CInformationPage extends Component {
 
                         </div>
                         <div className="input-group-register col-4">
-                            <input type="text"
-                                   className={`input form-control ${this.context.constantInformationPageValidation.nationality_requiredReg === false ? "is-invalid" : ""}`}
-                                   value={this.context.constantInformationPage.nationality}
-                                   onChange={(e) =>  this.context.handleFields(e, 'constantInformationPage', 'nationality')}
-                                   placeholder=" "
+                            <CustomInput
+                                condition1={this.context.constantInformationPageValidation.nationality_requiredReg}
+                                value={this.context.constantInformationPage.nationality}
+                                fieldNameString={'constantInformationPage'}
+                                valueOfInputString={'nationality'}
+                                required={true}
+                                label={'ملیت'}
                             />
-                            <label className="placeholder"  style={{right: this.context.constantInformationPageValidation.nationality_requiredReg === false ? '35px' : '12px'}}>
-                                ملیت
-                                <span style={{color : 'red'}}>*</span>
-                            </label>
-
-                            {
-                                this.context.constantInformationPageValidation.nationality_requiredReg === false
-                                    ? <small
-                                        className="text-danger">{this.context.errors['required']}</small>
-                                    : <div/>
-                            }
-
                         </div>
                         <div className="input-group-register col-4">
-                            <input type="text"
-                                   className={`input form-control ${this.context.constantInformationPageValidation.fatherName_requiredReg === false ? "is-invalid" : ""}`}
-                                   value={this.context.constantInformationPage.fatherName}
-                                   onChange={(e) =>  this.context.handleFields(e, 'constantInformationPage', 'fatherName')}
-                                   placeholder=" "
+                            <CustomInput
+                                condition1={this.context.constantInformationPageValidation.fatherName_requiredReg}
+                                value={this.context.constantInformationPage.fatherName}
+                                fieldNameString={'constantInformationPage'}
+                                valueOfInputString={'fatherName'}
+                                required={true}
+                                label={'نام پدر'}
                             />
-                            <label className="placeholder" style={{right: this.context.constantInformationPageValidation.fatherName_requiredReg === false ? '35px' : '12px'}}>
-                                نام پدر
-                                <span style={{color : 'red'}}>*</span>
-                            </label>
-
-                            {
-                                this.context.constantInformationPageValidation.fatherName_requiredReg === false
-                                    ? <small
-                                        className="text-danger">{this.context.errors['required']}</small>
-                                    : <div/>
-                            }
-
                         </div>
                         <div className="input-group-register col-4">
                             <select className='input'
@@ -228,51 +142,37 @@ class CInformationPage extends Component {
                             <label className="placeholder">دین</label>
                         </div>
                         <div className="input-group-register col-4">
-                            <input type="text"
-                                   className={`input form-control`}
-                                   value={this.context.constantInformationPage.subReligion}
-                                   onChange={(e) =>  this.context.handleFields(e, 'constantInformationPage', 'subReligion')}
-                                   placeholder=" "
+                            <CustomInput
+                                value={this.context.constantInformationPage.subReligion}
+                                fieldNameString={'constantInformationPage'}
+                                valueOfInputString={'subReligion'}
+                                label={'مذهب'}
                             />
-                            <label className="placeholder">مذهب</label>
                         </div>
                         <div className="input-group-register col-4">
-                            <input type="text"
-                                   className={`input form-control`}
-                                   value={this.context.constantInformationPage.university}
-                                   onChange={(e) =>  this.context.handleFields(e, 'constantInformationPage', 'university')}
-                                   placeholder=" "
+                            <CustomInput
+                                value={this.context.constantInformationPage.university}
+                                fieldNameString={'constantInformationPage'}
+                                valueOfInputString={'university'}
+                                label={'دانشگاه محل تحصیل'}
                             />
-                            <label className="placeholder">دانشگاه محل تحصیل</label>
                         </div>
                         <div className="input-group-register col-4">
-                            <input type="text"
-                                   className={`input form-control ${this.context.constantInformationPageValidation.studentNumber_numberReg === false ? "is-invalid" : ""}`}
-                                   value={this.context.constantInformationPage.studentNumber}
-                                   onChange={(e) =>  this.context.handleFields(e, 'constantInformationPage', 'studentNumber')}
-                                   placeholder=" "
+                            <CustomInput
+                                condition4={this.context.constantInformationPageValidation.studentNumber_numberReg}
+                                value={this.context.constantInformationPage.studentNumber}
+                                fieldNameString={'constantInformationPage'}
+                                valueOfInputString={'studentNumber'}
+                                label={'شماره دانشجویی'}
                             />
-                            <label className="placeholder"
-                                   style={{right: this.context.constantInformationPageValidation.studentNumber_numberReg === false ? '35px' : '12px'}}>
-                                شماره دانشجویی
-                            </label>
-
-                            {
-                                this.context.constantInformationPageValidation.studentNumber_numberReg === false
-                                    ? <small
-                                        className="text-danger">{this.context.errors['numberRequired']}</small>
-                                    : <div/>
-                            }
-
                         </div>
                         <div className="input-group-register col-4">
-                            <input type="text"
-                                   className={`input form-control`}
-                                   value={this.context.constantInformationPage.fatherJob}
-                                   onChange={(e) =>  this.context.handleFields(e, 'constantInformationPage', 'fatherJob')}
-                                   placeholder=" "
+                            <CustomInput
+                                value={this.context.constantInformationPage.fatherJob}
+                                fieldNameString={'constantInformationPage'}
+                                valueOfInputString={'fatherJob'}
+                                label={'شغل پدر'}
                             />
-                            <label className="placeholder">شغل پدر</label>
                         </div>
                         <div className="input-group-register col-4">
                             <select className='input'
@@ -287,38 +187,26 @@ class CInformationPage extends Component {
                             <label className="placeholder">وضعیت تاهل</label>
                         </div>
                         {
-                            this.context.fields.maritalStatus === 'married' ? (
+                            this.context.constantInformationPage.maritalStatus === 'married' ? (
                                 <>
                                     <div className="input-group-register col-4">
-                                        <input type="text"
-                                               className={`input form-control ${(this.context.constantInformationPageValidation.spouseFullName_requiredReg === false &&
-                                                   this.context.fields.maritalStatus === 'married') ? "is-invalid" : ""}`}
-                                               value={this.context.constantInformationPage.spouseFullName}
-                                               onChange={(e) =>  this.context.handleFields(e, 'constantInformationPage', 'spouseFullName')}
-                                               placeholder=" "
+                                        <CustomInput
+                                            condition1={this.context.constantInformationPageValidation.spouseFullName_requiredReg}
+                                            condition5={this.context.fields.maritalStatus === 'married'}
+                                            value={this.context.constantInformationPage.spouseFullName}
+                                            fieldNameString={'constantInformationPage'}
+                                            valueOfInputString={'spouseFullName'}
+                                            required={true}
+                                            label={'نام و نام خانوادگی همسر'}
                                         />
-                                        <label className="placeholder" style={{right: (this.context.constantInformationPageValidation.spouseFullName_requiredReg === false &&
-                                                this.context.fields.maritalStatus === 'married') ? '35px' : '12px'}}>
-                                            نام و نام خانوادگی همسر
-                                            <span style={{color : 'red'}}>*</span>
-                                        </label>
-
-                                        {
-                                            (this.context.constantInformationPageValidation.spouseFullName_requiredReg === false && this.context.fields.maritalStatus === 'married')
-                                                ? <small
-                                                    className="text-danger">{this.context.errors['required']}</small>
-                                                : <div/>
-                                        }
-
                                     </div>
                                     <div className="input-group-register col-4">
-                                        <input type="text"
-                                               className={`input form-control`}
-                                               value={this.context.constantInformationPage.spouseJob}
-                                               onChange={(e) =>  this.context.handleFields(e, 'constantInformationPage', 'spouseJob')}
-                                               placeholder=" "
+                                        <CustomInput
+                                            value={this.context.constantInformationPage.spouseJob}
+                                            fieldNameString={'constantInformationPage'}
+                                            valueOfInputString={'spouseJob'}
+                                            label={'شغل همسر'}
                                         />
-                                        <label className="placeholder">شغل همسر</label>
                                     </div>
                                 </>
                             ) : (
@@ -336,25 +224,25 @@ class CInformationPage extends Component {
                             <label className="placeholder">آیا بیماری خاصی دارید؟</label>
                         </div>
                         {
-                            this.context.fields.health === 'true' ? (
+                            this.context.constantInformationPage.health === 'true' ? (
                                 <>
                                     <div className="input-group-register col-12">
                                         <textarea
                                             className={`input form-control ${(this.context.constantInformationPageValidation.healthDescription_requiredReg === false &&
-                                                this.context.fields.health === 'true') ? "is-invalid" : ""}`}
+                                                this.context.constantInformationPage.health === 'true') ? "is-invalid" : ""}`}
                                             value={this.context.constantInformationPage.healthDescription}
                                             onChange={(e) =>  this.context.handleFields(e, 'constantInformationPage', 'healthDescription')}
                                             placeholder=" "
                                         />
                                         <label className="placeholder" style={{right: (this.context.constantInformationPageValidation.healthDescription_requiredReg === false &&
-                                                this.context.fields.health === 'true') ? '35px' : '12px'}}>
+                                                this.context.constantInformationPage.health === 'true') ? '35px' : '12px'}}>
                                             توضیحات
                                             <span style={{color : 'red'}}>*</span>
                                         </label>
 
                                         {
                                             (this.context.constantInformationPageValidation.healthDescription_requiredReg === false &&
-                                                this.context.fields.health === 'true')
+                                                this.context.constantInformationPage.health === 'true')
                                                 ? <small
                                                     className="text-danger">{this.context.errors['required']}</small>
                                                 : <div/>

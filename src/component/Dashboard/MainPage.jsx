@@ -183,6 +183,10 @@ class MainPage extends Component {
                 admissionStartDate_requiredReg: '',
                 admissionEndDate_requiredReg: '',
                 paymentDate_requiredReg: '',
+                rentPaymentAmount_numberReg: '',
+                depositPaymentAmount_numberReg: '',
+                discountPaymentAmount_numberReg: '',
+                phoneNumber_telephoneReg: '',
             },
 
             // ----------------------- <OGInformationPage /> information validations
@@ -210,7 +214,7 @@ class MainPage extends Component {
             constantInformationFurtherValidation: {
                 address_requiredReg: '',
                 home_tel_requiredReg: '',
-                home_tel_telephoneReg: '',
+                home_tel_homeTelephoneReg: '',
                 resident_tel_requiredReg: '',
                 resident_tel_telephoneReg: '',
                 admissionStartDate_requiredReg: '',
@@ -221,7 +225,7 @@ class MainPage extends Component {
             familyGuestInformationFurtherValidation: {
                 address_requiredReg: '',
                 home_tel_requiredReg: '',
-                home_tel_telephoneReg: '',
+                home_tel_homeTelephoneReg: '',
                 resident_tel_requiredReg: '',
                 resident_tel_telephoneReg: '',
             },
@@ -229,7 +233,7 @@ class MainPage extends Component {
             otherGuestInformationFurtherValidation: {
                 address_requiredReg: '',
                 home_tel_requiredReg: '',
-                home_tel_telephoneReg: '',
+                home_tel_homeTelephoneReg: '',
                 resident_tel_requiredReg: '',
                 resident_tel_telephoneReg: '',
             },

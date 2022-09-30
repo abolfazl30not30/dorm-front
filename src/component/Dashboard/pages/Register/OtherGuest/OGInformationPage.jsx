@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import BuildingContext from "../../../../../contexts/Building";
 import {DatePicker} from "react-persian-datepicker";
+import CustomInput from "../../../../CustomInput";
 
 class OGInformationPage extends Component {
     static contextType = BuildingContext;
@@ -162,23 +163,13 @@ class OGInformationPage extends Component {
                             <label className="placeholder">تاریخ پرداخت</label>
                         </div>
                         <div className="input-group-register col-4">
-                            <input type="text"
-                                   className={`input form-control ${this.context.otherGuestInformationValidation.rentPaymentAmount_numberReg === false ? "is-invalid" : ""}`}
-                                   value={this.context.otherGuestInformation.rentPaymentAmount}
-                                   onChange={(e) =>  this.context.handleFields(e, 'otherGuestInformation', 'rentPaymentAmount')}
-                                   placeholder=" "
+                            <CustomInput
+                                condition4={this.context.otherGuestInformationValidation.rentPaymentAmount_numberReg}
+                                value={this.context.otherGuestInformation.rentPaymentAmount}
+                                fieldNameString={'otherGuestInformation'}
+                                valueOfInputString={'rentPaymentAmount'}
+                                label={'مبلغ پرداخت اجاره'}
                             />
-                            <label className="placeholder" style={{right: this.context.otherGuestInformationValidation.rentPaymentAmount_numberReg === false ? '35px' : '12px'}}>
-                                مبلغ پرداخت اجاره
-                            </label>
-
-                            {
-                                this.context.otherGuestInformationValidation.rentPaymentAmount_numberReg === false
-                                    ? <small
-                                        className="text-danger">{this.context.errors['numberRequired']}</small>
-                                    : <div/>
-                            }
-
                         </div>
                         <div className="input-group-register col-4">
                             <input type="text"

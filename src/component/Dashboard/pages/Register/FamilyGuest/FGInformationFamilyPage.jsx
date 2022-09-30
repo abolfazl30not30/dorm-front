@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import "../../../../../style/registerPage.css"
 import BuildingContext from "../../../../../contexts/Building";
+import CustomInput from "../../../../CustomInput";
 
 class FGInformationFamilyPage extends Component {
     static contextType = BuildingContext;
@@ -14,63 +15,33 @@ class FGInformationFamilyPage extends Component {
                     <div className='d-flex flex-wrap justify-content-start'>
                         <div className='col-12 pe-3 mb-3'>شخص اول</div>
                         <div className="input-group-register col-3">
-                            <input type="text"
-                                   className={`input form-control ${this.context.familyGuestInformationFamilyValidation.firstPerson_FullName_requiredReg === false ? "is-invalid" : ""}`}
-                                   value={this.context.familyGuestInformationFamily.firstPerson_FullName}
-                                   onChange={(e) =>  this.context.handleFields(e, 'familyGuestInformationFamily', 'firstPerson_FullName')}
-                                   placeholder=" "
+                            <CustomInput
+                                condition1={this.context.familyGuestInformationFamilyValidation.firstPerson_FullName_requiredReg}
+                                value={this.context.familyGuestInformationFamily.firstPerson_FullName}
+                                fieldNameString={'familyGuestInformationFamily'}
+                                valueOfInputString={'firstPerson_FullName'}
+                                required={true}
+                                label={'نام و نام خانوادگی'}
                             />
-                            <label className="placeholder"  style={{right: this.context.familyGuestInformationFamilyValidation.firstPerson_FullName_requiredReg === false ? '35px' : '12px'}}>
-                                نام و نام خانوادگی
-                                <span style={{color : 'red'}}>*</span>
-                            </label>
-
-                            {
-                                this.context.familyGuestInformationFamilyValidation.firstPerson_FullName_requiredReg === false
-                                    ? <small
-                                        className="text-danger">{this.context.errors['required']}</small>
-                                    : <div/>
-                            }
-
                         </div>
                         <div className="input-group-register col-3">
-                            <input type="text"
-                                   className={`input form-control ${(this.context.familyGuestInformationFamilyValidation.firstPerson_PhoneNumber_requiredReg &&
-                                       this.context.familyGuestInformationFamilyValidation.firstPerson_PhoneNumber_telephoneReg) === false ? "is-invalid" : ""}`}
-                                   value={this.context.familyGuestInformationFamily.firstPerson_PhoneNumber}
-                                   onChange={(e) =>  this.context.handleFields(e, 'familyGuestInformationFamily', 'firstPerson_PhoneNumber')}
-                                   placeholder=" "
+                            <CustomInput
+                                condition1={this.context.familyGuestInformationFamilyValidation.firstPerson_PhoneNumber_requiredReg}
+                                condition2={this.context.familyGuestInformationFamilyValidation.firstPerson_PhoneNumber_telephoneReg}
+                                value={this.context.familyGuestInformationFamily.firstPerson_PhoneNumber}
+                                fieldNameString={'familyGuestInformationFamily'}
+                                valueOfInputString={'firstPerson_PhoneNumber'}
+                                required={true}
+                                label={'شماره تماس'}
                             />
-                            <label className="placeholder" style={{right: (this.context.familyGuestInformationFamilyValidation.firstPerson_PhoneNumber_requiredReg &&
-                                    this.context.familyGuestInformationFamilyValidation.firstPerson_PhoneNumber_telephoneReg) === false ? '35px' : '12px'}}>
-                                شماره تماس
-                                <span style={{color : 'red'}}>*</span>
-                            </label>
-
-                            {
-                                this.context.familyGuestInformationFamilyValidation.firstPerson_PhoneNumber_requiredReg === false
-                                    ? <small
-                                        className="text-danger">{this.context.errors['required']}</small>
-                                    : <div/>
-                            }
-                            {
-                                (this.context.familyGuestInformationFamilyValidation.firstPerson_PhoneNumber_requiredReg === true &&
-                                    this.context.familyGuestInformationFamilyValidation.firstPerson_PhoneNumber_telephoneReg === false)
-                                    ? <small
-                                        className="text-danger">{this.context.errors['telephoneRegex']}</small>
-                                    : <div/>
-                            }
-
                         </div>
                         <div className="input-group-register col-3">
-                            <input type="text"
-                                   className={`input form-control`}
-                                   value={this.context.familyGuestInformationFamily.firstPerson_FatherName}
-                                   onChange={(e) =>  this.context.handleFields(e, 'familyGuestInformationFamily', 'firstPerson_FatherName')}
-                                   placeholder=" "
+                            <CustomInput
+                                value={this.context.familyGuestInformationFamily.firstPerson_FatherName}
+                                fieldNameString={'familyGuestInformationFamily'}
+                                valueOfInputString={'firstPerson_FatherName'}
+                                label={'نام  پدر'}
                             />
-                            <label className="placeholder">نام  پدر</label>
-
                         </div>
                         <div className="input-group-register col-3">
                             <select className='input'
@@ -89,63 +60,33 @@ class FGInformationFamilyPage extends Component {
                     <div className='d-flex flex-wrap justify-content-start mt-4'>
                         <div className='col-12 pe-3 mb-3'>شخص دوم</div>
                         <div className="input-group-register col-3">
-                            <input type="text"
-                                   className={`input form-control ${this.context.familyGuestInformationFamilyValidation.secondPerson_FullName_requiredReg === false ? "is-invalid" : ""}`}
-                                   value={this.context.familyGuestInformationFamily.secondPerson_FullName}
-                                   onChange={(e) =>  this.context.handleFields(e, 'familyGuestInformationFamily', 'secondPerson_FullName')}
-                                   placeholder=" "
+                            <CustomInput
+                                condition1={this.context.familyGuestInformationFamilyValidation.secondPerson_FullName_requiredReg}
+                                value={this.context.familyGuestInformationFamily.secondPerson_FullName}
+                                fieldNameString={'familyGuestInformationFamily'}
+                                valueOfInputString={'secondPerson_FullName'}
+                                required={true}
+                                label={'نام و نام خانوادگی'}
                             />
-                            <label className="placeholder" style={{right: this.context.familyGuestInformationFamilyValidation.secondPerson_FullName_requiredReg === false ? '35px' : '12px'}}>
-                                نام و نام خانوادگی
-                                <span style={{color : 'red'}}>*</span>
-                            </label>
-
-                            {
-                                this.context.familyGuestInformationFamilyValidation.secondPerson_FullName_requiredReg === false
-                                    ? <small
-                                        className="text-danger">{this.context.errors['required']}</small>
-                                    : <div/>
-                            }
-
                         </div>
                         <div className="input-group-register col-3">
-                            <input type="text"
-                                   className={`input form-control ${(this.context.familyGuestInformationFamilyValidation.secondPerson_PhoneNumber_requiredReg &&
-                                       this.context.familyGuestInformationFamilyValidation.secondPerson_PhoneNumber_telephoneReg) === false ? "is-invalid" : ""}`}
-                                   value={this.context.familyGuestInformationFamily.secondPerson_PhoneNumber}
-                                   onChange={(e) =>  this.context.handleFields(e, 'familyGuestInformationFamily', 'secondPerson_PhoneNumber')}
-                                   placeholder=" "
+                            <CustomInput
+                                condition1={this.context.familyGuestInformationFamilyValidation.secondPerson_PhoneNumber_requiredReg}
+                                condition2={this.context.familyGuestInformationFamilyValidation.secondPerson_PhoneNumber_telephoneReg}
+                                value={this.context.familyGuestInformationFamily.secondPerson_PhoneNumber}
+                                fieldNameString={'familyGuestInformationFamily'}
+                                valueOfInputString={'secondPerson_PhoneNumber'}
+                                required={true}
+                                label={'شماره تماس'}
                             />
-                            <label className="placeholder" style={{right: (this.context.familyGuestInformationFamilyValidation.secondPerson_PhoneNumber_requiredReg &&
-                                    this.context.familyGuestInformationFamilyValidation.secondPerson_PhoneNumber_telephoneReg) === false ? '35px' : '12px'}}>
-                                شماره تماس
-                                <span style={{color : 'red'}}>*</span>
-                            </label>
-
-                            {
-                                this.context.familyGuestInformationFamilyValidation.secondPerson_PhoneNumber_requiredReg === false
-                                    ? <small
-                                        className="text-danger">{this.context.errors['required']}</small>
-                                    : <div/>
-                            }
-                            {
-                                (this.context.familyGuestInformationFamilyValidation.secondPerson_PhoneNumber_requiredReg === true &&
-                                    this.context.familyGuestInformationFamilyValidation.secondPerson_PhoneNumber_telephoneReg === false)
-                                    ? <small
-                                        className="text-danger">{this.context.errors['telephoneRegex']}</small>
-                                    : <div/>
-                            }
-
                         </div>
                         <div className="input-group-register col-3">
-                            <input type="text"
-                                   className={`input form-control`}
-                                   value={this.context.familyGuestInformationFamily.secondPerson_FatherName}
-                                   onChange={(e) =>  this.context.handleFields(e, 'familyGuestInformationFamily', 'secondPerson_FatherName')}
-                                   placeholder=" "
+                            <CustomInput
+                                value={this.context.familyGuestInformationFamily.secondPerson_FatherName}
+                                fieldNameString={'familyGuestInformationFamily'}
+                                valueOfInputString={'secondPerson_FatherName'}
+                                label={'نام  پدر'}
                             />
-                            <label className="placeholder">نام  پدر</label>
-
                         </div>
                         <div className="input-group-register col-3">
                             <select className='input'

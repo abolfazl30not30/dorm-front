@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import "../../../../../style/registerPage.css"
 import BuildingContext from "../../../../../contexts/Building";
 import {DatePicker} from "react-persian-datepicker";
+import CustomInput from "../../../../CustomInput";
 class CInformationFurtherPage extends Component {
     static contextType = BuildingContext;
 
@@ -26,62 +27,26 @@ class CInformationFurtherPage extends Component {
                     <h2>مشخصات تکمیلی</h2>
                     <div className='d-flex flex-wrap justify-content-start'>
                         <div className="input-group-register col-6">
-                            <input type="text"
-                                   className={`input form-control ${(this.context.constantInformationFurtherValidation.resident_tel_telephoneReg &&
-                                       this.context.constantInformationFurtherValidation.resident_tel_requiredReg) === false ? "is-invalid" : ""}`}
-                                   value={this.context.constantInformationFurther.resident_tel}
-                                   onChange={(e) =>  this.context.handleFields(e, 'constantInformationFurther', 'resident_tel')}
-                                   placeholder=" "/>
-                            <label className="placeholder" style={{right: (this.context.constantInformationFurtherValidation.resident_tel_telephoneReg &&
-                                    this.context.constantInformationFurtherValidation.resident_tel_requiredReg) === false ? '35px' : '12px'}}>
-                                شماره تماس اقامتگر
-                                <span style={{color : 'red'}}>*</span>
-                            </label>
-
-                            {
-                                this.context.constantInformationFurtherValidation.resident_tel_requiredReg === false
-                                    ? <small
-                                        className="text-danger">{this.context.errors['required']}</small>
-                                    : <div/>
-                            }
-
-                            {
-                                (this.context.constantInformationFurtherValidation.resident_tel_telephoneReg === false &&
-                                    this.context.constantInformationFurtherValidation.resident_tel_requiredReg === true)
-                                    ? <small
-                                        className="text-danger">{this.context.errors['telephoneRegex']}</small>
-                                    : <div/>
-                            }
-
+                            <CustomInput
+                                condition1={this.context.constantInformationFurtherValidation.resident_tel_requiredReg}
+                                condition2={this.context.constantInformationFurtherValidation.resident_tel_telephoneReg}
+                                value={this.context.constantInformationFurther.resident_tel}
+                                fieldNameString={'constantInformationFurther'}
+                                valueOfInputString={'resident_tel'}
+                                required={true}
+                                label={'شماره تماس اقامتگر'}
+                            />
                         </div>
                         <div className="input-group-register col-6">
-                            <input type="text"
-                                   className={`input form-control ${(this.context.constantInformationFurtherValidation.home_tel_requiredReg &&
-                                       this.context.constantInformationFurtherValidation.home_tel_telephoneReg) === false ? "is-invalid" : ""}`}
-                                   value={this.context.constantInformationFurther.home_tel}
-                                   onChange={(e) =>  this.context.handleFields(e, 'constantInformationFurther', 'home_tel')}
-                                   placeholder=" "/>
-                            <label className="placeholder"
-                                   style={{right: (this.context.constantInformationFurtherValidation.home_tel_requiredReg &&
-                                           this.context.constantInformationFurtherValidation.home_tel_telephoneReg) === false ? '35px' : '12px'}}>
-                                شماره تلفن منزل
-                                <span style={{color : 'red'}}>*</span>
-                            </label>
-
-                            {
-                                this.context.constantInformationFurtherValidation.home_tel_requiredReg === false
-                                    ? <small
-                                        className="text-danger">{this.context.errors['required']}</small>
-                                    : <div/>
-                            }
-
-                            {
-                                (this.context.constantInformationFurtherValidation.home_tel_telephoneReg === false && this.context.constantInformationFurtherValidation.home_tel_requiredReg === true)
-                                    ? <small
-                                        className="text-danger">{this.context.errors['homeTelephoneReg']}</small>
-                                    : <div/>
-                            }
-
+                            <CustomInput
+                                condition1={this.context.constantInformationFurtherValidation.home_tel_requiredReg}
+                                condition3={this.context.constantInformationFurtherValidation.home_tel_homeTelephoneReg}
+                                value={this.context.constantInformationFurther.home_tel}
+                                fieldNameString={'constantInformationFurther'}
+                                valueOfInputString={'home_tel'}
+                                required={true}
+                                label={'شماره تلفن منزل'}
+                            />
                         </div>
                         <div className="input-group-register col-6">
                             <DatePicker calendarStyles={this.state.calStyles}
@@ -125,23 +90,14 @@ class CInformationFurtherPage extends Component {
 
                         </div>
                         <div className="input-group-register col-12">
-                            <input type="text"
-                                   className={`input form-control ${this.context.constantInformationFurtherValidation.address_requiredReg === false ? "is-invalid" : ""}`}
-                                   value={this.context.constantInformationFurther.address}
-                                   onChange={(e) =>  this.context.handleFields(e, 'constantInformationFurther', 'address')}
-                                   placeholder=" "/>
-                            <label className="placeholder"
-                                   style={{right: this.context.constantInformationFurtherValidation.address_requiredReg === false ? '35px' : '12px'}}>
-                                آدرس محل سکونت <span style={{color : 'red'}}>*</span>
-                            </label>
-
-                            {
-                                this.context.constantInformationFurtherValidation.address_requiredReg === false
-                                    ? <small
-                                        className="text-danger">{this.context.errors['required']}</small>
-                                    : <div/>
-                            }
-
+                            <CustomInput
+                                condition1={this.context.constantInformationFurtherValidation.address_requiredReg}
+                                value={this.context.constantInformationFurther.address}
+                                fieldNameString={'constantInformationFurther'}
+                                valueOfInputString={'address'}
+                                required={true}
+                                label={'آدرس محل سکونت'}
+                            />
                         </div>
                     </div>
                 </div>
