@@ -1,11 +1,15 @@
 import React, { Component } from 'react'
 import "../../../../../style/registerPage.css"
 import BuildingContext from "../../../../../contexts/Building";
+import { Calendar, DatePicker } from 'react-persian-datepicker';
+import SimpleTextInput from "../../../../CustomInputs/SimpleTextInput";
+import Error from "../../../../CustomInputs/Error";
 
 class CInformationFamilyPage extends Component {
     static contextType = BuildingContext;
 
-    state = {  }
+    state = {}
+
     render() {
         return (
             <>
@@ -14,63 +18,33 @@ class CInformationFamilyPage extends Component {
                     <div className='d-flex flex-wrap justify-content-start'>
                         <div className='col-12 pe-3 mb-3'>شخص اول</div>
                         <div className="input-group-register col-3">
-                            <input type="text"
-                                   className={`input form-control ${this.context.constantInformationFamilyValidation.firstPerson_FullName_requiredReg === false ? "is-invalid" : ""}`}
-                                   value={this.context.constantInformationFamily.firstPerson_FullName}
-                                   onChange={(e) =>  this.context.handleFields(e, 'constantInformationFamily', 'firstPerson_FullName')}
-                                   placeholder=" "
+                            <SimpleTextInput
+                                condition1={this.context.constantInformationFamilyValidation.firstPerson_FullName_requiredReg}
+                                value={this.context.constantInformationFamily.firstPerson_FullName}
+                                fieldNameString={'constantInformationFamily'} // this.context.fieldsNAmeString
+                                valueOfInputString={'firstPerson_FullName'} // this.context.fieldsNAmeString.valueOfInputString
+                                required={true}
+                                label={'نام و نام خانوادگی'}
                             />
-                            <label className="placeholder"  style={{right: this.context.constantInformationFamilyValidation.firstPerson_FullName_requiredReg === false ? '35px' : '12px'}}>
-                                نام و نام خانوادگی
-                                <span style={{color : 'red'}}>*</span>
-                            </label>
-
-                            {
-                                this.context.constantInformationFamilyValidation.firstPerson_FullName_requiredReg === false
-                                    ? <small
-                                        className="text-danger">{this.context.errors['required']}</small>
-                                    : <div/>
-                            }
-
                         </div>
                         <div className="input-group-register col-3">
-                            <input type="text"
-                                   className={`input form-control ${(this.context.constantInformationFamilyValidation.firstPerson_PhoneNumber_requiredReg &&
-                                       this.context.constantInformationFamilyValidation.firstPerson_PhoneNumber_telephoneReg) === false ? "is-invalid" : ""}`}
-                                   value={this.context.constantInformationFamily.firstPerson_PhoneNumber}
-                                   onChange={(e) =>  this.context.handleFields(e, 'constantInformationFamily', 'firstPerson_PhoneNumber')}
-                                   placeholder=" "
+                            <SimpleTextInput
+                                condition1={this.context.constantInformationFamilyValidation.firstPerson_PhoneNumber_requiredReg}
+                                condition2={this.context.constantInformationFamilyValidation.firstPerson_PhoneNumber_telephoneReg}
+                                value={this.context.constantInformationFamily.firstPerson_PhoneNumber}
+                                fieldNameString={'constantInformationFamily'}
+                                valueOfInputString={'firstPerson_PhoneNumber'}
+                                required={true}
+                                label={'شماره تماس'}
                             />
-                            <label className="placeholder" style={{right: (this.context.constantInformationFamilyValidation.firstPerson_PhoneNumber_requiredReg &&
-                                    this.context.constantInformationFamilyValidation.firstPerson_PhoneNumber_telephoneReg) === false ? '35px' : '12px'}}>
-                                شماره تماس
-                                <span style={{color : 'red'}}>*</span>
-                            </label>
-
-                            {
-                                this.context.constantInformationFamilyValidation.firstPerson_PhoneNumber_requiredReg === false
-                                    ? <small
-                                        className="text-danger">{this.context.errors['required']}</small>
-                                    : <div/>
-                            }
-                            {
-                                (this.context.constantInformationFamilyValidation.firstPerson_PhoneNumber_requiredReg === true &&
-                                    this.context.constantInformationFamilyValidation.firstPerson_PhoneNumber_telephoneReg === false)
-                                    ? <small
-                                        className="text-danger">{this.context.errors['telephoneRegex']}</small>
-                                    : <div/>
-                            }
-
                         </div>
                         <div className="input-group-register col-3">
-                            <input type="text"
-                                   className={`input form-control`}
-                                   value={this.context.constantInformationFamily.firstPerson_FatherName}
-                                   onChange={(e) =>  this.context.handleFields(e, 'constantInformationFamily', 'firstPerson_FatherName')}
-                                   placeholder=" "
+                            <SimpleTextInput
+                                value={this.context.constantInformationFamily.firstPerson_FatherName}
+                                fieldNameString={'constantInformationFamily'}
+                                valueOfInputString={'firstPerson_FatherName'}
+                                label={'نام  پدر'}
                             />
-                            <label className="placeholder">نام  پدر</label>
-
                         </div>
                         <div className="input-group-register col-3">
                             <select className='input'
@@ -89,63 +63,33 @@ class CInformationFamilyPage extends Component {
                     <div className='d-flex flex-wrap justify-content-start mt-4'>
                         <div className='col-12 pe-3 mb-3'>شخص دوم</div>
                         <div className="input-group-register col-3">
-                            <input type="text"
-                                   className={`input form-control ${this.context.constantInformationFamilyValidation.secondPerson_FullName_requiredReg === false ? "is-invalid" : ""}`}
-                                   value={this.context.constantInformationFamily.secondPerson_FullName}
-                                   onChange={(e) =>  this.context.handleFields(e, 'constantInformationFamily', 'secondPerson_FullName')}
-                                   placeholder=" "
+                            <SimpleTextInput
+                                condition1={this.context.constantInformationFamilyValidation.secondPerson_FullName_requiredReg}
+                                value={this.context.constantInformationFamily.secondPerson_FullName}
+                                fieldNameString={'constantInformationFamily'}
+                                valueOfInputString={'secondPerson_FullName'}
+                                required={true}
+                                label={'نام و نام خانوادگی'}
                             />
-                            <label className="placeholder" style={{right: this.context.constantInformationFamilyValidation.secondPerson_FullName_requiredReg === false ? '35px' : '12px'}}>
-                                نام و نام خانوادگی
-                                <span style={{color : 'red'}}>*</span>
-                            </label>
-
-                            {
-                                this.context.constantInformationFamilyValidation.secondPerson_FullName_requiredReg === false
-                                    ? <small
-                                        className="text-danger">{this.context.errors['required']}</small>
-                                    : <div/>
-                            }
-
                         </div>
                         <div className="input-group-register col-3">
-                            <input type="text"
-                                   className={`input form-control ${(this.context.constantInformationFamilyValidation.secondPerson_PhoneNumber_requiredReg &&
-                                       this.context.constantInformationFamilyValidation.secondPerson_PhoneNumber_telephoneReg) === false ? "is-invalid" : ""}`}
-                                   value={this.context.constantInformationFamily.secondPerson_PhoneNumber}
-                                   onChange={(e) =>  this.context.handleFields(e, 'constantInformationFamily', 'secondPerson_PhoneNumber')}
-                                   placeholder=" "
+                            <SimpleTextInput
+                                condition1={this.context.constantInformationFamilyValidation.secondPerson_PhoneNumber_requiredReg}
+                                condition2={this.context.constantInformationFamilyValidation.secondPerson_PhoneNumber_telephoneReg}
+                                value={this.context.constantInformationFamily.secondPerson_PhoneNumber}
+                                fieldNameString={'constantInformationFamily'}
+                                valueOfInputString={'secondPerson_PhoneNumber'}
+                                required={true}
+                                label={'شماره تماس'}
                             />
-                            <label className="placeholder" style={{right: (this.context.constantInformationFamilyValidation.secondPerson_PhoneNumber_requiredReg &&
-                                    this.context.constantInformationFamilyValidation.secondPerson_PhoneNumber_telephoneReg) === false ? '35px' : '12px'}}>
-                                شماره تماس
-                                <span style={{color : 'red'}}>*</span>
-                            </label>
-
-                            {
-                                this.context.constantInformationFamilyValidation.secondPerson_PhoneNumber_requiredReg === false
-                                    ? <small
-                                        className="text-danger">{this.context.errors['required']}</small>
-                                    : <div/>
-                            }
-                            {
-                                (this.context.constantInformationFamilyValidation.secondPerson_PhoneNumber_requiredReg === true &&
-                                    this.context.constantInformationFamilyValidation.secondPerson_PhoneNumber_telephoneReg === false)
-                                    ? <small
-                                        className="text-danger">{this.context.errors['telephoneRegex']}</small>
-                                    : <div/>
-                            }
-
                         </div>
                         <div className="input-group-register col-3">
-                            <input type="text"
-                                   className={`input form-control`}
-                                   value={this.context.constantInformationFamily.secondPerson_FatherName}
-                                   onChange={(e) =>  this.context.handleFields(e, 'constantInformationFamily', 'secondPerson_FatherName')}
-                                   placeholder=" "
+                            <SimpleTextInput
+                                value={this.context.constantInformationFamily.secondPerson_FatherName}
+                                fieldNameString={'constantInformationFamily'}
+                                valueOfInputString={'secondPerson_FatherName'}
+                                label={'نام  پدر'}
                             />
-                            <label className="placeholder">نام  پدر</label>
-
                         </div>
                         <div className="input-group-register col-3">
                             <select className='input'

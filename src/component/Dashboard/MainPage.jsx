@@ -85,6 +85,8 @@ class MainPage extends Component {
                 address: '',
                 home_tel: '',
                 resident_tel: '',
+                admissionStartDate: '',
+                admissionEndDate: '',
             },
 
             // ----------------------- <FGInformationFurtherPage /> information
@@ -181,6 +183,10 @@ class MainPage extends Component {
                 admissionStartDate_requiredReg: '',
                 admissionEndDate_requiredReg: '',
                 paymentDate_requiredReg: '',
+                rentPaymentAmount_numberReg: '',
+                depositPaymentAmount_numberReg: '',
+                discountPaymentAmount_numberReg: '',
+                phoneNumber_telephoneReg: '',
             },
 
             // ----------------------- <OGInformationPage /> information validations
@@ -208,16 +214,18 @@ class MainPage extends Component {
             constantInformationFurtherValidation: {
                 address_requiredReg: '',
                 home_tel_requiredReg: '',
-                home_tel_telephoneReg: '',
+                home_tel_homeTelephoneReg: '',
                 resident_tel_requiredReg: '',
                 resident_tel_telephoneReg: '',
+                admissionStartDate_requiredReg: '',
+                admissionEndDate_requiredReg: '',
             },
 
             // ----------------------- <FGInformationFurtherPage /> information validations
             familyGuestInformationFurtherValidation: {
                 address_requiredReg: '',
                 home_tel_requiredReg: '',
-                home_tel_telephoneReg: '',
+                home_tel_homeTelephoneReg: '',
                 resident_tel_requiredReg: '',
                 resident_tel_telephoneReg: '',
             },
@@ -225,7 +233,7 @@ class MainPage extends Component {
             otherGuestInformationFurtherValidation: {
                 address_requiredReg: '',
                 home_tel_requiredReg: '',
-                home_tel_telephoneReg: '',
+                home_tel_homeTelephoneReg: '',
                 resident_tel_requiredReg: '',
                 resident_tel_telephoneReg: '',
             },
@@ -309,6 +317,7 @@ class MainPage extends Component {
                         handleUnitNumber: this.handleUnitNumber,
                         handlePersonId : this.handlePersonId,
                         handleFields: this.handleFields,
+                        handleDates: this.handleDates,
                         handleValidations: this.handleValidations,
                         handleSpecificValidations: this.handleSpecificValidations,}}
                     >
@@ -349,6 +358,12 @@ class MainPage extends Component {
         this.setState({ fields: newFields });
     }
 
+    handleDates = (value, residentType, field) => {
+        let newFields = {...this.state.fields};
+        newFields[residentType][field] = value
+        this.setState({ fields: newFields });
+    }
+
     handleValidations = (fields, names) => {
         let newValidations = {...this.state.validations};
         for (let i = 0; i < names.length; i++) {
@@ -368,7 +383,7 @@ class MainPage extends Component {
         // newValidations[name] = field;
         this.setState({specificValidations : newSpecificValidations});
 
-        // console.log(this.state.fields)
+        console.log(this.state.fields)
         // console.log(this.state.fields.otherGuestInformationFurther)
     }
 }

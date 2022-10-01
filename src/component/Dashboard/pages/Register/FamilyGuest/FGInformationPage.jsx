@@ -1,12 +1,27 @@
 import React, { Component } from 'react';
 import * as yup from 'yup';
 import BuildingContext from "../../../../../contexts/Building";
+import {DatePicker} from "react-persian-datepicker";
+import SimpleTextInput from "../../../../CustomInputs/SimpleTextInput";
 
 
 class FGInformationPage extends Component {
     static contextType = BuildingContext;
 
-    state = { }
+    state = {
+        calStyles : {
+            calendarContainer: "calendarContainer",
+            dayPickerContainer: "dayPickerContainer",
+            monthsList: "monthsList",
+            daysOfWeek: "daysOfWeek",
+            dayWrapper: "dayWrapper",
+            selected: "selected",
+            heading: "heading",
+            next: "next",
+            prev: "prev",
+            title: "title",
+        }
+    }
 
     render() {
         return (
@@ -16,111 +31,61 @@ class FGInformationPage extends Component {
 
                     <div className='d-flex flex-wrap justify-content-start'>
                         <div className="input-group-register col-4">
-                            <input type="text"
-                                   className={`input form-control ${this.context.familyGuestInformationValidation.fullName_requiredReg === false ? "is-invalid" : ""}`}
-                                   value={this.context.familyGuestInformation.fullName}
-                                   onChange={(e) => this.context.handleFields(e, 'familyGuestInformation', 'fg_fullName')}
-                                   placeholder=" "
+                            <SimpleTextInput
+                                condition1={this.context.familyGuestInformationValidation.fullName_requiredReg}
+                                value={this.context.familyGuestInformation.fullName}
+                                fieldNameString={'familyGuestInformation'}
+                                valueOfInputString={'fullName'}
+                                required={true}
+                                label={'نام و نام خانوادگی'}
                             />
-                            <label className="placeholder"
-                                   style={{right: this.context.familyGuestInformationValidation.fullName_requiredReg === false ? '35px' : '12px'}}>
-                                نام و نام خانوادگی
-                                <span style={{color : 'red'}}>*</span>
-                            </label>
-
-                            {
-                                this.context.familyGuestInformationValidation.fullName_requiredReg === false
-                                    ? <small
-                                        className="text-danger">{this.context.errors['required']}</small>
-                                    : <div/>
-                            }
-
                         </div>
                         <div className="input-group-register col-4">
-                            <input type="text"
-                                   className={`input form-control ${(this.context.familyGuestInformationValidation.nationalCode_requiredReg &&
-                                       this.context.familyGuestInformationValidation.nationalCode_numberReg) === false ? "is-invalid" : ""}`}
-                                   value={this.context.familyGuestInformation.nationalCode}
-                                   onChange={(e) => this.context.handleFields(e, 'familyGuestInformation', 'nationalCode')}
-                                   placeholder=" "
+                            <SimpleTextInput
+                                condition1={this.context.familyGuestInformationValidation.nationalCode_requiredReg}
+                                condition4={this.context.familyGuestInformationValidation.nationalCode_numberReg}
+                                value={this.context.familyGuestInformation.nationalCode}
+                                fieldNameString={'familyGuestInformation'}
+                                valueOfInputString={'nationalCode'}
+                                required={true}
+                                label={'کد ملی'}
                             />
-                            <label className="placeholder" style={{right: (this.context.familyGuestInformationValidation.nationalCode_requiredReg &&
-                                    this.context.familyGuestInformationValidation.nationalCode_numberReg) === false ? '35px' : '12px'}}>
-                                کد ملی
-                                <span style={{color : 'red'}}>*</span>
-                            </label>
-
-                            {
-                                this.context.familyGuestInformationValidation.nationalCode_requiredReg === false
-                                    ? <small
-                                        className="text-danger">{this.context.errors['required']}</small>
-                                    : <div/>
-                            }
-
-                            {
-                                (this.context.familyGuestInformationValidation.nationalCode_numberReg === false && this.context.familyGuestInformationValidation.nationalCode_requiredReg === true)
-                                    ? <small
-                                        className="text-danger">{this.context.errors['numberRequired']}</small>
-                                    : <div/>
-                            }
-
                         </div>
                         <div className="input-group-register col-4">
-                            <input type="text"
-                                   className={`input form-control ${(this.context.familyGuestInformationValidation.certificateNumber_requiredReg &&
-                                       this.context.familyGuestInformationValidation.certificateNumber_numberReg) === false ? "is-invalid" : ""}`}
-                                   value={this.context.familyGuestInformation.certificateNumber}
-                                   onChange={(e) => this.context.handleFields(e, 'familyGuestInformation', 'certificateNumber')}
-                                   placeholder=" "
+                            <SimpleTextInput
+                                condition1={this.context.familyGuestInformationValidation.certificateNumber_requiredReg}
+                                condition4={this.context.familyGuestInformationValidation.certificateNumber_numberReg}
+                                value={this.context.familyGuestInformation.certificateNumber}
+                                fieldNameString={'familyGuestInformation'}
+                                valueOfInputString={'certificateNumber'}
+                                required={true}
+                                label={'شماره شناسنامه'}
                             />
-                            <label className="placeholder" style={{right: (this.context.familyGuestInformationValidation.certificateNumber_requiredReg &&
-                                    this.context.familyGuestInformationValidation.certificateNumber_numberReg) === false ? '35px' : '12px'}}>
-                                شماره شناسنامه
-                                <span style={{color : 'red'}}>*</span>
-                            </label>
-
-                            {
-                                this.context.familyGuestInformationValidation.certificateNumber_requiredReg === false
-                                    ? <small
-                                        className="text-danger">{this.context.errors['required']}</small>
-                                    : <div/>
-                            }
-
-                            {
-                                (this.context.familyGuestInformationValidation.certificateNumber_numberReg === false && this.context.familyGuestInformationValidation.certificateNumber_requiredReg === true)
-                                    ? <small
-                                        className="text-danger">{this.context.errors['numberRequired']}</small>
-                                    : <div/>
-                            }
-
                         </div>
                         <div className="input-group-register col-4">
-                            <input type="text"
-                                   className="input form-control"
-                                   value={this.context.familyGuestInformation.placeOfIssue}
-                                   onChange={(e) => this.context.handleFields(e, 'familyGuestInformation', 'placeOfIssue')}
-                                   placeholder=" "
+                            <SimpleTextInput
+                                value={this.context.familyGuestInformation.placeOfIssue}
+                                fieldNameString={'familyGuestInformation'}
+                                valueOfInputString={'placeOfIssue'}
+                                label={'محل صدور'}
                             />
-                            <label className="placeholder">محل صدور</label>
                         </div>
                         <div className="input-group-register col-4">
-                            <input type="text"
-                                   className="input form-control"
-                                   value={this.context.familyGuestInformation.birthDate}
-                                   onChange={(e) => this.context.handleFields(e, 'familyGuestInformation', 'birthDate')}
-                                   placeholder=" "
+                            <DatePicker calendarStyles={this.state.calStyles}
+                                        inputFormat="jYYYY/jM/jD"
+                                        className="input form-control"
+                                        value={this.context.familyGuestInformation.birthDate}
+                                        onChange={(value) =>  this.context.handleDates(value, 'familyGuestInformation', 'birthDate')}
                             />
                             <label className="placeholder">تاریخ تولد</label>
                         </div>
                         <div className="input-group-register col-4">
-                            <input type="text"
-                                   className={`input form-control ${this.context.familyGuestInformationValidation.admissionStartDate_requiredReg === false ? "is-invalid" : ""}`}
-                                   value={this.context.familyGuestInformation.admissionStartDate}
-                                   onChange={(e) => this.context.handleFields(e, 'familyGuestInformation', 'admissionStartDate')}
-                                   placeholder=" "
-                                   name='admission_start_date'
+                            <DatePicker calendarStyles={this.state.calStyles}
+                                        inputFormat="jYYYY/jM/jD"
+                                        className={`input form-control ${this.context.familyGuestInformationValidation.admissionStartDate_requiredReg === false ? "is-invalid" : ""}`}
+                                        value={this.context.familyGuestInformation.admissionStartDate}
+                                        onChange={(value) =>  this.context.handleDates(value, 'familyGuestInformation', 'admissionStartDate')}
                             />
-                            {/*this.props.updateData*/}
                             <label className="placeholder" style={{right: this.context.familyGuestInformationValidation.admissionStartDate_requiredReg === false ? '35px' : '12px'}}>
                                 تاریخ شروع پذیرش
                                 <span style={{color : 'red'}}>*</span>
@@ -136,12 +101,11 @@ class FGInformationPage extends Component {
                         </div>
 
                         <div className="input-group-register col-4">
-                            <input type="text"
-                                   className={`input form-control ${this.context.familyGuestInformationValidation.admissionEndDate_requiredReg === false ? "is-invalid" : ""}`}
-                                   value={this.context.familyGuestInformation.admissionEndDate}
-                                   onChange={(e) => this.context.handleFields(e, 'familyGuestInformation', 'admissionEndDate')}
-                                   placeholder=" "
-                                   name='admission_end_date'
+                            <DatePicker calendarStyles={this.state.calStyles}
+                                        inputFormat="jYYYY/jM/jD"
+                                        className={`input form-control ${this.context.familyGuestInformationValidation.admissionEndDate_requiredReg === false ? "is-invalid" : ""}`}
+                                        value={this.context.familyGuestInformation.admissionEndDate}
+                                        onChange={(value) =>  this.context.handleDates(value, 'familyGuestInformation', 'admissionEndDate')}
                             />
                             <label className="placeholder" style={{right: this.context.familyGuestInformationValidation.admissionEndDate_requiredReg === false ? '35px' : '12px'}}>
                                 تاریخ اتمام پذیرش
@@ -157,12 +121,11 @@ class FGInformationPage extends Component {
 
                         </div>
                         <div className="input-group-register col-4">
-                            <input type="text"
-                                   className={`input form-control ${this.context.familyGuestInformationValidation.paymentDate_requiredReg === false ? "is-invalid" : ""}`}
-                                   value={this.context.familyGuestInformation.paymentDate}
-                                   onChange={(e) => this.context.handleFields(e, 'familyGuestInformation', 'paymentDate')}
-                                   placeholder=" "
-                                   name='payment_date'
+                            <DatePicker calendarStyles={this.state.calStyles}
+                                        inputFormat="jYYYY/jM/jD"
+                                        className={`input form-control ${this.context.familyGuestInformationValidation.paymentDate_requiredReg === false ? "is-invalid" : ""}`}
+                                        value={this.context.familyGuestInformation.paymentDate}
+                                        onChange={(value) =>  this.context.handleDates(value, 'familyGuestInformation', 'paymentDate')}
                             />
                             <label className="placeholder" style={{right: this.context.familyGuestInformationValidation.paymentDate_requiredReg === false ? '35px' : '12px'}}>
                                 تاریخ پرداخت
@@ -180,31 +143,31 @@ class FGInformationPage extends Component {
                         <div>
                         </div>
                         <div className="input-group-register col-4">
-                            <input type="text"
-                                   className="input form-control"
-                                   value={this.context.familyGuestInformation.rentPaymentAmount}
-                                   onChange={(e) => this.context.handleFields(e, 'familyGuestInformation', 'rentPaymentAmount')}
-                                   placeholder=" "
+                            <SimpleTextInput
+                                condition4={this.context.familyGuestInformationValidation.rentPaymentAmount_numberReg}
+                                value={this.context.familyGuestInformation.rentPaymentAmount}
+                                fieldNameString={'familyGuestInformation'}
+                                valueOfInputString={'rentPaymentAmount'}
+                                label={'مبلغ پرداخت اجاره'}
                             />
-                            <label className="placeholder">مبلغ پرداخت اجاره</label>
                         </div>
                         <div className="input-group-register col-4">
-                            <input type="text"
-                                   className="input form-control"
-                                   value={this.context.familyGuestInformation.depositPaymentAmount}
-                                   onChange={(e) => this.context.handleFields(e, 'familyGuestInformation', 'depositPaymentAmount')}
-                                   placeholder=" "
+                            <SimpleTextInput
+                                condition4={this.context.familyGuestInformationValidation.depositPaymentAmount_numberReg}
+                                value={this.context.familyGuestInformation.depositPaymentAmount}
+                                fieldNameString={'familyGuestInformation'}
+                                valueOfInputString={'depositPaymentAmount'}
+                                label={'مبلغ پرداخت ودیعه'}
                             />
-                            <label className="placeholder">مبلغ پرداخت ودیعه</label>
                         </div>
                         <div className="input-group-register col-4">
-                            <input type="text"
-                                   className="input form-control"
-                                   value={this.context.familyGuestInformation.discountPaymentAmount}
-                                   onChange={(e) => this.context.handleFields(e, 'familyGuestInformation', 'discountPaymentAmount')}
-                                   placeholder=" "
+                            <SimpleTextInput
+                                condition4={this.context.familyGuestInformationValidation.discountPaymentAmount_numberReg}
+                                value={this.context.familyGuestInformation.discountPaymentAmount}
+                                fieldNameString={'familyGuestInformation'}
+                                valueOfInputString={'discountPaymentAmount'}
+                                label={'مبلغ پرداخت تخفیف'}
                             />
-                            <label className="placeholder">مبلغ پرداخت تخفیف</label>
                         </div>
                         <div className="input-group-register col-4">
                             <select className='input'
@@ -229,13 +192,13 @@ class FGInformationPage extends Component {
                             <label className="placeholder">آدرس محل سکونت</label>
                         </div>
                         <div className="input-group-register col-4">
-                            <input type="text"
-                                   className="input form-control"
-                                   value={this.context.familyGuestInformation.phoneNumber}
-                                   onChange={(e) => this.context.handleFields(e, 'familyGuestInformation', 'phoneNumber')}
-                                   placeholder=" "
+                            <SimpleTextInput
+                                condition2={this.context.familyGuestInformationValidation.phoneNumber_telephoneReg}
+                                value={this.context.familyGuestInformation.phoneNumber}
+                                fieldNameString={'familyGuestInformation'}
+                                valueOfInputString={'phoneNumber'}
+                                label={'شماره تماس'}
                             />
-                            <label className="placeholder">شماره تماس</label>
                         </div>
                     </div>
                 </form>
