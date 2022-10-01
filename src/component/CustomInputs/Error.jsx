@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import "../style/registerPage.css"
-import BuildingContext from "../contexts/Building";
+import "../../style/registerPage.css"
+import BuildingContext from "../../contexts/Building";
 
 class Error extends Component {
     static contextType = BuildingContext;

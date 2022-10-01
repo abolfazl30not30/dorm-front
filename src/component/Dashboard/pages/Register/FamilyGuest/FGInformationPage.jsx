@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import * as yup from 'yup';
 import BuildingContext from "../../../../../contexts/Building";
 import {DatePicker} from "react-persian-datepicker";
-import CustomInput from "../../../../CustomInput";
+import CustomInput from "../../../../CustomInputs/CustomInput";
 
 
 class FGInformationPage extends Component {

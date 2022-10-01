@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import "../../../../../style/registerPage.css"
 import BuildingContext from "../../../../../contexts/Building";
 import {DatePicker} from "react-persian-datepicker";
-import CustomInput from "../../../../CustomInput";
+import CustomInput from "../../../../CustomInputs/CustomInput";
 
 class CInformationPage extends Component {
     static contextType = BuildingContext;

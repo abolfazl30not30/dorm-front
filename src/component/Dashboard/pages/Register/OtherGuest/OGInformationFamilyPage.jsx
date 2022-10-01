@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import "../../../../../style/registerPage.css"
 import BuildingContext from "../../../../../contexts/Building";
-import CustomInput from "../../../../CustomInput";
+import CustomInput from "../../../../CustomInputs/CustomInput";
 
 class OGInformationFamilyPage extends Component {
     static contextType = BuildingContext;

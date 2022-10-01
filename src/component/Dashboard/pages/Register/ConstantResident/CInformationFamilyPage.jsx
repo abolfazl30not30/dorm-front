@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import "../../../../../style/registerPage.css"
 import BuildingContext from "../../../../../contexts/Building";
 import { Calendar, DatePicker } from 'react-persian-datepicker';
-import CustomInput from "../../../../CustomInput";
-import Error from "../../../../Error";
+import CustomInput from "../../../../CustomInputs/CustomInput";
+import Error from "../../../../CustomInputs/Error";
 
 class CInformationFamilyPage extends Component {
     static contextType = BuildingContext;
