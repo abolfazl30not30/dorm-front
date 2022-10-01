@@ -3,7 +3,7 @@ import "../../style/registerPage.css"
 import BuildingContext from "../../contexts/Building";
 import Error from "./Error";
 
-class CustomInput extends Component {
+class SimpleTextInput extends Component {
     static contextType = BuildingContext;
 
     render() {
@@ -42,4 +42,4 @@ class CustomInput extends Component {
     }
 }
 
-export default CustomInput;
+export default SimpleTextInput;

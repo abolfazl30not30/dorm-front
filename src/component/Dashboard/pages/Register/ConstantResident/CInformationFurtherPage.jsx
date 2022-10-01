@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import "../../../../../style/registerPage.css"
 import BuildingContext from "../../../../../contexts/Building";
 import {DatePicker} from "react-persian-datepicker";
-import CustomInput from "../../../../CustomInputs/CustomInput";
+import SimpleTextInput from "../../../../CustomInputs/SimpleTextInput";
 class CInformationFurtherPage extends Component {
     static contextType = BuildingContext;
 
@@ -27,7 +27,7 @@ class CInformationFurtherPage extends Component {
                     <h2>مشخصات تکمیلی</h2>
                     <div className='d-flex flex-wrap justify-content-start'>
                         <div className="input-group-register col-6">
-                            <CustomInput
+                            <SimpleTextInput
                                 condition1={this.context.constantInformationFurtherValidation.resident_tel_requiredReg}
                                 condition2={this.context.constantInformationFurtherValidation.resident_tel_telephoneReg}
                                 value={this.context.constantInformationFurther.resident_tel}
@@ -38,7 +38,7 @@ class CInformationFurtherPage extends Component {
                             />
                         </div>
                         <div className="input-group-register col-6">
-                            <CustomInput
+                            <SimpleTextInput
                                 condition1={this.context.constantInformationFurtherValidation.home_tel_requiredReg}
                                 condition3={this.context.constantInformationFurtherValidation.home_tel_homeTelephoneReg}
                                 value={this.context.constantInformationFurther.home_tel}
@@ -90,7 +90,7 @@ class CInformationFurtherPage extends Component {
 
                         </div>
                         <div className="input-group-register col-12">
-                            <CustomInput
+                            <SimpleTextInput
                                 condition1={this.context.constantInformationFurtherValidation.address_requiredReg}
                                 value={this.context.constantInformationFurther.address}
                                 fieldNameString={'constantInformationFurther'}

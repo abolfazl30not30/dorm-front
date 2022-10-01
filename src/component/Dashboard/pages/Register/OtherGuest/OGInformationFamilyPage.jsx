@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import "../../../../../style/registerPage.css"
 import BuildingContext from "../../../../../contexts/Building";
-import CustomInput from "../../../../CustomInputs/CustomInput";
+import SimpleTextInput from "../../../../CustomInputs/SimpleTextInput";
 
 class OGInformationFamilyPage extends Component {
     static contextType = BuildingContext;
@@ -15,7 +15,7 @@ class OGInformationFamilyPage extends Component {
                     <div className='d-flex flex-wrap justify-content-start'>
                         <div className='col-12 pe-3 mb-3'>شخص اول</div>
                         <div className="input-group-register col-3">
-                            <CustomInput
+                            <SimpleTextInput
                                 condition1={this.context.otherGuestInformationFamilyValidation.firstPerson_FullName_requiredReg}
                                 value={this.context.otherGuestInformationFamily.firstPerson_FullName}
                                 fieldNameString={'otherGuestInformationFamily'}
@@ -25,7 +25,7 @@ class OGInformationFamilyPage extends Component {
                             />
                         </div>
                         <div className="input-group-register col-3">
-                            <CustomInput
+                            <SimpleTextInput
                                 condition1={this.context.otherGuestInformationFamilyValidation.firstPerson_PhoneNumber_requiredReg}
                                 condition2={this.context.otherGuestInformationFamilyValidation.firstPerson_PhoneNumber_telephoneReg}
                                 value={this.context.otherGuestInformationFamily.firstPerson_PhoneNumber}
@@ -36,7 +36,7 @@ class OGInformationFamilyPage extends Component {
                             />
                         </div>
                         <div className="input-group-register col-3">
-                            <CustomInput
+                            <SimpleTextInput
                                 value={this.context.otherGuestInformationFamily.firstPerson_FatherName}
                                 fieldNameString={'otherGuestInformationFamily'}
                                 valueOfInputString={'firstPerson_FatherName'}
@@ -60,7 +60,7 @@ class OGInformationFamilyPage extends Component {
                     <div className='d-flex flex-wrap justify-content-start mt-4'>
                         <div className='col-12 pe-3 mb-3'>شخص دوم</div>
                         <div className="input-group-register col-3">
-                            <CustomInput
+                            <SimpleTextInput
                                 condition1={this.context.otherGuestInformationFamilyValidation.secondPerson_FullName_requiredReg}
                                 value={this.context.otherGuestInformationFamily.secondPerson_FullName}
                                 fieldNameString={'otherGuestInformationFamily'}
@@ -70,7 +70,7 @@ class OGInformationFamilyPage extends Component {
                             />
                         </div>
                         <div className="input-group-register col-3">
-                            <CustomInput
+                            <SimpleTextInput
                                 condition1={this.context.otherGuestInformationFamilyValidation.secondPerson_PhoneNumber_requiredReg}
                                 condition2={this.context.otherGuestInformationFamilyValidation.secondPerson_PhoneNumber_telephoneReg}
                                 value={this.context.otherGuestInformationFamily.secondPerson_PhoneNumber}
@@ -81,7 +81,7 @@ class OGInformationFamilyPage extends Component {
                             />
                         </div>
                         <div className="input-group-register col-3">
-                            <CustomInput
+                            <SimpleTextInput
                                 value={this.context.otherGuestInformationFamily.secondPerson_FatherName}
                                 fieldNameString={'otherGuestInformationFamily'}
                                 valueOfInputString={'secondPerson_FatherName'}

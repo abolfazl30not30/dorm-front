@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import "../../../../../style/registerPage.css"
 import BuildingContext from "../../../../../contexts/Building";
 import { Calendar, DatePicker } from 'react-persian-datepicker';
-import CustomInput from "../../../../CustomInputs/CustomInput";
+import SimpleTextInput from "../../../../CustomInputs/SimpleTextInput";
 import Error from "../../../../CustomInputs/Error";
 
 class CInformationFamilyPage extends Component {
@@ -18,7 +18,7 @@ class CInformationFamilyPage extends Component {
                     <div className='d-flex flex-wrap justify-content-start'>
                         <div className='col-12 pe-3 mb-3'>شخص اول</div>
                         <div className="input-group-register col-3">
-                            <CustomInput
+                            <SimpleTextInput
                                 condition1={this.context.constantInformationFamilyValidation.firstPerson_FullName_requiredReg}
                                 value={this.context.constantInformationFamily.firstPerson_FullName}
                                 fieldNameString={'constantInformationFamily'} // this.context.fieldsNAmeString
@@ -28,7 +28,7 @@ class CInformationFamilyPage extends Component {
                             />
                         </div>
                         <div className="input-group-register col-3">
-                            <CustomInput
+                            <SimpleTextInput
                                 condition1={this.context.constantInformationFamilyValidation.firstPerson_PhoneNumber_requiredReg}
                                 condition2={this.context.constantInformationFamilyValidation.firstPerson_PhoneNumber_telephoneReg}
                                 value={this.context.constantInformationFamily.firstPerson_PhoneNumber}
@@ -39,7 +39,7 @@ class CInformationFamilyPage extends Component {
                             />
                         </div>
                         <div className="input-group-register col-3">
-                            <CustomInput
+                            <SimpleTextInput
                                 value={this.context.constantInformationFamily.firstPerson_FatherName}
                                 fieldNameString={'constantInformationFamily'}
                                 valueOfInputString={'firstPerson_FatherName'}
@@ -63,7 +63,7 @@ class CInformationFamilyPage extends Component {
                     <div className='d-flex flex-wrap justify-content-start mt-4'>
                         <div className='col-12 pe-3 mb-3'>شخص دوم</div>
                         <div className="input-group-register col-3">
-                            <CustomInput
+                            <SimpleTextInput
                                 condition1={this.context.constantInformationFamilyValidation.secondPerson_FullName_requiredReg}
                                 value={this.context.constantInformationFamily.secondPerson_FullName}
                                 fieldNameString={'constantInformationFamily'}
@@ -73,7 +73,7 @@ class CInformationFamilyPage extends Component {
                             />
                         </div>
                         <div className="input-group-register col-3">
-                            <CustomInput
+                            <SimpleTextInput
                                 condition1={this.context.constantInformationFamilyValidation.secondPerson_PhoneNumber_requiredReg}
                                 condition2={this.context.constantInformationFamilyValidation.secondPerson_PhoneNumber_telephoneReg}
                                 value={this.context.constantInformationFamily.secondPerson_PhoneNumber}
@@ -84,7 +84,7 @@ class CInformationFamilyPage extends Component {
                             />
                         </div>
                         <div className="input-group-register col-3">
-                            <CustomInput
+                            <SimpleTextInput
                                 value={this.context.constantInformationFamily.secondPerson_FatherName}
                                 fieldNameString={'constantInformationFamily'}
                                 valueOfInputString={'secondPerson_FatherName'}

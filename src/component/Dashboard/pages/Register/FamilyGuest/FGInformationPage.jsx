@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import * as yup from 'yup';
 import BuildingContext from "../../../../../contexts/Building";
 import {DatePicker} from "react-persian-datepicker";
-import CustomInput from "../../../../CustomInputs/CustomInput";
+import SimpleTextInput from "../../../../CustomInputs/SimpleTextInput";
 
 
 class FGInformationPage extends Component {
@@ -31,7 +31,7 @@ class FGInformationPage extends Component {
 
                     <div className='d-flex flex-wrap justify-content-start'>
                         <div className="input-group-register col-4">
-                            <CustomInput
+                            <SimpleTextInput
                                 condition1={this.context.familyGuestInformationValidation.fullName_requiredReg}
                                 value={this.context.familyGuestInformation.fullName}
                                 fieldNameString={'familyGuestInformation'}
@@ -41,7 +41,7 @@ class FGInformationPage extends Component {
                             />
                         </div>
                         <div className="input-group-register col-4">
-                            <CustomInput
+                            <SimpleTextInput
                                 condition1={this.context.familyGuestInformationValidation.nationalCode_requiredReg}
                                 condition4={this.context.familyGuestInformationValidation.nationalCode_numberReg}
                                 value={this.context.familyGuestInformation.nationalCode}
@@ -52,7 +52,7 @@ class FGInformationPage extends Component {
                             />
                         </div>
                         <div className="input-group-register col-4">
-                            <CustomInput
+                            <SimpleTextInput
                                 condition1={this.context.familyGuestInformationValidation.certificateNumber_requiredReg}
                                 condition4={this.context.familyGuestInformationValidation.certificateNumber_numberReg}
                                 value={this.context.familyGuestInformation.certificateNumber}
@@ -63,7 +63,7 @@ class FGInformationPage extends Component {
                             />
                         </div>
                         <div className="input-group-register col-4">
-                            <CustomInput
+                            <SimpleTextInput
                                 value={this.context.familyGuestInformation.placeOfIssue}
                                 fieldNameString={'familyGuestInformation'}
                                 valueOfInputString={'placeOfIssue'}
@@ -143,7 +143,7 @@ class FGInformationPage extends Component {
                         <div>
                         </div>
                         <div className="input-group-register col-4">
-                            <CustomInput
+                            <SimpleTextInput
                                 condition4={this.context.familyGuestInformationValidation.rentPaymentAmount_numberReg}
                                 value={this.context.familyGuestInformation.rentPaymentAmount}
                                 fieldNameString={'familyGuestInformation'}
@@ -152,7 +152,7 @@ class FGInformationPage extends Component {
                             />
                         </div>
                         <div className="input-group-register col-4">
-                            <CustomInput
+                            <SimpleTextInput
                                 condition4={this.context.familyGuestInformationValidation.depositPaymentAmount_numberReg}
                                 value={this.context.familyGuestInformation.depositPaymentAmount}
                                 fieldNameString={'familyGuestInformation'}
@@ -161,7 +161,7 @@ class FGInformationPage extends Component {
                             />
                         </div>
                         <div className="input-group-register col-4">
-                            <CustomInput
+                            <SimpleTextInput
                                 condition4={this.context.familyGuestInformationValidation.discountPaymentAmount_numberReg}
                                 value={this.context.familyGuestInformation.discountPaymentAmount}
                                 fieldNameString={'familyGuestInformation'}
@@ -192,7 +192,7 @@ class FGInformationPage extends Component {
                             <label className="placeholder">آدرس محل سکونت</label>
                         </div>
                         <div className="input-group-register col-4">
-                            <CustomInput
+                            <SimpleTextInput
                                 condition2={this.context.familyGuestInformationValidation.phoneNumber_telephoneReg}
                                 value={this.context.familyGuestInformation.phoneNumber}
                                 fieldNameString={'familyGuestInformation'}

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import BuildingContext from "../../../../../contexts/Building";
 import {DatePicker} from "react-persian-datepicker";
-import CustomInput from "../../../../CustomInputs/CustomInput";
+import SimpleTextInput from "../../../../CustomInputs/SimpleTextInput";
 
 class OGInformationPage extends Component {
     static contextType = BuildingContext;
@@ -27,7 +27,7 @@ class OGInformationPage extends Component {
                     <h2>مهمان (متفرقه)</h2>
                     <div className='d-flex flex-wrap justify-content-start'>
                         <div className="input-group-register col-4">
-                            <CustomInput
+                            <SimpleTextInput
                                 condition1={this.context.otherGuestInformationValidation.fullName_requiredReg}
                                 value={this.context.otherGuestInformation.fullName}
                                 fieldNameString={'otherGuestInformation'}
@@ -36,7 +36,7 @@ class OGInformationPage extends Component {
                             />
                         </div>
                         <div className="input-group-register col-4">
-                            <CustomInput
+                            <SimpleTextInput
                                 condition1={this.context.otherGuestInformationValidation.nationalCode_requiredReg}
                                 condition4={this.context.otherGuestInformationValidation.nationalCode_numberReg}
                                 value={this.context.otherGuestInformation.nationalCode}
@@ -46,7 +46,7 @@ class OGInformationPage extends Component {
                             />
                         </div>
                         <div className="input-group-register col-4">
-                            <CustomInput
+                            <SimpleTextInput
                                 condition1={this.context.otherGuestInformationValidation.certificateNumber_requiredReg}
                                 condition4={this.context.otherGuestInformationValidation.certificateNumber_numberReg}
                                 value={this.context.otherGuestInformation.certificateNumber}
@@ -56,7 +56,7 @@ class OGInformationPage extends Component {
                             />
                         </div>
                         <div className="input-group-register col-4">
-                            <CustomInput
+                            <SimpleTextInput
                                 value={this.context.otherGuestInformation.placeOfIssue}
                                 fieldNameString={'otherGuestInformation'}
                                 valueOfInputString={'placeOfIssue'}
@@ -113,7 +113,7 @@ class OGInformationPage extends Component {
                             <label className="placeholder">تاریخ پرداخت</label>
                         </div>
                         <div className="input-group-register col-4">
-                            <CustomInput
+                            <SimpleTextInput
                                 condition4={this.context.otherGuestInformationValidation.rentPaymentAmount_numberReg}
                                 value={this.context.otherGuestInformation.rentPaymentAmount}
                                 fieldNameString={'otherGuestInformation'}
@@ -123,7 +123,7 @@ class OGInformationPage extends Component {
                             />
                         </div>
                         <div className="input-group-register col-4">
-                            <CustomInput
+                            <SimpleTextInput
                                 condition4={this.context.otherGuestInformationValidation.depositPaymentAmount_numberReg}
                                 value={this.context.otherGuestInformation.depositPaymentAmount}
                                 fieldNameString={'otherGuestInformation'}
@@ -132,7 +132,7 @@ class OGInformationPage extends Component {
                             />
                         </div>
                         <div className="input-group-register col-4">
-                            <CustomInput
+                            <SimpleTextInput
                                 condition4={this.context.otherGuestInformationValidation.discountPaymentAmount_numberReg}
                                 value={this.context.otherGuestInformation.discountPaymentAmount}
                                 fieldNameString={'otherGuestInformation'}
