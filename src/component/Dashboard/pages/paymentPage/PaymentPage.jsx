@@ -19,6 +19,7 @@ import {RiFileUploadFill} from "react-icons/ri";
 import Alert from 'react-bootstrap/Alert';
 import {containerClasses} from "@mui/material";
 
+
 class PaymentPage extends Component {
     state = {
         choices: [
@@ -56,11 +57,17 @@ class PaymentPage extends Component {
         isUpload: false,
         uploadFile: [],
         date: '',
-        selectedType: '',
-        price:"",
-        description: "",
-        priceType:"IRR",
+        selectedType: null,
+        price:'',
+        description: '',
+        priceType:"IRR", // default value
 
+        Validations: {
+            price_requiredReg: '',
+            price_numberReg: '',
+            selectedTypeBoolean: true,
+            date_requiredReg: '',
+        }
 
     }
 
@@ -83,7 +90,7 @@ class PaymentPage extends Component {
 
                 <div className='first-section row'>
                     <div className='col-4'>
-                        <label for="price">مبلغ :</label>
+                        <label htmlFor="price">مبلغ :</label>
                         <div className="row" style={{marginTop: "20px"}}>
                             <div className='col-3 m-0 p-0'>
                                 <select className='form-select' style={{height: "50px"}} value={this.state.priceType} onChange={(e)=>{this.handlePriceType(e)}}>
@@ -92,8 +99,25 @@ class PaymentPage extends Component {
                                 </select>
                             </div>
                             <div className='form-group col-9 m-0 p-0'>
-                                <input id="price" type='text' className='form-control  input '
+                                <input id="price"
+                                       type='text'
+                                       className={`input form-control ${(this.state.Validations.price_requiredReg && this.state.Validations.price_numberReg) === false ? "is-invalid" : ""}`}
                                        style={{height: "50px", width: "90%"}} onChange={(e)=>{this.handlePriceInput(e)}}/>
+
+                                {
+                                    this.state.Validations.price_requiredReg === false
+                                        ? <small
+                                            className="text-danger">این فیلد الزامی است!</small>
+                                        : <div/>
+                                }
+
+                                {
+                                    (this.state.Validations.price_numberReg === false && this.state.Validations.price_requiredReg === true)
+                                        ? <small
+                                            className="text-danger">عدد وارد کنید!</small>
+                                        : <div/>
+                                }
+
                                 {/*<TextField id="filled-basic" label="قیمت" variant="filled" />*/}
                             </div>
                         </div>
@@ -101,12 +125,23 @@ class PaymentPage extends Component {
                     <div className='col-8'>
                         <label style={{marginRight: "33px"}}>نوع: </label>
                         <div style={{width: '100%', marginRight: "16px"}}>
-                            <Accordion defaultActiveKey="0">
+                            <Accordion defaultActiveKey="0"
+                                       style={{backgroundColor: this.state.Validations.selectedTypeBoolean ? '' : 'rgba(255, 0, 0, 0.4)'}}
+                            >
                                 <Accordion.Item eventKey="0">
-                                    <Accordion.Header>{this.state.selectedType}&nbsp;</Accordion.Header>
+                                    <Accordion.Header>
+                                        {this.state.selectedType}&nbsp;
+                                    </Accordion.Header>
                                     <Accordion.Body>
                                         <div>
                                             <div className=' row flex-wrap'>
+                                                {
+                                                    this.state.Validations.selectedTypeBoolean // ifSelected condition
+                                                    ? null
+                                                        : <div className="d-flex justify-content-center mb-3">
+                                                            <small className="text-danger">یکی از فیلدهای زیر را اتخاب کنید!</small>
+                                                          </div>
+                                                }
                                                 <ToggleButtonGroup
                                                     orientation="vertical"
                                                     value={this.state.selectedType}
@@ -157,7 +192,19 @@ class PaymentPage extends Component {
                 <div className='second-section d-flex flex-wrap justify-content-start mr-3 row' style={{height: '50%'}}>
                     <div className='col-4 mt-5 mb-3 date-container'>
                         <label className='mb-3'>تاریخ: </label>
-                        <DatePicker calendarStyles={this.state.styles} onChange={value=>{this.handleDateInput(value)}}/>
+                        <DatePicker calendarStyles={this.state.styles}
+                                    className={`input form-control ${this.state.Validations.date_requiredReg === false ? "is-invalid" : ""}`}
+                                    value={this.state.date}
+                                    onChange={value=>{this.handleDateInput(value)}}
+                        />
+
+                        {
+                            this.state.Validations.date_requiredReg === false
+                                ? <small
+                                    className="text-danger">این فیلد الزامی است!</small>
+                                : <div/>
+                        }
+
                     </div>
                     <div className='col-8'>
                         <Form>
@@ -296,6 +343,29 @@ class PaymentPage extends Component {
 
     }
 
+    handleValidations = () => {
+        let requiredReg = /^\s*$/;
+        let numberReg = /^[0-9]*$/;
+
+        let price_requiredReg = !requiredReg.test(this.state.price);
+        let price_numberReg = numberReg.test(this.state.price);
+        let selectedTypeBoolean = this.state.selectedType !== null;
+        let date_requiredReg = !requiredReg.test(this.state.date);
+
+        console.log("1")
+        console.log(price_requiredReg, price_numberReg, selectedTypeBoolean, date_requiredReg)
+
+        let newValidations = {...this.state.Validations};
+        newValidations.price_requiredReg = price_requiredReg;
+        newValidations.price_numberReg = price_numberReg;
+        newValidations.selectedTypeBoolean = selectedTypeBoolean;
+        newValidations.date_requiredReg = date_requiredReg;
+
+        this.setState({Validations: newValidations});
+
+        return price_requiredReg && price_numberReg && selectedTypeBoolean && date_requiredReg;
+    }
+
     handleInputFile = (event) =>{
         this.setState({uploadFile : event.target.files})
     }
@@ -317,28 +387,37 @@ class PaymentPage extends Component {
         this.setState({priceType:event.target.value})
     }
 
-    handleSubmitPayment = async()=>{
-        const rawResponse = await fetch('http://api.saadatportal.com/api/v1/paymentHistory', {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(
-                {
-                    date: "1400/01/01 00:00:00",
-                    unit: this.state.priceType,
-                    value: this.state.price,
-                    type: this.state.selectedType,
-                    paymentType:"receive",
-                    description: this.state.description,
-                    parentId: "",
-                    parentType:"Personnel",
-                }
-            )
-        });
-        var content = await rawResponse.json();
-        console.log(content);
+    handleSubmitPayment = async () => {
+        let result = this.handleValidations();
+
+        // console.log(this.state)
+        // console.log(this.state.Validations)
+
+        if (result) {
+            const rawResponse = await fetch('http://api.saadatportal.com/api/v1/paymentHistory', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(
+                    {
+                        date: "1400/01/01 00:00:00",
+                        unit: this.state.priceType,
+                        value: this.state.price,
+                        type: this.state.selectedType,
+                        paymentType: "receive",
+                        description: this.state.description,
+                        parentId: "",
+                        parentType: "Personnel",
+                    }
+                )
+            });
+            var content = await rawResponse.json();
+            console.log(content);
+        } else {
+            console.log("ERROR")
+        }
     }
 }
 
