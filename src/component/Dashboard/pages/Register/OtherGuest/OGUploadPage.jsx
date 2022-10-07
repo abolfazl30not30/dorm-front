@@ -50,11 +50,12 @@ class OGUploadPage extends Component {
     render() {
         return (
             <>
-                <div className='upload-container row'>
-                    <div className='upload-logo-container col-6'>
-                        <img src={upload_icon} className='upload-icon' alt='upload_icon' />
+                <div className='upload-container row mt-4'>
+                    <div className="upload-container-title">
+                        <h5>آپلود مدارک</h5>
+                        <p>حداکثر حجم آپلود فایل 10 مگابایت می باشد</p>
                     </div>
-                    <div className='sections col-6' >
+                    <div className='sections col-md-7' >
                         <Accordion defaultActiveKey="0">
                             <Accordion.Item eventKey="0">
                                 <Accordion.Header>آپلود شناسنامه</Accordion.Header>
@@ -141,7 +142,9 @@ class OGUploadPage extends Component {
                             </Accordion.Item>
                         </Accordion>
                     </div>
-
+                    <div className='upload-logo-container col-md-5'>
+                        <img src={upload_icon} className='upload-icon' alt='upload_icon' />
+                    </div>
                 </div>
             </>
         );

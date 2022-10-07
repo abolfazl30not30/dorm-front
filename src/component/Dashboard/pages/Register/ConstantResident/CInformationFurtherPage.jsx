@@ -26,7 +26,7 @@ class CInformationFurtherPage extends Component {
                 <div className="register-step-box">
                     <h2>مشخصات تکمیلی</h2>
                     <div className='d-flex flex-wrap justify-content-start'>
-                        <div className="input-group-register col-6">
+                        <div className="input-group-register col-12 col-md-4 my-2">
                             <SimpleTextInput
                                 condition1={this.context.constantInformationFurtherValidation.resident_tel_requiredReg}
                                 condition2={this.context.constantInformationFurtherValidation.resident_tel_telephoneReg}
@@ -37,7 +37,7 @@ class CInformationFurtherPage extends Component {
                                 label={'شماره تماس اقامتگر'}
                             />
                         </div>
-                        <div className="input-group-register col-6">
+                        <div className="input-group-register col-12 col-md-4 my-2">
                             <SimpleTextInput
                                 condition1={this.context.constantInformationFurtherValidation.home_tel_requiredReg}
                                 condition3={this.context.constantInformationFurtherValidation.home_tel_homeTelephoneReg}
@@ -48,7 +48,7 @@ class CInformationFurtherPage extends Component {
                                 label={'شماره تلفن منزل'}
                             />
                         </div>
-                        <div className="input-group-register col-6">
+                        <div className="input-group-register col-12 col-md-4 my-2">
                             <DatePicker calendarStyles={this.state.calStyles}
                                         inputFormat="jYYYY/jM/jD"
                                         className={`input form-control ${this.context.constantInformationFurtherValidation.admissionStartDate_requiredReg === false ? "is-invalid" : ""}`}
@@ -69,7 +69,7 @@ class CInformationFurtherPage extends Component {
 
                         </div>
 
-                        <div className="input-group-register col-6">
+                        <div className="input-group-register col-12 col-md-4 my-2">
                             <DatePicker calendarStyles={this.state.calStyles}
                                         inputFormat="jYYYY/jM/jD"
                                         className={`input form-control ${this.context.constantInformationFurtherValidation.admissionEndDate_requiredReg === false ? "is-invalid" : ""}`}
@@ -89,7 +89,7 @@ class CInformationFurtherPage extends Component {
                             }
 
                         </div>
-                        <div className="input-group-register col-12">
+                        <div className="input-group-register col-12 col-md-8 my-2">
                             <SimpleTextInput
                                 condition1={this.context.constantInformationFurtherValidation.address_requiredReg}
                                 value={this.context.constantInformationFurther.address}

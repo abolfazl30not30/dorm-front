@@ -26,7 +26,7 @@ class OGInformationPage extends Component {
                 <div className="register-step-box">
                     <h2>مهمان (متفرقه)</h2>
                     <div className='d-flex flex-wrap justify-content-start'>
-                        <div className="input-group-register col-4">
+                        <div className="input-group-register col-12 col-md-4 my-2">
                             <SimpleTextInput
                                 condition1={this.context.otherGuestInformationValidation.fullName_requiredReg}
                                 value={this.context.otherGuestInformation.fullName}
@@ -35,7 +35,7 @@ class OGInformationPage extends Component {
                                 label={'نام و نام خانوادگی'}
                             />
                         </div>
-                        <div className="input-group-register col-4">
+                        <div className="input-group-register col-12 col-md-4 my-2">
                             <SimpleTextInput
                                 condition1={this.context.otherGuestInformationValidation.nationalCode_requiredReg}
                                 condition4={this.context.otherGuestInformationValidation.nationalCode_numberReg}
@@ -45,7 +45,7 @@ class OGInformationPage extends Component {
                                 label={'کد ملی'}
                             />
                         </div>
-                        <div className="input-group-register col-4">
+                        <div className="input-group-register col-12 col-md-4 my-2">
                             <SimpleTextInput
                                 condition1={this.context.otherGuestInformationValidation.certificateNumber_requiredReg}
                                 condition4={this.context.otherGuestInformationValidation.certificateNumber_numberReg}
@@ -55,7 +55,7 @@ class OGInformationPage extends Component {
                                 label={'شماره شناسنامه'}
                             />
                         </div>
-                        <div className="input-group-register col-4">
+                        <div className="input-group-register col-12 col-md-4 my-2">
                             <SimpleTextInput
                                 value={this.context.otherGuestInformation.placeOfIssue}
                                 fieldNameString={'otherGuestInformation'}
@@ -63,7 +63,7 @@ class OGInformationPage extends Component {
                                 label={'محل صدور'}
                             />
                         </div>
-                        <div className="input-group-register col-4">
+                        <div className="input-group-register col-12 col-md-4 my-2">
                             <DatePicker calendarStyles={this.state.calStyles}
                                         inputFormat="jYYYY/jM/jD"
                                         className={`input form-control ${this.context.otherGuestInformationValidation.admissionStartDate_requiredReg === false ? "is-invalid" : ""}`}
@@ -83,7 +83,7 @@ class OGInformationPage extends Component {
                             }
 
                         </div>
-                        <div className="input-group-register col-4">
+                        <div className="input-group-register col-12 col-md-4 my-2">
                             <DatePicker calendarStyles={this.state.calStyles}
                                         inputFormat="jYYYY/jM/jD"
                                         className={`input form-control ${this.context.otherGuestInformationValidation.admissionEndDate_requiredReg === false ? "is-invalid" : ""}`}
@@ -103,7 +103,7 @@ class OGInformationPage extends Component {
                             }
 
                         </div>
-                        <div className="input-group-register col-4">
+                        <div className="input-group-register col-12 col-md-4 my-2">
                             <DatePicker calendarStyles={this.state.calStyles}
                                         inputFormat="jYYYY/jM/jD"
                                         className={`input form-control`}
@@ -112,7 +112,7 @@ class OGInformationPage extends Component {
                             />
                             <label className="placeholder">تاریخ پرداخت</label>
                         </div>
-                        <div className="input-group-register col-4">
+                        <div className="input-group-register col-12 col-md-4 my-2">
                             <SimpleTextInput
                                 condition4={this.context.otherGuestInformationValidation.rentPaymentAmount_numberReg}
                                 value={this.context.otherGuestInformation.rentPaymentAmount}
@@ -122,7 +122,7 @@ class OGInformationPage extends Component {
                                 label={'مبلغ پرداخت اجاره'}
                             />
                         </div>
-                        <div className="input-group-register col-4">
+                        <div className="input-group-register col-12 col-md-4 my-2">
                             <SimpleTextInput
                                 condition4={this.context.otherGuestInformationValidation.depositPaymentAmount_numberReg}
                                 value={this.context.otherGuestInformation.depositPaymentAmount}
@@ -131,7 +131,7 @@ class OGInformationPage extends Component {
                                 label={'مبلغ پرداخت ودیعه'}
                             />
                         </div>
-                        <div className="input-group-register col-4">
+                        <div className="input-group-register col-12 col-md-4 my-2">
                             <SimpleTextInput
                                 condition4={this.context.otherGuestInformationValidation.discountPaymentAmount_numberReg}
                                 value={this.context.otherGuestInformation.discountPaymentAmount}
@@ -140,7 +140,7 @@ class OGInformationPage extends Component {
                                 label={' مبلغ پرداخت تخفیف'}
                             />
                         </div>
-                        <div className="input-group-register col-4">
+                        <div className="input-group-register col-12 col-md-4 my-2">
                             <DatePicker calendarStyles={this.state.calStyles}
                                         inputFormat="jYYYY/jM/jD"
                                         className={`input form-control`}

@@ -93,7 +93,7 @@ class CUploadPage extends Component {
     render() {
         return (
             <>
-                <div className='upload-container row'>
+                <div className='upload-container row mt-4'>
                     <div className="upload-container-title">
                         <h5>آپلود مدارک</h5>
                         <p>حداکثر حجم آپلود فایل 10 مگابایت می باشد</p>

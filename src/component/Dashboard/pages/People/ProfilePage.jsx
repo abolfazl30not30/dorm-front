@@ -346,7 +346,7 @@ class ProfilePage extends Component {
     render() {
         return (
             <>
-                <div className='profile-container row'> {/*given photo*/}
+                <div className='profile-container row p-3'> {/*given photo*/}
                     <div className='image-container'>
                         <div className="d-flex flex-column flex-md-row justify-content-around align-items-center w-100">
                             <img

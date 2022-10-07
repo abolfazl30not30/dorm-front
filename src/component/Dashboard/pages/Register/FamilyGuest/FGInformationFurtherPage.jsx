@@ -12,7 +12,7 @@ class FGInformationFurtherPage extends Component {
                 <div className="register-step-box">
                     <h2>مشخصات تکمیلی</h2>
                     <div className='d-flex flex-wrap justify-content-start'>
-                        <div className="input-group-register col-6">
+                        <div className="input-group-register col-12 col-md-4 my-2">
                             <SimpleTextInput
                                 condition1={this.context.familyGuestInformationFurtherValidation.resident_tel_requiredReg}
                                 condition2={this.context.familyGuestInformationFurtherValidation.resident_tel_telephoneReg}
@@ -23,7 +23,7 @@ class FGInformationFurtherPage extends Component {
                                 label={'شماره تماس اقامتگر'}
                             />
                         </div>
-                        <div className="input-group-register col-6">
+                        <div className="input-group-register col-12 col-md-4 my-2">
                             <SimpleTextInput
                                 condition1={this.context.familyGuestInformationFurtherValidation.home_tel_requiredReg}
                                 condition3={this.context.familyGuestInformationFurtherValidation.home_tel_homeTelephoneReg}

@@ -28,7 +28,7 @@ class CInformationPage extends Component {
                 <div className="register-step-box">
                     <h2>مشخصات</h2>
                     <div className='d-flex flex-wrap justify-content-start'>
-                        <div className="input-group-register col-4">
+                        <div className="input-group-register col-12 col-md-4 my-2">
                             <SimpleTextInput
                                 condition1={this.context.constantInformationPageValidation.firstName_requiredReg}
                                 value={this.context.constantInformationPage.firstName}
@@ -38,7 +38,7 @@ class CInformationPage extends Component {
                                 label={'نام'}
                             />
                         </div>
-                        <div className="input-group-register col-4">
+                        <div className="input-group-register col-12 col-md-4 my-2">
                             <SimpleTextInput
                                 condition1={this.context.constantInformationPageValidation.lastName_requiredReg}
                                 value={this.context.constantInformationPage.lastName}
@@ -48,7 +48,7 @@ class CInformationPage extends Component {
                                 label={'نام خانوادگی'}
                             />
                         </div>
-                        <div className="input-group-register col-4">
+                        <div className="input-group-register col-12 col-md-4 my-2">
                             <SimpleTextInput
                                 value={this.context.constantInformationPageValidation.nickName}
                                 fieldNameString={'constantInformationPage'}
@@ -56,7 +56,7 @@ class CInformationPage extends Component {
                                 label={'نام مستعار'}
                             />
                         </div>
-                        <div className="input-group-register col-4">
+                        <div className="input-group-register col-12 col-md-4 my-2">
                             <SimpleTextInput
                                 condition1={this.context.constantInformationPageValidation.nationalCode_requiredReg}
                                 condition4={this.context.constantInformationPageValidation.nationalCode_numberReg}
@@ -67,7 +67,7 @@ class CInformationPage extends Component {
                                 label={'کد ملی'}
                             />
                         </div>
-                        <div className="input-group-register col-4">
+                        <div className="input-group-register col-12 col-md-4 my-2">
                             <SimpleTextInput
                                 condition1={this.context.constantInformationPageValidation.certificateNumber_requiredReg}
                                 condition4={this.context.constantInformationPageValidation.certificateNumber_numberReg}
@@ -78,7 +78,7 @@ class CInformationPage extends Component {
                                 label={'شماره شناسنامه'}
                             />
                         </div>
-                        <div className="input-group-register col-4">
+                        <div className="input-group-register col-12 col-md-4 my-2">
                             <SimpleTextInput
                                 condition1={this.context.constantInformationPageValidation.placeOfIssue_requiredReg}
                                 value={this.context.constantInformationPage.placeOfIssue}
@@ -88,7 +88,7 @@ class CInformationPage extends Component {
                                 label={' محل صدور'}
                             />
                         </div>
-                        <div className="input-group-register col-4 date-container">
+                        <div className="input-group-register col-12 col-md-4 my-2 date-container">
                             <DatePicker calendarStyles={this.state.calStyles}
                                         inputFormat="jYYYY/jM/jD"
                                         className={`input form-control ${this.context.constantInformationPageValidation.birthDate_requiredReg === false ? "is-invalid" : ""}`}
@@ -108,7 +108,7 @@ class CInformationPage extends Component {
                             }
 
                         </div>
-                        <div className="input-group-register col-4">
+                        <div className="input-group-register col-12 col-md-4 my-2">
                             <SimpleTextInput
                                 condition1={this.context.constantInformationPageValidation.nationality_requiredReg}
                                 value={this.context.constantInformationPage.nationality}
@@ -118,7 +118,7 @@ class CInformationPage extends Component {
                                 label={'ملیت'}
                             />
                         </div>
-                        <div className="input-group-register col-4">
+                        <div className="input-group-register col-12 col-md-4 my-2">
                             <SimpleTextInput
                                 condition1={this.context.constantInformationPageValidation.fatherName_requiredReg}
                                 value={this.context.constantInformationPage.fatherName}
@@ -128,7 +128,7 @@ class CInformationPage extends Component {
                                 label={'نام پدر'}
                             />
                         </div>
-                        <div className="input-group-register col-4">
+                        <div className="input-group-register col-12 col-md-4 my-2">
                             <select className='input'
                                     value={this.context.constantInformationPage.religion}
                                     onChange={(e) =>  this.context.handleFields(e, 'constantInformationPage', 'religion')}
@@ -141,7 +141,7 @@ class CInformationPage extends Component {
                             </select>
                             <label className="placeholder">دین</label>
                         </div>
-                        <div className="input-group-register col-4">
+                        <div className="input-group-register col-12 col-md-4 my-2">
                             <SimpleTextInput
                                 value={this.context.constantInformationPage.subReligion}
                                 fieldNameString={'constantInformationPage'}
@@ -149,7 +149,7 @@ class CInformationPage extends Component {
                                 label={'مذهب'}
                             />
                         </div>
-                        <div className="input-group-register col-4">
+                        <div className="input-group-register col-12 col-md-4 my-2">
                             <SimpleTextInput
                                 value={this.context.constantInformationPage.university}
                                 fieldNameString={'constantInformationPage'}
@@ -157,7 +157,7 @@ class CInformationPage extends Component {
                                 label={'دانشگاه محل تحصیل'}
                             />
                         </div>
-                        <div className="input-group-register col-4">
+                        <div className="input-group-register col-12 col-md-4 my-2">
                             <SimpleTextInput
                                 condition4={this.context.constantInformationPageValidation.studentNumber_numberReg}
                                 value={this.context.constantInformationPage.studentNumber}
@@ -166,7 +166,7 @@ class CInformationPage extends Component {
                                 label={'شماره دانشجویی'}
                             />
                         </div>
-                        <div className="input-group-register col-4">
+                        <div className="input-group-register col-12 col-md-4 my-2">
                             <SimpleTextInput
                                 value={this.context.constantInformationPage.fatherJob}
                                 fieldNameString={'constantInformationPage'}
@@ -174,7 +174,7 @@ class CInformationPage extends Component {
                                 label={'شغل پدر'}
                             />
                         </div>
-                        <div className="input-group-register col-4">
+                        <div className="input-group-register col-12 col-md-4 my-2">
                             <select className='input'
                                     name='maritalStatus'
                                     value={this.context.constantInformationPage.maritalStatus}
@@ -189,7 +189,7 @@ class CInformationPage extends Component {
                         {
                             this.context.constantInformationPage.maritalStatus === 'married' ? (
                                 <>
-                                    <div className="input-group-register col-4">
+                                    <div className="input-group-register col-12 col-md-4 my-2">
                                         <SimpleTextInput
                                             condition1={this.context.constantInformationPageValidation.spouseFullName_requiredReg}
                                             condition5={this.context.fields.maritalStatus === 'married'}
@@ -200,7 +200,7 @@ class CInformationPage extends Component {
                                             label={'نام و نام خانوادگی همسر'}
                                         />
                                     </div>
-                                    <div className="input-group-register col-4">
+                                    <div className="input-group-register col-12 col-md-4 my-2">
                                         <SimpleTextInput
                                             value={this.context.constantInformationPage.spouseJob}
                                             fieldNameString={'constantInformationPage'}
@@ -213,7 +213,7 @@ class CInformationPage extends Component {
                                 <></>
                             )
                         }
-                        <div className="input-group-register col-4">
+                        <div className="input-group-register col-12 col-md-4 my-2">
                             <select className='input'
                                     value={this.context.constantInformationPage.health}
                                     onChange={(e) =>  this.context.handleFields(e, 'constantInformationPage', 'health')}
@@ -226,7 +226,7 @@ class CInformationPage extends Component {
                         {
                             this.context.constantInformationPage.health === 'true' ? (
                                 <>
-                                    <div className="input-group-register col-12">
+                                    <div className="input-group-register col-12 my-2">
                                         <textarea
                                             className={`input form-control ${(this.context.constantInformationPageValidation.healthDescription_requiredReg === false &&
                                                 this.context.constantInformationPage.health === 'true') ? "is-invalid" : ""}`}
