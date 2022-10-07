@@ -46,7 +46,7 @@
 }
 .third-section .file-container{
     background-color: #fff;
-    width: 35%;
+    min-width: 35%;
     height: 40px;
     display: flex;
     align-items: center;
@@ -64,4 +64,9 @@
 }
 .third-section .deleteBtn:hover{
     color: rgb(245, 40, 92);
+}
+.loading{
+    display: flex;
+    align-items: start;
+    margin-right:10px
 }

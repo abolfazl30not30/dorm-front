@@ -19,9 +19,13 @@ import {Accordion} from 'react-bootstrap';
 import {Table} from 'react-bootstrap';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
+import BuildingContext from "../../../../contexts/Building";
 
 
 class ProfilePage extends Component {
+
+    static contextType = BuildingContext;
+
     state = {
         people: [
             {
@@ -329,7 +333,13 @@ class ProfilePage extends Component {
     refundableAmount = createRef();
     reason = createRef();
 
-    componentDidMount() {
+    async componentDidMount () {
+
+        // const response = await fetch(`http://api.saadatportal.com/api/v1/characteristic/${this.context.charId}`).then((response) => response.json())
+        //     .then((data) => this.setState({people: data}));
+
+        const response1 = await fetch("https://persiancalapi.ir/jalali/1401/12/29").then((response) => response.json())
+            .then((data) => console.log(data));
 
     }
 

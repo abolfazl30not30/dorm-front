@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import "../../../../style/uploadPage.css"
+import {BsFileEarmarkImage,BsFileEarmarkPdfFill} from "react-icons/bs"
 import upload_icon from '../../../../img/Group 1.png'
 import pdf_icon from '../../../../img/pdf_icon.png'
 import png_icon from '../../../../img/png_icon.png'
@@ -59,30 +60,15 @@ class UploadPage extends Component {
                             <Accordion.Item eventKey="0">
                                 <Accordion.Header>آپلود شناسنامه</Accordion.Header>
                                 <Accordion.Body>
-                                    <form action="/" method="get">
-                                        {/*<input type="file" className="form-control profile-pic-uploader" onChange={this.uploadFile} />*/}
-                                        {/*{ this.state.uploadPercentage > 0 && <ProgressBar now={this.state.uploadPercentage} active label={`${this.state.uploadPercentage}%`} /> }*/}
-                                        {/*صفحه اول<br/>*/}
-                                        {/*<input type="file" className="form-control profile-pic-uploader" onChange={this.uploadFile} />*/}
-                                        {/*{ this.state.uploadPercentage > 0 && <ProgressBar now={this.state.uploadPercentage} active label={`${this.state.uploadPercentage}%`} /> }*/}
-                                        {/*صفحه دوم<br/>*/}
-                                        {/*<input type="file" className="form-control profile-pic-uploader" onChange={this.uploadFile} />*/}
-                                        {/*{ this.state.uploadPercentage > 0 && <ProgressBar now={this.state.uploadPercentage} active label={`${this.state.uploadPercentage}%`} /> }*/}
-                                        {/*صفحه سوم<br/>*/}
-                                        {/*<input type="file" className="form-control profile-pic-uploader" onChange={this.uploadFile} />*/}
-                                        {/*{ this.state.uploadPercentage > 0 && <ProgressBar now={this.state.uploadPercentage} active label={`${this.state.uploadPercentage}%`} /> }*/}
-                                        {/*صفحه چهارم<br/>*/}
-                                        {/*<input type="file" className="form-control profile-pic-uploader" onChange={this.uploadFile} />*/}
-                                        {/*{ this.state.uploadPercentage > 0 && <ProgressBar now={this.state.uploadPercentage} active label={`${this.state.uploadPercentage}%`} /> }*/}
-                                        {/*کل صفحات*/}
-                                        <img src={png_icon} className='png-icon' />
+                                    <div>
+                                        <BsFileEarmarkImage fontsize="20px"/>
                                         <span className='tab'> صفحه اول</span>
-                                        <input className='inputs p-2' type="file" id="myFile" name="filename" />
+                                        <input className='form-control  p-2 ' type="file" id="formFileLg" name="filename" />
                                         <br />
 
-                                        <img src={png_icon} className='png-icon' />
+
                                         <span className='tab'> صفحه دوم</span>
-                                        <input className='p-2' type="file" id="myFile" name="filename" />
+                                        <input className='form-control p-2' type="file" id="myFile" name="filename" />
                                         <br />
 
                                         <img src={png_icon} className='png-icon' />
@@ -95,11 +81,11 @@ class UploadPage extends Component {
                                         <input className='p-2' type="file" id="myFile" name="filename" />
                                         <br />
 
-                                        <img src={pdf_icon} className='pdf-icon' />
+                                        <BsFileEarmarkPdfFill fontSize="20px"/>
                                         <span className='tab'> کل صفحات</span>
                                         <input className='p-2' type="file" id="myFile" name="filename" />
 
-                                    </form>
+                                    </div>
                                 </Accordion.Body>
                             </Accordion.Item>
                             <Accordion.Item eventKey="1">
@@ -114,7 +100,6 @@ class UploadPage extends Component {
                                         <img src={png_icon} className='png-icon' />
                                         <span className='tab'> صفحه دوم</span>
                                         <input className='p-2' type="file" id="myFile" name="filename" />
-
                                     </form>
                                 </Accordion.Body>
                             </Accordion.Item>

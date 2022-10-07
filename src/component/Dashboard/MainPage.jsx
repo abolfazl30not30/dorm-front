@@ -17,6 +17,7 @@ class MainPage extends Component {
         unitNumber: "",
         unitId: "",
         personId:"",
+        charId:"",
         fields: {
 
             //############################################################################## first page
@@ -281,6 +282,7 @@ class MainPage extends Component {
                 <div className='d-flex flex-column pt-4 px-5'>
                     <BuildingContext.Provider value={{ unitId: this.state.unitId,
                         personId:this.state.personId,
+                        charId:this.state.charId,
                         typeofResident: this.state.typeofResident,
                         unitNumber: this.state.unitNumber,
                         fields: this.state.fields,
@@ -348,8 +350,8 @@ class MainPage extends Component {
         this.setState({ unitNumber: unitNumber });
         this.setState({ unitId: unitId });
     }
-    handlePersonId = (personId) =>{
-        this.setState({personId : personId});
+    handlePersonId = (personId,charId) =>{
+        this.setState({personId : personId,charId:charId});
     }
 
     handleFields = (e, residentType, field) => {

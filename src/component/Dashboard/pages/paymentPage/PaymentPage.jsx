@@ -2,7 +2,7 @@ import {Component} from "react";
 import {Link} from "react-router-dom";
 import Accordion from "react-bootstrap/Accordion";
 import Form from 'react-bootstrap/Form';
-import {Calendar, DatePicker} from 'react-persian-datepicker';
+import {DatePicker} from 'react-persian-datepicker';
 import 'react-persian-datepicker/lib/styles/basic.css'
 import 'react-calendar/dist/Calendar.css';
 import "react-datepicker/dist/react-datepicker.css";
@@ -15,10 +15,9 @@ import '../../../../style/paymentPage.css';
 import {AiFillCloseCircle} from "react-icons/ai";
 import {MdCloudUpload, MdDelete} from "react-icons/md";
 import {RiFileUploadFill} from "react-icons/ri";
-
+import ReactLoading from 'react-loading';
 import Alert from 'react-bootstrap/Alert';
-import {containerClasses} from "@mui/material";
-
+import moment from 'moment-jalali';
 
 class PaymentPage extends Component {
     state = {
@@ -30,18 +29,6 @@ class PaymentPage extends Component {
         inputType: "",
         showType: false,
 
-        paymentInput: {
-            date: "",
-            unit: "",
-            value: "",
-            type: "",
-            paymentType:"",
-            description: "",
-            file: {
-                name: "",
-                fileId: "",
-            }
-        },
         styles: {
             calendarContainer: "calendarContainer",
             dayPickerContainer: "dayPickerContainer",
@@ -55,12 +42,18 @@ class PaymentPage extends Component {
             title: "title",
         },
         isUpload: false,
+        hasError: false,
+        isLoading: false,
         uploadFile: [],
+
+        dataPicker: null,
         date: '',
         selectedType: null,
-        price:'',
+        price: '',
         description: '',
-        priceType:"IRR", // default value
+        priceType: "IRR", // default value
+        fileName: "",
+        fileId: "",
 
         Validations: {
             price_requiredReg: '',
@@ -71,10 +64,13 @@ class PaymentPage extends Component {
 
     }
 
-    handleClick(e) {
-        e.preventDefault();
-        // console.log(this.state.inputText)
+    async componentDidMount() {
+        const response = await fetch('http://api.saadatportal.com/api/v1/category/search?type=PaymentHistory').then((response) => response.json())
+            .then((data) => console.log(data));
+
+
     }
+
     render() {
         return (
             <>
@@ -93,7 +89,10 @@ class PaymentPage extends Component {
                         <label htmlFor="price">مبلغ :</label>
                         <div className="row" style={{marginTop: "20px"}}>
                             <div className='col-3 m-0 p-0'>
-                                <select className='form-select' style={{height: "50px"}} value={this.state.priceType} onChange={(e)=>{this.handlePriceType(e)}}>
+                                <select className='form-select' style={{height: "50px"}} value={this.state.priceType}
+                                        onChange={(e) => {
+                                            this.handlePriceType(e)
+                                        }}>
                                     <option value="IRR">ریال</option>
                                     <option value="USD">دلار</option>
                                 </select>
@@ -101,8 +100,11 @@ class PaymentPage extends Component {
                             <div className='form-group col-9 m-0 p-0'>
                                 <input id="price"
                                        type='text'
+                                       value={this.state.price}
                                        className={`input form-control ${(this.state.Validations.price_requiredReg && this.state.Validations.price_numberReg) === false ? "is-invalid" : ""}`}
-                                       style={{height: "50px", width: "90%"}} onChange={(e)=>{this.handlePriceInput(e)}}/>
+                                       style={{height: "50px", width: "90%"}} onChange={(e) => {
+                                    this.handlePriceInput(e)
+                                }}/>
 
                                 {
                                     this.state.Validations.price_requiredReg === false
@@ -137,10 +139,11 @@ class PaymentPage extends Component {
                                             <div className=' row flex-wrap'>
                                                 {
                                                     this.state.Validations.selectedTypeBoolean // ifSelected condition
-                                                    ? null
+                                                        ? null
                                                         : <div className="d-flex justify-content-center mb-3">
-                                                            <small className="text-danger">یکی از فیلدهای زیر را اتخاب کنید!</small>
-                                                          </div>
+                                                            <small className="text-danger">یکی از فیلدهای زیر را اتخاب
+                                                                کنید!</small>
+                                                        </div>
                                                 }
                                                 <ToggleButtonGroup
                                                     orientation="vertical"
@@ -193,9 +196,11 @@ class PaymentPage extends Component {
                     <div className='col-4 mt-5 mb-3 date-container'>
                         <label className='mb-3'>تاریخ: </label>
                         <DatePicker calendarStyles={this.state.styles}
+                                    value={this.state.dataPicker}
                                     className={`input form-control ${this.state.Validations.date_requiredReg === false ? "is-invalid" : ""}`}
-                                    value={this.state.date}
-                                    onChange={value=>{this.handleDateInput(value)}}
+                                    onChange={value => {
+                                        this.handleDateInput(value)
+                                    }}
                         />
 
                         {
@@ -210,7 +215,10 @@ class PaymentPage extends Component {
                         <Form>
                             <Form.Group className="mb-3 mt-5" controlId="exampleForm.ControlTextarea1">
                                 <Form.Label style={{marginRight: '30px'}}>توضیحات: </Form.Label>
-                                <Form.Control as="textarea" rows={8} style={{marginRight: '30px', width: '95%'}} onChange={(e)=>{this.handleDescriptionInput(e)}}/>
+                                <Form.Control as="textarea" rows={8} value={this.state.description}
+                                              style={{marginRight: '30px', width: '95%'}} onChange={(e) => {
+                                    this.handleDescriptionInput(e)
+                                }}/>
                             </Form.Group>
                         </Form>
                     </div>
@@ -220,39 +228,59 @@ class PaymentPage extends Component {
                     <label htmlFor="formFileLg" className="form-label">آپلود فاکتور :</label>
                     <div className="row">
                         <div className="col-6">
-                            <input className="form-control form-control" id="formFileLg" type="file" onChange={(e)=>{this.handleInputFile(e)}}/>
+                            <input className="form-control form-control " id="formFileLg" type="file" onChange={(e) => {
+                                this.handleInputFile(e)
+                            }}/>
                         </div>
                         <div className="col-6">
-                            {this.state.isUpload ? (
+                            {this.state.isUpload && !this.state.hasError ? (
                                 <div className="file-container">
-                                    <button className="deleteBtn"><MdDelete fontSize="25px"/></button>
+                                    <button className="deleteBtn" onClick={this.handleDeleteFile}><MdDelete
+                                        fontSize="25px"/></button>
                                     <div className="d-flex align-items-center">
-                                        <h6 className="mx-1">first page</h6>
+                                        <h6 className="mx-1">{this.state.fileName}</h6>
                                         <RiFileUploadFill/>
                                     </div>
                                 </div>
-                            ) : (
-                                <button className="uploadBtn" onClick={this.handleUpload}><MdCloudUpload fontSize="35px"/></button>
+                            ) : (this.state.isLoading ? (
+                                    <div className="d-flex align-item-start">
+                                        <button className="uploadBtn" onClick={this.handleUpload}
+                                                disabled={this.state.isLoading}><MdCloudUpload fontSize="35px"/>
+                                        </button>
+                                        <ReactLoading type="cylon" color="#bdc3c7" className="loading" height={1}
+                                                      width={45}/>
+                                    </div>
+                                ) : (
+                                    <button className="uploadBtn" onClick={this.handleUpload}
+                                            disabled={this.state.isLoading}><MdCloudUpload fontSize="35px"/></button>
+                                )
                             )}
+
                         </div>
                     </div>
                     <div>
                         {
-                            this.state.isUpload ? (
-                                <Alert variant='success' className="mt-3">
-                                    فایل با موفقیت آپلود شد
-                                </Alert>
-                            ):(<div></div>)
+                            this.state.isUpload && (
+                                (this.state.hasError) ? (
+                                    <Alert variant='danger' className="mt-3">
+                                        فایل آپلود نشد
+                                    </Alert>
+                                ) : (
+                                    <Alert variant='success' className="mt-3">
+                                        فایل با موفقیت آپلود شد
+                                    </Alert>
+                                )
+                            )
                         }
                     </div>
 
 
                 </div>
 
-                <div className='fourth-section mb-5 mt-2' style={{width: '100%'}}>
+                <div className='fourth-section mt-5 mb-3 d-flex justify-content-center'>
                     <button type="button"
-                            className="btn btn-success btn-lg btn-block mr-2"
-                            style={{width: '100%'}}
+                            className="btn btn-success "
+                            style={{width: '50%'}}
                             onClick={this.handleSubmitPayment}
                     >
                         ثبت
@@ -284,6 +312,10 @@ class PaymentPage extends Component {
         );
     }
 
+    handleClick(e) {
+        e.preventDefault();
+    }
+
     handleOpenType = () => {
         this.setState({showType: true});
     }
@@ -300,6 +332,15 @@ class PaymentPage extends Component {
         this.setState({inputType: e.target.value});
     }
 
+    handleDeleteFile = async () => {
+        await fetch(`http://api.saadatportal.com/api/v1/file/${this.state.fileId}`, {
+            method: 'DELETE',
+        })
+            .then(res => res.text())
+            .then(res => console.log(res));
+        this.setState({fileId: ""});
+        this.setState({isUpload: false});
+    }
     handleSubmitType = (e) => {
         e.preventDefault();
         let regCheck = /^\s*$/;
@@ -317,28 +358,27 @@ class PaymentPage extends Component {
         this.setState({tempChoices: updateChoice});
     }
 
-    handleUpload = async () =>{
+    handleUpload = async () => {
+        this.setState({isLoading: true});
         let formData = new FormData();
         console.log(this.state.uploadFile[0]);
-
-        formData.append('file',this.state.uploadFile[0]);
-
-        await fetch('http://localhost:8089/api/v1/file', {
+        formData.append('file', this.state.uploadFile[0]);
+        await fetch('http://api.saadatportal.com/api/v1/file', {
             method: 'POST',
-            // headers: {
-            //     'Accept': 'application/json',
-            //     'Content-Type': 'application/json'
-            // },
             body: formData
         }).then((response) => response.json())
             .then((result) => {
                 console.log('Success:', result);
-                this.setState({fileId : result.message.id})
-                this.setState({isUpload:true})
+                this.setState({fileId: result.message.id})
+                this.setState({isUpload: true})
+                this.setState({hasError: false})
+                this.setState({isLoading: false});
             })
             .catch((error) => {
                 console.error('Error:', error);
-                this.setState({isUpload:false})
+                this.setState({isUpload: true})
+                this.setState({hasError: true})
+                this.setState({isLoading: false});
             });
 
     }
@@ -366,33 +406,49 @@ class PaymentPage extends Component {
         return price_requiredReg && price_numberReg && selectedTypeBoolean && date_requiredReg;
     }
 
-    handleInputFile = (event) =>{
-        this.setState({uploadFile : event.target.files})
+    handleInputFile = (event) => {
+        this.setState({uploadFile: event.target.files})
+        this.setState({fileName: event.target.files[0].name})
     }
 
-    handlePriceInput = (event) =>{
-        this.setState({price:event.target.value})
+    handlePriceInput = (event) => {
+        this.setState({price: event.target.value})
     }
 
-    handleDescriptionInput = (event)=>{
-        this.setState({description:event.target.value})
+    handleDescriptionInput = (event) => {
+        this.setState({description: event.target.value})
     }
 
-    handleDateInput = (value)=>{
-        this.setState({date:value})
+    handleDateInput = (value) => {
+        this.setState({dataPicker: value})
         let date = new Date(value._d);
-        console.log(date.getDate())
+        let convertDate = date.getFullYear() + "/" + date.getMonth() + "/" + date.getDate() + " " + "00:" + "00:" + "00";
+        this.setState({date: convertDate})
     }
-    handlePriceType = (event) =>{
-        this.setState({priceType:event.target.value})
+
+    handlePriceType = (event) => {
+        this.setState({priceType: event.target.value})
     }
 
     handleSubmitPayment = async () => {
         let result = this.handleValidations();
-
-        // console.log(this.state)
-        // console.log(this.state.Validations)
-
+        let payment = {
+            date: this.state.date,
+            unit: this.state.priceType,
+            value: this.state.price,
+            type: this.state.selectedType,
+            paymentType: "receive",
+            description: this.state.description,
+            parentId: "",
+            parentType: "Personnel",
+        }
+        if (this.state.fileId !== "") {
+            let file = {file:{
+                    name: this.state.fileName,
+                    fileId:this.state.fileId
+                }}
+            payment = Object.assign(payment,file)
+        }
         if (result) {
             const rawResponse = await fetch('http://api.saadatportal.com/api/v1/paymentHistory', {
                 method: 'POST',
@@ -400,21 +456,19 @@ class PaymentPage extends Component {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(
-                    {
-                        date: "1400/01/01 00:00:00",
-                        unit: this.state.priceType,
-                        value: this.state.price,
-                        type: this.state.selectedType,
-                        paymentType: "receive",
-                        description: this.state.description,
-                        parentId: "",
-                        parentType: "Personnel",
-                    }
-                )
+                body: JSON.stringify(payment)
             });
             var content = await rawResponse.json();
             console.log(content);
+            this.setState({
+                date: "",
+                price: "",
+                selectedType: "",
+                description: "",
+                fileName: "",
+                fileId: "",
+                isUpload: false,
+            })
         } else {
             console.log("ERROR")
         }

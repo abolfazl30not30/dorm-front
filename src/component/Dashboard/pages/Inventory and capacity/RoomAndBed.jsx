@@ -324,7 +324,7 @@ class RoomAndBed extends Component {
                                     <div className="input-container row align-items-center">
                                         <div className="col-1"><label>براساس:</label></div>
                                         <div className="col-3 " style={{paddingLeft: "0"}}>
-                                            <Form.Select aria-label="Default select example" value={this.state.searchType} onChange={(e)=>{this.setState({searchType:e.target.value})}}>
+                                            <Form.Select aria-label="Default select example" style={{height : "50px"}} value={this.state.searchType} onChange={(e)=>{this.setState({searchType:e.target.value})}}>
                                                 <option value="firstName">نام و نام خانوادگی</option>
                                                 <option value="nationalCode">کد ملی</option>
                                             </Form.Select>

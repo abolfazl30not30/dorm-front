@@ -20,7 +20,7 @@ class SearchAccount extends Component {
         placeholder: '',
         accountFound: [],
         searchInput:"",
-        searchType:"firstName",
+        searchType:"fullName",
     }
     render() {
         return (
@@ -29,7 +29,7 @@ class SearchAccount extends Component {
                     <div className="col-md-1 col-sm-2 px-0"><label>براساس:</label></div>
                     <div className="col-md-3 col-sm-6 px-0" style={{paddingLeft: "0"}}>
                         <Form.Select aria-label="Default select example" style={{height:"50px",fontSize:"14px"}} value={this.state.searchType} onChange={(e)=>{this.setState({searchType:e.target.value})}}>
-                            <option value="firstName">نام و نام خانوادگی</option>
+                            <option value="fullName">نام و نام خانوادگی</option>
                             <option value="nationalCode">کد ملی</option>
                             <option value="phoneNumber">شماره تلفن</option>
                         </Form.Select>
@@ -46,7 +46,7 @@ class SearchAccount extends Component {
                 <div className='result'>
                     {this.state.accountFound.map(accountFound => (
                         <>
-                            <Link to="profile" className='account-found-link' onClick={()=>{this.context.handlePersonId(accountFound.personId)}}>
+                            <Link to="profile" className='account-found-link' onClick={()=>{this.context.handlePersonId(accountFound.parentId,accountFound.id)}}>
                                 <div className='account-found mb-3 d-flex flex-column flex-md-row'>
                                     {/*<FiUser size={80} style={{ marginLeft: '5%', marginTop: '1%' }} />*/}
                                     <img
