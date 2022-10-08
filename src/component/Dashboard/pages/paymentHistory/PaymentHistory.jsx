@@ -1,9 +1,10 @@
 import {Component, createRef} from "react";
 import "../../../../style/paymentHistory.css"
 import {DatePicker} from "react-persian-datepicker";
-class PaymentHistory extends  Component{
+
+class PaymentHistory extends Component {
     state = {
-        calStyles : {
+        calStyles: {
             calendarContainer: "calendarContainer",
             dayPickerContainer: "dayPickerContainer",
             monthsList: "monthsList",
@@ -15,28 +16,688 @@ class PaymentHistory extends  Component{
             prev: "prev",
             title: "title",
         },
-        payment :{},
-        typeTransaction: 'all'
-    }
-    type = createRef();
-    startDate = createRef();
-    endDate = createRef();
-    count = createRef();
-
-    async componentDidMount() {
-        let data;
-        const response = await fetch('http://api.saadatportal.com/api/v1/paymentHistory').then((response) => response.json())
-            .then((data) => this.setState({payment: data},()=>{
-                // console.log(this.state.payment)
-            }));
-    }
-    handleSubmit = (e) => {
-        e.preventDefault();
-        const type = this.type.current;
-        const startTime = this.startTime.current.value;
-        const endTime = this.endTime.current.value;
-        const count = this.count.current.value;
-        // console.log(type)
+        payment:
+            [
+                {
+                    "id": "1d8872b926164eba800fcec3bcb083c5",
+                    "date": "2022/10/14 14:30:00",
+                    "amount": {
+                        "unit": "IRR",
+                        "value": 12.5
+                    },
+                    "type": "بیمه",
+                    "paymentType": "expend",
+                    "description": "stuff",
+                    "file": {
+                        "shenasname": "696222e8d1e04e07beb4dbc175eb963e"
+                    },
+                    "parentId": "fed44fe2b374467e98806c6a26af5c04",
+                    "parentType": "Person"
+                },
+                {
+                    "id": "1d8872b926164eba800fcec3bcb083c5",
+                    "date": "2022/10/14 14:30:00",
+                    "amount": {
+                        "unit": "IRR",
+                        "value": 12.5
+                    },
+                    "type": "بیمه",
+                    "paymentType": "expend",
+                    "description": "stuff",
+                    "file": {
+                        "shenasname": "696222e8d1e04e07beb4dbc175eb963e"
+                    },
+                    "parentId": "fed44fe2b374467e98806c6a26af5c04",
+                    "parentType": "Person"
+                },
+                {
+                    "id": "1d8872b926164eba800fcec3bcb083c5",
+                    "date": "2022/10/14 14:30:00",
+                    "amount": {
+                        "unit": "IRR",
+                        "value": 12.5
+                    },
+                    "type": "بیمه",
+                    "paymentType": "expend",
+                    "description": "stuff",
+                    "file": {
+                        "shenasname": "696222e8d1e04e07beb4dbc175eb963e"
+                    },
+                    "parentId": "fed44fe2b374467e98806c6a26af5c04",
+                    "parentType": "Person"
+                },
+                {
+                    "id": "1d8872b926164eba800fcec3bcb083c5",
+                    "date": "2022/10/14 14:30:00",
+                    "amount": {
+                        "unit": "IRR",
+                        "value": 12.5
+                    },
+                    "type": "بیمه",
+                    "paymentType": "expend",
+                    "description": "stuff",
+                    "file": {
+                        "shenasname": "696222e8d1e04e07beb4dbc175eb963e"
+                    },
+                    "parentId": "fed44fe2b374467e98806c6a26af5c04",
+                    "parentType": "Person"
+                },
+                {
+                    "id": "1d8872b926164eba800fcec3bcb083c5",
+                    "date": "2022/10/14 14:30:00",
+                    "amount": {
+                        "unit": "IRR",
+                        "value": 12.5
+                    },
+                    "type": "بیمه",
+                    "paymentType": "expend",
+                    "description": "stuff",
+                    "file": {
+                        "shenasname": "696222e8d1e04e07beb4dbc175eb963e"
+                    },
+                    "parentId": "fed44fe2b374467e98806c6a26af5c04",
+                    "parentType": "Person"
+                },
+                {
+                    "id": "1d8872b926164eba800fcec3bcb083c5",
+                    "date": "2022/10/14 14:30:00",
+                    "amount": {
+                        "unit": "IRR",
+                        "value": 12.5
+                    },
+                    "type": "بیمه",
+                    "paymentType": "expend",
+                    "description": "stuff",
+                    "file": {
+                        "shenasname": "696222e8d1e04e07beb4dbc175eb963e"
+                    },
+                    "parentId": "fed44fe2b374467e98806c6a26af5c04",
+                    "parentType": "Person"
+                },
+                {
+                    "id": "1d8872b926164eba800fcec3bcb083c5",
+                    "date": "2022/10/14 14:30:00",
+                    "amount": {
+                        "unit": "IRR",
+                        "value": 12.5
+                    },
+                    "type": "بیمه",
+                    "paymentType": "expend",
+                    "description": "stuff",
+                    "file": {
+                        "shenasname": "696222e8d1e04e07beb4dbc175eb963e"
+                    },
+                    "parentId": "fed44fe2b374467e98806c6a26af5c04",
+                    "parentType": "Person"
+                },
+                {
+                    "id": "1d8872b926164eba800fcec3bcb083c5",
+                    "date": "2022/10/14 14:30:00",
+                    "amount": {
+                        "unit": "IRR",
+                        "value": 12.5
+                    },
+                    "type": "بیمه",
+                    "paymentType": "expend",
+                    "description": "stuff",
+                    "file": {
+                        "shenasname": "696222e8d1e04e07beb4dbc175eb963e"
+                    },
+                    "parentId": "fed44fe2b374467e98806c6a26af5c04",
+                    "parentType": "Person"
+                },
+                {
+                    "id": "1d8872b926164eba800fcec3bcb083c5",
+                    "date": "2022/10/14 14:30:00",
+                    "amount": {
+                        "unit": "IRR",
+                        "value": 12.5
+                    },
+                    "type": "بیمه",
+                    "paymentType": "expend",
+                    "description": "stuff",
+                    "file": {
+                        "shenasname": "696222e8d1e04e07beb4dbc175eb963e"
+                    },
+                    "parentId": "fed44fe2b374467e98806c6a26af5c04",
+                    "parentType": "Person"
+                },
+                {
+                    "id": "1d8872b926164eba800fcec3bcb083c5",
+                    "date": "2022/10/14 14:30:00",
+                    "amount": {
+                        "unit": "IRR",
+                        "value": 12.5
+                    },
+                    "type": "بیمه",
+                    "paymentType": "expend",
+                    "description": "stuff",
+                    "file": {
+                        "shenasname": "696222e8d1e04e07beb4dbc175eb963e"
+                    },
+                    "parentId": "fed44fe2b374467e98806c6a26af5c04",
+                    "parentType": "Person"
+                },
+                {
+                    "id": "1d8872b926164eba800fcec3bcb083c5",
+                    "date": "2022/10/14 14:30:00",
+                    "amount": {
+                        "unit": "IRR",
+                        "value": 12.5
+                    },
+                    "type": "بیمه",
+                    "paymentType": "expend",
+                    "description": "stuff",
+                    "file": {
+                        "shenasname": "696222e8d1e04e07beb4dbc175eb963e"
+                    },
+                    "parentId": "fed44fe2b374467e98806c6a26af5c04",
+                    "parentType": "Person"
+                },
+                {
+                    "id": "1d8872b926164eba800fcec3bcb083c5",
+                    "date": "2022/10/14 14:30:00",
+                    "amount": {
+                        "unit": "IRR",
+                        "value": 12.5
+                    },
+                    "type": "بیمه",
+                    "paymentType": "expend",
+                    "description": "stuff",
+                    "file": {
+                        "shenasname": "696222e8d1e04e07beb4dbc175eb963e"
+                    },
+                    "parentId": "fed44fe2b374467e98806c6a26af5c04",
+                    "parentType": "Person"
+                },
+                {
+                    "id": "1d8872b926164eba800fcec3bcb083c5",
+                    "date": "2022/10/14 14:30:00",
+                    "amount": {
+                        "unit": "IRR",
+                        "value": 12.5
+                    },
+                    "type": "بیمه",
+                    "paymentType": "expend",
+                    "description": "stuff",
+                    "file": {
+                        "shenasname": "696222e8d1e04e07beb4dbc175eb963e"
+                    },
+                    "parentId": "fed44fe2b374467e98806c6a26af5c04",
+                    "parentType": "Person"
+                },
+                {
+                    "id": "1d8872b926164eba800fcec3bcb083c5",
+                    "date": "2022/10/14 14:30:00",
+                    "amount": {
+                        "unit": "IRR",
+                        "value": 12.5
+                    },
+                    "type": "بیمه",
+                    "paymentType": "expend",
+                    "description": "stuff",
+                    "file": {
+                        "shenasname": "696222e8d1e04e07beb4dbc175eb963e"
+                    },
+                    "parentId": "fed44fe2b374467e98806c6a26af5c04",
+                    "parentType": "Person"
+                },
+                {
+                    "id": "1d8872b926164eba800fcec3bcb083c5",
+                    "date": "2022/10/14 14:30:00",
+                    "amount": {
+                        "unit": "IRR",
+                        "value": 12.5
+                    },
+                    "type": "بیمه",
+                    "paymentType": "expend",
+                    "description": "stuff",
+                    "file": {
+                        "shenasname": "696222e8d1e04e07beb4dbc175eb963e"
+                    },
+                    "parentId": "fed44fe2b374467e98806c6a26af5c04",
+                    "parentType": "Person"
+                },
+                {
+                    "id": "1d8872b926164eba800fcec3bcb083c5",
+                    "date": "2022/10/14 14:30:00",
+                    "amount": {
+                        "unit": "IRR",
+                        "value": 12.5
+                    },
+                    "type": "بیمه",
+                    "paymentType": "expend",
+                    "description": "stuff",
+                    "file": {
+                        "shenasname": "696222e8d1e04e07beb4dbc175eb963e"
+                    },
+                    "parentId": "fed44fe2b374467e98806c6a26af5c04",
+                    "parentType": "Person"
+                },
+                {
+                    "id": "1d8872b926164eba800fcec3bcb083c5",
+                    "date": "2022/10/14 14:30:00",
+                    "amount": {
+                        "unit": "IRR",
+                        "value": 12.5
+                    },
+                    "type": "بیمه",
+                    "paymentType": "expend",
+                    "description": "stuff",
+                    "file": {
+                        "shenasname": "696222e8d1e04e07beb4dbc175eb963e"
+                    },
+                    "parentId": "fed44fe2b374467e98806c6a26af5c04",
+                    "parentType": "Person"
+                },
+                {
+                    "id": "1d8872b926164eba800fcec3bcb083c5",
+                    "date": "2022/10/14 14:30:00",
+                    "amount": {
+                        "unit": "IRR",
+                        "value": 12.5
+                    },
+                    "type": "بیمه",
+                    "paymentType": "expend",
+                    "description": "stuff",
+                    "file": {
+                        "shenasname": "696222e8d1e04e07beb4dbc175eb963e"
+                    },
+                    "parentId": "fed44fe2b374467e98806c6a26af5c04",
+                    "parentType": "Person"
+                },
+                {
+                    "id": "1d8872b926164eba800fcec3bcb083c5",
+                    "date": "2022/10/14 14:30:00",
+                    "amount": {
+                        "unit": "IRR",
+                        "value": 12.5
+                    },
+                    "type": "بیمه",
+                    "paymentType": "expend",
+                    "description": "stuff",
+                    "file": {
+                        "shenasname": "696222e8d1e04e07beb4dbc175eb963e"
+                    },
+                    "parentId": "fed44fe2b374467e98806c6a26af5c04",
+                    "parentType": "Person"
+                },
+                {
+                    "id": "1d8872b926164eba800fcec3bcb083c5",
+                    "date": "2022/10/14 14:30:00",
+                    "amount": {
+                        "unit": "IRR",
+                        "value": 12.5
+                    },
+                    "type": "بیمه",
+                    "paymentType": "expend",
+                    "description": "stuff",
+                    "file": {
+                        "shenasname": "696222e8d1e04e07beb4dbc175eb963e"
+                    },
+                    "parentId": "fed44fe2b374467e98806c6a26af5c04",
+                    "parentType": "Person"
+                },
+                {
+                    "id": "1d8872b926164eba800fcec3bcb083c5",
+                    "date": "2022/10/14 14:30:00",
+                    "amount": {
+                        "unit": "IRR",
+                        "value": 12.5
+                    },
+                    "type": "بیمه",
+                    "paymentType": "expend",
+                    "description": "stuff",
+                    "file": {
+                        "shenasname": "696222e8d1e04e07beb4dbc175eb963e"
+                    },
+                    "parentId": "fed44fe2b374467e98806c6a26af5c04",
+                    "parentType": "Person"
+                },
+                {
+                    "id": "1d8872b926164eba800fcec3bcb083c5",
+                    "date": "2022/10/14 14:30:00",
+                    "amount": {
+                        "unit": "IRR",
+                        "value": 12.5
+                    },
+                    "type": "بیمه",
+                    "paymentType": "expend",
+                    "description": "stuff",
+                    "file": {
+                        "shenasname": "696222e8d1e04e07beb4dbc175eb963e"
+                    },
+                    "parentId": "fed44fe2b374467e98806c6a26af5c04",
+                    "parentType": "Person"
+                },
+                {
+                    "id": "1d8872b926164eba800fcec3bcb083c5",
+                    "date": "2022/10/14 14:30:00",
+                    "amount": {
+                        "unit": "IRR",
+                        "value": 12.5
+                    },
+                    "type": "بیمه",
+                    "paymentType": "expend",
+                    "description": "stuff",
+                    "file": {
+                        "shenasname": "696222e8d1e04e07beb4dbc175eb963e"
+                    },
+                    "parentId": "fed44fe2b374467e98806c6a26af5c04",
+                    "parentType": "Person"
+                },
+                {
+                    "id": "1d8872b926164eba800fcec3bcb083c5",
+                    "date": "2022/10/14 14:30:00",
+                    "amount": {
+                        "unit": "IRR",
+                        "value": 12.5
+                    },
+                    "type": "بیمه",
+                    "paymentType": "expend",
+                    "description": "stuff",
+                    "file": {
+                        "shenasname": "696222e8d1e04e07beb4dbc175eb963e"
+                    },
+                    "parentId": "fed44fe2b374467e98806c6a26af5c04",
+                    "parentType": "Person"
+                },
+                {
+                    "id": "1d8872b926164eba800fcec3bcb083c5",
+                    "date": "2022/10/14 14:30:00",
+                    "amount": {
+                        "unit": "IRR",
+                        "value": 12.5
+                    },
+                    "type": "بیمه",
+                    "paymentType": "expend",
+                    "description": "stuff",
+                    "file": {
+                        "shenasname": "696222e8d1e04e07beb4dbc175eb963e"
+                    },
+                    "parentId": "fed44fe2b374467e98806c6a26af5c04",
+                    "parentType": "Person"
+                },
+                {
+                    "id": "1d8872b926164eba800fcec3bcb083c5",
+                    "date": "2022/10/14 14:30:00",
+                    "amount": {
+                        "unit": "IRR",
+                        "value": 12.5
+                    },
+                    "type": "بیمه",
+                    "paymentType": "expend",
+                    "description": "stuff",
+                    "file": {
+                        "shenasname": "696222e8d1e04e07beb4dbc175eb963e"
+                    },
+                    "parentId": "fed44fe2b374467e98806c6a26af5c04",
+                    "parentType": "Person"
+                },
+                {
+                    "id": "1d8872b926164eba800fcec3bcb083c5",
+                    "date": "2022/10/14 14:30:00",
+                    "amount": {
+                        "unit": "IRR",
+                        "value": 12.5
+                    },
+                    "type": "بیمه",
+                    "paymentType": "expend",
+                    "description": "stuff",
+                    "file": {
+                        "shenasname": "696222e8d1e04e07beb4dbc175eb963e"
+                    },
+                    "parentId": "fed44fe2b374467e98806c6a26af5c04",
+                    "parentType": "Person"
+                },
+                {
+                    "id": "1d8872b926164eba800fcec3bcb083c5",
+                    "date": "2022/10/14 14:30:00",
+                    "amount": {
+                        "unit": "IRR",
+                        "value": 12.5
+                    },
+                    "type": "بیمه",
+                    "paymentType": "expend",
+                    "description": "stuff",
+                    "file": {
+                        "shenasname": "696222e8d1e04e07beb4dbc175eb963e"
+                    },
+                    "parentId": "fed44fe2b374467e98806c6a26af5c04",
+                    "parentType": "Person"
+                },
+                {
+                    "id": "1d8872b926164eba800fcec3bcb083c5",
+                    "date": "2022/10/14 14:30:00",
+                    "amount": {
+                        "unit": "IRR",
+                        "value": 12.5
+                    },
+                    "type": "بیمه",
+                    "paymentType": "expend",
+                    "description": "stuff",
+                    "file": {
+                        "shenasname": "696222e8d1e04e07beb4dbc175eb963e"
+                    },
+                    "parentId": "fed44fe2b374467e98806c6a26af5c04",
+                    "parentType": "Person"
+                },
+                {
+                    "id": "1d8872b926164eba800fcec3bcb083c5",
+                    "date": "2022/10/14 14:30:00",
+                    "amount": {
+                        "unit": "IRR",
+                        "value": 12.5
+                    },
+                    "type": "بیمه",
+                    "paymentType": "expend",
+                    "description": "stuff",
+                    "file": {
+                        "shenasname": "696222e8d1e04e07beb4dbc175eb963e"
+                    },
+                    "parentId": "fed44fe2b374467e98806c6a26af5c04",
+                    "parentType": "Person"
+                },
+                {
+                    "id": "1d8872b926164eba800fcec3bcb083c5",
+                    "date": "2022/10/14 14:30:00",
+                    "amount": {
+                        "unit": "IRR",
+                        "value": 12.5
+                    },
+                    "type": "بیمه",
+                    "paymentType": "expend",
+                    "description": "stuff",
+                    "file": {
+                        "shenasname": "696222e8d1e04e07beb4dbc175eb963e"
+                    },
+                    "parentId": "fed44fe2b374467e98806c6a26af5c04",
+                    "parentType": "Person"
+                },
+                {
+                    "id": "1d8872b926164eba800fcec3bcb083c5",
+                    "date": "2022/10/14 14:30:00",
+                    "amount": {
+                        "unit": "IRR",
+                        "value": 12.5
+                    },
+                    "type": "بیمه",
+                    "paymentType": "expend",
+                    "description": "stuff",
+                    "file": {
+                        "shenasname": "696222e8d1e04e07beb4dbc175eb963e"
+                    },
+                    "parentId": "fed44fe2b374467e98806c6a26af5c04",
+                    "parentType": "Person"
+                },
+                {
+                    "id": "1d8872b926164eba800fcec3bcb083c5",
+                    "date": "2022/10/14 14:30:00",
+                    "amount": {
+                        "unit": "IRR",
+                        "value": 12.5
+                    },
+                    "type": "بیمه",
+                    "paymentType": "deposit",
+                    "description": "stuff",
+                    "file": {
+                        "shenasname": "696222e8d1e04e07beb4dbc175eb963e"
+                    },
+                    "parentId": "fed44fe2b374467e98806c6a26af5c04",
+                    "parentType": "Person"
+                },
+                {
+                    "id": "1d8872b926164eba800fcec3bcb083c5",
+                    "date": "2022/10/14 14:30:00",
+                    "amount": {
+                        "unit": "IRR",
+                        "value": 12.5
+                    },
+                    "type": "بیمه",
+                    "paymentType": "deposit",
+                    "description": "stuff",
+                    "file": {
+                        "shenasname": "696222e8d1e04e07beb4dbc175eb963e"
+                    },
+                    "parentId": "fed44fe2b374467e98806c6a26af5c04",
+                    "parentType": "Person"
+                },
+                {
+                    "id": "1d8872b926164eba800fcec3bcb083c5",
+                    "date": "2022/10/14 14:30:00",
+                    "amount": {
+                        "unit": "IRR",
+                        "value": 12.5
+                    },
+                    "type": "بیمه",
+                    "paymentType": "deposit",
+                    "description": "stuff",
+                    "file": {
+                        "shenasname": "696222e8d1e04e07beb4dbc175eb963e"
+                    },
+                    "parentId": "fed44fe2b374467e98806c6a26af5c04",
+                    "parentType": "Person"
+                },
+                {
+                    "id": "1d8872b926164eba800fcec3bcb083c5",
+                    "date": "2022/10/14 14:30:00",
+                    "amount": {
+                        "unit": "IRR",
+                        "value": 12.5
+                    },
+                    "type": "بیمه",
+                    "paymentType": "deposit",
+                    "description": "stuff",
+                    "file": {
+                        "shenasname": "696222e8d1e04e07beb4dbc175eb963e"
+                    },
+                    "parentId": "fed44fe2b374467e98806c6a26af5c04",
+                    "parentType": "Person"
+                },
+                {
+                    "id": "1d8872b926164eba800fcec3bcb083c5",
+                    "date": "2022/10/14 14:30:00",
+                    "amount": {
+                        "unit": "IRR",
+                        "value": 12.5
+                    },
+                    "type": "بیمه",
+                    "paymentType": "deposit",
+                    "description": "stuff",
+                    "file": {
+                        "shenasname": "696222e8d1e04e07beb4dbc175eb963e"
+                    },
+                    "parentId": "fed44fe2b374467e98806c6a26af5c04",
+                    "parentType": "Person"
+                },
+                {
+                    "id": "1d8872b926164eba800fcec3bcb083c5",
+                    "date": "2022/10/14 14:30:00",
+                    "amount": {
+                        "unit": "IRR",
+                        "value": 12.5
+                    },
+                    "type": "بیمه",
+                    "paymentType": "deposit",
+                    "description": "stuff",
+                    "file": {
+                        "shenasname": "696222e8d1e04e07beb4dbc175eb963e"
+                    },
+                    "parentId": "fed44fe2b374467e98806c6a26af5c04",
+                    "parentType": "Person"
+                },
+                {
+                    "id": "1d8872b926164eba800fcec3bcb083c5",
+                    "date": "2022/10/14 14:30:00",
+                    "amount": {
+                        "unit": "IRR",
+                        "value": 12.5
+                    },
+                    "type": "بیمه",
+                    "paymentType": "deposit",
+                    "description": "stuff",
+                    "file": {
+                        "shenasname": "696222e8d1e04e07beb4dbc175eb963e"
+                    },
+                    "parentId": "fed44fe2b374467e98806c6a26af5c04",
+                    "parentType": "Person"
+                },
+                {
+                    "id": "1d8872b926164eba800fcec3bcb083c5",
+                    "date": "2022/10/14 14:30:00",
+                    "amount": {
+                        "unit": "IRR",
+                        "value": 12.5
+                    },
+                    "type": "بیمه",
+                    "paymentType": "deposit",
+                    "description": "stuff",
+                    "file": {
+                        "shenasname": "696222e8d1e04e07beb4dbc175eb963e"
+                    },
+                    "parentId": "fed44fe2b374467e98806c6a26af5c04",
+                    "parentType": "Person"
+                },
+                {
+                    "id": "1d8872b926164eba800fcec3bcb083c5",
+                    "date": "2022/10/14 14:30:00",
+                    "amount": {
+                        "unit": "IRR",
+                        "value": 12.5
+                    },
+                    "type": "بیمه",
+                    "paymentType": "deposit",
+                    "description": "stuff",
+                    "file": {
+                        "shenasname": "696222e8d1e04e07beb4dbc175eb963e"
+                    },
+                    "parentId": "fed44fe2b374467e98806c6a26af5c04",
+                    "parentType": "Person"
+                },
+                {
+                    "id": "1d8872b926164eba800fcec3bcb083c5",
+                    "date": "2022/10/14 14:30:00",
+                    "amount": {
+                        "unit": "IRR",
+                        "value": 12.5
+                    },
+                    "type": "بیمه",
+                    "paymentType": "deposit",
+                    "description": "stuff",
+                    "file": {
+                        "shenasname": "696222e8d1e04e07beb4dbc175eb963e"
+                    },
+                    "parentId": "fed44fe2b374467e98806c6a26af5c04",
+                    "parentType": "Person"
+                },
+            ]
+        ,
+        paymentFilter: [],
+        typeTransaction: 'all',
+        dataPickerStart: null,
+        dataPickerEnd: null,
+        dateStart: '',
+        dateEnd: ''
     }
 
     render() {
@@ -68,6 +729,9 @@ class PaymentHistory extends  Component{
                                         inputFormat="jYYYY/jM/jD"
                                         className='input form-control date-picker'
                                         ref={this.startDate}
+                                        onChange={value => {
+                                            this.handleDateStartInput(value)
+                                        }}
                             />
                             <label className='placeholder'>از تاریخ</label>
                         </div>
@@ -76,6 +740,9 @@ class PaymentHistory extends  Component{
                                         inputFormat="jYYYY/jM/jD"
                                         className='input form-control'
                                         ref={this.endDate}
+                                        onChange={value => {
+                                            this.handleDateEndInput(value)
+                                        }}
                             />
                             <label className='placeholder'>تا تاریخ</label>
                         </div>
@@ -95,42 +762,27 @@ class PaymentHistory extends  Component{
                         <table className='table mt-4'>
                             <thead>
                             <tr>
+                                <th>#</th>
+                                <th>نوع</th>
                                 <th>تاریخ</th>
                                 <th>مقدار</th>
-                                <th>نوع</th>
                                 <th>پرداخت کننده</th>
                                 <th>توضیحات</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td>تاریخ</td>
-                                <td>مقدار</td>
-                                <td>نوع</td>
-                                <td>پرداخت کننده</td>
-                                <td>توضیحات</td>
-                            </tr>
-                            <tr>
-                                <td>تاریخ</td>
-                                <td>مقدار</td>
-                                <td>نوع</td>
-                                <td>پرداخت کننده</td>
-                                <td>توضیحات</td>
-                            </tr>
-                            <tr>
-                                <td>تاریخ</td>
-                                <td>مقدار</td>
-                                <td>نوع</td>
-                                <td>پرداخت کننده</td>
-                                <td>توضیحات</td>
-                            </tr>
-                            <tr>
-                                <td>تاریخ</td>
-                                <td>مقدار</td>
-                                <td>نوع</td>
-                                <td>پرداخت کننده</td>
-                                <td>توضیحات</td>
-                            </tr>
+                            {
+                                this.state.payment.map((peyment, index) => (
+                                    <tr>
+                                        <td>{index + 1}</td>
+                                        <td>{peyment.type}</td>
+                                        <td>{new Date(peyment.date).toLocaleDateString('fa-IR')}</td>
+                                        <td>{peyment.amount.value}</td>
+                                        <td>{peyment.parentId}</td>
+                                        <td>{peyment.description}</td>
+                                    </tr>
+                                ))
+                            }
                             </tbody>
                         </table>
                     </div>
@@ -138,5 +790,86 @@ class PaymentHistory extends  Component{
             </>
         )
     }
+
+    type = createRef();
+    startDate = createRef();
+    endDate = createRef();
+    count = createRef();
+
+    /*async componentDidMount() {
+        let data;
+        const response = await fetch('http://api.saadatportal.com/api/v1/paymentHistory').then((response) => response.json())
+            .then((data) => this.setState({payment: data}, () => {
+                // console.log(this.state.payment)
+            }));
+    }*/
+
+    handleDateStartInput = (value) => {
+        // this.setState({dataPickerStart: value})
+        let date = new Date(value._d);
+        let convertDate = date.getFullYear() + "/" + date.getMonth() + "/" + date.getDate();
+        this.setState({dateStart: convertDate})
+    }
+    handleDateEndInput = (value) => {
+        // this.setState({dataPickerEnd: value})
+        let date = new Date(value._d);
+        let convertDate = date.getFullYear() + "/" + date.getMonth() + "/" + date.getDate();
+        this.setState({dateEnd: date})
+    }
+    handleSubmit = (e) => {
+        e.preventDefault();
+        const type = this.type.current.value;
+        const startTime = this.state.dateStart;
+        const endTime = this.state.dateEnd;
+        const count = this.count.current.value;
+
+        // filter type
+        /*( () => {
+            switch (type) {
+                case 'all':
+                    return (() => {
+                        console.log(this.state.payment)
+                    })();
+                case 'withdraw':
+                    return (() => {
+                        const list = this.state.payment;
+                        const filterType = list.filter((payment) => payment.paymentType === 'expend')
+                        this.setState({paymentFilter : filterType})
+                        console.log(this.state.paymentFilter)
+                    })();
+                case 'deposit':
+                    return (() => {
+                        const list = this.state.payment;
+                        const filterType = list.filter((payment) => payment.paymentType === 'deposit')
+                        this.setState({paymentFilter : filterType})
+                        console.log(this.state.paymentFilter)
+                    })();
+            }
+        })();*/
+        // filter count
+        /*( () => {
+            switch (count) {
+                case '10':
+                    return (() => {
+                        console.log('10')
+                    })();
+                case '25':
+                    return (() => {
+                        console.log('25')
+                    })();
+                case '50':
+                    return (() => {
+                        console.log('50')
+                    })();
+                case '100':
+                    return (() => {
+                        console.log('100')
+                    })();
+            }
+        })();*/
+        /*console.log(startTime)*/
+    }
+
 }
+
 export default PaymentHistory;
