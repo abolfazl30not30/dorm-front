@@ -361,6 +361,8 @@ class MainRegister extends Component {
         switch (type) {
             case 'constant': {
                 let updatedState = [...this.state.steps];
+                updatedState[3].label = "مشخصات بستگان"
+
                 updatedState[1].content = <CInformationPage />;
                 updatedState[2].content = <CInformationFurtherPage />;
                 updatedState[3].content = <CInformationFamilyPage />;
@@ -377,6 +379,7 @@ class MainRegister extends Component {
             case 'otherGuest': {
                 let updatedState = [...this.state.steps];
 
+                updatedState[3].label = "انتخاب میزبان"
                 updatedState[1].content = <OGInformationPage />;
                 updatedState[2].content = <OGInformationFurtherPage />;
                 updatedState[3].content = <OGInformationFamilyPage />;
@@ -392,6 +395,7 @@ class MainRegister extends Component {
 
             case 'familyGuest': {
                 let updatedState = [...this.state.steps];
+                updatedState[3].label = "انتخاب میزبان"
 
                 updatedState[1].content = <FGInformationPage />;
                 updatedState[2].content = <FGInformationFurtherPage />;
@@ -419,10 +423,15 @@ class MainRegister extends Component {
                         primaryBtnClass="next-btn"
                         secondaryBtnClass="previous-btn"
                         steps={this.state.steps}
+                        onSubmit={this.handleSubmit}
                     />
                 </div>
             </>
         );
+    }
+
+    handleSubmit = ()=>{
+
     }
 }
 

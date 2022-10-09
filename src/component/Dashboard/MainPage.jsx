@@ -13,6 +13,7 @@ import SearchAccount from './pages/People/SearchAccount';
 import PaymentPage from './pages/paymentPage/PaymentPage';
 class MainPage extends Component {
     state = {
+
         typeofResident: '',
         unitNumber: "",
         unitId: "",
@@ -21,7 +22,6 @@ class MainPage extends Component {
         fields: {
 
             //############################################################################## first page
-
             // ----------------------- <CInformationPage /> information
             constantInformationPage : {
                 firstName: '',
@@ -383,8 +383,8 @@ class MainPage extends Component {
             newSpecificValidations[residentType][names[i]] = fields[i];
         }
         // newValidations[name] = field;
-        this.setState({specificValidations : newSpecificValidations});
 
+        this.setState({specificValidations : newSpecificValidations});
         console.log(this.state.fields)
         // console.log(this.state.fields.otherGuestInformationFurther)
     }
