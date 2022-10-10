@@ -4,6 +4,7 @@ import HamburgerMenu from './component/Dashboard/HamburgerMenu'
 import Header from './component/Dashboard/Header';
 import { AccumulationChartComponent, AccumulationSeriesCollectionDirective, AccumulationSeriesDirective } from '@syncfusion/ej2-react-charts';
 import MainDashboard from './component/MainDashboard';
+import Error404 from "./component/errors/error404";
 
 class App extends Component {
     state = {}
@@ -11,7 +12,7 @@ class App extends Component {
     render() {
         return (
             <>
-                <MainDashboard />
+                <Error404 />
             </>
         );
     }
