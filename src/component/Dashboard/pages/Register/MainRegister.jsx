@@ -1,6 +1,5 @@
-import React, { Component, useState } from 'react';
+import React, { Component } from 'react';
 import UploadPage from './UploadPage';
-import "../../../../style/mainRegister.css";
 import "../../../../style/registerPage.css";
 import StepProgressBar from 'react-step-progress';
 import 'react-step-progress/dist/index.css';
@@ -23,9 +22,14 @@ import OGUploadPage from "./OtherGuest/OGUploadPage";
 import BuildingContext from '../../../../contexts/Building'
 
 class MainRegister extends Component {
+    constructor(props) {
+        super(props);
+        this.constantCheck = React.createRef();
+        this.familyGuestCheck = React.createRef();
+        this.otherGuestCheck = React.createRef();
+    }
 
     static contextType = BuildingContext;
-
 
     //######################################################## first pages
     constantInformationPageValidation = () => {
@@ -289,42 +293,45 @@ class MainRegister extends Component {
     }
 
     state = {
-        typeofResident: this.context.typeofResident,
+
         steps: [
             {
                 label: 'نوع اقامتگر',
                 name: 'step 1',
                 content:
                     <div className='typeofResident'>
-                        <div className="mx-5">
+                        <div className="mt-2">
                             <h5 className="mb-5">نوع اقامتگر</h5>
                             <div className="constant-container">
-                                <input className="radioInput" id="constant" type="radio" name="flexRadioDefault" value='constant'
-                                    // checked={this.context.typeofResident === 'constant'}
-                                       onChange={(e) => { this.checked(e); this.context.handleTypeofResident('constant')}}
-                                />
-                                <label className="mx-1" htmlFor="constant">
+                                <label className="radio-container">
                                     اقامتگر ثابت
+                                    <input type="radio"  name="register-radio" value="constant"
+                                           ref={this.constantCheck}
+                                           onChange={(e) => { this.checked(e); this.context.handleTypeofResident('constant')}}
+                                    />
+                                        <span className="checkmark"></span>
                                 </label>
                             </div>
-                            <div className="guest-container mt-2">
-                                <label className="guestText">مهمان : </label>
+                            <div className="guest-container mt-4">
+                                <label className="guest-text mb-3">مهمان : </label>
                                 <div className="mx-4 my-1">
-                                    <input className="radioInput" id="familyGuest" type="radio" name="flexRadioDefault" value='familyGuest'
-                                        // checked={this.context.typeofResident === 'familyGuest'}
-                                           onChange={(e) => { this.checked(e); this.context.handleTypeofResident('familyGuest') }}
-                                    />
-                                    <label className="mx-1" htmlFor="familyGuest">
+                                    <label className="radio-container">
                                         بستگان درجه یک
+                                        <input type="radio"  name="register-radio" value="familyGuest"
+                                               ref={this.familyGuestCheck}
+                                               onChange={(e) => { this.checked(e); this.context.handleTypeofResident('familyGuest')}}
+                                        />
+                                        <span className="checkmark"></span>
                                     </label>
                                 </div>
-                                <div className=" mx-4 my-1">
-                                    <input className="radioInput" id="otherGuest" type="radio" name="flexRadioDefault" value='otherGuest'
-                                        // checked={this.context.typeofResident === 'otherGuest'}
-                                           onChange={(e) => { this.checked(e); this.context.handleTypeofResident('otherGuest') }}
-                                    />
-                                    <label  className="mx-1" htmlFor="otherGuest">
+                                <div className="mx-4 my-1">
+                                    <label className="radio-container">
                                         متفرقه
+                                        <input type="radio"  name="register-radio" value="otherGuest"
+                                               ref={this.otherGuestCheck}
+                                               onChange={(e) => { this.checked(e); this.context.handleTypeofResident('otherGuest')}}
+                                        />
+                                        <span className="checkmark"></span>
                                     </label>
                                 </div>
                             </div>
@@ -361,8 +368,10 @@ class MainRegister extends Component {
         switch (type) {
             case 'constant': {
                 let updatedState = [...this.state.steps];
-                updatedState[3].label = "مشخصات بستگان"
 
+                console.log(this.constantCheck.current)
+
+                updatedState[3].label = "مشخصات بستگان"
                 updatedState[1].content = <CInformationPage />;
                 updatedState[2].content = <CInformationFurtherPage />;
                 updatedState[3].content = <CInformationFamilyPage />;
@@ -377,7 +386,10 @@ class MainRegister extends Component {
             }
 
             case 'otherGuest': {
+
                 let updatedState = [...this.state.steps];
+
+                console.log(this.otherGuestCheck.current);
 
                 updatedState[3].label = "انتخاب میزبان"
                 updatedState[1].content = <OGInformationPage />;
@@ -395,7 +407,11 @@ class MainRegister extends Component {
 
             case 'familyGuest': {
                 let updatedState = [...this.state.steps];
+
+                console.log(this.familyGuestCheck.current)
+
                 updatedState[3].label = "انتخاب میزبان"
+
 
                 updatedState[1].content = <FGInformationPage />;
                 updatedState[2].content = <FGInformationFurtherPage />;
@@ -417,6 +433,7 @@ class MainRegister extends Component {
                 <div style={{ direction: "ltr" }}>
                     <StepProgressBar
                         startingStep={0}
+                        contentClass={"register-container"}
                         previousBtnName={"قبلی"}
                         nextBtnName={"بعدی"}
                         submitBtnName={"ارسال"}
