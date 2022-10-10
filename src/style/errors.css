@@ -1,0 +1,28 @@
+.error-box {
+    background-color: #fdb713;
+    height: 100vh;
+    padding: 2rem;
+    display: flex;
+    justify-content: center;
+}
+.error-content {
+    background-color: #fff;
+    border-radius: 0.5rem;
+    height: 100%;
+    width: 100%;
+    padding: 3rem;
+    text-align: center;
+}
+.error-content img {
+    margin-bottom: 48px;
+    max-width: 100%;
+}
+.error-content .text {
+    font-size: 28px;
+    font-weight: 600;
+}
+.error-content .btn {
+    background-color:#fdb713;
+    border-radius: .5rem;
+    color: #fff;
+}

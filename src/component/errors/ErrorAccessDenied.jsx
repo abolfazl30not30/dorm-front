@@ -1,9 +1,9 @@
 import {Component} from "react";
 import "../../style/errors.css";
-import image from "../../img/error404.png";
+import image from "../../img/error-access-denied.png";
 
 
-class Error404 extends Component {
+class ErrorAccessDenied extends Component {
     state = []
 
     render() {
@@ -11,8 +11,8 @@ class Error404 extends Component {
             <>
                 <div className='error-box'>
                     <div className="error-content">
-                        <img src={image} alt='error404' />
-                        <div className='text'>نمی توانیم صفحه مورد نظر شما را پیدا کنیم</div>
+                        <img src={image} alt='error404' style={{maxHeight:'200px'}} />
+                        <div className='text'>متاسفانه شما به این بخش دسترسی ندارید</div>
                         <button className='btn'>بازگشت به صفحه اصلی</button>
                     </div>
                 </div>
@@ -22,4 +22,4 @@ class Error404 extends Component {
 
 }
 
-export default Error404;
+export default ErrorAccessDenied;
