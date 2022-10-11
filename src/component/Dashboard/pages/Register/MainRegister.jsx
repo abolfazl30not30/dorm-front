@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import UploadPage from './UploadPage';
 import "../../../../style/registerPage.css";
 import StepProgressBar from 'react-step-progress';
 import 'react-step-progress/dist/index.css';
@@ -22,6 +21,7 @@ import OGUploadPage from "./OtherGuest/OGUploadPage";
 import BuildingContext from '../../../../contexts/Building'
 
 class MainRegister extends Component {
+
     constructor(props) {
         super(props);
         this.constantCheck = React.createRef();
@@ -411,7 +411,6 @@ class MainRegister extends Component {
                 console.log(this.familyGuestCheck.current)
 
                 updatedState[3].label = "انتخاب میزبان"
-
 
                 updatedState[1].content = <FGInformationPage />;
                 updatedState[2].content = <FGInformationFurtherPage />;

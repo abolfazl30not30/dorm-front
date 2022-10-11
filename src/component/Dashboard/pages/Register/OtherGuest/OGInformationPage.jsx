@@ -70,7 +70,8 @@ class OGInformationPage extends Component {
                                         value={this.context.otherGuestInformation.admissionStartDate}
                                         onChange={(value) =>  this.context.handleDates(value, 'otherGuestInformation', 'admissionStartDate')}
                             />
-                            <label className="placeholder" style={{right: this.context.otherGuestInformationValidation.admissionStartDate_requiredReg === false ? '35px' : '12px'}}>
+                            <label className="placeholder" style={this.context.otherGuestInformation.admissionStartDate !== "" ? ({display:"none"}):
+                                (this.context.otherGuestInformationValidation.admissionStartDate_requiredReg === false ? ({right:'35px',display:"inline"}) : ({right:'12px',display:"inline"}))}>
                                 تاریخ شروع پذیرش
                                 <span style={{color : 'red'}}>*</span>
                             </label>
@@ -90,7 +91,8 @@ class OGInformationPage extends Component {
                                         value={this.context.otherGuestInformation.admissionEndDate}
                                         onChange={(value) =>  this.context.handleDates(value, 'otherGuestInformation', 'admissionEndDate')}
                             />
-                            <label className="placeholder" style={{right: this.context.otherGuestInformationValidation.admissionEndDate_requiredReg === false ? '35px' : '12px'}}>
+                            <label className="placeholder" style={this.context.otherGuestInformation.admissionEndDate !== "" ? ({display:"none"}):
+                                (this.context.otherGuestInformationValidation.admissionEndDate_requiredReg === false ? ({right:'35px',display:"inline"}) : ({right:'12px',display:"inline"}))}>
                                 تاریخ اتمام پذیرش
                                 <span style={{color : 'red'}}>*</span>
                             </label>
@@ -110,7 +112,8 @@ class OGInformationPage extends Component {
                                         value={this.context.otherGuestInformation.paymentDate}
                                         onChange={(value) =>  this.context.handleDates(value, 'otherGuestInformation', 'paymentDate')}
                             />
-                            <label className="placeholder">تاریخ پرداخت</label>
+                            <label className="placeholder" style={this.context.otherGuestInformation.paymentDate !== "" ? ({display:"none"}):
+                                ({display:"inline"})}>تاریخ پرداخت</label>
                         </div>
                         <div className="input-group-register col-4">
                             <SimpleTextInput
@@ -147,7 +150,8 @@ class OGInformationPage extends Component {
                                         value={this.context.otherGuestInformation.birthDate}
                                         onChange={(value) =>  this.context.handleDates(value, 'otherGuestInformation', 'birthDate')}
                             />
-                            <label className="placeholder">تاریخ تولد</label>
+                            <label className="placeholder" style={this.context.otherGuestInformation.birthDate !== "" ? ({display:"none"}):
+                                ({display:"inline"})}>تاریخ تولد</label>
                         </div>
                     </div>
                 </div>

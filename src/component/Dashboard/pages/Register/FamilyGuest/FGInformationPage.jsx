@@ -77,7 +77,8 @@ class FGInformationPage extends Component {
                                         value={this.context.familyGuestInformation.birthDate}
                                         onChange={(value) =>  this.context.handleDates(value, 'familyGuestInformation', 'birthDate')}
                             />
-                            <label className="placeholder">تاریخ تولد</label>
+                            <label className="placeholder" style={this.context.familyGuestInformation.birthDate !== "" ? ({display:"none"}):
+                                ({display:"inline"})}>تاریخ تولد</label>
                         </div>
                         <div className="input-group-register col-4">
                             <DatePicker calendarStyles={this.state.calStyles}
@@ -86,7 +87,8 @@ class FGInformationPage extends Component {
                                         value={this.context.familyGuestInformation.admissionStartDate}
                                         onChange={(value) =>  this.context.handleDates(value, 'familyGuestInformation', 'admissionStartDate')}
                             />
-                            <label className="placeholder" style={{right: this.context.familyGuestInformationValidation.admissionStartDate_requiredReg === false ? '35px' : '12px'}}>
+                            <label className="placeholder" style={this.context.familyGuestInformation.admissionStartDate !== "" ? ({display:"none"}):
+                                (this.context.familyGuestInformationValidation.admissionStartDate_requiredReg === false ? ({right:'35px',display:"inline"}) : ({right:'12px',display:"inline"}))}>
                                 تاریخ شروع پذیرش
                                 <span style={{color : 'red'}}>*</span>
                             </label>
@@ -107,7 +109,8 @@ class FGInformationPage extends Component {
                                         value={this.context.familyGuestInformation.admissionEndDate}
                                         onChange={(value) =>  this.context.handleDates(value, 'familyGuestInformation', 'admissionEndDate')}
                             />
-                            <label className="placeholder" style={{right: this.context.familyGuestInformationValidation.admissionEndDate_requiredReg === false ? '35px' : '12px'}}>
+                            <label className="placeholder" style={this.context.familyGuestInformation.admissionEndDate !== "" ? ({display:"none"}):
+                                (this.context.familyGuestInformationValidation.admissionEndDate_requiredReg === false ? ({right:'35px',display:"inline"}) : ({right:'12px',display:"inline"}))}>
                                 تاریخ اتمام پذیرش
                                 <span style={{color : 'red'}}>*</span>
                             </label>
@@ -127,7 +130,8 @@ class FGInformationPage extends Component {
                                         value={this.context.familyGuestInformation.paymentDate}
                                         onChange={(value) =>  this.context.handleDates(value, 'familyGuestInformation', 'paymentDate')}
                             />
-                            <label className="placeholder" style={{right: this.context.familyGuestInformationValidation.paymentDate_requiredReg === false ? '35px' : '12px'}}>
+                            <label className="placeholder" style={this.context.familyGuestInformation.paymentDate !== "" ? ({display:"none"}):
+                                (this.context.familyGuestInformationValidation.paymentDate_requiredReg === false ? ({right:'35px',display:"inline"}) : ({right:'12px',display:"inline"}))}>
                                 تاریخ پرداخت
                                 <span style={{color : 'red'}}>*</span>
                             </label>

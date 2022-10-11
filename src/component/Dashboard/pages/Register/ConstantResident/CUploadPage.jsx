@@ -281,7 +281,7 @@ class CUploadPage extends Component {
                                                             <RiFileUploadFill/>
                                                         </div>
                                                         <button className="deleteBtn"
-                                                                onClick={this.handleDeleteAllPage}><MdDelete
+                                                                onClick={this.handleDeleteBirthAllPage}><MdDelete
                                                             fontSize="20px"/></button>
                                                     </div>
                                                 ) : (this.state.isLoadingBirthAllPage && (
@@ -409,7 +409,7 @@ class CUploadPage extends Component {
                                                             <RiFileUploadFill/>
                                                         </div>
                                                         <button className="deleteBtn"
-                                                                onClick={this.handleDeleteCartAllpage}><MdDelete
+                                                                onClick={this.handleDeleteCartAllPage}><MdDelete
                                                             fontSize="20px"/></button>
                                                     </div>
                                                 ) : (this.state.isLoadingCartAllPage && (
@@ -490,7 +490,7 @@ class CUploadPage extends Component {
                                         </div>
                                         <input className='form-control form-control-sm  p-2 ' type="file"
                                                id="formFileLg" name="filename" onChange={(e) => {
-                                            this.handleFile(e)
+                                            this.handleFileRegister(e)
                                         }}/>
                                         <div>
                                             {this.state.isUploadRegister && !this.state.hasErrorRegister ? (
@@ -603,8 +603,249 @@ class CUploadPage extends Component {
             });
     }
 
-    handleDeleteBirthPage1 = () => {
+    handleDeleteBirthPage1 = async () => {
+        await fetch(`http://api.saadatportal.com/api/v1/file`, {
+            method: 'DELETE',
+        })
+            .then(res => res.text())
+            .then(res => console.log(res));
+        this.setState({fileId: ""});
+        this.setState({isUploadBirthPage1: false});
     }
+
+    handleFileBirthPage2 = async (e) => {
+        this.setState({isLoadingBirthPage2: true});
+        let formData = new FormData();
+        formData.append('file', e.target.files[0]);
+
+        await fetch('http://api.saadatportal.com/api/v1/file', {
+            method: 'POST',
+            body: formData
+        }).then((response) => response.json())
+            .then((result) => {
+                console.log('Success:', result);
+                this.setState({isLoadingBirthPage2: false});
+                this.setState({isUploadBirthPage2: true})
+                this.setState({hasErrorBirthPage2: false});
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                this.setState({isLoadingBirthPage2: false});
+                this.setState({isUploadBirthPage2: true})
+                this.setState({hasErrorBirthPage2: true});
+            });
+    }
+
+    handleDeleteBirthPage2 = async () => {
+        await fetch(`http://api.saadatportal.com/api/v1/file`, {
+            method: 'DELETE',
+        })
+            .then(res => res.text())
+            .then(res => console.log(res));
+        this.setState({fileId: ""});
+        this.setState({isUploadBirthPage2: false});
+    }
+
+    handleFileBirthPage3 = async (e) => {
+        this.setState({isLoadingBirthPage3: true});
+        let formData = new FormData();
+        formData.append('file', e.target.files[0]);
+
+        await fetch('http://api.saadatportal.com/api/v1/file', {
+            method: 'POST',
+            body: formData
+        }).then((response) => response.json())
+            .then((result) => {
+                console.log('Success:', result);
+                this.setState({isLoadingBirthPage3: false});
+                this.setState({isUploadBirthPage3: true})
+                this.setState({hasErrorBirthPage3: false});
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                this.setState({isLoadingBirthPage3: false});
+                this.setState({isUploadBirthPage3: true})
+                this.setState({hasErrorBirthPage3: true});
+            });
+    }
+
+    handleDeleteBirthPage3 = async () => {
+        await fetch(`http://api.saadatportal.com/api/v1/file`, {
+            method: 'DELETE',
+        })
+            .then(res => res.text())
+            .then(res => console.log(res));
+        this.setState({fileId: ""});
+        this.setState({isUploadBirthPage3: false});
+    }
+
+    handleFileBirthPage4 = async (e) => {
+        this.setState({isLoadingBirthPage4: true});
+        let formData = new FormData();
+        formData.append('file', e.target.files[0]);
+
+        await fetch('http://api.saadatportal.com/api/v1/file', {
+            method: 'POST',
+            body: formData
+        }).then((response) => response.json())
+            .then((result) => {
+                console.log('Success:', result);
+                this.setState({isLoadingBirthPage4: false});
+                this.setState({isUploadBirthPage4: true})
+                this.setState({hasErrorBirthPage4: false});
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                this.setState({isLoadingBirthPage4: false});
+                this.setState({isUploadBirthPage4: true})
+                this.setState({hasErrorBirthPage4: true});
+            });
+    }
+
+    handleDeleteBirthPage4 = async () => {
+        await fetch(`http://api.saadatportal.com/api/v1/file`, {
+            method: 'DELETE',
+        })
+            .then(res => res.text())
+            .then(res => console.log(res));
+        this.setState({fileId: ""});
+        this.setState({isUploadBirthPage4: false});
+    }
+
+    handleFileBirthAllPage = async (e) => {
+        this.setState({isLoadingBirthAllPage: true});
+        let formData = new FormData();
+        formData.append('file', e.target.files[0]);
+
+        await fetch('http://api.saadatportal.com/api/v1/file', {
+            method: 'POST',
+            body: formData
+        }).then((response) => response.json())
+            .then((result) => {
+                console.log('Success:', result);
+                this.setState({isLoadingBirthAllPage: false});
+                this.setState({isUploadBirthAllPage: true})
+                this.setState({hasErrorBirthAllPage: false});
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                this.setState({isLoadingBirthAllPage: false});
+                this.setState({isUploadBirthAllPage: true})
+                this.setState({hasErrorBirthAllPage: true});
+            });
+    }
+
+    handleDeleteBirthAllPage = async () => {
+        await fetch(`http://api.saadatportal.com/api/v1/file`, {
+            method: 'DELETE',
+        })
+            .then(res => res.text())
+            .then(res => console.log(res));
+        this.setState({fileId: ""});
+        this.setState({isUploadBirthAllPage: false});
+    }
+
+    handleFileCartPage1 = async (e) => {
+        this.setState({isLoadingCartPage1: true});
+        let formData = new FormData();
+        formData.append('file', e.target.files[0]);
+
+        await fetch('http://api.saadatportal.com/api/v1/file', {
+            method: 'POST',
+            body: formData
+        }).then((response) => response.json())
+            .then((result) => {
+                console.log('Success:', result);
+                this.setState({isLoadingCartPage1: false});
+                this.setState({isUploadCartPage1: true})
+                this.setState({hasErrorCartPage1: false});
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                this.setState({isLoadingCartPage1: false});
+                this.setState({isUploadCartPage1: true})
+                this.setState({hasErrorCartPage1: true});
+            });
+    }
+
+    handleDeleteCartPage1 = async () => {
+        await fetch(`http://api.saadatportal.com/api/v1/file`, {
+            method: 'DELETE',
+        })
+            .then(res => res.text())
+            .then(res => console.log(res));
+        this.setState({fileId: ""});
+        this.setState({isUploadCartPage1: false});
+    }
+
+    handleFileCartPage2 = async (e) => {
+        this.setState({isLoadingCartPage2: true});
+        let formData = new FormData();
+        formData.append('file', e.target.files[0]);
+
+        await fetch('http://api.saadatportal.com/api/v1/file', {
+            method: 'POST',
+            body: formData
+        }).then((response) => response.json())
+            .then((result) => {
+                console.log('Success:', result);
+                this.setState({isLoadingCartPage2: false});
+                this.setState({isUploadCartPage2: true})
+                this.setState({hasErrorCartPage2: false});
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                this.setState({isLoadingCartPage2: false});
+                this.setState({isUploadCartPage2: true})
+                this.setState({hasErrorCartPage2: true});
+            });
+    }
+
+    handleDeleteCartPage2 = async () => {
+        await fetch(`http://api.saadatportal.com/api/v1/file`, {
+            method: 'DELETE',
+        })
+            .then(res => res.text())
+            .then(res => console.log(res));
+        this.setState({fileId: ""});
+        this.setState({isUploadCartAllPage: false});
+    }
+
+    handleFileCartAllPage = async (e) => {
+        this.setState({isLoadingCartAllPage: true});
+        let formData = new FormData();
+        formData.append('file', e.target.files[0]);
+
+        await fetch('http://api.saadatportal.com/api/v1/file', {
+            method: 'POST',
+            body: formData
+        }).then((response) => response.json())
+            .then((result) => {
+                console.log('Success:', result);
+                this.setState({isLoadingCartAllPage: false});
+                this.setState({isUploadCartAllPage: true})
+                this.setState({hasErrorCartAllPage: false});
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                this.setState({isLoadingCartAllPage: false});
+                this.setState({isUploadCartAllPage: true})
+                this.setState({hasErrorCartAllPage: true});
+            });
+    }
+
+    handleDeleteCartAllPage = async () => {
+        await fetch(`http://api.saadatportal.com/api/v1/file`, {
+            method: 'DELETE',
+        })
+            .then(res => res.text())
+            .then(res => console.log(res));
+        this.setState({fileId: ""});
+        this.setState({isUploadBirthAllPage: false});
+    }
+
+
+
 }
 
 export default CUploadPage;

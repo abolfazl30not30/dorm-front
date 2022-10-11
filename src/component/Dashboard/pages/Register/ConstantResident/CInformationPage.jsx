@@ -93,9 +93,12 @@ class CInformationPage extends Component {
                                         inputFormat="jYYYY/jM/jD"
                                         className={`input form-control ${this.context.constantInformationPageValidation.birthDate_requiredReg === false ? "is-invalid" : ""}`}
                                         value={this.context.constantInformationPage.birthDate}
-                                        onChange={(value) =>  this.context.handleDates(value, 'constantInformationPage', 'birthDate')}
+                                        onChange={(value) =>  {this.context.handleDates(value, 'constantInformationPage', 'birthDate')}}
                             />
-                            <label className="placeholder" style={{right: this.context.constantInformationPageValidation.birthDate_requiredReg === false ? '35px' : '12px'}}>
+
+                            <label className="placeholder"
+                                   style={this.context.constantInformationPage.birthDate !== "" ? ({display:"none"}):
+                                (this.context.constantInformationPageValidation.birthDate_requiredReg === false ? ({right:'35px',display:"inline"}) : ({right:'12px',display:"inline"}))}>
                                 تاریخ تولد
                                 <span style={{color : 'red'}}>*</span>
                             </label>

@@ -55,7 +55,9 @@ class CInformationFurtherPage extends Component {
                                         value={this.context.constantInformationFurther.admissionStartDate}
                                         onChange={(value) =>  this.context.handleDates(value, 'constantInformationFurther', 'admissionStartDate')}
                             />
-                            <label className="placeholder" style={{right: this.context.constantInformationFurtherValidation.admissionStartDate_requiredReg === false ? '35px' : '12px'}}>
+                            <label className="placeholder" style={this.context.constantInformationFurther.admissionStartDate !== "" ? ({display:"none"}):
+                                (this.context.constantInformationFurtherValidation.admissionStartDate_requiredReg === false ? ({right:'35px',display:"inline"}) : ({right:'12px',display:"inline"}))}>
+
                                 تاریخ شروع پذیرش
                                 <span style={{color : 'red'}}>*</span>
                             </label>
@@ -76,7 +78,8 @@ class CInformationFurtherPage extends Component {
                                         value={this.context.constantInformationFurther.admissionEndDate}
                                         onChange={(value) =>  this.context.handleDates(value, 'constantInformationFurther', 'admissionEndDate')}
                             />
-                            <label className="placeholder" style={{right: this.context.constantInformationFurtherValidation.admissionEndDate_requiredReg === false ? '35px' : '12px'}}>
+                            <label className="placeholder" style={this.context.constantInformationFurther.admissionEndDate !== "" ? ({display:"none"}):
+                                (this.context.constantInformationFurtherValidation.admissionEndDate_requiredReg === false ? ({right:'35px',display:"inline"}) : ({right:'12px',display:"inline"}))}>
                                 تاریخ اتمام پذیرش
                                 <span style={{color : 'red'}}>*</span>
                             </label>

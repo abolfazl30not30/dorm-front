@@ -1,6 +1,7 @@
 .text{
     margin-bottom: 50px;
 }
+
 .upload-container {
     background-color: #fff;
     padding: 1rem;
@@ -9,10 +10,13 @@
     box-shadow: 0 0 20px 0 #4c577d05;
     direction: rtl;
 }
+
 .upload-container-title h5{
-    font-size: 19px;
+    font-size: 22px;
+    font-weight: bold;
     margin-top: 10px;
 }
+
 .upload-container-title p{
     font-size: 12px;
     margin-top: 15px;

@@ -21,10 +21,7 @@ import moment from 'moment-jalali';
 
 class PaymentPage extends Component {
     state = {
-        choices: [
-            'محصولات بهداشتی',
-            'بیمه',
-        ],
+        choices: [],
         tempChoices: [],
         inputType: "",
         showType: false,
@@ -65,8 +62,8 @@ class PaymentPage extends Component {
     }
 
     async componentDidMount() {
-        const response = await fetch('http://api.saadatportal.com/api/v1/category/search?type=PaymentHistory').then((response) => response.json())
-            .then((data) => console.log(data));
+        const response = await fetch('http://api.saadatportal.com/api/v1/category/search?type=Payment').then((response) => response.json())
+            .then((data) => this.setState({choices : data}));
 
 
     }
@@ -154,8 +151,8 @@ class PaymentPage extends Component {
                                                 >
                                                     {
                                                         this.state.choices.map((c) =>
-                                                            <ToggleButton value={c} className='col'>
-                                                                {c}
+                                                            <ToggleButton value={c.name} className='col'>
+                                                                {c.name}
                                                             </ToggleButton>
                                                         )
                                                     }
@@ -341,6 +338,7 @@ class PaymentPage extends Component {
         this.setState({fileId: ""});
         this.setState({isUpload: false});
     }
+
     handleSubmitType = (e) => {
         e.preventDefault();
         let regCheck = /^\s*$/;
@@ -380,7 +378,6 @@ class PaymentPage extends Component {
                 this.setState({hasError: true})
                 this.setState({isLoading: false});
             });
-
     }
 
     handleValidations = () => {
@@ -406,7 +403,7 @@ class PaymentPage extends Component {
         return price_requiredReg && price_numberReg && selectedTypeBoolean && date_requiredReg;
     }
 
-    handleInputFile = (event) => {
+    handleInputFile = async (event) => {
         this.setState({uploadFile: event.target.files})
         this.setState({fileName: event.target.files[0].name})
     }

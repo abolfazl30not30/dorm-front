@@ -27,6 +27,7 @@
     background-color: #DB9B31 !important;
     border:none !important;
 }
+
 .next-btn:hover{
     color: #000 !important;
 }
@@ -47,6 +48,7 @@
     margin-top: 2rem;
     border-radius: 0.5rem;
     box-shadow: 0 0 20px 0 #4c577d05;
+    width: 100%;
     direction: rtl;
 }
 
@@ -75,7 +77,7 @@
     top: 20px;
     right: 12px;
     font-size: 14px;
-    padding: 0px 5px;
+    padding: 0 5px;
     color: #2b2f33;
     transition: 0.3s;
     pointer-events: none;
