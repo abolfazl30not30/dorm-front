@@ -144,6 +144,20 @@ class MainPage extends Component {
             },
             //##############################################################################
 
+            //############################################################################## fourth page
+            constantUploadPage:[
+
+            ],
+
+            familyGuestUploadPage: [
+
+            ],
+
+            otherGuestUploadPage: [
+
+            ],
+            //##############################################################################
+
         },
         errors : {
             required: 'این فیلد الزامی است!',
@@ -339,6 +353,16 @@ class MainPage extends Component {
                 </div>
             </>
         );
+    }
+
+    handleUploadedFile = (residentTypeString, name, fileId, category) => {
+        let updatedFiles = {...this.state.fields};
+        let tmp = {
+            name : name,
+            fileId : fileId,
+            category : category
+        }
+        updatedFiles[residentTypeString].push(tmp);
     }
 
     handleTypeofResident = (type) => {
