@@ -844,6 +844,105 @@ class CUploadPage extends Component {
         this.setState({isUploadBirthAllPage: false});
     }
 
+    handleFilePersonnelImg = async (e) => {
+        this.setState({isLoadingPersonnelImg: true});
+        let formData = new FormData();
+        formData.append('file', e.target.files[0]);
+
+        await fetch('http://api.saadatportal.com/api/v1/file', {
+            method: 'POST',
+            body: formData
+        }).then((response) => response.json())
+            .then((result) => {
+                console.log('Success:', result);
+                this.setState({isLoadingPersonnelImg: false});
+                this.setState({isUploadPersonnelImg: true})
+                this.setState({hasErrorPersonnelImg: false});
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                this.setState({isLoadingPersonnelImg: false});
+                this.setState({isUploadPersonnelImg: true})
+                this.setState({hasErrorPersonnelImg: true});
+            });
+    }
+
+    handleDeletePersonnelImg = async () => {
+        await fetch(`http://api.saadatportal.com/api/v1/file`, {
+            method: 'DELETE',
+        })
+            .then(res => res.text())
+            .then(res => console.log(res));
+        this.setState({fileId: ""});
+        this.setState({isUploadPersonnelImg: false});
+    }
+
+    handleFileRegister = async (e) => {
+        this.setState({isLoadingRegister: true});
+        let formData = new FormData();
+        formData.append('file', e.target.files[0]);
+
+        await fetch('http://api.saadatportal.com/api/v1/file', {
+            method: 'POST',
+            body: formData
+        }).then((response) => response.json())
+            .then((result) => {
+                console.log('Success:', result);
+                this.setState({isLoadingRegister: false});
+                this.setState({isUploadRegister: true})
+                this.setState({hasErrorRegister: false});
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                this.setState({isLoadingRegister: false});
+                this.setState({isUploadRegister: true})
+                this.setState({hasErrorRegister: true});
+            });
+    }
+
+    handleDeleteRegister = async () => {
+        await fetch(`http://api.saadatportal.com/api/v1/file`, {
+            method: 'DELETE',
+        })
+            .then(res => res.text())
+            .then(res => console.log(res));
+        this.setState({fileId: ""});
+        this.setState({isUploadRegister: false});
+    }
+
+
+    handleFileRegisterUni = async (e) => {
+        this.setState({isLoadingRegisterUni: true});
+        let formData = new FormData();
+        formData.append('file', e.target.files[0]);
+
+        await fetch('http://api.saadatportal.com/api/v1/file', {
+            method: 'POST',
+            body: formData
+        }).then((response) => response.json())
+            .then((result) => {
+                console.log('Success:', result);
+                this.setState({isLoadingRegisterUni: false});
+                this.setState({isUploadRegisterUni: true})
+                this.setState({hasErrorRegisterUni: false});
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                this.setState({isLoadingRegisterUni: false});
+                this.setState({isUploadRegisterUni: true})
+                this.setState({hasErrorRegisterUni: true});
+            });
+    }
+
+    handleDeleteRegisterUni = async () => {
+        await fetch(`http://api.saadatportal.com/api/v1/file`, {
+            method: 'DELETE',
+        })
+            .then(res => res.text())
+            .then(res => console.log(res));
+        this.setState({fileId: ""});
+        this.setState({isUploadRegisterUni: false});
+    }
 
 
 }
