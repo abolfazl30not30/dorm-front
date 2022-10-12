@@ -54,6 +54,12 @@ class HamburgerMenu extends Component {
                         </Link>
                     </li>
                     <li className='sidenav-item'>
+                        <Link to="/contacts" className='sidenav-link' onClick={window.innerWidth <= 768 && this.context.handleSidebar}>
+                            <i className="bi bi-journal-plus"></i>
+                            مخاطبین
+                        </Link>
+                    </li>
+                    <li className='sidenav-item'>
                         <Link to="/" className='sidenav-link' onClick={window.innerWidth <= 768 && this.context.handleSidebar}>
                             <i className="bi bi-hand-thumbs-up" />
                             باشگاه

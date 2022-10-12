@@ -11,6 +11,7 @@ import MainRegister from './pages/Register/MainRegister';
 import ProfilePage from './pages/People/ProfilePage';
 import SearchAccount from './pages/People/SearchAccount';
 import PaymentPage from './pages/paymentPage/PaymentPage';
+import Contacts from './pages/contacts/contacts';
 class MainPage extends Component {
     state = {
 
@@ -332,6 +333,7 @@ class MainPage extends Component {
                             <Route path="/people" element={(<SearchAccount />)} />
                             <Route path="/people/profile" element={(<ProfilePage />)} />
                             <Route path='/payment' element={(<PaymentPage />)} />
+                            <Route path='/contacts' element={(<Contacts />)} />
                             <Route path="/Register" element={(<MainRegister />)} />
                             <Route path="/edit" element={(<EditFloorAndUnit />)} />
                         </Routes>

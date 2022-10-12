@@ -1,0 +1,61 @@
+.contact {
+    background-color: #fff;
+    padding: 16px;
+    border-radius: 8px;
+    box-shadow: 0 20px 25px 0 rgb(170 179 217 / 20%);
+}
+.contact .title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #444;
+    margin-bottom: 16px;
+}
+.contact .btn-add {
+    background-color: #eee;
+    border-radius: 8px;
+}
+.contact .btn-add:hover {
+    background-color: #eee !important;
+}
+.table-box {
+    overflow-x: auto;
+    white-space: nowrap;
+    margin-top: 24px;
+}
+.table {
+    border: 1px solid #eee !important;
+    text-align: right;
+    border-radius: 0.65rem;
+    border-spacing: 0;
+    border-collapse: separate;
+}
+.table tbody tr:nth-child(odd)>* {
+    background-color: #f9f9f9 !important;
+}
+.table tr,.table th,.table td {
+    border: none;
+    padding: 10px !important;
+}
+.table th {
+    font-weight: 600;
+    font-size: 13px;
+}
+.table td {
+    font-size: 14px;
+}
+.btn-record-contact {
+    background-color: #db9b31 !important;
+    width: 100%;
+    color: #fff !important;;
+    font-size: 18px !important;;
+    margin-top: 16px;
+}
+.add-input-contact {
+    background-color: #f9f9f9;
+    margin: 8px;
+    padding: 8px;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 24px;
+    cursor: pointer;
+}
