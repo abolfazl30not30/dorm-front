@@ -144,6 +144,20 @@ class MainPage extends Component {
             },
             //##############################################################################
 
+            //############################################################################## fourth page
+            constantUploadPage:[
+
+            ],
+
+            familyGuestUploadPage: [
+
+            ],
+
+            otherGuestUploadPage: [
+
+            ],
+            //##############################################################################
+
         },
         errors : {
             required: 'این فیلد الزامی است!',
@@ -315,13 +329,19 @@ class MainPage extends Component {
                         otherGuestInformationFamilyValidation: this.state.specificValidations.otherGuestInformationFamilyValidation,
 
                         specificValidations : this.state.specificValidations,
+
+                        constantUploadPage: this.state.fields.constantUploadPage, // UploadPage
+                        familyGuestUploadPage: this.state.fields.familyGuestUploadPage, // UploadPage
+                        otherGuestUploadPage: this.state.fields.otherGuestUploadPage, // UploadPage
+
                         handleTypeofResident: this.handleTypeofResident,
                         handleUnitNumber: this.handleUnitNumber,
                         handlePersonId : this.handlePersonId,
                         handleFields: this.handleFields,
                         handleDates: this.handleDates,
                         handleValidations: this.handleValidations,
-                        handleSpecificValidations: this.handleSpecificValidations,}}
+                        handleSpecificValidations: this.handleSpecificValidations,
+                        handleUploadedFile : this.handleUploadedFile}}
                     >
                         <Routes>
                             <Route path="/" element={(<Home />)} />
@@ -339,6 +359,15 @@ class MainPage extends Component {
                 </div>
             </>
         );
+    }
+
+    handleUploadedFile = (residentTypeString, name, fileId) => {
+        let updatedFiles = {...this.state.fields};
+        let tmp = {
+            name : name,
+            fileId : fileId,
+        }
+        updatedFiles[residentTypeString].push(tmp);
     }
 
     handleTypeofResident = (type) => {
