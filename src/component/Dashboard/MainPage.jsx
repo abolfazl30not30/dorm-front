@@ -329,13 +329,19 @@ class MainPage extends Component {
                         otherGuestInformationFamilyValidation: this.state.specificValidations.otherGuestInformationFamilyValidation,
 
                         specificValidations : this.state.specificValidations,
+
+                        constantUploadPage: this.state.fields.constantUploadPage, // UploadPage
+                        familyGuestUploadPage: this.state.fields.familyGuestUploadPage, // UploadPage
+                        otherGuestUploadPage: this.state.fields.otherGuestUploadPage, // UploadPage
+
                         handleTypeofResident: this.handleTypeofResident,
                         handleUnitNumber: this.handleUnitNumber,
                         handlePersonId : this.handlePersonId,
                         handleFields: this.handleFields,
                         handleDates: this.handleDates,
                         handleValidations: this.handleValidations,
-                        handleSpecificValidations: this.handleSpecificValidations,}}
+                        handleSpecificValidations: this.handleSpecificValidations,
+                        handleUploadedFile : this.handleUploadedFile}}
                     >
                         <Routes>
                             <Route path="/" element={(<Home />)} />
