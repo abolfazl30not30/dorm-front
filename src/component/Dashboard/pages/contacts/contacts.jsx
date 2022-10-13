@@ -29,8 +29,8 @@ class contacts extends Component {
             }
         ],
         show: false,
-        inputTelephone: [null],
-        inputMobile: [null],
+        inputTelephone: [],
+        inputMobile: [],
         name: [],
         telephoneNumbers: [],
         mobileNumbers: []
@@ -44,7 +44,7 @@ class contacts extends Component {
                     <div className="d-flex flex-row justify-content-between">
                         <div className="d-flex flex-row">
                             <input type='text' className='form-control input-search' placeholder='جستجو'/>
-                            <button className='btn'><BsSearch/></button>
+                            <button className='btn'><BsSearch fontSize="25px"/></button>
                         </div>
                         <button className='btn btn-add' onClick={() => {
                             this.handleShow()
@@ -88,17 +88,22 @@ class contacts extends Component {
                             }}/>
                             <label className="placeholder" style={{right: '12px'}}>نام و نام خانوادگی</label>
                         </div>
-                        {/*<div className='input-group-register mb-3'>
+
+
+
+
+                        <div className='input-group-register mb-3'>
                             <input type='text' className='input form-control' onChange={(e) => {
-                                this.getValueInputTelephone(e.target.value)
+                                this.getValueInputTelephone(e.target.value,0)
                             }}/>
                             <label className="placeholder" style={{right: '12px'}}>تلفن ثابت</label>
-                        </div>*/}
+                        </div>
                         {
                             this.state.inputTelephone.map((telephone, index) => (
                                 <div className='input-group-register mb-3'>
+                                    <AiOutlineClose className='btn-delete-input' onClick={() => {this.deleteInputTelephone(index)}}/>
                                     <input type='text' className='input form-control' onChange={(e) => {
-                                        this.getValueInputTelephone(e.target.value, index)
+                                        this.getValueInputTelephone(e.target.value, index+1)
                                     }}/>
                                     <label className="placeholder" style={{right: '12px'}}>تلفن ثابت</label>
                                 </div>
@@ -109,17 +114,21 @@ class contacts extends Component {
                         }}>
                             <AiOutlinePlus className='ms-2'/>
                         </div>
-                        {/*<div className='input-group-register mb-3'>
+
+
+
+                        <div className='input-group-register mb-3'>
                             <input type='text' className='input form-control' onChange={(e) => {
-                                this.getValueInputMobile(e.target.value)
+                                this.getValueInputMobile(e.target.value,0)
                             }}/>
                             <label className="placeholder" style={{right: '12px'}}>تلفن همراه</label>
-                        </div>*/}
+                        </div>
                         {
                             this.state.inputMobile.map((mobile, index) => (
                                 <div className='input-group-register mb-3'>
+                                    <AiOutlineClose className='btn-delete-input' onClick={() => {this.deleteInputMobile(index)}}/>
                                     <input type='text' className='input form-control' onChange={(e) => {
-                                        this.getValueInputMobile(e.target.value, index)
+                                        this.getValueInputMobile(e.target.value, index+1)
                                     }}/>
                                     <label className="placeholder" style={{right: '12px'}}>تلفن همراه</label>
                                 </div>
@@ -130,10 +139,16 @@ class contacts extends Component {
                         }}>
                             <AiOutlinePlus className='ms-2'/>
                         </div>
+
+
+
                         <button className='btn btn-record-contact' onClick={() => {
                             this.handleRecordContact()
                         }}>ثبت
                         </button>
+
+
+
                     </Modal.Body>
                 </Modal>
             </>
@@ -171,6 +186,14 @@ class contacts extends Component {
         const updateMobile = [...this.state.mobileNumbers];
         updateMobile[index] = e;
         this.setState({mobileNumbers: updateMobile});
+    }
+    deleteInputTelephone = (i) => {
+        const updateInputsTelephone = this.state.inputTelephone.splice(i,1)
+        this.setState({inputTelephone: updateInputsTelephone});
+    }
+    deleteInputMobile = (i) => {
+        const updateInputsMobile = this.state.inputMobile.splice(i,1)
+        this.setState({inputMobile: updateInputsMobile});
     }
     handleRecordContact = () => {
         const newContact = {

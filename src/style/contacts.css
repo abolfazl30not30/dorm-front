@@ -59,3 +59,11 @@
     font-size: 24px;
     cursor: pointer;
 }
+.btn-delete-input {
+    position: absolute;
+    left: 16px;
+    top: 14px;
+    color: red;
+    font-size: 16px;
+    cursor: pointer;
+}
