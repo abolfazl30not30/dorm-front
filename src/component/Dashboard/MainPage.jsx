@@ -355,12 +355,11 @@ class MainPage extends Component {
         );
     }
 
-    handleUploadedFile = (residentTypeString, name, fileId, category) => {
+    handleUploadedFile = (residentTypeString, name, fileId) => {
         let updatedFiles = {...this.state.fields};
         let tmp = {
             name : name,
             fileId : fileId,
-            category : category
         }
         updatedFiles[residentTypeString].push(tmp);
     }
