@@ -89,15 +89,13 @@ class contacts extends Component {
                             <label className="placeholder" style={{right: '12px'}}>نام و نام خانوادگی</label>
                         </div>
 
-
-
-
                         <div className='input-group-register mb-3'>
                             <input type='text' className='input form-control' onChange={(e) => {
                                 this.getValueInputTelephone(e.target.value,0)
                             }}/>
                             <label className="placeholder" style={{right: '12px'}}>تلفن ثابت</label>
                         </div>
+
                         {
                             this.state.inputTelephone.map((telephone, index) => (
                                 <div className='input-group-register mb-3'>
@@ -158,21 +156,23 @@ class contacts extends Component {
     handleClose = () => {
         this.setState({show: false})
     };
+
     handleShow = () => {
         this.setState({show: true})
     };
     addInputTelephoneNumbers = () => {
         const newInputTelephone = this.state.inputTelephone.concat(
-            {}
+            ""
         )
         this.setState({inputTelephone: newInputTelephone});
     }
     addInputMobileNumbers = () => {
         const newInputMobile = this.state.inputMobile.concat(
-            {}
+            ""
         )
         this.setState({inputMobile: newInputMobile});
     }
+
     getValueInputName = (e) => {
         const name = e;
         this.setState({name: name})
@@ -182,19 +182,24 @@ class contacts extends Component {
         updateTelephone[index] = e;
         this.setState({telephoneNumbers: updateTelephone});
     }
+
     getValueInputMobile = (e, index) => {
         const updateMobile = [...this.state.mobileNumbers];
         updateMobile[index] = e;
         this.setState({mobileNumbers: updateMobile});
     }
+
     deleteInputTelephone = (i) => {
-        const updateInputsTelephone = this.state.inputTelephone.splice(i,1)
+        const updateInputsTelephone = [...this.state.inputTelephone];
+        updateInputsTelephone.splice(i,1)
         this.setState({inputTelephone: updateInputsTelephone});
     }
     deleteInputMobile = (i) => {
-        const updateInputsMobile = this.state.inputMobile.splice(i,1)
+        const updateInputsMobile = [...this.state.inputMobile];
+        updateInputsMobile.splice(i,1);
         this.setState({inputMobile: updateInputsMobile});
     }
+
     handleRecordContact = () => {
         const newContact = {
             name: this.state.name,
