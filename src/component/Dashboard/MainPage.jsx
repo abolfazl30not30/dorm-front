@@ -42,7 +42,7 @@ class MainPage extends Component {
                 spouseFullName: '',
                 spouseJob: '',
                 health: 'false', // default value (first option)
-                healthDescription: '',
+                healthyStatus: '',
             },
 
             // ----------------------- <FGInformationPage /> information
@@ -84,23 +84,23 @@ class MainPage extends Component {
             // ----------------------- <CInformationFurtherPage /> information
             constantInformationFurther: {
                 address: '',
-                home_tel: '',
-                resident_tel: '',
-                admissionStartDate: '',
+                telephoneNumber: '',
+                phoneNumber: '',
+                reservationDate: '',
                 admissionEndDate: '',
             },
 
             // ----------------------- <FGInformationFurtherPage /> information
             familyGuestInformationFurther: {
                 address: '',
-                home_tel: '',
-                resident_tel: '',
+                telephoneNumber: '',
+                phoneNumber: '',
             },
             // ----------------------- <OGInformationFurtherPage /> information
             otherGuestInformationFurther: {
                 address: '',
-                home_tel: '',
-                resident_tel: '',
+                telephoneNumber: '',
+                phoneNumber: '',
             },
             //##############################################################################
 
@@ -108,15 +108,15 @@ class MainPage extends Component {
             //############################################################################## third page
             // ----------------------- <CInformationFamilyPage /> information
             constantInformationFamily: {
-                firstPerson_FullName : '',
-                firstPerson_PhoneNumber : '',
-                firstPerson_FatherName : '',
-                firstPerson_relationshipWithResident : 'father', // default value (first option)
+                firstPersonFullName : '',
+                firstPersonPhoneNumber : '',
+                firstPersonFatherName : '',
+                firstPersonRelationshipWithResident : 'father', // default value (first option)
 
-                secondPerson_FullName : '',
-                secondPerson_PhoneNumber : '',
-                secondPerson_FatherName : '',
-                secondPerson_relationshipWithResident : 'father', // default value (first option)
+                secondPersonFullName : '',
+                secondPersonPhoneNumber : '',
+                secondPersonFatherName : '',
+                secondPersonRelationshipWithResident : 'father', // default value (first option)
             },
             // ----------------------- <FGIInformationFamilyPage /> information
             familyGuestInformationFamily: {
@@ -400,7 +400,9 @@ class MainPage extends Component {
 
     handleDates = (value, residentType, field) => {
         let newFields = {...this.state.fields};
-        newFields[residentType][field] = value
+        let date = new Date(value._d);
+        let convertDate = date.getFullYear() + "/" + date.getMonth() + "/" + date.getDate() + " " + "00:" + "00:" + "00";
+        newFields[residentType][field] = convertDate
         this.setState({ fields: newFields });
     }
 

@@ -16,7 +16,7 @@ class FGInformationFurtherPage extends Component {
                             <SimpleTextInput
                                 condition1={this.context.familyGuestInformationFurtherValidation.resident_tel_requiredReg}
                                 condition2={this.context.familyGuestInformationFurtherValidation.resident_tel_telephoneReg}
-                                value={this.context.familyGuestInformationFurther.resident_tel}
+                                value={this.context.familyGuestInformationFurther.phoneNumber}
                                 fieldNameString={'familyGuestInformationFurther'}
                                 valueOfInputString={'resident_tel'}
                                 required={true}
@@ -27,7 +27,7 @@ class FGInformationFurtherPage extends Component {
                             <SimpleTextInput
                                 condition1={this.context.familyGuestInformationFurtherValidation.home_tel_requiredReg}
                                 condition3={this.context.familyGuestInformationFurtherValidation.home_tel_homeTelephoneReg}
-                                value={this.context.familyGuestInformationFurther.home_tel}
+                                value={this.context.familyGuestInformationFurther.telephoneNumber}
                                 fieldNameString={'familyGuestInformationFurther'}
                                 valueOfInputString={'home_tel'}
                                 required={true}

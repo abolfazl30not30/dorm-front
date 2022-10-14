@@ -30,7 +30,7 @@ class CInformationFurtherPage extends Component {
                             <SimpleTextInput
                                 condition1={this.context.constantInformationFurtherValidation.resident_tel_requiredReg}
                                 condition2={this.context.constantInformationFurtherValidation.resident_tel_telephoneReg}
-                                value={this.context.constantInformationFurther.resident_tel}
+                                value={this.context.constantInformationFurther.phoneNumber}
                                 fieldNameString={'constantInformationFurther'}
                                 valueOfInputString={'resident_tel'}
                                 required={true}
@@ -41,7 +41,7 @@ class CInformationFurtherPage extends Component {
                             <SimpleTextInput
                                 condition1={this.context.constantInformationFurtherValidation.home_tel_requiredReg}
                                 condition3={this.context.constantInformationFurtherValidation.home_tel_homeTelephoneReg}
-                                value={this.context.constantInformationFurther.home_tel}
+                                value={this.context.constantInformationFurther.telephoneNumber}
                                 fieldNameString={'constantInformationFurther'}
                                 valueOfInputString={'home_tel'}
                                 required={true}
@@ -52,10 +52,9 @@ class CInformationFurtherPage extends Component {
                             <DatePicker calendarStyles={this.state.calStyles}
                                         inputFormat="jYYYY/jM/jD"
                                         className={`input form-control ${this.context.constantInformationFurtherValidation.admissionStartDate_requiredReg === false ? "is-invalid" : ""}`}
-                                        value={this.context.constantInformationFurther.admissionStartDate}
                                         onChange={(value) =>  this.context.handleDates(value, 'constantInformationFurther', 'admissionStartDate')}
                             />
-                            <label className="placeholder" style={this.context.constantInformationFurther.admissionStartDate !== "" ? ({display:"none"}):
+                            <label className="placeholder" style={this.context.constantInformationFurther.reservationDate !== "" ? ({display:"none"}):
                                 (this.context.constantInformationFurtherValidation.admissionStartDate_requiredReg === false ? ({right:'35px',display:"inline"}) : ({right:'12px',display:"inline"}))}>
 
                                 تاریخ شروع پذیرش
@@ -75,7 +74,6 @@ class CInformationFurtherPage extends Component {
                             <DatePicker calendarStyles={this.state.calStyles}
                                         inputFormat="jYYYY/jM/jD"
                                         className={`input form-control ${this.context.constantInformationFurtherValidation.admissionEndDate_requiredReg === false ? "is-invalid" : ""}`}
-                                        value={this.context.constantInformationFurther.admissionEndDate}
                                         onChange={(value) =>  this.context.handleDates(value, 'constantInformationFurther', 'admissionEndDate')}
                             />
                             <label className="placeholder" style={this.context.constantInformationFurther.admissionEndDate !== "" ? ({display:"none"}):
