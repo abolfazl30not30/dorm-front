@@ -1,0 +1,83 @@
+
+.payment-history {
+    background-color: #fff;
+    padding: 1rem;
+    border-radius: 16px;
+    margin: 1rem;
+    font-size: 15px;
+    color: #404040;
+}
+.payment-history .title {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+
+.payment-history .input-group-filter{
+    position: relative;
+    padding: 8px;
+}
+.payment-history .input{
+    padding: 10px;
+    height: 50px;
+    border-radius: 8px !important;
+    outline: none;
+    color: #2a2e32b3;
+    background-color: #fff;
+    border: 1px solid #bec6cc;
+    width: 100%;
+}
+.payment-history .placeholder{
+    position: absolute;
+    top: 20px;
+    right: 12px;
+    font-size: 12px;
+    padding: 0px 5px;
+    color: #2b2f33;
+    transition: 0.3s;
+    pointer-events: none;
+}
+.payment-history label.placeholder {
+    top: 0px;
+    background-color: #fff;
+    color: #2a2e32b3;
+    padding: 0 6px;
+    opacity: 1;
+}
+/*
+.input:focus + .placeholder, .input:not(:placeholder-shown) + .placeholder
+{
+    top: -5px;
+    background-color: #fff;
+    color: #2a2e32b3;
+    padding: 0 6px;
+    opacity: 1;
+}
+.tether-enabled:not(:placeholder-shown) + .placeholder {
+    top: -5px;
+    background-color: #fff;
+    color: #2a2e32b3;
+    padding: 0 6px;
+    opacity: 1;
+}*/
+.payment-history .table-box {
+    overflow-x: auto;
+    white-space: nowrap;
+}
+.payment-history .table-box table {
+    border-radius: 0.65rem;
+    border-spacing: 0;
+    border-collapse: separate;
+}
+.payment-history .table>:not(caption)>*>* {
+    padding: 16px !important;
+}
+.payment-history .btn-see {
+    background-color: #db9b31;
+    color: #fff;
+    height: 50px;
+}
+.payment-history .btn-see:hover {
+    background-color: #f3c885 !important;
+    color: #fff !important;
+}
