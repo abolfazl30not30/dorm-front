@@ -504,7 +504,8 @@ class MainRegister extends Component {
     }
 
     handleSubmit = ()=>{
-
+        this.props.history.push("/");
+        this.props.history.push("/Register");
     }
 }
 

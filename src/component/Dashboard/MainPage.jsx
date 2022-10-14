@@ -23,7 +23,7 @@ class MainPage extends Component {
 
             //############################################################################## first page
             // ----------------------- <CInformationPage /> information
-            constantInformationPage : {
+            constantInformationPage: {
                 firstName: '',
                 lastName: '',
                 nickName: '',
@@ -288,7 +288,6 @@ class MainPage extends Component {
             },
             //##############################################################################
         },
-
     }
     render() {
         return (
@@ -341,8 +340,11 @@ class MainPage extends Component {
                         handleDates: this.handleDates,
                         handleValidations: this.handleValidations,
                         handleSpecificValidations: this.handleSpecificValidations,
-                        handleUploadedFile : this.handleUploadedFile}}
+                        handleUploadedFile : this.handleUploadedFile,
+                        handleDeleteUploadedFile: this.handleDeleteUploadedFile
+                    }}
                     >
+
                         <Routes>
                             <Route path="/" element={(<Home />)} />
                             <Route path="/booking" element={(<FloorAndUnit />)} />
@@ -368,6 +370,13 @@ class MainPage extends Component {
             fileId : fileId,
         }
         updatedFiles[residentTypeString].push(tmp);
+        this.setState({fields:updatedFiles});
+    }
+
+    handleDeleteUploadedFile = (residentTypeString,fileId) =>{
+        let updatedFiles = {...this.state.fields};
+        updatedFiles[residentTypeString] = updatedFiles[residentTypeString].filter(f => f.fileId !== fileId);
+        this.setState({fields:updatedFiles});
     }
 
     handleTypeofResident = (type) => {

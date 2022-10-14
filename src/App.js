@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { BrowserRouter } from "react-router-dom";
 import Login from './component/Login';
 import HamburgerMenu from './component/Dashboard/HamburgerMenu'
 import Header from './component/Dashboard/Header';
@@ -11,7 +12,7 @@ class App extends Component {
     render() {
         return (
             <>
-                <MainDashboard />
+                <BrowserRouter><MainDashboard /></BrowserRouter>
             </>
         );
     }
