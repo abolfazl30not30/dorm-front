@@ -13,6 +13,8 @@ import SearchAccount from './pages/People/SearchAccount';
 import PaymentPage from './pages/paymentPage/PaymentPage';
 import EventPage from './pages/EventPage/EventPage'
 import RequestPage from './pages/RequestPage/RequestPage'
+import Contacts from './pages/contacts/contacts';
+
 class MainPage extends Component {
     state = {
 
@@ -356,6 +358,7 @@ class MainPage extends Component {
                             <Route path="/people" element={(<SearchAccount />)} />
                             <Route path="/people/profile" element={(<ProfilePage />)} />
                             <Route path='/payment' element={(<PaymentPage />)} />
+                            <Route path='/contacts' element={(<Contacts />)} />
                             <Route path="/Register" element={(<MainRegister />)} />
                             <Route path="/edit" element={(<EditFloorAndUnit />)} />
                             <Route path="/Calender" element={(<EventPage />)} />

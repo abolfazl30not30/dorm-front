@@ -54,12 +54,6 @@ class HamburgerMenu extends Component {
                         </Link>
                     </li>
                     <li className='sidenav-item'>
-                        <Link to="/" className='sidenav-link' onClick={window.innerWidth <= 768 && this.context.handleSidebar}>
-                            <i className="bi bi-hand-thumbs-up" />
-                            باشگاه
-                        </Link>
-                    </li>
-                    <li className='sidenav-item'>
                         <Link to="/Calender" className='sidenav-link' onClick={window.innerWidth <= 768 && this.context.handleSidebar}>
                             <i className="bi bi-file-earmark-text" />
                             تقويم
@@ -69,6 +63,18 @@ class HamburgerMenu extends Component {
                         <Link to="/Request" className='sidenav-link' onClick={window.innerWidth <= 768 && this.context.handleSidebar}>
                             <i className="bi bi-person-circle" />
                             درخواست
+                        </Link>
+                    </li>
+                    <li className='sidenav-item'>
+                        <Link to="/contacts" className='sidenav-link' onClick={window.innerWidth <= 768 && this.context.handleSidebar}>
+                            <i className="bi bi-journal-plus"></i>
+                            مخاطبین
+                        </Link>
+                    </li>
+                    <li className='sidenav-item'>
+                        <Link to="/" className='sidenav-link' onClick={window.innerWidth <= 768 && this.context.handleSidebar}>
+                            <i className="bi bi-hand-thumbs-up" />
+                            باشگاه
                         </Link>
                     </li>
                     <li className='sidenav-item'>
