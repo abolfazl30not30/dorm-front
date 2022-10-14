@@ -14,7 +14,7 @@ import PaymentPage from './pages/paymentPage/PaymentPage';
 import EventPage from './pages/EventPage/EventPage'
 import RequestPage from './pages/RequestPage/RequestPage'
 import Contacts from './pages/contacts/contacts';
-
+import PaymentHistory from './pages/PaymentHistory/PaymentHistory'
 class MainPage extends Component {
     state = {
 
@@ -363,6 +363,7 @@ class MainPage extends Component {
                             <Route path="/edit" element={(<EditFloorAndUnit />)} />
                             <Route path="/Calender" element={(<EventPage />)} />
                             <Route path="/Request" element={(<RequestPage />)} />
+                            <Route path="/PaymentHistory" element={(<PaymentHistory />)} />
                             <Route path="/" element={(<EditFloorAndUnit />)} />
                         </Routes>
                     </BuildingContext.Provider>
