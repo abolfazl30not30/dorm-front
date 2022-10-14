@@ -16,7 +16,7 @@ class OGInformationFurtherPage extends Component {
                             <SimpleTextInput
                                 condition1={this.context.otherGuestInformationFurtherValidation.resident_tel_requiredReg}
                                 condition2={this.context.otherGuestInformationFurtherValidation.resident_tel_telephoneReg}
-                                value={this.context.otherGuestInformationFurther.resident_tel}
+                                value={this.context.otherGuestInformationFurther.phoneNumber}
                                 fieldNameString={'otherGuestInformationFurther'}
                                 valueOfInputString={'resident_tel'}
                                 required={true}
@@ -27,7 +27,7 @@ class OGInformationFurtherPage extends Component {
                             <SimpleTextInput
                                 condition1={this.context.otherGuestInformationFurtherValidation.home_tel_requiredReg}
                                 condition3={this.context.otherGuestInformationFurtherValidation.home_tel_homeTelephoneReg}
-                                value={this.context.otherGuestInformationFurther.home_tel}
+                                value={this.context.otherGuestInformationFurther.telephoneNumber}
                                 fieldNameString={'otherGuestInformationFurther'}
                                 valueOfInputString={'home_tel'}
                                 required={true}

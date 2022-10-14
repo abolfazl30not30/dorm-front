@@ -25,7 +25,7 @@ class MainPage extends Component {
 
             //############################################################################## first page
             // ----------------------- <CInformationPage /> information
-            constantInformationPage : {
+            constantInformationPage: {
                 firstName: '',
                 lastName: '',
                 nickName: '',
@@ -44,7 +44,7 @@ class MainPage extends Component {
                 spouseFullName: '',
                 spouseJob: '',
                 health: 'false', // default value (first option)
-                healthDescription: '',
+                healthyStatus: '',
             },
 
             // ----------------------- <FGInformationPage /> information
@@ -86,23 +86,23 @@ class MainPage extends Component {
             // ----------------------- <CInformationFurtherPage /> information
             constantInformationFurther: {
                 address: '',
-                home_tel: '',
-                resident_tel: '',
-                admissionStartDate: '',
+                telephoneNumber: '',
+                phoneNumber: '',
+                reservationDate: '',
                 admissionEndDate: '',
             },
 
             // ----------------------- <FGInformationFurtherPage /> information
             familyGuestInformationFurther: {
                 address: '',
-                home_tel: '',
-                resident_tel: '',
+                telephoneNumber: '',
+                phoneNumber: '',
             },
             // ----------------------- <OGInformationFurtherPage /> information
             otherGuestInformationFurther: {
                 address: '',
-                home_tel: '',
-                resident_tel: '',
+                telephoneNumber: '',
+                phoneNumber: '',
             },
             //##############################################################################
 
@@ -110,15 +110,15 @@ class MainPage extends Component {
             //############################################################################## third page
             // ----------------------- <CInformationFamilyPage /> information
             constantInformationFamily: {
-                firstPerson_FullName : '',
-                firstPerson_PhoneNumber : '',
-                firstPerson_FatherName : '',
-                firstPerson_relationshipWithResident : 'father', // default value (first option)
+                firstPersonFullName : '',
+                firstPersonPhoneNumber : '',
+                firstPersonFatherName : '',
+                firstPersonRelationshipWithResident : 'father', // default value (first option)
 
-                secondPerson_FullName : '',
-                secondPerson_PhoneNumber : '',
-                secondPerson_FatherName : '',
-                secondPerson_relationshipWithResident : 'father', // default value (first option)
+                secondPersonFullName : '',
+                secondPersonPhoneNumber : '',
+                secondPersonFatherName : '',
+                secondPersonRelationshipWithResident : 'father', // default value (first option)
             },
             // ----------------------- <FGIInformationFamilyPage /> information
             familyGuestInformationFamily: {
@@ -144,6 +144,20 @@ class MainPage extends Component {
                 secondPerson_FatherName : '',
                 secondPerson_relationshipWithResident : 'father', // default value (first option)
             },
+            //##############################################################################
+
+            //############################################################################## fourth page
+            constantUploadPage:[
+
+            ],
+
+            familyGuestUploadPage: [
+
+            ],
+
+            otherGuestUploadPage: [
+
+            ],
             //##############################################################################
 
         },
@@ -276,7 +290,6 @@ class MainPage extends Component {
             },
             //##############################################################################
         },
-
     }
     render() {
         return (
@@ -317,14 +330,23 @@ class MainPage extends Component {
                         otherGuestInformationFamilyValidation: this.state.specificValidations.otherGuestInformationFamilyValidation,
 
                         specificValidations : this.state.specificValidations,
+
+                        constantUploadPage: this.state.fields.constantUploadPage, // UploadPage
+                        familyGuestUploadPage: this.state.fields.familyGuestUploadPage, // UploadPage
+                        otherGuestUploadPage: this.state.fields.otherGuestUploadPage, // UploadPage
+
                         handleTypeofResident: this.handleTypeofResident,
                         handleUnitNumber: this.handleUnitNumber,
                         handlePersonId : this.handlePersonId,
                         handleFields: this.handleFields,
                         handleDates: this.handleDates,
                         handleValidations: this.handleValidations,
-                        handleSpecificValidations: this.handleSpecificValidations,}}
+                        handleSpecificValidations: this.handleSpecificValidations,
+                        handleUploadedFile : this.handleUploadedFile,
+                        handleDeleteUploadedFile: this.handleDeleteUploadedFile
+                    }}
                     >
+
                         <Routes>
                             <Route path="/" element={(<Home />)} />
                             <Route path="/booking" element={(<FloorAndUnit />)} />
@@ -344,6 +366,22 @@ class MainPage extends Component {
                 </div>
             </>
         );
+    }
+
+    handleUploadedFile = (residentTypeString, name, fileId) => {
+        let updatedFiles = {...this.state.fields};
+        let tmp = {
+            name : name,
+            fileId : fileId,
+        }
+        updatedFiles[residentTypeString].push(tmp);
+        this.setState({fields:updatedFiles});
+    }
+
+    handleDeleteUploadedFile = (residentTypeString,fileId) =>{
+        let updatedFiles = {...this.state.fields};
+        updatedFiles[residentTypeString] = updatedFiles[residentTypeString].filter(f => f.fileId !== fileId);
+        this.setState({fields:updatedFiles});
     }
 
     handleTypeofResident = (type) => {
@@ -367,7 +405,9 @@ class MainPage extends Component {
 
     handleDates = (value, residentType, field) => {
         let newFields = {...this.state.fields};
-        newFields[residentType][field] = value
+        let date = new Date(value._d);
+        let convertDate = date.getFullYear() + "/" + date.getMonth() + "/" + date.getDate() + " " + "00:" + "00:" + "00";
+        newFields[residentType][field] = convertDate
         this.setState({ fields: newFields });
     }
 

@@ -92,7 +92,6 @@ class CInformationPage extends Component {
                             <DatePicker calendarStyles={this.state.calStyles}
                                         inputFormat="jYYYY/jM/jD"
                                         className={`input form-control ${this.context.constantInformationPageValidation.birthDate_requiredReg === false ? "is-invalid" : ""}`}
-                                        value={this.context.constantInformationPage.birthDate}
                                         onChange={(value) =>  {this.context.handleDates(value, 'constantInformationPage', 'birthDate')}}
                             />
 
@@ -233,7 +232,7 @@ class CInformationPage extends Component {
                                         <textarea
                                             className={`input form-control ${(this.context.constantInformationPageValidation.healthDescription_requiredReg === false &&
                                                 this.context.constantInformationPage.health === 'true') ? "is-invalid" : ""}`}
-                                            value={this.context.constantInformationPage.healthDescription}
+                                            value={this.context.constantInformationPage.healthyStatus}
                                             onChange={(e) =>  this.context.handleFields(e, 'constantInformationPage', 'healthDescription')}
                                             placeholder=" "
                                         />

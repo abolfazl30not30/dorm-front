@@ -1194,6 +1194,7 @@ class ProfilePage extends Component {
                         'date': date,
                         'description': description
                     }
+
                     const newReports = this.state.report.concat(result);
                     this.setState({report: newReports});
                     this.setState({show: false});

@@ -67,7 +67,6 @@ class OGInformationPage extends Component {
                             <DatePicker calendarStyles={this.state.calStyles}
                                         inputFormat="jYYYY/jM/jD"
                                         className={`input form-control ${this.context.otherGuestInformationValidation.admissionStartDate_requiredReg === false ? "is-invalid" : ""}`}
-                                        value={this.context.otherGuestInformation.admissionStartDate}
                                         onChange={(value) =>  this.context.handleDates(value, 'otherGuestInformation', 'admissionStartDate')}
                             />
                             <label className="placeholder" style={this.context.otherGuestInformation.admissionStartDate !== "" ? ({display:"none"}):
@@ -88,7 +87,6 @@ class OGInformationPage extends Component {
                             <DatePicker calendarStyles={this.state.calStyles}
                                         inputFormat="jYYYY/jM/jD"
                                         className={`input form-control ${this.context.otherGuestInformationValidation.admissionEndDate_requiredReg === false ? "is-invalid" : ""}`}
-                                        value={this.context.otherGuestInformation.admissionEndDate}
                                         onChange={(value) =>  this.context.handleDates(value, 'otherGuestInformation', 'admissionEndDate')}
                             />
                             <label className="placeholder" style={this.context.otherGuestInformation.admissionEndDate !== "" ? ({display:"none"}):
@@ -109,7 +107,6 @@ class OGInformationPage extends Component {
                             <DatePicker calendarStyles={this.state.calStyles}
                                         inputFormat="jYYYY/jM/jD"
                                         className={`input form-control`}
-                                        value={this.context.otherGuestInformation.paymentDate}
                                         onChange={(value) =>  this.context.handleDates(value, 'otherGuestInformation', 'paymentDate')}
                             />
                             <label className="placeholder" style={this.context.otherGuestInformation.paymentDate !== "" ? ({display:"none"}):
@@ -147,7 +144,6 @@ class OGInformationPage extends Component {
                             <DatePicker calendarStyles={this.state.calStyles}
                                         inputFormat="jYYYY/jM/jD"
                                         className={`input form-control`}
-                                        value={this.context.otherGuestInformation.birthDate}
                                         onChange={(value) =>  this.context.handleDates(value, 'otherGuestInformation', 'birthDate')}
                             />
                             <label className="placeholder" style={this.context.otherGuestInformation.birthDate !== "" ? ({display:"none"}):

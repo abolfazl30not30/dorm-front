@@ -74,7 +74,6 @@ class FGInformationPage extends Component {
                             <DatePicker calendarStyles={this.state.calStyles}
                                         inputFormat="jYYYY/jM/jD"
                                         className="input form-control"
-                                        value={this.context.familyGuestInformation.birthDate}
                                         onChange={(value) =>  this.context.handleDates(value, 'familyGuestInformation', 'birthDate')}
                             />
                             <label className="placeholder" style={this.context.familyGuestInformation.birthDate !== "" ? ({display:"none"}):
@@ -84,7 +83,6 @@ class FGInformationPage extends Component {
                             <DatePicker calendarStyles={this.state.calStyles}
                                         inputFormat="jYYYY/jM/jD"
                                         className={`input form-control ${this.context.familyGuestInformationValidation.admissionStartDate_requiredReg === false ? "is-invalid" : ""}`}
-                                        value={this.context.familyGuestInformation.admissionStartDate}
                                         onChange={(value) =>  this.context.handleDates(value, 'familyGuestInformation', 'admissionStartDate')}
                             />
                             <label className="placeholder" style={this.context.familyGuestInformation.admissionStartDate !== "" ? ({display:"none"}):
@@ -106,7 +104,6 @@ class FGInformationPage extends Component {
                             <DatePicker calendarStyles={this.state.calStyles}
                                         inputFormat="jYYYY/jM/jD"
                                         className={`input form-control ${this.context.familyGuestInformationValidation.admissionEndDate_requiredReg === false ? "is-invalid" : ""}`}
-                                        value={this.context.familyGuestInformation.admissionEndDate}
                                         onChange={(value) =>  this.context.handleDates(value, 'familyGuestInformation', 'admissionEndDate')}
                             />
                             <label className="placeholder" style={this.context.familyGuestInformation.admissionEndDate !== "" ? ({display:"none"}):
@@ -127,7 +124,6 @@ class FGInformationPage extends Component {
                             <DatePicker calendarStyles={this.state.calStyles}
                                         inputFormat="jYYYY/jM/jD"
                                         className={`input form-control ${this.context.familyGuestInformationValidation.paymentDate_requiredReg === false ? "is-invalid" : ""}`}
-                                        value={this.context.familyGuestInformation.paymentDate}
                                         onChange={(value) =>  this.context.handleDates(value, 'familyGuestInformation', 'paymentDate')}
                             />
                             <label className="placeholder" style={this.context.familyGuestInformation.paymentDate !== "" ? ({display:"none"}):
