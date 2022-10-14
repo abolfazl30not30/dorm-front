@@ -11,6 +11,8 @@ import MainRegister from './pages/Register/MainRegister';
 import ProfilePage from './pages/People/ProfilePage';
 import SearchAccount from './pages/People/SearchAccount';
 import PaymentPage from './pages/paymentPage/PaymentPage';
+import EventPage from './pages/EventPage/EventPage'
+import RequestPage from './pages/RequestPage/RequestPage'
 class MainPage extends Component {
     state = {
 
@@ -334,6 +336,9 @@ class MainPage extends Component {
                             <Route path='/payment' element={(<PaymentPage />)} />
                             <Route path="/Register" element={(<MainRegister />)} />
                             <Route path="/edit" element={(<EditFloorAndUnit />)} />
+                            <Route path="/Calender" element={(<EventPage />)} />
+                            <Route path="/Request" element={(<RequestPage />)} />
+                            <Route path="/" element={(<EditFloorAndUnit />)} />
                         </Routes>
                     </BuildingContext.Provider>
                 </div>

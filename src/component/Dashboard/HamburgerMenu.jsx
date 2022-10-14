@@ -60,6 +60,18 @@ class HamburgerMenu extends Component {
                         </Link>
                     </li>
                     <li className='sidenav-item'>
+                        <Link to="/Calender" className='sidenav-link' onClick={window.innerWidth <= 768 && this.context.handleSidebar}>
+                            <i className="bi bi-file-earmark-text" />
+                            تقويم
+                        </Link>
+                    </li>
+                    <li className='sidenav-item'>
+                        <Link to="/Request" className='sidenav-link' onClick={window.innerWidth <= 768 && this.context.handleSidebar}>
+                            <i className="bi bi-person-circle" />
+                            درخواست
+                        </Link>
+                    </li>
+                    <li className='sidenav-item'>
                         <Link to="/" className='sidenav-link' onClick={window.innerWidth <= 768 && this.context.handleSidebar}>
                             <i className="bi bi-file-earmark-text" />
                             ملزومات اداری
