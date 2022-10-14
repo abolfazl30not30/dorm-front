@@ -3,31 +3,12 @@ import '../../../../style/contacts.css'
 import {BsSearch} from "react-icons/bs";
 import {AiOutlineClose, AiOutlinePlus} from "react-icons/ai";
 import {Modal} from 'react-bootstrap'
+import Form from "react-bootstrap/Form";
+import {BiSearch} from "react-icons/bi";
 
 class contacts extends Component {
     state = {
-        contacts: [
-            {
-                name: 'میلاد زارع',
-                telephoneNumbers: ['09335137958'],
-                mobileNumbers: ['09335137958']
-            },
-            {
-                name: 'میلاد زارع',
-                telephoneNumbers: ['09335137958'],
-                mobileNumbers: ['09335137958']
-            },
-            {
-                name: 'میلاد زارع',
-                telephoneNumbers: ['09335137958'],
-                mobileNumbers: ['09335137958']
-            },
-            {
-                name: 'میلاد زارع',
-                telephoneNumbers: ['09335137958'],
-                mobileNumbers: ['09335137958']
-            }
-        ],
+        contacts: [],
         show: false,
         inputTelephone: [],
         inputMobile: [],
@@ -36,20 +17,34 @@ class contacts extends Component {
         mobileNumbers: []
     }
 
+    async componentDidMount() {
+         const response = await fetch('http://api.saadatportal.com/api/v1/phoneBook').then((response) => response.json())
+             .then((data) => this.setState({contacts : data}));
+    }
+
     render() {
         return (
             <>
                 <div className="contact">
                     <div className="title">دفترچه تلفن</div>
-                    <div className="d-flex flex-row justify-content-between">
-                        <div className="d-flex flex-row">
-                            <input type='text' className='form-control input-search' placeholder='جستجو'/>
-                            <button className='btn'><BsSearch fontSize="25px"/></button>
+                    <button className='btn btn-add my-4' onClick={() => {
+                        this.handleShow()
+                    }}><AiOutlinePlus className='ms-2'/>افزودن مخاطب
+                    </button>
+                    <div className="row align-items-center">
+                        <div className="col-md-1 col-sm-2 px-0"><label>براساس:</label></div>
+                        <div className="col-md-3 col-sm-6 px-0" style={{paddingLeft: "0"}}>
+                            <Form.Select aria-label="Default select example" style={{height:"50px",fontSize:"14px"}} value={this.state.searchType} onChange={(e)=>{this.setState({searchType:e.target.value})}}>
+                                <option value="fullName">نام و نام خانوادگی</option>
+                                <option value="nationalCode">شماره همراه</option>
+                                <option value="phoneNumber"> تلفن ثابت</option>
+                            </Form.Select>
                         </div>
-                        <button className='btn btn-add' onClick={() => {
-                            this.handleShow()
-                        }}><AiOutlinePlus className='ms-2'/>افزودن
-                        </button>
+                        <div className="input-group-register col-md-7 col-sm-11 px-0 d-flex" style={{paddingRight: "0"}}>
+                            <input type="text" id="inputSearch" className="input" placeholder="جسـتوجـو" style={{padding:"6px"}} onChange={(e)=>{this.handleSearchInput(e)}}/>
+                            <button className="btn outline-secondary"><BiSearch fontSize="25px" onClick={this.handleSearchBtn}/>
+                            </button>
+                        </div>
                     </div>
                     <div className="table-box">
                         <table className='table'>
@@ -65,8 +60,8 @@ class contacts extends Component {
                                 this.state.contacts.map((i) => (
                                     <tr>
                                         <td>{i.name}</td>
-                                        <td>{i.telephoneNumbers}</td>
-                                        <td>{i.mobileNumbers}</td>
+                                        <td >{i.telephoneNumbers.map((num)=>(<div className="mb-2">{num}</div>))}</td>
+                                        <td>{i.mobileNumbers.map((num)=>(<div className="mb-2">{num}</div>))}</td>
                                     </tr>
                                 ))
                             }
@@ -200,13 +195,27 @@ class contacts extends Component {
         this.setState({inputMobile: updateInputsMobile});
     }
 
-    handleRecordContact = () => {
+    handleRecordContact = async () => {
+
         const newContact = {
             name: this.state.name,
             telephoneNumbers : this.state.telephoneNumbers,
             mobileNumbers: this.state.mobileNumbers
         }
-        console.log(newContact)
+
+        const rawResponse = await fetch('http://api.saadatportal.com/api/v1/phoneBook', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(newContact)
+        });
+
+        const response = await fetch('http://api.saadatportal.com/api/v1/phoneBook').then((response) => response.json())
+            .then((data) => this.setState({contacts : data}));
+
+        this.setState({show: false})
     }
 }
 
