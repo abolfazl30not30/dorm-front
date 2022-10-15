@@ -68,19 +68,13 @@ class HamburgerMenu extends Component {
                     <li className='sidenav-item'>
                         <Link to="/PaymentHistory" className='sidenav-link' onClick={window.innerWidth <= 768 && this.context.handleSidebar}>
                             <i className="bi bi-journal-plus"></i>
-                            مخاطبین
+                            صورتحساب
                         </Link>
                     </li>
                     <li className='sidenav-item'>
                         <Link to="/contacts" className='sidenav-link' onClick={window.innerWidth <= 768 && this.context.handleSidebar}>
                             <i className="bi bi-journal-plus"></i>
                             مخاطبین
-                        </Link>
-                    </li>
-                    <li className='sidenav-item'>
-                        <Link to="/" className='sidenav-link' onClick={window.innerWidth <= 768 && this.context.handleSidebar}>
-                            <i className="bi bi-hand-thumbs-up" />
-                            باشگاه
                         </Link>
                     </li>
                     <li className='sidenav-item'>
@@ -94,19 +88,7 @@ class HamburgerMenu extends Component {
                             <i className="bi bi-person-circle" />
                             کادر مدیریت
                         </Link>
-                    </li>
-                    <li className='sidenav-item'>
-                        <Link to="/" className='sidenav-link' onClick={window.innerWidth <= 768 && this.context.handleSidebar}>
-                            <i className="bi bi-gear" />
-                            تنظیمات
-                        </Link>
-                    </li>
-                    <li className='sidenav-item'>
-                        <Link to="/" className='sidenav-link' onClick={window.innerWidth <= 768 && this.context.handleSidebar}>
-                            <i className="bi bi-telephone" />
-                            تماس با ما
-                        </Link>
-                    </li>
+                    </li>>
                 </ul>
             </div>
         );

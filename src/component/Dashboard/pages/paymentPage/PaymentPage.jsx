@@ -71,217 +71,219 @@ class PaymentPage extends Component {
     render() {
         return (
             <>
-                <div className="back-btn">
-                    <Link to="/">
-                        بازگشت
-                        <i className="bi bi-caret-left-fill"/>
-                    </Link>
-                </div>
-                <div className="text">
-                    <h4>ثبت فاکتور</h4>
-                </div>
-
-                <div className='first-section row'>
-                    <div className='col-4'>
-                        <label htmlFor="price">مبلغ :</label>
-                        <div className="row" style={{marginTop: "20px"}}>
-                            <div className='col-3 m-0 p-0'>
-                                <select className='form-select' style={{height: "50px"}} value={this.state.priceType}
-                                        onChange={(e) => {
-                                            this.handlePriceType(e)
-                                        }}>
-                                    <option value="IRR">ریال</option>
-                                    <option value="USD">دلار</option>
-                                </select>
-                            </div>
-                            <div className='form-group col-9 m-0 p-0'>
-                                <input id="price"
-                                       type='text'
-                                       value={this.state.price}
-                                       className={`input form-control ${(this.state.Validations.price_requiredReg && this.state.Validations.price_numberReg) === false ? "is-invalid" : ""}`}
-                                       style={{height: "50px", width: "90%"}} onChange={(e) => {
-                                    this.handlePriceInput(e)
-                                }}/>
-
-                                {
-                                    this.state.Validations.price_requiredReg === false
-                                        ? <small
-                                            className="text-danger">این فیلد الزامی است!</small>
-                                        : <div/>
-                                }
-
-                                {
-                                    (this.state.Validations.price_numberReg === false && this.state.Validations.price_requiredReg === true)
-                                        ? <small
-                                            className="text-danger">عدد وارد کنید!</small>
-                                        : <div/>
-                                }
-
-                                {/*<TextField id="filled-basic" label="قیمت" variant="filled" />*/}
-                            </div>
-                        </div>
+                <div>
+                    <div className="back-btn">
+                        <Link to="/">
+                            بازگشت
+                            <i className="bi bi-caret-left-fill"/>
+                        </Link>
                     </div>
-                    <div className='col-8'>
-                        <label style={{marginRight: "33px"}}>نوع: </label>
-                        <div style={{width: '100%', marginRight: "16px"}}>
-                            <Accordion defaultActiveKey="0"
-                                       style={{backgroundColor: this.state.Validations.selectedTypeBoolean ? '' : 'rgba(255, 0, 0, 0.4)'}}
-                            >
-                                <Accordion.Item eventKey="0">
-                                    <Accordion.Header>
-                                        {this.state.selectedType}&nbsp;
-                                    </Accordion.Header>
-                                    <Accordion.Body>
-                                        <div>
-                                            <div className=' row flex-wrap'>
-                                                {
-                                                    this.state.Validations.selectedTypeBoolean // ifSelected condition
-                                                        ? null
-                                                        : <div className="d-flex justify-content-center mb-3">
-                                                            <small className="text-danger">یکی از فیلدهای زیر را اتخاب
-                                                                کنید!</small>
-                                                        </div>
-                                                }
-                                                <ToggleButtonGroup
-                                                    orientation="vertical"
-                                                    value={this.state.selectedType}
-                                                    exclusive
-                                                    onChange={this.handleAlignment}
-                                                    aria-label="text alignment"
-                                                >
-                                                    {
-                                                        this.state.choices.map((c) =>
-                                                            <ToggleButton value={c.name} className='col'>
-                                                                {c.name}
-                                                            </ToggleButton>
-                                                        )
-                                                    }
-                                                    {
-                                                        this.state.tempChoices.map((type, i) =>
-                                                            <ToggleButton value={type} className='col'
-                                                                          style={{display: "block"}}>
-                                                                <div className="d-flex justify-content-center"
-                                                                     style={{position: "relative"}}>
-                                                                    <div className="close-btn-div">
-                                                                        <button className="close-btn" onClick={() => {
-                                                                            this.handleDeleteType(i)
-                                                                        }}><AiFillCloseCircle color="#F1416C"/></button>
-                                                                    </div>
-                                                                    <div className="">{type}</div>
-                                                                </div>
-                                                            </ToggleButton>
-                                                        )
-                                                    }
-                                                    <button value="add"
-                                                            onClick={() => {
-                                                                this.handleOpenType()
-                                                            }}
-                                                            className='col addTypeBtn'
-                                                    >
-                                                        <IoIosAddCircleOutline size={25}/>
-                                                    </button>
-                                                </ToggleButtonGroup>
-                                            </div>
-                                        </div>
-                                    </Accordion.Body>
-                                </Accordion.Item>
-                            </Accordion>
-                        </div>
+                    <div className="text">
+                        <h4>ثبت فاکتور</h4>
                     </div>
-                </div>
-                <div className='second-section d-flex flex-wrap justify-content-start mr-3 row' style={{height: '50%'}}>
-                    <div className='col-4 mt-5 mb-3 date-container'>
-                        <label className='mb-3'>تاریخ: </label>
-                        <DatePicker calendarStyles={this.state.styles}
-                                    value={this.state.dataPicker}
-                                    className={`input form-control ${this.state.Validations.date_requiredReg === false ? "is-invalid" : ""}`}
-                                    onChange={value => {
-                                        this.handleDateInput(value)
-                                    }}
-                        />
 
-                        {
-                            this.state.Validations.date_requiredReg === false
-                                ? <small
-                                    className="text-danger">این فیلد الزامی است!</small>
-                                : <div/>
-                        }
-
-                    </div>
-                    <div className='col-8'>
-                        <Form>
-                            <Form.Group className="mb-3 mt-5" controlId="exampleForm.ControlTextarea1">
-                                <Form.Label style={{marginRight: '30px'}}>توضیحات: </Form.Label>
-                                <Form.Control as="textarea" rows={8} value={this.state.description}
-                                              style={{marginRight: '30px', width: '95%'}} onChange={(e) => {
-                                    this.handleDescriptionInput(e)
-                                }}/>
-                            </Form.Group>
-                        </Form>
-                    </div>
-                </div>
-
-                <div className='third-section'>
-                    <label htmlFor="formFileLg" className="form-label">آپلود فاکتور :</label>
-                    <div className="row">
-                        <div className="col-6">
-                            <input className="form-control form-control " id="formFileLg" type="file" onChange={(e) => {
-                                this.handleInputFile(e)
-                            }}/>
-                        </div>
-                        <div className="col-6">
-                            {this.state.isUpload && !this.state.hasError ? (
-                                <div className="file-container">
-                                    <button className="deleteBtn" onClick={this.handleDeleteFile}><MdDelete
-                                        fontSize="25px"/></button>
-                                    <div className="d-flex align-items-center">
-                                        <h6 className="mx-1">{this.state.fileName}</h6>
-                                        <RiFileUploadFill/>
-                                    </div>
+                    <div className='first-section row'>
+                        <div className='col-4'>
+                            <label htmlFor="price">مبلغ :</label>
+                            <div className="row" style={{marginTop: "20px"}}>
+                                <div className='col-3 m-0 p-0'>
+                                    <select className='form-select' style={{height: "50px"}} value={this.state.priceType}
+                                            onChange={(e) => {
+                                                this.handlePriceType(e)
+                                            }}>
+                                        <option value="IRR">ریال</option>
+                                        <option value="USD">دلار</option>
+                                    </select>
                                 </div>
-                            ) : (this.state.isLoading ? (
-                                    <div className="d-flex align-item-start">
-                                        <button className="uploadBtn" onClick={this.handleUpload}
-                                                disabled={this.state.isLoading}><MdCloudUpload fontSize="35px"/>
-                                        </button>
-                                        <ReactLoading type="cylon" color="#bdc3c7" className="loading" height={1}
-                                                      width={45}/>
-                                    </div>
-                                ) : (
-                                    <button className="uploadBtn" onClick={this.handleUpload}
-                                            disabled={this.state.isLoading}><MdCloudUpload fontSize="35px"/></button>
-                                )
-                            )}
+                                <div className='form-group col-9 m-0 p-0'>
+                                    <input id="price"
+                                           type='text'
+                                           value={this.state.price}
+                                           className={`input form-control ${(this.state.Validations.price_requiredReg && this.state.Validations.price_numberReg) === false ? "is-invalid" : ""}`}
+                                           style={{height: "50px", width: "90%"}} onChange={(e) => {
+                                        this.handlePriceInput(e)
+                                    }}/>
 
+                                    {
+                                        this.state.Validations.price_requiredReg === false
+                                            ? <small
+                                                className="text-danger">این فیلد الزامی است!</small>
+                                            : <div/>
+                                    }
+
+                                    {
+                                        (this.state.Validations.price_numberReg === false && this.state.Validations.price_requiredReg === true)
+                                            ? <small
+                                                className="text-danger">عدد وارد کنید!</small>
+                                            : <div/>
+                                    }
+
+                                    {/*<TextField id="filled-basic" label="قیمت" variant="filled" />*/}
+                                </div>
+                            </div>
+                        </div>
+                        <div className='col-8'>
+                            <label style={{marginRight: "33px"}}>نوع: </label>
+                            <div style={{width: '100%', marginRight: "16px"}}>
+                                <Accordion defaultActiveKey="0"
+                                           style={{backgroundColor: this.state.Validations.selectedTypeBoolean ? '' : 'rgba(255, 0, 0, 0.4)'}}
+                                >
+                                    <Accordion.Item eventKey="0">
+                                        <Accordion.Header>
+                                            {this.state.selectedType}&nbsp;
+                                        </Accordion.Header>
+                                        <Accordion.Body>
+                                            <div>
+                                                <div className=' row flex-wrap'>
+                                                    {
+                                                        this.state.Validations.selectedTypeBoolean // ifSelected condition
+                                                            ? null
+                                                            : <div className="d-flex justify-content-center mb-3">
+                                                                <small className="text-danger">یکی از فیلدهای زیر را اتخاب
+                                                                    کنید!</small>
+                                                            </div>
+                                                    }
+                                                    <ToggleButtonGroup
+                                                        orientation="vertical"
+                                                        value={this.state.selectedType}
+                                                        exclusive
+                                                        onChange={this.handleAlignment}
+                                                        aria-label="text alignment"
+                                                    >
+                                                        {
+                                                            this.state.choices.map((c) =>
+                                                                <ToggleButton value={c.name} className='col'>
+                                                                    {c.name}
+                                                                </ToggleButton>
+                                                            )
+                                                        }
+                                                        {
+                                                            this.state.tempChoices.map((type, i) =>
+                                                                <ToggleButton value={type} className='col'
+                                                                              style={{display: "block"}}>
+                                                                    <div className="d-flex justify-content-center"
+                                                                         style={{position: "relative"}}>
+                                                                        <div className="close-btn-div">
+                                                                            <button className="close-btn" onClick={() => {
+                                                                                this.handleDeleteType(i)
+                                                                            }}><AiFillCloseCircle color="#F1416C"/></button>
+                                                                        </div>
+                                                                        <div className="">{type}</div>
+                                                                    </div>
+                                                                </ToggleButton>
+                                                            )
+                                                        }
+                                                        <button value="add"
+                                                                onClick={() => {
+                                                                    this.handleOpenType()
+                                                                }}
+                                                                className='col addTypeBtn'
+                                                        >
+                                                            <IoIosAddCircleOutline size={25}/>
+                                                        </button>
+                                                    </ToggleButtonGroup>
+                                                </div>
+                                            </div>
+                                        </Accordion.Body>
+                                    </Accordion.Item>
+                                </Accordion>
+                            </div>
                         </div>
                     </div>
-                    <div>
-                        {
-                            this.state.isUpload && (
-                                (this.state.hasError) ? (
-                                    <Alert variant='danger' className="mt-3">
-                                        فایل آپلود نشد
-                                    </Alert>
-                                ) : (
-                                    <Alert variant='success' className="mt-3">
-                                        فایل با موفقیت آپلود شد
-                                    </Alert>
-                                )
-                            )
-                        }
+                    <div className='second-section d-flex flex-wrap justify-content-start mr-3 row' style={{height: '50%'}}>
+                        <div className='col-4 mt-5 mb-3 date-container'>
+                            <label className='mb-3'>تاریخ: </label>
+                            <DatePicker calendarStyles={this.state.styles}
+                                        value={this.state.dataPicker}
+                                        className={`input form-control ${this.state.Validations.date_requiredReg === false ? "is-invalid" : ""}`}
+                                        onChange={value => {
+                                            this.handleDateInput(value)
+                                        }}
+                            />
+
+                            {
+                                this.state.Validations.date_requiredReg === false
+                                    ? <small
+                                        className="text-danger">این فیلد الزامی است!</small>
+                                    : <div/>
+                            }
+
+                        </div>
+                        <div className='col-8'>
+                            <Form>
+                                <Form.Group className="mb-3 mt-5" controlId="exampleForm.ControlTextarea1">
+                                    <Form.Label style={{marginRight: '30px'}}>توضیحات: </Form.Label>
+                                    <Form.Control as="textarea" rows={8} value={this.state.description}
+                                                  style={{marginRight: '30px', width: '95%'}} onChange={(e) => {
+                                        this.handleDescriptionInput(e)
+                                    }}/>
+                                </Form.Group>
+                            </Form>
+                        </div>
                     </div>
 
+                    <div className='third-section'>
+                        <label htmlFor="formFileLg" className="form-label">آپلود فاکتور :</label>
+                        <div className="row">
+                            <div className="col-6">
+                                <input className="form-control form-control " id="formFileLg" type="file" onChange={(e) => {
+                                    this.handleInputFile(e)
+                                }}/>
+                            </div>
+                            <div className="col-6">
+                                {this.state.isUpload && !this.state.hasError ? (
+                                    <div className="file-container">
+                                        <button className="deleteBtn" onClick={this.handleDeleteFile}><MdDelete
+                                            fontSize="25px"/></button>
+                                        <div className="d-flex align-items-center">
+                                            <h6 className="mx-1">{this.state.fileName}</h6>
+                                            <RiFileUploadFill/>
+                                        </div>
+                                    </div>
+                                ) : (this.state.isLoading ? (
+                                        <div className="d-flex align-item-start">
+                                            <button className="uploadBtn" onClick={this.handleUpload}
+                                                    disabled={this.state.isLoading}><MdCloudUpload fontSize="35px"/>
+                                            </button>
+                                            <ReactLoading type="cylon" color="#bdc3c7" className="loading" height={1}
+                                                          width={45}/>
+                                        </div>
+                                    ) : (
+                                        <button className="uploadBtn" onClick={this.handleUpload}
+                                                disabled={this.state.isLoading}><MdCloudUpload fontSize="35px"/></button>
+                                    )
+                                )}
 
-                </div>
+                            </div>
+                        </div>
+                        <div>
+                            {
+                                this.state.isUpload && (
+                                    (this.state.hasError) ? (
+                                        <Alert variant='danger' className="mt-3">
+                                            فایل آپلود نشد
+                                        </Alert>
+                                    ) : (
+                                        <Alert variant='success' className="mt-3">
+                                            فایل با موفقیت آپلود شد
+                                        </Alert>
+                                    )
+                                )
+                            }
+                        </div>
 
-                <div className='fourth-section mt-5 mb-3 d-flex justify-content-center'>
-                    <button type="button"
-                            className="btn btn-success "
-                            style={{width: '50%'}}
-                            onClick={this.handleSubmitPayment}
-                    >
-                        ثبت
-                    </button>
+
+                    </div>
+
+                    <div className='fourth-section mt-5 mb-3 d-flex justify-content-center'>
+                        <button type="button"
+                                className="btn btn-success "
+                                style={{width: '50%'}}
+                                onClick={this.handleSubmitPayment}
+                        >
+                            ثبت
+                        </button>
+                    </div>
                 </div>
                 <Modal centered show={this.state.showType} onHide={() => {
                     this.handleCloseType()
