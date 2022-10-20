@@ -67,3 +67,6 @@
     font-size: 16px;
     cursor: pointer;
 }
+.tether-element {
+    z-index: 100000;
+}
