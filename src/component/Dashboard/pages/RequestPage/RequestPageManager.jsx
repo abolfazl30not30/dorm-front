@@ -4,21 +4,23 @@ import {Modal} from "react-bootstrap";
 import Accordion from "react-bootstrap/Accordion";
 import ToggleButton from "@mui/material/ToggleButton";
 import Button from 'react-bootstrap/Button';
-import Overlay from 'react-bootstrap/Overlay';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormControl from '@mui/material/FormControl';
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import {IoIosAddCircleOutline} from "react-icons/io";
-import {IoIosSearch} from "react-icons/io";
 import {TiTimes} from "react-icons/ti";
 import {TiTick} from "react-icons/ti";
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
+import Form from "react-bootstrap/Form";
+import {BiSearch} from "react-icons/bi";
 
 import '../../../../style/registerPage.css';
 import '../../../../style/paymentPage.css';
 import '../../../../style/searchAccount.css';
 import "../../../../style/registerPage.css";
-import Form from "react-bootstrap/Form";
-import {BiSearch} from "react-icons/bi";
 
 class RequestPage extends Component {
 
@@ -29,6 +31,10 @@ class RequestPage extends Component {
     }
 
     state = {
+        tmpRequest: '',
+
+        showStatusModal: false,
+
         searchBase: 'name',
         searchContent: '',
 
@@ -58,13 +64,26 @@ class RequestPage extends Component {
         },
 
         requests : [
-            // {
-            //     topic: '',
-            //     type: '',
-            //     name: '',
-            //     reason: '',
-            //     accepted: false, // default
-            // }
+            {
+                topic: '',
+                type: '',
+                name: '',
+                reason: '',
+                accepted: 'null', // default
+                // ifFalseTopic: 'ifFalseTopic',
+                // ifFalseReason: 'ifFalseReason',
+                // ifFalseType: 'ifFalseType'
+            },
+            {
+                topic: '',
+                type: '',
+                name: '',
+                reason: '',
+                accepted: 'true', // default
+                // ifFalseTopic: 'ifFalseTopic',
+                // ifFalseReason: 'ifFalseReason',
+                // ifFalseType: 'ifFalseType'
+            }
         ],
     }
 
@@ -80,7 +99,7 @@ class RequestPage extends Component {
 
                 <div>
                     <h4>
-                        درخواست
+                        درخواست (مدیریت)
                     </h4>
                 </div>
 
@@ -133,12 +152,14 @@ class RequestPage extends Component {
 
                 <div className={'row'}>
                     {
-                        this.state.requests.map(request => (
-                            <>
+                        this.state.requests.map((request, index, curr) => (
+                            <div key={index}>
                                 <div className={'account-found mb-3 shadow d-flex row'} style={{height: '200px'}}>
+
                                     {/*<div className={'d-flex justify-content-left col-1'} style={{backgroundColor: 'rgb(247, 247, 247)'}}>*/}
                                     {/*    <button><AiFillCloseCircle color="#F1416C" /></button>*/}
                                     {/*</div>*/}
+
                                     <div className={'row'}>
                                         <div className={'col'}>
                                             <label> عنوان :</label>
@@ -155,16 +176,26 @@ class RequestPage extends Component {
                                             </div>
                                             <div className={'col row'}>
                                                 <label className={'col-4'}> وضعیت :</label>
+
                                                 {
-                                                    request.accepted !== null
-                                                    ? (request.accepted === true
-                                                        ? <Button disabled={true}
-                                                                  variant="success"
-                                                                  className={'col-8'}
-                                                                  style={{width: '30%'}}>
+                                                    request.accepted !== 'null'
+                                                        ? (request.accepted === 'true'
+                                                            ? <Button
+                                                                      variant="success"
+                                                                      className={'col-8'}
+                                                                      style={{width: '30%'}}
+                                                                      onClick={() => {
+                                                                          this.setState({showStatusModal: 'true'});
+                                                                          this.setState({tmpRequest : request})
+                                                                          // console.log(request)
+
+                                                                          // console.log(this.state.requests.indexOf(request))
+                                                                          // console.log(request.accepted);
+                                                                      }}
+                                                            >
                                                                 قبول شده
                                                             </Button>
-                                                        : <>
+                                                            : <>
                                                                 <OverlayTrigger
                                                                     placement="bottom"
                                                                     delay={{ show: 250, hide: 400 }}
@@ -189,16 +220,156 @@ class RequestPage extends Component {
                                                                 >
                                                                     <Button variant="danger"
                                                                             className={'col-8'}
-                                                                            style={{width: '30%'}}>رد شده</Button>
+                                                                            style={{width: '30%'}}
+                                                                            onClick={() => {
+                                                                                this.setState({showStatusModal: 'true'});
+                                                                                this.setState({tmpRequest : request})
+                                                                                // console.log(request)
+
+                                                                                // console.log(this.state.requests.indexOf(request))
+                                                                                // console.log(request.accepted);
+                                                                            }}
+                                                                    >
+                                                                        رد شده
+                                                                    </Button>
                                                                 </OverlayTrigger>
                                                             </>)
-                                                            : <Button disabled={true}
-                                                                      variant="secondary"
-                                                                      className={'col-8'}
-                                                                      style={{width: '30%'}}>
-                                                                تعیین نشده
-                                                             </Button>
+                                                        : <Button
+                                                                  variant="secondary"
+                                                                  className={'col-8'}
+                                                                  style={{width: '30%'}}
+                                                                  onClick={() => {
+                                                                      this.setState({showStatusModal: 'true'});
+                                                                      this.setState({tmpRequest : request})
+                                                                      // console.log(request)
+
+                                                                      // console.log(this.state.requests.indexOf(request))
+                                                                      // console.log(request.accepted);
+                                                                  }}
+                                                        >
+                                                            تعیین نشده
+                                                        </Button>
                                                 }
+
+                                                <Modal centered show={this.state.showStatusModal} onHide={() => {
+                                                    this.handleCloseType();
+
+                                                    // console.log(this.state.requests);
+                                                }}>
+                                                    <Modal.Header closeButton>
+                                                        <Modal.Title>تغییر وضعیت: </Modal.Title>
+                                                    </Modal.Header>
+
+                                                    <Modal.Body className="justify-content-center">
+                                                        <FormControl>
+
+                                                            <RadioGroup
+                                                                row
+                                                                aria-labelledby="demo-row-radio-buttons-group-label"
+                                                                name="row-radio-buttons-group"
+                                                                value={this.state.tmpRequest.accepted}
+                                                                // onClick={() => console.log(request.accepted)}
+                                                                onChange={(value) => {
+                                                                    let updatedRequests = [...this.state.requests];
+
+                                                                    for (const updatedRequestsKey of updatedRequests) {
+                                                                        if (updatedRequestsKey === this.state.tmpRequest) {
+                                                                            updatedRequestsKey.accepted = value.target.value;
+                                                                            break;
+                                                                        }
+                                                                    }
+                                                                    // updatedRequests[index].accepted = value.target.value;
+                                                                    this.setState({requests : updatedRequests})
+
+                                                                    // console.log(this.state.requests.indexOf(request))
+
+                                                                    // console.log(this.state.requests[index])
+                                                                }}
+                                                            >
+
+                                                                <FormControlLabel labelPlacement="top" value="null" control={<Radio />} label="تعیین نشده" />
+                                                                <FormControlLabel labelPlacement="top" value="true" control={<Radio />} label="تایید شده" />
+                                                                <FormControlLabel labelPlacement="top" value="false" control={<Radio />} label="تایید نشده" />
+
+                                                            </RadioGroup>
+                                                        </FormControl>
+
+
+                                                        <div style={{display: this.state.tmpRequest.accepted !== 'false' ? 'none' : 'block'}}>
+                                                            <div className={'input-group-register'}>
+                                                                <input
+                                                                    className={'input form-control'}
+                                                                    placeholder={' '}
+                                                                    value={this.state.tmpRequest.ifFalseTopic}
+                                                                    onChange={(value) => {
+                                                                        let updatedRequests = [...this.state.requests];
+
+                                                                        for (const updatedRequestsKey of updatedRequests) {
+                                                                            if (updatedRequestsKey === this.state.tmpRequest) {
+                                                                                updatedRequestsKey.ifFalseTopic = value.target.value;
+                                                                                break;
+                                                                            }
+                                                                        }
+
+                                                                        this.setState({requests : updatedRequests})
+                                                                    }}
+                                                                />
+                                                                <label className={'placeholder'}>
+                                                                    عنوان
+                                                                </label>
+                                                            </div>
+
+                                                            <div className={'input-group-register'}>
+                                                                <input
+                                                                    className={'input form-control'}
+                                                                    placeholder={' '}
+                                                                    value={this.state.tmpRequest.ifFalseReason}
+                                                                    onChange={(value) => {
+                                                                        let updatedRequests = [...this.state.requests];
+
+                                                                        for (const updatedRequestsKey of updatedRequests) {
+                                                                            if (updatedRequestsKey === this.state.tmpRequest) {
+                                                                                updatedRequestsKey.ifFalseReason = value.target.value;
+                                                                                break;
+                                                                            }
+                                                                        }
+
+                                                                        this.setState({requests : updatedRequests})
+                                                                    }}
+                                                                />
+                                                                <label className={'placeholder'}>
+                                                                    دلیل
+                                                                </label>
+                                                            </div>
+
+                                                            <div className={'input-group-register'}>
+                                                                <input
+                                                                    className={'input form-control'}
+                                                                    placeholder={' '}
+                                                                    value={this.state.tmpRequest.ifFalseType}
+                                                                    onChange={(value) => {
+                                                                        let updatedRequests = [...this.state.requests];
+
+                                                                        for (const updatedRequestsKey of updatedRequests) {
+                                                                            if (updatedRequestsKey === this.state.tmpRequest) {
+                                                                                updatedRequestsKey.ifFalseType = value.target.value;
+                                                                                break;
+                                                                            }
+                                                                        }
+
+                                                                        this.setState({requests : updatedRequests})
+                                                                    }}
+                                                                />
+                                                                <label className={'placeholder'}>
+                                                                    نوع
+                                                                </label>
+                                                            </div>
+
+                                                        </div>
+
+                                                    </Modal.Body>
+
+                                                </Modal>
                                             </div>
                                         </div>
                                         <div className={'col'}>
@@ -209,7 +380,7 @@ class RequestPage extends Component {
                                         </div>
                                     </div>
                                 </div>
-                            </>
+                            </div>
                         ))
                     }
                 </div>
@@ -226,11 +397,15 @@ class RequestPage extends Component {
 
                             <div className={'input-group-register col-6'}>
                                 <input type='text'
-                                       className={`input form-control col ${ this.state.Validations.topic_requireReg === false  ? "is-invalid" : ""}`}
-                                       onChange={(e) => this.handleInputChange(e, 'topic')}
+                                       className={`input form-control col 
+                                       ${ this.state.Validations.topic_requireReg === false  ? "is-invalid" : ""}
+                                       `}
+                                       onChange={(e) =>
+                                           this.handleInputChange(e, 'topic')}
                                        placeholder=" "
                                 />
-                                <label className={'placeholder'} style={{right: this.state.Validations.topic_requireReg === false ? '35px' : '12px'}}>
+                                <label className={'placeholder'}
+                                       style={{right: this.state.Validations.topic_requireReg === false ? '35px' : '12px'}}>
                                     &nbsp;عنوان
                                     <span style={{color : 'red'}}>*</span>
                                 </label>
@@ -411,6 +586,7 @@ class RequestPage extends Component {
 
     handleCloseType = () => {
         this.setState({showType: false});
+        this.setState({showStatusModal: false});
     }
 
     handleAlignment = (event, newAlignment) => {
@@ -440,10 +616,10 @@ class RequestPage extends Component {
                 type: this.state.tempFields.type,
                 name: this.state.tempFields.name,
                 reason: this.state.tempFields.reason,
-                accepted: false, // null, false, true
-                ifFalseTopic: 'ifFalseTopic',
-                ifFalseReason: 'ifFalseReason',
-                ifFalseType: 'ifFalseType'
+                accepted: 'null', // null, false, true
+                ifFalseTopic: '',
+                ifFalseReason: '',
+                ifFalseType: ''
             }
             updatedRequests.push(request);
             this.setState({requests: updatedRequests});
