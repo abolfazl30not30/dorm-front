@@ -65,20 +65,20 @@ class RequestPage extends Component {
 
         requests : [
             {
-                topic: '',
-                type: '',
-                name: '',
-                reason: '',
+                topic: 'test',
+                type: 'test',
+                name: 'test',
+                reason: 'test',
                 accepted: 'null', // default
                 // ifFalseTopic: 'ifFalseTopic',
                 // ifFalseReason: 'ifFalseReason',
                 // ifFalseType: 'ifFalseType'
             },
             {
-                topic: '',
-                type: '',
-                name: '',
-                reason: '',
+                topic: 'test',
+                type: 'test',
+                name: 'test',
+                reason: 'test',
                 accepted: 'true', // default
                 // ifFalseTopic: 'ifFalseTopic',
                 // ifFalseReason: 'ifFalseReason',
