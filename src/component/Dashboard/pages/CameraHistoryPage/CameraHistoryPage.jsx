@@ -3,6 +3,9 @@ import {Link} from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import {BiSearch} from "react-icons/bi";
 import {Modal} from "react-bootstrap";
+import persian from "react-date-object/calendars/persian";
+import persian_fa from "react-date-object/locales/persian_fa";
+import DatePicker from "react-multi-date-picker";
 // import React from "@types/react";
 
 import '../../../../style/registerPage.css';
@@ -10,12 +13,22 @@ import '../../../../style/registerPage.css';
 class CameraHistoryPage extends Component{
 
     state = {
+        validation: {
+            title_requireReg: '',
+            date_requiredReg: '',
+            unit_requireReg: '',
+            assignee_requireReg: '',
+            unit_numberReg: '',
+        },
+
         showModal: false,
 
         tmpRequest: {
             title: '',
             description: '',
             unit: '',
+            date: '',
+            dateValue: '',
             supervisor: '',
             assignee: '',
             status: 'null',
@@ -171,9 +184,18 @@ class CameraHistoryPage extends Component{
                             description: '',
                             unit: '',
                             supervisor: '',
+                            date: '',
                             assignee: '',
                             status: 'null',
                         }
+
+                        let resetValidations = {...this.state.validation};
+                        resetValidations.assignee_requireReg = '';
+                        resetValidations.date_requiredReg = '';
+                        resetValidations.unit_requireReg = '';
+                        resetValidations.title_requireReg = '';
+
+                        this.setState({validation : resetValidations})
 
                         this.setState({tmpRequest : emptyTmpRequest})
 
@@ -230,7 +252,7 @@ class CameraHistoryPage extends Component{
                                 <tr>
                                     <td>{index + 1}</td>
                                     <td>{data.title}</td>
-                                    <td>{new Date(data.date).toLocaleDateString('fa-IR')}</td>
+                                    <td>{data.date}</td>
                                     <td>{data.unit}</td>
                                     <td>{data.assignee}</td>
                                     <td>{data.status}</td>
@@ -252,53 +274,140 @@ class CameraHistoryPage extends Component{
                         <div className={'d-flex flex-wrap row'}>
                             <div className={'col-6 input-group-register'}>
                                 <input
-                                    className={'input form-control'}
+                                    className={`input form-control mb-2 ${this.state.validation.title_requireReg === false ? "is-invalid" : ""}`}
                                     placeholder={' '}
                                     onChange={(e) =>
                                         this.handleInitializingTmpRequestFields(e, 'title')}
                                 />
-                                <label className={'placeholder'} style={{right: '20px'}}>
+                                <label className={'placeholder'} style={{right: this.state.validation.title_requireReg === false ? '35px' : '20px'}}>
                                     عنوان
+                                    <span style={{color : 'red'}}>*</span>
                                 </label>
+
+                                {
+                                    this.state.validation.title_requireReg === false
+                                        ? <small
+                                            className="text-danger">این فیلد الزامی است!</small>
+                                        : <div/>
+                                }
+
                             </div>
 
                             <div className={'col-6 input-group-register'}>
-                                <input
-                                    className={'input form-control'}
-                                    placeholder={' '}
-                                    onChange={(e) =>
-                                        this.handleInitializingTmpRequestFields(e, 'date')}
-                                />
-                                <label className={'placeholder'} style={{right: '20px'}}>
+
+                                <DatePicker
+                                    format="ِِِِِِYYYY/MM/DD"
+                                    inputClass={`input form-control mb-2 ${this.state.validation.date_requiredReg === false ? "is-invalid" : ""}`}
+                                    value={this.state.tmpRequest.dateValue}
+
+                                    onChange={(value) => {
+                                        let updatedTmpRequest = {...this.state.tmpRequest};
+
+                                        updatedTmpRequest.dateValue = value;
+                                        updatedTmpRequest.date = new Date(value).toLocaleDateString('fa-IR')
+                                        this.setState({tmpRequest : updatedTmpRequest})
+                                    }}
+
+                                    mapDays={({ date }) => {
+                                        let props = {}
+                                        let isWeekend = [6].includes(date.weekDay.index)
+
+                                        if (isWeekend)
+                                            props.className = "highlight highlight-red";
+
+                                        return props
+                                    }}
+
+                                    weekDays={
+                                        [
+                                            ["شنبه", "Sat"],
+                                            ["یکشنبه", "Sun"],
+                                            ["دوشنبه", "Mon"],
+                                            ["سه شنبه", "Tue"],
+                                            ["چهارشنبه", "Wed"],
+                                            ["پنجشنبه", "Thu"],
+                                            ["جمعه", "Fri"],
+                                        ]
+                                    }
+
+                                    calendar={persian}
+                                    locale={persian_fa}
+                                >
+                                    <button type="button" className={"btn btn-secondary mb-2"} onClick={() => {
+                                        let updatedTmpRequest = {...this.state.tmpRequest};
+
+                                        updatedTmpRequest.dateValue = '';
+                                        updatedTmpRequest.date = '';
+                                        this.setState({tmpRequest : updatedTmpRequest})
+                                    }}>
+                                        ریست
+                                    </button>
+                                </DatePicker>
+                                <label className={'placeholder'} style={{right: this.state.validation.date_requiredReg === false ? '35px' : '20px'}}>
                                     تاریخ
+                                    <span style={{color : 'red'}}>*</span>
                                 </label>
+
+                                {
+                                    this.state.validation.date_requiredReg === false
+                                        ? <small
+                                            className="text-danger">این فیلد الزامی است!</small>
+                                        : <div/>
+                                }
+
                             </div>
 
                         </div>
 
                         <div className={'d-flex flex-wrap row'}>
+
                             <div className={'col-6 input-group-register'}>
                                 <input
-                                    className={'input form-control'}
+                                    className={`input form-control mb-2 ${this.state.validation.assignee_requireReg === false ? "is-invalid" : ""}`}
                                     placeholder={' '}
                                     onChange={(e) =>
-                                        this.handleInitializingTmpRequestFields(e, 'description')}
+                                        this.handleInitializingTmpRequestFields(e, 'assignee')}
                                 />
-                                <label className={'placeholder'} style={{right: '20px'}}>
-                                    توضیحات
+                                <label className={'placeholder'} style={{right: this.state.validation.assignee_requireReg === false ? '35px' : '20px'}}>
+                                    نام درخواست کننده
+                                    <span style={{color : 'red'}}>*</span>
                                 </label>
+
+                                {
+                                    this.state.validation.assignee_requireReg === false
+                                        ? <small
+                                            className="text-danger">این فیلد الزامی است!</small>
+                                        : <div/>
+                                }
+
                             </div>
 
                             <div className={'col-6 input-group-register'}>
                                 <input
-                                    className={'input form-control'}
+                                    className={`input form-control mb-2 ${this.state.validation.unit_requireReg === false || this.state.validation.unit_numberReg === false ? "is-invalid" : ""}`}
                                     placeholder={' '}
                                     onChange={(e) =>
                                         this.handleInitializingTmpRequestFields(e, 'unit')}
                                 />
-                                <label className={'placeholder'} style={{right: '20px'}}>
+                                <label className={'placeholder'} style={{right: this.state.validation.unit_requireReg === false || this.state.validation.unit_numberReg === false ? '35px' : '20px'}}>
                                     شماره واحد
+                                    <span style={{color : 'red'}}>*</span>
                                 </label>
+
+                                {
+                                    this.state.validation.unit_requireReg === false
+                                        ? <small
+                                            className="text-danger">این فیلد الزامی است!</small>
+                                        : <div/>
+                                }
+
+                                {
+                                    this.state.validation.unit_numberReg === false
+                                        ? <small
+                                            className="text-danger">عدد وارد کنید!</small>
+                                        : <div/>
+                                }
+
                             </div>
 
                         </div>
@@ -308,10 +417,10 @@ class CameraHistoryPage extends Component{
                                 className={'input form-control'}
                                 placeholder={' '}
                                 onChange={(e) =>
-                                    this.handleInitializingTmpRequestFields(e, 'assignee')}
+                                    this.handleInitializingTmpRequestFields(e, 'description')}
                             />
                             <label className={'placeholder'} style={{right: '20px'}}>
-                                نام درخواست کننده
+                                توضیحات
                             </label>
                         </div>
 
@@ -321,6 +430,7 @@ class CameraHistoryPage extends Component{
                         <button className="btn btn-success" onClick={(event) => {
                             if (this.handleSubmitType(event)) {
                                 this.handleCloseModal()
+                                console.log(this.state.tmpRequest)
                             }
 
                         }}>ثبت
@@ -348,12 +458,38 @@ class CameraHistoryPage extends Component{
     }
 
     handleSubmitType = () => {
+        let regCheck = /^\s*$/;
+        let numberReg = /^\s*[0-9]*\s*$/;
+
         let updatedData = [...this.state.data];
-        updatedData.push(this.state.tmpRequest);
 
-        this.setState({data : updatedData});
+        let title_requireReg = !regCheck.test(this.state.tmpRequest.title);
+        let date_requiredReg = !regCheck.test(this.state.tmpRequest.date);
+        let unit_requireReg = !regCheck.test(this.state.tmpRequest.unit);
+        let unit_numberReg = numberReg.test(this.state.tmpRequest.unit);
+        let assignee_requireReg = !regCheck.test(this.state.tmpRequest.assignee);
 
-        return true; // checking validations
+        if (title_requireReg && date_requiredReg && unit_requireReg && assignee_requireReg && unit_numberReg) {
+            updatedData.push(this.state.tmpRequest);
+            this.setState({data : updatedData});
+        }
+
+        // console.log(this.state.tmpRequest.date)
+
+        this.handleValidations([title_requireReg, date_requiredReg, unit_requireReg, assignee_requireReg, unit_numberReg],
+            ['title_requireReg', 'date_requiredReg', 'unit_requireReg', 'assignee_requireReg', 'unit_numberReg']);
+
+        return title_requireReg && date_requiredReg && unit_requireReg && assignee_requireReg && unit_numberReg; // checking validations
+    }
+
+    handleValidations = (valueOfField, nameOfField) => {
+        let updatedValidations = {...this.state.validation};
+
+        for (let i = 0; i < valueOfField.length; i++) {
+            updatedValidations[nameOfField[i]] = valueOfField[i];
+        }
+
+        this.setState({validation : updatedValidations});
     }
 
     handleInitializingTmpRequestFields = (e, nameOfField) => {
