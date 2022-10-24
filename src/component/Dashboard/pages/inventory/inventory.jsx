@@ -1,10 +1,14 @@
 import React, {Component} from "react";
 import '../../../../style/inventory.css'
 import {BsSearch} from "react-icons/bs";
-import {AiOutlineClose, AiOutlinePlus} from "react-icons/ai";
+import {AiFillCloseCircle, AiOutlineClose, AiOutlinePlus} from "react-icons/ai";
 import {Modal} from 'react-bootstrap'
 import Form from "react-bootstrap/Form";
 import {BiSearch} from "react-icons/bi";
+import Accordion from "react-bootstrap/Accordion";
+import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
+import ToggleButton from "@mui/material/ToggleButton";
+import {IoIosAddCircleOutline} from "react-icons/io";
 
 class inventory extends Component {
     state = {
@@ -64,8 +68,15 @@ class inventory extends Component {
             }
         ],
         type: [],
+        category :[],
         name: [],
-        count: []
+        count: [],
+        selectedCategoryBoolean: true,
+        selectedCategory: null,
+        choices: [],
+        tempChoices: [],
+        showCategory: false,
+        inputCategory: []
 
     }
 
@@ -152,17 +163,96 @@ class inventory extends Component {
                             </select>
                             <label className="placeholder">نوع</label>
                         </div>
-                        <div className='input-group-register mb-3'>
+                        {/*<div className='input-group-register mb-3'>
                             <input type='text' className='input form-control' onChange={(e) => {
-                                this.getValueInputName(e.target.value)
+                                this.getValueInputCategory(e.target.value)
                             }}/>
-                            <label className="placeholder" style={{right: '12px'}}>نام</label>
+                            <label className="placeholder" style={{right: '12px'}}>دسته بندی</label>
+                        </div>*/}
+
+                        <div>
+                            <label style={{marginRight: "33px"}}>دسته بندی: </label>
+                            <div style={{width: '100%'}}>
+                                <Accordion defaultActiveKey="0"
+                                           style={{backgroundColor: this.state.selectedCategoryBoolean ? '' : 'rgba(255, 0, 0, 0.4)'}}
+                                >
+                                    <Accordion.Item eventKey="0">
+                                        <Accordion.Header>
+                                            {this.state.selectedCategory}&nbsp;
+                                        </Accordion.Header>
+                                        <Accordion.Body>
+                                            <div>
+                                                <div className=' row flex-wrap'>
+                                                    {
+                                                        this.state.selectedCategoryBoolean // ifSelected condition
+                                                            ? null
+                                                            : <div className="d-flex justify-content-center mb-3">
+                                                                <small className="text-danger">یکی از فیلدهای زیر را اتخاب
+                                                                    کنید!</small>
+                                                            </div>
+                                                    }
+                                                    <ToggleButtonGroup
+                                                        orientation="vertical"
+                                                        value={this.state.selectedCategory}
+                                                        exclusive
+                                                        onChange={this.handleAlignment}
+                                                        aria-label="text alignment"
+                                                    >
+                                                        {
+                                                            this.state.choices.map((c) =>
+                                                                <ToggleButton value={c.name} className='col'>
+                                                                    {c.name}
+                                                                </ToggleButton>
+                                                            )
+                                                        }
+                                                        {
+                                                            this.state.tempChoices.map((type, i) =>
+                                                                <ToggleButton value={type} className='col'
+                                                                              style={{display: "block"}}>
+                                                                    <div className="d-flex justify-content-center"
+                                                                         style={{position: "relative"}}>
+                                                                        <div className="close-btn-div">
+                                                                            <button className="close-btn" onClick={() => {
+                                                                                this.handleDeleteCategory(i)
+                                                                            }}><AiFillCloseCircle color="#F1416C"/></button>
+                                                                        </div>
+                                                                        <div className="">{type}</div>
+                                                                    </div>
+                                                                </ToggleButton>
+                                                            )
+                                                        }
+                                                        <button value="add"
+                                                                onClick={() => {
+                                                                    this.handleOpenCategory()
+                                                                }}
+                                                                className='col addTypeBtn'
+                                                        >
+                                                            <IoIosAddCircleOutline size={25}/>
+                                                        </button>
+                                                    </ToggleButtonGroup>
+                                                </div>
+                                            </div>
+                                        </Accordion.Body>
+                                    </Accordion.Item>
+                                </Accordion>
+                            </div>
                         </div>
-                        <div className='input-group-register mb-3'>
-                            <input type='number' className='input form-control' onChange={(e) => {
-                                this.getValueInputCount(e.target.value)
-                            }}/>
-                            <label className="placeholder" style={{right: '12px'}}>تعداد</label>
+
+
+
+                        <div className='d-flex flex-row'>
+                            <div className='input-group-register col-8 mb-3'>
+                                <input type='text' className='input form-control' onChange={(e) => {
+                                    this.getValueInputName(e.target.value)
+                                }}/>
+                                <label className="placeholder" style={{right: '12px'}}>نام</label>
+                            </div>
+                            <div className='input-group-register col-4 mb-3'>
+                                <input type='number' className='input form-control' onChange={(e) => {
+                                    this.getValueInputCount(e.target.value)
+                                }}/>
+                                <label className="placeholder" style={{right: '12px'}}>تعداد</label>
+                            </div>
                         </div>
 
                         <button className='btn btn-record-inventory' onClick={() => {
@@ -172,8 +262,29 @@ class inventory extends Component {
 
                     </Modal.Body>
                 </Modal>
+                <Modal centered show={this.state.showType} onHide={() => {
+                    this.handleCloseCategory()
+                }}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>افزودن نوع جدید</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body className="justify-content-center">
+                        <input type='text'
+                               className='form-control mt-3 mb-3 input'
+                               onChange={(e) => this.handleInputCategoryChange(e)} placeholder="نوع جدید"/>
+                    </Modal.Body>
+                    <Modal.Footer className="justify-content-start">
+                        <button className="btn btn-success" onClick={(event) => {
+                            this.handleSubmitCategory(event)
+                        }}>ثبت
+                        </button>
+                        <button className="btn btn-light" onClick={() => {
+                            this.handleCloseCategory()
+                        }}>بستن
+                        </button>
+                    </Modal.Footer>
+                </Modal>
             </>
-            /* <>inventory</>*/
         );
     }
 
@@ -187,21 +298,53 @@ class inventory extends Component {
     getValueInputType = (e) => {
         this.setState({type: e})
     }
+    getValueInputCategory = (e) => {
+        this.setState({category: e})
+    }
     getValueInputName = (e) => {
         this.setState({name: e})
     }
     getValueInputCount = (e) => {
         this.setState({count: e})
     }
+    handleAlignment = (event, newAlignment) => {
+        this.setState({selectedCategory: newAlignment});
+
+    };
+    handleDeleteCategory = (index) => {
+        let updateChoice = [...this.state.tempChoices];
+        updateChoice.splice(index, 1);
+        this.setState({tempChoices: updateChoice});
+    }
+    handleOpenCategory = () => {
+        this.setState({showCategory: true});
+    }
+    handleCloseCategory = () => {
+        this.setState({showCategory: false});
+    }
+    handleInputCategoryChange = (e) => {
+        this.setState({inputCategory: e.target.value});
+    }
+    handleSubmitCategory = (e) => {
+        e.preventDefault();
+        let regCheck = /^\s*$/;
+        if (!regCheck.test(this.state.inputType)) {
+            let updateChoice = [...this.state.tempChoices];
+            updateChoice.push(this.state.inputCategory);
+            this.setState({tempChoices: updateChoice});
+        }
+        this.setState({showCategory: false})
+    }
 
     handleRecordInventory = async () => {
 
         const newInventory = {
             type: this.state.type,
+            category: this.state.category,
             name: this.state.name,
             count: this.state.count
         }
-
+        console.log(newInventory)
         /*const rawResponse = await fetch('http://api.saadatportal.com/api/v1/telephoneHistory', {
             method: 'POST',
             headers: {
