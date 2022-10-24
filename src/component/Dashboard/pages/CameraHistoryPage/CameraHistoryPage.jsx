@@ -279,7 +279,7 @@ class CameraHistoryPage extends Component{
                                     onChange={(e) =>
                                         this.handleInitializingTmpRequestFields(e, 'title')}
                                 />
-                                <label className={'placeholder'} style={{right: this.state.validation.title_requireReg === false ? '35px' : '20px'}}>
+                                <label className={'placeholder'} style={{right: this.state.validation.title_requireReg === false ? '40px' : '20px'}}>
                                     عنوان
                                     <span style={{color : 'red'}}>*</span>
                                 </label>
@@ -296,6 +296,8 @@ class CameraHistoryPage extends Component{
                             <div className={'col-6 input-group-register'}>
 
                                 <DatePicker
+                                    // placeholder={' '}
+                                    // className={'input'}
                                     format="ِِِِِِYYYY/MM/DD"
                                     inputClass={`input form-control mb-2 ${this.state.validation.date_requiredReg === false ? "is-invalid" : ""}`}
                                     value={this.state.tmpRequest.dateValue}
@@ -343,7 +345,7 @@ class CameraHistoryPage extends Component{
                                         ریست
                                     </button>
                                 </DatePicker>
-                                <label className={'placeholder'} style={{right: this.state.validation.date_requiredReg === false ? '35px' : '20px'}}>
+                                <label className={'placeholder'} style={{right: this.state.validation.date_requiredReg === false ? '40px' : '20px'}}>
                                     تاریخ
                                     <span style={{color : 'red'}}>*</span>
                                 </label>
@@ -368,7 +370,7 @@ class CameraHistoryPage extends Component{
                                     onChange={(e) =>
                                         this.handleInitializingTmpRequestFields(e, 'assignee')}
                                 />
-                                <label className={'placeholder'} style={{right: this.state.validation.assignee_requireReg === false ? '35px' : '20px'}}>
+                                <label className={'placeholder'} style={{right: this.state.validation.assignee_requireReg === false ? '40px' : '20px'}}>
                                     نام درخواست کننده
                                     <span style={{color : 'red'}}>*</span>
                                 </label>
@@ -389,7 +391,7 @@ class CameraHistoryPage extends Component{
                                     onChange={(e) =>
                                         this.handleInitializingTmpRequestFields(e, 'unit')}
                                 />
-                                <label className={'placeholder'} style={{right: this.state.validation.unit_requireReg === false || this.state.validation.unit_numberReg === false ? '35px' : '20px'}}>
+                                <label className={'placeholder'} style={{right: this.state.validation.unit_requireReg === false || this.state.validation.unit_numberReg === false ? '40px' : '20px'}}>
                                     شماره واحد
                                     <span style={{color : 'red'}}>*</span>
                                 </label>
