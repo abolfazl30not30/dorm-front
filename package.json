@@ -42,6 +42,7 @@
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
     "react-step-progress": "^1.0.3",
+    "react-trello": "^2.2.11",
     "reactjs-persian-calendar": "^1.1.7",
     "reactjs-popup": "^2.0.5",
     "web-vitals": "^2.1.4",

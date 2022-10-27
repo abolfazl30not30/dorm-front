@@ -372,7 +372,7 @@ class MainPage extends Component {
                             <Route path="/Request-manager" element={(<RequestPageManager />)} />
                             <Route path="/camera-history" element={(<CameraHistoryPage />)} />
                             <Route path="/PaymentHistory" element={(<PaymentHistory />)} />
-                            <Route path="/PaymentHistory" element={(<TrelloPage/>)} />
+                            <Route path="/taskManagement" element={(<TrelloPage/>)} />
                             <Route path="/" element={(<EditFloorAndUnit />)} />
                         </Routes>
                     </BuildingContext.Provider>
