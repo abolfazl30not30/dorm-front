@@ -18,6 +18,7 @@ import PaymentHistory from './pages/PaymentHistory/PaymentHistory'
 import RequestPageManager from "./pages/RequestPage/RequestPageManager";
 import CameraHistoryPage from "./pages/CameraHistoryPage/CameraHistoryPage";
 import CallHistory from './pages/callHistory/callHistory';
+import TrelloPage from "./pages/TrelloPage/TrelloPage";
 
 class MainPage extends Component {
     state = {
@@ -371,6 +372,7 @@ class MainPage extends Component {
                             <Route path="/Request-manager" element={(<RequestPageManager />)} />
                             <Route path="/camera-history" element={(<CameraHistoryPage />)} />
                             <Route path="/PaymentHistory" element={(<PaymentHistory />)} />
+                            <Route path="/PaymentHistory" element={(<TrelloPage/>)} />
                             <Route path="/" element={(<EditFloorAndUnit />)} />
                         </Routes>
                     </BuildingContext.Provider>

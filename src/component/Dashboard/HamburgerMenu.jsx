@@ -59,12 +59,12 @@ class HamburgerMenu extends Component {
                             تقويم
                         </Link>
                     </li>
-                    <li className='sidenav-item'>
-                        <Link to="/Request" className='sidenav-link' onClick={window.innerWidth <= 768 && this.context.handleSidebar}>
-                            <i className="bi bi-person-circle" />
-                            درخواست
-                        </Link>
-                    </li>
+                    {/*<li className='sidenav-item'>*/}
+                    {/*    <Link to="/Request" className='sidenav-link' onClick={window.innerWidth <= 768 && this.context.handleSidebar}>*/}
+                    {/*        <i className="bi bi-person-circle" />*/}
+                    {/*        درخواست*/}
+                    {/*    </Link>*/}
+                    {/*</li>*/}
                     <li className='sidenav-item'>
                         <Link to="/Request-manager" className='sidenav-link' onClick={window.innerWidth <= 768 && this.context.handleSidebar}>
                             <i className="bi bi-person-circle" />
@@ -96,9 +96,9 @@ class HamburgerMenu extends Component {
                         </Link>
                     </li>
                     <li className='sidenav-item'>
-                        <Link to="/" className='sidenav-link' onClick={window.innerWidth <= 768 && this.context.handleSidebar}>
-                            <i className="bi bi-file-earmark-text" />
-                            ملزومات اداری
+                        <Link to="/taskManagement" className='sidenav-link' onClick={window.innerWidth <= 768 && this.context.handleSidebar}>
+                            <i className="bi bi-journal-plus"></i>
+                            مدیریت وظایف
                         </Link>
                     </li>
                     <li className='sidenav-item'>

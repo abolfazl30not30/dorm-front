@@ -1,0 +1,1 @@
+export default ({onClick, t, laneId}) => <button onClick={onClick} style={{borderRadius: 20}}>{t('Click to add card')}</button>
