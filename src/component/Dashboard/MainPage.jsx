@@ -17,6 +17,7 @@ import Contacts from './pages/contacts/contacts';
 import PaymentHistory from './pages/PaymentHistory/PaymentHistory'
 import RequestPageManager from "./pages/RequestPage/RequestPageManager";
 import CameraHistoryPage from "./pages/CameraHistoryPage/CameraHistoryPage";
+import CallHistory from './pages/callHistory/callHistory';
 
 class MainPage extends Component {
     state = {
@@ -362,6 +363,7 @@ class MainPage extends Component {
                             <Route path="/people/profile" element={(<ProfilePage />)} />
                             <Route path='/payment' element={(<PaymentPage />)} />
                             <Route path='/contacts' element={(<Contacts />)} />
+                            <Route path='/CallHistory' element={(<CallHistory />)} />
                             <Route path="/Register" element={(<MainRegister />)} />
                             <Route path="/edit" element={(<EditFloorAndUnit />)} />
                             <Route path="/Calender" element={(<EventPage />)} />
