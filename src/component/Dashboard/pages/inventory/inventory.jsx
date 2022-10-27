@@ -16,59 +16,31 @@ class inventory extends Component {
         inventory: [
             {
                 "id": "c9b75819a41b43e08c78cf5662e52c35",
-                "accessories": [
-                    {
+                "accessories": {
                         "id": "43b1b71031fc4b2a895b34d0bfc17ef1",
                         "name": "پریز",
                         "count": 13,
                         "description": null
-                    },
-                    {
-                        "id": "7c260b31b2754d8db301f403064a0668",
-                        "name": "دو شاخه",
-                        "count": 20,
-                        "description": null
-                    },
-                    {
-                        "id": "edf16db654f7455c9f71ac09adabf2ea",
-                        "name": "سه راهی",
-                        "count": 40,
-                        "description": null
                     }
-                ],
+                ,
                 "accessoryType": "onHand",
                 "category": "تاسیسات"
             },
             {
                 "id": "c9b75819a41b43e08c78cf5662e52c35",
-                "accessories": [
-
-                    {
-                        "id": "43b1b71031fc4b2a895b34d0bfc17ef1",
-                        "name": "پریز",
-                        "count": 13,
-                        "description": null
-                    },
-                    {
-                        "id": "7c260b31b2754d8db301f403064a0668",
-                        "name": "دو شاخه",
-                        "count": 20,
-                        "description": null
-                    },
-                    {
-                        "id": "edf16db654f7455c9f71ac09adabf2ea",
-                        "name": "سه راهی",
-                        "count": 40,
-                        "description": null
-                    }
-
-                ],
+                "accessories": {
+                    "id": "43b1b71031fc4b2a895b34d0bfc17ef1",
+                    "name": "پریز",
+                    "count": 13,
+                    "description": null
+                }
+                ,
                 "accessoryType": "onHand",
                 "category": "تاسیسات"
             }
         ],
         type: [],
-        category :[],
+        category: [],
         name: [],
         count: [],
         selectedCategoryBoolean: true,
@@ -79,8 +51,6 @@ class inventory extends Component {
         inputCategory: []
 
     }
-
-
     /*async componentDidMount() {
         const response = await fetch('http://api.saadatportal.com/api/v1/inventory').then((response) => response.json())
             .then((data) => this.setState({inventory: data}));
@@ -122,6 +92,7 @@ class inventory extends Component {
                             <thead>
                             <tr>
                                 <th>نوع</th>
+                                <th>دسته بندی</th>
                                 <th>نام</th>
                                 <th>تعداد</th>
                             </tr>
@@ -130,14 +101,10 @@ class inventory extends Component {
                             {
                                 this.state.inventory.map((i) => (
                                     <tr>
-                                        <td>
-                                            {i.accessoryType}
-                                        </td>
-                                        <td>test</td>
-                                        <td>test</td>
-                                        {/*{i.accessories.map((acc) => (
-                                            console.log(acc.name)
-                                        ))}*/}
+                                        <td>{this.convertTypeToPersian(i.accessoryType)}</td>
+                                        <td>{i.category}</td>
+                                        <td>{i.accessories.name}</td>
+                                        <td>{i.accessories.count}</td>
                                     </tr>
                                 ))
                             }
@@ -163,13 +130,6 @@ class inventory extends Component {
                             </select>
                             <label className="placeholder">نوع</label>
                         </div>
-                        {/*<div className='input-group-register mb-3'>
-                            <input type='text' className='input form-control' onChange={(e) => {
-                                this.getValueInputCategory(e.target.value)
-                            }}/>
-                            <label className="placeholder" style={{right: '12px'}}>دسته بندی</label>
-                        </div>*/}
-
                         <div>
                             <label style={{marginRight: "33px"}}>دسته بندی: </label>
                             <div style={{width: '100%'}}>
@@ -212,9 +172,11 @@ class inventory extends Component {
                                                                     <div className="d-flex justify-content-center"
                                                                          style={{position: "relative"}}>
                                                                         <div className="close-btn-div">
-                                                                            <button className="close-btn" onClick={() => {
-                                                                                this.handleDeleteCategory(i)
-                                                                            }}><AiFillCloseCircle color="#F1416C"/></button>
+                                                                            <button className="close-btn"
+                                                                                    onClick={() => {
+                                                                                        this.handleDeleteCategory(i)
+                                                                                    }}><AiFillCloseCircle
+                                                                                color="#F1416C"/></button>
                                                                         </div>
                                                                         <div className="">{type}</div>
                                                                     </div>
@@ -237,9 +199,6 @@ class inventory extends Component {
                                 </Accordion>
                             </div>
                         </div>
-
-
-
                         <div className='d-flex flex-row'>
                             <div className='input-group-register col-8 mb-3'>
                                 <input type='text' className='input form-control' onChange={(e) => {
@@ -254,15 +213,13 @@ class inventory extends Component {
                                 <label className="placeholder" style={{right: '12px'}}>تعداد</label>
                             </div>
                         </div>
-
                         <button className='btn btn-record-inventory' onClick={() => {
                             this.handleRecordInventory()
                         }}>ثبت
                         </button>
-
                     </Modal.Body>
                 </Modal>
-                <Modal centered show={this.state.showType} onHide={() => {
+                <Modal centered show={this.state.showCategory} onHide={() => {
                     this.handleCloseCategory()
                 }}>
                     <Modal.Header closeButton>
@@ -294,7 +251,19 @@ class inventory extends Component {
     handleShow = () => {
         this.setState({show: true})
     };
-
+    convertTypeToPersian = (type) => {
+        switch(type) {
+            case "deficiency":
+                return "نیازمندی";
+                break;
+            case "needs":
+                return "کاستی";
+                break;
+            case "onHand":
+                return "دارایی";
+                break;
+        }
+    }
     getValueInputType = (e) => {
         this.setState({type: e})
     }
@@ -311,6 +280,18 @@ class inventory extends Component {
         this.setState({selectedCategory: newAlignment});
 
     };
+    handleValidations = () => {
+        let selectedCategoryBoolean = this.state.selectedCategoryBoolean !== null;
+        console.log(selectedCategoryBoolean)
+
+        let newValidations = {...this.state.selectedCategoryBoolean};
+        newValidations.selectedTypeBoolean = selectedCategoryBoolean;
+
+
+        this.setState({selectedCategoryBoolean: newValidations});
+
+        return selectedCategoryBoolean;
+    }
     handleDeleteCategory = (index) => {
         let updateChoice = [...this.state.tempChoices];
         updateChoice.splice(index, 1);
@@ -318,9 +299,11 @@ class inventory extends Component {
     }
     handleOpenCategory = () => {
         this.setState({showCategory: true});
+        this.setState({show: false});
     }
     handleCloseCategory = () => {
         this.setState({showCategory: false});
+        this.setState({show: true});
     }
     handleInputCategoryChange = (e) => {
         this.setState({inputCategory: e.target.value});
@@ -333,29 +316,31 @@ class inventory extends Component {
             updateChoice.push(this.state.inputCategory);
             this.setState({tempChoices: updateChoice});
         }
-        this.setState({showCategory: false})
+        console.log(this.state.tempChoices)
+        this.setState({showCategory: false});
+        this.setState({show: true});
     }
-
     handleRecordInventory = async () => {
-
         const newInventory = {
-            type: this.state.type,
-            category: this.state.category,
-            name: this.state.name,
-            count: this.state.count
+            category: this.state.tempChoices,
+            accessoryType: this.state.type,
+            accessories: {
+                name: this.state.name,
+                count: this.state.count
+            }
         }
         console.log(newInventory)
-        /*const rawResponse = await fetch('http://api.saadatportal.com/api/v1/telephoneHistory', {
+        const rawResponse = await fetch('http://api.saadatportal.com/api/v1/inventory', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(newCall)
+            body: JSON.stringify(newInventory)
         });
 
-        const response = await fetch('http://api.saadatportal.com/api/v1/telephoneHistory').then((response) => response.json())
-            .then((data) => this.setState({newCall: data}));*/
+        const response = await fetch('http://api.saadatportal.com/api/v1/inventory').then((response) => response.json())
+            .then((data) => this.setState({newInventory: data}));
         this.setState({show: false})
     }
 }
