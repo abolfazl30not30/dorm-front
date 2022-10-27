@@ -17,6 +17,7 @@ import Contacts from './pages/contacts/contacts';
 import PaymentHistory from './pages/PaymentHistory/PaymentHistory'
 import RequestPageManager from "./pages/RequestPage/RequestPageManager";
 import CameraHistoryPage from "./pages/CameraHistoryPage/CameraHistoryPage";
+
 class MainPage extends Component {
     state = {
 

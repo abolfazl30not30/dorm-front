@@ -74,7 +74,7 @@ class HamburgerMenu extends Component {
                     <li className='sidenav-item'>
                         <Link to="/camera-history" className='sidenav-link' onClick={window.innerWidth <= 768 && this.context.handleSidebar}>
                             <i className="bi bi-person-circle" />
-                            camera history
+                            دوربین
                         </Link>
                     </li>
                     <li className='sidenav-item'>
