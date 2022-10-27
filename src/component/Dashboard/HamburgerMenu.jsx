@@ -101,12 +101,18 @@ class HamburgerMenu extends Component {
                             مدیریت وظایف
                         </Link>
                     </li>
+                    <li className="sidenav-item">
+                        <Link to="/Inventory" className='sidenav-link' onClick={window.innerWidth <= 768 && this.context.handleSidebar}>
+                            <i className="bi bi-journal-plus"></i>
+                            انبار
+                        </Link>
+                    </li>
                     <li className='sidenav-item'>
                         <Link to="/" className='sidenav-link' onClick={window.innerWidth <= 768 && this.context.handleSidebar}>
                             <i className="bi bi-person-circle" />
                             کادر مدیریت
                         </Link>
-                    </li>>
+                    </li>
                 </ul>
             </div>
         );

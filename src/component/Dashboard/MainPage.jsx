@@ -19,7 +19,7 @@ import RequestPageManager from "./pages/RequestPage/RequestPageManager";
 import CameraHistoryPage from "./pages/CameraHistoryPage/CameraHistoryPage";
 import CallHistory from './pages/callHistory/callHistory';
 import TrelloPage from "./pages/TrelloPage/TrelloPage";
-
+import Inventory from './pages/inventory/inventory'
 class MainPage extends Component {
     state = {
 
@@ -365,6 +365,7 @@ class MainPage extends Component {
                             <Route path='/payment' element={(<PaymentPage />)} />
                             <Route path='/contacts' element={(<Contacts />)} />
                             <Route path='/CallHistory' element={(<CallHistory />)} />
+                            <Route path='/Inventory' element={(<Inventory />)} />
                             <Route path="/Register" element={(<MainRegister />)} />
                             <Route path="/edit" element={(<EditFloorAndUnit />)} />
                             <Route path="/Calender" element={(<EventPage />)} />
