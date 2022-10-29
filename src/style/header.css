@@ -28,3 +28,11 @@
   background-color: transparent;
   border:none;
 }
+.profile-dropdown{
+  display: flex;
+  justify-content: end !important;
+  align-items: end !important;
+}
+.dropdown-toggle:after{
+  display: none !important;
+}
