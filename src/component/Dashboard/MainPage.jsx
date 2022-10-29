@@ -19,7 +19,9 @@ import RequestPageManager from "./pages/RequestPage/RequestPageManager";
 import CameraHistoryPage from "./pages/CameraHistoryPage/CameraHistoryPage";
 import CallHistory from './pages/callHistory/callHistory';
 import TrelloPage from "./pages/TrelloPage/TrelloPage";
-import Inventory from './pages/inventory/inventory'
+import Inventory from './pages/inventory/inventory';
+
+
 class MainPage extends Component {
     state = {
 
