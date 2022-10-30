@@ -20,6 +20,7 @@ import CameraHistoryPage from "./pages/CameraHistoryPage/CameraHistoryPage";
 import CallHistory from './pages/callHistory/callHistory';
 import TrelloPage from "./pages/TrelloPage/TrelloPage";
 import Inventory from './pages/inventory/inventory';
+import PersonnelRegister from './pages/PersonnelRegister/PersonnelRegister';
 
 
 class MainPage extends Component {
@@ -376,6 +377,7 @@ class MainPage extends Component {
                             <Route path="/camera-history" element={(<CameraHistoryPage />)} />
                             <Route path="/PaymentHistory" element={(<PaymentHistory />)} />
                             <Route path="/taskManagement" element={(<TrelloPage/>)} />
+                            <Route path="/PersonnelRegister" element={(<PersonnelRegister />)} />
                             <Route path="/" element={(<EditFloorAndUnit />)} />
                         </Routes>
                     </BuildingContext.Provider>
