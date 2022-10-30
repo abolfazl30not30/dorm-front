@@ -27,7 +27,7 @@ class Error extends Component {
                         : <div/>
                 }
                 {
-                    this.props.condition4 && !this.props.condition1
+                    this.props.condition4 && (!this.props.condition1)
                         ? <small
                             className="text-danger">{this.context.errors[this.props.error4]}</small>
                         : <div/>

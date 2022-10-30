@@ -74,6 +74,47 @@ class PersonnelRegister extends Component {
     }
 
     personnelAdditionalInformation = () => {
+        let requiredReg = /^\s*$/;
+        let numberReg = /^\s*[0-9]*\s*$/;
+        let numberAndEmptyReg = /^(\s*[0-9]*\s*|\s*)$/;
+        let homeTelephoneReg = /^(\d{3}-\d{8}|\s*)$/; // 012-34567890
+
+        let major_requiredReg = !requiredReg.test(this.context.personnelFields.major);
+        let spouseFullName_requiredReg = !requiredReg.test(this.context.personnelFields.spouseFullName);
+        let bankName_requiredReg = !requiredReg.test(this.context.personnelFields.bankName);
+        let cardNumber_requiredReg = !requiredReg.test(this.context.personnelFields.cardNumber);
+        let bankAccountNumber_requiredReg = !requiredReg.test(this.context.personnelFields.bankAccountNumber);
+        let bankAccountOwnerName_requiredReg = !requiredReg.test(this.context.personnelFields.bankAccountOwnerName);
+        let bankAccountShabaNumber_requiredReg = !requiredReg.test(this.context.personnelFields.bankAccountShabaNumber);
+        let bankAccountExpirationDate_requiredReg = !requiredReg.test(this.context.personnelFields.bankAccountExpirationDate);
+        // let fullName_requiredReg = !requiredReg.test(this.context.personnelFields.fullName);
+        let parentType_requiredReg = !requiredReg.test(this.context.personnelFields.parentType);
+        let parentId_requiredReg = !requiredReg.test(this.context.personnelFields.parentId);
+        let gender_requiredReg = !requiredReg.test(this.context.personnelFields.gender);
+
+        // let homeNumber_homeTelephoneReg = homeTelephoneReg.test(this.context.personnelFields.homeNumber);
+
+        let cardNumber_numberReg = numberReg.test(this.context.personnelFields.cardNumber)
+        let bankAccountNumber_numberReg = numberReg.test(this.context.personnelFields.bankAccountNumber)
+        let bankAccountShabaNumber_numberReg = numberReg.test(this.context.personnelFields.bankAccountShabaNumber)
+        let cvv2_numberAndEmptyReg = numberAndEmptyReg.test(this.context.personnelFields.cvv2)
+
+        this.context.handleSpecificValidations([major_requiredReg, spouseFullName_requiredReg,
+                bankName_requiredReg, cardNumber_requiredReg, bankAccountNumber_requiredReg, bankAccountOwnerName_requiredReg,
+                bankAccountShabaNumber_requiredReg, bankAccountExpirationDate_requiredReg,
+                parentType_requiredReg, parentId_requiredReg, gender_requiredReg, cardNumber_numberReg,
+                bankAccountNumber_numberReg, bankAccountShabaNumber_numberReg, cvv2_numberAndEmptyReg],
+            ['major_requiredReg', 'spouseFullName_requiredReg',
+                'bankName_requiredReg', 'cardNumber_requiredReg', 'bankAccountNumber_requiredReg', 'bankAccountOwnerName_requiredReg',
+                'bankAccountShabaNumber_requiredReg', 'bankAccountExpirationDate_requiredReg',
+                'parentType_requiredReg', 'parentId_requiredReg', 'gender_requiredReg', 'cardNumber_numberReg',
+                'bankAccountNumber_numberReg', 'bankAccountShabaNumber_numberReg', 'cvv2_numberAndEmptyReg'], 'personnelFieldsValidation')
+
+        return major_requiredReg && spouseFullName_requiredReg &&
+            bankName_requiredReg && cardNumber_requiredReg && bankAccountNumber_requiredReg && bankAccountOwnerName_requiredReg &&
+            bankAccountShabaNumber_requiredReg && bankAccountExpirationDate_requiredReg &&
+            parentType_requiredReg && parentId_requiredReg && gender_requiredReg && cardNumber_numberReg &&
+            bankAccountNumber_numberReg && bankAccountShabaNumber_numberReg && cvv2_numberAndEmptyReg;
 
     }
 
@@ -84,12 +125,13 @@ class PersonnelRegister extends Component {
                 label: 'مشخصات اولیه',
                 name: 'step 1',
                 content: <BasicInformation />,
-                validator: this.personnelBasicInformation
+                // validator: this.personnelBasicInformation
             },
             {
                 label: 'مشخصات تکمیلی',
                 name: 'step 2',
                 content: <AdditionalInformation />,
+                validator: this.personnelAdditionalInformation,
             },
             {
                 label: 'آپلود مدارک',

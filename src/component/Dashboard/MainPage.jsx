@@ -57,19 +57,19 @@ class MainPage extends Component {
                 health: '',
                 alias: '',
 
-                university: '',
+                university: '', //
                 major: '',
                 spouseFullName: '',
-                spouseJob: '',
-                homeNumber: '',
+                spouseJob: '', //
+                homeNumber: '', // ????????
                 bankName: '',
                 cardNumber: '',
                 bankAccountNumber: '',
                 bankAccountOwnerName: '',
                 bankAccountShabaNumber: '',
                 bankAccountExpirationDate: '',
-                cvv2: '',
-                fullName: '',
+                cvv2: '', //
+                fullName: '',//
                 parentType: '',
                 parentId: '',
                 gender: '',
@@ -260,7 +260,25 @@ class MainPage extends Component {
                 email_emailReg: '',
 
                 //second page
+                major_requiredReg: '',
+                spouseFullName_requiredReg: '',
+                bankName_requiredReg: '',
+                cardNumber_requiredReg: '',
+                bankAccountNumber_requiredReg: '',
+                bankAccountOwnerName_requiredReg: '',
+                bankAccountShabaNumber_requiredReg: '',
+                bankAccountExpirationDate_requiredReg: '',
+                fullName_requiredReg: '',
+                parentType_requiredReg: '',
+                parentId_requiredReg: '',
+                gender_requiredReg: '',
 
+                homeNumber_homeTelephoneReg: '',
+
+                cardNumber_numberReg: '',
+                bankAccountNumber_numberReg: '',
+                bankAccountShabaNumber_numberReg: '',
+                cvv2_numberRegAndEmpty: '',
             },
 
 
