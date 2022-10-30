@@ -38,6 +38,7 @@ class MainPage extends Component {
                 firstName: '',
                 lastName: '',
                 nationalCode: '',
+                placeOfIssue:'',
                 certificateNumber: '',
                 phoneNumber: '',
                 address: '',
@@ -52,9 +53,10 @@ class MainPage extends Component {
                 maritalStatus: '',
                 religion: '',
                 subReligion: '',
-                healthyStatus: '',
+                healthyStatus: '', // boolean
                 health: '',
                 alias: '',
+
                 university: '',
                 major: '',
                 spouseFullName: '',
@@ -75,7 +77,6 @@ class MainPage extends Component {
                     startDate: '',
                     endDate:'',
                 },
-                placeOfIssue:'',
 
             },
 
@@ -218,7 +219,6 @@ class MainPage extends Component {
 
             ],
             //##############################################################################
-
         },
         errors : {
             required: 'این فیلد الزامی است!',
@@ -226,9 +226,46 @@ class MainPage extends Component {
             homeTelephoneReg: 'شماره تلفن ثابت با کد وارد کنید (۳۴۵۶۷۸۹۰-۰۱۲) ',
             telephoneRegex: 'شماره تلفن همراه وارد کنید! (۰۹۱۲۳۴۵۶۷۸۹)',
             emailRegex: 'ایمیل وارد کنید!',
+            MobileOrHomeTelephoneReg: 'شماره تماس(۰۹۱۲۳۴۵۶۷۸۹) یا تلفن ثابت(۳۴۵۶۷۸۹۰-۰۱۲) وارد شود!',
+            emailReg: 'ایمیل وارد کنید! (example@email.com)',
         },
 
         specificValidations : {
+
+            personnelFieldsValidation: {
+                //first page
+                firstName_requiredReg: '',
+                lastName_requiredReg: '',
+                nationalCode_requiredReg: '',
+                placeOfIssue_requiredReg: '',
+                certificateNumber_requiredReg: '',
+                phoneNumber_requiredReg: '',
+                address_requiredReg: '',
+                telephoneNumber_requiredReg: '',
+                emergencyNumber_requiredReg: '',
+                birthPlace_requiredReg: '',
+                birthDate_requiredReg: '',
+                education_requiredReg: '',
+                postalCode_requiredReg: '',
+                email_requiredReg: '',
+                nationality_requiredReg: '',
+                maritalStatus_requiredReg: '',
+                religion_requiredReg: '',
+                nationalCode_numberReg: '',
+                certificateNumber_numberReg: '',
+                postalCode_numberReg: '',
+                phoneNumber_phoneNumberReg: '',
+                telephoneNumber_homeTelephoneReg: '',
+                emergencyNumber_MobileOrHomeTelephoneReg: '',
+                email_emailReg: '',
+
+                //second page
+
+            },
+
+
+            // MAIN REGISTER
+
             //############################################################################## first page
 
             // ----------------------- <CInformationPage /> information validations
@@ -356,6 +393,7 @@ class MainPage extends Component {
                 <div className='d-flex flex-column pt-4 px-5'>
                     <BuildingContext.Provider value={{
                         personnelFields: this.state.fields.personnelFields,
+                        personnelFieldsValidation: this.state.specificValidations.personnelFieldsValidation,
                         unitId: this.state.unitId,
                         personId:this.state.personId,
                         charId:this.state.charId,
