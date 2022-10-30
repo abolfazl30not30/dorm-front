@@ -4,9 +4,9 @@ class UploadPage extends Component{
 
     render() {
         return (
-            <div>
+            <>
 
-            </div>
+            </>
         );
     }
 

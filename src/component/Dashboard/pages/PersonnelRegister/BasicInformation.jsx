@@ -1,12 +1,181 @@
 import {Component} from "react";
+import SimpleTextInput from "../../../CustomInputs/SimpleTextInput";
+import BuildingContext from "../../../../contexts/Building";
 
 class BasicInformation extends Component{
+    static contextType = BuildingContext;
 
     render() {
         return (
-            <div>
+            <>
+                <div className="register-step-box">
+                    <h2>مشخصات اولیه</h2>
+                    <div className='d-flex flex-wrap justify-content-start'>
+                        <div className="input-group-register col-4">
+                            <SimpleTextInput
+                                condition1={this.context.otherGuestInformationValidation.fullName_requiredReg}
+                                value={this.context.personnelFields.firstName}
+                                fieldNameString={'personnelFields'}
+                                valueOfInputString={'firstName'}
+                                label={'نام'}
+                            />
+                        </div>
+                        <div className="input-group-register col-4">
+                            <SimpleTextInput
+                                condition1={this.context.otherGuestInformationValidation.fullName_requiredReg}
+                                value={this.context.personnelFields.lastName}
+                                fieldNameString={'personnelFields'}
+                                valueOfInputString={'lastName'}
+                                label={'نام خانوادگی'}
+                            />
+                        </div>
+                        <div className="input-group-register col-4">
+                            <SimpleTextInput
+                                condition1={this.context.otherGuestInformationValidation.nationalCode_requiredReg}
+                                condition4={this.context.otherGuestInformationValidation.nationalCode_numberReg}
+                                value={this.context.personnelFields.nationalCode}
+                                fieldNameString={'personnelFields'}
+                                valueOfInputString={'nationalCode'}
+                                label={'کد ملی'}
+                            />
+                        </div>
+                        <div className="input-group-register col-4">
+                            <SimpleTextInput
+                                condition1={this.context.otherGuestInformationValidation.certificateNumber_requiredReg}
+                                condition4={this.context.otherGuestInformationValidation.certificateNumber_numberReg}
+                                value={this.context.personnelFields.certificateNumber}
+                                fieldNameString={'personnelFields'}
+                                valueOfInputString={'certificateNumber'}
+                                label={'شماره شناسنامه'}
+                            />
+                        </div>
+                        <div className="input-group-register col-4">
+                            <SimpleTextInput
+                                condition1={this.context.otherGuestInformationValidation.certificateNumber_requiredReg}
+                                condition4={this.context.otherGuestInformationValidation.certificateNumber_numberReg}
+                                value={this.context.personnelFields.phoneNumber}
+                                fieldNameString={'personnelFields'}
+                                valueOfInputString={'phoneNumber'}
+                                label={'شماره تماس'}
+                            />
+                        </div>
+                        <div className="input-group-register col-4">
+                            <SimpleTextInput
+                                condition1={this.context.otherGuestInformationValidation.certificateNumber_requiredReg}
+                                condition4={this.context.otherGuestInformationValidation.certificateNumber_numberReg}
+                                value={this.context.personnelFields.address}
+                                fieldNameString={'personnelFields'}
+                                valueOfInputString={'address'}
+                                label={'محل سکونت'}
+                            />
+                        </div>
+                        <div className="input-group-register col-4">
+                            <SimpleTextInput
+                                condition1={this.context.otherGuestInformationValidation.certificateNumber_requiredReg}
+                                condition4={this.context.otherGuestInformationValidation.certificateNumber_numberReg}
+                                value={this.context.personnelFields.telephoneNumber}
+                                fieldNameString={'personnelFields'}
+                                valueOfInputString={'telephoneNumber'}
+                                label={'شماره تلفن ثابت'}
+                            />
+                        </div>
+                        {/*<div className="input-group-register col-4">*/}
+                        {/*    <SimpleTextInput*/}
+                        {/*        value={this.context.otherGuestInformation.placeOfIssue}*/}
+                        {/*        fieldNameString={'otherGuestInformation'}*/}
+                        {/*        valueOfInputString={'placeOfIssue'}*/}
+                        {/*        label={'محل صدور'}*/}
+                        {/*    />*/}
+                        {/*</div>*/}
+                        {/*<div className="input-group-register col-4">*/}
+                        {/*    <DatePicker calendarStyles={this.state.calStyles}*/}
+                        {/*                inputFormat="jYYYY/jM/jD"*/}
+                        {/*                className={`input form-control ${this.context.otherGuestInformationValidation.admissionStartDate_requiredReg === false ? "is-invalid" : ""}`}*/}
+                        {/*                onChange={(value) =>  this.context.handleDates(value, 'otherGuestInformation', 'admissionStartDate')}*/}
+                        {/*    />*/}
+                        {/*    <label className="placeholder" style={this.context.otherGuestInformation.admissionStartDate !== "" ? ({display:"none"}):*/}
+                        {/*        (this.context.otherGuestInformationValidation.admissionStartDate_requiredReg === false ? ({right:'35px',display:"inline"}) : ({right:'12px',display:"inline"}))}>*/}
+                        {/*        تاریخ شروع پذیرش*/}
+                        {/*        <span style={{color : 'red'}}>*</span>*/}
+                        {/*    </label>*/}
 
-            </div>
+                        {/*    {*/}
+                        {/*        this.context.otherGuestInformationValidation.admissionStartDate_requiredReg === false*/}
+                        {/*            ? <small*/}
+                        {/*                className="text-danger">{this.context.errors['required']}</small>*/}
+                        {/*            : <div/>*/}
+                        {/*    }*/}
+
+                        {/*</div>*/}
+                        {/*<div className="input-group-register col-4">*/}
+                        {/*    <DatePicker calendarStyles={this.state.calStyles}*/}
+                        {/*                inputFormat="jYYYY/jM/jD"*/}
+                        {/*                className={`input form-control ${this.context.otherGuestInformationValidation.admissionEndDate_requiredReg === false ? "is-invalid" : ""}`}*/}
+                        {/*                onChange={(value) =>  this.context.handleDates(value, 'otherGuestInformation', 'admissionEndDate')}*/}
+                        {/*    />*/}
+                        {/*    <label className="placeholder" style={this.context.otherGuestInformation.admissionEndDate !== "" ? ({display:"none"}):*/}
+                        {/*        (this.context.otherGuestInformationValidation.admissionEndDate_requiredReg === false ? ({right:'35px',display:"inline"}) : ({right:'12px',display:"inline"}))}>*/}
+                        {/*        تاریخ اتمام پذیرش*/}
+                        {/*        <span style={{color : 'red'}}>*</span>*/}
+                        {/*    </label>*/}
+
+                        {/*    {*/}
+                        {/*        this.context.otherGuestInformationValidation.admissionEndDate_requiredReg === false*/}
+                        {/*            ? <small*/}
+                        {/*                className="text-danger">{this.context.errors['required']}</small>*/}
+                        {/*            : <div/>*/}
+                        {/*    }*/}
+
+                        {/*</div>*/}
+                        {/*<div className="input-group-register col-4">*/}
+                        {/*    <DatePicker calendarStyles={this.state.calStyles}*/}
+                        {/*                inputFormat="jYYYY/jM/jD"*/}
+                        {/*                className={`input form-control`}*/}
+                        {/*                onChange={(value) =>  this.context.handleDates(value, 'otherGuestInformation', 'paymentDate')}*/}
+                        {/*    />*/}
+                        {/*    <label className="placeholder" style={this.context.otherGuestInformation.paymentDate !== "" ? ({display:"none"}):*/}
+                        {/*        ({display:"inline"})}>تاریخ پرداخت</label>*/}
+                        {/*</div>*/}
+                        {/*<div className="input-group-register col-4">*/}
+                        {/*    <SimpleTextInput*/}
+                        {/*        condition4={this.context.otherGuestInformationValidation.rentPaymentAmount_numberReg}*/}
+                        {/*        value={this.context.otherGuestInformation.rentPaymentAmount}*/}
+                        {/*        fieldNameString={'otherGuestInformation'}*/}
+                        {/*        valueOfInputString={'rentPaymentAmount'}*/}
+                        {/*        // required={true}*/}
+                        {/*        label={'مبلغ پرداخت اجاره'}*/}
+                        {/*    />*/}
+                        {/*</div>*/}
+                        {/*<div className="input-group-register col-4">*/}
+                        {/*    <SimpleTextInput*/}
+                        {/*        condition4={this.context.otherGuestInformationValidation.depositPaymentAmount_numberReg}*/}
+                        {/*        value={this.context.otherGuestInformation.depositPaymentAmount}*/}
+                        {/*        fieldNameString={'otherGuestInformation'}*/}
+                        {/*        valueOfInputString={'depositPaymentAmount'}*/}
+                        {/*        label={'مبلغ پرداخت ودیعه'}*/}
+                        {/*    />*/}
+                        {/*</div>*/}
+                        {/*<div className="input-group-register col-4">*/}
+                        {/*    <SimpleTextInput*/}
+                        {/*        condition4={this.context.otherGuestInformationValidation.discountPaymentAmount_numberReg}*/}
+                        {/*        value={this.context.otherGuestInformation.discountPaymentAmount}*/}
+                        {/*        fieldNameString={'otherGuestInformation'}*/}
+                        {/*        valueOfInputString={'discountPaymentAmount'}*/}
+                        {/*        label={' مبلغ پرداخت تخفیف'}*/}
+                        {/*    />*/}
+                        {/*</div>*/}
+                        {/*<div className="input-group-register col-4">*/}
+                        {/*    <DatePicker calendarStyles={this.state.calStyles}*/}
+                        {/*                inputFormat="jYYYY/jM/jD"*/}
+                        {/*                className={`input form-control`}*/}
+                        {/*                onChange={(value) =>  this.context.handleDates(value, 'otherGuestInformation', 'birthDate')}*/}
+                        {/*    />*/}
+                        {/*    <label className="placeholder" style={this.context.otherGuestInformation.birthDate !== "" ? ({display:"none"}):*/}
+                        {/*        ({display:"inline"})}>تاریخ تولد</label>*/}
+                        {/*</div>*/}
+                    </div>
+                </div>
+            </>
         );
     }
 

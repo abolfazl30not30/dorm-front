@@ -33,6 +33,55 @@ class MainPage extends Component {
         charId:"",
         fields: {
 
+            personnelFields: {
+                id: '',
+                firstName: '',
+                lastName: '',
+                nationalCode: '',
+                certificateNumber: '',
+                phoneNumber: '',
+                address: '',
+                telephoneNumber: '',
+                emergencyNumber: '',
+                birthPlace: '',
+                birthDate: '',
+                education: '',
+                postalCode: '',
+                email: '',
+                nationality: '',
+                maritalStatus: '',
+                religion: '',
+                subReligion: '',
+                healthyStatus: '',
+                health: '',
+                alias: '',
+                university: '',
+                major: '',
+                spouseFullName: '',
+                spouseJob: '',
+                homeNumber: '',
+                bankName: '',
+                cardNumber: '',
+                bankAccountNumber: '',
+                bankAccountOwnerName: '',
+                bankAccountShabaNumber: '',
+                bankAccountExpirationDate: '',
+                cvv2: '',
+                fullName: '',
+                parentType: '',
+                parentId: '',
+                gender: '',
+                timePeriod: {
+                    startDate: '',
+                    endDate:'',
+                },
+                placeOfIssue:'',
+
+            },
+
+            // MAIN REGISTER -------------------------------
+
+
             //############################################################################## first page
             // ----------------------- <CInformationPage /> information
             constantInformationPage: {
@@ -305,7 +354,9 @@ class MainPage extends Component {
         return (
             <>
                 <div className='d-flex flex-column pt-4 px-5'>
-                    <BuildingContext.Provider value={{ unitId: this.state.unitId,
+                    <BuildingContext.Provider value={{
+                        personnelFields: this.state.fields.personnelFields,
+                        unitId: this.state.unitId,
                         personId:this.state.personId,
                         charId:this.state.charId,
                         typeofResident: this.state.typeofResident,

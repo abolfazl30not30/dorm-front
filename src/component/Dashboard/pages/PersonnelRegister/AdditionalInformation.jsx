@@ -4,9 +4,9 @@ class AdditionalInformation extends Component{
 
     render() {
         return (
-            <div>
+            <>
 
-            </div>
+            </>
         );
     }
 

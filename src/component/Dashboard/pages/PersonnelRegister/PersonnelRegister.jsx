@@ -25,10 +25,6 @@ class PersonnelRegister extends Component {
                 content: <UploadPage />,
             }
         ],
-        constantCheck : true,
-        otherGuestCheck: false,
-        familyGuestCheck : false,
-        typeofResident : "constant",
 
     }
 
