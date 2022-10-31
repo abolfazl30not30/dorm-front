@@ -39,6 +39,12 @@ class HamburgerMenu extends Component {
                             تقويم
                         </NavLink>
                     </li>
+                    <li className='sidenav-item'>
+                        <Link to="/PersonnelRegister" className='sidenav-link' onClick={window.innerWidth <= 768 && this.context.handleSidebar}>
+                            <i className="bi bi-file-earmark-text" />
+                            personnel register
+                        </Link>
+                    </li>
                     {/*<li className='sidenav-item'>*/}
                     {/*    <Link to="/Request" className='sidenav-link' onClick={window.innerWidth <= 768 && this.context.handleSidebar}>*/}
                     {/*        <i className="bi bi-person-circle" />*/}

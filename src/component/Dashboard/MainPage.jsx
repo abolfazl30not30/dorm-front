@@ -20,6 +20,7 @@ import CameraHistoryPage from "./pages/CameraHistoryPage/CameraHistoryPage";
 import CallHistory from './pages/callHistory/callHistory';
 import TrelloPage from "./pages/TrelloPage/TrelloPage";
 import Inventory from './pages/inventory/inventory';
+import PersonnelRegister from "./pages/PersonnelRegister/PersonnelRegister";
 
 
 class MainPage extends Component {
@@ -31,6 +32,55 @@ class MainPage extends Component {
         personId:"",
         charId:"",
         fields: {
+
+            personnelFields: {
+                id: '',
+                firstName: '',
+                lastName: '',
+                nationalCode: '',
+                placeOfIssue:'',
+                certificateNumber: '',
+                phoneNumber: '',
+                address: '',
+                telephoneNumber: '',
+                emergencyNumber: '',
+                birthPlace: '',
+                birthDate: '',
+                education: '',
+                postalCode: '',
+                email: '',
+                nationality: '',
+                maritalStatus: '',
+                religion: '',
+                subReligion: '',
+                healthyStatus: '', // boolean
+                health: '',
+                alias: '',
+
+                university: '', //
+                major: '',
+                spouseFullName: '',
+                spouseJob: '', //
+                homeNumber: '', // ????????
+                bankName: '',
+                cardNumber: '',
+                bankAccountNumber: '',
+                bankAccountOwnerName: '',
+                bankAccountShabaNumber: '',
+                bankAccountExpirationDate: '',
+                cvv2: '', //
+                fullName: '',//
+                parentType: '',
+                parentId: '',
+                gender: '',
+                timePeriod: {
+                    startDate: '',
+                    endDate:'',
+                },
+
+            },
+
+            //MAIN REGISTER
 
             //############################################################################## first page
             // ----------------------- <CInformationPage /> information
@@ -179,6 +229,58 @@ class MainPage extends Component {
         },
 
         specificValidations : {
+
+            personnelFieldsValidation: {
+                //first page
+                firstName_requiredReg: '',
+                lastName_requiredReg: '',
+                nationalCode_requiredReg: '',
+                placeOfIssue_requiredReg: '',
+                certificateNumber_requiredReg: '',
+                phoneNumber_requiredReg: '',
+                address_requiredReg: '',
+                telephoneNumber_requiredReg: '',
+                emergencyNumber_requiredReg: '',
+                birthPlace_requiredReg: '',
+                birthDate_requiredReg: '',
+                education_requiredReg: '',
+                postalCode_requiredReg: '',
+                email_requiredReg: '',
+                nationality_requiredReg: '',
+                maritalStatus_requiredReg: '',
+                religion_requiredReg: '',
+                nationalCode_numberReg: '',
+                certificateNumber_numberReg: '',
+                postalCode_numberReg: '',
+                phoneNumber_phoneNumberReg: '',
+                telephoneNumber_homeTelephoneReg: '',
+                emergencyNumber_MobileOrHomeTelephoneReg: '',
+                email_emailReg: '',
+
+                //second page
+                major_requiredReg: '',
+                spouseFullName_requiredReg: '',
+                bankName_requiredReg: '',
+                cardNumber_requiredReg: '',
+                bankAccountNumber_requiredReg: '',
+                bankAccountOwnerName_requiredReg: '',
+                bankAccountShabaNumber_requiredReg: '',
+                bankAccountExpirationDate_requiredReg: '',
+                fullName_requiredReg: '',
+                parentType_requiredReg: '',
+                parentId_requiredReg: '',
+                gender_requiredReg: '',
+
+                homeNumber_homeTelephoneReg: '',
+
+                cardNumber_numberReg: '',
+                bankAccountNumber_numberReg: '',
+                bankAccountShabaNumber_numberReg: '',
+                cvv2_numberReg: '',
+            },
+
+            //MAIN REGISTER
+
             //############################################################################## first page
 
             // ----------------------- <CInformationPage /> information validations
@@ -304,7 +406,10 @@ class MainPage extends Component {
         return (
             <>
                 <div className='d-flex flex-column pt-4 px-5'>
-                    <BuildingContext.Provider value={{ unitId: this.state.unitId,
+                    <BuildingContext.Provider value={{
+                        personnelFields: this.state.fields.personnelFields,
+                        personnelFieldsValidation: this.state.specificValidations.personnelFieldsValidation,
+                        unitId: this.state.unitId,
                         personId:this.state.personId,
                         charId:this.state.charId,
                         typeofResident: this.state.typeofResident,
@@ -372,6 +477,7 @@ class MainPage extends Component {
                             <Route path="/edit" element={(<EditFloorAndUnit />)} />
                             <Route path="/Calender" element={(<EventPage />)} />
                             <Route path="/Request" element={(<RequestPage />)} />
+                            <Route path="/PersonnelRegister" element={(<PersonnelRegister />)} />
                             <Route path="/Request-manager" element={(<RequestPageManager />)} />
                             <Route path="/camera-history" element={(<CameraHistoryPage />)} />
                             <Route path="/PaymentHistory" element={(<PaymentHistory />)} />
