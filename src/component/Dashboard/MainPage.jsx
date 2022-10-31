@@ -278,7 +278,7 @@ class MainPage extends Component {
                 cardNumber_numberReg: '',
                 bankAccountNumber_numberReg: '',
                 bankAccountShabaNumber_numberReg: '',
-                cvv2_numberRegAndEmpty: '',
+                cvv2_numberReg: '',
             },
 
 

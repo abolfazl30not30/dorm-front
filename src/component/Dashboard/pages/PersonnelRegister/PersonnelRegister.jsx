@@ -76,7 +76,6 @@ class PersonnelRegister extends Component {
     personnelAdditionalInformation = () => {
         let requiredReg = /^\s*$/;
         let numberReg = /^\s*[0-9]*\s*$/;
-        let numberAndEmptyReg = /^(\s*[0-9]*\s*|\s*)$/;
         let homeTelephoneReg = /^(\d{3}-\d{8}|\s*)$/; // 012-34567890
 
         let major_requiredReg = !requiredReg.test(this.context.personnelFields.major);
@@ -97,24 +96,24 @@ class PersonnelRegister extends Component {
         let cardNumber_numberReg = numberReg.test(this.context.personnelFields.cardNumber)
         let bankAccountNumber_numberReg = numberReg.test(this.context.personnelFields.bankAccountNumber)
         let bankAccountShabaNumber_numberReg = numberReg.test(this.context.personnelFields.bankAccountShabaNumber)
-        let cvv2_numberAndEmptyReg = numberAndEmptyReg.test(this.context.personnelFields.cvv2)
+        let cvv2_numberReg = numberReg.test(this.context.personnelFields.cvv2)
 
         this.context.handleSpecificValidations([major_requiredReg, spouseFullName_requiredReg,
                 bankName_requiredReg, cardNumber_requiredReg, bankAccountNumber_requiredReg, bankAccountOwnerName_requiredReg,
                 bankAccountShabaNumber_requiredReg, bankAccountExpirationDate_requiredReg,
                 parentType_requiredReg, parentId_requiredReg, gender_requiredReg, cardNumber_numberReg,
-                bankAccountNumber_numberReg, bankAccountShabaNumber_numberReg, cvv2_numberAndEmptyReg],
+                bankAccountNumber_numberReg, bankAccountShabaNumber_numberReg, cvv2_numberReg],
             ['major_requiredReg', 'spouseFullName_requiredReg',
                 'bankName_requiredReg', 'cardNumber_requiredReg', 'bankAccountNumber_requiredReg', 'bankAccountOwnerName_requiredReg',
                 'bankAccountShabaNumber_requiredReg', 'bankAccountExpirationDate_requiredReg',
                 'parentType_requiredReg', 'parentId_requiredReg', 'gender_requiredReg', 'cardNumber_numberReg',
-                'bankAccountNumber_numberReg', 'bankAccountShabaNumber_numberReg', 'cvv2_numberAndEmptyReg'], 'personnelFieldsValidation')
+                'bankAccountNumber_numberReg', 'bankAccountShabaNumber_numberReg', 'cvv2_numberReg'], 'personnelFieldsValidation')
 
         return major_requiredReg && spouseFullName_requiredReg &&
             bankName_requiredReg && cardNumber_requiredReg && bankAccountNumber_requiredReg && bankAccountOwnerName_requiredReg &&
             bankAccountShabaNumber_requiredReg && bankAccountExpirationDate_requiredReg &&
             parentType_requiredReg && parentId_requiredReg && gender_requiredReg && cardNumber_numberReg &&
-            bankAccountNumber_numberReg && bankAccountShabaNumber_numberReg && cvv2_numberAndEmptyReg;
+            bankAccountNumber_numberReg && bankAccountShabaNumber_numberReg && cvv2_numberReg;
 
     }
 

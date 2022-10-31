@@ -104,9 +104,8 @@ class AdditionalInformation extends Component{
                             />
                         </div>
                         <div className="input-group-register col-4">
-                            {/* BBBBBBBBUUUUUUUUUGGGGGGGGg*/}
                             <SimpleTextInput
-                                condition4={this.context.personnelFieldsValidation.cvv2_numberRegAndEmpty}
+                                condition4={this.context.personnelFieldsValidation.cvv2_numberReg}
                                 value={this.context.personnelFields.cvv2}
                                 fieldNameString={'personnelFields'}
                                 valueOfInputString={'cvv2'}
