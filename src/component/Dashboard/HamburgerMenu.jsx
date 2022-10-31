@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import logo from "../../img/logo.png"
 import "../../style/hamburgerMenu.css";
-import { Link } from 'react-router-dom';
+import {Link, NavLink} from 'react-router-dom';
 import MainContext from '../../contexts/ContextProvider';
 
 class HamburgerMenu extends Component {
@@ -12,52 +12,32 @@ class HamburgerMenu extends Component {
         return (
 
             <div style={
-                this.context.activeMenu ? { display: "none" } : { display: "block" }
+                this.context.activeMenu ? {display: "none"} : {display: "block"}
             }>
                 <div className='close-icon'>
-                    <button onClick={() => { this.context.handleSidebar() }}>
+                    <button onClick={() => {
+                        this.context.handleSidebar()
+                    }}>
                         <i className='bi bi-x'/>
                     </button>
                 </div>
                 <div className='logo-container'>
-                    <img src={logo} className="sidenav-logo" alt="لوگو" />
+                    <img src={logo} className="sidenav-logo" alt="لوگو"/>
                 </div>
                 <ul>
                     <li className='sidenav-item'>
-                        <Link to="/" className='sidenav-link' onClick={window.innerWidth <= 768 && this.context.handleSidebar}>
-                            <i className="bi bi-people"/>
-                            خانه
-                        </Link>
-                    </li>
-                    <li className='sidenav-item'>
-                        <Link to="/Register" className='sidenav-link' onClick={window.innerWidth <= 768 && this.context.handleSidebar}>
-                            <i className="bi bi-person-plus"/>
-                            پذیرش
-                        </Link>
-                    </li>
-                    <li className='sidenav-item'>
-                        <Link to="/People" className='sidenav-link' onClick={window.innerWidth <= 768 && this.context.handleSidebar}>
-                            <i className="bi bi-person-plus" />
-                            اشخاص
-                        </Link>
-                    </li>
-                    <li className='sidenav-item'>
-                        <Link to="/booking" className='sidenav-link' onClick={window.innerWidth <= 768 && this.context.handleSidebar}>
-                            <i className="bi bi-journal-plus" />
-                            موجودی و ظرفیت
-                        </Link>
-                    </li>
-                    <li className='sidenav-item'>
-                        <Link to="/payment" className='sidenav-link' onClick={window.innerWidth <= 768 && this.context.handleSidebar}>
-                            <i className="bi bi-journal-plus" />
+                        <NavLink activeClassName='active-sidebar' to="/payment" className='sidenav-link'
+                                 onClick={window.innerWidth <= 768 && this.context.handleSidebar}>
+                            <i className="bi bi-journal-plus"/>
                             ثبت فاکتور
-                        </Link>
+                        </NavLink>
                     </li>
                     <li className='sidenav-item'>
-                        <Link to="/Calender" className='sidenav-link' onClick={window.innerWidth <= 768 && this.context.handleSidebar}>
-                            <i className="bi bi-file-earmark-text" />
+                        <NavLink activeClassName='active-sidebar' to="/Calender" className='sidenav-link'
+                                 onClick={window.innerWidth <= 768 && this.context.handleSidebar}>
+                            <i className="bi bi-file-earmark-text"/>
                             تقويم
-                        </Link>
+                        </NavLink>
                     </li>
                     {/*<li className='sidenav-item'>*/}
                     {/*    <Link to="/Request" className='sidenav-link' onClick={window.innerWidth <= 768 && this.context.handleSidebar}>*/}
@@ -66,60 +46,66 @@ class HamburgerMenu extends Component {
                     {/*    </Link>*/}
                     {/*</li>*/}
                     <li className='sidenav-item'>
-                        <Link to="/Request-manager" className='sidenav-link' onClick={window.innerWidth <= 768 && this.context.handleSidebar}>
-                            <i className="bi bi-person-circle" />
+                        <NavLink activeClassName='active-sidebar' to="/Request-manager" className='sidenav-link'
+                                 onClick={window.innerWidth <= 768 && this.context.handleSidebar}>
+                            <i className="bi bi-person-circle"/>
                             درخواست (مدیریت)
-                        </Link>
+                        </NavLink>
                     </li>
                     <li className='sidenav-item'>
-                        <Link to="/camera-history" className='sidenav-link' onClick={window.innerWidth <= 768 && this.context.handleSidebar}>
-                            <i className="bi bi-person-circle" />
+                        <NavLink activeClassName='active-sidebar' to="/camera-history" className='sidenav-link'
+                                 onClick={window.innerWidth <= 768 && this.context.handleSidebar}>
+                            <i className="bi bi-person-circle"/>
                             دوربین
-                        </Link>
+                        </NavLink>
                     </li>
                     <li className='sidenav-item'>
-                        <Link to="/PaymentHistory" className='sidenav-link' onClick={window.innerWidth <= 768 && this.context.handleSidebar}>
+                        <NavLink activeClassName='active-sidebar' to="/PaymentHistory" className='sidenav-link'
+                                 onClick={window.innerWidth <= 768 && this.context.handleSidebar}>
                             <i className="bi bi-journal-plus"/>
                             صورتحساب
-                        </Link>
+                        </NavLink>
                     </li>
                     <li className='sidenav-item'>
-                        <Link to="/contacts" className='sidenav-link' onClick={window.innerWidth <= 768 && this.context.handleSidebar}>
+                        <NavLink activeClassName='active-sidebar' to="/contacts" className='sidenav-link'
+                                 onClick={window.innerWidth <= 768 && this.context.handleSidebar}>
                             <i className="bi bi-journal-plus"/>
                             مخاطبین
-                        </Link>
+                        </NavLink>
                     </li>
                     <li className='sidenav-item'>
-                        <Link to="/CallHistory" className='sidenav-link' onClick={window.innerWidth <= 768 && this.context.handleSidebar}>
+                        <NavLink activeClassName='active-sidebar' to="/CallHistory" className='sidenav-link'
+                                 onClick={window.innerWidth <= 768 && this.context.handleSidebar}>
                             <i className="bi bi-journal-plus"></i>
                             تاریخچه تماس ها
-                        </Link>
+                        </NavLink>
                     </li>
                     <li className='sidenav-item'>
-                        <Link to="/taskManagement" className='sidenav-link' onClick={window.innerWidth <= 768 && this.context.handleSidebar}>
+                        <NavLink activeClassName='active-sidebar' to="/taskManagement" className='sidenav-link'
+                                 onClick={window.innerWidth <= 768 && this.context.handleSidebar}>
                             <i className="bi bi-journal-plus"></i>
                             مدیریت وظایف
-                        </Link>
+                        </NavLink>
                     </li>
                     <li className="sidenav-item">
-                        <Link to="/Inventory" className='sidenav-link' onClick={window.innerWidth <= 768 && this.context.handleSidebar}>
+                        <NavLink activeClassName='active-sidebar' to="/Inventory" className='sidenav-link'
+                                 onClick={window.innerWidth <= 768 && this.context.handleSidebar}>
                             <i className="bi bi-journal-plus"></i>
                             انبار
-                        </Link>
+                        </NavLink>
                     </li>
                     <li className='sidenav-item'>
-                        <Link to="/" className='sidenav-link' onClick={window.innerWidth <= 768 && this.context.handleSidebar}>
-                            <i className="bi bi-person-circle" />
+                        <NavLink activeClassName='active-sidebar' to="/" className='sidenav-link'
+                                 onClick={window.innerWidth <= 768 && this.context.handleSidebar}>
+                            <i className="bi bi-person-circle"/>
                             کادر مدیریت
-                        </Link>
+                        </NavLink>
                     </li>
                 </ul>
             </div>
         );
     }
 }
-
-
 
 
 export default HamburgerMenu;

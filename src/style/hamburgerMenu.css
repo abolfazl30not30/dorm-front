@@ -43,7 +43,7 @@
 
 .sidenav .logo-container {
   width: 95%;
-  height: 13%;
+  height: 20%;
 
 }
 
@@ -63,19 +63,25 @@
 }
 
 .sidenav li.sidenav-item a {
+  display: flex;
+  align-items: center;
   margin-right: 1rem;
-  display: inline-block;
   width: 94%;
   height: 35px;
-  padding: 10px 10px;
+  padding: 21px 10px;
+  border-radius: 10px;
   text-decoration: none;
   color: #000;
 }
 
 .sidenav li.sidenav-item a:hover {
-  background-color: rgb(244, 244, 244);
+  background-color: #fff2e0;
 }
 
 .sidenav li.sidenav-item i {
   margin-left: 0.6rem;
+}
+
+.active{
+  background-color: #fff2e0 ;
 }

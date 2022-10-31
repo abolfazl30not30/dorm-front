@@ -3,9 +3,12 @@ import HamburgerMenu from './HamburgerMenu.jsx';
 import "../../style/header.css";
 import MainContext from '../../contexts/ContextProvider';
 import Dropdown from 'react-bootstrap/Dropdown';
-import {BsFillPersonFill} from "react-icons/bs"
+import {BsFillPersonFill,BsPerson,BsPersonPlus} from "react-icons/bs"
 import {IoMdExit} from "react-icons/io"
 import {GoTasklist} from "react-icons/go"
+import {AiOutlineHome} from "react-icons/ai";
+import {MdOutlineInventory} from "react-icons/md"
+import {NavLink} from "react-router-dom";
 
 class Header extends Component {
     static contextType = MainContext;
@@ -15,27 +18,63 @@ class Header extends Component {
         return (
             <>
                 <div className='header'>
-                    <button className='btn' onClick={() => {
-                        this.context.handleSidebar()
-                    }}><i className="bi bi-list"></i></button>
+                    <div className="d-flex align-item-center">
+                        <button className='btn' onClick={() => {
+                            this.context.handleSidebar()
+                        }}><i className="bi bi-list"></i></button>
+                        <ul className="d-flex navbar" >
+                            <li className='navbar-item'>
+                                <NavLink activeClassName='active-header' to="/" className='sidenav-link' >
+                                    <AiOutlineHome style={{paddingLeft:"7px"}} font-size="20px"/>
+                                    خانه
+                                </NavLink>
+                            </li>
+                            <li className='navbar-item'>
+                                <NavLink activeClassName='active-header' to="/Register" className='sidenav-link' >
+                                    <BsPersonPlus style={{paddingLeft:"7px"}} font-size="20px"/>
+                                    پذیرش
+                                </NavLink>
+                            </li>
+                            <li className='navbar-item'>
+                                <NavLink  activeClassName='active-header' to="/People" className='sidenav-link' >
+                                    <BsPerson style={{paddingLeft:"7px"}} font-size="20px"/>
+                                    اشخاص
+                                </NavLink>
+                            </li>
+                            <li className='navbar-item'>
+                                <NavLink activeClassName='active-header' to="/booking" className='sidenav-link'>
+                                    <MdOutlineInventory style={{paddingLeft:"7px"}} font-size="20px" />
+                                    موجودی و ظرفیت
+                                </NavLink>
+                            </li>
+                        </ul>
+                    </div>
                     <div>
-
                         <Dropdown>
                             <Dropdown.Toggle className="profile-dropdown" id="dropdown-basic">
-                                <div className="profile-img-container">
+                                <div className="profile-img-container d-flex align-items-center">
                                     <button className="none-btn">
                                         <img className="profile-img"
-                                             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBnUckFxDVe5FOT5vuVfWCvWWY1pUrOPBOFPu9CNZYpABJSYPCigxy9rEc32E6mBamw3c&usqp=CAU" alt="profile"/>
+                                             src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
+                                             alt="profile"/>
                                     </button>
                                 </div>
                             </Dropdown.Toggle>
-                            <Dropdown.Menu  style={{zIndex:"100",width:"350px",textAlign:"right"}} >
-                                <div>
-                                    <button className="none-btn">
-                                        <BsFillPersonFill/>
-                                        <span>علی محمدی</span>
-                                        <p>مشاهده حساب کاربری</p>
-                                    </button>
+                            <Dropdown.Menu  style={{zIndex:"100",width:"250px",textAlign:"right"}} >
+                                <div className="d-flex align-items-center px-4 py-2 sidebar-profile">
+                                    <div className="sidebar-profile-img">
+                                        <img className="profile-img"
+                                             src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
+                                             alt="profile"/>
+                                    </div>
+                                    <div className="d-flex flex-column justify-content-center mx-3">
+                                        <h6>
+                                            علی محمدی
+                                        </h6>
+                                        <p>
+                                            سرپرست
+                                        </p>
+                                    </div>
                                 </div>
                                 <div>
                                     <button className="none-btn">
