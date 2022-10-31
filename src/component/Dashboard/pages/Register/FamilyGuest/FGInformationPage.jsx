@@ -3,25 +3,13 @@ import * as yup from 'yup';
 import BuildingContext from "../../../../../contexts/Building";
 import {DatePicker} from "react-persian-datepicker";
 import SimpleTextInput from "../../../../CustomInputs/SimpleTextInput";
+import DateInput from "../../../../CustomInputs/DateInput";
 
 
 class FGInformationPage extends Component {
     static contextType = BuildingContext;
 
-    state = {
-        calStyles : {
-            calendarContainer: "calendarContainer",
-            dayPickerContainer: "dayPickerContainer",
-            monthsList: "monthsList",
-            daysOfWeek: "daysOfWeek",
-            dayWrapper: "dayWrapper",
-            selected: "selected",
-            heading: "heading",
-            next: "next",
-            prev: "prev",
-            title: "title",
-        }
-    }
+    state = {}
 
     render() {
         return (
@@ -71,76 +59,49 @@ class FGInformationPage extends Component {
                             />
                         </div>
                         <div className="input-group-register col-4">
-                            <DatePicker calendarStyles={this.state.calStyles}
-                                        inputFormat="jYYYY/jM/jD"
-                                        className="input form-control"
-                                        onChange={(value) =>  this.context.handleDates(value, 'familyGuestInformation', 'birthDate')}
+                            <DateInput value={this.context.valueOfDates.familyGuest.birthDate}
+                                       fieldNameString={'familyGuestInformation'}
+                                       valueFieldString={'familyGuest'}
+                                       valueOfInputString={'birthDate'}
+                                       label={'تاریخ تولد'}
+                                       timeInclude={false}
                             />
-                            <label className="placeholder" style={this.context.familyGuestInformation.birthDate !== "" ? ({display:"none"}):
-                                ({display:"inline"})}>تاریخ تولد</label>
                         </div>
                         <div className="input-group-register col-4">
-                            <DatePicker calendarStyles={this.state.calStyles}
-                                        inputFormat="jYYYY/jM/jD"
-                                        className={`input form-control ${this.context.familyGuestInformationValidation.admissionStartDate_requiredReg === false ? "is-invalid" : ""}`}
-                                        onChange={(value) =>  this.context.handleDates(value, 'familyGuestInformation', 'admissionStartDate')}
+                            <DateInput condition1={this.context.familyGuestInformationValidation.admissionStartDate_requiredReg}
+                                       value={this.context.valueOfDates.familyGuest.admissionStartDate}
+                                       valueFieldString={'familyGuest'}
+                                       fieldNameString={'familyGuestInformation'}
+                                       valueOfInputString={'admissionStartDate'}
+                                       required={true}
+                                       label={' تاریخ شروع پذیرش'}
+                                       timeInclude={true}
                             />
-                            <label className="placeholder" style={this.context.familyGuestInformation.admissionStartDate !== "" ? ({display:"none"}):
-                                (this.context.familyGuestInformationValidation.admissionStartDate_requiredReg === false ? ({right:'35px',display:"inline"}) : ({right:'12px',display:"inline"}))}>
-                                تاریخ شروع پذیرش
-                                <span style={{color : 'red'}}>*</span>
-                            </label>
-
-                            {
-                                this.context.familyGuestInformationValidation.admissionStartDate_requiredReg === false
-                                    ? <small
-                                        className="text-danger">{this.context.errors['required']}</small>
-                                    : <div/>
-                            }
 
                         </div>
 
                         <div className="input-group-register col-4">
-                            <DatePicker calendarStyles={this.state.calStyles}
-                                        inputFormat="jYYYY/jM/jD"
-                                        className={`input form-control ${this.context.familyGuestInformationValidation.admissionEndDate_requiredReg === false ? "is-invalid" : ""}`}
-                                        onChange={(value) =>  this.context.handleDates(value, 'familyGuestInformation', 'admissionEndDate')}
+                            <DateInput condition1={this.context.familyGuestInformationValidation.admissionEndDate_requiredReg}
+                                       value={this.context.valueOfDates.familyGuest.admissionEndDate}
+                                       valueFieldString={'familyGuest'}
+                                       fieldNameString={'familyGuestInformation'}
+                                       valueOfInputString={'admissionEndDate'}
+                                       required={true}
+                                       label={'تاریخ اتمام پذیرش'}
+                                       timeInclude={true}
                             />
-                            <label className="placeholder" style={this.context.familyGuestInformation.admissionEndDate !== "" ? ({display:"none"}):
-                                (this.context.familyGuestInformationValidation.admissionEndDate_requiredReg === false ? ({right:'35px',display:"inline"}) : ({right:'12px',display:"inline"}))}>
-                                تاریخ اتمام پذیرش
-                                <span style={{color : 'red'}}>*</span>
-                            </label>
-
-                            {
-                                this.context.familyGuestInformationValidation.admissionEndDate_requiredReg === false
-                                    ? <small
-                                        className="text-danger">{this.context.errors['required']}</small>
-                                    : <div/>
-                            }
 
                         </div>
                         <div className="input-group-register col-4">
-                            <DatePicker calendarStyles={this.state.calStyles}
-                                        inputFormat="jYYYY/jM/jD"
-                                        className={`input form-control ${this.context.familyGuestInformationValidation.paymentDate_requiredReg === false ? "is-invalid" : ""}`}
-                                        onChange={(value) =>  this.context.handleDates(value, 'familyGuestInformation', 'paymentDate')}
+                            <DateInput condition1={this.context.familyGuestInformationValidation.paymentDate_requiredReg}
+                                       value={this.context.valueOfDates.familyGuest.paymentDate}
+                                       valueFieldString={'familyGuest'}
+                                       fieldNameString={'familyGuestInformation'}
+                                       valueOfInputString={'paymentDate'}
+                                       required={true}
+                                       label={'تاریخ پرداخت'}
+                                       timeInclude={false}
                             />
-                            <label className="placeholder" style={this.context.familyGuestInformation.paymentDate !== "" ? ({display:"none"}):
-                                (this.context.familyGuestInformationValidation.paymentDate_requiredReg === false ? ({right:'35px',display:"inline"}) : ({right:'12px',display:"inline"}))}>
-                                تاریخ پرداخت
-                                <span style={{color : 'red'}}>*</span>
-                            </label>
-
-                            {
-                                this.context.familyGuestInformationValidation.paymentDate_requiredReg === false
-                                    ? <small
-                                        className="text-danger">{this.context.errors['required']}</small>
-                                    : <div/>
-                            }
-
-                        </div>
-                        <div>
                         </div>
                         <div className="input-group-register col-4">
                             <SimpleTextInput
@@ -183,13 +144,12 @@ class FGInformationPage extends Component {
                             <label className="placeholder">نسبت با اقامتگر</label>
                         </div>
                         <div className="input-group-register col-8">
-                            <input type="text"
-                                   className="input form-control"
-                                   value={this.context.familyGuestInformation.address}
-                                   onChange={(e) => this.context.handleFields(e, 'familyGuestInformation', 'address')}
-                                   placeholder=" "
+                            <SimpleTextInput
+                                value={this.context.familyGuestInformation.address}
+                                fieldNameString={'familyGuestInformation'}
+                                valueOfInputString={'address'}
+                                label={'آدرس محل سکونت'}
                             />
-                            <label className="placeholder">آدرس محل سکونت</label>
                         </div>
                         <div className="input-group-register col-4">
                             <SimpleTextInput

@@ -108,7 +108,16 @@ class DateInput extends Component{
 
                 >
                 </DatePicker>
-                <label className="placeholder" style={{right: this.props.condition1 === false ? '35px' : '12px'}}>
+
+                <label className="placeholder"
+                       style={{right: this.props.condition1 === false ? '35px' : '12px'}}
+                    // style={this.props.value !== "" || this.props.value !== {}
+                    //     ? ({display:"none"})
+                    //     : (this.props.condition1 === false
+                    //         ? ({right:'35px',display:"inline"})
+                    //         : ({right:'12px',display:"inline"}))
+                    // }
+                >
                     {
                         this.props.label
                     }

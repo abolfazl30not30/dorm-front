@@ -31,6 +31,29 @@ class MainPage extends Component {
         unitId: "",
         personId:"",
         charId:"",
+
+        valueOfDates: {
+            constantResident: {
+                birthDate: '',
+                admissionStartDate: '',
+                admissionEndDate: '',
+
+            },
+            familyGuest: {
+                birthDate: '',
+                admissionStartDate: '',
+                admissionEndDate: '',
+                paymentDate: '',
+
+            },
+            otherGuest: {
+                birthDate: '',
+                admissionStartDate: '',
+                admissionEndDate: '',
+                paymentDate: '',
+            }
+        },
+
         fields: {
 
             personnelFields: {
@@ -416,6 +439,7 @@ class MainPage extends Component {
                         unitNumber: this.state.unitNumber,
                         fields: this.state.fields,
                         errors: this.state.errors,
+                        valueOfDates: this.state.valueOfDates,
                         constantInformationPage: this.state.fields.constantInformationPage,
                         constantInformationPageValidation: this.state.specificValidations.constantInformationPageValidation,
 
@@ -454,6 +478,7 @@ class MainPage extends Component {
                         handlePersonId : this.handlePersonId,
                         handleFields: this.handleFields,
                         handleDates: this.handleDates,
+                        handleValueOfDate: this.handleValueOfDate,
                         handleValidations: this.handleValidations,
                         handleSpecificValidations: this.handleSpecificValidations,
                         handleUploadedFile : this.handleUploadedFile,
@@ -531,6 +556,12 @@ class MainPage extends Component {
         let convertDate = date.getFullYear() + "/" + date.getMonth() + "/" + date.getDate() + " " + "00:" + "00:" + "00";
         newFields[residentType][field] = convertDate
         this.setState({ fields: newFields });
+    }
+
+    handleValueOfDate = (value, residentType, field) => {
+        let newFields = {...this.state.valueOfDates};
+        newFields[residentType][field] = value
+        this.setState({ valueOfDates: newFields });
     }
 
     handleValidations = (fields, names) => {

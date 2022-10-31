@@ -3,6 +3,7 @@ import "../../../../../style/registerPage.css"
 import BuildingContext from "../../../../../contexts/Building";
 import {DatePicker} from "react-persian-datepicker";
 import SimpleTextInput from "../../../../CustomInputs/SimpleTextInput";
+import DateInput from "../../../../CustomInputs/DateInput";
 
 class CInformationPage extends Component {
     static contextType = BuildingContext;
@@ -89,25 +90,15 @@ class CInformationPage extends Component {
                             />
                         </div>
                         <div className="input-group-register col-4 date-container">
-                            <DatePicker calendarStyles={this.state.calStyles}
-                                        inputFormat="jYYYY/jM/jD"
-                                        className={`input form-control ${this.context.constantInformationPageValidation.birthDate_requiredReg === false ? "is-invalid" : ""}`}
-                                        onChange={(value) =>  {this.context.handleDates(value, 'constantInformationPage', 'birthDate')}}
+                            <DateInput condition1={this.context.constantInformationPageValidation.birthDate_requiredReg}
+                                       value={this.context.valueOfDates.constantResident.birthDate}
+                                       valueFieldString={'constantResident'}
+                                       fieldNameString={'constantInformationPage'}
+                                       valueOfInputString={'birthDate'}
+                                       required={true}
+                                       label={'تاریخ تولد'}
+                                       timeInclude={false}
                             />
-
-                            <label className="placeholder"
-                                   style={this.context.constantInformationPage.birthDate !== "" ? ({display:"none"}):
-                                (this.context.constantInformationPageValidation.birthDate_requiredReg === false ? ({right:'35px',display:"inline"}) : ({right:'12px',display:"inline"}))}>
-                                تاریخ تولد
-                                <span style={{color : 'red'}}>*</span>
-                            </label>
-
-                            {
-                                this.context.constantInformationPageValidation.birthDate_requiredReg === false
-                                    ? <small
-                                        className="text-danger">{this.context.errors['required']}</small>
-                                    : <div/>
-                            }
 
                         </div>
                         <div className="input-group-register col-4">

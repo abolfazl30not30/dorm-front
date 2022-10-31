@@ -2,24 +2,12 @@ import React, { Component } from 'react';
 import BuildingContext from "../../../../../contexts/Building";
 import {DatePicker} from "react-persian-datepicker";
 import SimpleTextInput from "../../../../CustomInputs/SimpleTextInput";
+import DateInput from "../../../../CustomInputs/DateInput";
 
 class OGInformationPage extends Component {
     static contextType = BuildingContext;
 
-    state = {
-        calStyles : {
-            calendarContainer: "calendarContainer",
-            dayPickerContainer: "dayPickerContainer",
-            monthsList: "monthsList",
-            daysOfWeek: "daysOfWeek",
-            dayWrapper: "dayWrapper",
-            selected: "selected",
-            heading: "heading",
-            next: "next",
-            prev: "prev",
-            title: "title",
-        }
-    }
+    state = {}
     render() {
         return (
             <>
@@ -64,53 +52,35 @@ class OGInformationPage extends Component {
                             />
                         </div>
                         <div className="input-group-register col-4">
-                            <DatePicker calendarStyles={this.state.calStyles}
-                                        inputFormat="jYYYY/jM/jD"
-                                        className={`input form-control ${this.context.otherGuestInformationValidation.admissionStartDate_requiredReg === false ? "is-invalid" : ""}`}
-                                        onChange={(value) =>  this.context.handleDates(value, 'otherGuestInformation', 'admissionStartDate')}
+                            <DateInput condition1={this.context.otherGuestInformationValidation.admissionStartDate_requiredReg}
+                                       value={this.context.valueOfDates.otherGuest.admissionStartDate}
+                                       valueFieldString={'otherGuest'}
+                                       fieldNameString={'otherGuestInformation'}
+                                       valueOfInputString={'admissionStartDate'}
+                                       required={true}
+                                       label={' تاریخ شروع پذیرش'}
+                                       timeInclude={true}
                             />
-                            <label className="placeholder" style={this.context.otherGuestInformation.admissionStartDate !== "" ? ({display:"none"}):
-                                (this.context.otherGuestInformationValidation.admissionStartDate_requiredReg === false ? ({right:'35px',display:"inline"}) : ({right:'12px',display:"inline"}))}>
-                                تاریخ شروع پذیرش
-                                <span style={{color : 'red'}}>*</span>
-                            </label>
-
-                            {
-                                this.context.otherGuestInformationValidation.admissionStartDate_requiredReg === false
-                                    ? <small
-                                        className="text-danger">{this.context.errors['required']}</small>
-                                    : <div/>
-                            }
-
                         </div>
                         <div className="input-group-register col-4">
-                            <DatePicker calendarStyles={this.state.calStyles}
-                                        inputFormat="jYYYY/jM/jD"
-                                        className={`input form-control ${this.context.otherGuestInformationValidation.admissionEndDate_requiredReg === false ? "is-invalid" : ""}`}
-                                        onChange={(value) =>  this.context.handleDates(value, 'otherGuestInformation', 'admissionEndDate')}
+                            <DateInput timeInclude={true}
+                                       condition1={this.context.otherGuestInformationValidation.admissionEndDate_requiredReg}
+                                       value={this.context.valueOfDates.otherGuest.admissionEndDate}
+                                       valueFieldString={'otherGuest'}
+                                       fieldNameString={'otherGuestInformation'}
+                                       valueOfInputString={'admissionEndDate'}
+                                       required={true}
+                                       label={'تاریخ اتمام پذیرش'}
                             />
-                            <label className="placeholder" style={this.context.otherGuestInformation.admissionEndDate !== "" ? ({display:"none"}):
-                                (this.context.otherGuestInformationValidation.admissionEndDate_requiredReg === false ? ({right:'35px',display:"inline"}) : ({right:'12px',display:"inline"}))}>
-                                تاریخ اتمام پذیرش
-                                <span style={{color : 'red'}}>*</span>
-                            </label>
-
-                            {
-                                this.context.otherGuestInformationValidation.admissionEndDate_requiredReg === false
-                                    ? <small
-                                        className="text-danger">{this.context.errors['required']}</small>
-                                    : <div/>
-                            }
-
                         </div>
                         <div className="input-group-register col-4">
-                            <DatePicker calendarStyles={this.state.calStyles}
-                                        inputFormat="jYYYY/jM/jD"
-                                        className={`input form-control`}
-                                        onChange={(value) =>  this.context.handleDates(value, 'otherGuestInformation', 'paymentDate')}
+                            <DateInput value={this.context.valueOfDates.otherGuest.paymentDate}
+                                       valueFieldString={'otherGuest'}
+                                       fieldNameString={'otherGuestInformation'}
+                                       valueOfInputString={'paymentDate'}
+                                       label={'تاریخ پرداخت'}
+                                       timeInclude={false}
                             />
-                            <label className="placeholder" style={this.context.otherGuestInformation.paymentDate !== "" ? ({display:"none"}):
-                                ({display:"inline"})}>تاریخ پرداخت</label>
                         </div>
                         <div className="input-group-register col-4">
                             <SimpleTextInput
@@ -118,7 +88,6 @@ class OGInformationPage extends Component {
                                 value={this.context.otherGuestInformation.rentPaymentAmount}
                                 fieldNameString={'otherGuestInformation'}
                                 valueOfInputString={'rentPaymentAmount'}
-                                // required={true}
                                 label={'مبلغ پرداخت اجاره'}
                             />
                         </div>
@@ -141,13 +110,12 @@ class OGInformationPage extends Component {
                             />
                         </div>
                         <div className="input-group-register col-4">
-                            <DatePicker calendarStyles={this.state.calStyles}
-                                        inputFormat="jYYYY/jM/jD"
-                                        className={`input form-control`}
-                                        onChange={(value) =>  this.context.handleDates(value, 'otherGuestInformation', 'birthDate')}
+                            <DateInput value={this.context.otherGuestInformation.birthDate}
+                                       fieldNameString={'otherGuestInformation'}
+                                       valueOfInputString={'birthDate'}
+                                       label={'تاریخ تولد'}
+                                       timeInclude={false}
                             />
-                            <label className="placeholder" style={this.context.otherGuestInformation.birthDate !== "" ? ({display:"none"}):
-                                ({display:"inline"})}>تاریخ تولد</label>
                         </div>
                     </div>
                 </div>

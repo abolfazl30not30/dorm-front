@@ -3,23 +3,11 @@ import "../../../../../style/registerPage.css"
 import BuildingContext from "../../../../../contexts/Building";
 import {DatePicker} from "react-persian-datepicker";
 import SimpleTextInput from "../../../../CustomInputs/SimpleTextInput";
+import DateInput from "../../../../CustomInputs/DateInput";
 class CInformationFurtherPage extends Component {
     static contextType = BuildingContext;
 
-    state = {
-        calStyles : {
-            calendarContainer: "calendarContainer",
-            dayPickerContainer: "dayPickerContainer",
-            monthsList: "monthsList",
-            daysOfWeek: "daysOfWeek",
-            dayWrapper: "dayWrapper",
-            selected: "selected",
-            heading: "heading",
-            next: "next",
-            prev: "prev",
-            title: "title",
-        }
-    }
+    state = {}
     render() {
         return (
             <>
@@ -49,45 +37,26 @@ class CInformationFurtherPage extends Component {
                             />
                         </div>
                         <div className="input-group-register col-6">
-                            <DatePicker calendarStyles={this.state.calStyles}
-                                        inputFormat="jYYYY/jM/jD"
-                                        className={`input form-control ${this.context.constantInformationFurtherValidation.admissionStartDate_requiredReg === false ? "is-invalid" : ""}`}
-                                        onChange={(value) =>  this.context.handleDates(value, 'constantInformationFurther', 'admissionStartDate')}
+                            <DateInput condition1={this.context.constantInformationFurtherValidation.admissionStartDate_requiredReg}
+                                       value={this.context.valueOfDates.constantResident.admissionStartDate}
+                                       valueFieldString={'constantResident'}
+                                       fieldNameString={'constantInformationFurther'}
+                                       valueOfInputString={'admissionStartDate'}
+                                       required={true}
+                                       label={'تاریخ شروع پذیرش'}
+                                       timeInclude={true}
                             />
-                            <label className="placeholder" style={this.context.constantInformationFurther.reservationDate !== "" ? ({display:"none"}):
-                                (this.context.constantInformationFurtherValidation.admissionStartDate_requiredReg === false ? ({right:'35px',display:"inline"}) : ({right:'12px',display:"inline"}))}>
-
-                                تاریخ شروع پذیرش
-                                <span style={{color : 'red'}}>*</span>
-                            </label>
-
-                            {
-                                this.context.constantInformationFurtherValidation.admissionStartDate_requiredReg === false
-                                    ? <small
-                                        className="text-danger">{this.context.errors['required']}</small>
-                                    : <div/>
-                            }
-
                         </div>
-
                         <div className="input-group-register col-6">
-                            <DatePicker calendarStyles={this.state.calStyles}
-                                        inputFormat="jYYYY/jM/jD"
-                                        className={`input form-control ${this.context.constantInformationFurtherValidation.admissionEndDate_requiredReg === false ? "is-invalid" : ""}`}
-                                        onChange={(value) =>  this.context.handleDates(value, 'constantInformationFurther', 'admissionEndDate')}
+                            <DateInput condition1={this.context.constantInformationFurtherValidation.admissionEndDate_requiredReg}
+                                       value={this.context.valueOfDates.constantResident.admissionEndDate}
+                                       valueFieldString={'constantResident'}
+                                       fieldNameString={'constantInformationFurther'}
+                                       valueOfInputString={'admissionEndDate'}
+                                       required={true}
+                                       label={'تاریخ اتمام پذیرش'}
+                                       timeInclude={true}
                             />
-                            <label className="placeholder" style={this.context.constantInformationFurther.admissionEndDate !== "" ? ({display:"none"}):
-                                (this.context.constantInformationFurtherValidation.admissionEndDate_requiredReg === false ? ({right:'35px',display:"inline"}) : ({right:'12px',display:"inline"}))}>
-                                تاریخ اتمام پذیرش
-                                <span style={{color : 'red'}}>*</span>
-                            </label>
-
-                            {
-                                this.context.constantInformationFurtherValidation.admissionEndDate_requiredReg === false
-                                    ? <small
-                                        className="text-danger">{this.context.errors['required']}</small>
-                                    : <div/>
-                            }
 
                         </div>
                         <div className="input-group-register col-12">
