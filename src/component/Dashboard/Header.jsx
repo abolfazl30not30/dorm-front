@@ -8,8 +8,7 @@ import {IoMdExit} from "react-icons/io"
 import {GoTasklist} from "react-icons/go"
 import {AiOutlineHome} from "react-icons/ai";
 import {MdOutlineInventory} from "react-icons/md"
-import {NavLink} from "react-router-dom";
-
+import {NavLink,Link} from "react-router-dom";
 class Header extends Component {
     static contextType = MainContext;
     state = {}
@@ -60,33 +59,37 @@ class Header extends Component {
                                     </button>
                                 </div>
                             </Dropdown.Toggle>
-                            <Dropdown.Menu  style={{zIndex:"100",width:"250px",textAlign:"right"}} >
-                                <div className="d-flex align-items-center px-4 py-2 sidebar-profile">
-                                    <div className="sidebar-profile-img">
-                                        <img className="profile-img"
-                                             src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
-                                             alt="profile"/>
-                                    </div>
-                                    <div className="d-flex flex-column justify-content-center mx-3">
-                                        <h6>
-                                            علی محمدی
-                                        </h6>
-                                        <p>
-                                            سرپرست
-                                        </p>
-                                    </div>
+                            <Dropdown.Menu  style={{zIndex:"100",width:"250px",textAlign:"right",borderRadius:"20px",border:"none",padding:"12px",boxShadow:"0px 0px 4px 0px #0000004d"}} >
+                                <div className="dropdown-items">
+                                    <Link to="/">
+                                        <div className="d-flex align-items-center px-3 py-1 sidebar-profile">
+                                            <div className="sidebar-profile-img">
+                                                <img className="profile-img"
+                                                     src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
+                                                     alt="profile"/>
+                                            </div>
+                                            <div className="d-flex flex-column justify-content-center mx-3">
+                                                <h6>
+                                                    علی محمدی
+                                                </h6>
+                                                <p>
+                                                    مشاهده پروفایل
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </Link>
                                 </div>
-                                <div>
-                                    <button className="none-btn">
+                                <div className="dropdown-items">
+                                    <Link to="/taskManagement" >
                                         <GoTasklist/>
                                         <span>مشاهده وظایف</span>
-                                    </button>
+                                    </Link>
                                 </div>
-                                <div>
-                                    <button className="none-btn">
+                                <div className="dropdown-items">
+                                    <Link to="/taskManagement">
                                         <IoMdExit/>
                                         <span>خروج</span>
-                                    </button>
+                                    </Link>
                                 </div>
                             </Dropdown.Menu>
                         </Dropdown>

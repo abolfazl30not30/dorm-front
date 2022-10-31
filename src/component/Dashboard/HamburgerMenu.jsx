@@ -94,13 +94,6 @@ class HamburgerMenu extends Component {
                             انبار
                         </NavLink>
                     </li>
-                    <li className='sidenav-item'>
-                        <NavLink activeClassName='active-sidebar' to="/" className='sidenav-link'
-                                 onClick={window.innerWidth <= 768 && this.context.handleSidebar}>
-                            <i className="bi bi-person-circle"/>
-                            کادر مدیریت
-                        </NavLink>
-                    </li>
                 </ul>
             </div>
         );
