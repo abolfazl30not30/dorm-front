@@ -64,6 +64,7 @@ class AdditionalInformation extends Component{
                                 fieldNameString={'personnelFields'}
                                 valueOfInputString={'cardNumber'}
                                 label={'شماره کارت'}
+                                // maxLength={16}
                             />
                         </div>
                         <div className="input-group-register col-4">
@@ -114,6 +115,7 @@ class AdditionalInformation extends Component{
                                 fieldNameString={'personnelFields'}
                                 valueOfInputString={'cvv2'}
                                 label={'ccv2'}
+                                maxLength={4}
                             />
                         </div>
                         <div className="input-group-register col-4">

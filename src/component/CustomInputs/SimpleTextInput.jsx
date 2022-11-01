@@ -10,6 +10,7 @@ class SimpleTextInput extends Component {
         return (
             <>
                 <input type="text"
+                       maxLength={this.props.maxLength}
                        className={`input form-control ${this.props.condition1 === false || this.props.condition2 === false ||
                        this.props.condition3 === false || this.props.condition4 === false || this.props.condition6 === false ||
                        this.props.condition7 === false || this.props.condition5 ? "is-invalid" : ""}`}
