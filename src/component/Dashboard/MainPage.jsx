@@ -51,6 +51,12 @@ class MainPage extends Component {
                 admissionStartDate: '',
                 admissionEndDate: '',
                 paymentDate: '',
+            },
+
+            personnel: {
+                birthDate: '',
+                bankAccountExpirationDate: '',
+
             }
         },
 
@@ -68,7 +74,7 @@ class MainPage extends Component {
                 telephoneNumber: '',
                 emergencyNumber: '',
                 birthPlace: '',
-                birthDate: '',
+                birthDate: '', //
                 education: '',
                 postalCode: '',
                 email: '',
@@ -552,9 +558,12 @@ class MainPage extends Component {
 
     handleDates = (value, residentType, field) => {
         let newFields = {...this.state.fields};
-        let date = new Date(value._d);
-        let convertDate = date.getFullYear() + "/" + date.getMonth() + "/" + date.getDate() + " " + "00:" + "00:" + "00";
-        newFields[residentType][field] = convertDate
+        newFields[residentType][field] = value;
+        // formatting values was done in DateInput !!!
+
+        // let date = new Date(value._d);
+        // let convertDate = date.getFullYear() + "/" + date.getMonth() + "/" + date.getDate() + " " + "00:" + "00:" + "00";
+        // newFields[residentType][field] = convertDate
         this.setState({ fields: newFields });
     }
 

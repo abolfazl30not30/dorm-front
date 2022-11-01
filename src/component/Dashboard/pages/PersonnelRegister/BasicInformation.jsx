@@ -1,6 +1,7 @@
 import {Component} from "react";
 import SimpleTextInput from "../../../CustomInputs/SimpleTextInput";
 import BuildingContext from "../../../../contexts/Building";
+import DateInput from "../../../CustomInputs/DateInput";
 
 class BasicInformation extends Component{
     static contextType = BuildingContext;
@@ -117,13 +118,15 @@ class BasicInformation extends Component{
                             />
                         </div>
                         <div className="input-group-register col-4">
-                            <SimpleTextInput
+                            <DateInput
                                 condition1={this.context.personnelFieldsValidation.birthDate_requiredReg}
-                                value={this.context.personnelFields.birthDate}
+                                value={this.context.valueOfDates.personnel.birthDate}
+                                valueFieldString={'personnel'}
                                 fieldNameString={'personnelFields'}
                                 valueOfInputString={'birthDate'}
-                                label={'تاریخ تولد'}
                                 required={true}
+                                label={'تاریخ تولد'}
+                                timeInclude={false}
                             />
                         </div>
                         <div className="input-group-register col-4">

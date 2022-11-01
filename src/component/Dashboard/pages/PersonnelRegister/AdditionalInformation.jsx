@@ -1,6 +1,7 @@
 import {Component} from "react";
 import BuildingContext from "../../../../contexts/Building";
 import SimpleTextInput from "../../../CustomInputs/SimpleTextInput";
+import DateInput from "../../../CustomInputs/DateInput";
 
 class AdditionalInformation extends Component{
     static contextType = BuildingContext;
@@ -95,12 +96,15 @@ class AdditionalInformation extends Component{
                             />
                         </div>
                         <div className="input-group-register col-4">
-                            <SimpleTextInput
+                            <DateInput
                                 condition1={this.context.personnelFieldsValidation.bankAccountExpirationDate_requiredReg}
-                                value={this.context.personnelFields.bankAccountExpirationDate}
+                                value={this.context.valueOfDates.personnel.bankAccountExpirationDate}
+                                valueFieldString={'personnel'}
                                 fieldNameString={'personnelFields'}
                                 valueOfInputString={'bankAccountExpirationDate'}
+                                required={true}
                                 label={'تاریخ انقضا کارت'}
+                                timeInclude={false}
                             />
                         </div>
                         <div className="input-group-register col-4">
