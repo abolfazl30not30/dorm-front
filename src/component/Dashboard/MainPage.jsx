@@ -559,11 +559,6 @@ class MainPage extends Component {
     handleDates = (value, residentType, field) => {
         let newFields = {...this.state.fields};
         newFields[residentType][field] = value;
-        // formatting values was done in DateInput !!!
-
-        // let date = new Date(value._d);
-        // let convertDate = date.getFullYear() + "/" + date.getMonth() + "/" + date.getDate() + " " + "00:" + "00:" + "00";
-        // newFields[residentType][field] = convertDate
         this.setState({ fields: newFields });
     }
 
