@@ -100,6 +100,13 @@ class HamburgerMenu extends Component {
                             انبار
                         </NavLink>
                     </li>
+                    <li className="sidenav-item">
+                        <NavLink activeClassName='active-sidebar' to="/PresenceAbsence" className='sidenav-link'
+                                 onClick={window.innerWidth <= 768 && this.context.handleSidebar}>
+                            <i className="bi bi-hand-thumbs-up"></i>
+                            حضور و غیاب
+                        </NavLink>
+                    </li>
                 </ul>
             </div>
         );

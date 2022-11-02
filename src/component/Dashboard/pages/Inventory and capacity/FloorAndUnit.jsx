@@ -76,7 +76,7 @@ class FloorAndUnit extends Component {
 
     async componentDidMount() {
         let data;
-        const response = await fetch('http://api.saadatportal.com/api/v1/floor').then((response) => response.json())
+        const response = await fetch('https://api.saadatportal.com/api/v1/floor').then((response) => response.json())
             .then((data) => this.setState({floor: data, isLoading: false},()=>{
                 if (data.length == 0) {
                     this.setState({isFullUnit: false})
@@ -84,6 +84,7 @@ class FloorAndUnit extends Component {
                     this.setState({isFullUnit: true})
                 }
             }));
+        console.log(this.state.floor)
 
     }
 
@@ -137,7 +138,7 @@ class FloorAndUnit extends Component {
                                                     <div className={`unit col-4`}>
                                                         <Link className={`${unit.empty ? "empty-link" : "full-link"}`}
                                                               to="/RoomAndBed" onClick={() => {
-                                                            this.context.handleUnitNumber(unit.number, unit.id)
+                                                            this.context.handlez(unit.number, unit.id)
                                                         }}>
                                                             <TbBuilding fontSize="2rem"/>
                                                             <h5 className='unit-name'>واحد {unit.number}</h5>
