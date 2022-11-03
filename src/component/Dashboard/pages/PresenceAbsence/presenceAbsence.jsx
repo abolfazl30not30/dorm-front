@@ -88,11 +88,14 @@ class PresenceAbsence extends Component {
                                             <div className='units-list row'>
                                                 {
                                                     f.units.map((u) => (
-                                                        <div className='units-list-item col-4 my-2'>
+                                                        u.empty ? '' :  <div className='units-list-item col-4 my-2'>
                                                             <Link to="/PresenceAbsencePage2" onClick={() => {
                                                                 this.context.handleUnitNumberPA(u.number, u.id)
                                                             }}>
-                                                                <i className="bi bi-building"></i> واحد {u.number}
+                                                                <div className="d-flex flex-column">
+                                                                    <div><i className="bi bi-building"></i></div>
+                                                                    <div>واحد {u.number}</div>
+                                                                </div>
                                                             </Link>
                                                         </div>
                                                     ))

@@ -3,7 +3,7 @@ import '../../../../style/PresenceAbsence.css'
 import {Link} from "react-router-dom";
 import BuildingContext from "../../../../contexts/Building";
 import FloorAndBedLoading from "../../../loading/FloorAndBedLoading";
-// import BootstrapSwitchButton from 'bootstrap-switch-button-react'
+import BootstrapSwitchButton from 'bootstrap-switch-button-react'
 
 class PresenceAbsenceRoomPerson extends Component {
     static contextType = BuildingContext;
@@ -17,12 +17,12 @@ class PresenceAbsenceRoomPerson extends Component {
                     {
                         "id": "427a4678fc5b42bca15c86c756ecbe32",
                         "name": "تخت A",
-                        "empty": true,
+                        "empty": false,
                         "room": "c065ace3afd84a818c9f563112a8a61f",
-                        "person": null
+                        "person": 'میلاد'
                     }
                 ],
-                "empty": true,
+                "empty": false,
                 "accessories": [],
                 "unit": "28579824ad914a3aae4b6e7386ee5c96",
                 "concatName": "100-1"
@@ -35,12 +35,12 @@ class PresenceAbsenceRoomPerson extends Component {
                     {
                         "id": "427a4678fc5b42bca15c86c756ecbe32",
                         "name": "تخت A",
-                        "empty": true,
+                        "empty": false,
                         "room": "c065ace3afd84a818c9f563112a8a61f",
-                        "person": null
+                        "person": 'ابوالفضل'
                     }
                 ],
-                "empty": true,
+                "empty": false,
                 "accessories": [],
                 "unit": "28579824ad914a3aae4b6e7386ee5c96",
                 "concatName": "100-1"
@@ -83,13 +83,14 @@ class PresenceAbsenceRoomPerson extends Component {
                 "concatName": "100-1"
             }
         ],
-        rooms:[],
-        unit:[],
-        isLoading:false
+        rooms: [],
+        unit: [],
+        isLoading: false
     }
+
     async componentDidMount() {
         const response = await fetch(`https://api.saadatportal.com/api/v1/unit/room/${this.context.unitIdPA}`).then((response) => response.json())
-            .then((data) => this.setState({rooms: data, isLoading: false},()=>{
+            .then((data) => this.setState({rooms: data, isLoading: false}, () => {
                 if (data.length == 0) {
                     this.setState({isFull: false})
                 } else {
@@ -101,6 +102,7 @@ class PresenceAbsenceRoomPerson extends Component {
             .then((data) => this.setState({unit: data, isLoading: false}));
 
     }
+
     render() {
         return (
             <>
@@ -120,21 +122,26 @@ class PresenceAbsenceRoomPerson extends Component {
                         ) : (
                             <div className='row'>
                                 {this.state.roomsFake.map((r) => (
-                                    <div className="col-12 col-md-4 p-2">
-                                        <div className='pa-floor'>
-                                            <div className="title">اتاق {r.concatName}</div>
-                                            <div className='units-list row'>
-                                                {
-                                                    r.beds.map((b) => (
-                                                        <div className='units-list-item col-12 col-md-4 my-2'>
-                                                            <div><i className="bi bi-person"></i> {b.name}</div>
-                                                            {/*<BootstrapSwitchButton onlabel='Admin User' offlabel='Regular User' checked={false}/>*/}
-                                                        </div>
-                                                    ))
-                                                }
+                                    r.empty ? '' : (<div className="col-12 col-md-4 p-2">
+                                            <div className='pa-floor'>
+                                                <div className="title">اتاق {r.concatName}</div>
+                                                <div className='units-list row'>
+                                                    {
+                                                        r.beds.map((b) => (
+                                                            b.empty ? '' : (<div className='units-list-item col-12 my-2'>
+                                                                <div><i className="bi bi-person"></i> {b.person}</div>
+                                                                <BootstrapSwitchButton onlabel='حاضر' onstyle='success'
+                                                                                       offlabel='غایب' offstyle='secondary'
+                                                                                       checked={false}
+                                                                                       class='me-2'
+                                                                                       onChange={(e) => {this.handleGetStatus(e,b.id)}}
+                                                                />
+                                                            </div>)
+                                                        ))
+                                                    }
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>
+                                        </div>)
                                 ))}
                             </div>
                         )
@@ -143,6 +150,26 @@ class PresenceAbsenceRoomPerson extends Component {
             </>
         );
     }
+
+    handleGetStatus = (checked,id) => {
+        var today = new Date();
+        const dd = String(today.getDate()).padStart(2, '0');
+        const mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+        const yyyy = today.getFullYear();
+        const hh = String(today.getHours()).padStart(2, '0');
+        const MM = String(today.getMinutes()).padStart(2, '0');
+        const ss = String(today.getSeconds()).padStart(2, '0');
+        today = `${mm}/${dd}/${yyyy} ${hh}:${MM}:${ss}`
+
+        const report = {
+            "date" : today,
+            "title" : "حضور و غیاب",
+            "personId" : id,
+            "checkCleaning" : checked
+        }
+        console.log(report);
+    }
+
 }
 
 export default PresenceAbsenceRoomPerson;
