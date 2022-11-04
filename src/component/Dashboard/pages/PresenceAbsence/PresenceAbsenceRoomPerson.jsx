@@ -90,18 +90,16 @@ class PresenceAbsenceRoomPerson extends Component {
 
     async componentDidMount() {
         const response = await fetch(`https://api.saadatportal.com/api/v1/unit/room/${this.context.unitIdPA}`).then((response) => response.json())
-            .then((data) => this.setState({rooms: data, isLoading: false}, () => {
-                if (data.length == 0) {
-                    this.setState({isFull: false})
-                } else {
-                    this.setState({isFull: true})
-                }
-            }));
+            .then((data) => console.log(data));
 
-        const responseUnit = await fetch(`https://api.saadatportal.com/api/v1/unit/${this.context.unitIdPA}`).then((response) => response.json())
-            .then((data) => this.setState({unit: data, isLoading: false}));
+        /*const responseUnit = await fetch(`https://api.saadatportal.com/api/v1/unit/${this.context.unitIdPA}`).then((response) => response.json())
+            .then((data) => this.setState({unit: data, isLoading: false}));*/
+
+       /* const test = await fetch(`https://api.saadatportal.com/api/v1/unit/person/${this.context.unitIdPA}`).then((response) => response.json())
+            .then((data) => console.log(data))*/
 
     }
+
 
     render() {
         return (
@@ -123,25 +121,27 @@ class PresenceAbsenceRoomPerson extends Component {
                             <div className='row'>
                                 {this.state.roomsFake.map((r) => (
                                     r.empty ? '' : (<div className="col-12 col-md-4 p-2">
-                                            <div className='pa-floor'>
-                                                <div className="title">اتاق {r.concatName}</div>
-                                                <div className='units-list row'>
-                                                    {
-                                                        r.beds.map((b) => (
-                                                            b.empty ? '' : (<div className='units-list-item col-12 my-2'>
-                                                                <div><i className="bi bi-person"></i> {b.person}</div>
-                                                                <BootstrapSwitchButton onlabel='حاضر' onstyle='success'
-                                                                                       offlabel='غایب' offstyle='secondary'
-                                                                                       checked={false}
-                                                                                       class='me-2'
-                                                                                       onChange={(e) => {this.handleGetStatus(e,b.id)}}
-                                                                />
-                                                            </div>)
-                                                        ))
-                                                    }
-                                                </div>
+                                        <div className='pa-floor'>
+                                            <div className="title">اتاق {r.concatName}</div>
+                                            <div className='units-list row'>
+                                                {
+                                                    r.beds.map((b) => (
+                                                        b.empty ? '' : (<div className='units-list-item col-12 my-2'>
+                                                            <div><i className="bi bi-person"></i> {b.person}</div>
+                                                            <BootstrapSwitchButton onlabel='حاضر' onstyle='success'
+                                                                                   offlabel='غایب' offstyle='secondary'
+                                                                                   checked={false}
+                                                                                   class='me-2'
+                                                                                   onChange={(e) => {
+                                                                                       this.handleGetStatus(e, b.id)
+                                                                                   }}
+                                                            />
+                                                        </div>)
+                                                    ))
+                                                }
                                             </div>
-                                        </div>)
+                                        </div>
+                                    </div>)
                                 ))}
                             </div>
                         )
@@ -151,7 +151,7 @@ class PresenceAbsenceRoomPerson extends Component {
         );
     }
 
-    handleGetStatus = (checked,id) => {
+    handleGetStatus = (checked, id) => {
         var today = new Date();
         const dd = String(today.getDate()).padStart(2, '0');
         const mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
@@ -162,10 +162,10 @@ class PresenceAbsenceRoomPerson extends Component {
         today = `${mm}/${dd}/${yyyy} ${hh}:${MM}:${ss}`
 
         const report = {
-            "date" : today,
-            "title" : "حضور و غیاب",
-            "personId" : id,
-            "checkCleaning" : checked
+            "date": today,
+            "title": "حضور و غیاب",
+            "personId": id,
+            "checkCleaning": checked
         }
         console.log(report);
     }

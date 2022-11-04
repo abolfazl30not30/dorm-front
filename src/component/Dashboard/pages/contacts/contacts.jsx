@@ -215,7 +215,11 @@ class contacts extends Component {
         const response = await fetch('http://api.saadatportal.com/api/v1/phoneBook').then((response) => response.json())
             .then((data) => this.setState({contacts : data}));
 
-        this.setState({show: false})
+        this.setState({show: false});
+        this.setState({inputTelephone:[]});
+        this.setState({inputMobile:[]});
+        this.setState({telephoneNumbers:[]});
+        this.setState({mobileNumbers:[]});
     }
 }
 
