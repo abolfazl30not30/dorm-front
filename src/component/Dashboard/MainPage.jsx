@@ -85,7 +85,6 @@ class MainPage extends Component {
                 healthyStatus: '', // boolean
                 health: '',
                 alias: '',
-
                 university: '', //
                 major: '',
                 spouseFullName: '',
@@ -116,7 +115,7 @@ class MainPage extends Component {
             constantInformationPage: {
                 firstName: '',
                 lastName: '',
-                nickName: '',
+                alias: '',
                 nationalCode: '',
                 certificateNumber: '',
                 placeOfIssue: '',
@@ -431,6 +430,7 @@ class MainPage extends Component {
             //##############################################################################
         },
     }
+
     render() {
         return (
             <>
@@ -491,7 +491,6 @@ class MainPage extends Component {
                         handleDeleteUploadedFile: this.handleDeleteUploadedFile
                     }}
                     >
-
                         <Routes>
                             <Route path="/" element={(<Home />)} />
                             <Route path="/booking" element={(<FloorAndUnit />)} />
@@ -510,6 +509,7 @@ class MainPage extends Component {
                             <Route path="/Request" element={(<RequestPage />)} />
                             <Route path="/PersonnelRegister" element={(<PersonnelRegister />)} />
                             <Route path="/Request-manager" element={(<RequestPageManager />)} />
+                            <Route path="/Request" element={(<RequestPage />)} />
                             <Route path="/camera-history" element={(<CameraHistoryPage />)} />
                             <Route path="/PaymentHistory" element={(<PaymentHistory />)} />
                             <Route path="/taskManagement" element={(<TrelloPage/>)} />

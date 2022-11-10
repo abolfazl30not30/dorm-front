@@ -52,6 +52,13 @@ class HamburgerMenu extends Component {
                     {/*    </Link>*/}
                     {/*</li>*/}
                     <li className='sidenav-item'>
+                        <NavLink activeClassName='active-sidebar' to="/Request" className='sidenav-link'
+                                 onClick={window.innerWidth <= 768 && this.context.handleSidebar}>
+                            <i className="bi bi-person-circle"/>
+                            درخواست
+                        </NavLink>
+                    </li>
+                    <li className='sidenav-item'>
                         <NavLink activeClassName='active-sidebar' to="/Request-manager" className='sidenav-link'
                                  onClick={window.innerWidth <= 768 && this.context.handleSidebar}>
                             <i className="bi bi-person-circle"/>

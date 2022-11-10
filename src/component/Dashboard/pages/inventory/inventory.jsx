@@ -52,7 +52,7 @@ class inventory extends Component {
 
     }
     /*async componentDidMount() {
-        const response = await fetch('http://api.saadatportal.com/api/v1/inventory').then((response) => response.json())
+        const response = await fetch('https://api.saadatportal.com/api/v1/inventory').then((response) => response.json())
             .then((data) => this.setState({inventory: data}));
     }*/
 
@@ -330,7 +330,7 @@ class inventory extends Component {
             }
         }
         console.log(newInventory)
-        const rawResponse = await fetch('http://api.saadatportal.com/api/v1/inventory', {
+        const rawResponse = await fetch('https://api.saadatportal.com/api/v1/inventory', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -339,7 +339,7 @@ class inventory extends Component {
             body: JSON.stringify(newInventory)
         });
 
-        const response = await fetch('http://api.saadatportal.com/api/v1/inventory').then((response) => response.json())
+        const response = await fetch('https://api.saadatportal.com/api/v1/inventory').then((response) => response.json())
             .then((data) => this.setState({newInventory: data}));
         this.setState({show: false})
     }
