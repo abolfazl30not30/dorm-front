@@ -79,7 +79,7 @@ class MainPage extends Component {
                 postalCode: '',
                 email: '',
                 nationality: '',
-                maritalStatus: '',
+                maritalStatus: 'single', // default value
                 religion: '',
                 subReligion: '',
                 healthyStatus: '', // boolean
@@ -101,7 +101,7 @@ class MainPage extends Component {
                 fullName: '',//
                 parentType: '',
                 parentId: '',
-                gender: '',
+                gender: 'male', // default value
                 timePeriod: {
                     startDate: '',
                     endDate:'',
