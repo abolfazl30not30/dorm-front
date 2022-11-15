@@ -6,6 +6,7 @@ import {Modal} from 'react-bootstrap'
 import Form from "react-bootstrap/Form";
 import {BiSearch} from "react-icons/bi";
 import {DatePicker} from "react-persian-datepicker";
+import './../../../../style/requestPage.css'
 
 class callHistory extends Component {
     state = {
@@ -37,7 +38,7 @@ class callHistory extends Component {
     }
 
     async componentDidMount() {
-        const response = await fetch('http://api.saadatportal.com/api/v1/telephoneHistory').then((response) => response.json())
+        const response = await fetch('https://api.saadatportal.com/api/v1/telephoneHistory').then((response) => response.json())
             .then((data) => this.setState({callHistory : data}));
     }
 
@@ -46,7 +47,7 @@ class callHistory extends Component {
             <>
                 <div className="contact">
                     <div className="title">تاریخچه تماس ها</div>
-                    <button className='btn btn-add my-4' onClick={() => {
+                    <button className='btn-done my-4' onClick={() => {
                         this.handleShow()
                     }}><AiOutlinePlus className='ms-2'/>افزودن
                     </button>
@@ -265,11 +266,12 @@ class callHistory extends Component {
             description: this.state.description
         }
 
+
         let updatedCallHistory = [...this.state.callHistory];
         updatedCallHistory.push(newCall);
         this.setState({callHistory : updatedCallHistory});
 
-        const rawResponse = await fetch('http://api.saadatportal.com/api/v1/telephoneHistory', {
+        const rawResponse = await fetch('https://api.saadatportal.com/api/v1/telephoneHistory', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -278,7 +280,7 @@ class callHistory extends Component {
             body: JSON.stringify(newCall)
         });
 
-        const response = await fetch('http://api.saadatportal.com/api/v1/telephoneHistory').then((response) => response.json())
+        const response = await fetch('https://api.saadatportal.com/api/v1/telephoneHistory').then((response) => response.json())
             .then((data) => this.setState({newCall : data}));
 
         // this.setState({show: false})

@@ -585,7 +585,7 @@ class FGUploadPage extends Component {
         let formData = new FormData();
         formData.append('file', e.target.files[0]);
 
-        await fetch('http://api.saadatportal.com/api/v1/file', {
+        await fetch('https://api.saadatportal.com/api/v1/file', {
             method: 'POST',
             body: formData
         }).then((response) => response.json())

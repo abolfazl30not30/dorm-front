@@ -21,6 +21,8 @@ import CallHistory from './pages/callHistory/callHistory';
 import TrelloPage from "./pages/TrelloPage/TrelloPage";
 import Inventory from './pages/inventory/inventory';
 import PersonnelRegister from "./pages/PersonnelRegister/PersonnelRegister";
+import PresenceAbsence from "./pages/PresenceAbsence/presenceAbsence";
+import PresenceAbsenceRoomPerson from './pages/PresenceAbsence/PresenceAbsenceRoomPerson'
 
 
 class MainPage extends Component {
@@ -28,6 +30,8 @@ class MainPage extends Component {
 
         typeofResident: '',
         unitNumber: "",
+        unitIdPA: "",
+        unitNumberPA: "",
         unitId: "",
         personId:"",
         charId:"",
@@ -85,7 +89,6 @@ class MainPage extends Component {
                 healthyStatus: '', // boolean
                 health: '',
                 alias: '',
-
                 university: '', //
                 major: '',
                 spouseFullName: '',
@@ -116,7 +119,7 @@ class MainPage extends Component {
             constantInformationPage: {
                 firstName: '',
                 lastName: '',
-                nickName: '',
+                alias: '',
                 nationalCode: '',
                 certificateNumber: '',
                 placeOfIssue: '',
@@ -431,6 +434,7 @@ class MainPage extends Component {
             //##############################################################################
         },
     }
+
     render() {
         return (
             <>
@@ -439,10 +443,12 @@ class MainPage extends Component {
                         personnelFields: this.state.fields.personnelFields,
                         personnelFieldsValidation: this.state.specificValidations.personnelFieldsValidation,
                         unitId: this.state.unitId,
+                        unitIdPA: this.state.unitIdPA,
                         personId:this.state.personId,
                         charId:this.state.charId,
                         typeofResident: this.state.typeofResident,
                         unitNumber: this.state.unitNumber,
+                        unitNumberPA: this.state.unitNumberPA,
                         fields: this.state.fields,
                         errors: this.state.errors,
                         valueOfDates: this.state.valueOfDates,
@@ -481,6 +487,7 @@ class MainPage extends Component {
 
                         handleTypeofResident: this.handleTypeofResident,
                         handleUnitNumber: this.handleUnitNumber,
+                        handleUnitNumberPA: this.handleUnitNumberPA,
                         handlePersonId : this.handlePersonId,
                         handleFields: this.handleFields,
                         handleDates: this.handleDates,
@@ -491,7 +498,6 @@ class MainPage extends Component {
                         handleDeleteUploadedFile: this.handleDeleteUploadedFile
                     }}
                     >
-
                         <Routes>
                             <Route path="/" element={(<Home />)} />
                             <Route path="/booking" element={(<FloorAndUnit />)} />
@@ -510,9 +516,12 @@ class MainPage extends Component {
                             <Route path="/Request" element={(<RequestPage />)} />
                             <Route path="/PersonnelRegister" element={(<PersonnelRegister />)} />
                             <Route path="/Request-manager" element={(<RequestPageManager />)} />
+                            <Route path="/Request" element={(<RequestPage />)} />
                             <Route path="/camera-history" element={(<CameraHistoryPage />)} />
                             <Route path="/PaymentHistory" element={(<PaymentHistory />)} />
                             <Route path="/taskManagement" element={(<TrelloPage/>)} />
+                            <Route path="/PresenceAbsence" element={(<PresenceAbsence/>)} />
+                            <Route path="/PresenceAbsencePage2" element={(<PresenceAbsenceRoomPerson/>)} />
                             <Route path="/" element={(<EditFloorAndUnit />)} />
                         </Routes>
                     </BuildingContext.Provider>
@@ -545,6 +554,10 @@ class MainPage extends Component {
     handleUnitNumber = (unitNumber, unitId) => {
         this.setState({ unitNumber: unitNumber });
         this.setState({ unitId: unitId });
+    }
+    handleUnitNumberPA = (unitNumber, unitId) => {
+        this.setState({ unitNumberPA: unitNumber });
+        this.setState({ unitIdPA: unitId });
     }
     handlePersonId = (personId,charId) =>{
         this.setState({personId : personId,charId:charId});
