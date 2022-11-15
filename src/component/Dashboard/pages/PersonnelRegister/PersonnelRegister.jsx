@@ -109,7 +109,7 @@ class PersonnelRegister extends Component {
                 'parentType_requiredReg', 'parentId_requiredReg', 'gender_requiredReg', 'cardNumber_numberReg',
                 'bankAccountNumber_numberReg', 'bankAccountShabaNumber_numberReg', 'cvv2_numberReg'], 'personnelFieldsValidation')
 
-        console.log (this.context.valueOfDates.personnel.bankAccountExpirationDate)
+        // console.log (this.context.valueOfDates.personnel.bankAccountExpirationDate)
 
         return major_requiredReg && spouseFullName_requiredReg &&
             bankName_requiredReg && cardNumber_requiredReg && bankAccountNumber_requiredReg && bankAccountOwnerName_requiredReg &&
