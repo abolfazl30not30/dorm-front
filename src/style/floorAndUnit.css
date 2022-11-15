@@ -48,10 +48,10 @@
 
 .floorAndUnit .edit-btn-container .edit-btn {
     text-decoration: none;
-    color: #000;
+    color: #fff;
     background: #f1c40f;
-    padding: 10px 34px;
-    border-radius: 12px;
+    padding: .5rem 1rem;
+    border-radius: .5rem;
 }
 
 

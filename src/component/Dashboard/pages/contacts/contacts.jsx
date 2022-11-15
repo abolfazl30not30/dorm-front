@@ -26,11 +26,14 @@ class contacts extends Component {
         return (
             <>
                 <div className="contact">
-                    <div className="title">دفترچه تلفن</div>
-                    <button className='btn btn-add my-4' onClick={() => {
-                        this.handleShow()
-                    }}><AiOutlinePlus className='ms-2'/>افزودن مخاطب
-                    </button>
+                    <div className="d-flex flex-row justify-content-between align-items-center">
+                        <div className="title">دفترچه تلفن</div>
+                        <button className='btn-done my-4' onClick={() => {
+                            this.handleShow()
+                        }}><AiOutlinePlus className='ms-2'/>افزودن مخاطب
+                        </button>
+                    </div>
+
                     <div className="row align-items-center">
                         <div className="col-md-1 col-sm-2 px-0"><label>براساس:</label></div>
                         <div className="col-md-3 col-sm-6 px-0" style={{paddingLeft: "0"}}>

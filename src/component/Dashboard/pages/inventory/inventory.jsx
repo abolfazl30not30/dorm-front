@@ -9,6 +9,7 @@ import Accordion from "react-bootstrap/Accordion";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import ToggleButton from "@mui/material/ToggleButton";
 import {IoIosAddCircleOutline} from "react-icons/io";
+import './../../../../style/requestPage.css'
 
 class inventory extends Component {
     state = {
@@ -61,7 +62,7 @@ class inventory extends Component {
             <>
                 <div className="inventory">
                     <div className="title">انبار</div>
-                    <button className='btn btn-add my-4' onClick={() => {
+                    <button className='btn-done my-4' onClick={() => {
                         this.handleShow()
                     }}><AiOutlinePlus className='ms-2'/>افزودن
                     </button>

@@ -72,6 +72,7 @@
   border-radius: 10px;
   text-decoration: none;
   color: #000;
+  font-size: .9rem;
 }
 
 .sidenav li.sidenav-item a:hover {

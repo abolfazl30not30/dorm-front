@@ -1,6 +1,8 @@
 import {Component, createRef} from "react";
 import "../../../../style/paymentHistory.css"
 import {DatePicker} from "react-persian-datepicker";
+import {AiOutlineEye} from 'react-icons/ai'
+import {BsCalculator} from 'react-icons/bs'
 
 class PaymentHistory extends Component {
     state = {
@@ -705,17 +707,7 @@ class PaymentHistory extends Component {
             <>
                 <div className="payment-history">
                     <div className='title'>صورتحساب</div>
-                    <div className="d-flex flex-row mt-4">
-                        <div className='d-flex flex-row ms-3'>
-                            <span>هزینه کل:</span>
-                            <span>50000</span>
-                        </div>
-                        <div className='d-flex flex-row'>
-                            <span>درآمد کل:</span>
-                            <span>60000</span>
-                        </div>
-                    </div>
-                    <form className="d-flex flex-row flex-wrap my-2 align-items-center" onSubmit={this.handleSubmit}>
+                    <form className="d-flex flex-row flex-wrap my-2 align-items-center mt-3" onSubmit={this.handleSubmit}>
                         <div className='input-group-filter col-6 col-md my-2 px-2'>
                             <select className='input' ref={this.type}>
                                 <option value='all'>همه تراکنش ها</option>
@@ -755,8 +747,19 @@ class PaymentHistory extends Component {
                             </select>
                             <label className='placeholder'>تعداد تراکنش</label>
                         </div>
-                        <button className='btn btn-see col-12 col-md my-2 px-2'>مشاهده</button>
+                        <button className='btn btn-see col-12 col-md my-2 px-2'><AiOutlineEye className={'ms-1'}/>مشاهده
+                        </button>
                     </form>
+                    <div className="d-flex flex-row my-2">
+                        <div className='d-flex flex-row ms-3'>
+                            <span><BsCalculator className={'ms-1'} />هزینه کل:</span>
+                            <span>50000</span>
+                        </div>
+                        <div className='d-flex flex-row'>
+                            <span><BsCalculator className={'ms-1'} />درآمد کل:</span>
+                            <span>60000</span>
+                        </div>
+                    </div>
                     <div className='mx-3' style={{borderBottom: '1px solid #ddd'}}></div>
                     <div className="table-box">
                         <table className='table mt-4'>

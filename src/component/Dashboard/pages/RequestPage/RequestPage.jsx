@@ -19,6 +19,7 @@ import '../../../../style/searchAccount.css';
 import "../../../../style/registerPage.css";
 import Form from "react-bootstrap/Form";
 import {BiSearch} from "react-icons/bi";
+import {MdDone} from "react-icons/md";
 
 class RequestPage extends Component {
 
@@ -89,7 +90,7 @@ class RequestPage extends Component {
                 </div>
 
                 <div className={'d-flex'} style={{justifyContent: 'center'}}>
-                    <button className={'btn btn-success'} onClick={() => {
+                    <button className={'btn-done'} onClick={() => {
                         this.handleOpenType();
 
                         let resetTypeOfTempFields = {...this.state.tempFields};
@@ -107,7 +108,7 @@ class RequestPage extends Component {
                         this.setState({tempFields : resetTypeOfTempFields})
                         this.setState({Validations : resetValidations})
                     }}>
-                        ثبت درخواست
+                        <MdDone className='ms-1' />ثبت درخواست
                     </button>
                 </div>
 
@@ -164,9 +165,9 @@ class RequestPage extends Component {
                                                     ? (request.checked === true
                                                         ? <Button disabled={true}
                                                                   variant="success"
-                                                                  className={'col-8'}
+                                                                  className={'col-8 btn-done'}
                                                                   style={{width: '30%'}}>
-                                                                قبول شده
+                                                            <MdDone className='ms-1' />قبول شده
                                                             </Button>
                                                         : <>
                                                                 <OverlayTrigger
