@@ -51,9 +51,9 @@ class CInformationPage extends Component {
                         </div>
                         <div className="input-group-register col-4">
                             <SimpleTextInput
-                                value={this.context.constantInformationPageValidation.nickName}
+                                value={this.context.constantInformationPageValidation.alias}
                                 fieldNameString={'constantInformationPage'}
-                                valueOfInputString={'nickName'}
+                                valueOfInputString={'alias'}
                                 label={'نام مستعار'}
                             />
                         </div>

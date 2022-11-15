@@ -39,16 +39,18 @@ class RequestPage extends Component {
             'محصولات بهداشتی',
             'بیمه',
         ],
+
         addInputContentInModal: '',
         addButtonDisabled: false,
 
         selectedType: null,
+
         tempFields: {
             topic: '',
             type: null,
             name: '',
             reason: '',
-            accepted: false, // default
+            checked: false, // default
         },
 
         Validations: {
@@ -58,14 +60,16 @@ class RequestPage extends Component {
         },
 
         requests : [
-            // {
-            //     topic: '',
-            //     type: '',
-            //     name: '',
-            //     reason: '',
-            //     accepted: false, // default
-            // }
         ],
+    }
+
+    async componentDidMount() {
+        // const response1 = await fetch('https://api.saadatportal.com/api/v1/category/search?type=Request').then((response) => response.json())
+        //     .then((data) => this.setState({ choices: data }));
+
+        const response2 = await fetch('https://api.saadatportal.com/api/v1/request').then((response) => response.json())
+            .then((data) => this.setState({ requests: data }));
+
     }
 
     render() {
@@ -93,7 +97,7 @@ class RequestPage extends Component {
                         resetTypeOfTempFields['name'] = '';
                         resetTypeOfTempFields['reason'] = '';
                         resetTypeOfTempFields['topic'] = '';
-                        resetTypeOfTempFields['accepted'] = null;
+                        resetTypeOfTempFields['checked'] = null;
 
                         let resetValidations = {...this.state.Validations};
                         resetValidations['selectedTypeBoolean'] = true;
@@ -142,7 +146,7 @@ class RequestPage extends Component {
                                     <div className={'row'}>
                                         <div className={'col'}>
                                             <label> عنوان :</label>
-                                            {request.topic}
+                                            {request.name}
                                         </div>
                                         <div className={'col'}>
                                             <label> نوع :</label>
@@ -151,13 +155,13 @@ class RequestPage extends Component {
                                         <div className={'row mt-4'}>
                                             <div className={'col'}>
                                                 <label> درخواست کننده :</label>
-                                                {request.name}
+                                                {request.assignee}
                                             </div>
                                             <div className={'col row'}>
                                                 <label className={'col-4'}> وضعیت :</label>
                                                 {
-                                                    request.accepted !== null
-                                                    ? (request.accepted === true
+                                                    request.checked !== null
+                                                    ? (request.checked === true
                                                         ? <Button disabled={true}
                                                                   variant="success"
                                                                   className={'col-8'}
@@ -208,6 +212,7 @@ class RequestPage extends Component {
                                             </div>
                                         </div>
                                     </div>
+
                                 </div>
                             </>
                         ))
@@ -381,19 +386,14 @@ class RequestPage extends Component {
 
                     </Modal.Body>
                     <Modal.Footer className="justify-content-start">
-                        <button className="btn btn-success" onClick={(event) => {
-                            if (this.handleSubmitType(event)) {
-                                this.handleCloseType()
-                            }
-
-                            // console.log(this.state.tempFields)
-
-                        }}>ثبت
+                        <button className="btn btn-success" onClick={(event) => {this.handleSubmitType(event)}}>ثبت
                         </button>
+
                         <button className="btn btn-light" onClick={() => {
                             this.handleCloseType()
                         }}>بستن
                         </button>
+
                     </Modal.Footer>
                 </Modal>
 
@@ -425,7 +425,7 @@ class RequestPage extends Component {
         this.setState({tempFields : updatedTempFields});
     }
 
-    handleSubmitType = (e) => {
+    handleSubmitType = async (e) => {
         e.preventDefault();
         let regCheck = /^\s*$/;
 
@@ -433,17 +433,31 @@ class RequestPage extends Component {
         let selectedTypeBoolean = this.state.tempFields.type !== undefined && this.state.tempFields.type !== null;
         let name_requireReg = !regCheck.test(this.state.tempFields.name);
 
+        const date = new Date();
+        let day = String(date.getDate()).padStart(2, '0');
+        let month = String(date.getMonth() + 1).padStart(2, '0')
+        let year = date.getFullYear();
+        let date2 = year+"/"+month+"/"+day+" "+"00:"+"00:"+"00";
+
+        console.log(date2,this.state.tempFields.topic,this.state.tempFields.type,this.state.tempFields.reason,this.state.tempFields.name)
+        const rawResponse = await fetch('https://api.saadatportal.com/api/v1/request', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ dateOfRegistration: date2,name: this.state.tempFields.topic, type: this.state.tempFields.type, reason: this.state.tempFields.reason, checked:true, supervisorId:"9999999",description:"a",assignee:this.state.tempFields.name})
+        });
+
+        const content = await rawResponse.json();
         if (topic_requireReg && selectedTypeBoolean && name_requireReg) {
             let updatedRequests = [...this.state.requests];
             let request = {
-                topic: this.state.tempFields.topic,
+                name: this.state.tempFields.topic,
                 type: this.state.tempFields.type,
-                name: this.state.tempFields.name,
+                assignee: this.state.tempFields.name,
                 reason: this.state.tempFields.reason,
-                accepted: false, // null, false, true
-                ifFalseTopic: 'ifFalseTopic',
-                ifFalseReason: 'ifFalseReason',
-                ifFalseType: 'ifFalseType'
+                checked: null, // null, false, true
             }
             updatedRequests.push(request);
             this.setState({requests: updatedRequests});

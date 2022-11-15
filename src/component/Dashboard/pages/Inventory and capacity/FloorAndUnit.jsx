@@ -76,7 +76,8 @@ class FloorAndUnit extends Component {
 
     async componentDidMount() {
         let data;
-        const response = await fetch('https://api.saadatportal.com/api/v1/floor').then((response) => response.json())
+        const response = await fetch('https://api.saadatportal.com/api/v1/floor/search?sort=name').then((response) => response.json())
+
             .then((data) => this.setState({floor: data, isLoading: false},()=>{
                 if (data.length == 0) {
                     this.setState({isFullUnit: false})

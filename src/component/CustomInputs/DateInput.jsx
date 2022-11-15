@@ -13,6 +13,7 @@ import persian_en from "react-date-object/locales/persian_en";
 
 import DatePickerHeader from "react-multi-date-picker/plugins/date_picker_header";
 import login from "../Login";
+import {Button} from "@mui/material";
 
 class DateInput extends Component{
     static contextType = BuildingContext;
@@ -41,6 +42,8 @@ class DateInput extends Component{
                 {/*/>*/}
 
                 <DatePicker
+                    // fixMainPosition={false}
+                    calendarPosition={`top`}
                     digits={this.state.digits}
                     format={`${this.props.timeInclude ? 'HH:mm:ss YYYY/MM/DD' : 'YYYY/MM/DD'}`}
 
@@ -63,20 +66,20 @@ class DateInput extends Component{
 
                     }}
 
-                    className="rmdp-mobile"
-                    mobileButtons={
-                        [
-                            {
-                                label: "ریست",
-                                type: "button",
-                                className: "rmdp-button rmdp-action-button",
-                                onClick: () => {
-                                    this.context.handleValueOfDate({}, this.props.valueFieldString, this.props.valueOfInputString);
-                                    this.context.handleDates('', this.props.fieldNameString, this.props.valueOfInputString)
-                                },
-                            },
-                        ]
-                    }
+                    // className="rmdp-mobile"
+                    // mobileButtons={
+                    //     [
+                    //         {
+                    //             label: "ریست",
+                    //             type: "button",
+                    //             className: "rmdp-button rmdp-action-button",
+                    //             onClick: () => {
+                    //                 this.context.handleValueOfDate({}, this.props.valueFieldString, this.props.valueOfInputString);
+                    //                 this.context.handleDates('', this.props.fieldNameString, this.props.valueOfInputString)
+                    //             },
+                    //         },
+                    //     ]
+                    // }
 
                     mapDays={({ date }) => {
                         let props = {}
@@ -107,6 +110,14 @@ class DateInput extends Component{
                     locale={persian_fa}
 
                 >
+                    <Button
+                        onClick={() => {
+                            this.context.handleValueOfDate({}, this.props.valueFieldString, this.props.valueOfInputString);
+                            this.context.handleDates('', this.props.fieldNameString, this.props.valueOfInputString)}
+                        }
+                    >
+                        ریست
+                    </Button>
                 </DatePicker>
 
                 <label className="placeholder"

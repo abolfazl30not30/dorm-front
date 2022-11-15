@@ -798,7 +798,7 @@ class PaymentHistory extends Component {
 
     /*async componentDidMount() {
         let data;
-        const response = await fetch('http://api.saadatportal.com/api/v1/paymentHistory').then((response) => response.json())
+        const response = await fetch('https://api.saadatportal.com/api/v1/paymentHistory').then((response) => response.json())
             .then((data) => this.setState({payment: data}, () => {
                 // console.log(this.state.payment)
             }));
