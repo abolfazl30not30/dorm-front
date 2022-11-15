@@ -83,7 +83,7 @@ class MainPage extends Component {
                 postalCode: '',
                 email: '',
                 nationality: '',
-                maritalStatus: '',
+                maritalStatus: 'single', // default value
                 religion: '',
                 subReligion: '',
                 healthyStatus: '', 
@@ -103,11 +103,9 @@ class MainPage extends Component {
                 cvv2: '', //
                 fullName: '',//
                 parentType: '',
-                parentId: '',
-                gender: '',
+                gender: 'male',
                 startDate: '',
                 endDate: '',
-
 
             },
 
