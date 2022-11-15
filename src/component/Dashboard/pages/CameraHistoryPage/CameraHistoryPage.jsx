@@ -6,9 +6,11 @@ import {Modal} from "react-bootstrap";
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
 import DatePicker from "react-multi-date-picker";
+import {MdDone} from "react-icons/md";
 // import React from "@types/react";
 
 import '../../../../style/registerPage.css';
+import '../../../../style/paymentHistory.css';
 
 class CameraHistoryPage extends Component{
 
@@ -169,74 +171,76 @@ class CameraHistoryPage extends Component{
                     </Link>
                 </div>
 
-                <div>
-                    <h4>
-                        تاریخچه عکس
-                    </h4>
-                </div>
+                <div className="payment-history">
+                    <div className={'d-flex flex-row justify-content-between aligns-item-center'}>
+                        <h4>
+                            تاریخچه عکس
+                        </h4>
+                        <div className={'d-flex'} style={{justifyContent: 'center'}}>
+                            <button className={'btn-done'} onClick={() => {
+                                this.handleOpenModal();
 
-                <div className={'d-flex'} style={{justifyContent: 'center'}}>
-                    <button className={'btn btn-success'} onClick={() => {
-                        this.handleOpenModal();
+                                let emptyTmpRequest = {
+                                    title: '',
+                                    description: '',
+                                    unit: '',
+                                    supervisor: '',
+                                    date: '',
+                                    assignee: '',
+                                    status: 'null',
+                                }
 
-                        let emptyTmpRequest = {
-                            title: '',
-                            description: '',
-                            unit: '',
-                            supervisor: '',
-                            date: '',
-                            assignee: '',
-                            status: 'null',
-                        }
+                                let resetValidations = {...this.state.validation};
+                                resetValidations.assignee_requireReg = '';
+                                resetValidations.date_requiredReg = '';
+                                resetValidations.unit_requireReg = '';
+                                resetValidations.title_requireReg = '';
 
-                        let resetValidations = {...this.state.validation};
-                        resetValidations.assignee_requireReg = '';
-                        resetValidations.date_requiredReg = '';
-                        resetValidations.unit_requireReg = '';
-                        resetValidations.title_requireReg = '';
+                                this.setState({validation : resetValidations})
 
-                        this.setState({validation : resetValidations})
+                                this.setState({tmpRequest : emptyTmpRequest})
 
-                        this.setState({tmpRequest : emptyTmpRequest})
+                                // let resetTypeOfTempFields = {...this.state.tempFields};
+                                // resetTypeOfTempFields['type'] = null;
+                                // resetTypeOfTempFields['name'] = '';
+                                // resetTypeOfTempFields['reason'] = '';
+                                // resetTypeOfTempFields['topic'] = '';
+                                // resetTypeOfTempFields['accepted'] = null;
+                                //
+                                // let resetValidations = {...this.state.Validations};
+                                // resetValidations['selectedTypeBoolean'] = true;
+                                // resetValidations['topic_requireReg'] = '';
+                                // resetValidations['name_requireReg'] = '';
+                                //
+                                // this.setState({tempFields : resetTypeOfTempFields})
+                                // this.setState({Validations : resetValidations})
 
-                        // let resetTypeOfTempFields = {...this.state.tempFields};
-                        // resetTypeOfTempFields['type'] = null;
-                        // resetTypeOfTempFields['name'] = '';
-                        // resetTypeOfTempFields['reason'] = '';
-                        // resetTypeOfTempFields['topic'] = '';
-                        // resetTypeOfTempFields['accepted'] = null;
-                        //
-                        // let resetValidations = {...this.state.Validations};
-                        // resetValidations['selectedTypeBoolean'] = true;
-                        // resetValidations['topic_requireReg'] = '';
-                        // resetValidations['name_requireReg'] = '';
-                        //
-                        // this.setState({tempFields : resetTypeOfTempFields})
-                        // this.setState({Validations : resetValidations})
-
-                    }}>
-                        ثبت درخواست
-                    </button>
-                </div>
-
-                <div className="row align-items-center ">
-                    <div className="col-md-1 col-sm-2 px-0"><label>براساس:</label></div>
-                    <div className="col-md-3 col-sm-6 px-0" style={{paddingLeft: "0"}}>
-                        <Form.Select aria-label="Default select example" style={{height:"50px",fontSize:"14px"}} value={this.state.searchType} onChange={(e)=>{this.setState({searchType:e.target.value})}}>
-                            <option value="fullName">نام درخواست کننده</option>
-                            <option value="title">عنوان</option>
-                        </Form.Select>
+                            }}>
+                                <MdDone className='ms-1' />ثبت درخواست
+                            </button>
+                        </div>
                     </div>
-                    <div className="input-group-register col-md-7 col-sm-11 px-0 d-flex" style={{paddingRight: "0"}}>
-                        <input type="text" id="inputSearch" className="input" placeholder="جسـتوجـو" style={{padding:"6px"}} onChange={(e)=>{this.handleSearchInput(e)}}/>
-                        <button className="btn outline-secondary"><BiSearch fontSize="25px" onClick={this.handleSearchBtn}/>
-                        </button>
-                    </div>
-                </div>
 
-                <div>
-                    <table className='table mt-4'>
-                        <thead>
+
+
+                    <div className="row align-items-center ">
+                        <div className="col-md-1 col-sm-2 px-0"><label>براساس:</label></div>
+                        <div className="col-md-3 col-sm-6 px-0" style={{paddingLeft: "0"}}>
+                            <Form.Select aria-label="Default select example" style={{height:"50px",fontSize:"14px"}} value={this.state.searchType} onChange={(e)=>{this.setState({searchType:e.target.value})}}>
+                                <option value="fullName">نام درخواست کننده</option>
+                                <option value="title">عنوان</option>
+                            </Form.Select>
+                        </div>
+                        <div className="input-group-register col-md-7 col-sm-11 px-0 d-flex" style={{paddingRight: "0"}}>
+                            <input type="text" id="inputSearch" className="input" placeholder="جسـتوجـو" style={{padding:"6px"}} onChange={(e)=>{this.handleSearchInput(e)}}/>
+                            <button className="btn outline-secondary"><BiSearch fontSize="25px" onClick={this.handleSearchBtn}/>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div className={'table-box'}>
+                        <table className='table'>
+                            <thead>
                             <tr>
                                 <th>#</th>
                                 <th>عنوان</th>
@@ -245,23 +249,26 @@ class CameraHistoryPage extends Component{
                                 <th>نام درخواست کننده</th>
                                 <th>وضعیت</th>
                             </tr>
-                        </thead>
-                        <tbody>
-                        {
-                            this.state.data.map((data, index) => (
-                                <tr>
-                                    <td>{index + 1}</td>
-                                    <td>{data.title}</td>
-                                    <td>{data.date}</td>
-                                    <td>{data.unit}</td>
-                                    <td>{data.assignee}</td>
-                                    <td>{data.status}</td>
-                                </tr>
-                            ))
-                        }
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                            {
+                                this.state.data.map((data, index) => (
+                                    <tr>
+                                        <td>{index + 1}</td>
+                                        <td>{data.title}</td>
+                                        <td>{data.date}</td>
+                                        <td>{data.unit}</td>
+                                        <td>{data.assignee}</td>
+                                        <td>{data.status}</td>
+                                    </tr>
+                                ))
+                            }
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
+
+
 
                 <Modal centered show={this.state.showModal} onHide={() =>{
                     this.handleCloseModal();
@@ -429,7 +436,7 @@ class CameraHistoryPage extends Component{
                     </Modal.Body>
 
                     <Modal.Footer>
-                        <button className="btn btn-success" onClick={(event) => {
+                        <button className="btn-done" onClick={(event) => {
                             if (this.handleSubmitType(event)) {
                                 this.handleCloseModal()
                                 console.log(this.state.tmpRequest)

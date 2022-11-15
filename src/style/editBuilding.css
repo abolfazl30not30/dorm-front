@@ -121,20 +121,13 @@
 }
 
 .register .register-btn {
-    border: none;
-    color: #000;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    color: #fff;
     text-decoration: none;
-    border-radius: 15px;
-    width: 25%;
-    height: 48px;
-    background-color: #2ecc71;
-    font-size: 15px;
-    font-weight: bold;
-    box-shadow: 0px 0px 6px rgb(0 0 0 / 20%);
-    margin-bottom: 30px;
+    border-radius: 0.5rem;
+    background-color: #20d489;
+    font-size: 16px;
+    margin-bottom: 2rem;
+    padding: 0.5rem 1rem;
 }
 
 .register .register-btn:hover {

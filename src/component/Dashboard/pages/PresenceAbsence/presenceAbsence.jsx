@@ -68,7 +68,7 @@ class PresenceAbsence extends Component {
             <>
                 <div className="row">
                     <div className="presence-absence">
-                        <div className="title-page">حضور غیاب</div>
+                        <div className="title-page">نوبت نظافت شبانه</div>
                         {this.state.isLoading ? (
                             <div className='row' style={{marginTop: "60px"}}>
                                 <FloorAndBedLoading/>
@@ -87,7 +87,7 @@ class PresenceAbsence extends Component {
                                                                 this.context.handleUnitNumberPA(u.number, u.id)
                                                             }}>
                                                                 <div className="d-flex flex-column">
-                                                                    <div><i className="bi bi-building"></i></div>
+                                                                    <div style={{fontSize:"1.5rem"}}><i className="bi bi-building"></i></div>
                                                                     <div>واحد {u.number}</div>
                                                                 </div>
                                                             </Link>

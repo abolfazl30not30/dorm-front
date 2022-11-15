@@ -16,11 +16,12 @@ import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
 import Form from "react-bootstrap/Form";
 import {BiSearch} from "react-icons/bi";
-
+import {MdDone} from "react-icons/md";
 import '../../../../style/registerPage.css';
 import '../../../../style/paymentPage.css';
 import '../../../../style/searchAccount.css';
 import "../../../../style/registerPage.css";
+import './../../../../style/requestPage.css'
 
 class RequestPage extends Component {
 
@@ -104,7 +105,7 @@ class RequestPage extends Component {
                 </div>
 
                 <div className={'d-flex'} style={{justifyContent: 'center'}}>
-                    <button className={'btn btn-success'} onClick={() => {
+                    <button className={'btn-done'} onClick={() => {
                         this.handleOpenType();
 
                         let resetTypeOfTempFields = {...this.state.tempFields};
@@ -122,7 +123,7 @@ class RequestPage extends Component {
                         this.setState({tempFields : resetTypeOfTempFields})
                         this.setState({Validations : resetValidations})
                     }}>
-                        ثبت درخواست
+                        <MdDone className='ms-1' />ثبت درخواست
                     </button>
                 </div>
 
@@ -182,7 +183,7 @@ class RequestPage extends Component {
                                                         ? (request.accepted === 'true'
                                                             ? <Button
                                                                       variant="success"
-                                                                      className={'col-8'}
+                                                                      className={'col-8 btn-done'}
                                                                       style={{width: '30%'}}
                                                                       onClick={() => {
                                                                           this.setState({showStatusModal: 'true'});
@@ -219,7 +220,7 @@ class RequestPage extends Component {
                                                                     }
                                                                 >
                                                                     <Button variant="danger"
-                                                                            className={'col-8'}
+                                                                            className={'col-8 btn-reject'}
                                                                             style={{width: '30%'}}
                                                                             onClick={() => {
                                                                                 this.setState({showStatusModal: 'true'});
@@ -236,7 +237,7 @@ class RequestPage extends Component {
                                                             </>)
                                                         : <Button
                                                                   variant="secondary"
-                                                                  className={'col-8'}
+                                                                  className={'col-8 btn-unknown'}
                                                                   style={{width: '30%'}}
                                                                   onClick={() => {
                                                                       this.setState({showStatusModal: 'true'});

@@ -6,6 +6,7 @@ import FloorAndBedLoading from "../../../loading/FloorAndBedLoading";
 import BootstrapSwitchButton from 'bootstrap-switch-button-react'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
+import {BsDoorClosed} from 'react-icons/bs'
 
 class PresenceAbsenceRoomPerson extends Component {
     static contextType = BuildingContext;
@@ -161,7 +162,8 @@ class PresenceAbsenceRoomPerson extends Component {
                     </Link>
                 </div>
                 <div className="presence-absence">
-                    <div className="title-page">حضور و غیاب (واحد {this.context.unitNumberPA})</div>
+                    <div className="title-page">حضور و غیاب</div>
+                    <div className="title-page" style={{fontSize:'14px'}}><i className="bi bi-building ms-2"></i>واحد {this.context.unitNumberPA}</div>
                     {
                         this.state.isLoading ? (
                             <div className='row' style={{marginTop: "60px"}}>
@@ -172,7 +174,7 @@ class PresenceAbsenceRoomPerson extends Component {
                                 {this.state.roomApi.map((r) => (
                                     r.empty ? '' : (<div className="col-12 col-md-4 p-2">
                                         <div className='pa-floor'>
-                                            <div className="title">اتاق {r.roomNumber}</div>
+                                            <div className="title"><BsDoorClosed style={{fontSize:"20px"}} className={'ms-1'} />اتاق {r.roomNumber}</div>
                                             <div className='units-list row'>
                                                 {
                                                     r.information.map((b) => (
@@ -187,11 +189,11 @@ class PresenceAbsenceRoomPerson extends Component {
                                                             >
                                                                 <div className='units-list-item col-12 my-2'>
                                                                     <div>
-                                                                        <i className="bi bi-person"></i>
+                                                                        <i className="bi bi-person ms-1"></i>
                                                                         {b.personName} (تخت {b.bedName})
                                                                     </div>
-                                                                    <BootstrapSwitchButton onlabel='حاضر' onstyle='success'
-                                                                                           offlabel='غایب'
+                                                                    <BootstrapSwitchButton onlabel='انجام شد' onstyle='success'
+                                                                                           offlabel='انجام نشد'
                                                                                            offstyle='secondary'
                                                                                            checked={false}
                                                                                            class='me-2'
