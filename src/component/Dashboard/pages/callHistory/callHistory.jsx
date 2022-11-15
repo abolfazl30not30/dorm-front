@@ -28,7 +28,13 @@ class callHistory extends Component {
         callerName: [],
         phoneNumber: [],
         date: [],
-        description: []
+        description: [],
+        validations: {
+            title_requiredReg: '',
+            callerName_requiredReg: '',
+            date_requiredReg: '',
+            phoneNumber_requiredReg: '',
+        }
     }
 
     async componentDidMount() {
@@ -87,44 +93,61 @@ class callHistory extends Component {
                         </table>
                     </div>
                 </div>
-                <Modal className='report-modal' centered show={this.state.show}>
-                    <Modal.Header>
+                <Modal className='report-modal' centered show={this.state.show} onHide={
+                    () => this.handleClose()
+                }>
+                    <Modal.Header closeButton>
                         <Modal.Title><span>ثبت تماس</span></Modal.Title>
-                        <button className='btn' onClick={() => {
-                            this.handleClose()
-                        }}><AiOutlineClose/></button>
                     </Modal.Header>
                     <Modal.Body>
                         <div className='input-group-register mb-3'>
-                            <input type='text' className='input form-control' onChange={(e) => {
+                            <input type='text'
+                                   className={`input form-control ${this.state.validations.title_requiredReg === false ? "is-invalid" : ""}`}
+                                   onChange={(e) => {
                                 this.getValueInputTitle(e.target.value)
                             }}/>
-                            <label className="placeholder" style={{right: '12px'}}>عنوان</label>
+                            <label className="placeholder" style={{right: '12px'}}>
+                                عنوان
+                                <span style={{color: 'red'}}>*</span>
+                            </label>
                         </div>
                         <div className='input-group-register mb-3'>
-                            <input type='text' className='input form-control' onChange={(e) => {
+                            <input type='text'
+                                   className={`input form-control ${this.state.validations.callerName_requiredReg === false ? "is-invalid" : ""}`}
+                                   onChange={(e) => {
                                 this.getValueInputCallerName(e.target.value)
                             }}/>
-                            <label className="placeholder" style={{right: '12px'}}>نام تماس گیرنده</label>
+                            <label className="placeholder" style={{right: '12px'}}>
+                                نام تماس گیرنده
+                                <span style={{color: 'red'}}>*</span>
+                            </label>
                         </div>
                         <div className='input-group-register mb-3'>
-                            <input type='text' className='input form-control' onChange={(e) => {
+                            <input type='text'
+                                   className={`input form-control ${this.state.validations.phoneNumber_requiredReg === false ? "is-invalid" : ""}`}
+                                   onChange={(e) => {
                                 this.getValueInputPhoneNumber(e.target.value)
                             }}/>
-                            <label className="placeholder" style={{right: '12px'}}>شماره تماس</label>
+                            <label className="placeholder" style={{right: '12px'}}>
+                                شماره تماس
+                                <span style={{color: 'red'}}>*</span>
+                            </label>
                         </div>
                         <div className='input-group-register mb-3'>
                             <DatePicker calendarStyles={this.state.calStyles}
                                         inputFormat="jYYYY/jM/jD"
-                                        className='input form-control date-picker'
+                                        className={`input form-control date-picker ${this.state.validations.date_requiredReg === false ? "is-invalid" : ""}`}
                                         onChange={(e) => {
                                             this.getValueInputDate(e)
                                         }}
                             />
-                            <label className='placeholder'>تاریخ</label>
+                            <label className='placeholder' style={{right: this.state.validations.date_requiredReg === false ? '35px' : '12px'}}>
+                                تاریخ
+                                <span style={{color: 'red'}}>*</span>
+                            </label>
                         </div>
                         <div className='input-group-register mb-3'>
-                            <input type='text' className='input form-control' onChange={(e) => {
+                            <textarea className='input form-control' onChange={(e) => {
                                 this.getValueInputDescription(e.target.value)
                             }}/>
                             <label className="placeholder" style={{right: '12px'}}>توضیحات</label>
@@ -175,7 +198,10 @@ class callHistory extends Component {
 
 
                         <button className='btn btn-record-contact' onClick={() => {
-                            this.handleRecordContact()
+                            if (this.handleValidations()) {
+                                this.handleRecordContact();
+                                this.handleClose();
+                            }
                         }}>ثبت
                         </button>
 
@@ -212,6 +238,24 @@ class callHistory extends Component {
         this.setState({description: e})
     }
 
+    handleValidations = () => {
+        let requiredReg = /^\s*$/;
+
+        let title_requiredReg = !requiredReg.test(this.state.title);
+        let callerName_requiredReg = !requiredReg.test(this.state.callerName);
+        let date_requiredReg = !requiredReg.test(this.state.date);
+        let phoneNumber_requiredReg = !requiredReg.test(this.state.phoneNumber);
+
+        let updatedValidations = {...this.state.validations};
+        updatedValidations.title_requiredReg = title_requiredReg;
+        updatedValidations.callerName_requiredReg = callerName_requiredReg;
+        updatedValidations.date_requiredReg = date_requiredReg;
+        updatedValidations.phoneNumber_requiredReg = phoneNumber_requiredReg;
+        this.setState({validations : updatedValidations});
+
+        return title_requiredReg && callerName_requiredReg && date_requiredReg && phoneNumber_requiredReg;
+    }
+
     handleRecordContact = async () => {
 
         const newCall = {
@@ -221,6 +265,11 @@ class callHistory extends Component {
             date: this.state.date,
             description: this.state.description
         }
+
+
+        let updatedCallHistory = [...this.state.callHistory];
+        updatedCallHistory.push(newCall);
+        this.setState({callHistory : updatedCallHistory});
 
         const rawResponse = await fetch('https://api.saadatportal.com/api/v1/telephoneHistory', {
             method: 'POST',
@@ -234,7 +283,7 @@ class callHistory extends Component {
         const response = await fetch('https://api.saadatportal.com/api/v1/telephoneHistory').then((response) => response.json())
             .then((data) => this.setState({newCall : data}));
 
-        this.setState({show: false})
+        // this.setState({show: false})
     }
 }
 
