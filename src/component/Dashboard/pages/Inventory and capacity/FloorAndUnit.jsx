@@ -12,6 +12,7 @@ import {EditText, EditTextarea} from 'react-edit-text';
 import 'react-edit-text/dist/index.css';
 import {Button, Modal} from 'react-bootstrap'
 import {BiChevronLeft} from 'react-icons/bi'
+import { FiEdit2 } from 'react-icons/fi'
 
 
 class FloorAndUnit extends Component {
@@ -39,7 +40,7 @@ class FloorAndUnit extends Component {
                     this.setState({isFullUnit: true})
                 }
             }));
-        console.log(this.state.floor)
+
 
     }
 
@@ -72,7 +73,7 @@ class FloorAndUnit extends Component {
                             <div className={this.state.isFullUnit ? "edit-btn-container" : "register-btn-container"}>
                                 <Link to="edit-floor-and-unit"
                                       className={this.state.isFullUnit ? "edit-btn" : "register-btn"}>
-                                    {this.state.isFullUnit ? (<h6>ویرایش</h6>) : (<h6> ثبت طبقه و واحد</h6>)}
+                                    {this.state.isFullUnit ? (<h6><FiEdit2 className='ms-1' />ویرایش</h6>) : (<h6> ثبت طبقه و واحد</h6>)}
                                 </Link>
                             </div>
                             <div className="floor-container row">
@@ -116,14 +117,26 @@ class FloorAndUnit extends Component {
                         <Modal.Title>امکانات طبقه</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        {
-                            this.state.tempFloor.accessories.map((acc) => (
-                                <div className='d-flex flex-row my-2 w-50'>
-                                    <div className='ms-3'><BiChevronLeft/>{acc.name}</div>
-                                    <div className='me-auto'>{acc.count} عدد</div>
-                                </div>
-                            ))
-                        }
+                        <div className="table-box">
+                            <table className="table">
+                                <thead>
+                                    <tr>
+                                        <th>نام</th>
+                                        <th>تعداد</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                {
+                                    this.state.tempFloor.accessories.map((acc) => (
+                                    <tr>
+                                        <td>{acc.name}</td>
+                                        <td>{acc.count}</td>
+                                    </tr>
+                                    ))
+                                }
+                                </tbody>
+                            </table>
+                        </div>
                     </Modal.Body>
                 </Modal>
             </>

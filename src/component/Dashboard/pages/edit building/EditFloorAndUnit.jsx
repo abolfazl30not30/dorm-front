@@ -9,6 +9,7 @@ import { Button, Modal } from 'react-bootstrap';
 import CounterInput from "react-counter-input";
 import { FaPencilAlt } from "react-icons/fa";
 import { MdAddCircle } from "react-icons/md"
+import {MdDone} from 'react-icons/md'
 import 'react-edit-text/dist/index.css';
 
 
@@ -43,7 +44,6 @@ class EditFloorAndUnit extends Component {
                             <i class="bi bi-caret-left-fill"/>
                         </Link>
                     </div>
-
                     <div className="text">
                         <h4>ثبت طبقه و واحد</h4>
                         <p>
@@ -91,7 +91,7 @@ class EditFloorAndUnit extends Component {
                         </div>
                     </div>
                     <div className="register">
-                        <Link to="/booking" className="register-btn">ثـبـت</Link>
+                        <Link to="/booking" className="register-btn"><MdDone className='ms-1' />ثـبـت</Link>
                     </div>
                 </div>
 

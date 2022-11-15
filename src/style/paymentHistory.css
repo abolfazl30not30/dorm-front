@@ -73,11 +73,17 @@
     padding: 16px !important;
 }
 .payment-history .btn-see {
-    background-color: #db9b31;
     color: #fff;
+    text-decoration: none;
+    border-radius: 0.5rem;
+    background-color: #20d489;
+    font-size: 16px;
+    margin-bottom: 2rem;
+    padding: 0.5rem 1rem;
+    border: none;
     height: 50px;
 }
 .payment-history .btn-see:hover {
-    background-color: #f3c885 !important;
+    background-color: #19b674 !important;
     color: #fff !important;
 }

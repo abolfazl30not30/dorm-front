@@ -78,3 +78,6 @@
 span.switch-off.btn.btn-secondary,
 span.switch-on.btn.btn-success
 {top: -3px;}
+.switch.btn {
+    min-width: 4.5rem;
+}

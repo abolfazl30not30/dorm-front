@@ -6,6 +6,7 @@ import {Modal} from 'react-bootstrap'
 import Form from "react-bootstrap/Form";
 import {BiSearch} from "react-icons/bi";
 import {DatePicker} from "react-persian-datepicker";
+import './../../../../style/requestPage.css'
 
 class callHistory extends Component {
     state = {
@@ -40,7 +41,7 @@ class callHistory extends Component {
             <>
                 <div className="contact">
                     <div className="title">تاریخچه تماس ها</div>
-                    <button className='btn btn-add my-4' onClick={() => {
+                    <button className='btn-done my-4' onClick={() => {
                         this.handleShow()
                     }}><AiOutlinePlus className='ms-2'/>افزودن
                     </button>

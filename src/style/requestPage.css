@@ -1,0 +1,60 @@
+.css-vqmohf-MuiButtonBase-root-MuiRadio-root.Mui-checked {
+    color: #db9b31;
+}
+.btn-done {
+    color: #fff;
+    text-decoration: none;
+    border-radius: 0.5rem;
+    background-color: #20d489;
+    font-size: 16px;
+    margin-bottom: 2rem;
+    padding: 0.5rem 1rem;
+    border: none;
+}
+
+.btn-done:hover {
+    background-color: #19b674;
+    box-shadow: none;
+}
+
+.btn-done.disabled, .btn-done:disabled,.btn-done:disabled .btn {
+    background-color: #20d489;
+}
+
+.btn-reject {
+    color: #fff;
+    text-decoration: none;
+    border-radius: 0.5rem;
+    background-color: #f1416c;
+    font-size: 16px;
+    margin-bottom: 2rem;
+    padding: 0.5rem 1rem;
+    border: none;
+}
+.btn-reject:hover {
+    background-color: #d9214e;
+    box-shadow: none;
+}
+
+.btn-reject.disabled, .btn-reject:disabled,.btn-reject:disabled .btn {
+    background-color: #f1416c;
+}
+
+.btn-unknown {
+    color: #3F4254;
+    background-color: #E4E6EF;
+    text-decoration: none;
+    border-radius: 0.5rem;
+    font-size: 16px;
+    margin-bottom: 2rem;
+    padding: 0.5rem 1rem;
+    border: none;
+}
+.btn-unknown:hover {
+    background-color: #b5b5c3;
+    box-shadow: none;
+}
+
+.btn-unknown.disabled, .btn-unknown:disabled,.btn-unknown:disabled .btn {
+    background-color: #E4E6EF;
+}
