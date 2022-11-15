@@ -2,11 +2,11 @@
     color: #db9b31;
 }
 .btn-done {
-    color: #fff;
+    color: #000;
     text-decoration: none;
     border-radius: 0.5rem;
     background-color: #20d489;
-    font-size: 16px;
+    font-size: 1rem;
     margin-bottom: 2rem;
     padding: 0.5rem 1rem;
     border: none;
@@ -14,6 +14,7 @@
 
 .btn-done:hover {
     background-color: #19b674;
+    color: #fff;
     box-shadow: none;
 }
 
@@ -22,7 +23,7 @@
 }
 
 .btn-reject {
-    color: #fff;
+    color: #000;
     text-decoration: none;
     border-radius: 0.5rem;
     background-color: #f1416c;
@@ -33,6 +34,7 @@
 }
 .btn-reject:hover {
     background-color: #d9214e;
+    color: #fff;
     box-shadow: none;
 }
 
@@ -41,7 +43,7 @@
 }
 
 .btn-unknown {
-    color: #3F4254;
+    color: #000;
     background-color: #E4E6EF;
     text-decoration: none;
     border-radius: 0.5rem;

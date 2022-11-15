@@ -2,14 +2,14 @@ import React, {Component} from 'react';
 import '../../../../style/PresenceAbsence.css'
 import {AiOutlineLeft} from 'react-icons/ai'
 import {Link} from "react-router-dom";
-import { HiOutlineBuildingOffice } from "react-icons/hi";
+import {HiOutlineBuildingOffice} from "react-icons/hi";
 import BuildingContext from "../../../../contexts/Building";
 import FloorAndBedLoading from "../../../loading/FloorAndBedLoading";
 
 class PresenceAbsence extends Component {
     static contextType = BuildingContext;
     state = {
-        floor:[],
+        floor: [],
         isLoading: true,
         floorFake: [
             {
@@ -58,11 +58,13 @@ class PresenceAbsence extends Component {
             },
         ]
     }
+
     async componentDidMount() {
         let data;
         const response = await fetch('https://api.saadatportal.com/api/v1/floor').then((response) => response.json())
             .then((data) => this.setState({floor: data, isLoading: false}));
     }
+
     render() {
         return (
             <>
@@ -82,12 +84,15 @@ class PresenceAbsence extends Component {
                                             <div className='units-list row'>
                                                 {
                                                     f.units.map((u) => (
-                                                        u.empty ? '' :  <div className='units-list-item col-4 my-2 justify-content-center'>
+                                                        u.empty ? '' : <div
+                                                            className='units-list-item col-4 my-2 justify-content-center'>
                                                             <Link to="/PresenceAbsencePage2" onClick={() => {
                                                                 this.context.handleUnitNumberPA(u.number, u.id)
                                                             }}>
                                                                 <div className="d-flex flex-column">
-                                                                    <div style={{fontSize:"1.5rem"}}><i className="bi bi-building"></i></div>
+                                                                    <div style={{fontSize: "1.5rem"}}><i
+                                                                        className="bi bi-building"
+                                                                        style={{color: '#b47a2c'}}></i></div>
                                                                     <div>واحد {u.number}</div>
                                                                 </div>
                                                             </Link>

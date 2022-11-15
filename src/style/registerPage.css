@@ -15,6 +15,7 @@
     border-radius: 15px;
     box-shadow: 0 30px 50px 0 rgb(170 179 217 / 20%);
 }
+
 .typeofResident h5{
     font-weight: bold;
     font-size: 22px;
@@ -106,7 +107,7 @@ label.placeholder {
     padding-right: 35px;
     margin-bottom: 12px;
     cursor: pointer;
-    font-size: 19px;
+    font-size: 1rem;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
@@ -162,4 +163,15 @@ label.placeholder {
     height: 8px;
     border-radius: 50%;
     background: white;
+}
+@media (max-width: 768px) {
+    .typeofResident {
+        width: 100%;
+    }
+    ._1hzhf {
+        font-size: .8rem;
+    }
+    .typeofResident h5 {
+        font-size: 1.4rem;
+    }
 }

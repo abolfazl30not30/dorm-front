@@ -21,6 +21,7 @@
 }
 
 .floorAndUnit .text h4 {
+    font-size: 1.3rem;
     font-weight: bold;
     color: #555;
 }
@@ -30,6 +31,7 @@
     margin-top: 27px;
     width: 80%;
     color: #676767;
+    font-size: 1rem;
 }
 
 .floorAndUnit .edit-btn-container {
