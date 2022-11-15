@@ -9,6 +9,7 @@ import Accordion from "react-bootstrap/Accordion";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import ToggleButton from "@mui/material/ToggleButton";
 import {IoIosAddCircleOutline} from "react-icons/io";
+import './../../../../style/requestPage.css'
 
 class inventory extends Component {
     state = {
@@ -52,7 +53,7 @@ class inventory extends Component {
 
     }
     /*async componentDidMount() {
-        const response = await fetch('http://api.saadatportal.com/api/v1/inventory').then((response) => response.json())
+        const response = await fetch('https://api.saadatportal.com/api/v1/inventory').then((response) => response.json())
             .then((data) => this.setState({inventory: data}));
     }*/
 
@@ -61,7 +62,7 @@ class inventory extends Component {
             <>
                 <div className="inventory">
                     <div className="title">انبار</div>
-                    <button className='btn btn-add my-4' onClick={() => {
+                    <button className='btn-done my-4' onClick={() => {
                         this.handleShow()
                     }}><AiOutlinePlus className='ms-2'/>افزودن
                     </button>
@@ -330,7 +331,7 @@ class inventory extends Component {
             }
         }
         console.log(newInventory)
-        const rawResponse = await fetch('http://api.saadatportal.com/api/v1/inventory', {
+        const rawResponse = await fetch('https://api.saadatportal.com/api/v1/inventory', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -339,7 +340,7 @@ class inventory extends Component {
             body: JSON.stringify(newInventory)
         });
 
-        const response = await fetch('http://api.saadatportal.com/api/v1/inventory').then((response) => response.json())
+        const response = await fetch('https://api.saadatportal.com/api/v1/inventory').then((response) => response.json())
             .then((data) => this.setState({newInventory: data}));
         this.setState({show: false})
     }

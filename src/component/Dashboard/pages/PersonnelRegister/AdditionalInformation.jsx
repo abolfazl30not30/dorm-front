@@ -28,6 +28,7 @@ class AdditionalInformation extends Component{
                                 fieldNameString={'personnelFields'}
                                 valueOfInputString={'major'}
                                 label={'رشته'}
+                                required={true}
                             />
                         </div>
                         <div className="input-group-register col-4">
@@ -37,6 +38,7 @@ class AdditionalInformation extends Component{
                                 fieldNameString={'personnelFields'}
                                 valueOfInputString={'spouseFullName'}
                                 label={'نام و نام خانوادگی همسر'}
+                                required={true}
                             />
                         </div>
                         <div className="input-group-register col-4">
@@ -54,6 +56,7 @@ class AdditionalInformation extends Component{
                                 fieldNameString={'personnelFields'}
                                 valueOfInputString={'bankName'}
                                 label={'نام بانک'}
+                                required={true}
                             />
                         </div>
                         <div className="input-group-register col-4">
@@ -65,6 +68,7 @@ class AdditionalInformation extends Component{
                                 valueOfInputString={'cardNumber'}
                                 label={'شماره کارت'}
                                 // maxLength={16}
+                                required={true}
                             />
                         </div>
                         <div className="input-group-register col-4">
@@ -75,6 +79,7 @@ class AdditionalInformation extends Component{
                                 fieldNameString={'personnelFields'}
                                 valueOfInputString={'bankAccountNumber'}
                                 label={'شماره حساب'}
+                                required={true}
                             />
                         </div>
                         <div className="input-group-register col-4">
@@ -84,6 +89,7 @@ class AdditionalInformation extends Component{
                                 fieldNameString={'personnelFields'}
                                 valueOfInputString={'bankAccountOwnerName'}
                                 label={'نام مالک حساب'}
+                                required={true}
                             />
                         </div>
                         <div className="input-group-register col-4">
@@ -94,6 +100,7 @@ class AdditionalInformation extends Component{
                                 fieldNameString={'personnelFields'}
                                 valueOfInputString={'bankAccountShabaNumber'}
                                 label={'شماره شبا'}
+                                required={true}
                             />
                         </div>
                         <div className="input-group-register col-4">
@@ -132,7 +139,8 @@ class AdditionalInformation extends Component{
                                 value={this.context.personnelFields.parentType}
                                 fieldNameString={'personnelFields'}
                                 valueOfInputString={'parentType'}
-                                label={'تایپ پرسنل'}
+                                label={'نوع پرسنل'}
+                                required={true}
                             />
                         </div>
                         <div className="input-group-register col-4">
@@ -142,16 +150,19 @@ class AdditionalInformation extends Component{
                                 fieldNameString={'personnelFields'}
                                 valueOfInputString={'parentId'}
                                 label={'آیدی پرسنل'}
+                                required={true}
                             />
                         </div>
                         <div className="input-group-register col-4">
-                            <SimpleTextInput
-                                condition1={this.context.personnelFieldsValidation.gender_requiredReg}
+                            <select
+                                className={'input'}
                                 value={this.context.personnelFields.gender}
-                                fieldNameString={'personnelFields'}
-                                valueOfInputString={'gender'}
-                                label={'جنسیت'}
-                            />
+                                onChange={(e) => this.context.handleFields(e, 'personnelFields', 'gender')}
+                            >
+                                <option value={'male'}>مرد</option>
+                                <option value={'female'}>زن</option>
+                            </select>
+                            <label className="placeholder">جنسیت</label>
                         </div>
                     </div>
                 </div>

@@ -172,14 +172,25 @@ class BasicInformation extends Component{
                             />
                         </div>
                         <div className="input-group-register col-4">
-                            <SimpleTextInput
-                                condition1={this.context.personnelFieldsValidation.maritalStatus_requiredReg}
+                            {/*<SimpleTextInput*/}
+                            {/*    condition1={this.context.personnelFieldsValidation.maritalStatus_requiredReg}*/}
+                            {/*    value={this.context.personnelFields.maritalStatus}*/}
+                            {/*    fieldNameString={'personnelFields'}*/}
+                            {/*    valueOfInputString={'maritalStatus'}*/}
+                            {/*    label={'وضعیت تاهل'}*/}
+                            {/*    required={true}*/}
+                            {/*/>*/}
+
+                            <select
+                                className={'input'}
                                 value={this.context.personnelFields.maritalStatus}
-                                fieldNameString={'personnelFields'}
-                                valueOfInputString={'maritalStatus'}
-                                label={'وضعیت تاهل'}
-                                required={true}
-                            />
+                                onChange={(e) => this.context.handleFields(e, 'personnelFields', 'maritalStatus')}
+                            >
+                                <option value={'single'}>مجرد</option>
+                                <option value={'married'}>متاهل</option>
+                            </select>
+                            <label className="placeholder">وضعیت تاهل</label>
+
                         </div>
                         <div className="input-group-register col-4">
                         <SimpleTextInput
@@ -205,14 +216,6 @@ class BasicInformation extends Component{
                                 fieldNameString={'personnelFields'}
                                 valueOfInputString={'health'}
                                 label={'وضعیت سلامت'}
-                            />
-                        </div>
-                        <div className="input-group-register col-4">
-                            <SimpleTextInput
-                                value={this.context.personnelFields.alias}
-                                fieldNameString={'personnelFields'}
-                                valueOfInputString={'alias'}
-                                label={'نام کاربری'}
                             />
                         </div>
                     </div>

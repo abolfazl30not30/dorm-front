@@ -18,7 +18,7 @@ class contacts extends Component {
     }
 
     async componentDidMount() {
-         const response = await fetch('http://api.saadatportal.com/api/v1/phoneBook').then((response) => response.json())
+         const response = await fetch('https://api.saadatportal.com/api/v1/phoneBook').then((response) => response.json())
              .then((data) => this.setState({contacts : data}));
     }
 
@@ -26,11 +26,14 @@ class contacts extends Component {
         return (
             <>
                 <div className="contact">
-                    <div className="title">دفترچه تلفن</div>
-                    <button className='btn btn-add my-4' onClick={() => {
-                        this.handleShow()
-                    }}><AiOutlinePlus className='ms-2'/>افزودن مخاطب
-                    </button>
+                    <div className="d-flex flex-row justify-content-between align-items-center">
+                        <div className="title">دفترچه تلفن</div>
+                        <button className='btn-done my-4' onClick={() => {
+                            this.handleShow()
+                        }}><AiOutlinePlus className='ms-2'/>افزودن مخاطب
+                        </button>
+                    </div>
+
                     <div className="row align-items-center">
                         <div className="col-md-1 col-sm-2 px-0"><label>براساس:</label></div>
                         <div className="col-md-3 col-sm-6 px-0" style={{paddingLeft: "0"}}>
@@ -203,7 +206,7 @@ class contacts extends Component {
             mobileNumbers: this.state.mobileNumbers
         }
 
-        const rawResponse = await fetch('http://api.saadatportal.com/api/v1/phoneBook', {
+        const rawResponse = await fetch('https://api.saadatportal.com/api/v1/phoneBook', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -212,10 +215,14 @@ class contacts extends Component {
             body: JSON.stringify(newContact)
         });
 
-        const response = await fetch('http://api.saadatportal.com/api/v1/phoneBook').then((response) => response.json())
+        const response = await fetch('https://api.saadatportal.com/api/v1/phoneBook').then((response) => response.json())
             .then((data) => this.setState({contacts : data}));
 
-        this.setState({show: false})
+        this.setState({show: false});
+        this.setState({inputTelephone:[]});
+        this.setState({inputMobile:[]});
+        this.setState({telephoneNumbers:[]});
+        this.setState({mobileNumbers:[]});
     }
 }
 
