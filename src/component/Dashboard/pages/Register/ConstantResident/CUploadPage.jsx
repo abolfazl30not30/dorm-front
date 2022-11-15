@@ -152,7 +152,7 @@ class CUploadPage extends Component {
                                             </div>
                                             <input className='form-control form-control-sm  p-2 ' type="file"
                                                    ref={this.inputBirthPage1}
-                                                   disabled={this.state.isUploadBirthPage1}
+                                                   disabled={this.state.isUploadBirthPage1 && !this.state.hasErrorBirthPage1}
                                                    id="formFileLg" name="filename" onChange={(e) => {
                                                 this.handleFileBirthPage1(e)
                                             }}/>
@@ -194,7 +194,7 @@ class CUploadPage extends Component {
                                             </div>
                                             <input className='form-control form-control-sm  p-2 ' type="file"
                                                    ref={this.inputBirthPage2}
-                                                   disabled={this.state.isUploadBirthPage2}
+                                                   disabled={this.state.isUploadBirthPage2 && !this.state.hasErrorBirthPage2}
                                                    id="formFileLg" name="filename" onChange={(e) => {
                                                 this.handleFileBirthPage2(e)
                                             }}/>
@@ -236,7 +236,7 @@ class CUploadPage extends Component {
                                             </div>
                                             <input className='form-control form-control-sm  p-2 ' type="file"
                                                    ref={this.inputBirthPage3}
-                                                   disabled={this.state.isUploadBirthPage3}
+                                                   disabled={this.state.isUploadBirthPage3 && !this.state.hasErrorBirthPage3}
                                                    id="formFileLg" name="filename" onChange={(e) => {
                                                 this.handleFileBirthPage3(e)
                                             }}/>
@@ -278,7 +278,7 @@ class CUploadPage extends Component {
                                             </div>
                                             <input className='form-control form-control-sm  p-2 ' type="file"
                                                    ref={this.inputBirthPage4}
-                                                   disabled={this.state.isUploadBirthPage4}
+                                                   disabled={this.state.isUploadBirthPage4 && !this.state.hasErrorBirthPage4}
                                                    id="formFileLg" name="filename" onChange={(e) => {
                                                 this.handleFileBirthPage4(e)
                                             }}/>
@@ -320,7 +320,7 @@ class CUploadPage extends Component {
                                             </div>
                                             <input className='form-control form-control-sm  p-2 ' type="file"
                                                    ref={this.inputBirthAllPage}
-                                                   disabled={this.state.isUploadBirthAllPage}
+                                                   disabled={this.state.isUploadBirthAllPage && !this.state.hasErrorBirthAllPage}
                                                    id="formFileLg" name="filename" onChange={(e) => {
                                                 this.handleFileBirthAllPage(e)
                                             }}/>
@@ -369,7 +369,7 @@ class CUploadPage extends Component {
                                             </div>
                                             <input className='form-control form-control-sm  p-2 ' type="file"
                                                    ref={this.inputCartPage1}
-                                                   disabled={this.state.isUploadCartPage1}
+                                                   disabled={this.state.isUploadCartPage1 && !this.state.hasErrorCartPage1}
                                                    id="formFileLg" name="filename" onChange={(e) => {
                                                 this.handleFileCartPage1(e)
                                             }}/>
@@ -411,7 +411,7 @@ class CUploadPage extends Component {
                                             </div>
                                             <input className='form-control form-control-sm  p-2 ' type="file"
                                                    ref={this.inputCartPage2}
-                                                   disabled={this.state.isUploadCartPage2}
+                                                   disabled={this.state.isUploadCartPage2 && !this.state.hasErrorCartPage2}
                                                    id="formFileLg" name="filename" onChange={(e) => {
                                                 this.handleFileCartPage2(e)
                                             }}/>
@@ -454,7 +454,7 @@ class CUploadPage extends Component {
                                             </div>
                                             <input className='form-control form-control-sm  p-2 ' type="file"
                                                    ref={this.inputCartAllPage}
-                                                   disabled={this.state.isUploadCartAllPage}
+                                                   disabled={this.state.isUploadCartAllPage  && !this.state.hasErrorCartAllPage}
                                                    id="formFileLg" name="filename" onChange={(e) => {
                                                 this.handleFileCartAllPage(e)
                                             }}/>
@@ -502,7 +502,7 @@ class CUploadPage extends Component {
                                         </div>
                                         <input className='form-control form-control-sm  p-2 ' type="file"
                                                ref={this.inputPersonnelImg}
-                                               disabled={this.state.isUploadPersonnelImg}
+                                               disabled={this.state.isUploadPersonnelImg && !this.state.hasErrorPersonnelImg}
                                                id="formFileLg" name="filename" onChange={(e) => {
                                             this.handleFilePersonnelImg(e)
                                         }}/>
@@ -549,7 +549,7 @@ class CUploadPage extends Component {
                                         </div>
                                         <input className='form-control form-control-sm  p-2 ' type="file"
                                                ref={this.inputRegister}
-                                               disabled={this.state.isUploadRegister}
+                                               disabled={this.state.isUploadRegister && !this.state.hasErrorRegister}
                                                id="formFileLg" name="filename" onChange={(e) => {
                                             this.handleFileRegister(e)
                                         }}/>
@@ -596,7 +596,7 @@ class CUploadPage extends Component {
                                         </div>
                                         <input className='form-control form-control-sm  p-2 ' type="file"
                                                ref={this.inputRegisterUni}
-                                               disabled={this.state.isUploadRegisterUni}
+                                               disabled={this.state.isUploadRegisterUni && !this.state.hasErrorRegisterUni}
                                                id="formFileLg" name="filename" onChange={(e) => {
                                             this.handleFileRegisterUni(e)
                                         }}/>
@@ -621,8 +621,8 @@ class CUploadPage extends Component {
                                                 )
                                             )}
                                             {
-                                                this.state.isUploadBirthAllPage && (
-                                                    (this.state.hasErrorBirthAllPage) && (
+                                                this.state.isUploadRegisterUni && (
+                                                    (this.state.hasErrorRegisterUni) && (
                                                         <Alert variant='danger' className="mt-3">
                                                             فایل آپلود نشد
                                                         </Alert>
@@ -1063,7 +1063,7 @@ class CUploadPage extends Component {
                     this.setState({fileIdRegisterUni: result.message.id});
                     this.context.handleUploadedFile("constantUploadPage", "registerUni", result.message.id);
                     this.setState({isLoadingRegisterUni: false});
-                    this.setState({isUploadRegisterUni: true})
+                    this.setState({isUploadRegisterUni: true});
                     this.setState({hasErrorRegisterUni: false});
                 })
                 .catch((error) => {

@@ -166,6 +166,7 @@ class RoomAndBed extends Component {
     }
 
     async componentDidMount() {
+        console.log(this.context.unitId)
         const response = await fetch(`https://api.saadatportal.com/api/v1/unit/room/${this.context.unitId}`).then((response) => response.json())
             .then((data) => this.setState({rooms: data, isLoading: false},()=>{
                 if (data.length == 0) {

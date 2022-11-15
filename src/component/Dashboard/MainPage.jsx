@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import Home from './pages/Home';
 
-import { Routes, Route } from 'react-router-dom';
+import {Routes, Route} from 'react-router-dom';
 import FloorAndUnit from './pages/Inventory and capacity/FloorAndUnit';
 import RoomAndBed from './pages/Inventory and capacity/RoomAndBed';
 import BuildingContext from '../../contexts/Building';
@@ -33,27 +33,27 @@ class MainPage extends Component {
         unitIdPA: "",
         unitNumberPA: "",
         unitId: "",
-        personId:"",
-        charId:"",
+        personId: "",
+        charId: "",
 
         valueOfDates: {
             constantResident: {
                 birthDate: '',
-                admissionStartDate: '',
-                admissionEndDate: '',
+                startDate: '',
+                endDate: '',
 
             },
             familyGuest: {
                 birthDate: '',
-                admissionStartDate: '',
-                admissionEndDate: '',
+                startDate: '',
+                endDate: '',
                 paymentDate: '',
 
             },
             otherGuest: {
                 birthDate: '',
-                admissionStartDate: '',
-                admissionEndDate: '',
+                startDate: '',
+                endDate: '',
                 paymentDate: '',
             },
 
@@ -71,7 +71,7 @@ class MainPage extends Component {
                 firstName: '',
                 lastName: '',
                 nationalCode: '',
-                placeOfIssue:'',
+                placeOfIssue: '',
                 certificateNumber: '',
                 phoneNumber: '',
                 address: '',
@@ -86,8 +86,8 @@ class MainPage extends Component {
                 maritalStatus: '',
                 religion: '',
                 subReligion: '',
-                healthyStatus: '', // boolean
-                health: '',
+                healthyStatus: '', 
+                health: true,
                 alias: '',
                 university: '', //
                 major: '',
@@ -105,15 +105,13 @@ class MainPage extends Component {
                 parentType: '',
                 parentId: '',
                 gender: '',
-                timePeriod: {
-                    startDate: '',
-                    endDate:'',
-                },
+                startDate: '',
+                endDate: '',
+
 
             },
 
             //MAIN REGISTER
-
             //############################################################################## first page
             // ----------------------- <CInformationPage /> information
             constantInformationPage: {
@@ -139,14 +137,14 @@ class MainPage extends Component {
             },
 
             // ----------------------- <FGInformationPage /> information
-            familyGuestInformation : { // مهمان بستگان درجه یک -- صفحه مشخصات اولیه
+            familyGuestInformation: { // مهمان بستگان درجه یک -- صفحه مشخصات اولیه
                 fullName: '',
                 nationalCode: '',
                 certificateNumber: '',
                 placeOfIssue: '',
                 birthDate: '',
-                admissionStartDate: '',
-                admissionEndDate: '',
+                startDate: '',
+                endDate: '',
                 paymentDate: '',
                 rentPaymentAmount: '',
                 depositPaymentAmount: '',
@@ -162,8 +160,8 @@ class MainPage extends Component {
                 nationalCode: '',
                 certificateNumber: '',
                 placeOfIssue: '',
-                admissionStartDate: '',
-                admissionEndDate: '',
+                startDate: '',
+                endDate: '',
                 paymentDate: '',
                 rentPaymentAmount: '',
                 depositPaymentAmount: '',
@@ -180,7 +178,7 @@ class MainPage extends Component {
                 telephoneNumber: '',
                 phoneNumber: '',
                 reservationDate: '',
-                admissionEndDate: '',
+                endDate: '',
             },
 
             // ----------------------- <FGInformationFurtherPage /> information
@@ -201,58 +199,52 @@ class MainPage extends Component {
             //############################################################################## third page
             // ----------------------- <CInformationFamilyPage /> information
             constantInformationFamily: {
-                firstPersonFullName : '',
-                firstPersonPhoneNumber : '',
-                firstPersonFatherName : '',
-                firstPersonRelationshipWithResident : 'father', // default value (first option)
+                firstPersonFullName: '',
+                firstPersonPhoneNumber: '',
+                firstPersonFatherName: '',
+                firstPersonRelationshipWithResident: 'father', // default value (first option)
 
-                secondPersonFullName : '',
-                secondPersonPhoneNumber : '',
-                secondPersonFatherName : '',
-                secondPersonRelationshipWithResident : 'father', // default value (first option)
+                secondPersonFullName: '',
+                secondPersonPhoneNumber: '',
+                secondPersonFatherName: '',
+                secondPersonRelationshipWithResident: 'father', // default value (first option)
             },
             // ----------------------- <FGIInformationFamilyPage /> information
             familyGuestInformationFamily: {
-                firstPerson_FullName : '',
-                firstPerson_PhoneNumber : '',
-                firstPerson_FatherName : '',
-                firstPerson_relationshipWithResident : 'father', // default value (first option)
+                firstPersonFullName: '',
+                firstPersonPhoneNumber: '',
+                firstPersonFatherName: '',
+                firstPersonRelationshipWithResident: 'father', // default value (first option)
 
-                secondPerson_FullName : '',
-                secondPerson_PhoneNumber : '',
-                secondPerson_FatherName : '',
-                secondPerson_relationshipWithResident : 'father', // default value (first option)
+                secondPersonFullName: '',
+                secondPersonPhoneNumber: '',
+                secondPersonFatherName: '',
+                secondPersonRelationshipWithResident: 'father', // default value (first option)
             },
             // ----------------------- <OGIInformationFamilyPage /> information
             otherGuestInformationFamily: {
-                firstPerson_FullName : '',
-                firstPerson_PhoneNumber : '',
-                firstPerson_FatherName : '',
-                firstPerson_relationshipWithResident : 'father', // default value (first option)
+                firstPersonFullName: '',
+                firstPersonPhoneNumber: '',
+                firstPersonFatherName: '',
+                firstPersonRelationshipWithResident: 'father', // default value (first option)
 
-                secondPerson_FullName : '',
-                secondPerson_PhoneNumber : '',
-                secondPerson_FatherName : '',
-                secondPerson_relationshipWithResident : 'father', // default value (first option)
+                secondPersonFullName: '',
+                secondPersonPhoneNumber: '',
+                secondPersonFatherName: '',
+                secondPersonRelationshipWithResident: 'father', // default value (first option)
             },
             //##############################################################################
 
             //############################################################################## fourth page
-            constantUploadPage:[
+            constantUploadPage: [],
 
-            ],
+            familyGuestUploadPage: [],
 
-            familyGuestUploadPage: [
-
-            ],
-
-            otherGuestUploadPage: [
-
-            ],
+            otherGuestUploadPage: [],
             //##############################################################################
 
         },
-        errors : {
+        errors: {
             required: 'این فیلد الزامی است!',
             numberRequired: 'عدد وارد کنید!',
             homeTelephoneReg: 'شماره تلفن ثابت با کد وارد کنید (۳۴۵۶۷۸۹۰-۰۱۲) ',
@@ -260,7 +252,7 @@ class MainPage extends Component {
             emailRegex: 'ایمیل وارد کنید!',
         },
 
-        specificValidations : {
+        specificValidations: {
 
             personnelFieldsValidation: {
                 //first page
@@ -316,7 +308,7 @@ class MainPage extends Component {
             //############################################################################## first page
 
             // ----------------------- <CInformationPage /> information validations
-            constantInformationPageValidation : {
+            constantInformationPageValidation: {
                 firstName_requiredReg: '',
                 lastName_requiredReg: '',
                 nationalCode_requiredReg: '',
@@ -330,18 +322,18 @@ class MainPage extends Component {
                 fatherName_requiredReg: '',
                 studentNumber_numberReg: '',
                 spouseFullName_requiredReg: '',
-                healthDescription_requiredReg: '',
+                healthyStatus_requiredReg: '',
             },
 
             // ----------------------- <FGInformationPage /> information validation
-            familyGuestInformationValidation : {
+            familyGuestInformationValidation: {
                 fullName_requiredReg: '',
                 nationalCode_requiredReg: '',
                 nationalCode_numberReg: '',
                 certificateNumber_requiredReg: '',
                 certificateNumber_numberReg: '',
-                admissionStartDate_requiredReg: '',
-                admissionEndDate_requiredReg: '',
+                startDate_requiredReg: '',
+                endDate_requiredReg: '',
                 paymentDate_requiredReg: '',
                 rentPaymentAmount_numberReg: '',
                 depositPaymentAmount_numberReg: '',
@@ -356,10 +348,10 @@ class MainPage extends Component {
                 nationalCode_numberReg: '',
                 certificateNumber_requiredReg: '',
                 certificateNumber_numberReg: '',
-                admissionStartDate_requiredReg: '',
-                // admissionStartDate_dateReg: '',
-                admissionEndDate_requiredReg: '',
-                // admissionStartDate_dateReg: '',
+                startDate_requiredReg: '',
+                // startDate_dateReg: '',
+                endDate_requiredReg: '',
+                // startDate_dateReg: '',
                 // paymentDate_dateReg: '',
                 rentPaymentAmount_numberReg: '',
                 depositPaymentAmount_numberReg: '',
@@ -373,29 +365,29 @@ class MainPage extends Component {
             // ----------------------- <CInformationFurtherPage /> information validations
             constantInformationFurtherValidation: {
                 address_requiredReg: '',
-                home_tel_requiredReg: '',
-                home_tel_homeTelephoneReg: '',
-                resident_tel_requiredReg: '',
-                resident_tel_telephoneReg: '',
-                admissionStartDate_requiredReg: '',
-                admissionEndDate_requiredReg: '',
+                telephoneNumber_requiredReg: '',
+                telephoneNumber_homeTelephoneReg: '',
+                phoneNumber_requiredReg: '',
+                phoneNumber_telephoneReg: '',
+                startDate_requiredReg: '',
+                endDate_requiredReg: '',
             },
 
             // ----------------------- <FGInformationFurtherPage /> information validations
             familyGuestInformationFurtherValidation: {
                 address_requiredReg: '',
-                home_tel_requiredReg: '',
-                home_tel_homeTelephoneReg: '',
-                resident_tel_requiredReg: '',
-                resident_tel_telephoneReg: '',
+                telephoneNumber_requiredReg: '',
+                telephoneNumber_homeTelephoneReg: '',
+                phoneNumber_requiredReg: '',
+                phoneNumber_telephoneReg: '',
             },
             // ----------------------- <OGInformationFurtherPage /> information validations
             otherGuestInformationFurtherValidation: {
                 address_requiredReg: '',
-                home_tel_requiredReg: '',
-                home_tel_homeTelephoneReg: '',
-                resident_tel_requiredReg: '',
-                resident_tel_telephoneReg: '',
+                telephoneNumber_requiredReg: '',
+                telephoneNumber_homeTelephoneReg: '',
+                phoneNumber_requiredReg: '',
+                phoneNumber_telephoneReg: '',
             },
             //##############################################################################
 
@@ -403,33 +395,33 @@ class MainPage extends Component {
             //############################################################################## third page
             // ----------------------- <CInformationFamilyPage /> information validations
             constantInformationFamilyValidation: {
-                firstPerson_FullName_requiredReg : '',
-                firstPerson_PhoneNumber_requiredReg : '',
-                firstPerson_PhoneNumber_telephoneReg : '',
+                firstPersonFullName_requiredReg: '',
+                firstPersonPhoneNumber_requiredReg: '',
+                firstPersonPhoneNumber_telephoneReg: '',
 
-                secondPerson_FullName_requiredReg : '',
-                secondPerson_PhoneNumber_requiredReg : '',
-                secondPerson_PhoneNumber_telephoneReg : '',
+                secondPersonFullName_requiredReg: '',
+                secondPersonPhoneNumber_requiredReg: '',
+                secondPersonPhoneNumber_telephoneReg: '',
             },
             // ----------------------- <FGIInformationFamilyPage /> information validations
             familyGuestInformationFamilyValidation: {
-                firstPerson_FullName_requiredReg : '',
-                firstPerson_PhoneNumber_requiredReg : '',
-                firstPerson_PhoneNumber_telephoneReg : '',
+                firstPersonFullName_requiredReg: '',
+                firstPersonPhoneNumber_requiredReg: '',
+                firstPersonPhoneNumber_telephoneReg: '',
 
-                secondPerson_FullName_requiredReg : '',
-                secondPerson_PhoneNumber_requiredReg : '',
-                secondPerson_PhoneNumber_telephoneReg : '',
+                secondPersonFullName_requiredReg: '',
+                secondPersonPhoneNumber_requiredReg: '',
+                secondPersonPhoneNumber_telephoneReg: '',
             },
             // ----------------------- <OGIInformationFamilyPage /> information validations
             otherGuestInformationFamilyValidation: {
-                firstPerson_FullName_requiredReg : '',
-                firstPerson_PhoneNumber_requiredReg : '',
-                firstPerson_PhoneNumber_telephoneReg : '',
+                firstPersonFullName_requiredReg: '',
+                firstPersonPhoneNumber_requiredReg: '',
+                firstPersonPhoneNumber_telephoneReg: '',
 
-                secondPerson_FullName_requiredReg : '',
-                secondPerson_PhoneNumber_requiredReg : '',
-                secondPerson_PhoneNumber_telephoneReg : '',
+                secondPersonFullName_requiredReg: '',
+                secondPersonPhoneNumber_requiredReg: '',
+                secondPersonPhoneNumber_telephoneReg: '',
             },
             //##############################################################################
         },
@@ -444,8 +436,8 @@ class MainPage extends Component {
                         personnelFieldsValidation: this.state.specificValidations.personnelFieldsValidation,
                         unitId: this.state.unitId,
                         unitIdPA: this.state.unitIdPA,
-                        personId:this.state.personId,
-                        charId:this.state.charId,
+                        personId: this.state.personId,
+                        charId: this.state.charId,
                         typeofResident: this.state.typeofResident,
                         unitNumber: this.state.unitNumber,
                         unitNumberPA: this.state.unitNumberPA,
@@ -479,7 +471,7 @@ class MainPage extends Component {
                         otherGuestInformationFamily: this.state.fields.otherGuestInformationFamily,
                         otherGuestInformationFamilyValidation: this.state.specificValidations.otherGuestInformationFamilyValidation,
 
-                        specificValidations : this.state.specificValidations,
+                        specificValidations: this.state.specificValidations,
 
                         constantUploadPage: this.state.fields.constantUploadPage, // UploadPage
                         familyGuestUploadPage: this.state.fields.familyGuestUploadPage, // UploadPage
@@ -488,41 +480,41 @@ class MainPage extends Component {
                         handleTypeofResident: this.handleTypeofResident,
                         handleUnitNumber: this.handleUnitNumber,
                         handleUnitNumberPA: this.handleUnitNumberPA,
-                        handlePersonId : this.handlePersonId,
+                        handlePersonId: this.handlePersonId,
                         handleFields: this.handleFields,
                         handleDates: this.handleDates,
                         handleValueOfDate: this.handleValueOfDate,
                         handleValidations: this.handleValidations,
                         handleSpecificValidations: this.handleSpecificValidations,
-                        handleUploadedFile : this.handleUploadedFile,
+                        handleUploadedFile: this.handleUploadedFile,
                         handleDeleteUploadedFile: this.handleDeleteUploadedFile
                     }}
                     >
                         <Routes>
-                            <Route path="/" element={(<Home />)} />
-                            <Route path="/booking" element={(<FloorAndUnit />)} />
-                            <Route path="/booking/edit-floor-and-unit" element={(<EditFloorAndUnit />)} />
-                            <Route path="/RoomAndBed" element={(<RoomAndBed />)} />
-                            <Route path='/RoomAndBed/edit-room-and-bed' element={(<EditRoomAndBed />)} />
-                            <Route path="/people" element={(<SearchAccount />)} />
-                            <Route path="/people/profile" element={(<ProfilePage />)} />
-                            <Route path='/payment' element={(<PaymentPage />)} />
-                            <Route path='/contacts' element={(<Contacts />)} />
-                            <Route path='/CallHistory' element={(<CallHistory />)} />
-                            <Route path='/Inventory' element={(<Inventory />)} />
-                            <Route path="/Register" element={(<MainRegister />)} />
-                            <Route path="/edit" element={(<EditFloorAndUnit />)} />
-                            <Route path="/Calender" element={(<EventPage />)} />
-                            <Route path="/Request" element={(<RequestPage />)} />
-                            <Route path="/PersonnelRegister" element={(<PersonnelRegister />)} />
-                            <Route path="/Request-manager" element={(<RequestPageManager />)} />
-                            <Route path="/Request" element={(<RequestPage />)} />
-                            <Route path="/camera-history" element={(<CameraHistoryPage />)} />
-                            <Route path="/PaymentHistory" element={(<PaymentHistory />)} />
-                            <Route path="/taskManagement" element={(<TrelloPage/>)} />
-                            <Route path="/PresenceAbsence" element={(<PresenceAbsence/>)} />
-                            <Route path="/PresenceAbsencePage2" element={(<PresenceAbsenceRoomPerson/>)} />
-                            <Route path="/" element={(<EditFloorAndUnit />)} />
+                            <Route path="/" element={(<Home/>)}/>
+                            <Route path="/booking" element={(<FloorAndUnit/>)}/>
+                            <Route path="/booking/edit-floor-and-unit" element={(<EditFloorAndUnit/>)}/>
+                            <Route path="/RoomAndBed" element={(<RoomAndBed/>)}/>
+                            <Route path='/RoomAndBed/edit-room-and-bed' element={(<EditRoomAndBed/>)}/>
+                            <Route path="/people" element={(<SearchAccount/>)}/>
+                            <Route path="/people/profile" element={(<ProfilePage/>)}/>
+                            <Route path='/payment' element={(<PaymentPage/>)}/>
+                            <Route path='/contacts' element={(<Contacts/>)}/>
+                            <Route path='/CallHistory' element={(<CallHistory/>)}/>
+                            <Route path='/Inventory' element={(<Inventory/>)}/>
+                            <Route path="/Register" element={(<MainRegister/>)}/>
+                            <Route path="/edit" element={(<EditFloorAndUnit/>)}/>
+                            <Route path="/Calender" element={(<EventPage/>)}/>
+                            <Route path="/Request" element={(<RequestPage/>)}/>
+                            <Route path="/PersonnelRegister" element={(<PersonnelRegister/>)}/>
+                            <Route path="/Request-manager" element={(<RequestPageManager/>)}/>
+                            <Route path="/Request" element={(<RequestPage/>)}/>
+                            <Route path="/camera-history" element={(<CameraHistoryPage/>)}/>
+                            <Route path="/PaymentHistory" element={(<PaymentHistory/>)}/>
+                            <Route path="/taskManagement" element={(<TrelloPage/>)}/>
+                            <Route path="/PresenceAbsence" element={(<PresenceAbsence/>)}/>
+                            <Route path="/PresenceAbsencePage2" element={(<PresenceAbsenceRoomPerson/>)}/>
+                            <Route path="/" element={(<EditFloorAndUnit/>)}/>
                         </Routes>
                     </BuildingContext.Provider>
                 </div>
@@ -533,17 +525,17 @@ class MainPage extends Component {
     handleUploadedFile = (residentTypeString, name, fileId) => {
         let updatedFiles = {...this.state.fields};
         let tmp = {
-            name : name,
-            fileId : fileId,
+            name: name,
+            fileId: fileId,
         }
         updatedFiles[residentTypeString].push(tmp);
-        this.setState({fields:updatedFiles});
+        this.setState({fields: updatedFiles});
     }
 
-    handleDeleteUploadedFile = (residentTypeString,fileId) =>{
+    handleDeleteUploadedFile = (residentTypeString, fileId) => {
         let updatedFiles = {...this.state.fields};
         updatedFiles[residentTypeString] = updatedFiles[residentTypeString].filter(f => f.fileId !== fileId);
-        this.setState({fields:updatedFiles});
+        this.setState({fields: updatedFiles});
     }
 
     handleTypeofResident = (type) => {
@@ -552,33 +544,33 @@ class MainPage extends Component {
     }
 
     handleUnitNumber = (unitNumber, unitId) => {
-        this.setState({ unitNumber: unitNumber });
-        this.setState({ unitId: unitId });
+        this.setState({unitNumber: unitNumber});
+        this.setState({unitId: unitId});
     }
     handleUnitNumberPA = (unitNumber, unitId) => {
-        this.setState({ unitNumberPA: unitNumber });
-        this.setState({ unitIdPA: unitId });
+        this.setState({unitNumberPA: unitNumber});
+        this.setState({unitIdPA: unitId});
     }
-    handlePersonId = (personId,charId) =>{
-        this.setState({personId : personId,charId:charId});
+    handlePersonId = (personId, charId) => {
+        this.setState({personId: personId, charId: charId});
     }
 
     handleFields = (e, residentType, field) => {
         let newFields = {...this.state.fields};
         newFields[residentType][field] = e.target.value
-        this.setState({ fields: newFields });
+        this.setState({fields: newFields});
     }
 
     handleDates = (value, residentType, field) => {
         let newFields = {...this.state.fields};
         newFields[residentType][field] = value;
-        this.setState({ fields: newFields });
+        this.setState({fields: newFields});
     }
 
     handleValueOfDate = (value, residentType, field) => {
         let newFields = {...this.state.valueOfDates};
         newFields[residentType][field] = value
-        this.setState({ valueOfDates: newFields });
+        this.setState({valueOfDates: newFields});
     }
 
     handleValidations = (fields, names) => {
@@ -587,7 +579,7 @@ class MainPage extends Component {
             newValidations[names[i]] = fields[i];
         }
         // newValidations[name] = field;
-        this.setState({validations : newValidations});
+        this.setState({validations: newValidations});
 
         // console.log(newValidations)
     }
@@ -599,7 +591,7 @@ class MainPage extends Component {
         }
         // newValidations[name] = field;
 
-        this.setState({specificValidations : newSpecificValidations});
+        this.setState({specificValidations: newSpecificValidations});
         console.log(this.state.fields)
         // console.log(this.state.fields.otherGuestInformationFurther)
     }

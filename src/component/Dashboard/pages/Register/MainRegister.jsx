@@ -46,7 +46,7 @@ class MainRegister extends Component {
         let nationality_requiredReg = !requiredReg.test(this.context.constantInformationPage.nationality);
         let fatherName_requiredReg = !requiredReg.test(this.context.constantInformationPage.fatherName);
         let spouseFullName_requiredReg = !requiredReg.test(this.context.constantInformationPage.spouseFullName);
-        let healthDescription_requiredReg = !requiredReg.test(this.context.constantInformationPage.healthyStatus);
+        let healthyStatus_requiredReg = !requiredReg.test(this.context.constantInformationPage.healthyStatus);
 
         let nationalCode_numberReg = numberReg.test(this.context.constantInformationPage.nationalCode);
         let certificateNumber_numberReg = numberReg.test(this.context.constantInformationPage.certificateNumber);
@@ -57,19 +57,19 @@ class MainRegister extends Component {
         }
 
         if (this.context.constantInformationPage.health === 'false') {
-            healthDescription_requiredReg = true;
+            healthyStatus_requiredReg = true;
         }
 
         this.context.handleSpecificValidations([firstName_requiredReg, lastName_requiredReg, nationalCode_requiredReg, certificateNumber_requiredReg,
                 placeOfIssue_requiredReg, birthDate_requiredReg, nationality_requiredReg, fatherName_requiredReg, spouseFullName_requiredReg,
-                healthDescription_requiredReg, nationalCode_numberReg, certificateNumber_numberReg, studentNumber_numberReg],
+                healthyStatus_requiredReg, nationalCode_numberReg, certificateNumber_numberReg, studentNumber_numberReg],
             ['firstName_requiredReg', 'lastName_requiredReg', 'nationalCode_requiredReg', 'certificateNumber_requiredReg',
                 'placeOfIssue_requiredReg', 'birthDate_requiredReg', 'nationality_requiredReg', 'fatherName_requiredReg', 'spouseFullName_requiredReg',
-                'healthDescription_requiredReg', 'nationalCode_numberReg', 'certificateNumber_numberReg', 'studentNumber_numberReg'], 'constantInformationPageValidation');
+                'healthyStatus_requiredReg', 'nationalCode_numberReg', 'certificateNumber_numberReg', 'studentNumber_numberReg'], 'constantInformationPageValidation');
 
         return firstName_requiredReg && lastName_requiredReg && nationalCode_requiredReg && certificateNumber_requiredReg &&
             placeOfIssue_requiredReg && birthDate_requiredReg && nationality_requiredReg && fatherName_requiredReg && spouseFullName_requiredReg &&
-            healthDescription_requiredReg && nationalCode_numberReg && certificateNumber_numberReg && studentNumber_numberReg;
+            healthyStatus_requiredReg && nationalCode_numberReg && certificateNumber_numberReg && studentNumber_numberReg;
     }
 
     familyGuestValidation = () => {
@@ -82,8 +82,8 @@ class MainRegister extends Component {
         let fullName_requiredReg = !requiredReg.test(this.context.familyGuestInformation.fullName);
         let nationalCode_requiredReg = !requiredReg.test(this.context.familyGuestInformation.nationalCode);
         let certificateNumber_requiredReg = !requiredReg.test(this.context.familyGuestInformation.certificateNumber);
-        let admissionStartDate_requiredReg = !requiredReg.test(this.context.familyGuestInformation.admissionStartDate);
-        let admissionEndDate_requiredReg = !requiredReg.test(this.context.familyGuestInformation.admissionEndDate);
+        let startDate_requiredReg = !requiredReg.test(this.context.familyGuestInformation.startDate);
+        let endDate_requiredReg = !requiredReg.test(this.context.familyGuestInformation.endDate);
         let paymentDate_requiredReg = !requiredReg.test(this.context.familyGuestInformation.paymentDate);
 
         let rentPaymentAmount_numberReg = numberReg.test(this.context.familyGuestInformation.rentPaymentAmount)
@@ -95,16 +95,16 @@ class MainRegister extends Component {
         let phoneNumber_telephoneReg = telephoneReg.test(this.context.familyGuestInformation.phoneNumber);
 
         this.context.handleSpecificValidations([fullName_requiredReg, nationalCode_requiredReg, certificateNumber_requiredReg,
-                admissionStartDate_requiredReg, admissionEndDate_requiredReg, paymentDate_requiredReg, rentPaymentAmount_numberReg,
+                startDate_requiredReg, endDate_requiredReg, paymentDate_requiredReg, rentPaymentAmount_numberReg,
                 depositPaymentAmount_numberReg, discountPaymentAmount_numberReg, nationalCode_numberReg, certificateNumber_numberReg,
                 phoneNumber_telephoneReg],
             ['fullName_requiredReg', 'nationalCode_requiredReg', 'certificateNumber_requiredReg',
-                'admissionStartDate_requiredReg', 'admissionEndDate_requiredReg', 'paymentDate_requiredReg',
+                'startDate_requiredReg', 'endDate_requiredReg', 'paymentDate_requiredReg',
             'rentPaymentAmount_numberReg', 'depositPaymentAmount_numberReg', 'discountPaymentAmount_numberReg',
                 'nationalCode_numberReg', 'certificateNumber_numberReg', 'phoneNumber_telephoneReg'], 'familyGuestInformationValidation');
 
         return fullName_requiredReg && nationalCode_requiredReg && certificateNumber_requiredReg &&
-            admissionStartDate_requiredReg && admissionEndDate_requiredReg && paymentDate_requiredReg &&
+            startDate_requiredReg && endDate_requiredReg && paymentDate_requiredReg &&
             nationalCode_numberReg && certificateNumber_numberReg && phoneNumber_telephoneReg;
     }
     componentDidMount() {
@@ -203,8 +203,8 @@ class MainRegister extends Component {
         let fullName_requiredReg = !requiredReg.test(this.context.otherGuestInformation.fullName);
         let nationalCode_requiredReg = !requiredReg.test(this.context.otherGuestInformation.nationalCode);
         let certificateNumber_requiredReg = !requiredReg.test(this.context.otherGuestInformation.certificateNumber);
-        let admissionStartDate_requiredReg = !requiredReg.test(this.context.otherGuestInformation.admissionStartDate);
-        let admissionEndDate_requiredReg = !requiredReg.test(this.context.otherGuestInformation.admissionEndDate);
+        let startDate_requiredReg = !requiredReg.test(this.context.otherGuestInformation.startDate);
+        let endDate_requiredReg = !requiredReg.test(this.context.otherGuestInformation.endDate);
 
         let nationalCode_numberReg = numberReg.test(this.context.otherGuestInformation.nationalCode);
         let certificateNumber_numberReg = numberReg.test(this.context.otherGuestInformation.certificateNumber);
@@ -213,14 +213,14 @@ class MainRegister extends Component {
         let discountPaymentAmount_numberReg = numberReg.test(this.context.otherGuestInformation.discountPaymentAmount);
 
         this.context.handleSpecificValidations([fullName_requiredReg, nationalCode_requiredReg, certificateNumber_requiredReg,
-                admissionStartDate_requiredReg, admissionEndDate_requiredReg, nationalCode_numberReg, certificateNumber_numberReg,
+                startDate_requiredReg, endDate_requiredReg, nationalCode_numberReg, certificateNumber_numberReg,
                 rentPaymentAmount_numberReg, depositPaymentAmount_numberReg, discountPaymentAmount_numberReg],
             ['fullName_requiredReg', 'nationalCode_requiredReg', 'certificateNumber_requiredReg',
-                'admissionStartDate_requiredReg', 'admissionEndDate_requiredReg', 'nationalCode_numberReg', 'certificateNumber_numberReg',
+                'startDate_requiredReg', 'endDate_requiredReg', 'nationalCode_numberReg', 'certificateNumber_numberReg',
                 'rentPaymentAmount_numberReg', 'depositPaymentAmount_numberReg', 'discountPaymentAmount_numberReg'], 'otherGuestInformationValidation');
 
         return fullName_requiredReg && nationalCode_requiredReg && certificateNumber_requiredReg &&
-            admissionStartDate_requiredReg && admissionEndDate_requiredReg && nationalCode_numberReg && certificateNumber_numberReg &&
+            startDate_requiredReg && endDate_requiredReg && nationalCode_numberReg && certificateNumber_numberReg &&
             rentPaymentAmount_numberReg && depositPaymentAmount_numberReg && discountPaymentAmount_numberReg;
     }
 
@@ -235,27 +235,27 @@ class MainRegister extends Component {
 
         let address_requiredReg = !requiredReg.test(this.context.constantInformationFurther.address);
 
-        let home_tel_requiredReg = !requiredReg.test(this.context.constantInformationFurther.telephoneNumber);
-        let home_tel_homeTelephoneReg = homeTelephoneReg.test(this.context.constantInformationFurther.telephoneNumber);
+        let telephoneNumber_requiredReg = !requiredReg.test(this.context.constantInformationFurther.telephoneNumber);
+        let telephoneNumber_homeTelephoneReg = homeTelephoneReg.test(this.context.constantInformationFurther.telephoneNumber);
 
-        let resident_tel_requiredReg = !requiredReg.test(this.context.constantInformationFurther.phoneNumber);
-        let resident_tel_telephoneReg = telephoneReg.test(this.context.constantInformationFurther.phoneNumber);
+        let phoneNumber_requiredReg = !requiredReg.test(this.context.constantInformationFurther.phoneNumber);
+        let phoneNumber_telephoneReg = telephoneReg.test(this.context.constantInformationFurther.phoneNumber);
 
-        let admissionStartDate_requiredReg = !requiredReg.test(this.context.constantInformationFurther.reservationDate);
-        let admissionEndDate_requiredReg = !requiredReg.test(this.context.constantInformationFurther.admissionEndDate);
+        let startDate_requiredReg = !requiredReg.test(this.context.constantInformationFurther.reservationDate);
+        let endDate_requiredReg = !requiredReg.test(this.context.constantInformationFurther.endDate);
 
-        this.context.handleSpecificValidations([address_requiredReg, home_tel_requiredReg, home_tel_homeTelephoneReg,
-                 resident_tel_requiredReg, resident_tel_telephoneReg, admissionStartDate_requiredReg, admissionEndDate_requiredReg],
-            ['address_requiredReg', 'home_tel_requiredReg', 'home_tel_homeTelephoneReg', 'resident_tel_requiredReg',
-                'resident_tel_telephoneReg', 'admissionStartDate_requiredReg', 'admissionEndDate_requiredReg'], 'constantInformationFurtherValidation');
+        this.context.handleSpecificValidations([address_requiredReg, telephoneNumber_requiredReg, telephoneNumber_homeTelephoneReg,
+                 phoneNumber_requiredReg, phoneNumber_telephoneReg, startDate_requiredReg, endDate_requiredReg],
+            ['address_requiredReg', 'telephoneNumber_requiredReg', 'telephoneNumber_homeTelephoneReg', 'phoneNumber_requiredReg',
+                'phoneNumber_telephoneReg', 'startDate_requiredReg', 'endDate_requiredReg'], 'constantInformationFurtherValidation');
 
         return address_requiredReg &&
-            home_tel_requiredReg &&
-            home_tel_homeTelephoneReg &&
-            resident_tel_requiredReg &&
-            resident_tel_telephoneReg &&
-            admissionStartDate_requiredReg &&
-            admissionEndDate_requiredReg;
+            telephoneNumber_requiredReg &&
+            telephoneNumber_homeTelephoneReg &&
+            phoneNumber_requiredReg &&
+            phoneNumber_telephoneReg &&
+            startDate_requiredReg &&
+            endDate_requiredReg;
     }
 
     fgInformationFurtherPageValidation = () => {
@@ -266,22 +266,22 @@ class MainRegister extends Component {
 
         let address_requiredReg = !requiredReg.test(this.context.familyGuestInformationFurther.address);
 
-        let home_tel_requiredReg = !requiredReg.test(this.context.familyGuestInformationFurther.telephoneNumber);
-        let home_tel_homeTelephoneReg = homeTelephoneReg.test(this.context.familyGuestInformationFurther.telephoneNumber);
+        let telephoneNumber_requiredReg = !requiredReg.test(this.context.familyGuestInformationFurther.telephoneNumber);
+        let telephoneNumber_homeTelephoneReg = homeTelephoneReg.test(this.context.familyGuestInformationFurther.telephoneNumber);
 
-        let resident_tel_requiredReg = !requiredReg.test(this.context.familyGuestInformationFurther.phoneNumber);
-        let resident_tel_telephoneReg = telephoneReg.test(this.context.familyGuestInformationFurther.phoneNumber);
+        let phoneNumber_requiredReg = !requiredReg.test(this.context.familyGuestInformationFurther.phoneNumber);
+        let phoneNumber_telephoneReg = telephoneReg.test(this.context.familyGuestInformationFurther.phoneNumber);
 
-        this.context.handleSpecificValidations([address_requiredReg, home_tel_requiredReg, home_tel_homeTelephoneReg,
-                resident_tel_requiredReg, resident_tel_telephoneReg],
-            ['address_requiredReg', 'home_tel_requiredReg', 'home_tel_homeTelephoneReg', 'resident_tel_requiredReg',
-                'resident_tel_telephoneReg'], 'familyGuestInformationFurtherValidation');
+        this.context.handleSpecificValidations([address_requiredReg, telephoneNumber_requiredReg, telephoneNumber_homeTelephoneReg,
+                phoneNumber_requiredReg, phoneNumber_telephoneReg],
+            ['address_requiredReg', 'telephoneNumber_requiredReg', 'telephoneNumber_homeTelephoneReg', 'phoneNumber_requiredReg',
+                'phoneNumber_telephoneReg'], 'familyGuestInformationFurtherValidation');
 
         return address_requiredReg &&
-            home_tel_requiredReg &&
-            home_tel_homeTelephoneReg &&
-            resident_tel_requiredReg &&
-            resident_tel_telephoneReg;
+            telephoneNumber_requiredReg &&
+            telephoneNumber_homeTelephoneReg &&
+            phoneNumber_requiredReg &&
+            phoneNumber_telephoneReg;
     }
 
     ogInformationFurtherPageValidation = () => {
@@ -292,22 +292,22 @@ class MainRegister extends Component {
 
         let address_requiredReg = !requiredReg.test(this.context.otherGuestInformationFurther.address);
 
-        let home_tel_requiredReg = !requiredReg.test(this.context.otherGuestInformationFurther.telephoneNumber);
-        let home_tel_homeTelephoneReg = homeTelephoneReg.test(this.context.otherGuestInformationFurther.telephoneNumber);
+        let telephoneNumber_requiredReg = !requiredReg.test(this.context.otherGuestInformationFurther.telephoneNumber);
+        let telephoneNumber_homeTelephoneReg = homeTelephoneReg.test(this.context.otherGuestInformationFurther.telephoneNumber);
 
-        let resident_tel_requiredReg = !requiredReg.test(this.context.otherGuestInformationFurther.phoneNumber);
-        let resident_tel_telephoneReg = telephoneReg.test(this.context.otherGuestInformationFurther.phoneNumber);
+        let phoneNumber_requiredReg = !requiredReg.test(this.context.otherGuestInformationFurther.phoneNumber);
+        let phoneNumber_telephoneReg = telephoneReg.test(this.context.otherGuestInformationFurther.phoneNumber);
 
-        this.context.handleSpecificValidations([address_requiredReg, home_tel_requiredReg, home_tel_homeTelephoneReg,
-                resident_tel_requiredReg, resident_tel_telephoneReg],
-            ['address_requiredReg', 'home_tel_requiredReg', 'home_tel_homeTelephoneReg', 'resident_tel_requiredReg',
-                'resident_tel_telephoneReg'], 'otherGuestInformationFurtherValidation');
+        this.context.handleSpecificValidations([address_requiredReg, telephoneNumber_requiredReg, telephoneNumber_homeTelephoneReg,
+                phoneNumber_requiredReg, phoneNumber_telephoneReg],
+            ['address_requiredReg', 'telephoneNumber_requiredReg', 'telephoneNumber_homeTelephoneReg', 'phoneNumber_requiredReg',
+                'phoneNumber_telephoneReg'], 'otherGuestInformationFurtherValidation');
 
         return address_requiredReg &&
-            home_tel_requiredReg &&
-            home_tel_homeTelephoneReg &&
-            resident_tel_requiredReg &&
-            resident_tel_telephoneReg;
+            telephoneNumber_requiredReg &&
+            telephoneNumber_homeTelephoneReg &&
+            phoneNumber_requiredReg &&
+            phoneNumber_telephoneReg;
     }
 
 
@@ -316,69 +316,69 @@ class MainRegister extends Component {
         let requiredReg = /^\s*$/;
         let telephoneReg = /^09\d{9}$/;
 
-        let firstPerson_FullName_requiredReg = !requiredReg.test(this.context.constantInformationFamily.firstPersonFullName);
-        let firstPerson_PhoneNumber_requiredReg = !requiredReg.test(this.context.constantInformationFamily.firstPersonPhoneNumber);
-        let secondPerson_FullName_requiredReg = !requiredReg.test(this.context.constantInformationFamily.secondPersonFullName);
-        let secondPerson_PhoneNumber_requiredReg = !requiredReg.test(this.context.constantInformationFamily.secondPersonPhoneNumber);
+        let firstPersonFullName_requiredReg = !requiredReg.test(this.context.constantInformationFamily.firstPersonFullName);
+        let firstPersonPhoneNumber_requiredReg = !requiredReg.test(this.context.constantInformationFamily.firstPersonPhoneNumber);
+        let secondPersonFullName_requiredReg = !requiredReg.test(this.context.constantInformationFamily.secondPersonFullName);
+        let secondPersonPhoneNumber_requiredReg = !requiredReg.test(this.context.constantInformationFamily.secondPersonPhoneNumber);
 
-        let firstPerson_PhoneNumber_telephoneReg = telephoneReg.test(this.context.constantInformationFamily.firstPersonPhoneNumber);
-        let secondPerson_PhoneNumber_telephoneReg = telephoneReg.test(this.context.constantInformationFamily.secondPersonPhoneNumber);
+        let firstPersonPhoneNumber_telephoneReg = telephoneReg.test(this.context.constantInformationFamily.firstPersonPhoneNumber);
+        let secondPersonPhoneNumber_telephoneReg = telephoneReg.test(this.context.constantInformationFamily.secondPersonPhoneNumber);
 
-        this.context.handleSpecificValidations([firstPerson_FullName_requiredReg, firstPerson_PhoneNumber_requiredReg,
-            secondPerson_FullName_requiredReg, secondPerson_PhoneNumber_requiredReg, firstPerson_PhoneNumber_telephoneReg,
-            secondPerson_PhoneNumber_telephoneReg], ['firstPerson_FullName_requiredReg', 'firstPerson_PhoneNumber_requiredReg',
-            'secondPerson_FullName_requiredReg', 'secondPerson_PhoneNumber_requiredReg', 'firstPerson_PhoneNumber_telephoneReg',
-            'secondPerson_PhoneNumber_telephoneReg'], 'constantInformationFamilyValidation');
+        this.context.handleSpecificValidations([firstPersonFullName_requiredReg, firstPersonPhoneNumber_requiredReg,
+            secondPersonFullName_requiredReg, secondPersonPhoneNumber_requiredReg, firstPersonPhoneNumber_telephoneReg,
+            secondPersonPhoneNumber_telephoneReg], ['firstPersonFullName_requiredReg', 'firstPersonPhoneNumber_requiredReg',
+            'secondPersonFullName_requiredReg', 'secondPersonPhoneNumber_requiredReg', 'firstPersonPhoneNumber_telephoneReg',
+            'secondPersonPhoneNumber_telephoneReg'], 'constantInformationFamilyValidation');
 
-        return firstPerson_FullName_requiredReg && firstPerson_PhoneNumber_requiredReg &&
-            secondPerson_FullName_requiredReg && secondPerson_PhoneNumber_requiredReg && firstPerson_PhoneNumber_telephoneReg &&
-            secondPerson_PhoneNumber_telephoneReg;
+        return firstPersonFullName_requiredReg && firstPersonPhoneNumber_requiredReg &&
+            secondPersonFullName_requiredReg && secondPersonPhoneNumber_requiredReg && firstPersonPhoneNumber_telephoneReg &&
+            secondPersonPhoneNumber_telephoneReg;
     }
 
     fgInformationFamilyPageValidation = () => {
         let requiredReg = /^\s*$/;
         let telephoneReg = /^09\d{9}$/;
 
-        let firstPerson_FullName_requiredReg = !requiredReg.test(this.context.familyGuestInformationFamily.firstPerson_FullName);
-        let firstPerson_PhoneNumber_requiredReg = !requiredReg.test(this.context.familyGuestInformationFamily.firstPerson_PhoneNumber);
-        let secondPerson_FullName_requiredReg = !requiredReg.test(this.context.familyGuestInformationFamily.secondPerson_FullName);
-        let secondPerson_PhoneNumber_requiredReg = !requiredReg.test(this.context.familyGuestInformationFamily.secondPerson_PhoneNumber);
+        let firstPersonFullName_requiredReg = !requiredReg.test(this.context.familyGuestInformationFamily.firstPersonFullName);
+        let firstPersonPhoneNumber_requiredReg = !requiredReg.test(this.context.familyGuestInformationFamily.firstPersonPhoneNumber);
+        let secondPersonFullName_requiredReg = !requiredReg.test(this.context.familyGuestInformationFamily.secondPersonFullName);
+        let secondPersonPhoneNumber_requiredReg = !requiredReg.test(this.context.familyGuestInformationFamily.secondPersonPhoneNumber);
 
-        let firstPerson_PhoneNumber_telephoneReg = telephoneReg.test(this.context.familyGuestInformationFamily.firstPerson_PhoneNumber);
-        let secondPerson_PhoneNumber_telephoneReg = telephoneReg.test(this.context.familyGuestInformationFamily.secondPerson_PhoneNumber);
+        let firstPersonPhoneNumber_telephoneReg = telephoneReg.test(this.context.familyGuestInformationFamily.firstPersonPhoneNumber);
+        let secondPersonPhoneNumber_telephoneReg = telephoneReg.test(this.context.familyGuestInformationFamily.secondPersonPhoneNumber);
 
-        this.context.handleSpecificValidations([firstPerson_FullName_requiredReg, firstPerson_PhoneNumber_requiredReg,
-            secondPerson_FullName_requiredReg, secondPerson_PhoneNumber_requiredReg, firstPerson_PhoneNumber_telephoneReg,
-            secondPerson_PhoneNumber_telephoneReg], ['firstPerson_FullName_requiredReg', 'firstPerson_PhoneNumber_requiredReg',
-            'secondPerson_FullName_requiredReg', 'secondPerson_PhoneNumber_requiredReg', 'firstPerson_PhoneNumber_telephoneReg',
-            'secondPerson_PhoneNumber_telephoneReg'], 'familyGuestInformationFamilyValidation');
+        this.context.handleSpecificValidations([firstPersonFullName_requiredReg, firstPersonPhoneNumber_requiredReg,
+            secondPersonFullName_requiredReg, secondPersonPhoneNumber_requiredReg, firstPersonPhoneNumber_telephoneReg,
+            secondPersonPhoneNumber_telephoneReg], ['firstPersonFullName_requiredReg', 'firstPersonPhoneNumber_requiredReg',
+            'secondPersonFullName_requiredReg', 'secondPersonPhoneNumber_requiredReg', 'firstPersonPhoneNumber_telephoneReg',
+            'secondPersonPhoneNumber_telephoneReg'], 'familyGuestInformationFamilyValidation');
 
-        return firstPerson_FullName_requiredReg && firstPerson_PhoneNumber_requiredReg &&
-            secondPerson_FullName_requiredReg && secondPerson_PhoneNumber_requiredReg && firstPerson_PhoneNumber_telephoneReg &&
-            secondPerson_PhoneNumber_telephoneReg;
+        return firstPersonFullName_requiredReg && firstPersonPhoneNumber_requiredReg &&
+            secondPersonFullName_requiredReg && secondPersonPhoneNumber_requiredReg && firstPersonPhoneNumber_telephoneReg &&
+            secondPersonPhoneNumber_telephoneReg;
     }
 
     ogInformationFamilyPageValidation = () => {
         let requiredReg = /^\s*$/;
         let telephoneReg = /^09\d{9}$/;
 
-        let firstPerson_FullName_requiredReg = !requiredReg.test(this.context.otherGuestInformationFamily.firstPerson_FullName);
-        let firstPerson_PhoneNumber_requiredReg = !requiredReg.test(this.context.otherGuestInformationFamily.firstPerson_PhoneNumber);
-        let secondPerson_FullName_requiredReg = !requiredReg.test(this.context.otherGuestInformationFamily.secondPerson_FullName);
-        let secondPerson_PhoneNumber_requiredReg = !requiredReg.test(this.context.otherGuestInformationFamily.secondPerson_PhoneNumber);
+        let firstPersonFullName_requiredReg = !requiredReg.test(this.context.otherGuestInformationFamily.firstPersonFullName);
+        let firstPersonPhoneNumber_requiredReg = !requiredReg.test(this.context.otherGuestInformationFamily.firstPersonPhoneNumber);
+        let secondPersonFullName_requiredReg = !requiredReg.test(this.context.otherGuestInformationFamily.secondPersonFullName);
+        let secondPersonPhoneNumber_requiredReg = !requiredReg.test(this.context.otherGuestInformationFamily.secondPersonPhoneNumber);
 
-        let firstPerson_PhoneNumber_telephoneReg = telephoneReg.test(this.context.otherGuestInformationFamily.firstPerson_PhoneNumber);
-        let secondPerson_PhoneNumber_telephoneReg = telephoneReg.test(this.context.otherGuestInformationFamily.secondPerson_PhoneNumber);
+        let firstPersonPhoneNumber_telephoneReg = telephoneReg.test(this.context.otherGuestInformationFamily.firstPersonPhoneNumber);
+        let secondPersonPhoneNumber_telephoneReg = telephoneReg.test(this.context.otherGuestInformationFamily.secondPersonPhoneNumber);
 
-        this.context.handleSpecificValidations([firstPerson_FullName_requiredReg, firstPerson_PhoneNumber_requiredReg,
-            secondPerson_FullName_requiredReg, secondPerson_PhoneNumber_requiredReg, firstPerson_PhoneNumber_telephoneReg,
-            secondPerson_PhoneNumber_telephoneReg], ['firstPerson_FullName_requiredReg', 'firstPerson_PhoneNumber_requiredReg',
-            'secondPerson_FullName_requiredReg', 'secondPerson_PhoneNumber_requiredReg', 'firstPerson_PhoneNumber_telephoneReg',
-            'secondPerson_PhoneNumber_telephoneReg'], 'otherGuestInformationFamilyValidation');
+        this.context.handleSpecificValidations([firstPersonFullName_requiredReg, firstPersonPhoneNumber_requiredReg,
+            secondPersonFullName_requiredReg, secondPersonPhoneNumber_requiredReg, firstPersonPhoneNumber_telephoneReg,
+            secondPersonPhoneNumber_telephoneReg], ['firstPersonFullName_requiredReg', 'firstPersonPhoneNumber_requiredReg',
+            'secondPersonFullName_requiredReg', 'secondPersonPhoneNumber_requiredReg', 'firstPersonPhoneNumber_telephoneReg',
+            'secondPersonPhoneNumber_telephoneReg'], 'otherGuestInformationFamilyValidation');
 
-        return firstPerson_FullName_requiredReg && firstPerson_PhoneNumber_requiredReg &&
-            secondPerson_FullName_requiredReg && secondPerson_PhoneNumber_requiredReg && firstPerson_PhoneNumber_telephoneReg &&
-            secondPerson_PhoneNumber_telephoneReg;
+        return firstPersonFullName_requiredReg && firstPersonPhoneNumber_requiredReg &&
+            secondPersonFullName_requiredReg && secondPersonPhoneNumber_requiredReg && firstPersonPhoneNumber_telephoneReg &&
+            secondPersonPhoneNumber_telephoneReg;
     }
 
     state = {
@@ -508,7 +508,15 @@ class MainRegister extends Component {
         switch (this.state.typeofResident){
             case "constant" : {
                 let NewCharacteristic = {...this.context.constantInformationPage,...this.context.constantInformationFurther,...this.context.constantInformationFamily};
-                console.log(NewCharacteristic)
+
+
+                let person = {
+                    residenceType:"resident",
+                    accommodationType:"permanent",
+                    characteristicId:"",
+                    files: this.context.constantUploadPage
+                }
+
             }
             case "familyGuest" : {
 

@@ -14,22 +14,22 @@ class FGInformationFurtherPage extends Component {
                     <div className='d-flex flex-wrap justify-content-start'>
                         <div className="input-group-register col-6">
                             <SimpleTextInput
-                                condition1={this.context.familyGuestInformationFurtherValidation.resident_tel_requiredReg}
-                                condition2={this.context.familyGuestInformationFurtherValidation.resident_tel_telephoneReg}
+                                condition1={this.context.familyGuestInformationFurtherValidation.phoneNumber_requiredReg}
+                                condition2={this.context.familyGuestInformationFurtherValidation.phoneNumber_telephoneReg}
                                 value={this.context.familyGuestInformationFurther.phoneNumber}
                                 fieldNameString={'familyGuestInformationFurther'}
-                                valueOfInputString={'resident_tel'}
+                                valueOfInputString={'phoneNumber'}
                                 required={true}
                                 label={'شماره تماس اقامتگر'}
                             />
                         </div>
                         <div className="input-group-register col-6">
                             <SimpleTextInput
-                                condition1={this.context.familyGuestInformationFurtherValidation.home_tel_requiredReg}
-                                condition3={this.context.familyGuestInformationFurtherValidation.home_tel_homeTelephoneReg}
+                                condition1={this.context.familyGuestInformationFurtherValidation.telephoneNumber_requiredReg}
+                                condition3={this.context.familyGuestInformationFurtherValidation.telephoneNumber_homeTelephoneReg}
                                 value={this.context.familyGuestInformationFurther.telephoneNumber}
                                 fieldNameString={'familyGuestInformationFurther'}
-                                valueOfInputString={'home_tel'}
+                                valueOfInputString={'telephoneNumber'}
                                 required={true}
                                 label={'شماره تلفن منزل'}
                             />

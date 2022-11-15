@@ -221,26 +221,25 @@ class CInformationPage extends Component {
                                 <>
                                     <div className="input-group-register col-12">
                                         <textarea
-                                            className={`input form-control ${(this.context.constantInformationPageValidation.healthDescription_requiredReg === false &&
+                                            className={`input form-control ${(this.context.constantInformationPageValidation.healthyStatus_requiredReg === false &&
                                                 this.context.constantInformationPage.health === 'true') ? "is-invalid" : ""}`}
                                             value={this.context.constantInformationPage.healthyStatus}
-                                            onChange={(e) =>  this.context.handleFields(e, 'constantInformationPage', 'healthDescription')}
+                                            onChange={(e) =>  this.context.handleFields(e, 'constantInformationPage', 'healthyStatus')}
                                             placeholder=" "
                                         />
-                                        <label className="placeholder" style={{right: (this.context.constantInformationPageValidation.healthDescription_requiredReg === false &&
+                                        <label className="placeholder" style={{right: (this.context.constantInformationPageValidation.healthyStatus_requiredReg === false &&
                                                 this.context.constantInformationPage.health === 'true') ? '35px' : '12px'}}>
                                             توضیحات
                                             <span style={{color : 'red'}}>*</span>
                                         </label>
 
                                         {
-                                            (this.context.constantInformationPageValidation.healthDescription_requiredReg === false &&
+                                            (this.context.constantInformationPageValidation.healthyStatus_requiredReg === false &&
                                                 this.context.constantInformationPage.health === 'true')
                                                 ? <small
                                                     className="text-danger">{this.context.errors['required']}</small>
                                                 : <div/>
                                         }
-
                                     </div>
                                 </>
                             ) : (

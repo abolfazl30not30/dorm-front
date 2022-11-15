@@ -13,48 +13,30 @@ import {IoIosAddCircleOutline} from "react-icons/io";
 class inventory extends Component {
     state = {
         show: false,
-        inventory: [
-            {
-                "id": "c9b75819a41b43e08c78cf5662e52c35",
-                "accessories": {
-                        "id": "43b1b71031fc4b2a895b34d0bfc17ef1",
-                        "name": "پریز",
-                        "count": 13,
-                        "description": null
-                    }
-                ,
-                "accessoryType": "onHand",
-                "category": "تاسیسات"
-            },
-            {
-                "id": "c9b75819a41b43e08c78cf5662e52c35",
-                "accessories": {
-                    "id": "43b1b71031fc4b2a895b34d0bfc17ef1",
-                    "name": "پریز",
-                    "count": 13,
-                    "description": null
-                }
-                ,
-                "accessoryType": "onHand",
-                "category": "تاسیسات"
-            }
-        ],
-        type: [],
+        inventory: [],
+        typeSearch:"",
+        type: "needs",
         category: [],
-        name: [],
-        count: [],
+        name: "",
+        count: "",
         selectedCategoryBoolean: true,
         selectedCategory: null,
         choices: [],
         tempChoices: [],
         showCategory: false,
-        inputCategory: []
+        inputCategory: [],
+        searchType:"name",
+        searchInput:"",
 
     }
-    /*async componentDidMount() {
-        const response = await fetch('https://api.saadatportal.com/api/v1/inventory').then((response) => response.json())
+    async componentDidMount() {
+        const response = await fetch('http://localhost:8089/api/v1/inventory').then((response) => response.json())
             .then((data) => this.setState({inventory: data}));
-    }*/
+
+        const response2 = await fetch('http://localhost:8089/api/v1/category/search?type=Inventory').then((response) => response.json())
+            .then((data) => this.setState({choices: data}));
+
+    }
 
     render() {
         return (
@@ -66,14 +48,29 @@ class inventory extends Component {
                     }}><AiOutlinePlus className='ms-2'/>افزودن
                     </button>
                     <div className="row align-items-center">
+                        <div className="col-md-1 col-sm-1 px-3 d-flex align-items-center "><label>نوع:</label></div>
+                        <div className="col-md-6 col-sm-6 px-0" style={{paddingLeft: "0"}}>
+                            <div className='input-group-filter col-6 col-md my-2 px-2'>
+                                <Form.Select aria-label="Default select example" style={{height: "50px", fontSize: "14px"}}
+                                             value={this.state.typeSearch} onChange={(e) => {this.handleFilterType(e)}}>
+                                    <option value="">همه</option>
+                                    <option value="needs">نیازمندی</option>
+                                    <option value="deficiency">کاستی</option>
+                                    <option value="onHand">دارایی</option>
+                                </Form.Select>
+                                <label className='placeholder'>نوع</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="row align-items-center">
                         <div className="col-md-1 col-sm-2 px-0"><label>براساس:</label></div>
                         <div className="col-md-3 col-sm-6 px-0" style={{paddingLeft: "0"}}>
                             <Form.Select aria-label="Default select example" style={{height: "50px", fontSize: "14px"}}
                                          value={this.state.searchType} onChange={(e) => {
                                 this.setState({searchType: e.target.value})
                             }}>
-                                <option value="fullName">نام</option>
-                                <option value="nationalCode">نوع</option>
+                                <option value="name">نام</option>
+                                <option value="category">دسته بندی</option>
                             </Form.Select>
                         </div>
                         <div className="input-group-register col-md-7 col-sm-11 px-0 d-flex"
@@ -82,8 +79,8 @@ class inventory extends Component {
                                    style={{padding: "6px"}} onChange={(e) => {
                                 this.handleSearchInput(e)
                             }}/>
-                            <button className="btn outline-secondary"><BiSearch fontSize="25px"
-                                                                                onClick={this.handleSearchBtn}/>
+
+                            <button className="btn outline-secondary" onClick={this.handleSearchBtn}><BiSearch fontSize="25px" />
                             </button>
                         </div>
                     </div>
@@ -103,8 +100,8 @@ class inventory extends Component {
                                     <tr>
                                         <td>{this.convertTypeToPersian(i.accessoryType)}</td>
                                         <td>{i.category}</td>
-                                        <td>{i.accessories.name}</td>
-                                        <td>{i.accessories.count}</td>
+                                        <td>{i.accessories[0].name}</td>
+                                        <td>{i.accessories[0].count}</td>
                                     </tr>
                                 ))
                             }
@@ -124,8 +121,8 @@ class inventory extends Component {
                             <select className="input" onChange={(e) => {
                                 this.getValueInputType(e.target.value)
                             }}>
-                                <option value="deficiency">نیازمندی</option>
-                                <option value="needs">کاستی</option>
+                                <option value="needs">نیازمندی</option>
+                                <option value="deficiency">کاستی</option>
                                 <option value="onHand">دارایی</option>
                             </select>
                             <label className="placeholder">نوع</label>
@@ -200,18 +197,21 @@ class inventory extends Component {
                             </div>
                         </div>
                         <div className='d-flex flex-row'>
+
                             <div className='input-group-register col-8 mb-3'>
                                 <input type='text' className='input form-control' onChange={(e) => {
                                     this.getValueInputName(e.target.value)
                                 }}/>
                                 <label className="placeholder" style={{right: '12px'}}>نام</label>
                             </div>
+
                             <div className='input-group-register col-4 mb-3'>
                                 <input type='number' className='input form-control' onChange={(e) => {
                                     this.getValueInputCount(e.target.value)
                                 }}/>
                                 <label className="placeholder" style={{right: '12px'}}>تعداد</label>
                             </div>
+
                         </div>
                         <button className='btn btn-record-inventory' onClick={() => {
                             this.handleRecordInventory()
@@ -219,6 +219,7 @@ class inventory extends Component {
                         </button>
                     </Modal.Body>
                 </Modal>
+
                 <Modal centered show={this.state.showCategory} onHide={() => {
                     this.handleCloseCategory()
                 }}>
@@ -248,23 +249,28 @@ class inventory extends Component {
     handleClose = () => {
         this.setState({show: false})
     };
-    handleShow = () => {
+    handleShow = async () => {
         this.setState({show: true})
+        const response2 = await fetch('http://localhost:8089/api/v1/category/search?type=Inventory').then((response) => response.json())
+            .then((data) => this.setState({choices: data}));
     };
     convertTypeToPersian = (type) => {
+        let value = "";
         switch(type) {
-            case "deficiency":
-                return "نیازمندی";
-                break;
             case "needs":
-                return "کاستی";
+                value = "نیازمندی";
+                break;
+            case "deficiency":
+                value = "کاستی";
                 break;
             case "onHand":
-                return "دارایی";
+                value = "دارایی";
                 break;
         }
+        return value;
     }
     getValueInputType = (e) => {
+        console.log(e);
         this.setState({type: e})
     }
     getValueInputCategory = (e) => {
@@ -273,13 +279,16 @@ class inventory extends Component {
     getValueInputName = (e) => {
         this.setState({name: e})
     }
+
     getValueInputCount = (e) => {
         this.setState({count: e})
     }
+
     handleAlignment = (event, newAlignment) => {
         this.setState({selectedCategory: newAlignment});
 
-    };
+    }
+
     handleValidations = () => {
         let selectedCategoryBoolean = this.state.selectedCategoryBoolean !== null;
         console.log(selectedCategoryBoolean)
@@ -292,45 +301,56 @@ class inventory extends Component {
 
         return selectedCategoryBoolean;
     }
+
     handleDeleteCategory = (index) => {
         let updateChoice = [...this.state.tempChoices];
         updateChoice.splice(index, 1);
         this.setState({tempChoices: updateChoice});
     }
+
     handleOpenCategory = () => {
         this.setState({showCategory: true});
         this.setState({show: false});
     }
+
     handleCloseCategory = () => {
         this.setState({showCategory: false});
         this.setState({show: true});
     }
+
     handleInputCategoryChange = (e) => {
         this.setState({inputCategory: e.target.value});
     }
+
     handleSubmitCategory = (e) => {
         e.preventDefault();
         let regCheck = /^\s*$/;
+
         if (!regCheck.test(this.state.inputType)) {
             let updateChoice = [...this.state.tempChoices];
             updateChoice.push(this.state.inputCategory);
             this.setState({tempChoices: updateChoice});
         }
-        console.log(this.state.tempChoices)
+
         this.setState({showCategory: false});
         this.setState({show: true});
     }
+
     handleRecordInventory = async () => {
         const newInventory = {
-            category: this.state.tempChoices,
+            category: this.state.selectedCategory,
             accessoryType: this.state.type,
-            accessories: {
-                name: this.state.name,
-                count: this.state.count
-            }
+            accessories: [
+                {
+                    name: this.state.name,
+                    count: this.state.count
+                }
+            ]
+
         }
         console.log(newInventory)
-        const rawResponse = await fetch('https://api.saadatportal.com/api/v1/inventory', {
+
+        const rawResponse = await fetch('http://localhost:8089/api/v1/inventory', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -339,10 +359,32 @@ class inventory extends Component {
             body: JSON.stringify(newInventory)
         });
 
-        const response = await fetch('https://api.saadatportal.com/api/v1/inventory').then((response) => response.json())
-            .then((data) => this.setState({newInventory: data}));
+        const response = await fetch('http://localhost:8089/api/v1/inventory').then((response) => response.json())
+            .then((data) => this.setState({inventory: data}));
         this.setState({show: false})
+
+        this.setState({type:"needs",tempChoices:[],selectedCategory:null,selectedCategoryBoolean: true})
     }
+
+    handleSearchInput = async (e) => {
+        const value = e.target.value;
+        this.setState({searchInput:value});
+        const response = await fetch(`http://localhost:8089/api/v1/inventory/search?${this.state.searchType}=${e.target.value}`).then((response) => response.json())
+            .then((data) => this.setState({inventory: data}));
+    }
+
+    handleSearchBtn = async () => {
+        console.log(this.state.searchInput)
+        const response = await fetch(`http://localhost:8089/api/v1/inventory/search?${this.state.searchType}=${this.state.searchInput}`).then((response) => response.json())
+            .then((data) => this.setState({inventory: data}));
+    }
+
+    handleFilterType = async (e) =>{
+        this.setState({typeSearch:e.target.value})
+        const response = await fetch(`http://localhost:8089/api/v1/inventory/search?accessoryType=${e.target.value}`).then((response) => response.json())
+            .then((data) => this.setState({inventory: data}));
+    }
+
 }
 
 export default inventory;

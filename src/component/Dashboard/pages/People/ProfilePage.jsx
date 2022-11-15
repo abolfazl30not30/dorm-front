@@ -805,6 +805,7 @@ class ProfilePage extends Component {
                                             </div>
                                         </Accordion.Body>
                                     </Accordion.Item>
+
                                     <Accordion.Item eventKey="1">
                                         <Accordion.Header>کارت ملی</Accordion.Header>
                                         <Accordion.Body>
@@ -836,6 +837,7 @@ class ProfilePage extends Component {
                                             </OverlayTrigger>
                                         </Accordion.Body>
                                     </Accordion.Item>
+
                                     <Accordion.Item eventKey="2">
                                         <Accordion.Header>عکس پرسنلی</Accordion.Header>
                                         <Accordion.Body>

@@ -52,11 +52,11 @@ class OGInformationPage extends Component {
                             />
                         </div>
                         <div className="input-group-register col-4">
-                            <DateInput condition1={this.context.otherGuestInformationValidation.admissionStartDate_requiredReg}
-                                       value={this.context.valueOfDates.otherGuest.admissionStartDate}
+                            <DateInput condition1={this.context.otherGuestInformationValidation.startDate_requiredReg}
+                                       value={this.context.valueOfDates.otherGuest.startDate}
                                        valueFieldString={'otherGuest'}
                                        fieldNameString={'otherGuestInformation'}
-                                       valueOfInputString={'admissionStartDate'}
+                                       valueOfInputString={'startDate'}
                                        required={true}
                                        label={' تاریخ شروع پذیرش'}
                                        timeInclude={true}
@@ -64,11 +64,11 @@ class OGInformationPage extends Component {
                         </div>
                         <div className="input-group-register col-4">
                             <DateInput timeInclude={true}
-                                       condition1={this.context.otherGuestInformationValidation.admissionEndDate_requiredReg}
-                                       value={this.context.valueOfDates.otherGuest.admissionEndDate}
+                                       condition1={this.context.otherGuestInformationValidation.endDate_requiredReg}
+                                       value={this.context.valueOfDates.otherGuest.endDate}
                                        valueFieldString={'otherGuest'}
                                        fieldNameString={'otherGuestInformation'}
-                                       valueOfInputString={'admissionEndDate'}
+                                       valueOfInputString={'endDate'}
                                        required={true}
                                        label={'تاریخ اتمام پذیرش'}
                             />

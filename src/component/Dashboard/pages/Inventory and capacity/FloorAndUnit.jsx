@@ -19,52 +19,6 @@ class FloorAndUnit extends Component {
     static contextType = BuildingContext;
 
     state = {
-        floor1: [
-            {
-                id: 1, name: "طبقه اول",
-                units: [
-                    {id: 111, number: "111", empty: false},
-                    {id: 112, number: "112", empty: true},
-                    {id: 113, number: "113", empty: false},
-                    {id: 114, number: "114", empty: false},
-                    {id: 115, number: "115", empty: true},
-                    {id: 116, number: "116", empty: false}
-                ]
-            },
-            {
-                id: 2, name: "طبقه دوم",
-                units: [
-                    {id: 211, number: "211", empty: true},
-                    {id: 212, number: "212", empty: true},
-                    {id: 213, number: "213", empty: true},
-                    {id: 214, number: "214", empty: true},
-                    {id: 215, number: "215", empty: true},
-                    {id: 216, number: "216", empty: true}
-                ]
-            },
-            {
-                id: 3, name: "طبقه سوم",
-                units: [
-                    {id: 311, number: "311", empty: false},
-                    {id: 312, number: "312", empty: false},
-                    {id: 313, number: "313", empty: true},
-                    {id: 314, number: "314", empty: true},
-                    {id: 315, number: "315", empty: true},
-                    {id: 316, number: "316", empty: true}
-                ]
-            },
-            {
-                id: 3, name: "طبقه چهارم",
-                units: [
-                    {id: 311, number: "411", empty: false},
-                    {id: 312, number: "412", empty: true},
-                    {id: 313, number: "413", empty: false},
-                    {id: 314, number: "414", empty: true},
-                    {id: 315, number: "415", empty: true},
-                    {id: 316, number: "416", empty: true}
-                ]
-            },
-        ],
         isLoading: true,
         isFullUnit: false,
         floor: [],
@@ -139,7 +93,7 @@ class FloorAndUnit extends Component {
                                                     <div className={`unit col-4`}>
                                                         <Link className={`${unit.empty ? "empty-link" : "full-link"}`}
                                                               to="/RoomAndBed" onClick={() => {
-                                                            this.context.handlez(unit.number, unit.id)
+                                                            this.context.handleUnitNumber(unit.number, unit.id)
                                                         }}>
                                                             <TbBuilding fontSize="2rem"/>
                                                             <h5 className='unit-name'>واحد {unit.number}</h5>

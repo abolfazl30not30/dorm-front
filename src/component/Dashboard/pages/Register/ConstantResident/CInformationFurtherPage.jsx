@@ -16,43 +16,43 @@ class CInformationFurtherPage extends Component {
                     <div className='d-flex flex-wrap justify-content-start'>
                         <div className="input-group-register col-6">
                             <SimpleTextInput
-                                condition1={this.context.constantInformationFurtherValidation.resident_tel_requiredReg}
-                                condition2={this.context.constantInformationFurtherValidation.resident_tel_telephoneReg}
+                                condition1={this.context.constantInformationFurtherValidation.phoneNumber_requiredReg}
+                                condition2={this.context.constantInformationFurtherValidation.phoneNumber_telephoneReg}
                                 value={this.context.constantInformationFurther.phoneNumber}
                                 fieldNameString={'constantInformationFurther'}
-                                valueOfInputString={'resident_tel'}
+                                valueOfInputString={'phoneNumber'}
                                 required={true}
                                 label={'شماره تماس اقامتگر'}
                             />
                         </div>
                         <div className="input-group-register col-6">
                             <SimpleTextInput
-                                condition1={this.context.constantInformationFurtherValidation.home_tel_requiredReg}
-                                condition3={this.context.constantInformationFurtherValidation.home_tel_homeTelephoneReg}
+                                condition1={this.context.constantInformationFurtherValidation.telephoneNumber_requiredReg}
+                                condition3={this.context.constantInformationFurtherValidation.telephoneNumber_homeTelephoneReg}
                                 value={this.context.constantInformationFurther.telephoneNumber}
                                 fieldNameString={'constantInformationFurther'}
-                                valueOfInputString={'home_tel'}
+                                valueOfInputString={'telephoneNumber'}
                                 required={true}
                                 label={'شماره تلفن منزل'}
                             />
                         </div>
                         <div className="input-group-register col-6">
-                            <DateInput condition1={this.context.constantInformationFurtherValidation.admissionStartDate_requiredReg}
-                                       value={this.context.valueOfDates.constantResident.admissionStartDate}
+                            <DateInput condition1={this.context.constantInformationFurtherValidation.startDate_requiredReg}
+                                       value={this.context.valueOfDates.constantResident.startDate}
                                        valueFieldString={'constantResident'}
                                        fieldNameString={'constantInformationFurther'}
-                                       valueOfInputString={'admissionStartDate'}
+                                       valueOfInputString={'startDate'}
                                        required={true}
                                        label={'تاریخ شروع پذیرش'}
                                        timeInclude={true}
                             />
                         </div>
                         <div className="input-group-register col-6">
-                            <DateInput condition1={this.context.constantInformationFurtherValidation.admissionEndDate_requiredReg}
-                                       value={this.context.valueOfDates.constantResident.admissionEndDate}
+                            <DateInput condition1={this.context.constantInformationFurtherValidation.endDate_requiredReg}
+                                       value={this.context.valueOfDates.constantResident.endDate}
                                        valueFieldString={'constantResident'}
                                        fieldNameString={'constantInformationFurther'}
-                                       valueOfInputString={'admissionEndDate'}
+                                       valueOfInputString={'endDate'}
                                        required={true}
                                        label={'تاریخ اتمام پذیرش'}
                                        timeInclude={true}
