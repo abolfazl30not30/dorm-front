@@ -41,7 +41,7 @@ class SimpleTextInput extends Component {
                     error3={'homeTelephoneReg'}
                     error4={'numberRequired'}
                     error6={'MobileOrHomeTelephoneReg'}
-                    error7={'emailReg'}
+                    error7={'emailRegex'}
                 />
             </>
         );
