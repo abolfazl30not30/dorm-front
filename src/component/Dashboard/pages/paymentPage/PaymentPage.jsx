@@ -62,7 +62,7 @@ class PaymentPage extends Component {
     }
 
     async componentDidMount() {
-        const response = await fetch('https://api.saadatportal.com/api/v1/category/search?type=Payment').then((response) => response.json())
+        const response = await fetch('http://localhost:8089/api/v1/category/search?type=Payment').then((response) => response.json())
             .then((data) => this.setState({choices : data}));
 
 
@@ -332,7 +332,7 @@ class PaymentPage extends Component {
     }
 
     handleDeleteFile = async () => {
-        await fetch(`https://api.saadatportal.com/api/v1/file/${this.state.fileId}`, {
+        await fetch(`http://localhost:8089/api/v1/file/${this.state.fileId}`, {
             method: 'DELETE',
         })
             .then(res => res.text())
@@ -363,7 +363,7 @@ class PaymentPage extends Component {
         let formData = new FormData();
         console.log(this.state.uploadFile[0]);
         formData.append('file', this.state.uploadFile[0]);
-        await fetch('https://api.saadatportal.com/api/v1/file', {
+        await fetch('http://localhost:8089/api/v1/file', {
             method: 'POST',
             body: formData
         }).then((response) => response.json())
@@ -449,7 +449,7 @@ class PaymentPage extends Component {
             payment = Object.assign(payment,file)
         }
         if (result) {
-            const rawResponse = await fetch('https://api.saadatportal.com/api/v1/paymentHistory', {
+            const rawResponse = await fetch('http://localhost:8089/api/v1/paymentHistory', {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',

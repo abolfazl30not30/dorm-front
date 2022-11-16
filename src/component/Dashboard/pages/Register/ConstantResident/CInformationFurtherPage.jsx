@@ -22,7 +22,7 @@ class CInformationFurtherPage extends Component {
                                 fieldNameString={'constantInformationFurther'}
                                 valueOfInputString={'phoneNumber'}
                                 required={true}
-                                label={'شماره تماس اقامتگر'}
+                                label={'شماره همراه اقامتگر'}
                             />
                         </div>
                         <div className="input-group-register col-6">

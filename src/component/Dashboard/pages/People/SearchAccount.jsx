@@ -22,6 +22,10 @@ class SearchAccount extends Component {
         searchInput:"",
         searchType:"fullName",
     }
+    async componentDidMount() {
+        const response = await fetch('http://localhost:8089/api/v1/characteristic').then((response) => response.json())
+            .then((data) => this.setState({accountFound : data}));
+    }
     render() {
         return (
             <>
@@ -43,6 +47,7 @@ class SearchAccount extends Component {
 
                     {/*</div>*/}
                 </div>
+
                 <div className='result'>
                     {this.state.accountFound.map(accountFound => (
                         <>
@@ -103,8 +108,9 @@ class SearchAccount extends Component {
         const value = e.target.value;
         this.setState({searchInput:value});
     }
+
     handleSearchBtn = async () =>{
-        const response = await fetch(`https://api.saadatportal.com/api/v1/characteristic/search?${this.state.searchType}=${this.state.searchInput}`).then((response) => response.json())
+        const response = await fetch(`http://localhost:8089/api/v1/characteristic/search?${this.state.searchType}=${this.state.searchInput}`).then((response) => response.json())
             .then((data) => this.setState({accountFound: data}));
     }
 }

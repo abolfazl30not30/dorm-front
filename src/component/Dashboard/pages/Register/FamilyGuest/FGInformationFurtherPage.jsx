@@ -20,7 +20,7 @@ class FGInformationFurtherPage extends Component {
                                 fieldNameString={'familyGuestInformationFurther'}
                                 valueOfInputString={'phoneNumber'}
                                 required={true}
-                                label={'شماره تماس اقامتگر'}
+                                label={'شماره همراه اقامتگر'}
                             />
                         </div>
                         <div className="input-group-register col-6">

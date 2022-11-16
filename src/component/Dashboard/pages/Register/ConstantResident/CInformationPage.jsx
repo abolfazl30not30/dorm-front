@@ -124,7 +124,7 @@ class CInformationPage extends Component {
                         <div className="input-group-register col-4">
                             <select className='input'
                                     value={this.context.constantInformationPage.religion}
-                                    onChange={(e) =>  this.context.handleFields(e, 'constantInformationPage', 'religion')}
+                                    onChange={(e) =>  this.context.handleFields(e.target.value, 'constantInformationPage', 'religion')}
                             >
                                 <option value='islam'>اسلام</option>
                                 <option value='christianity'>مسیحیت</option>
@@ -171,7 +171,7 @@ class CInformationPage extends Component {
                             <select className='input'
                                     name='maritalStatus'
                                     value={this.context.constantInformationPage.maritalStatus}
-                                    onChange={(e) =>  this.context.handleFields(e, 'constantInformationPage', 'maritalStatus')}
+                                    onChange={(e) =>  this.context.handleFields(e.target.value, 'constantInformationPage', 'maritalStatus')}
                             >
                                 <option value='single' >مجرد</option>
                                 <option value='married'>متاهل</option>
@@ -209,7 +209,7 @@ class CInformationPage extends Component {
                         <div className="input-group-register col-4">
                             <select className='input'
                                     value={this.context.constantInformationPage.health}
-                                    onChange={(e) =>  this.context.handleFields(e, 'constantInformationPage', 'health')}
+                                    onChange={(e) =>  this.context.handleFields(e.target.value, 'constantInformationPage', 'health')}
                             >
                                 <option value='false'>خیر</option>
                                 <option value='true'>بله</option>
@@ -224,7 +224,7 @@ class CInformationPage extends Component {
                                             className={`input form-control ${(this.context.constantInformationPageValidation.healthyStatus_requiredReg === false &&
                                                 this.context.constantInformationPage.health === 'true') ? "is-invalid" : ""}`}
                                             value={this.context.constantInformationPage.healthyStatus}
-                                            onChange={(e) =>  this.context.handleFields(e, 'constantInformationPage', 'healthyStatus')}
+                                            onChange={(e) =>  this.context.handleFields(e.target.value, 'constantInformationPage', 'healthyStatus')}
                                             placeholder=" "
                                         />
                                         <label className="placeholder" style={{right: (this.context.constantInformationPageValidation.healthyStatus_requiredReg === false &&

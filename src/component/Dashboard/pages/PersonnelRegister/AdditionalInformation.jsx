@@ -157,7 +157,7 @@ class AdditionalInformation extends Component{
                             <select
                                 className={'input'}
                                 value={this.context.personnelFields.gender}
-                                onChange={(e) => this.context.handleFields(e, 'personnelFields', 'gender')}
+                                onChange={(e) => this.context.handleFields(e.target.value, 'personnelFields', 'gender')}
                             >
                                 <option value={'male'}>مرد</option>
                                 <option value={'female'}>زن</option>

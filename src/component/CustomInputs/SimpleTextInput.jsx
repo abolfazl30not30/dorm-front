@@ -15,7 +15,7 @@ class SimpleTextInput extends Component {
                        this.props.condition3 === false || this.props.condition4 === false || this.props.condition6 === false ||
                        this.props.condition7 === false || this.props.condition5 ? "is-invalid" : ""}`}
                        value={this.props.value}
-                       onChange={(e) =>  this.context.handleFields(e, this.props.fieldNameString, this.props.valueOfInputString)}
+                       onChange={(e) =>  this.context.handleFields(e.target.value, this.props.fieldNameString, this.props.valueOfInputString)}
                        placeholder=" "
                 />
                 <label className="placeholder"  style={{right: this.props.condition1 === false || this.props.condition2 === false ||

@@ -184,7 +184,7 @@ class BasicInformation extends Component{
                             <select
                                 className={'input'}
                                 value={this.context.personnelFields.maritalStatus}
-                                onChange={(e) => this.context.handleFields(e, 'personnelFields', 'maritalStatus')}
+                                onChange={(e) => this.context.handleFields(e.target.value, 'personnelFields', 'maritalStatus')}
                             >
                                 <option value={'single'}>مجرد</option>
                                 <option value={'married'}>متاهل</option>

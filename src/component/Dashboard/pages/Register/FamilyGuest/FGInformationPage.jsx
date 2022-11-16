@@ -133,7 +133,7 @@ class FGInformationPage extends Component {
                         <div className="input-group-register col-4">
                             <select className='input'
                                     value={this.context.familyGuestInformation.relationshipWithResident}
-                                    onChange={(e) => this.context.handleFields(e, 'familyGuestInformation', 'relationshipWithResident')}
+                                    onChange={(e) => this.context.handleFields(e.target.value, 'familyGuestInformation', 'relationshipWithResident')}
                             >
                                 <option value='father'>پدر</option>
                                 <option value='mother'>مادر</option>
@@ -142,23 +142,6 @@ class FGInformationPage extends Component {
                                 <option value='other'>غیره</option>
                             </select>
                             <label className="placeholder">نسبت با اقامتگر</label>
-                        </div>
-                        <div className="input-group-register col-8">
-                            <SimpleTextInput
-                                value={this.context.familyGuestInformation.address}
-                                fieldNameString={'familyGuestInformation'}
-                                valueOfInputString={'address'}
-                                label={'آدرس محل سکونت'}
-                            />
-                        </div>
-                        <div className="input-group-register col-4">
-                            <SimpleTextInput
-                                condition2={this.context.familyGuestInformationValidation.phoneNumber_telephoneReg}
-                                value={this.context.familyGuestInformation.phoneNumber}
-                                fieldNameString={'familyGuestInformation'}
-                                valueOfInputString={'phoneNumber'}
-                                label={'شماره تماس'}
-                            />
                         </div>
                     </div>
                 </form>

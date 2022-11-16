@@ -92,20 +92,18 @@ class MainRegister extends Component {
         let nationalCode_numberReg = numberReg.test(this.context.familyGuestInformation.nationalCode);
         let certificateNumber_numberReg = numberReg.test(this.context.familyGuestInformation.certificateNumber);
 
-        let phoneNumber_telephoneReg = telephoneReg.test(this.context.familyGuestInformation.phoneNumber);
 
         this.context.handleSpecificValidations([fullName_requiredReg, nationalCode_requiredReg, certificateNumber_requiredReg,
                 startDate_requiredReg, endDate_requiredReg, paymentDate_requiredReg, rentPaymentAmount_numberReg,
-                depositPaymentAmount_numberReg, discountPaymentAmount_numberReg, nationalCode_numberReg, certificateNumber_numberReg,
-                phoneNumber_telephoneReg],
+                depositPaymentAmount_numberReg, discountPaymentAmount_numberReg, nationalCode_numberReg, certificateNumber_numberReg,],
             ['fullName_requiredReg', 'nationalCode_requiredReg', 'certificateNumber_requiredReg',
                 'startDate_requiredReg', 'endDate_requiredReg', 'paymentDate_requiredReg',
             'rentPaymentAmount_numberReg', 'depositPaymentAmount_numberReg', 'discountPaymentAmount_numberReg',
-                'nationalCode_numberReg', 'certificateNumber_numberReg', 'phoneNumber_telephoneReg'], 'familyGuestInformationValidation');
+                'nationalCode_numberReg', 'certificateNumber_numberReg'], 'familyGuestInformationValidation');
 
         return fullName_requiredReg && nationalCode_requiredReg && certificateNumber_requiredReg &&
             startDate_requiredReg && endDate_requiredReg && paymentDate_requiredReg &&
-            nationalCode_numberReg && certificateNumber_numberReg && phoneNumber_telephoneReg;
+            nationalCode_numberReg && certificateNumber_numberReg;
     }
     componentDidMount() {
         let typeOfResident = <div className='typeofResident'>
@@ -336,49 +334,11 @@ class MainRegister extends Component {
     }
 
     fgInformationFamilyPageValidation = () => {
-        let requiredReg = /^\s*$/;
-        let telephoneReg = /^09\d{9}$/;
 
-        let firstPersonFullName_requiredReg = !requiredReg.test(this.context.familyGuestInformationFamily.firstPersonFullName);
-        let firstPersonPhoneNumber_requiredReg = !requiredReg.test(this.context.familyGuestInformationFamily.firstPersonPhoneNumber);
-        let secondPersonFullName_requiredReg = !requiredReg.test(this.context.familyGuestInformationFamily.secondPersonFullName);
-        let secondPersonPhoneNumber_requiredReg = !requiredReg.test(this.context.familyGuestInformationFamily.secondPersonPhoneNumber);
-
-        let firstPersonPhoneNumber_telephoneReg = telephoneReg.test(this.context.familyGuestInformationFamily.firstPersonPhoneNumber);
-        let secondPersonPhoneNumber_telephoneReg = telephoneReg.test(this.context.familyGuestInformationFamily.secondPersonPhoneNumber);
-
-        this.context.handleSpecificValidations([firstPersonFullName_requiredReg, firstPersonPhoneNumber_requiredReg,
-            secondPersonFullName_requiredReg, secondPersonPhoneNumber_requiredReg, firstPersonPhoneNumber_telephoneReg,
-            secondPersonPhoneNumber_telephoneReg], ['firstPersonFullName_requiredReg', 'firstPersonPhoneNumber_requiredReg',
-            'secondPersonFullName_requiredReg', 'secondPersonPhoneNumber_requiredReg', 'firstPersonPhoneNumber_telephoneReg',
-            'secondPersonPhoneNumber_telephoneReg'], 'familyGuestInformationFamilyValidation');
-
-        return firstPersonFullName_requiredReg && firstPersonPhoneNumber_requiredReg &&
-            secondPersonFullName_requiredReg && secondPersonPhoneNumber_requiredReg && firstPersonPhoneNumber_telephoneReg &&
-            secondPersonPhoneNumber_telephoneReg;
     }
 
     ogInformationFamilyPageValidation = () => {
-        let requiredReg = /^\s*$/;
-        let telephoneReg = /^09\d{9}$/;
 
-        let firstPersonFullName_requiredReg = !requiredReg.test(this.context.otherGuestInformationFamily.firstPersonFullName);
-        let firstPersonPhoneNumber_requiredReg = !requiredReg.test(this.context.otherGuestInformationFamily.firstPersonPhoneNumber);
-        let secondPersonFullName_requiredReg = !requiredReg.test(this.context.otherGuestInformationFamily.secondPersonFullName);
-        let secondPersonPhoneNumber_requiredReg = !requiredReg.test(this.context.otherGuestInformationFamily.secondPersonPhoneNumber);
-
-        let firstPersonPhoneNumber_telephoneReg = telephoneReg.test(this.context.otherGuestInformationFamily.firstPersonPhoneNumber);
-        let secondPersonPhoneNumber_telephoneReg = telephoneReg.test(this.context.otherGuestInformationFamily.secondPersonPhoneNumber);
-
-        this.context.handleSpecificValidations([firstPersonFullName_requiredReg, firstPersonPhoneNumber_requiredReg,
-            secondPersonFullName_requiredReg, secondPersonPhoneNumber_requiredReg, firstPersonPhoneNumber_telephoneReg,
-            secondPersonPhoneNumber_telephoneReg], ['firstPersonFullName_requiredReg', 'firstPersonPhoneNumber_requiredReg',
-            'secondPersonFullName_requiredReg', 'secondPersonPhoneNumber_requiredReg', 'firstPersonPhoneNumber_telephoneReg',
-            'secondPersonPhoneNumber_telephoneReg'], 'otherGuestInformationFamilyValidation');
-
-        return firstPersonFullName_requiredReg && firstPersonPhoneNumber_requiredReg &&
-            secondPersonFullName_requiredReg && secondPersonPhoneNumber_requiredReg && firstPersonPhoneNumber_telephoneReg &&
-            secondPersonPhoneNumber_telephoneReg;
     }
 
     state = {
@@ -457,7 +417,6 @@ class MainRegister extends Component {
 
                 updatedState[1].validator = this.otherGuestValidation;
                 updatedState[2].validator = this.ogInformationFurtherPageValidation;
-                updatedState[3].validator = this.ogInformationFamilyPageValidation;
 
                 this.setState({ steps: updatedState })
                 break;
@@ -477,7 +436,7 @@ class MainRegister extends Component {
 
                 updatedState[1].validator = this.familyGuestValidation;
                 updatedState[2].validator = this.fgInformationFurtherPageValidation;
-                updatedState[3].validator = this.fgInformationFamilyPageValidation;
+
 
                 this.setState({ steps: updatedState })
                 break;
@@ -505,24 +464,165 @@ class MainRegister extends Component {
     }
 
     handleSubmit = async()=>{
+
         switch (this.state.typeofResident){
             case "constant" : {
-                let NewCharacteristic = {...this.context.constantInformationPage,...this.context.constantInformationFurther,...this.context.constantInformationFamily};
+                let newCharacteristic = {...this.context.constantInformationPage,...this.context.constantInformationFurther,...this.context.constantInformationFamily};
+                let birthDate1 = newCharacteristic.birthDate
+                newCharacteristic.birthDate = birthDate1+" 00:00:00";
 
+
+
+                console.log(newCharacteristic)
+                const rawResponse = await fetch('http://localhost:8089/api/v1/characteristic', {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(newCharacteristic)
+                });
+
+                var content = await rawResponse.json();
+                console.log(content)
 
                 let person = {
                     residenceType:"resident",
                     accommodationType:"permanent",
-                    characteristicId:"",
+                    characteristicId:content.id,
                     files: this.context.constantUploadPage
                 }
 
+                const rawResponse1 = await fetch('http://localhost:8089/api/v1/person', {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(person)
+                });
+                break;
             }
+
             case "familyGuest" : {
+                let newCharacteristic = {...this.context.familyGuestInformation,...this.context.familyGuestInformationFurther};
+                console.log(newCharacteristic);
 
+                let birthDate1 = newCharacteristic.birthDate
+                newCharacteristic.birthDate = birthDate1+" 00:00:00"
+
+                let paymentDate1 = newCharacteristic.paymentDate
+                newCharacteristic.paymentDate = paymentDate1+" 00:00:00";
+
+                console.log(newCharacteristic)
+                const createdChar = await fetch('http://localhost:8089/api/v1/characteristic', {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(newCharacteristic)
+                });
+
+                let respondChar = await createdChar.json();
+
+                console.log(respondChar)
+
+                let person = {
+                    residenceType:"resident",
+                    accommodationType:"permanent",
+                    characteristicId: respondChar.id,
+                    files: this.context.otherGuestUploadPage
+                }
+
+                const createdPerson = await fetch('http://localhost:8089/api/v1/person', {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(person)
+                });
+
+                let respondPerson = await createdPerson.json();
+
+                console.log(this.context.familyGuestInformationFamily.hostId)
+
+                let guest = {
+                    name: respondChar.fullName,
+                    childId: respondPerson.id
+                }
+
+                const createGuest = await fetch(`http://localhost:8089/api/v1/person/guest/${this.context.familyGuestInformationFamily.hostId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(guest)
+                });
+
+                break;
             }
-            case  "otherGuest" : {
 
+            case  "otherGuest" : {
+                let newCharacteristic = {...this.context.otherGuestInformation,...this.context.constantInformationFurther};
+                console.log(newCharacteristic);
+
+                let birthDate1 = newCharacteristic.birthDate
+                newCharacteristic.birthDate = birthDate1+" 00:00:00"
+
+                let paymentDate1 = newCharacteristic.paymentDate
+                newCharacteristic.paymentDate = paymentDate1+" 00:00:00";
+
+                console.log(newCharacteristic)
+                const createdChar = await fetch('http://localhost:8089/api/v1/characteristic', {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(newCharacteristic)
+                });
+
+                let respondChar = await createdChar.json();
+
+                console.log(respondChar)
+
+                let person = {
+                    residenceType:"resident",
+                    accommodationType:"permanent",
+                    characteristicId:respondChar.id,
+                    files: this.context.otherGuestUploadPage
+                }
+
+                const createdPerson = await fetch('http://localhost:8089/api/v1/person', {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(person)
+                });
+                let respondPerson = await createdPerson.json();
+
+                console.log(this.context.otherGuestInformationFamily.hostId)
+
+                let guest = {
+                    name: respondChar.fullName,
+                    childId: respondPerson.id
+                }
+
+                const createGuest = await fetch(`http://localhost:8089/api/v1/person/guest/${this.context.otherGuestInformationFamily.hostId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(guest)
+                });
+
+                break;
             }
         }
     }

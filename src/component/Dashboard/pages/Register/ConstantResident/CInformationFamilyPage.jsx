@@ -49,7 +49,7 @@ class CInformationFamilyPage extends Component {
                         <div className="input-group-register col-3">
                             <select className='input'
                                     value={this.context.constantInformationFamily.firstPersonRelationshipWithResident}
-                                    onChange={(e) =>  this.context.handleFields(e, 'constantInformationFamily', 'firstPersonRelationshipWithResident')}
+                                    onChange={(e) =>  this.context.handleFields(e.target.value, 'constantInformationFamily', 'firstPersonRelationshipWithResident')}
                             >
                                 <option value='father'>پدر</option>
                                 <option value='mother'>مادر</option>
@@ -94,7 +94,7 @@ class CInformationFamilyPage extends Component {
                         <div className="input-group-register col-3">
                             <select className='input'
                                     value={this.context.constantInformationFamily.secondPersonRelationshipWithResident}
-                                    onChange={(e) =>  this.context.handleFields(e, 'constantInformationFamily', 'secondPersonRelationshipWithResident')}
+                                    onChange={(e) =>  this.context.handleFields(e.target.value, 'constantInformationFamily', 'secondPersonRelationshipWithResident')}
                             >
                                 <option>پدر</option>
                                 <option>مادر</option>

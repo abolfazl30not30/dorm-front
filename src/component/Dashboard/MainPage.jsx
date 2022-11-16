@@ -148,8 +148,6 @@ class MainPage extends Component {
                 depositPaymentAmount: '',
                 discountPaymentAmount: '',
                 relationshipWithResident: 'father', // default value (first option)
-                address: '',
-                phoneNumber: '',
             },
 
             // ----------------------- <OGInformationPage /> information
@@ -209,27 +207,11 @@ class MainPage extends Component {
             },
             // ----------------------- <FGIInformationFamilyPage /> information
             familyGuestInformationFamily: {
-                firstPersonFullName: '',
-                firstPersonPhoneNumber: '',
-                firstPersonFatherName: '',
-                firstPersonRelationshipWithResident: 'father', // default value (first option)
-
-                secondPersonFullName: '',
-                secondPersonPhoneNumber: '',
-                secondPersonFatherName: '',
-                secondPersonRelationshipWithResident: 'father', // default value (first option)
+                hostId:''
             },
             // ----------------------- <OGIInformationFamilyPage /> information
             otherGuestInformationFamily: {
-                firstPersonFullName: '',
-                firstPersonPhoneNumber: '',
-                firstPersonFatherName: '',
-                firstPersonRelationshipWithResident: 'father', // default value (first option)
-
-                secondPersonFullName: '',
-                secondPersonPhoneNumber: '',
-                secondPersonFatherName: '',
-                secondPersonRelationshipWithResident: 'father', // default value (first option)
+                hostId:''
             },
             //##############################################################################
 
@@ -403,23 +385,11 @@ class MainPage extends Component {
             },
             // ----------------------- <FGIInformationFamilyPage /> information validations
             familyGuestInformationFamilyValidation: {
-                firstPersonFullName_requiredReg: '',
-                firstPersonPhoneNumber_requiredReg: '',
-                firstPersonPhoneNumber_telephoneReg: '',
 
-                secondPersonFullName_requiredReg: '',
-                secondPersonPhoneNumber_requiredReg: '',
-                secondPersonPhoneNumber_telephoneReg: '',
             },
             // ----------------------- <OGIInformationFamilyPage /> information validations
             otherGuestInformationFamilyValidation: {
-                firstPersonFullName_requiredReg: '',
-                firstPersonPhoneNumber_requiredReg: '',
-                firstPersonPhoneNumber_telephoneReg: '',
 
-                secondPersonFullName_requiredReg: '',
-                secondPersonPhoneNumber_requiredReg: '',
-                secondPersonPhoneNumber_telephoneReg: '',
             },
             //##############################################################################
         },
@@ -553,9 +523,9 @@ class MainPage extends Component {
         this.setState({personId: personId, charId: charId});
     }
 
-    handleFields = (e, residentType, field) => {
+    handleFields = (value, residentType, field) => {
         let newFields = {...this.state.fields};
-        newFields[residentType][field] = e.target.value
+        newFields[residentType][field] = value
         this.setState({fields: newFields});
     }
 

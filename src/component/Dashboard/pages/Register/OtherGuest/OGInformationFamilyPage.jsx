@@ -15,6 +15,7 @@ class OGInformationFamilyPage extends Component {
         peopleFound :[],
         searchInput:"",
         selectedPeople:"",
+        searchType:"fullName",
     }
 
     render() {
@@ -26,7 +27,7 @@ class OGInformationFamilyPage extends Component {
                         <div className="col-1"><label>براساس:</label></div>
                         <div className="col-3 " style={{paddingLeft: "0"}}>
                             <Form.Select aria-label="Default select example" style={{height : "50px"}} value={this.state.searchType} onChange={(e)=>{this.setState({searchType:e.target.value})}}>
-                                <option value="firstName">نام و نام خانوادگی</option>
+                                <option value="fullName">نام و نام خانوادگی</option>
                                 <option value="nationalCode">کد ملی</option>
                             </Form.Select>
                         </div>
@@ -60,7 +61,7 @@ class OGInformationFamilyPage extends Component {
                                             <div className="col-6">
                                                 <div className="d-flex">
                                                     <label>نام و نام خانوادگی: </label>
-                                                    <p>{poeple.firstName}{poeple.lastName}</p>
+                                                    <p>{poeple.firstName} {poeple.lastName}</p>
                                                 </div>
                                                 <div className="d-flex">
                                                     <label>نام پدر: </label>
@@ -88,17 +89,23 @@ class OGInformationFamilyPage extends Component {
         );
     }
     //search
-    handleSearchInput = (e) =>{
+    handleSearchInput = async (e) =>{
         const value = e.target.value;
         this.setState({searchInput:value});
-    }
-    handleSearchBtn = async () =>{
-        const response = await fetch(`https://api.saadatportal.com/api/v1/characteristic/search?${this.state.searchType}=${this.state.searchInput}`).then((response) => response.json())
+
+        const response = await fetch(`http://localhost:8089/api/v1/characteristic/search?${this.state.searchType}=${value}`).then((response) => response.json())
             .then((data) => this.setState({peopleFound: data}));
     }
+    handleSearchBtn = async () =>{
+        const response = await fetch(`http://localhost:8089/api/v1/characteristic/search?${this.state.searchType}=${this.state.searchInput}`).then((response) => response.json())
+            .then((data) => this.setState({peopleFound: data}));
+    }
+
     handleChange = (event, newAlignment) => {
-        console.log(newAlignment)
+
         this.setState({selectedPeople: newAlignment})
+        this.context.handleFields(newAlignment, 'otherGuestInformationFamily', 'hostId')
+
     }
 }
 

@@ -29,7 +29,7 @@ class EditFloorAndUnit extends Component {
     }
 
     async componentDidMount() {
-        const response = await fetch('https://api.saadatportal.com/api/v1/floor').then((response) => response.json())
+        const response = await fetch('http://localhost:8089/api/v1/floor').then((response) => response.json())
             .then((data) => this.setState({ floor: data, isLoading: false }));
     }
 
@@ -152,7 +152,7 @@ class EditFloorAndUnit extends Component {
 
     addFloor = async () => {
         var count = Math.floor(Math.random() * 100) + 1;
-        const rawResponse = await fetch('https://api.saadatportal.com/api/v1/floor', {
+        const rawResponse = await fetch('http://localhost:8089/api/v1/floor', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -176,7 +176,7 @@ class EditFloorAndUnit extends Component {
     addUnit = async (f) => {
         var count = Math.floor(Math.random() * 1000) + 1;
 
-        const rawResponse = await fetch('https://api.saadatportal.com/api/v1/unit', {
+        const rawResponse = await fetch('http://localhost:8089/api/v1/unit', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -197,7 +197,7 @@ class EditFloorAndUnit extends Component {
     editFloorTitle = async ({ value, previousValue }) => {
         const floor = this.state.floor.find(({ name }) => name === previousValue);
         const index = this.state.floor.findIndex(({ name }) => name === previousValue);
-        const rawResponse = await fetch(`https://api.saadatportal.com/api/v1/floor/${floor.id}`, {
+        const rawResponse = await fetch(`http://localhost:8089/api/v1/floor/${floor.id}`, {
             method: 'PATCH',
             headers: {
                 'Accept': 'application/json',
@@ -232,7 +232,7 @@ class EditFloorAndUnit extends Component {
         const unitId = updatedState[indexOfFloor].units[indexOfUnit].id;
         const number = parseInt(value)
 
-        const rawResponse = await fetch(`https://api.saadatportal.com/api/v1/unit/${unitId}`, {
+        const rawResponse = await fetch(`http://localhost:8089/api/v1/unit/${unitId}`, {
             method: 'PATCH',
             headers: {
                 'Accept': 'application/json',
@@ -250,7 +250,7 @@ class EditFloorAndUnit extends Component {
     deleteFloor = async (floor) => {
         this.setState({ showDeleteModal: true });
 
-        await fetch(`https://api.saadatportal.com/api/v1/floor/${floor.id}`, {
+        await fetch(`http://localhost:8089/api/v1/floor/${floor.id}`, {
             method: 'DELETE',
         })
             .then(res => res.text())
@@ -262,7 +262,7 @@ class EditFloorAndUnit extends Component {
 
     deleteUnit = async (unit, index) => {
 
-        await fetch(`https://api.saadatportal.com/api/v1/unit/${unit.id}`, {
+        await fetch(`http://localhost:8089/api/v1/unit/${unit.id}`, {
             method: 'DELETE',
         })
             .then(res => res.text())
@@ -316,7 +316,7 @@ class EditFloorAndUnit extends Component {
         const index = this.state.floor.indexOf(floor);
         const assessories = this.state.floor[index].accessories;
         console.log(assessories);
-        const rawResponse = await fetch(`https://api.saadatportal.com/api/v1/floor/${floor.id}`, {
+        const rawResponse = await fetch(`http://localhost:8089/api/v1/floor/${floor.id}`, {
             method: 'PATCH',
             headers: {
                 'Accept': 'application/json',
@@ -359,7 +359,7 @@ class EditFloorAndUnit extends Component {
         this.setState({ showَFloorAccessory: false })
     }
     handleFloorAccClose = async () => {
-        const response = await fetch('https://api.saadatportal.com/api/v1/floor').then((response) => response.json())
+        const response = await fetch('http://localhost:8089/api/v1/floor').then((response) => response.json())
             .then((data) => this.setState({ floor: data}));
         this.setState({ showَFloorAccessory: false })
 

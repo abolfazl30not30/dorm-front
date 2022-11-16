@@ -44,6 +44,14 @@ class OGInformationPage extends Component {
                             />
                         </div>
                         <div className="input-group-register col-4">
+                            <DateInput value={this.context.otherGuestInformation.birthDate}
+                                       fieldNameString={'otherGuestInformation'}
+                                       valueOfInputString={'birthDate'}
+                                       label={'تاریخ تولد'}
+                                       timeInclude={false}
+                            />
+                        </div>
+                        <div className="input-group-register col-4">
                             <SimpleTextInput
                                 value={this.context.otherGuestInformation.placeOfIssue}
                                 fieldNameString={'otherGuestInformation'}
@@ -109,14 +117,7 @@ class OGInformationPage extends Component {
                                 label={' مبلغ پرداخت تخفیف'}
                             />
                         </div>
-                        <div className="input-group-register col-4">
-                            <DateInput value={this.context.otherGuestInformation.birthDate}
-                                       fieldNameString={'otherGuestInformation'}
-                                       valueOfInputString={'birthDate'}
-                                       label={'تاریخ تولد'}
-                                       timeInclude={false}
-                            />
-                        </div>
+
                     </div>
                 </div>
             </>

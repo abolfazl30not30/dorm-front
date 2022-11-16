@@ -20,7 +20,7 @@ class OGInformationFurtherPage extends Component {
                                 fieldNameString={'otherGuestInformationFurther'}
                                 valueOfInputString={'phoneNumber'}
                                 required={true}
-                                label={'شماره تماس اقامتگر'}
+                                label={'شماره همراه اقامتگر'}
                             />
                         </div>
                         <div className="input-group-register col-6">
