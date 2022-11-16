@@ -130,6 +130,17 @@ class BasicInformation extends Component{
                             />
                         </div>
                         <div className="input-group-register col-4">
+                            <select
+                                className={'input'}
+                                value={this.context.personnelFields.gender}
+                                onChange={(e) => this.context.handleFields(e.target.value, 'personnelFields', 'gender')}
+                            >
+                                <option value={'male'}>مرد</option>
+                                <option value={'female'}>زن</option>
+                            </select>
+                            <label className="placeholder">جنسیت</label>
+                        </div>
+                        <div className="input-group-register col-4">
                             <SimpleTextInput
                                 condition1={this.context.personnelFieldsValidation.education_requiredReg}
                                 value={this.context.personnelFields.education}
@@ -172,15 +183,6 @@ class BasicInformation extends Component{
                             />
                         </div>
                         <div className="input-group-register col-4">
-                            {/*<SimpleTextInput*/}
-                            {/*    condition1={this.context.personnelFieldsValidation.maritalStatus_requiredReg}*/}
-                            {/*    value={this.context.personnelFields.maritalStatus}*/}
-                            {/*    fieldNameString={'personnelFields'}*/}
-                            {/*    valueOfInputString={'maritalStatus'}*/}
-                            {/*    label={'وضعیت تاهل'}*/}
-                            {/*    required={true}*/}
-                            {/*/>*/}
-
                             <select
                                 className={'input'}
                                 value={this.context.personnelFields.maritalStatus}
@@ -193,14 +195,17 @@ class BasicInformation extends Component{
 
                         </div>
                         <div className="input-group-register col-4">
-                        <SimpleTextInput
-                            condition1={this.context.personnelFieldsValidation.religion_requiredReg}
-                            value={this.context.personnelFields.religion}
-                            fieldNameString={'personnelFields'}
-                            valueOfInputString={'religion'}
-                            label={'دین'}
-                            required={true}
-                        />
+                            <select className='input'
+                                    value={this.context.personnelFields.religion}
+                                    onChange={(e) =>  this.context.handleFields(e.target.value, 'personnelFields', 'religion')}
+                            >
+                                <option value='islam'>اسلام</option>
+                                <option value='christianity'>مسیحیت</option>
+                                <option value='hinduism'>هندوئیسم</option>
+                                <option value='buddhism'>آیین بودایی</option>
+                                <option value='other'>سایر</option>
+                            </select>
+                            <label className="placeholder">دین</label>
                         </div>
                         <div className="input-group-register col-4">
                             <SimpleTextInput
@@ -210,14 +215,54 @@ class BasicInformation extends Component{
                                 label={'مذهب'}
                             />
                         </div>
+                        {/*<div className="input-group-register col-4">*/}
+                        {/*    <SimpleTextInput*/}
+                        {/*        value={this.context.personnelFields.health}*/}
+                        {/*        fieldNameString={'personnelFields'}*/}
+                        {/*        valueOfInputString={'health'}*/}
+                        {/*        label={'وضعیت سلامت'}*/}
+                        {/*    />*/}
+                        {/*</div>*/}
                         <div className="input-group-register col-4">
-                            <SimpleTextInput
-                                value={this.context.personnelFields.health}
-                                fieldNameString={'personnelFields'}
-                                valueOfInputString={'health'}
-                                label={'وضعیت سلامت'}
-                            />
+                            <select className='input'
+                                    value={this.context.personnelFields.health}
+                                    onChange={(e) =>  this.context.handleFields(e.target.value, 'personnelFields', 'health')}
+                            >
+                                <option value='false'>خیر</option>
+                                <option value='true'>بله</option>
+                            </select>
+                            <label className="placeholder">آیا بیماری خاصی دارید؟</label>
                         </div>
+                        {
+                            this.context.personnelFields.health === 'true' ? (
+                                <>
+                                    <div className="input-group-register col-12">
+                                        <textarea
+                                            className={`input form-control ${(this.context.personnelFields.healthyStatus_requiredReg === false &&
+                                                this.context.personnelFields.health === 'true') ? "is-invalid" : ""}`}
+                                            value={this.context.personnelFields.healthyStatus}
+                                            onChange={(e) =>  this.context.handleFields(e.target.value, 'personnelFields', 'healthyStatus')}
+                                            placeholder=" "
+                                        />
+                                        <label className="placeholder" style={{right: (this.context.personnelFieldsValidation.healthyStatus_requiredReg === false &&
+                                                this.context.personnelFields.health === 'true') ? '35px' : '12px'}}>
+                                            توضیحات
+                                            <span style={{color : 'red'}}>*</span>
+                                        </label>
+
+                                        {
+                                            (this.context.personnelFieldsValidation.healthyStatus_requiredReg === false &&
+                                                this.context.personnelFields.health === 'true')
+                                                ? <small
+                                                    className="text-danger">{this.context.errors['required']}</small>
+                                                : <div/>
+                                        }
+                                    </div>
+                                </>
+                            ) : (
+                                <></>
+                            )
+                        }
                     </div>
                 </div>
             </>

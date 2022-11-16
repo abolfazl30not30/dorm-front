@@ -130,7 +130,7 @@ class AdditionalInformation extends Component{
                                 value={this.context.personnelFields.fullName}
                                 fieldNameString={'personnelFields'}
                                 valueOfInputString={'fullName'}
-                                label={'نام و نام خانوداگی'}
+                                label={'نام و نام خانوادگی مالک کارت'}
                             />
                         </div>
                         <div className="input-group-register col-4">
@@ -142,27 +142,6 @@ class AdditionalInformation extends Component{
                                 label={'نوع پرسنل'}
                                 required={true}
                             />
-                        </div>
-                        <div className="input-group-register col-4">
-                            <SimpleTextInput
-                                condition1={this.context.personnelFieldsValidation.parentId_requiredReg}
-                                value={this.context.personnelFields.parentId}
-                                fieldNameString={'personnelFields'}
-                                valueOfInputString={'parentId'}
-                                label={'آیدی پرسنل'}
-                                required={true}
-                            />
-                        </div>
-                        <div className="input-group-register col-4">
-                            <select
-                                className={'input'}
-                                value={this.context.personnelFields.gender}
-                                onChange={(e) => this.context.handleFields(e.target.value, 'personnelFields', 'gender')}
-                            >
-                                <option value={'male'}>مرد</option>
-                                <option value={'female'}>زن</option>
-                            </select>
-                            <label className="placeholder">جنسیت</label>
                         </div>
                     </div>
                 </div>

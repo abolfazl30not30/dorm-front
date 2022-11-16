@@ -32,7 +32,7 @@ class PersonnelRegister extends Component {
         let email_requiredReg = !requiredReg.test(this.context.personnelFields.email);
         let nationality_requiredReg = !requiredReg.test(this.context.personnelFields.nationality);
         let maritalStatus_requiredReg = !requiredReg.test(this.context.personnelFields.maritalStatus);
-        let religion_requiredReg = !requiredReg.test(this.context.personnelFields.religion);
+        let healthyStatus_requiredReg = !requiredReg.test(this.context.personnelFields.healthyStatus);
 
         let nationalCode_numberReg = numberReg.test(this.context.personnelFields.nationalCode);
         let certificateNumber_numberReg = numberReg.test(this.context.personnelFields.certificateNumber);
@@ -51,26 +51,27 @@ class PersonnelRegister extends Component {
             address_requiredReg, telephoneNumber_requiredReg, emergencyNumber_requiredReg,
             birthPlace_requiredReg, birthDate_requiredReg, education_requiredReg,
             postalCode_requiredReg, email_requiredReg, nationality_requiredReg,
-            maritalStatus_requiredReg, religion_requiredReg, nationalCode_numberReg,
+            maritalStatus_requiredReg, nationalCode_numberReg,
             certificateNumber_numberReg, postalCode_numberReg, phoneNumber_phoneNumberReg,
-            telephoneNumber_homeTelephoneReg, emergencyNumber_MobileOrHomeTelephoneReg, email_emailReg],
+            telephoneNumber_homeTelephoneReg, emergencyNumber_MobileOrHomeTelephoneReg, email_emailReg, healthyStatus_requiredReg],
             ['firstName_requiredReg', 'lastName_requiredReg',
             'nationalCode_requiredReg', 'placeOfIssue_requiredReg', 'certificateNumber_requiredReg', 'phoneNumber_requiredReg',
             'address_requiredReg', 'telephoneNumber_requiredReg', 'emergencyNumber_requiredReg',
             'birthPlace_requiredReg', 'birthDate_requiredReg', 'education_requiredReg',
             'postalCode_requiredReg', 'email_requiredReg', 'nationality_requiredReg',
-            'maritalStatus_requiredReg', 'religion_requiredReg', 'nationalCode_numberReg',
+            'maritalStatus_requiredReg', 'nationalCode_numberReg',
             'certificateNumber_numberReg', 'postalCode_numberReg', 'phoneNumber_phoneNumberReg',
-            'telephoneNumber_homeTelephoneReg', 'emergencyNumber_MobileOrHomeTelephoneReg', 'email_emailReg'], 'personnelFieldsValidation')
+            'telephoneNumber_homeTelephoneReg', 'emergencyNumber_MobileOrHomeTelephoneReg', 'email_emailReg', 'healthyStatus_requiredReg'], 'personnelFieldsValidation')
 
         return firstName_requiredReg && lastName_requiredReg &&
             nationalCode_requiredReg && certificateNumber_requiredReg && phoneNumber_requiredReg &&
             address_requiredReg && telephoneNumber_requiredReg && emergencyNumber_requiredReg &&
             birthPlace_requiredReg && birthDate_requiredReg && education_requiredReg &&
             postalCode_requiredReg && email_requiredReg && nationality_requiredReg &&
-            maritalStatus_requiredReg && religion_requiredReg && nationalCode_numberReg &&
+            maritalStatus_requiredReg && nationalCode_numberReg &&
             certificateNumber_numberReg && postalCode_numberReg && phoneNumber_phoneNumberReg &&
-            telephoneNumber_homeTelephoneReg && emergencyNumber_MobileOrHomeTelephoneReg && email_emailReg;
+            telephoneNumber_homeTelephoneReg && emergencyNumber_MobileOrHomeTelephoneReg && email_emailReg &&
+            healthyStatus_requiredReg;
     }
 
     personnelAdditionalInformation = () => {

@@ -20,12 +20,22 @@ class FGInformationPage extends Component {
                     <div className='d-flex flex-wrap justify-content-start'>
                         <div className="input-group-register col-4">
                             <SimpleTextInput
-                                condition1={this.context.familyGuestInformationValidation.fullName_requiredReg}
-                                value={this.context.familyGuestInformation.fullName}
+                                condition1={this.context.familyGuestInformationValidation.firstName_requiredReg}
+                                value={this.context.familyGuestInformation.firstName}
                                 fieldNameString={'familyGuestInformation'}
-                                valueOfInputString={'fullName'}
+                                valueOfInputString={'firstName'}
                                 required={true}
-                                label={'نام و نام خانوادگی'}
+                                label={'نام'}
+                            />
+                        </div>
+                        <div className="input-group-register col-4">
+                            <SimpleTextInput
+                                condition1={this.context.familyGuestInformationValidation.lastName_requiredReg}
+                                value={this.context.familyGuestInformation.lastName}
+                                fieldNameString={'familyGuestInformation'}
+                                valueOfInputString={'lastName'}
+                                required={true}
+                                label={'نام خانوادگی'}
                             />
                         </div>
                         <div className="input-group-register col-4">

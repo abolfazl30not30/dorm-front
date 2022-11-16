@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import "../../../../style/registerPage.css";
 import StepProgressBar from 'react-step-progress';
 import 'react-step-progress/dist/index.css';
@@ -19,7 +19,6 @@ import OGInformationFamilyPage from "./OtherGuest/OGInformationFamilyPage";
 import OGUploadPage from "./OtherGuest/OGUploadPage";
 
 import BuildingContext from '../../../../contexts/Building'
-import typeofResident from "./TypeofResident";
 
 class MainRegister extends Component {
 
@@ -28,6 +27,11 @@ class MainRegister extends Component {
         this.constantCheck = React.createRef();
         this.familyGuestCheck = React.createRef();
         this.otherGuestCheck = React.createRef();
+    }
+
+    goHome = () => {
+        this.props.history.push('/Register')
+
     }
 
     static contextType = BuildingContext;
@@ -79,7 +83,8 @@ class MainRegister extends Component {
         let telephoneReg = /^(\s*09\d{9}\s*|\s*)$/; // iranian telephone number '09---------'
         // let emailReg = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
 
-        let fullName_requiredReg = !requiredReg.test(this.context.familyGuestInformation.fullName);
+        let firstName_requiredReg = !requiredReg.test(this.context.familyGuestInformation.firstName);
+        let lastName_requiredReg = !requiredReg.test(this.context.familyGuestInformation.lastName);
         let nationalCode_requiredReg = !requiredReg.test(this.context.familyGuestInformation.nationalCode);
         let certificateNumber_requiredReg = !requiredReg.test(this.context.familyGuestInformation.certificateNumber);
         let startDate_requiredReg = !requiredReg.test(this.context.familyGuestInformation.startDate);
@@ -93,15 +98,15 @@ class MainRegister extends Component {
         let certificateNumber_numberReg = numberReg.test(this.context.familyGuestInformation.certificateNumber);
 
 
-        this.context.handleSpecificValidations([fullName_requiredReg, nationalCode_requiredReg, certificateNumber_requiredReg,
+        this.context.handleSpecificValidations([firstName_requiredReg, lastName_requiredReg, nationalCode_requiredReg, certificateNumber_requiredReg,
                 startDate_requiredReg, endDate_requiredReg, paymentDate_requiredReg, rentPaymentAmount_numberReg,
                 depositPaymentAmount_numberReg, discountPaymentAmount_numberReg, nationalCode_numberReg, certificateNumber_numberReg,],
-            ['fullName_requiredReg', 'nationalCode_requiredReg', 'certificateNumber_requiredReg',
+            ['firstName_requiredReg', 'lastName_requiredReg', 'nationalCode_requiredReg', 'certificateNumber_requiredReg',
                 'startDate_requiredReg', 'endDate_requiredReg', 'paymentDate_requiredReg',
             'rentPaymentAmount_numberReg', 'depositPaymentAmount_numberReg', 'discountPaymentAmount_numberReg',
                 'nationalCode_numberReg', 'certificateNumber_numberReg'], 'familyGuestInformationValidation');
 
-        return fullName_requiredReg && nationalCode_requiredReg && certificateNumber_requiredReg &&
+        return firstName_requiredReg && lastName_requiredReg && nationalCode_requiredReg && certificateNumber_requiredReg &&
             startDate_requiredReg && endDate_requiredReg && paymentDate_requiredReg &&
             nationalCode_numberReg && certificateNumber_numberReg;
     }
@@ -198,7 +203,8 @@ class MainRegister extends Component {
         let requiredReg = /^\s*$/;
         let numberReg = /^\s*[0-9]*\s*$/;
 
-        let fullName_requiredReg = !requiredReg.test(this.context.otherGuestInformation.fullName);
+        let firstName_requiredReg = !requiredReg.test(this.context.otherGuestInformation.firstName);
+        let lastName_requiredReg = !requiredReg.test(this.context.otherGuestInformation.lastName);
         let nationalCode_requiredReg = !requiredReg.test(this.context.otherGuestInformation.nationalCode);
         let certificateNumber_requiredReg = !requiredReg.test(this.context.otherGuestInformation.certificateNumber);
         let startDate_requiredReg = !requiredReg.test(this.context.otherGuestInformation.startDate);
@@ -210,14 +216,14 @@ class MainRegister extends Component {
         let depositPaymentAmount_numberReg = numberReg.test(this.context.otherGuestInformation.depositPaymentAmount);
         let discountPaymentAmount_numberReg = numberReg.test(this.context.otherGuestInformation.discountPaymentAmount);
 
-        this.context.handleSpecificValidations([fullName_requiredReg, nationalCode_requiredReg, certificateNumber_requiredReg,
+        this.context.handleSpecificValidations([firstName_requiredReg, lastName_requiredReg, nationalCode_requiredReg, certificateNumber_requiredReg,
                 startDate_requiredReg, endDate_requiredReg, nationalCode_numberReg, certificateNumber_numberReg,
                 rentPaymentAmount_numberReg, depositPaymentAmount_numberReg, discountPaymentAmount_numberReg],
-            ['fullName_requiredReg', 'nationalCode_requiredReg', 'certificateNumber_requiredReg',
+            ['firstName_requiredReg', 'lastName_requiredReg', 'nationalCode_requiredReg', 'certificateNumber_requiredReg',
                 'startDate_requiredReg', 'endDate_requiredReg', 'nationalCode_numberReg', 'certificateNumber_numberReg',
                 'rentPaymentAmount_numberReg', 'depositPaymentAmount_numberReg', 'discountPaymentAmount_numberReg'], 'otherGuestInformationValidation');
 
-        return fullName_requiredReg && nationalCode_requiredReg && certificateNumber_requiredReg &&
+        return firstName_requiredReg && lastName_requiredReg && nationalCode_requiredReg && certificateNumber_requiredReg &&
             startDate_requiredReg && endDate_requiredReg && nationalCode_numberReg && certificateNumber_numberReg &&
             rentPaymentAmount_numberReg && depositPaymentAmount_numberReg && discountPaymentAmount_numberReg;
     }
@@ -228,7 +234,7 @@ class MainRegister extends Component {
     cInformationFurtherPageValidation = () => {
         let requiredReg = /^\s*$/;
         let telephoneReg = /^09\d{9}$/; // iranian telephone number '09---------'
-        let homeTelephoneReg = /^\d{3}-\d{8}$/;
+        let homeTelephoneReg = /^[0]\d{10}$/;
         let telephoneOrEmptyReg = /^(\s*09\d{9}\s*|\s*)$/;
 
         let address_requiredReg = !requiredReg.test(this.context.constantInformationFurther.address);
@@ -259,7 +265,7 @@ class MainRegister extends Component {
     fgInformationFurtherPageValidation = () => {
         let requiredReg = /^\s*$/;
         let telephoneReg = /^09\d{9}$/; // iranian telephone number '09---------'
-        let homeTelephoneReg = /^\d{3}-\d{8}$/;
+        let homeTelephoneReg = /^[0]\d{10}$/;
         let telephoneOrEmptyReg = /^(\s*09\d{9}\s*|\s*)$/;
 
         let address_requiredReg = !requiredReg.test(this.context.familyGuestInformationFurther.address);
@@ -285,7 +291,7 @@ class MainRegister extends Component {
     ogInformationFurtherPageValidation = () => {
         let requiredReg = /^\s*$/;
         let telephoneReg = /^09\d{9}$/; // iranian telephone number '09---------'
-        let homeTelephoneReg = /^\d{3}-\d{8}$/;
+        let homeTelephoneReg = /^[0]\d{10}$/;
         let telephoneOrEmptyReg = /^(\s*09\d{9}\s*|\s*)$/;
 
         let address_requiredReg = !requiredReg.test(this.context.otherGuestInformationFurther.address);
@@ -331,6 +337,16 @@ class MainRegister extends Component {
         return firstPersonFullName_requiredReg && firstPersonPhoneNumber_requiredReg &&
             secondPersonFullName_requiredReg && secondPersonPhoneNumber_requiredReg && firstPersonPhoneNumber_telephoneReg &&
             secondPersonPhoneNumber_telephoneReg;
+    }
+
+    fgThirdPage = () => {
+        return this.context.familyGuestInformationFamily.hostId !== '' &&
+            this.context.familyGuestInformationFamily.hostId !== null;
+    }
+
+    ogThirdPage = () => {
+        return this.context.otherGuestInformationFamily.hostId !== '' &&
+            this.context.otherGuestInformationFamily.hostId !== null;
     }
 
     fgInformationFamilyPageValidation = () => {
@@ -393,9 +409,9 @@ class MainRegister extends Component {
                 updatedState[3].content = <CInformationFamilyPage />;
                 updatedState[4].content = <CUploadPage />;
 
-                updatedState[1].validator = this.constantInformationPageValidation;
-                updatedState[2].validator = this.cInformationFurtherPageValidation;
-                updatedState[3].validator = this.cInformationFamilyPageValidation;
+                // updatedState[1].validator = this.constantInformationPageValidation;
+                // updatedState[2].validator = this.cInformationFurtherPageValidation;
+                // updatedState[3].validator = this.cInformationFamilyPageValidation;
 
                 this.setState({ steps: updatedState })
                 break;
@@ -415,8 +431,9 @@ class MainRegister extends Component {
                 updatedState[3].content = <OGInformationFamilyPage />;
                 updatedState[4].content = <OGUploadPage />;
 
-                updatedState[1].validator = this.otherGuestValidation;
-                updatedState[2].validator = this.ogInformationFurtherPageValidation;
+                // updatedState[1].validator = this.otherGuestValidation;
+                // updatedState[2].validator = this.ogInformationFurtherPageValidation;
+                // updatedState[3].validator = this.fgThirdPage();
 
                 this.setState({ steps: updatedState })
                 break;
@@ -434,9 +451,9 @@ class MainRegister extends Component {
                 updatedState[3].content = <FGInformationFamilyPage />;
                 updatedState[4].content = <FGUploadPage />;
 
-                updatedState[1].validator = this.familyGuestValidation;
-                updatedState[2].validator = this.fgInformationFurtherPageValidation;
-
+                // updatedState[1].validator = this.familyGuestValidation;
+                // updatedState[2].validator = this.fgInformationFurtherPageValidation;
+                // updatedState[3].validator = this.ogThirdPage();
 
                 this.setState({ steps: updatedState })
                 break;
@@ -464,6 +481,8 @@ class MainRegister extends Component {
     }
 
     handleSubmit = async()=>{
+        this.goHome();
+        this.context.handleReset();
 
         switch (this.state.typeofResident){
             case "constant" : {

@@ -16,11 +16,22 @@ class OGInformationPage extends Component {
                     <div className='d-flex flex-wrap justify-content-start'>
                         <div className="input-group-register col-4">
                             <SimpleTextInput
-                                condition1={this.context.otherGuestInformationValidation.fullName_requiredReg}
-                                value={this.context.otherGuestInformation.fullName}
+                                condition1={this.context.otherGuestInformationValidation.firstName_requiredReg}
+                                value={this.context.otherGuestInformation.firstName}
                                 fieldNameString={'otherGuestInformation'}
-                                valueOfInputString={'fullName'}
-                                label={'نام و نام خانوادگی'}
+                                valueOfInputString={'firstName'}
+                                label={'نام'}
+                                required={true}
+                            />
+                        </div>
+                        <div className="input-group-register col-4">
+                            <SimpleTextInput
+                                condition1={this.context.otherGuestInformationValidation.lastName_requiredReg}
+                                value={this.context.otherGuestInformation.lastName}
+                                fieldNameString={'otherGuestInformation'}
+                                valueOfInputString={'lastName'}
+                                label={'نام خانوادگی'}
+                                required={true}
                             />
                         </div>
                         <div className="input-group-register col-4">
@@ -31,6 +42,7 @@ class OGInformationPage extends Component {
                                 fieldNameString={'otherGuestInformation'}
                                 valueOfInputString={'nationalCode'}
                                 label={'کد ملی'}
+                                required={true}
                             />
                         </div>
                         <div className="input-group-register col-4">
@@ -41,10 +53,12 @@ class OGInformationPage extends Component {
                                 fieldNameString={'otherGuestInformation'}
                                 valueOfInputString={'certificateNumber'}
                                 label={'شماره شناسنامه'}
+                                required={true}
                             />
                         </div>
                         <div className="input-group-register col-4">
-                            <DateInput value={this.context.otherGuestInformation.birthDate}
+                            <DateInput value={this.context.valueOfDates.otherGuest.birthDate}
+                                       valueFieldString={'otherGuest'}
                                        fieldNameString={'otherGuestInformation'}
                                        valueOfInputString={'birthDate'}
                                        label={'تاریخ تولد'}

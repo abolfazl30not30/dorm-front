@@ -84,10 +84,10 @@ class MainPage extends Component {
                 email: '',
                 nationality: '',
                 maritalStatus: 'single', // default value
-                religion: '',
+                religion: 'islam', // default value
                 subReligion: '',
                 healthyStatus: '', 
-                health: true,
+                health: 'false',
                 alias: '',
                 university: '', //
                 major: '',
@@ -136,7 +136,8 @@ class MainPage extends Component {
 
             // ----------------------- <FGInformationPage /> information
             familyGuestInformation: { // مهمان بستگان درجه یک -- صفحه مشخصات اولیه
-                fullName: '',
+                firstName: '',
+                lastName: '',
                 nationalCode: '',
                 certificateNumber: '',
                 placeOfIssue: '',
@@ -152,7 +153,8 @@ class MainPage extends Component {
 
             // ----------------------- <OGInformationPage /> information
             otherGuestInformation: {
-                fullName: '',
+                firstName: '',
+                lastName: '',
                 nationalCode: '',
                 certificateNumber: '',
                 placeOfIssue: '',
@@ -227,7 +229,7 @@ class MainPage extends Component {
         errors: {
             required: 'این فیلد الزامی است!',
             numberRequired: 'عدد وارد کنید!',
-            homeTelephoneReg: 'شماره تلفن ثابت با کد وارد کنید (۳۴۵۶۷۸۹۰-۰۱۲) ',
+            homeTelephoneReg: 'شماره تلفن ثابت ۱۱ رقمی با کد وارد شود! ',
             telephoneRegex: 'شماره تلفن همراه وارد کنید! (۰۹۱۲۳۴۵۶۷۸۹)',
             emailRegex: 'ایمیل وارد کنید!',
         },
@@ -260,6 +262,7 @@ class MainPage extends Component {
                 telephoneNumber_homeTelephoneReg: '',
                 emergencyNumber_MobileOrHomeTelephoneReg: '',
                 email_emailReg: '',
+                healthyStatus_requiredReg: '',
 
                 //second page
                 major_requiredReg: '',
@@ -307,7 +310,8 @@ class MainPage extends Component {
 
             // ----------------------- <FGInformationPage /> information validation
             familyGuestInformationValidation: {
-                fullName_requiredReg: '',
+                firstName_requiredReg: '',
+                lastName_requiredReg: '',
                 nationalCode_requiredReg: '',
                 nationalCode_numberReg: '',
                 certificateNumber_requiredReg: '',
@@ -323,7 +327,8 @@ class MainPage extends Component {
 
             // ----------------------- <OGInformationPage /> information validations
             otherGuestInformationValidation: {
-                fullName_requiredReg: '',
+                firstName_requiredReg: '',
+                lastName_requiredReg: '',
                 nationalCode_requiredReg: '',
                 nationalCode_numberReg: '',
                 certificateNumber_requiredReg: '',
@@ -455,7 +460,8 @@ class MainPage extends Component {
                         handleValidations: this.handleValidations,
                         handleSpecificValidations: this.handleSpecificValidations,
                         handleUploadedFile: this.handleUploadedFile,
-                        handleDeleteUploadedFile: this.handleDeleteUploadedFile
+                        handleDeleteUploadedFile: this.handleDeleteUploadedFile,
+                        handleReset: this.handleReset,
                     }}
                     >
                         <Routes>
@@ -488,6 +494,157 @@ class MainPage extends Component {
                 </div>
             </>
         );
+    }
+
+    handleReset = () => {
+        let resetDateValues = {
+            constantResident: {
+                birthDate: '',
+                    startDate: '',
+                    endDate: '',
+
+            },
+            familyGuest: {
+                birthDate: '',
+                    startDate: '',
+                    endDate: '',
+                    paymentDate: '',
+
+            },
+            otherGuest: {
+                birthDate: '',
+                    startDate: '',
+                    endDate: '',
+                    paymentDate: '',
+            },
+
+            ...this.state.valueOfDates.personnel,
+        };
+
+        let resetFields = {
+            ...this.state.fields.personnelFields,
+
+            //MAIN REGISTER
+            //############################################################################## first page
+            // ----------------------- <CInformationPage /> information
+            constantInformationPage: {
+                firstName: '',
+                    lastName: '',
+                    alias: '',
+                    nationalCode: '',
+                    certificateNumber: '',
+                    placeOfIssue: '',
+                    birthDate: '',
+                    nationality: '',
+                    fatherName: '',
+                    religion: 'islam',
+                    subReligion: '',
+                    university: '',
+                    studentNumber: '',
+                    fatherJob: '',
+                    maritalStatus: 'single', // default value (first option)
+                    spouseFullName: '',
+                    spouseJob: '',
+                    health: 'false', // default value (first option)
+                    healthyStatus: '',
+            },
+
+            // ----------------------- <FGInformationPage /> information
+            familyGuestInformation: { // مهمان بستگان درجه یک -- صفحه مشخصات اولیه
+                firstName: '',
+                    lastName: '',
+                    nationalCode: '',
+                    certificateNumber: '',
+                    placeOfIssue: '',
+                    birthDate: '',
+                    startDate: '',
+                    endDate: '',
+                    paymentDate: '',
+                    rentPaymentAmount: '',
+                    depositPaymentAmount: '',
+                    discountPaymentAmount: '',
+                    relationshipWithResident: 'father', // default value (first option)
+            },
+
+            // ----------------------- <OGInformationPage /> information
+            otherGuestInformation: {
+                firstName: '',
+                    lastName: '',
+                    nationalCode: '',
+                    certificateNumber: '',
+                    placeOfIssue: '',
+                    startDate: '',
+                    endDate: '',
+                    paymentDate: '',
+                    rentPaymentAmount: '',
+                    depositPaymentAmount: '',
+                    discountPaymentAmount: '',
+                    birthDate: '',
+            },
+
+            //##############################################################################
+
+            //############################################################################## second page
+            // ----------------------- <CInformationFurtherPage /> information
+            constantInformationFurther: {
+                address: '',
+                    telephoneNumber: '',
+                    phoneNumber: '',
+                    reservationDate: '',
+                    endDate: '',
+            },
+
+            // ----------------------- <FGInformationFurtherPage /> information
+            familyGuestInformationFurther: {
+                address: '',
+                    telephoneNumber: '',
+                    phoneNumber: '',
+            },
+            // ----------------------- <OGInformationFurtherPage /> information
+            otherGuestInformationFurther: {
+                address: '',
+                    telephoneNumber: '',
+                    phoneNumber: '',
+            },
+            //##############################################################################
+
+
+            //############################################################################## third page
+            // ----------------------- <CInformationFamilyPage /> information
+            constantInformationFamily: {
+                firstPersonFullName: '',
+                    firstPersonPhoneNumber: '',
+                    firstPersonFatherName: '',
+                    firstPersonRelationshipWithResident: 'father', // default value (first option)
+
+                    secondPersonFullName: '',
+                    secondPersonPhoneNumber: '',
+                    secondPersonFatherName: '',
+                    secondPersonRelationshipWithResident: 'father', // default value (first option)
+            },
+            // ----------------------- <FGIInformationFamilyPage /> information
+            familyGuestInformationFamily: {
+                hostId:''
+            },
+            // ----------------------- <OGIInformationFamilyPage /> information
+            otherGuestInformationFamily: {
+                hostId:''
+            },
+            //##############################################################################
+
+            //############################################################################## fourth page
+            constantUploadPage: [],
+
+                familyGuestUploadPage: [],
+
+                otherGuestUploadPage: [],
+            //##############################################################################
+
+        };
+
+        this.setState({valueOfDates : resetDateValues});
+
+        this.setState({fields : resetFields});
     }
 
     handleUploadedFile = (residentTypeString, name, fileId) => {
