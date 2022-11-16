@@ -46,6 +46,10 @@ class PersonnelRegister extends Component {
 
         let email_emailReg = emailReg.test(this.context.personnelFields.email);
 
+        if (this.context.personnelFields.health === 'false') {
+            healthyStatus_requiredReg = true;
+        }
+
         this.context.handleSpecificValidations([firstName_requiredReg, lastName_requiredReg,
             nationalCode_requiredReg, placeOfIssue_requiredReg, certificateNumber_requiredReg, phoneNumber_requiredReg,
             address_requiredReg, telephoneNumber_requiredReg, emergencyNumber_requiredReg,
@@ -127,7 +131,7 @@ class PersonnelRegister extends Component {
                 label: 'مشخصات اولیه',
                 name: 'step 1',
                 content: <BasicInformation />,
-                // validator: this.personnelBasicInformation
+                validator: this.personnelBasicInformation
             },
             {
                 label: 'مشخصات تکمیلی',

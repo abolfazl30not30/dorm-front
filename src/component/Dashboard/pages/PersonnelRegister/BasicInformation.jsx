@@ -238,7 +238,7 @@ class BasicInformation extends Component{
                                 <>
                                     <div className="input-group-register col-12">
                                         <textarea
-                                            className={`input form-control ${(this.context.personnelFields.healthyStatus_requiredReg === false &&
+                                            className={`input form-control ${(this.context.personnelFieldsValidation.healthyStatus_requiredReg === false &&
                                                 this.context.personnelFields.health === 'true') ? "is-invalid" : ""}`}
                                             value={this.context.personnelFields.healthyStatus}
                                             onChange={(e) =>  this.context.handleFields(e.target.value, 'personnelFields', 'healthyStatus')}
