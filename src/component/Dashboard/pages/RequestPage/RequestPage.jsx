@@ -76,7 +76,7 @@ class RequestPage extends Component {
     render() {
         return (
             <>
-                <div className="p-3">
+                <div className="px-4">
                     <div className="back-btn">
                         <Link to="/">
                             بازگشت
