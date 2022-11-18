@@ -21,6 +21,7 @@ class MainDashboard extends Component {
     }
 
     render() {
+
         return (
             <MainContext.Provider value={{activeMenu: this.state.activeMenu, handleSidebar: this.handleSidebar}}>
                 <div className="main-container">

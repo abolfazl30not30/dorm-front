@@ -24,11 +24,11 @@ class callHistory extends Component {
         },
         callHistory: [],
         show: false,
-        title: [],
-        callerName: [],
-        phoneNumber: [],
-        date: [],
-        description: [],
+        title: "",
+        callerName: "",
+        phoneNumber: "",
+        date: "",
+        description: "",
         validations: {
             title_requiredReg: '',
             callerName_requiredReg: '',
@@ -195,8 +195,6 @@ class callHistory extends Component {
                             <AiOutlinePlus className='ms-2'/>
                         </div>*/}
 
-
-
                         <button className='btn btn-record-contact' onClick={() => {
                             if (this.handleValidations()) {
                                 this.handleRecordContact();
@@ -231,7 +229,7 @@ class callHistory extends Component {
     }
     getValueInputDate = (e) => {
         let date = new Date(e._d);
-        let convertDate = date.getFullYear() + "/" + date.getMonth() + "/" + date.getDate();
+        let convertDate = date.getFullYear() + "/" + date.getMonth() + "/" + date.getDate()+" 00:00:00";
         this.setState({date: convertDate})
     }
     getValueInputDescription = (e) => {
@@ -267,9 +265,7 @@ class callHistory extends Component {
         }
 
 
-        let updatedCallHistory = [...this.state.callHistory];
-        updatedCallHistory.push(newCall);
-        this.setState({callHistory : updatedCallHistory});
+
 
         const rawResponse = await fetch('http://localhost:8089/api/v1/telephoneHistory', {
             method: 'POST',
@@ -281,9 +277,10 @@ class callHistory extends Component {
         });
 
         const response = await fetch('http://localhost:8089/api/v1/telephoneHistory').then((response) => response.json())
-            .then((data) => this.setState({newCall : data}));
+            .then((data) => this.setState({callHistory : data}));
 
         // this.setState({show: false})
+        this.setState({title:"",callerName:"",phoneNumber:"",date:"",description:""})
     }
 }
 

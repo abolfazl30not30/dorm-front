@@ -31,7 +31,6 @@ class MainRegister extends Component {
 
     goHome = () => {
         this.props.history.push('/Register')
-
     }
 
     static contextType = BuildingContext;
@@ -409,9 +408,9 @@ class MainRegister extends Component {
                 updatedState[3].content = <CInformationFamilyPage />;
                 updatedState[4].content = <CUploadPage />;
 
-                // updatedState[1].validator = this.constantInformationPageValidation;
-                // updatedState[2].validator = this.cInformationFurtherPageValidation;
-                // updatedState[3].validator = this.cInformationFamilyPageValidation;
+                updatedState[1].validator = this.constantInformationPageValidation;
+                updatedState[2].validator = this.cInformationFurtherPageValidation;
+                updatedState[3].validator = this.cInformationFamilyPageValidation;
 
                 this.setState({ steps: updatedState })
                 break;
@@ -431,9 +430,9 @@ class MainRegister extends Component {
                 updatedState[3].content = <OGInformationFamilyPage />;
                 updatedState[4].content = <OGUploadPage />;
 
-                // updatedState[1].validator = this.otherGuestValidation;
-                // updatedState[2].validator = this.ogInformationFurtherPageValidation;
-                // updatedState[3].validator = this.fgThirdPage();
+                updatedState[1].validator = this.otherGuestValidation;
+                updatedState[2].validator = this.ogInformationFurtherPageValidation;
+                updatedState[3].validator = this.fgThirdPage();
 
                 this.setState({ steps: updatedState })
                 break;
@@ -451,9 +450,9 @@ class MainRegister extends Component {
                 updatedState[3].content = <FGInformationFamilyPage />;
                 updatedState[4].content = <FGUploadPage />;
 
-                // updatedState[1].validator = this.familyGuestValidation;
-                // updatedState[2].validator = this.fgInformationFurtherPageValidation;
-                // updatedState[3].validator = this.ogThirdPage();
+                updatedState[1].validator = this.familyGuestValidation;
+                updatedState[2].validator = this.fgInformationFurtherPageValidation;
+                updatedState[3].validator = this.ogThirdPage();
 
                 this.setState({ steps: updatedState })
                 break;
@@ -481,9 +480,6 @@ class MainRegister extends Component {
     }
 
     handleSubmit = async()=>{
-        this.goHome();
-        this.context.handleReset();
-
         switch (this.state.typeofResident){
             case "constant" : {
                 let newCharacteristic = {...this.context.constantInformationPage,...this.context.constantInformationFurther,...this.context.constantInformationFamily};
@@ -644,6 +640,10 @@ class MainRegister extends Component {
                 break;
             }
         }
+
+        this.goHome();
+        this.context.handleReset();
+
     }
 }
 

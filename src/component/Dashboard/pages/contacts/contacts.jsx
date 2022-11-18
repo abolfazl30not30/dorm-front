@@ -14,7 +14,9 @@ class contacts extends Component {
         inputMobile: [],
         name: [],
         telephoneNumbers: [],
-        mobileNumbers: []
+        mobileNumbers: [],
+        searchType:"name",
+        searchInput:"",
     }
 
     async componentDidMount() {
@@ -38,9 +40,9 @@ class contacts extends Component {
                         <div className="col-md-1 col-sm-2 px-0"><label>براساس:</label></div>
                         <div className="col-md-3 col-sm-6 px-0" style={{paddingLeft: "0"}}>
                             <Form.Select aria-label="Default select example" style={{height:"50px",fontSize:"14px"}} value={this.state.searchType} onChange={(e)=>{this.setState({searchType:e.target.value})}}>
-                                <option value="fullName">نام و نام خانوادگی</option>
-                                <option value="nationalCode">شماره همراه</option>
-                                <option value="phoneNumber"> تلفن ثابت</option>
+                                <option value="name">نام و نام خانوادگی</option>
+                                <option value="mobileNumbers">شماره همراه</option>
+                                <option value="telephoneNumbers"> تلفن ثابت</option>
                             </Form.Select>
                         </div>
                         <div className="input-group-register col-md-7 col-sm-11 px-0 d-flex" style={{paddingRight: "0"}}>
@@ -63,8 +65,8 @@ class contacts extends Component {
                                 this.state.contacts.map((i) => (
                                     <tr>
                                         <td>{i.name}</td>
-                                        <td >{i.telephoneNumbers.map((num)=>(<div className="mb-2">{num}</div>))}</td>
-                                        <td>{i.mobileNumbers.map((num)=>(<div className="mb-2">{num}</div>))}</td>
+                                        <td >{i.mobileNumbers.map((num)=>(<div className="mb-2">{num}</div>))}</td>
+                                        <td>{i.telephoneNumbers.map((num)=>(<div className="mb-2">{num}</div>))}</td>
                                     </tr>
                                 ))
                             }
@@ -72,6 +74,7 @@ class contacts extends Component {
                         </table>
                     </div>
                 </div>
+
                 <Modal className='report-modal' centered show={this.state.show}>
                     <Modal.Header>
                         <Modal.Title><span>ثبت مخاطب</span></Modal.Title>
@@ -151,19 +154,34 @@ class contacts extends Component {
         );
     }
 
+    handleSearchInput = async (e) => {
+        const value = e.target.value;
+        this.setState({searchInput:value});
+        const response = await fetch(`http://localhost:8089/api/v1/phoneBook/search?${this.state.searchType}=${e.target.value}`).then((response) => response.json())
+            .then((data) => this.setState({contacts: data}));
+    }
+
+    handleSearchBtn = async () => {
+        console.log(this.state.searchInput)
+        const response = await fetch(`http://localhost:8089/api/v1/phoneBook/search?${this.state.searchType}=${this.state.searchInput}`).then((response) => response.json())
+            .then((data) => this.setState({contacts: data}));
+    }
+
     handleClose = () => {
         this.setState({show: false})
     };
 
     handleShow = () => {
         this.setState({show: true})
-    };
+    }
+
     addInputTelephoneNumbers = () => {
         const newInputTelephone = this.state.inputTelephone.concat(
             ""
         )
         this.setState({inputTelephone: newInputTelephone});
     }
+
     addInputMobileNumbers = () => {
         const newInputMobile = this.state.inputMobile.concat(
             ""
@@ -192,6 +210,7 @@ class contacts extends Component {
         updateInputsTelephone.splice(i,1)
         this.setState({inputTelephone: updateInputsTelephone});
     }
+
     deleteInputMobile = (i) => {
         const updateInputsMobile = [...this.state.inputMobile];
         updateInputsMobile.splice(i,1);
