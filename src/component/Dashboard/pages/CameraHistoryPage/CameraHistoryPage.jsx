@@ -12,7 +12,7 @@ import {MdDone} from "react-icons/md";
 import '../../../../style/registerPage.css';
 import '../../../../style/paymentHistory.css';
 
-class CameraHistoryPage extends Component{
+class CameraHistoryPage extends Component {
 
     state = {
         validation: {
@@ -28,14 +28,12 @@ class CameraHistoryPage extends Component{
         tmpRequest: {
             title: '',
             description: '',
-            unit: '',
+            unitId: '',
             date: '',
-            dateValue: '',
             supervisor: '',
-            assignee: '',
-            status: 'null',
+            Assignee: '',
         },
-
+        dateValue: '',
         data: []
     }
 
@@ -52,49 +50,16 @@ class CameraHistoryPage extends Component{
 
                 <div className="payment-history">
                     <div className={'d-flex flex-row justify-content-between aligns-item-center'}>
+
                         <h4>
                             تاریخچه عکس
                         </h4>
+
                         <div className={'d-flex'} style={{justifyContent: 'center'}}>
                             <button className={'btn-done'} onClick={() => {
-                                this.handleOpenModal();
-
-                                let emptyTmpRequest = {
-                                    title: '',
-                                    description: '',
-                                    unit: '',
-                                    supervisor: '',
-                                    date: '',
-                                    assignee: '',
-                                }
-
-                                let resetValidations = {...this.state.validation};
-                                resetValidations.assignee_requireReg = '';
-                                resetValidations.date_requiredReg = '';
-                                resetValidations.unit_requireReg = '';
-                                resetValidations.title_requireReg = '';
-
-                                this.setState({validation : resetValidations})
-
-                                this.setState({tmpRequest : emptyTmpRequest})
-
-                                // let resetTypeOfTempFields = {...this.state.tempFields};
-                                // resetTypeOfTempFields['type'] = null;
-                                // resetTypeOfTempFields['name'] = '';
-                                // resetTypeOfTempFields['reason'] = '';
-                                // resetTypeOfTempFields['topic'] = '';
-                                // resetTypeOfTempFields['accepted'] = null;
-                                //
-                                // let resetValidations = {...this.state.Validations};
-                                // resetValidations['selectedTypeBoolean'] = true;
-                                // resetValidations['topic_requireReg'] = '';
-                                // resetValidations['name_requireReg'] = '';
-                                //
-                                // this.setState({tempFields : resetTypeOfTempFields})
-                                // this.setState({Validations : resetValidations})
-
+                                this.handleOpenModal()
                             }}>
-                                <MdDone className='ms-1' />ثبت درخواست
+                                <MdDone className='ms-1'/>ثبت درخواست
                             </button>
                         </div>
                     </div>
@@ -102,22 +67,32 @@ class CameraHistoryPage extends Component{
                     <div className="row align-items-center ">
                         <div className="col-md-1 col-sm-2 px-0"><label>براساس:</label></div>
                         <div className="col-md-3 col-sm-6 px-0" style={{paddingLeft: "0"}}>
-                            <Form.Select aria-label="Default select example" style={{height:"50px",fontSize:"14px"}} value={this.state.searchType} onChange={(e)=>{this.setState({searchType:e.target.value})}}>
+                            <Form.Select aria-label="Default select example" style={{height: "50px", fontSize: "14px"}}
+                                         value={this.state.searchType} onChange={(e) => {
+                                this.setState({searchType: e.target.value})
+                            }}>
                                 <option value="fullName">نام درخواست کننده</option>
                                 <option value="title">عنوان</option>
                             </Form.Select>
                         </div>
+                        <div className="input-group-register col-md-7 col-sm-11 px-0 d-flex"
+                             style={{paddingRight: "0"}}>
+                            <input type="text" id="inputSearch" className="input" placeholder="جسـتوجـو"
+                                   style={{padding: "6px"}} onChange={(e) => {
+                                this.handleSearchInput(e)
+                            }}/>
 
-                        <div className="input-group-register col-md-7 col-sm-11 px-0 d-flex" style={{paddingRight: "0"}}>
-                            <input type="text" id="inputSearch" className="input" placeholder="جسـتوجـو" style={{padding:"6px"}} onChange={(e)=>{this.handleSearchInput(e)}}/>
-                            <button className="btn outline-secondary"><BiSearch fontSize="25px" onClick={this.handleSearchBtn}/>
+                            <button className="btn outline-secondary"><BiSearch fontSize="25px"
+                                                                                onClick={this.handleSearchBtn}/>
                             </button>
-                        </div>
 
+                        </div>
                     </div>
 
                     <div className={'table-box'}>
+
                         <table className='table'>
+
                             <thead>
                             <tr>
                                 <th>#</th>
@@ -128,7 +103,9 @@ class CameraHistoryPage extends Component{
                                 <th>وضعیت</th>
                             </tr>
                             </thead>
+
                             <tbody>
+
                             {
                                 this.state.data.map((data, index) => (
                                     <tr>
@@ -141,20 +118,18 @@ class CameraHistoryPage extends Component{
                                     </tr>
                                 ))
                             }
+
                             </tbody>
                         </table>
+
                     </div>
                 </div>
-
-
-
-                <Modal centered show={this.state.showModal} onHide={() =>{
+                <Modal centered show={this.state.showModal} onHide={() => {
                     this.handleCloseModal();
                 }}>
                     <Modal.Header closeButton>
                         <Modal.Title>درخواست جدید</Modal.Title>
                     </Modal.Header>
-
                     <Modal.Body>
                         <div className={'d-flex flex-wrap row'}>
                             <div className={'col-12 input-group-register'}>
@@ -164,33 +139,27 @@ class CameraHistoryPage extends Component{
                                     onChange={(e) =>
                                         this.handleInitializingTmpRequestFields(e, 'title')}
                                 />
-                                <label className={'placeholder'} style={{right: this.state.validation.title_requireReg === false ? '40px' : '20px'}}>
+                                <label className={'placeholder'}
+                                       style={{right: this.state.validation.title_requireReg === false ? '40px' : '20px'}}>
                                     عنوان
-                                    <span style={{color : 'red'}}>*</span>
+                                    <span style={{color: 'red'}}>*</span>
                                 </label>
-
                                 {
                                     this.state.validation.title_requireReg === false
                                         ? <small
                                             className="text-danger">این فیلد الزامی است!</small>
                                         : <div/>
                                 }
-
                             </div>
 
                             <div className={'col-12 input-group-register'}>
                                 <DatePicker
                                     format="ِِِِِِYYYY/MM/DD"
                                     inputClass={`input form-control mb-2 ${this.state.validation.date_requiredReg === false ? "is-invalid" : ""}`}
-                                    value={this.state.tmpRequest.dateValue}
-                                    onChange={(value) => {
-                                        let updatedTmpRequest = {...this.state.tmpRequest};
+                                    value={this.state.dateValue}
+                                    onChange={(value) => {this.handleDateValue(value)}}
 
-                                        updatedTmpRequest.dateValue = value;
-                                        updatedTmpRequest.date = new Date(value).toLocaleDateString('fa-IR')
-                                        this.setState({tmpRequest : updatedTmpRequest})
-                                    }}
-                                    mapDays={({ date }) => {
+                                    mapDays={({date}) => {
                                         let props = {}
                                         let isWeekend = [6].includes(date.weekDay.index)
 
@@ -220,14 +189,15 @@ class CameraHistoryPage extends Component{
 
                                         updatedTmpRequest.dateValue = '';
                                         updatedTmpRequest.date = '';
-                                        this.setState({tmpRequest : updatedTmpRequest})
+                                        this.setState({tmpRequest: updatedTmpRequest})
                                     }}>
                                         ریست
                                     </button>
                                 </DatePicker>
-                                <label className={'placeholder'} style={{right: this.state.validation.date_requiredReg === false ? '40px' : '20px'}}>
+                                <label className={'placeholder'}
+                                       style={{right: this.state.validation.date_requiredReg === false ? '40px' : '20px'}}>
                                     تاریخ
-                                    <span style={{color : 'red'}}>*</span>
+                                    <span style={{color: 'red'}}>*</span>
                                 </label>
 
                                 {
@@ -236,22 +206,23 @@ class CameraHistoryPage extends Component{
                                             className="text-danger">این فیلد الزامی است!</small>
                                         : <div/>
                                 }
-
                             </div>
                         </div>
 
                         <div className={'d-flex flex-wrap row'}>
-
                             <div className={'col-12 input-group-register'}>
+
                                 <input
                                     className={`input form-control mb-2 ${this.state.validation.assignee_requireReg === false ? "is-invalid" : ""}`}
                                     placeholder={' '}
                                     onChange={(e) =>
                                         this.handleInitializingTmpRequestFields(e, 'assignee')}
                                 />
-                                <label className={'placeholder'} style={{right: this.state.validation.assignee_requireReg === false ? '40px' : '20px'}}>
+
+                                <label className={'placeholder'}
+                                       style={{right: this.state.validation.assignee_requireReg === false ? '40px' : '20px'}}>
                                     نام درخواست کننده
-                                    <span style={{color : 'red'}}>*</span>
+                                    <span style={{color: 'red'}}>*</span>
                                 </label>
 
                                 {
@@ -270,9 +241,10 @@ class CameraHistoryPage extends Component{
                                     onChange={(e) =>
                                         this.handleInitializingTmpRequestFields(e, 'unit')}
                                 />
-                                <label className={'placeholder'} style={{right: this.state.validation.unit_requireReg === false || this.state.validation.unit_numberReg === false ? '40px' : '20px'}}>
+                                <label className={'placeholder'}
+                                       style={{right: this.state.validation.unit_requireReg === false || this.state.validation.unit_numberReg === false ? '40px' : '20px'}}>
                                     شماره واحد
-                                    <span style={{color : 'red'}}>*</span>
+                                    <span style={{color: 'red'}}>*</span>
                                 </label>
 
                                 {
@@ -289,7 +261,6 @@ class CameraHistoryPage extends Component{
                                         : <div/>
                                 }
                             </div>
-
                         </div>
 
                         <div className={'input-group-register'}>
@@ -310,7 +281,6 @@ class CameraHistoryPage extends Component{
                         <button className="btn-done" onClick={() => {
                             if (this.handleIsValid()) {
                                 this.handleSubmit();
-                                this.handleCloseModal()
                             }
                         }}>ثبت
                         </button>
@@ -318,6 +288,7 @@ class CameraHistoryPage extends Component{
                         <button className="btn btn-light" onClick={() => {
                             this.handleCloseModal()
                         }}>بستن
+
                         </button>
                     </Modal.Footer>
                 </Modal>
@@ -326,28 +297,15 @@ class CameraHistoryPage extends Component{
     }
 
     handleOpenModal = () => {
-        this.setState({showModal : true});
+        this.setState({showModal: true});
+
     }
 
     handleCloseModal = () => {
-        this.setState({showModal : false});
+        this.setState({showModal: false});
     }
 
-    handleSearchBtn = () => {
-
-    }
-    handleSubmit = async ()=>{
-        const newRecord = {
-            title : this.state.title,
-            supervisor:"",
-            unitId:"",
-            Assignee:"",
-            date: this.state.date,
-            description: this.state.description
-        }
-
-
-
+    handleSubmit = async () => {
 
         const rawResponse = await fetch('http://localhost:8089/api/v1/cameraHistory', {
             method: 'POST',
@@ -355,14 +313,29 @@ class CameraHistoryPage extends Component{
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(newRecord)
+
+            body: JSON.stringify(this.state.tmpRequest)
         });
 
         const response = await fetch('http://localhost:8089/api/v1/cameraHistory').then((response) => response.json())
-            .then((data) => this.setState({callHistory : data}));
+            .then((data) => this.setState({data: data}));
+        let tmpRequest = {
+            title: '',
+            description: '',
+            unitId: '',
+            date: '',
+            dateValue: '',
+            supervisor: '',
+            Assignee: '',
+        }
 
-        // this.setState({show: false})
-        this.setState({title:"",callerName:"",phoneNumber:"",date:"",description:""})
+        let resetValidations = {...this.state.validation};
+        resetValidations.assignee_requireReg = '';
+        resetValidations.date_requiredReg = '';
+        resetValidations.unit_requireReg = '';
+        resetValidations.title_requireReg = '';
+
+        this.setState({validation: resetValidations,tmpRequest:tmpRequest});
     }
 
     handleIsValid = () => {
@@ -379,7 +352,7 @@ class CameraHistoryPage extends Component{
 
         if (title_requireReg && date_requiredReg && unit_requireReg && assignee_requireReg && unit_numberReg) {
             updatedData.push(this.state.tmpRequest);
-            this.setState({data : updatedData});
+            this.setState({data: updatedData});
         }
 
 
@@ -390,20 +363,30 @@ class CameraHistoryPage extends Component{
     }
 
     handleValidations = (valueOfField, nameOfField) => {
+
         let updatedValidations = {...this.state.validation};
 
         for (let i = 0; i < valueOfField.length; i++) {
             updatedValidations[nameOfField[i]] = valueOfField[i];
         }
 
-        this.setState({validation : updatedValidations});
+        this.setState({validation: updatedValidations});
     }
+    handleDateValue=(value)=>{
+        this.setState({dateValue : value});
+        console.log(value)
+        let date = new Date(value);
+        let convertDate = date.getFullYear() + "/" + date.getMonth() + "/" + date.getDate()+" 00:00:00";
 
+        let updateTmpRequest = {...this.state.tmpRequest};
+        updateTmpRequest.date = convertDate;
+        this.setState({tmpRequest: updateTmpRequest});
+
+    }
     handleInitializingTmpRequestFields = (e, nameOfField) => {
         let updatedTmpRequest = {...this.state.tmpRequest};
         updatedTmpRequest[nameOfField] = e.target.value;
-
-        this.setState({tmpRequest : updatedTmpRequest});
+        this.setState({tmpRequest: updatedTmpRequest});
     }
 }
 

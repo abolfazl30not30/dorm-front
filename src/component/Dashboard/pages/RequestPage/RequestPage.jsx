@@ -47,11 +47,12 @@ class RequestPage extends Component {
         selectedType: null,
 
         tempFields: {
-            topic: '',
+            topic: "",
             type: null,
-            name: '',
-            reason: '',
-            checked: false, // default
+            name: "",
+            reason: "",
+            checked: null, // default
+            description:""
         },
 
         Validations: {
@@ -209,8 +210,13 @@ class RequestPage extends Component {
                                                     {request.reason}
                                                 </div>
                                             </div>
+                                            <div className={'col'}>
+                                                <div>
+                                                    <label>  توضیحات :</label>
+                                                    {request.description}
+                                                </div>
+                                            </div>
                                         </div>
-
                                     </div>
                                 </>
                             ))
@@ -301,6 +307,7 @@ class RequestPage extends Component {
                                                             >
 
                                                             </input>
+
                                                             <button className={'col addTypeBtn'}
                                                                     onClick={() => {
                                                                         this.inputRef.current.style.display = 'none';
@@ -326,8 +333,6 @@ class RequestPage extends Component {
                                                                 <TiTick size={22} color={'green'}/>
                                                             </button>
                                                         </div>
-
-
                                                         <button value="add"
                                                                 onClick={() => {
                                                                     this.inputRef.current.style.display = 'block flex';
@@ -348,7 +353,6 @@ class RequestPage extends Component {
                                 </Accordion>
                             </div>
                         </div>
-
                         <div>
 
                             <div className="input-group-register col-12">
@@ -381,21 +385,33 @@ class RequestPage extends Component {
                                     دلیل
                                 </label>
                             </div>
+                            <div className="input-group-register col-12">
+                                <textarea  className='input form-control mb-2'
+                                           onChange={(e) => this.handleInputChange(e, 'description')}
+                                           placeholder=" "
+                                           rows='5'
+                                />
+                                <label className={'placeholder'}>
+                                    توضیحات
+                                </label>
+                            </div>
                         </div>
 
                     </Modal.Body>
                     <Modal.Footer className="justify-content-start">
-                        <button className="btn btn-success" onClick={(event) => {this.handleSubmitType(event)}}>ثبت
+                        <button className="btn btn-success" onClick={(event) => {
+                            if(this.handleIsValid(event)){
+                                this.handleSubmit()
+                            }
+                        }}>ثبت
                         </button>
 
                         <button className="btn btn-light" onClick={() => {
                             this.handleCloseType()
                         }}>بستن
                         </button>
-
                     </Modal.Footer>
                 </Modal>
-
             </>
         );
     }
@@ -424,7 +440,7 @@ class RequestPage extends Component {
         this.setState({tempFields : updatedTempFields});
     }
 
-    handleSubmitType = async (e) => {
+    handleIsValid = (e) => {
         e.preventDefault();
         let regCheck = /^\s*$/;
 
@@ -432,6 +448,14 @@ class RequestPage extends Component {
         let selectedTypeBoolean = this.state.tempFields.type !== undefined && this.state.tempFields.type !== null;
         let name_requireReg = !regCheck.test(this.state.tempFields.name);
 
+        this.handleValidations([topic_requireReg, selectedTypeBoolean, name_requireReg],
+            ['topic_requireReg', 'selectedTypeBoolean', 'name_requireReg'])
+
+        return topic_requireReg && selectedTypeBoolean && name_requireReg;
+
+    }
+
+    handleSubmit = async () => {
         const date = new Date();
         let day = String(date.getDate()).padStart(2, '0');
         let month = String(date.getMonth() + 1).padStart(2, '0')
@@ -445,28 +469,16 @@ class RequestPage extends Component {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ dateOfRegistration: date2,name: this.state.tempFields.topic, type: this.state.tempFields.type, reason: this.state.tempFields.reason, checked:true, supervisorId:"9999999",description:"a",assignee:this.state.tempFields.name})
+
+            body: JSON.stringify({ dateOfRegistration: date2,name: this.state.tempFields.topic, type: this.state.tempFields.type, reason: this.state.tempFields.reason, checked:null, supervisorId:"6666666",description:this.state.tempFields.description,assignee:this.state.tempFields.name})
         });
 
+        const response2 = await fetch('http://localhost:8089/api/v1/request').then((response) => response.json())
+            .then((data) => this.setState({ requests: data }));
+
         const content = await rawResponse.json();
-        if (topic_requireReg && selectedTypeBoolean && name_requireReg) {
-            let updatedRequests = [...this.state.requests];
-            let request = {
-                name: this.state.tempFields.topic,
-                type: this.state.tempFields.type,
-                assignee: this.state.tempFields.name,
-                reason: this.state.tempFields.reason,
-                checked: null, // null, false, true
-            }
-            updatedRequests.push(request);
-            this.setState({requests: updatedRequests});
-        }
 
-        this.handleValidations([topic_requireReg, selectedTypeBoolean, name_requireReg],
-            ['topic_requireReg', 'selectedTypeBoolean', 'name_requireReg'])
-
-        return topic_requireReg && selectedTypeBoolean && name_requireReg;
-
+        this.handleCloseType();
     }
 
     handleValidations = (valueOfField, nameOfField) => {
@@ -480,6 +492,7 @@ class RequestPage extends Component {
 
         // console.log(this.state.Validations.selectedTypeBoolean)
     }
+
 }
 
 export default RequestPage;

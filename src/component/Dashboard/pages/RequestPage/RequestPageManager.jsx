@@ -4,19 +4,21 @@ import {Modal} from "react-bootstrap";
 import Accordion from "react-bootstrap/Accordion";
 import ToggleButton from "@mui/material/ToggleButton";
 import Button from 'react-bootstrap/Button';
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormControl from '@mui/material/FormControl';
-import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
-import {IoIosAddCircleOutline} from "react-icons/io";
-import {TiTimes} from "react-icons/ti";
-import {TiTick} from "react-icons/ti";
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
 import Form from "react-bootstrap/Form";
+import FormControl from '@mui/material/FormControl';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
+
+import {IoIosAddCircleOutline} from "react-icons/io";
+import {TiTimes} from "react-icons/ti";
+import {TiTick} from "react-icons/ti";
 import {BiSearch} from "react-icons/bi";
 import {MdDone} from "react-icons/md";
+
 import '../../../../style/registerPage.css';
 import '../../../../style/paymentPage.css';
 import '../../../../style/searchAccount.css';
@@ -50,12 +52,13 @@ class RequestPage extends Component {
         addButtonDisabled: false,
 
         selectedType: null,
+
         tempFields: {
             topic: '',
             type: null,
             name: '',
             reason: '',
-            accepted: false, // default
+            checked: false, // default
         },
 
         Validations: {
@@ -64,30 +67,16 @@ class RequestPage extends Component {
             name_requireReg: '',
         },
 
-        requests : [
-            {
-                topic: 'test',
-                type: 'test',
-                name: 'test',
-                reason: 'test',
-                accepted: 'null', // default
-                // ifFalseTopic: 'ifFalseTopic',
-                // ifFalseReason: 'ifFalseReason',
-                // ifFalseType: 'ifFalseType'
-            },
-            {
-                topic: 'test',
-                type: 'test',
-                name: 'test',
-                reason: 'test',
-                accepted: 'true', // default
-                // ifFalseTopic: 'ifFalseTopic',
-                // ifFalseReason: 'ifFalseReason',
-                // ifFalseType: 'ifFalseType'
-            }
-        ],
+        requests : [],
     }
+    async componentDidMount() {
+        // const response1 = await fetch('http://localhost:8089/api/v1/category/search?type=Request').then((response) => response.json())
+        //     .then((data) => this.setState({ choices: data }));
 
+        const response2 = await fetch('http://localhost:8089/api/v1/request').then((response) => response.json())
+            .then((data) => this.setState({ requests: data }));
+
+    }
     render() {
         return (
             <>
@@ -97,7 +86,6 @@ class RequestPage extends Component {
                         <i className="bi bi-caret-left-fill"/>
                     </Link>
                 </div>
-
                 <div>
                     <h4>
                         درخواست (مدیریت)
@@ -113,7 +101,7 @@ class RequestPage extends Component {
                         resetTypeOfTempFields['name'] = '';
                         resetTypeOfTempFields['reason'] = '';
                         resetTypeOfTempFields['topic'] = '';
-                        resetTypeOfTempFields['accepted'] = null;
+                        resetTypeOfTempFields['checked'] = null;
 
                         let resetValidations = {...this.state.Validations};
                         resetValidations['selectedTypeBoolean'] = true;
@@ -162,7 +150,7 @@ class RequestPage extends Component {
                                     {/*</div>*/}
 
                                     <div className={'d-flex flex-row justify-content-between align-items-center'}>
-                                        <div className="d-flex flex-column">
+                                        <div className="d-flex flex-column row">
                                             <div className={'col mb-2'}>
                                                 <label> عنوان :</label>
                                                 {request.topic}
@@ -181,13 +169,19 @@ class RequestPage extends Component {
                                                     {request.reason}
                                                 </div>
                                             </div>
+                                            <div className={'col mb-2'}>
+                                                <div>
+                                                    <label>  توضيحات :</label>
+                                                    {request.description}
+                                                </div>
+                                            </div>
                                         </div>
                                         <div className={'d-flex flex-row align-items-baseline'}>
                                             <label className={'ms-2'}> وضعیت :</label>
 
                                             {
-                                                request.accepted !== 'null'
-                                                    ? (request.accepted === 'true'
+                                                request.checked !== 'null'
+                                                    ? (request.checked === 'true'
                                                     ? <Button
                                                         variant="success"
                                                         className={'btn-done'}
@@ -253,19 +247,18 @@ class RequestPage extends Component {
 
                                                 <Modal.Body className="justify-content-center">
                                                     <FormControl>
-
                                                         <RadioGroup
                                                             row
                                                             aria-labelledby="demo-row-radio-buttons-group-label"
                                                             name="row-radio-buttons-group"
-                                                            value={this.state.tmpRequest.accepted}
+                                                            value={this.state.tmpRequest.checked}
                                                             // onClick={() => console.log(request.accepted)}
                                                             onChange={(value) => {
                                                                 let updatedRequests = [...this.state.requests];
 
                                                                 for (const updatedRequestsKey of updatedRequests) {
                                                                     if (updatedRequestsKey === this.state.tmpRequest) {
-                                                                        updatedRequestsKey.accepted = value.target.value;
+                                                                        updatedRequestsKey.check = value.target.value;
                                                                         break;
                                                                     }
                                                                 }
@@ -286,7 +279,7 @@ class RequestPage extends Component {
                                                     </FormControl>
 
 
-                                                    <div style={{display: this.state.tmpRequest.accepted !== 'false' ? 'none' : 'block'}}>
+                                                    <div style={{display: this.state.tmpRequest.checked !== 'false' ? 'none' : 'block'}}>
                                                         <div className={'input-group-register'}>
                                                             <input
                                                                 className={'input form-control'}
@@ -406,8 +399,8 @@ class RequestPage extends Component {
                             <div className={'col-6'}>
                                 <Accordion defaultActiveKey="0"
                                            style={{backgroundColor: this.state.Validations.selectedTypeBoolean ? '' : 'rgba(255, 0, 0, 0.4)', marginTop: '-10px'}}
-                                           className={'col'}
-                                >
+                                           className={'col'}>
+
                                     <Accordion.Item eventKey="0">
                                         <Accordion.Header>
                                             {this.state.tempFields.type}&nbsp;
@@ -523,7 +516,6 @@ class RequestPage extends Component {
                                             className="text-danger">این فیلد الزامی است!</small>
                                         : <div/>
                                 }
-
                             </div>
 
                             <div className="input-group-register col-12">
@@ -544,9 +536,6 @@ class RequestPage extends Component {
                             if (this.handleSubmitType(event)) {
                                 this.handleCloseType()
                             }
-
-                            // console.log(this.state.tempFields)
-
                         }}>ثبت
                         </button>
                         <button className="btn btn-light" onClick={() => {
@@ -600,7 +589,7 @@ class RequestPage extends Component {
                 type: this.state.tempFields.type,
                 name: this.state.tempFields.name,
                 reason: this.state.tempFields.reason,
-                accepted: 'null', // null, false, true
+                checked: 'null', // null, false, true
                 ifFalseTopic: '',
                 ifFalseReason: '',
                 ifFalseType: ''

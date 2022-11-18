@@ -264,9 +264,6 @@ class callHistory extends Component {
             description: this.state.description
         }
 
-
-
-
         const rawResponse = await fetch('http://localhost:8089/api/v1/telephoneHistory', {
             method: 'POST',
             headers: {
