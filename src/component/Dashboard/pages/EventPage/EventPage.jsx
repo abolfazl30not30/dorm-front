@@ -1,13 +1,13 @@
 import {Component} from "react";
 // import { DatePicker } from "jalali-react-datepicker";
-import { Calendar } from "react-multi-date-picker";
+import {Calendar} from "react-multi-date-picker";
 import DatePickerHeader from "react-multi-date-picker/plugins/date_picker_header";
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
 import '../../../../style/EventPageStyle.css';
 import {Modal} from "react-bootstrap";
 
-class EventPage extends Component{
+class EventPage extends Component {
 
     state = {
         year: 'default', // number format
@@ -21,8 +21,7 @@ class EventPage extends Component{
         dayOfYear: 'default',
 
         isHoliday: '',
-        holidaysOfMonth: [
-        ],
+        holidaysOfMonth: [],
 
         eventsFromAPI: [
             // {
@@ -46,7 +45,7 @@ class EventPage extends Component{
             //     description: '',
             // },
         ],
-        customEvents : [
+        customEvents: [
             // {
             //     year: 1401,
             //     dayOfYear: 197,
@@ -69,6 +68,7 @@ class EventPage extends Component{
             // },
         ]
     }
+
     render() {
         return (
             <>
@@ -79,14 +79,14 @@ class EventPage extends Component{
                                 value={this.state.value}
                                 onChange={(value) => this.handleCalendarVar(value)}
 
-                                mapDays={({ date }) => {
+                                mapDays={({date}) => {
                                     this.handleHolidaysFromAPI(date.year, date.month.number, date.day, date);
                                     let props = {}
 
                                     let isWeekend = [6].includes(date.weekDay.index);
 
                                     for (let i = 0; i < this.state.customEvents.length; i++) {
-                                        if (this.state.customEvents[i].year === date.year && this.state.customEvents[i].dayOfYear === date.dayOfYear){
+                                        if (this.state.customEvents[i].year === date.year && this.state.customEvents[i].dayOfYear === date.dayOfYear) {
                                             // props.className = "highlight highlight-green";
                                             props.className += " border border-success border-1";
                                         }
@@ -109,7 +109,7 @@ class EventPage extends Component{
                                 }}
 
                                 plugins={[
-                                    <DatePickerHeader position="left" />
+                                    <DatePickerHeader position="left"/>
                                 ]}
 
                                 weekDays={
@@ -170,7 +170,8 @@ class EventPage extends Component{
                                 <ul className="p-2">
                                     {
                                         this.state.eventsFromAPI.map((event, key) => (
-                                            <li key={key} className={'p-1'} style={{fontSize:"10px"}}>{event.description}</li>
+                                            <li key={key} className={'p-1'}
+                                                style={{fontSize: "10px"}}>{event.description}</li>
                                         ))
                                     }
                                 </ul>
@@ -178,7 +179,12 @@ class EventPage extends Component{
                         </div>
                     </div>
                     <div className={'d-flex row col-5'}>
-                        <div style={{backgroundColor: "#fff", textAlign: 'center',boxShadow:'0 0 5px #8798ad',borderRadius:"10px"}}>
+                        <div style={{
+                            backgroundColor: "#fff",
+                            textAlign: 'center',
+                            boxShadow: '0 0 5px #8798ad',
+                            borderRadius: "10px"
+                        }}>
                             <button className={'btn btn-success m-4'}
                                     onClick={() => {
                                         this.handleOpenType();
@@ -193,7 +199,8 @@ class EventPage extends Component{
                                 {
                                     this.state.customEvents.map((event, key) => {
                                         return (event.dayOfYear === this.state.dayOfYear) && (event.year === this.state.year) ?
-                                            <li className={'p-3 list-group-item'} key={key} style={{width: '50%'}}>{event.description}</li> :
+                                            <li className={'p-3 list-group-item'} key={key}
+                                                style={{width: '50%'}}>{event.description}</li> :
                                             null
                                     })
                                 }
@@ -265,7 +272,7 @@ class EventPage extends Component{
         this.setState({month: value.month.number})
         this.setState({day: value.day});
 
-        this.handleAPI(value.year, value.month.number,value.day, value);
+        this.handleAPI(value.year, value.month.number, value.day, value);
 
         // console.log(this.state)
 
@@ -295,9 +302,9 @@ class EventPage extends Component{
                 if (data.is_holiday) {
                     let updatedHolidaysOfMonth = [...this.state.holidaysOfMonth];
                     let t = {
-                        day : day,
+                        day: day,
                         month: month,
-                        year : year
+                        year: year
                     }
 
                     let dateExist = false;
@@ -308,7 +315,7 @@ class EventPage extends Component{
                         }
                     }
 
-                    if (!dateExist){
+                    if (!dateExist) {
                         updatedHolidaysOfMonth.push(t)
                         this.setState({holidaysOfMonth: updatedHolidaysOfMonth})
                     }

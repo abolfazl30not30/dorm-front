@@ -13,9 +13,11 @@
 .inventory .btn-add {
     background-color: #2ecc71;
     border-radius: 8px;
+    color: #000;
 }
 .inventory .btn-add:hover {
     background-color: #27ae60 !important;
+    color: #fff;
 }
 .table-box {
     overflow-x: auto;
@@ -38,10 +40,10 @@
 }
 .table th {
     font-weight: 600;
-    font-size: 13px;
+    font-size: .85rem;
 }
 .table td {
-    font-size: 14px;
+    font-size: .8rem;
 }
 .btn-record-inventory {
     background-color: #db9b31 !important;

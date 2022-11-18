@@ -162,7 +162,7 @@ class PresenceAbsenceRoomPerson extends Component {
                     </Link>
                 </div>
                 <div className="presence-absence">
-                    <div className="title-page">حضور و غیاب</div>
+                    <div className="title-page">نوبت نظافت شبانه</div>
                     <div className="title-page" style={{fontSize:'14px'}}><i className="bi bi-building ms-2"></i>واحد {this.context.unitNumberPA}</div>
                     {
                         this.state.isLoading ? (

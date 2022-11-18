@@ -61,6 +61,7 @@
     --bs-btn-hover-color: #3f4254;
     --bs-btn-hover-bg: #b5b5c3;
     min-height: 24px;
+    min-width: 5.5rem;
 }
 .switch-group .btn-success ,
 .switch.btn.btn-success
@@ -71,6 +72,7 @@
     --bs-btn-hover-color: #fff;
     --bs-btn-hover-bg: #19b674;
     min-height: 24px;
+    min-width: 5.5rem;
 }
 .switch.btn {
     margin-right: 8px;

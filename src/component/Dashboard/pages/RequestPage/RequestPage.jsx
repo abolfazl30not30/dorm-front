@@ -76,100 +76,97 @@ class RequestPage extends Component {
     render() {
         return (
             <>
-                <div className="back-btn">
-                    <Link to="/">
-                        بازگشت
-                        <i className="bi bi-caret-left-fill"/>
-                    </Link>
-                </div>
-
-                <div>
-                    <h4>
-                        درخواست
-                    </h4>
-                </div>
-
-                <div className={'d-flex'} style={{justifyContent: 'center'}}>
-                    <button className={'btn-done'} onClick={() => {
-                        this.handleOpenType();
-
-                        let resetTypeOfTempFields = {...this.state.tempFields};
-                        resetTypeOfTempFields['type'] = null;
-                        resetTypeOfTempFields['name'] = '';
-                        resetTypeOfTempFields['reason'] = '';
-                        resetTypeOfTempFields['topic'] = '';
-                        resetTypeOfTempFields['checked'] = null;
-
-                        let resetValidations = {...this.state.Validations};
-                        resetValidations['selectedTypeBoolean'] = true;
-                        resetValidations['topic_requireReg'] = '';
-                        resetValidations['name_requireReg'] = '';
-
-                        this.setState({tempFields : resetTypeOfTempFields})
-                        this.setState({Validations : resetValidations})
-                    }}>
-                        <MdDone className='ms-1' />ثبت درخواست
-                    </button>
-                </div>
-
-                <div className="row align-items-center ">
-                    <div className="col-md-1 col-sm-2 px-0"><label>براساس:</label></div>
-                    <div className="col-md-3 col-sm-6 px-0" style={{paddingLeft: "0"}}>
-                        <Form.Select aria-label="Default select example"
-                                     style={{height:"50px",fontSize:"14px"}}
-                                     value={this.state.searchBase}
-                                     onChange={(value) => this.setState({searchBase : value.target.value})}>
-                            <option value="name">نام درخواست کننده</option>
-                            <option value="type">نوع</option>
-                            <option value="topic">عنوان</option>
-                        </Form.Select>
+                <div className="px-4">
+                    <div className="back-btn">
+                        <Link to="/">
+                            بازگشت
+                            <i className="bi bi-caret-left-fill"/>
+                        </Link>
                     </div>
-                    <div className="input-group-register col-md-7 col-sm-11 px-0 d-flex" style={{paddingRight: "0"}}>
-                        <input type="text"
-                               id="inputSearch"
-                               className="input"
-                               placeholder="جسـتوجـو"
-                               style={{padding:"6px"}}
-                               onChange={(value) => this.setState({searchContent : value.target.value})}/>
-                        <button className="btn outline-secondary"><BiSearch fontSize="25px" onClick={this.handleSearchBtn}/>
+                    <div>
+                        <h4>
+                            درخواست
+                        </h4>
+                    </div>
+                    <div className={'d-flex'} style={{justifyContent: 'center'}}>
+                        <button className={'btn-done'} onClick={() => {
+                            this.handleOpenType();
+
+                            let resetTypeOfTempFields = {...this.state.tempFields};
+                            resetTypeOfTempFields['type'] = null;
+                            resetTypeOfTempFields['name'] = '';
+                            resetTypeOfTempFields['reason'] = '';
+                            resetTypeOfTempFields['topic'] = '';
+                            resetTypeOfTempFields['checked'] = null;
+
+                            let resetValidations = {...this.state.Validations};
+                            resetValidations['selectedTypeBoolean'] = true;
+                            resetValidations['topic_requireReg'] = '';
+                            resetValidations['name_requireReg'] = '';
+
+                            this.setState({tempFields : resetTypeOfTempFields})
+                            this.setState({Validations : resetValidations})
+                        }}>
+                            <MdDone className='ms-1' />ثبت درخواست
                         </button>
                     </div>
-                </div>
-
-                <div className={'row'}>
-                    {
-                        this.state.requests.map(request => (
-                            <>
-                                <div className={'account-found mb-3 shadow d-flex row'} style={{height: '200px'}}>
-                                    {/*<div className={'d-flex justify-content-left col-1'} style={{backgroundColor: 'rgb(247, 247, 247)'}}>*/}
-                                    {/*    <button><AiFillCloseCircle color="#F1416C" /></button>*/}
-                                    {/*</div>*/}
-                                    <div className={'row'}>
-                                        <div className={'col'}>
-                                            <label> عنوان :</label>
-                                            {request.name}
-                                        </div>
-                                        <div className={'col'}>
-                                            <label> نوع :</label>
-                                            {request.type}
-                                        </div>
-                                        <div className={'row mt-4'}>
+                    <div className="row align-items-center ">
+                        <div className="col-md-1 col-sm-2 px-0"><label>براساس:</label></div>
+                        <div className="col-md-3 col-sm-6 px-0" style={{paddingLeft: "0"}}>
+                            <Form.Select aria-label="Default select example"
+                                         style={{height:"50px",fontSize:"14px"}}
+                                         value={this.state.searchBase}
+                                         onChange={(value) => this.setState({searchBase : value.target.value})}>
+                                <option value="name">نام درخواست کننده</option>
+                                <option value="type">نوع</option>
+                                <option value="topic">عنوان</option>
+                            </Form.Select>
+                        </div>
+                        <div className="input-group-register col-md-7 col-sm-11 px-0 d-flex" style={{paddingRight: "0"}}>
+                            <input type="text"
+                                   id="inputSearch"
+                                   className="input"
+                                   placeholder="جسـتوجـو"
+                                   style={{padding:"6px"}}
+                                   onChange={(value) => this.setState({searchContent : value.target.value})}/>
+                            <button className="btn outline-secondary"><BiSearch fontSize="25px" onClick={this.handleSearchBtn}/>
+                            </button>
+                        </div>
+                    </div>
+                    <div className={'row'}>
+                        {
+                            this.state.requests.map(request => (
+                                <>
+                                    <div className={'account-found mb-3 shadow d-flex row'} style={{height: '200px'}}>
+                                        {/*<div className={'d-flex justify-content-left col-1'} style={{backgroundColor: 'rgb(247, 247, 247)'}}>*/}
+                                        {/*    <button><AiFillCloseCircle color="#F1416C" /></button>*/}
+                                        {/*</div>*/}
+                                        <div className={'row'}>
                                             <div className={'col'}>
-                                                <label> درخواست کننده :</label>
-                                                {request.assignee}
+                                                <label> عنوان :</label>
+                                                {request.name}
                                             </div>
-                                            <div className={'col row'}>
-                                                <label className={'col-4'}> وضعیت :</label>
-                                                {
-                                                    request.checked !== null
-                                                    ? (request.checked === true
-                                                        ? <Button disabled={true}
-                                                                  variant="success"
-                                                                  className={'col-8 btn-done'}
-                                                                  style={{width: '30%'}}>
-                                                            <MdDone className='ms-1' />قبول شده
+                                            <div className={'col'}>
+                                                <label> نوع :</label>
+                                                {request.type}
+                                            </div>
+                                            <div className={'row mt-4'}>
+                                                <div className={'col'}>
+                                                    <label> درخواست کننده :</label>
+                                                    {request.assignee}
+                                                </div>
+                                                <div className={'col row'}>
+                                                    <label className={'col-4'}> وضعیت :</label>
+                                                    {
+                                                        request.checked !== null
+                                                            ? (request.checked === true
+                                                            ? <Button disabled={true}
+                                                                      variant="success"
+                                                                      className={'col-8 btn-done'}
+                                                                      style={{width: '30%'}}>
+                                                                <MdDone className='ms-1' />قبول شده
                                                             </Button>
-                                                        : <>
+                                                            : <>
                                                                 <OverlayTrigger
                                                                     placement="bottom"
                                                                     delay={{ show: 250, hide: 400 }}
@@ -202,22 +199,23 @@ class RequestPage extends Component {
                                                                       className={'col-8'}
                                                                       style={{width: '30%'}}>
                                                                 تعیین نشده
-                                                             </Button>
-                                                }
+                                                            </Button>
+                                                    }
+                                                </div>
+                                            </div>
+                                            <div className={'col'}>
+                                                <div>
+                                                    <label>  دلیل :</label>
+                                                    {request.reason}
+                                                </div>
                                             </div>
                                         </div>
-                                        <div className={'col'}>
-                                            <div>
-                                                <label>  دلیل :</label>
-                                                {request.reason}
-                                            </div>
-                                        </div>
-                                    </div>
 
-                                </div>
-                            </>
-                        ))
-                    }
+                                    </div>
+                                </>
+                            ))
+                        }
+                    </div>
                 </div>
 
                 <Modal centered size="lg" show={this.state.showType} onHide={() => {

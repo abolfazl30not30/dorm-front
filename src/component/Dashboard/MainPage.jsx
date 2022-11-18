@@ -403,7 +403,7 @@ class MainPage extends Component {
     render() {
         return (
             <>
-                <div className='d-flex flex-column pt-4 px-5'>
+                <div className='d-flex flex-column pt-4 px-3'>
                     <BuildingContext.Provider value={{
                         personnelFields: this.state.fields.personnelFields,
                         personnelFieldsValidation: this.state.specificValidations.personnelFieldsValidation,
