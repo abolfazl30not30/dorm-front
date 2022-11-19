@@ -70,10 +70,10 @@ class RequestPage extends Component {
         requests : [],
     }
     async componentDidMount() {
-        // const response1 = await fetch('http://localhost:8089/api/v1/category/search?type=Request').then((response) => response.json())
+        // const response1 = await fetch('https://api.saadatportal.com/api/v1/category/search?type=Request').then((response) => response.json())
         //     .then((data) => this.setState({ choices: data }));
 
-        const response2 = await fetch('http://localhost:8089/api/v1/request').then((response) => response.json())
+        const response2 = await fetch('https://api.saadatportal.com/api/v1/request').then((response) => response.json())
             .then((data) => this.setState({ requests: data }));
 
     }

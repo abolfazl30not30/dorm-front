@@ -23,7 +23,7 @@ class SearchAccount extends Component {
         searchType:"fullName",
     }
     async componentDidMount() {
-        const response = await fetch('http://localhost:8089/api/v1/characteristic').then((response) => response.json())
+        const response = await fetch('https://api.saadatportal.com/api/v1/characteristic').then((response) => response.json())
             .then((data) => this.setState({accountFound : data}));
     }
     render() {
@@ -52,6 +52,7 @@ class SearchAccount extends Component {
                     {this.state.accountFound.map(accountFound => (
                         <>
                             <Link to="profile" className='account-found-link' onClick={()=>{this.context.handlePersonId(accountFound.parentId,accountFound.id)}}>
+
                                 <div className='account-found mb-3 d-flex flex-column flex-md-row'>
                                     {/*<FiUser size={80} style={{ marginLeft: '5%', marginTop: '1%' }} />*/}
                                     <img
@@ -110,7 +111,7 @@ class SearchAccount extends Component {
     }
 
     handleSearchBtn = async () =>{
-        const response = await fetch(`http://localhost:8089/api/v1/characteristic/search?${this.state.searchType}=${this.state.searchInput}`).then((response) => response.json())
+        const response = await fetch(`https://api.saadatportal.com/api/v1/characteristic/search?${this.state.searchType}=${this.state.searchInput}`).then((response) => response.json())
             .then((data) => this.setState({accountFound: data}));
     }
 }

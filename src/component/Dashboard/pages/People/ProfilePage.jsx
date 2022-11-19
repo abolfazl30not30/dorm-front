@@ -335,11 +335,9 @@ class ProfilePage extends Component {
 
     async componentDidMount () {
 
-        // const response = await fetch(`http://localhost:8089/api/v1/characteristic/${this.context.charId}`).then((response) => response.json())
+        // const response = await fetch(`https://api.saadatportal.com/api/v1/characteristic/${this.context.charId}`).then((response) => response.json())
         //     .then((data) => this.setState({people: data}));
 
-        const response1 = await fetch("https://persiancalapi.ir/jalali/1401/12/29").then((response) => response.json())
-            .then((data) => console.log(data));
 
     }
 

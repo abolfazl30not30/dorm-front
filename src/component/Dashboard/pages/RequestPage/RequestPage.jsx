@@ -66,10 +66,10 @@ class RequestPage extends Component {
     }
 
     async componentDidMount() {
-        // const response1 = await fetch('http://localhost:8089/api/v1/category/search?type=Request').then((response) => response.json())
+        // const response1 = await fetch('https://api.saadatportal.com/api/v1/category/search?type=Request').then((response) => response.json())
         //     .then((data) => this.setState({ choices: data }));
 
-        const response2 = await fetch('http://localhost:8089/api/v1/request').then((response) => response.json())
+        const response2 = await fetch('https://api.saadatportal.com/api/v1/request').then((response) => response.json())
             .then((data) => this.setState({ requests: data }));
 
     }
@@ -463,7 +463,7 @@ class RequestPage extends Component {
         let date2 = year+"/"+month+"/"+day+" "+"00:"+"00:"+"00";
 
         console.log(date2,this.state.tempFields.topic,this.state.tempFields.type,this.state.tempFields.reason,this.state.tempFields.name)
-        const rawResponse = await fetch('http://localhost:8089/api/v1/request', {
+        const rawResponse = await fetch('https://api.saadatportal.com/api/v1/request', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -473,7 +473,7 @@ class RequestPage extends Component {
             body: JSON.stringify({ dateOfRegistration: date2,name: this.state.tempFields.topic, type: this.state.tempFields.type, reason: this.state.tempFields.reason, checked:null, supervisorId:"6666666",description:this.state.tempFields.description,assignee:this.state.tempFields.name})
         });
 
-        const response2 = await fetch('http://localhost:8089/api/v1/request').then((response) => response.json())
+        const response2 = await fetch('https://api.saadatportal.com/api/v1/request').then((response) => response.json())
             .then((data) => this.setState({ requests: data }));
 
         const content = await rawResponse.json();

@@ -167,7 +167,7 @@ class RoomAndBed extends Component {
 
     async componentDidMount() {
         console.log(this.context.unitId)
-        const response = await fetch(`http://localhost:8089/api/v1/unit/room/${this.context.unitId}`).then((response) => response.json())
+        const response = await fetch(`https://api.saadatportal.com/api/v1/unit/room/${this.context.unitId}`).then((response) => response.json())
             .then((data) => this.setState({rooms: data, isLoading: false},()=>{
                 if (data.length == 0) {
                     this.setState({isFull: false})
@@ -176,7 +176,7 @@ class RoomAndBed extends Component {
                 }
             }));
 
-        const responseUnit = await fetch(`http://localhost:8089/api/v1/unit/${this.context.unitId}`).then((response) => response.json())
+        const responseUnit = await fetch(`https://api.saadatportal.com/api/v1/unit/${this.context.unitId}`).then((response) => response.json())
             .then((data) => this.setState({unit: data, isLoading: false}));
 
     }
@@ -216,7 +216,7 @@ class RoomAndBed extends Component {
         this.setState({searchInput:value});
     }
     handleSearchBtn = async () =>{
-        const response = await fetch(`http://localhost:8089/api/v1/characteristic/search?${this.state.searchType}=${this.state.searchInput}`).then((response) => response.json())
+        const response = await fetch(`https://api.saadatportal.com/api/v1/characteristic/search?${this.state.searchType}=${this.state.searchInput}`).then((response) => response.json())
             .then((data) => this.setState({peopleFound: data}));
     }
     render() {

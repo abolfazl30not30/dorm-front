@@ -87,10 +87,10 @@ class EditRoomAndBed extends Component {
     }
 
     async componentDidMount() {
-        const response = await fetch(`http://localhost:8089/api/v1/unit/room/${this.context.unitId}`).then((response) => response.json())
+        const response = await fetch(`https://api.saadatportal.com/api/v1/unit/room/${this.context.unitId}`).then((response) => response.json())
             .then((data) => this.setState({rooms: data}));
 
-        const responseUnit = await fetch(`http://localhost:8089/api/v1/unit/${this.context.unitId}`).then((response) => response.json())
+        const responseUnit = await fetch(`https://api.saadatportal.com/api/v1/unit/${this.context.unitId}`).then((response) => response.json())
             .then((data) => this.setState({unit: data}));
         console.log(this.state.rooms[0]);
     }
@@ -351,7 +351,7 @@ class EditRoomAndBed extends Component {
 //room
     addRoom = async () => {
         var count = Math.floor(Math.random() * 100) + 1;
-        const rawResponse = await fetch('http://localhost:8089/api/v1/room', {
+        const rawResponse = await fetch('https://api.saadatportal.com/api/v1/room', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -378,7 +378,7 @@ class EditRoomAndBed extends Component {
         const index = this.state.rooms.findIndex(({number}) => number === previousValue);
         const number = parseInt(value);
 
-        const rawResponse = await fetch(`http://localhost:8089/api/v1/room/${room.id}`, {
+        const rawResponse = await fetch(`https://api.saadatportal.com/api/v1/room/${room.id}`, {
             method: 'PATCH',
             headers: {
                 'Accept': 'application/json',
@@ -400,7 +400,7 @@ class EditRoomAndBed extends Component {
 
     deleteRoom = async (room) => {
         console.log(room.id)
-        await fetch(`http://localhost:8089/api/v1/room/${room.id}`, {
+        await fetch(`https://api.saadatportal.com/api/v1/room/${room.id}`, {
             method: 'DELETE',
         })
             .then(res => res.text())
@@ -415,7 +415,7 @@ class EditRoomAndBed extends Component {
     //bed
     addBed = async (r) => {
 
-        const rawResponse = await fetch('http://localhost:8089/api/v1/bed', {
+        const rawResponse = await fetch('https://api.saadatportal.com/api/v1/bed', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -449,7 +449,7 @@ class EditRoomAndBed extends Component {
         const updatedState = [...this.state.rooms];
         const roomId = updatedState[indexOfRoom].id;
         const bedId = updatedState[indexOfRoom].beds[indexOfBed].id;
-        const rawResponse = await fetch(`http://localhost:8089/api/v1/bed/${bedId}`, {
+        const rawResponse = await fetch(`https://api.saadatportal.com/api/v1/bed/${bedId}`, {
             method: 'PATCH',
             headers: {
                 'Accept': 'application/json',
@@ -464,7 +464,7 @@ class EditRoomAndBed extends Component {
     }
 
     deleteBed = async (bed, index) => {
-        await fetch(`http://localhost:8089/api/v1/bed/${bed.id}`, {
+        await fetch(`https://api.saadatportal.com/api/v1/bed/${bed.id}`, {
             method: 'DELETE',
         })
             .then(res => res.text())
@@ -510,7 +510,7 @@ class EditRoomAndBed extends Component {
     }
 
     handleRoomAccClose = async () => {
-        const response = await fetch(`http://localhost:8089/api/v1/unit/room/${this.context.unitId}`).then((response) => response.json())
+        const response = await fetch(`https://api.saadatportal.com/api/v1/unit/room/${this.context.unitId}`).then((response) => response.json())
             .then((data) => this.setState({rooms: data}));
 
         this.setState({showَRoomAccessory: false})
@@ -531,7 +531,7 @@ class EditRoomAndBed extends Component {
         const index = this.state.rooms.indexOf(room);
         const assessories = this.state.rooms[index].accessories;
 
-        const rawResponse = await fetch(`http://localhost:8089/api/v1/room/${room.id}`, {
+        const rawResponse = await fetch(`https://api.saadatportal.com/api/v1/room/${room.id}`, {
             method: 'PATCH',
             headers: {
                 'Accept': 'application/json',
@@ -580,7 +580,7 @@ class EditRoomAndBed extends Component {
 
     handleSubmitUnitAcc = async ()=>{
         const assessories = this.state.unit.accessories;
-        const rawResponse = await fetch(`http://localhost:8089/api/v1/unit/${this.state.unit.id}`, {
+        const rawResponse = await fetch(`https://api.saadatportal.com/api/v1/unit/${this.state.unit.id}`, {
             method: 'PATCH',
             headers: {
                 'Accept': 'application/json',
@@ -591,7 +591,7 @@ class EditRoomAndBed extends Component {
         this.setState({showَUnitAccessory:false});
     }
     handleUnitAccClose = async () => {
-        const responseUnit = await fetch(`http://localhost:8089/api/v1/unit/${this.context.unitId}`).then((response) => response.json())
+        const responseUnit = await fetch(`https://api.saadatportal.com/api/v1/unit/${this.context.unitId}`).then((response) => response.json())
             .then((data) => this.setState({unit: data}));
         this.setState({showَUnitAccessory: false});
     }

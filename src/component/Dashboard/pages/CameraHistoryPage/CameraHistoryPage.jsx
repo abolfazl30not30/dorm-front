@@ -307,7 +307,7 @@ class CameraHistoryPage extends Component {
 
     handleSubmit = async () => {
 
-        const rawResponse = await fetch('http://localhost:8089/api/v1/cameraHistory', {
+        const rawResponse = await fetch('https://api.saadatportal.com/api/v1/cameraHistory', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -317,7 +317,7 @@ class CameraHistoryPage extends Component {
             body: JSON.stringify(this.state.tmpRequest)
         });
 
-        const response = await fetch('http://localhost:8089/api/v1/cameraHistory').then((response) => response.json())
+        const response = await fetch('https://api.saadatportal.com/api/v1/cameraHistory').then((response) => response.json())
             .then((data) => this.setState({data: data}));
         let tmpRequest = {
             title: '',
