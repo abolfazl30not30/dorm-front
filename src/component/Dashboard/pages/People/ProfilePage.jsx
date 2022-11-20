@@ -27,55 +27,11 @@ class ProfilePage extends Component {
     static contextType = BuildingContext;
 
     state = {
-        people: [
-            {
-                "id": "bf767aa7ebfd47e79183c99f82ac9c85",
-                "firstName": "Fazel",
-                "lastName": "Gheibi",
-                "nationalCode": "2500533395",
-                "certificateNumber": "12345",
-                "phoneNumber": "09170080635",
-                "address": "Fars, Lar",
-                "telephoneNumber": "52336889",
-                "fatherName": "Masoud",
-                "emergencyNumber": "09924664362",
-                "birthPlace": "Lar",
-                "birthDate": "2001-07-06T06:00:00Z",
-                "job": "student",
-                "education": "Bachelor's degree",
-                "postalCode": "74319-36864",
-                "email": "fazelgheibi2001@gmail.com",
-                "nationality": "Irainian",
-                "maritalStatus": "single",
-                "religion": "Muslims",
-                "subReligion": "shia",
-                "healthyStatus": "good",
-                "health": true,
-                "alias": "FAZ",
-                "reservationDate": null,
-                "university": null,
-                "studentNumber": null,
-                "major": null,
-                "spouseFullName": null,
-                "spouseFatherName": null,
-                "spouseJob": null,
-                "fatherJob": null,
-                "parentAddress": null,
-                "homeNumber": null,
-                "motherPhoneNumber": null,
-                "fatherPhoneNumber": null,
-                "bankName": null,
-                "cardNumber": null,
-                "bankAccountNumber": null,
-                "bankAccountOwnerName": null,
-                "bankAccountShabaNumber": null,
-                "bankAccountExpirationDate": null,
-                "cvv2": null,
-                "placeOfIssue": null
-            },
-        ],
+        person:{},
         show: false,
         reportType: 'cleaning',
+        personObject:{},
+        uploadedDoc:{},
         report: [
             {
                 "title": "cleaning",
@@ -335,10 +291,11 @@ class ProfilePage extends Component {
 
     async componentDidMount () {
 
-        // const response = await fetch(`https://api.saadatportal.com/api/v1/characteristic/${this.context.charId}`).then((response) => response.json())
-        //     .then((data) => this.setState({people: data}));
+        const response = await fetch(`https://api.saadatportal.com/api/v1/characteristic/${this.context.charId}`).then((response) => response.json())
+            .then((data) => this.setState({person: data}));
 
-
+        const response2 = await fetch(`https://api.saadatportal.com/api/v1/person/${this.context.personId}`).then((response) => response.json())
+            .then((data) => this.setState({personObject: data}));
     }
 
     render() {
@@ -350,39 +307,37 @@ class ProfilePage extends Component {
                             <img
                                 src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBnUckFxDVe5FOT5vuVfWCvWWY1pUrOPBOFPu9CNZYpABJSYPCigxy9rEc32E6mBamw3c&usqp=CAU"
                                 alt="profile"/>
-                            {this.state.people.map(p => (
                                 <div className='information d-flex flex-md-row flex-column'>
                                     <div className='ms-5'>
                                         <div className='col p-2'>
                                             <AiOutlineUser className='ms-2'/>
                                             <label> نام :</label>
-                                            {p.firstName}
+                                            {this.state.person.firstName}
                                         </div>
                                         <div className='col p-2'>
                                             <AiOutlineUser className='ms-2'/>
                                             <label> نام خانوادگی :</label>
-                                            {p.lastName}
+                                            {this.state.person.lastName}
                                         </div>
                                         <div className='col p-2'>
                                             <AiOutlineBarcode className='ms-2'/>
                                             <label> کد ملی :</label>
-                                            {p.nationalCode}
+                                            {this.state.person.nationalCode}
                                         </div>
                                     </div>
                                     <div>
                                         <div className='col p-2'>
                                             <BsTelephone className='ms-2'/>
                                             <label> شماره تلفن :</label>
-                                            {p.phoneNumber}
+                                            {this.state.person.phoneNumber}
                                         </div>
                                         <div className='col p-2'>
                                             <HiOutlineMailOpen className='ms-2'/>
                                             <label> ایمیل :</label>
-                                            {p.email}
+                                            {this.state.person.email}
                                         </div>
                                     </div>
                                 </div>
-                            ))}
                         </div>
                     </div>
                     <div className='tab-container'>
@@ -391,7 +346,7 @@ class ProfilePage extends Component {
                             id="uncontrolled-tab-example"
                             className="mb-3"
                         >
-                            <Tab eventKey="records" title="سوابق">
+                            <Tab eventKey="records" title="سوابق" style={{backgroundColor:"transparent"}}>
                                 <button className='btn-add-report' onClick={() => {
                                     this.handleShow()
                                 }}>ثبت گزارش
@@ -596,11 +551,11 @@ class ProfilePage extends Component {
                                                 {
                                                     this.state.report.map((p,i) => (
 
-                                                        p.title === 'penalty' ? (
+                                                        this.state.person.title === 'penalty' ? (
                                                             <tr>
                                                                 {/*<td>{i+1}</td>*/}
-                                                                <td>{p.description}</td>
-                                                                <td>{p.typePenalty}</td>
+                                                                <td>{this.state.person.description}</td>
+                                                                <td>{this.state.person.typePenalty}</td>
                                                                 <td>
                                                                     <OverlayTrigger
                                                                         placement="bottom"
@@ -726,9 +681,7 @@ class ProfilePage extends Component {
                                     </Accordion.Item>
                                 </Accordion>
                             </Tab>
-                            <Tab eventKey="documents" title="مدارک" className='records'>
-
-
+                            <Tab eventKey="documents" title="مدارک" className='records' style={{backgroundColor:"transparent"}}>
                                 <Accordion defaultActiveKey="0">
                                     <Accordion.Item eventKey="0">
                                         <Accordion.Header>شناسنامه</Accordion.Header>
@@ -883,99 +836,98 @@ class ProfilePage extends Component {
                                 <img className='test' src={png_icon}/>
                                 <img className='test' src={png_icon}/>*/}
                             </Tab>
-                            <Tab eventKey="more-information" title="اطلاعات بیشتر">
-                                {this.state.people.map(p => (
+                            <Tab eventKey="more-information" title="اطلاعات بیشتر" style={{backgroundColor:"transparent"}}>
                                     <div className='information d-flex flex-row flex-wrap'>
                                         <p className='col-12 col-md-4'>
                                             <label> نام :</label>
-                                            {p.firstName}
+                                            {this.state.person.firstName}
                                         </p>
                                         <p className='col-12 col-md-4'>
                                             <label> نام خانوادگی :</label>
-                                            {p.lastName}
+                                            {this.state.person.lastName}
                                         </p>
                                         <p className='col-12 col-md-4'>
                                             <label> کد ملی :</label>
-                                            {p.nationalCode}
+                                            {this.state.person.nationalCode}
                                         </p>
                                         <p className='col-12 col-md-4'>
                                             <label> شماره گواهی :</label>
-                                            {p.certificateNumber}
+                                            {this.state.person.certificateNumber}
                                         </p>
                                         <p className='col-12 col-md-4'>
                                             <label> شماره تماس :</label>
-                                            {p.phoneNumber}
+                                            {this.state.person.phoneNumber}
                                         </p>
                                         <p className='col-12 col-md-4'>
                                             <label> آدرس :</label>
-                                            {p.address}
+                                            {this.state.person.address}
                                         </p>
                                         <p className='col-12 col-md-4'>
                                             <label> شماره تلفن :</label>
-                                            {p.telephoneNumber}
+                                            {this.state.person.telephoneNumber}
                                         </p>
                                         <p className='col-12 col-md-4'>
                                             <label> نام پدر :</label>
-                                            {p.fatherName}
+                                            {this.state.person.fatherName}
                                         </p>
                                         <p className='col-12 col-md-4'>
                                             <label> شماره تلفن اضطراری :</label>
-                                            {p.emergencyNumber}
+                                            {this.state.person.emergencyNumber}
                                         </p>
                                         <p className='col-12 col-md-4'>
                                             <label> محل تولد :</label>
-                                            {p.birthPlace}
+                                            {this.state.person.placeOfIssue}
                                         </p>
                                         <p className='col-12 col-md-4'>
                                             <label> تاریخ تولد :</label>
-                                            {p.birthDate}
+                                            {this.state.person.birthDate}
                                         </p>
                                         <p className='col-12 col-md-4'>
                                             <label> شغل :</label>
-                                            {p.job}
+                                            {this.state.person.job}
                                         </p>
                                         <p className='col-12 col-md-4'>
                                             <label> تحصیلات :</label>
-                                            {p.education}
+                                            {this.state.person.education}
                                         </p>
                                         <p className='col-12 col-md-4'>
                                             <label> کد پستی :</label>
-                                            {p.postalCode}
+                                            {this.state.person.postalCode}
                                         </p>
                                         <p className='col-12 col-md-4'>
                                             <label> ایمیل :</label>
-                                            {p.email}
+                                            {this.state.person.email}
                                         </p>
                                         <p className='col-12 col-md-4'>
                                             <label>  ملیت :</label>
-                                            {p.nationality}
+                                            {this.state.person.nationality}
                                         </p>
                                         <p className='col-12 col-md-4'>
                                             <label> وضعیت تاهل :</label>
-                                            {p.maritalStatus}
+                                            {this.state.person.maritalStatus}
                                         </p>
                                         <p className='col-12 col-md-4'>
                                             <label> دین :</label>
-                                            {p.religion}
+                                            {this.state.person.religion}
                                         </p>
                                         <p className='col-12 col-md-4'>
                                             <label> مذهب :</label>
-                                            {p.subReligion}
+                                            {this.state.person.subReligion}
                                         </p>
                                         <p className='col-12 col-md-4'>
                                             <label> وضعیت سلامتی :</label>
-                                            {p.healthyStatus}
+                                            {this.state.person.healthyStatus}
                                         </p>
                                         <p className='col-12 col-md-4'>
                                             <label> نام مستعار :</label>
-                                            {p.alias}
+                                            {this.state.person.alias}
                                         </p>
                                     </div>
-                                ))}
                             </Tab>
                         </Tabs>
                     </div>
                 </div>
+
                 <Modal className='report-modal' centered show={this.state.show}>
                     <Modal.Header>
                         <Modal.Title><span>ثبت گزارش</span></Modal.Title>
@@ -1194,15 +1146,16 @@ class ProfilePage extends Component {
                         'date': date,
                         'description': description
                     }
-
                     const newReports = this.state.report.concat(result);
                     this.setState({report: newReports});
                     this.setState({show: false});
+
                 })();
             case 'delayInArrival':
                 return (() => {
                     const date = this.date.current.value;
                     const time = this.time.current.value;
+
                     const result = {
                         'title': this.state.reportType,
                         'date': date,
