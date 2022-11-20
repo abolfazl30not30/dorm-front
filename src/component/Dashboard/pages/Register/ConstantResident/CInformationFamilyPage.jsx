@@ -17,7 +17,7 @@ class CInformationFamilyPage extends Component {
                     <h2>مشخصات بستگان</h2>
                     <div className='d-flex flex-wrap justify-content-start'>
                         <div className='col-12 pe-3 mb-3'>شخص اول</div>
-                        <div className="input-group-register col-3">
+                        <div className="input-group-register col-md-4 col-12">
                             <SimpleTextInput
                                 condition1={this.context.constantInformationFamilyValidation.firstPersonFullName_requiredReg}
                                 value={this.context.constantInformationFamily.firstPersonFullName}
@@ -27,7 +27,7 @@ class CInformationFamilyPage extends Component {
                                 label={'نام و نام خانوادگی'}
                             />
                         </div>
-                        <div className="input-group-register col-3">
+                        <div className="input-group-register col-md-4 col-12">
                             <SimpleTextInput
                                 condition1={this.context.constantInformationFamilyValidation.firstPersonPhoneNumber_requiredReg}
                                 condition2={this.context.constantInformationFamilyValidation.firstPersonPhoneNumber_telephoneReg}
@@ -38,7 +38,7 @@ class CInformationFamilyPage extends Component {
                                 label={'شماره تماس'}
                             />
                         </div>
-                        <div className="input-group-register col-3">
+                        <div className="input-group-register col-md-4 col-12">
                             <SimpleTextInput
                                 value={this.context.constantInformationFamily.firstPersonFatherName}
                                 fieldNameString={'constantInformationFamily'}
@@ -46,7 +46,7 @@ class CInformationFamilyPage extends Component {
                                 label={'نام  پدر'}
                             />
                         </div>
-                        <div className="input-group-register col-3">
+                        <div className="input-group-register col-md-4 col-12">
                             <select className='input'
                                     value={this.context.constantInformationFamily.firstPersonRelationshipWithResident}
                                     onChange={(e) =>  this.context.handleFields(e.target.value, 'constantInformationFamily', 'firstPersonRelationshipWithResident')}
@@ -62,7 +62,7 @@ class CInformationFamilyPage extends Component {
                     </div>
                     <div className='d-flex flex-wrap justify-content-start mt-4'>
                         <div className='col-12 pe-3 mb-3'>شخص دوم</div>
-                        <div className="input-group-register col-3">
+                        <div className="input-group-register col-md-4 col-12">
                             <SimpleTextInput
                                 condition1={this.context.constantInformationFamilyValidation.secondPersonFullName_requiredReg}
                                 value={this.context.constantInformationFamily.secondPersonFullName}
@@ -72,7 +72,7 @@ class CInformationFamilyPage extends Component {
                                 label={'نام و نام خانوادگی'}
                             />
                         </div>
-                        <div className="input-group-register col-3">
+                        <div className="input-group-register col-md-4 col-12">
                             <SimpleTextInput
                                 condition1={this.context.constantInformationFamilyValidation.secondPersonPhoneNumber_requiredReg}
                                 condition2={this.context.constantInformationFamilyValidation.secondPersonPhoneNumber_telephoneReg}
@@ -83,7 +83,7 @@ class CInformationFamilyPage extends Component {
                                 label={'شماره تماس'}
                             />
                         </div>
-                        <div className="input-group-register col-3">
+                        <div className="input-group-register col-md-4 col-12">
                             <SimpleTextInput
                                 value={this.context.constantInformationFamily.secondPersonFatherName}
                                 fieldNameString={'constantInformationFamily'}
@@ -91,7 +91,7 @@ class CInformationFamilyPage extends Component {
                                 label={'نام  پدر'}
                             />
                         </div>
-                        <div className="input-group-register col-3">
+                        <div className="input-group-register col-md-4 col-12">
                             <select className='input'
                                     value={this.context.constantInformationFamily.secondPersonRelationshipWithResident}
                                     onChange={(e) =>  this.context.handleFields(e.target.value, 'constantInformationFamily', 'secondPersonRelationshipWithResident')}

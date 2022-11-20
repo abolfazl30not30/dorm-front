@@ -22,12 +22,11 @@
     font-weight: bold;
     color: #555;
 }
-
-
 .unitContainer .text P {
-    margin-top: 27px;
-    width: 80%;
+    margin-top: 2rem;
     color: #676767;
+    text-align: justify;
+    font-size: 1rem;
 }
 .unitContainer .edit-btn-container {
     display: flex;
@@ -74,7 +73,7 @@
 .unitContainer .unit-name .show-acc-btn{
     border: none;
     margin-top:12px;
-    font-size: 14px;
+    font-size: .8rem;
     color:#3498db ;
 }
 .unitContainer .unit-name .show-acc-btn:hover{
@@ -92,12 +91,12 @@
     margin-top: 10px;
     margin-bottom: 1rem;
     text-align: center;
-    font-size: 17px;
+    font-size: 1rem;
     font-weight: bold;
 }
 .room-box .show-acc-btn{
     border:none;
-    font-size: 12px;
+    font-size: .8rem;
     color:#3498db ;
 }
 .room-box .show-acc-btn:hover{
@@ -135,7 +134,7 @@
     color: #0e8c46;
 }
 .bed-box .title {
-    font-size: 14px;
+    font-size: .9rem;
     margin: 0;
     font-weight: normal;
     margin: 10px 0;
@@ -177,7 +176,7 @@ button.btn.btn-primary:hover {
     background-color: #f9f9f9;
     padding: 1rem;
     border-radius: 0.5rem;
-    font-size: 14px;
+    font-size: .8rem;
 }
 
 /* FullViewOfBed */
@@ -202,12 +201,12 @@ button.btn.btn-primary:hover {
 
 .profile-box .name {
     margin: 32px 0 16px 0;
-    font-size: 24px;
+    font-size: 1.4rem;
     color: #3F4254;
 }
 
 .profile-box .profile-item {
-    font-size: 14px;
+    font-size: .8rem;
     font-weight: 500;
     margin: 4px 0;
     color: #555760;

@@ -18,7 +18,7 @@ class FGInformationPage extends Component {
                     <h2>مهمان (بستگان درجه یک)</h2>
 
                     <div className='d-flex flex-wrap justify-content-start'>
-                        <div className="input-group-register col-4">
+                        <div className="input-group-register col-md-4 col-12">
                             <SimpleTextInput
                                 condition1={this.context.familyGuestInformationValidation.firstName_requiredReg}
                                 value={this.context.familyGuestInformation.firstName}
@@ -28,7 +28,7 @@ class FGInformationPage extends Component {
                                 label={'نام'}
                             />
                         </div>
-                        <div className="input-group-register col-4">
+                        <div className="input-group-register col-md-4 col-12">
                             <SimpleTextInput
                                 condition1={this.context.familyGuestInformationValidation.lastName_requiredReg}
                                 value={this.context.familyGuestInformation.lastName}
@@ -38,7 +38,7 @@ class FGInformationPage extends Component {
                                 label={'نام خانوادگی'}
                             />
                         </div>
-                        <div className="input-group-register col-4">
+                        <div className="input-group-register col-md-4 col-12">
                             <SimpleTextInput
                                 condition1={this.context.familyGuestInformationValidation.nationalCode_requiredReg}
                                 condition4={this.context.familyGuestInformationValidation.nationalCode_numberReg}
@@ -49,7 +49,7 @@ class FGInformationPage extends Component {
                                 label={'کد ملی'}
                             />
                         </div>
-                        <div className="input-group-register col-4">
+                        <div className="input-group-register col-md-4 col-12">
                             <SimpleTextInput
                                 condition1={this.context.familyGuestInformationValidation.certificateNumber_requiredReg}
                                 condition4={this.context.familyGuestInformationValidation.certificateNumber_numberReg}
@@ -60,7 +60,7 @@ class FGInformationPage extends Component {
                                 label={'شماره شناسنامه'}
                             />
                         </div>
-                        <div className="input-group-register col-4">
+                        <div className="input-group-register col-md-4 col-12">
                             <SimpleTextInput
                                 value={this.context.familyGuestInformation.placeOfIssue}
                                 fieldNameString={'familyGuestInformation'}
@@ -68,7 +68,7 @@ class FGInformationPage extends Component {
                                 label={'محل صدور'}
                             />
                         </div>
-                        <div className="input-group-register col-4">
+                        <div className="input-group-register col-md-4 col-12">
                             <DateInput value={this.context.valueOfDates.familyGuest.birthDate}
                                        fieldNameString={'familyGuestInformation'}
                                        valueFieldString={'familyGuest'}
@@ -77,7 +77,7 @@ class FGInformationPage extends Component {
                                        timeInclude={false}
                             />
                         </div>
-                        <div className="input-group-register col-4">
+                        <div className="input-group-register col-md-4 col-12">
                             <DateInput condition1={this.context.familyGuestInformationValidation.startDate_requiredReg}
                                        value={this.context.valueOfDates.familyGuest.startDate}
                                        valueFieldString={'familyGuest'}
@@ -89,8 +89,7 @@ class FGInformationPage extends Component {
                             />
 
                         </div>
-
-                        <div className="input-group-register col-4">
+                        <div className="input-group-register col-md-4 col-12">
                             <DateInput condition1={this.context.familyGuestInformationValidation.endDate_requiredReg}
                                        value={this.context.valueOfDates.familyGuest.endDate}
                                        valueFieldString={'familyGuest'}
@@ -102,7 +101,7 @@ class FGInformationPage extends Component {
                             />
 
                         </div>
-                        <div className="input-group-register col-4">
+                        <div className="input-group-register col-md-4 col-12">
                             <DateInput condition1={this.context.familyGuestInformationValidation.paymentDate_requiredReg}
                                        value={this.context.valueOfDates.familyGuest.paymentDate}
                                        valueFieldString={'familyGuest'}
@@ -113,7 +112,7 @@ class FGInformationPage extends Component {
                                        timeInclude={false}
                             />
                         </div>
-                        <div className="input-group-register col-4">
+                        <div className="input-group-register col-md-4 col-12">
                             <SimpleTextInput
                                 condition4={this.context.familyGuestInformationValidation.rentPaymentAmount_numberReg}
                                 value={this.context.familyGuestInformation.rentPaymentAmount}
@@ -122,7 +121,7 @@ class FGInformationPage extends Component {
                                 label={'مبلغ پرداخت اجاره'}
                             />
                         </div>
-                        <div className="input-group-register col-4">
+                        <div className="input-group-register col-md-4 col-12">
                             <SimpleTextInput
                                 condition4={this.context.familyGuestInformationValidation.depositPaymentAmount_numberReg}
                                 value={this.context.familyGuestInformation.depositPaymentAmount}
@@ -131,7 +130,7 @@ class FGInformationPage extends Component {
                                 label={'مبلغ پرداخت ودیعه'}
                             />
                         </div>
-                        <div className="input-group-register col-4">
+                        <div className="input-group-register col-md-4 col-12">
                             <SimpleTextInput
                                 condition4={this.context.familyGuestInformationValidation.discountPaymentAmount_numberReg}
                                 value={this.context.familyGuestInformation.discountPaymentAmount}
@@ -140,7 +139,7 @@ class FGInformationPage extends Component {
                                 label={'مبلغ پرداخت تخفیف'}
                             />
                         </div>
-                        <div className="input-group-register col-4">
+                        <div className="input-group-register col-md-4 col-12">
                             <select className='input'
                                     value={this.context.familyGuestInformation.relationshipWithResident}
                                     onChange={(e) => this.context.handleFields(e.target.value, 'familyGuestInformation', 'relationshipWithResident')}

@@ -2,8 +2,6 @@
     background-color: #f9f9f9;
 }
 
-.floorAndUnit {}
-
 .floorAndUnit .back-btn {
     display: flex;
     justify-content: end;
@@ -28,9 +26,9 @@
 
 
 .floorAndUnit .text P {
-    margin-top: 27px;
-    width: 80%;
+    margin-top: 2rem;
     color: #676767;
+    text-align: justify;
     font-size: 1rem;
 }
 
@@ -50,14 +48,11 @@
 
 .floorAndUnit .edit-btn-container .edit-btn {
     text-decoration: none;
-    color: #fff;
+    color: #000;
     background: #f1c40f;
     padding: .5rem 1rem;
     border-radius: .5rem;
 }
-
-
-
 .floorAndUnit .register-btn-container .register-btn {
     text-decoration: none;
     color: #000;
@@ -84,13 +79,13 @@
 
 .floorAndUnit .floor-container .floor .floor-name {
     text-align: center;
-    font-size: 17px;
+    font-size: 1rem;
     font-weight: bold;
     margin-top: 10px;
 }
 .floorAndUnit .floor-container .floor .show-acc-btn{
     border:none;
-    font-size: 12px;
+    font-size: .8rem;
     color:#3498db ;
 }
 .floorAndUnit .floor-container .floor .show-acc-btn:hover {
@@ -133,25 +128,5 @@
 .floorAndUnit .floor-container .floor .unit-container .unit .unit-name {
     color: inherit;
     margin-top: 9px;
-    font-size: 14px;
+    font-size: .9rem;
 }
-
-/* .floor {
-    background-color: #fff;
-    padding: 0.5rem;
-    border-radius: 0.5rem;
-}
-
-.floor .title {
-    font-size: 20px;
-    font-weight: 500;
-    text-align: center;
-}
-
-.floor .unit {
-    background-color: #f5f8fa;
-    margin: 0.5rem;
-    padding: 0.5rem;
-    border-radius: 0.5rem;
-    font-size: 14px;
-} */

@@ -7,18 +7,18 @@
     justify-content: center;
     width: 50%;
     height: 400px;
-    font-size: 18px;
-    padding-top:20px;
-    margin-top: 50px;
+    font-size: 1rem;
+    padding-top: 2rem;
+    margin-top: 3rem;
     direction: rtl;
     background-color: #fff;
-    border-radius: 15px;
+    border-radius: .5rem;
     box-shadow: 0 30px 50px 0 rgb(170 179 217 / 20%);
 }
 
 .typeofResident h5{
     font-weight: bold;
-    font-size: 22px;
+    font-size: 1.2rem;
 }
 .next-btn {
     text-decoration: none;
@@ -55,13 +55,13 @@
 
 .register-step-box h2 {
     font-weight: bold;
-    font-size: 22px;
+    font-size: 1.4rem;
     margin-bottom: 2rem;
 }
 
 .input-group-register{
     position: relative;
-    padding: 8px;
+    padding: .5rem;
 }
 .input{
     padding: 10px;
@@ -164,6 +164,12 @@ label.placeholder {
     border-radius: 50%;
     background: white;
 }
+._53Ji7 {
+     padding: 0 1rem;
+}
+._3uApM {
+    padding: 0 2rem 2rem 2rem;
+}
 @media (max-width: 768px) {
     .typeofResident {
         width: 100%;
@@ -171,7 +177,7 @@ label.placeholder {
     ._1hzhf {
         font-size: .8rem;
     }
-    .typeofResident h5 {
-        font-size: 1.4rem;
+    ._53Ji7 {
+        padding: 0;
     }
 }

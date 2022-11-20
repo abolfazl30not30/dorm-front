@@ -13,7 +13,7 @@ class AdditionalInformation extends Component{
                     <h2>مشخصات تکمیلی</h2>
                     <div className='d-flex flex-wrap justify-content-start'>
 
-                        <div className="input-group-register col-4">
+                        <div className="input-group-register col-md-4 col-12">
                             <SimpleTextInput
                                 value={this.context.personnelFields.university}
                                 fieldNameString={'personnelFields'}
@@ -21,7 +21,7 @@ class AdditionalInformation extends Component{
                                 label={'دانشگاه'}
                             />
                         </div>
-                        <div className="input-group-register col-4">
+                        <div className="input-group-register col-md-4 col-12">
                             <SimpleTextInput
                                 condition1={this.context.personnelFieldsValidation.major_requiredReg}
                                 value={this.context.personnelFields.major}
@@ -31,7 +31,7 @@ class AdditionalInformation extends Component{
                                 required={true}
                             />
                         </div>
-                        <div className="input-group-register col-4">
+                        <div className="input-group-register col-md-4 col-12">
                             <SimpleTextInput
                                 condition1={this.context.personnelFieldsValidation.spouseFullName_requiredReg}
                                 value={this.context.personnelFields.spouseFullName}
@@ -41,7 +41,7 @@ class AdditionalInformation extends Component{
                                 required={true}
                             />
                         </div>
-                        <div className="input-group-register col-4">
+                        <div className="input-group-register col-md-4 col-12">
                             <SimpleTextInput
                                 value={this.context.personnelFields.spouseJob}
                                 fieldNameString={'personnelFields'}
@@ -49,7 +49,7 @@ class AdditionalInformation extends Component{
                                 label={'شغل همسر'}
                             />
                         </div>
-                        <div className="input-group-register col-4">
+                        <div className="input-group-register col-md-4 col-12">
                             <SimpleTextInput
                                 condition1={this.context.personnelFieldsValidation.bankName_requiredReg}
                                 value={this.context.personnelFields.bankName}
@@ -59,7 +59,7 @@ class AdditionalInformation extends Component{
                                 required={true}
                             />
                         </div>
-                        <div className="input-group-register col-4">
+                        <div className="input-group-register col-md-4 col-12">
                             <SimpleTextInput
                                 condition1={this.context.personnelFieldsValidation.cardNumber_requiredReg}
                                 condition4={this.context.personnelFieldsValidation.cardNumber_numberReg}
@@ -71,7 +71,7 @@ class AdditionalInformation extends Component{
                                 required={true}
                             />
                         </div>
-                        <div className="input-group-register col-4">
+                        <div className="input-group-register col-md-4 col-12">
                             <SimpleTextInput
                                 condition1={this.context.personnelFieldsValidation.bankAccountNumber_requiredReg}
                                 condition4={this.context.personnelFieldsValidation.bankAccountNumber_numberReg}
@@ -82,7 +82,7 @@ class AdditionalInformation extends Component{
                                 required={true}
                             />
                         </div>
-                        <div className="input-group-register col-4">
+                        <div className="input-group-register col-md-4 col-12">
                             <SimpleTextInput
                                 condition1={this.context.personnelFieldsValidation.bankAccountOwnerName_requiredReg}
                                 value={this.context.personnelFields.bankAccountOwnerName}
@@ -92,7 +92,7 @@ class AdditionalInformation extends Component{
                                 required={true}
                             />
                         </div>
-                        <div className="input-group-register col-4">
+                        <div className="input-group-register col-md-4 col-12">
                             <SimpleTextInput
                                 condition1={this.context.personnelFieldsValidation.bankAccountShabaNumber_requiredReg}
                                 condition4={this.context.personnelFieldsValidation.bankAccountShabaNumber_numberReg}
@@ -103,7 +103,7 @@ class AdditionalInformation extends Component{
                                 required={true}
                             />
                         </div>
-                        <div className="input-group-register col-4">
+                        <div className="input-group-register col-md-4 col-12">
                             <DateInput
                                 condition1={this.context.personnelFieldsValidation.bankAccountExpirationDate_requiredReg}
                                 value={this.context.valueOfDates.personnel.bankAccountExpirationDate}
@@ -115,7 +115,7 @@ class AdditionalInformation extends Component{
                                 timeInclude={false}
                             />
                         </div>
-                        <div className="input-group-register col-4">
+                        <div className="input-group-register col-md-4 col-12">
                             <SimpleTextInput
                                 condition4={this.context.personnelFieldsValidation.cvv2_numberReg}
                                 value={this.context.personnelFields.cvv2}
@@ -125,7 +125,7 @@ class AdditionalInformation extends Component{
                                 maxLength={4}
                             />
                         </div>
-                        <div className="input-group-register col-4">
+                        <div className="input-group-register col-md-4 col-12">
                             <SimpleTextInput
                                 value={this.context.personnelFields.fullName}
                                 fieldNameString={'personnelFields'}
@@ -133,7 +133,7 @@ class AdditionalInformation extends Component{
                                 label={'نام و نام خانوادگی مالک کارت'}
                             />
                         </div>
-                        <div className="input-group-register col-4">
+                        <div className="input-group-register col-md-4 col-12">
                             <SimpleTextInput
                                 condition1={this.context.personnelFieldsValidation.parentType_requiredReg}
                                 value={this.context.personnelFields.parentType}

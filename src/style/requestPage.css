@@ -60,3 +60,17 @@
 .btn-unknown.disabled, .btn-unknown:disabled,.btn-unknown:disabled .btn {
     background-color: #E4E6EF;
 }
+.container {
+    display: block;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    box-shadow: none;
+    background: none;
+}
+.request-item {
+    font-size: .8rem;
+}
+.request-item label {
+    font-size: 1rem;
+}

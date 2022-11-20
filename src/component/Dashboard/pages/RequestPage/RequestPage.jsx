@@ -20,6 +20,10 @@ import "../../../../style/registerPage.css";
 import Form from "react-bootstrap/Form";
 import {BiSearch} from "react-icons/bi";
 import {MdDone} from "react-icons/md";
+import FormControl from "@mui/material/FormControl";
+import RadioGroup from "@mui/material/RadioGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Radio from "@mui/material/Radio";
 
 class RequestPage extends Component {
 
@@ -77,7 +81,7 @@ class RequestPage extends Component {
     render() {
         return (
             <>
-                <div className="px-4">
+                <div className="px-3 container">
                     <div className="back-btn">
                         <Link to="/">
                             بازگشت
@@ -111,7 +115,7 @@ class RequestPage extends Component {
                             <MdDone className='ms-1' />ثبت درخواست
                         </button>
                     </div>
-                    <div className="row align-items-center ">
+                    <div className="d-flex align-items-center mb-3">
                         <div className="col-md-1 col-sm-2 px-0"><label>براساس:</label></div>
                         <div className="col-md-3 col-sm-6 px-0" style={{paddingLeft: "0"}}>
                             <Form.Select aria-label="Default select example"
@@ -123,7 +127,7 @@ class RequestPage extends Component {
                                 <option value="topic">عنوان</option>
                             </Form.Select>
                         </div>
-                        <div className="input-group-register col-md-7 col-sm-11 px-0 d-flex" style={{paddingRight: "0"}}>
+                        <div className="col-md-7 col-sm-11 px-0 d-flex" style={{paddingRight: "0"}}>
                             <input type="text"
                                    id="inputSearch"
                                    className="input"
@@ -134,28 +138,106 @@ class RequestPage extends Component {
                             </button>
                         </div>
                     </div>
-                    <div className={'row'}>
+                    <div className={'row px-3'}>
                         {
                             this.state.requests.map(request => (
                                 <>
                                     <div className={'account-found mb-3 shadow d-flex row'} style={{height: '200px'}}>
-                                        {/*<div className={'d-flex justify-content-left col-1'} style={{backgroundColor: 'rgb(247, 247, 247)'}}>*/}
-                                        {/*    <button><AiFillCloseCircle color="#F1416C" /></button>*/}
-                                        {/*</div>*/}
-                                        <div className={'row'}>
-                                            <div className={'col'}>
-                                                <label> عنوان :</label>
-                                                {request.name}
-                                            </div>
-                                            <div className={'col'}>
-                                                <label> نوع :</label>
-                                                {request.type}
-                                            </div>
-                                            <div className={'row mt-4'}>
-                                                <div className={'col'}>
-                                                    <label> درخواست کننده :</label>
-                                                    {request.assignee}
+                                        <div className={'d-flex flex-row justify-content-between align-items-center request-item'}>
+                                            <div className="d-flex flex-column row">
+                                                <div className={'col mb-2'}>
+                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                    <label> عنوان :</label>
+                                                    {request.topic}
                                                 </div>
+                                                <div className={'col mb-2'}>
+                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                    <label> نوع :</label>
+                                                    {request.type}
+                                                </div>
+                                                <div className={'col mb-2'}>
+                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                    <label> درخواست کننده :</label>
+                                                    {request.name}
+                                                </div>
+                                                <div className={'col mb-2'}>
+                                                    <div>
+                                                        <i className="bi bi-caret-left ms-1"></i>
+                                                        <label>  دلیل :</label>
+                                                        {request.reason}
+                                                    </div>
+                                                </div>
+                                                <div className={'col mb-2'}>
+                                                    <div>
+                                                        <i className="bi bi-caret-left ms-1"></i>
+                                                        <label>  توضيحات :</label>
+                                                        {request.description}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className={'d-flex flex-row align-items-baseline'}>
+                                                <label className={'ms-2'}> وضعیت :</label>
+
+                                                {
+                                                    request.checked !== 'null'
+                                                        ? (request.checked === 'true'
+                                                        ? <Button
+                                                            variant="success"
+                                                            className={'btn-done'}
+                                                            onClick={() => {
+                                                                this.setState({showStatusModal: 'true'});
+                                                                this.setState({tmpRequest : request})
+                                                            }}
+                                                        >
+                                                            قبول شده
+                                                        </Button>
+                                                        : <>
+                                                            <OverlayTrigger
+                                                                placement="bottom"
+                                                                delay={{ show: 250, hide: 400 }}
+                                                                overlay={
+                                                                    <Tooltip>
+                                                                        <div>
+                                                                            <label>عنوان:</label>
+                                                                            <p>{request.ifFalseTopic}</p>
+                                                                        </div>
+
+                                                                        <div>
+                                                                            <label>دلیل:</label>
+                                                                            <p>{request.ifFalseReason}</p>
+                                                                        </div>
+
+                                                                        <div>
+                                                                            <label>نوع:</label>
+                                                                            <p>{request.ifFalseType}</p>
+                                                                        </div>
+                                                                    </Tooltip>
+                                                                }
+                                                            >
+                                                                <Button variant="danger"
+                                                                        className={'btn-reject'}
+                                                                        onClick={() => {
+                                                                            this.setState({showStatusModal: 'true'});
+                                                                            this.setState({tmpRequest : request})
+                                                                        }}
+                                                                >
+                                                                    رد شده
+                                                                </Button>
+                                                            </OverlayTrigger>
+                                                        </>)
+                                                        : <Button
+                                                            variant="secondary"
+                                                            className={'btn-unknown'}
+                                                            onClick={() => {
+                                                                this.setState({showStatusModal: 'true'});
+                                                                this.setState({tmpRequest : request})
+                                                            }}
+                                                        >
+                                                            تعیین نشده
+                                                        </Button>
+                                                }
+                                            </div>
+                                            {/*<div className={'row mt-4'}>
                                                 <div className={'col row'}>
                                                     <label className={'col-4'}> وضعیت :</label>
                                                     {
@@ -203,19 +285,7 @@ class RequestPage extends Component {
                                                             </Button>
                                                     }
                                                 </div>
-                                            </div>
-                                            <div className={'col'}>
-                                                <div>
-                                                    <label>  دلیل :</label>
-                                                    {request.reason}
-                                                </div>
-                                            </div>
-                                            <div className={'col'}>
-                                                <div>
-                                                    <label>  توضیحات :</label>
-                                                    {request.description}
-                                                </div>
-                                            </div>
+                                            </div>*/}
                                         </div>
                                     </div>
                                 </>

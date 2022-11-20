@@ -12,7 +12,7 @@ class OGInformationFurtherPage extends Component {
                 <div className="register-step-box">
                     <h2>مشخصات تکمیلی</h2>
                     <div className='d-flex flex-wrap justify-content-start'>
-                        <div className="input-group-register col-6">
+                        <div className="input-group-register col-md-6 col-12">
                             <SimpleTextInput
                                 condition1={this.context.otherGuestInformationFurtherValidation.phoneNumber_requiredReg}
                                 condition2={this.context.otherGuestInformationFurtherValidation.phoneNumber_telephoneReg}
@@ -23,7 +23,7 @@ class OGInformationFurtherPage extends Component {
                                 label={'شماره همراه اقامتگر'}
                             />
                         </div>
-                        <div className="input-group-register col-6">
+                        <div className="input-group-register col-md-6 col-12">
                             <SimpleTextInput
                                 condition1={this.context.otherGuestInformationFurtherValidation.telephoneNumber_requiredReg}
                                 condition3={this.context.otherGuestInformationFurtherValidation.telephoneNumber_homeTelephoneReg}

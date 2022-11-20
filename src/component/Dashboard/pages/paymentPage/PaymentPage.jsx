@@ -63,7 +63,7 @@ class PaymentPage extends Component {
 
     async componentDidMount() {
         const response = await fetch('https://api.saadatportal.com/api/v1/category/search?type=Payment').then((response) => response.json())
-            .then((data) => this.setState({choices : data}));
+            .then((data) => this.setState({choices: data}));
 
 
     }
@@ -71,7 +71,7 @@ class PaymentPage extends Component {
     render() {
         return (
             <>
-                <div>
+                <div className={'px-3'}>
                     <div className="back-btn">
                         <Link to="/">
                             بازگشت
@@ -82,12 +82,13 @@ class PaymentPage extends Component {
                         <h4>ثبت فاکتور</h4>
                     </div>
 
-                    <div className='first-section row'>
-                        <div className='col-4'>
+                    <div className='first-section d-flex flex-md-row flex-column'>
+                        <div className='col-md-4 col-12 px-3 mb-3 '>
                             <label htmlFor="price">مبلغ :</label>
-                            <div className="row" style={{marginTop: "20px"}}>
+                            <div className="row">
                                 <div className='col-3 m-0 p-0'>
-                                    <select className='form-select' style={{height: "50px"}} value={this.state.priceType}
+                                    <select className='form-select' style={{height: "50px"}}
+                                            value={this.state.priceType}
                                             onChange={(e) => {
                                                 this.handlePriceType(e)
                                             }}>
@@ -100,9 +101,9 @@ class PaymentPage extends Component {
                                            type='text'
                                            value={this.state.price}
                                            className={`input form-control ${(this.state.Validations.price_requiredReg && this.state.Validations.price_numberReg) === false ? "is-invalid" : ""}`}
-                                           style={{height: "50px", width: "90%"}} onChange={(e) => {
-                                        this.handlePriceInput(e)
-                                    }}/>
+                                           onChange={(e) => {
+                                               this.handlePriceInput(e)
+                                           }}/>
 
                                     {
                                         this.state.Validations.price_requiredReg === false
@@ -122,9 +123,9 @@ class PaymentPage extends Component {
                                 </div>
                             </div>
                         </div>
-                        <div className='col-8'>
-                            <label style={{marginRight: "33px"}}>نوع: </label>
-                            <div style={{width: '100%', marginRight: "16px"}}>
+                        <div className='col-md-8 col-12 px-3 mx-2'>
+                            <label>نوع: </label>
+                            <div>
                                 <Accordion defaultActiveKey="0"
                                            style={{backgroundColor: this.state.Validations.selectedTypeBoolean ? '' : 'rgba(255, 0, 0, 0.4)'}}
                                 >
@@ -164,9 +165,11 @@ class PaymentPage extends Component {
                                                                     <div className="d-flex justify-content-center"
                                                                          style={{position: "relative"}}>
                                                                         <div className="close-btn-div">
-                                                                            <button className="close-btn" onClick={() => {
-                                                                                this.handleDeleteType(i)
-                                                                            }}><AiFillCloseCircle color="#F1416C"/></button>
+                                                                            <button className="close-btn"
+                                                                                    onClick={() => {
+                                                                                        this.handleDeleteType(i)
+                                                                                    }}><AiFillCloseCircle
+                                                                                color="#F1416C"/></button>
                                                                         </div>
                                                                         <div className="">{type}</div>
                                                                     </div>
@@ -190,8 +193,9 @@ class PaymentPage extends Component {
                             </div>
                         </div>
                     </div>
-                    <div className='second-section d-flex flex-wrap justify-content-start mr-3 row' style={{height: '50%'}}>
-                        <div className='col-4 mt-5 mb-3 date-container'>
+                    <div className='second-section d-flex flex-md-row flex-column flex-wrap justify-content-start mr-3'
+                         style={{height: '50%'}}>
+                        <div className='col-md-4 col-12 px-3 my-3 date-container'>
                             <label className='mb-3'>تاریخ: </label>
                             <DatePicker calendarStyles={this.state.styles}
                                         value={this.state.dataPicker}
@@ -209,14 +213,14 @@ class PaymentPage extends Component {
                             }
 
                         </div>
-                        <div className='col-8'>
+                        <div className='col-md-8 col-12 px-3'>
                             <Form>
-                                <Form.Group className="mb-3 mt-5" controlId="exampleForm.ControlTextarea1">
-                                    <Form.Label style={{marginRight: '30px'}}>توضیحات: </Form.Label>
+                                <Form.Group className="my-3" controlId="exampleForm.ControlTextarea1">
+                                    <Form.Label>توضیحات: </Form.Label>
                                     <Form.Control as="textarea" rows={8} value={this.state.description}
-                                                  style={{marginRight: '30px', width: '95%'}} onChange={(e) => {
-                                        this.handleDescriptionInput(e)
-                                    }}/>
+                                                  onChange={(e) => {
+                                                      this.handleDescriptionInput(e)
+                                                  }}/>
                                 </Form.Group>
                             </Form>
                         </div>
@@ -226,9 +230,10 @@ class PaymentPage extends Component {
                         <label htmlFor="formFileLg" className="form-label">آپلود فاکتور :</label>
                         <div className="row">
                             <div className="col-6">
-                                <input className="form-control form-control " id="formFileLg" type="file" onChange={(e) => {
-                                    this.handleInputFile(e)
-                                }}/>
+                                <input className="form-control form-control " id="formFileLg" type="file"
+                                       onChange={(e) => {
+                                           this.handleInputFile(e)
+                                       }}/>
                             </div>
                             <div className="col-6">
                                 {this.state.isUpload && !this.state.hasError ? (
@@ -250,7 +255,8 @@ class PaymentPage extends Component {
                                         </div>
                                     ) : (
                                         <button className="uploadBtn" onClick={this.handleUpload}
-                                                disabled={this.state.isLoading}><MdCloudUpload fontSize="35px"/></button>
+                                                disabled={this.state.isLoading}><MdCloudUpload fontSize="35px"/>
+                                        </button>
                                     )
                                 )}
 
@@ -277,8 +283,8 @@ class PaymentPage extends Component {
 
                     <div className='fourth-section mt-5 mb-3 d-flex justify-content-center'>
                         <button type="button"
-                                className="btn btn-success "
-                                style={{width: '50%'}}
+                                className="btn"
+                                style={{width: '7rem',backgroundColor:'#20d489'}}
                                 onClick={this.handleSubmitPayment}
                         >
                             ثبت
@@ -442,11 +448,13 @@ class PaymentPage extends Component {
             parentType: "Personnel",
         }
         if (this.state.fileId !== "") {
-            let file = {file:{
+            let file = {
+                file: {
                     name: this.state.fileName,
-                    fileId:this.state.fileId
-                }}
-            payment = Object.assign(payment,file)
+                    fileId: this.state.fileId
+                }
+            }
+            payment = Object.assign(payment, file)
         }
         if (result) {
             const rawResponse = await fetch('https://api.saadatportal.com/api/v1/paymentHistory', {
