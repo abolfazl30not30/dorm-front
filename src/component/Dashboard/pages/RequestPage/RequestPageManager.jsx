@@ -12,13 +12,11 @@ import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
-
 import {IoIosAddCircleOutline} from "react-icons/io";
 import {TiTimes} from "react-icons/ti";
 import {TiTick} from "react-icons/ti";
 import {BiSearch} from "react-icons/bi";
 import {MdDone} from "react-icons/md";
-
 import '../../../../style/registerPage.css';
 import '../../../../style/paymentPage.css';
 import '../../../../style/searchAccount.css';
@@ -48,6 +46,7 @@ class RequestPage extends Component {
             'محصولات بهداشتی',
             'بیمه',
         ],
+
         addInputContentInModal: '',
         addButtonDisabled: false,
 
@@ -58,7 +57,7 @@ class RequestPage extends Component {
             type: null,
             name: '',
             reason: '',
-            checked: false, // default
+            checked: null, // default
         },
 
         Validations: {
@@ -77,6 +76,7 @@ class RequestPage extends Component {
             .then((data) => this.setState({ requests: data }));
 
     }
+
     render() {
         return (
             <>
@@ -193,6 +193,7 @@ class RequestPage extends Component {
                                                         قبول شده
                                                     </Button>
                                                     : <>
+
                                                         <OverlayTrigger
                                                             placement="bottom"
                                                             delay={{ show: 250, hide: 400 }}
@@ -225,6 +226,7 @@ class RequestPage extends Component {
                                                                 رد شده
                                                             </Button>
                                                         </OverlayTrigger>
+
                                                     </>)
                                                     : <Button
                                                         variant="secondary"
@@ -270,15 +272,12 @@ class RequestPage extends Component {
                                                                 // console.log(this.state.requests[index])
                                                             }}
                                                         >
-
                                                             <FormControlLabel labelPlacement="top" value="null" control={<Radio />} label="تعیین نشده" />
                                                             <FormControlLabel labelPlacement="top" value="true" control={<Radio />} label="تایید شده" />
                                                             <FormControlLabel labelPlacement="top" value="false" control={<Radio />} label="تایید نشده" />
 
                                                         </RadioGroup>
                                                     </FormControl>
-
-
                                                     <div style={{display: this.state.tmpRequest.checked !== 'false' ? 'none' : 'block'}}>
                                                         <div className={'input-group-register'}>
                                                             <input
@@ -302,7 +301,6 @@ class RequestPage extends Component {
                                                                 عنوان
                                                             </label>
                                                         </div>
-
                                                         <div className={'input-group-register'}>
                                                             <input
                                                                 className={'input form-control'}
@@ -325,7 +323,6 @@ class RequestPage extends Component {
                                                                 دلیل
                                                             </label>
                                                         </div>
-
                                                         <div className={'input-group-register'}>
                                                             <input
                                                                 className={'input form-control'}
@@ -348,7 +345,6 @@ class RequestPage extends Component {
                                                                 نوع
                                                             </label>
                                                         </div>
-
                                                     </div>
 
                                                 </Modal.Body>
@@ -455,6 +451,7 @@ class RequestPage extends Component {
                                                                         this.setState({addButtonDisabled : false});
                                                                     }}
                                                             >
+
                                                                 <TiTimes size={22} color={'red'}/>
                                                             </button>
                                                             <button className={'col addTypeBtn'}
@@ -496,9 +493,7 @@ class RequestPage extends Component {
                                 </Accordion>
                             </div>
                         </div>
-
                         <div>
-
                             <div className="input-group-register col-12">
                                 <input type='text'
                                        className={`input form-control mb-2 ${this.state.Validations.name_requireReg === false ? "is-invalid" : ""}`}
@@ -529,7 +524,6 @@ class RequestPage extends Component {
                                 </label>
                             </div>
                         </div>
-
                     </Modal.Body>
                     <Modal.Footer className="justify-content-start">
                         <button className="btn btn-success" onClick={(event) => {
@@ -583,6 +577,7 @@ class RequestPage extends Component {
         let name_requireReg = !regCheck.test(this.state.tempFields.name);
 
         if (topic_requireReg && selectedTypeBoolean && name_requireReg) {
+
             let updatedRequests = [...this.state.requests];
             let request = {
                 topic: this.state.tempFields.topic,
@@ -590,10 +585,8 @@ class RequestPage extends Component {
                 name: this.state.tempFields.name,
                 reason: this.state.tempFields.reason,
                 checked: 'null', // null, false, true
-                ifFalseTopic: '',
-                ifFalseReason: '',
-                ifFalseType: ''
             }
+
             updatedRequests.push(request);
             this.setState({requests: updatedRequests});
         }

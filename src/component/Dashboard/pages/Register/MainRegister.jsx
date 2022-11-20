@@ -622,7 +622,7 @@ class MainRegister extends Component {
 
                 console.log(this.context.otherGuestInformationFamily.hostId)
 
-                const editPersonRespond = await fetch(`https://api.saadatportal.com/api/v1/floor/${respondChar.id}`, {
+                const editPersonRespond = await fetch(`https://api.saadatportal.com/api/v1/characteristic/${respondChar.id}`, {
                     method: 'PATCH',
                     headers: {
                         'Accept': 'application/json',
