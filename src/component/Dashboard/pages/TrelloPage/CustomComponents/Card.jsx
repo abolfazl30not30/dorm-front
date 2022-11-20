@@ -58,7 +58,7 @@ class Card extends Component {
                 {/*        {title}*/}
                 {/*    </CardTitle>*/}
 
-                <div className={'d-flex justify-content-center'}>
+                <div className={'d-flex justify-content-center mb-3'}>
                     <h4>
                         {title}
                     </h4>
@@ -73,7 +73,7 @@ class Card extends Component {
                             </label>
                         </div>
 
-                        <div className={'justify-content-center'}>
+                        <div className={'d-flex justify-content-center'} style={{fontSize: '0.8rem'}}>
                             {timeLog}
                         </div>
                     </div>
@@ -86,14 +86,14 @@ class Card extends Component {
                             </label>
                         </div>
 
-                        <div className={'justify-content-center'}>
+                        <div className={'justify-content-center'} style={{fontSize: '0.8rem'}}>
                             {dueDate}
                         </div>
                     </div>
                 </div>
 
                 <div>
-                    <div className={'d-flex justify-content-center'}>
+                    <div className={'d-flex justify-content-center mt-3 mb-2'}>
                         <label>
                             {/*priority :*/}
                             اولویت:
