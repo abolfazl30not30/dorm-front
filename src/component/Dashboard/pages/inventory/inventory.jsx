@@ -214,7 +214,7 @@ class inventory extends Component {
                             </div>
 
                         </div>
-                        <button className='btn btn-record-inventory' onClick={() => {
+                        <button className='btn-done w-100' onClick={() => {
                             this.handleRecordInventory()
                         }}>ثبت
                         </button>
@@ -233,7 +233,7 @@ class inventory extends Component {
                                onChange={(e) => this.handleInputCategoryChange(e)} placeholder="نوع جدید"/>
                     </Modal.Body>
                     <Modal.Footer className="justify-content-start">
-                        <button className="btn btn-success" onClick={(event) => {
+                        <button className="btn-done" onClick={(event) => {
                             this.handleSubmitCategory(event)
                         }}>ثبت
                         </button>

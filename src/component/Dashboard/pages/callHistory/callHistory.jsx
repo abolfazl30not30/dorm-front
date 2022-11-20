@@ -195,7 +195,7 @@ class callHistory extends Component {
                             <AiOutlinePlus className='ms-2'/>
                         </div>*/}
 
-                        <button className='btn btn-record-contact' onClick={() => {
+                        <button className='btn-done w-100' onClick={() => {
                             if (this.handleValidations()) {
                                 this.handleRecordContact();
                                 this.handleClose();

@@ -141,7 +141,7 @@ class contacts extends Component {
 
 
 
-                        <button className='btn btn-record-contact' onClick={() => {
+                        <button className='btn-done w-100' onClick={() => {
                             this.handleRecordContact()
                         }}>ثبت
                         </button>
