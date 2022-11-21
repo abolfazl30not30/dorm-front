@@ -24,11 +24,11 @@ class DateInput extends Component{
 
         plugin1: [ // this.props.timeInclude === true
             <TimePicker position="bottom"/>,
-            <DatePickerHeader position="left" />
+            // <DatePickerHeader position="left" />
         ],
 
         plugin2: [// this.props.timeInclude === false
-            <DatePickerHeader position="left" />
+            // <DatePickerHeader position="left" />
         ],
     }
     render() {

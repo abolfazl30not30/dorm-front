@@ -53,83 +53,94 @@ class Card extends Component {
                 style={style}
                 className={className}
             >
-                <CardHeader>
-                    <CardTitle draggable={cardDraggable}>
+                {/*<CardHeader>*/}
+                {/*    <CardTitle draggable={cardDraggable}>*/}
+                {/*        {title}*/}
+                {/*    </CardTitle>*/}
+
+                <div className={'d-flex justify-content-center mb-3'}>
+                    <h4>
                         {title}
-                    </CardTitle>
-                    <CardRightContent>
-                        <div>
-                            <div className={'d-flex justify-content-center'}>
-                                <label>
-                                    {/*due date :*/}
-                                    ددلاین:
-                                </label>
-                            </div>
-
-                            <div className={'d-flex justify-content-center'} style={{borderBottom: '4px solid blue'}}>
-                                {dueDate}
-                            </div>
+                    </h4>
+                </div>
+                {/*<CardRightContent>*/}
+                <div className={'d-flex row'}>
+                    <div className={'col-6'}>
+                        <div className={'d-flex justify-content-center'}>
+                            <label>
+                                {/*due date :*/}
+                                زمان صرف شده:
+                            </label>
                         </div>
 
-                        {/*<div>*/}
-                        {/*    <div className={'d-flex justify-content-center'}>*/}
-                        {/*        <label>*/}
-                        {/*            time log :*/}
-                        {/*        </label>*/}
-                        {/*    </div>*/}
-                        {/*    <div className={'d-flex justify-content-center'} style={{borderBottom: '4px solid blue'}}>*/}
-                        {/*        {timeLog}*/}
-                        {/*    </div>*/}
-                        {/*</div>*/}
-
-                        <div>
-                            <div className={'d-flex justify-content-center'}>
-                                <label>
-                                    {/*priority :*/}
-                                    اولویت:
-                                </label>
-                            </div>
-                            {/*<div>*/}
-                            {
-                                priority === "low"
-                                    ? <div className={'d-flex justify-content-center'}
-                                           style={{
-                                               backgroundColor: 'yellow',
-                                               borderRadius: 20
-                                    }}
-                                    >
-                                        کم
-                                </div>
-                                    : (priority === "medium" ? <div className={'d-flex justify-content-center'}
-                                                                    style={{
-                                                                        backgroundColor: 'orange',
-                                                                        borderRadius: 20
-                                    }}
-                                        >
-                                            متوسط
-                                    </div>
-                                    : (priority === "high" ? <div className={'d-flex justify-content-center'}
-                                           style={{
-                                               backgroundColor: 'rgba(255, 0, 0, 0.6)',
-                                               borderRadius: 20
-                                    }}
-                                        >
-                                            زیاد
-                                    </div> : <div className={'d-flex justify-content-center'}
-                                                  style={{
-                                                      backgroundColor: 'rgba(0, 0, 255, 0.6)',
-                                                      borderRadius: 20
-                                                  }}
-                                        >
-                                            ضروری
-                                        </div>))
-                            }
-                                {/*{priority}*/}
-                            {/*</div>*/}
+                        <div className={'d-flex justify-content-center'} style={{fontSize: '0.8rem'}}>
+                            {timeLog}
                         </div>
-                    </CardRightContent>
-                    {showDeleteButton && <DeleteButton onClick={this.onDelete} />}
-                </CardHeader>
+                    </div>
+
+                    <div className={'col-6'}>
+                        <div className={'justify-content-center'}>
+                            <label>
+                                {/*due date :*/}
+                                تاریخ اتمام:
+                            </label>
+                        </div>
+
+                        <div className={'justify-content-center'} style={{fontSize: '0.8rem'}}>
+                            {dueDate}
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div className={'d-flex justify-content-center mt-3 mb-2'}>
+                        <label>
+                            {/*priority :*/}
+                            اولویت:
+                        </label>
+                    </div>
+                    {/*<div>*/}
+                    {
+                        priority === "low"
+                            ? <div className={'d-flex justify-content-center'}
+                                   style={{
+                                       backgroundColor: 'yellow',
+                                       borderRadius: 20
+                            }}
+                            >
+                                کم
+                        </div>
+                            : (priority === "medium" ? <div className={'d-flex justify-content-center'}
+                                                            style={{
+                                                                backgroundColor: 'orange',
+                                                                borderRadius: 20
+                            }}
+                                >
+                                    متوسط
+                            </div>
+                            : (priority === "high" ? <div className={'d-flex justify-content-center'}
+                                   style={{
+                                       backgroundColor: 'rgba(255, 0, 0, 0.6)',
+                                       borderRadius: 20
+                            }}
+                                >
+                                    زیاد
+                            </div> : <div className={'d-flex justify-content-center'}
+                                          style={{
+                                              backgroundColor: 'rgba(0, 0, 255, 0.6)',
+                                              borderRadius: 20
+                                          }}
+                                >
+                                    ضروری
+                                </div>))
+                    }
+                        {/*{priority}*/}
+                    {/*</div>*/}
+                </div>
+                {/*</CardRightContent>*/}
+                {showDeleteButton && <DeleteButton onClick={this.onDelete} />}
+                {/*</CardHeader>*/}
+                <div>&nbsp;</div>
                 <Detail>
                     {description}
                 </Detail>

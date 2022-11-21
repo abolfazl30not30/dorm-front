@@ -13,17 +13,19 @@ import {
 } from 'react-trello/dist/styles/Base'
 import {AddButton, CancelButton} from 'react-trello/dist/styles/Elements'
 import EditableLabel from 'react-trello/dist/widgets/EditableLabel'
-import {Button} from "@mui/material";
+import {Button, MenuItem, Select} from "@mui/material";
 import {Modal} from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import {BiSearch} from "react-icons/bi";
+import persian from "react-date-object/calendars/persian";
+import persian_fa from "react-date-object/locales/persian_fa";
 
 class NewCardForm extends Component {
 
     state = {
         // main data
-        title: 'بدون عنوان',
-        description: 'بدون توضیحات',
+        title: '',
+        description: '',
         priority: 'medium',
         dueDate: 'تعریف نشده',
         timeLog: 'تعریف نشده',
@@ -60,113 +62,181 @@ class NewCardForm extends Component {
     render() {
         const {onCancel, t} = this.props
         return (
-            <>
-                <CardForm>
-                    <CardWrapper>
-                        <CardHeader>
-                            <CardTitle style={{fontSize: '0.7rem'}} >
-                                <EditableLabel placeholder={'عنوان'} onChange={val => this.updateField('title', val)} />
+            <div style={{backgroundColor: '#f9f9f9'}}>
+                {/*<EditableLabel placeholder={'عنوان'} onChange={val => this.updateField('title', val)} />*/}
+                <div className="input-group-register">
+                    <input type="text"
+                           className={`input form-control`}
+                           value={this.state.title}
+                           onChange={(val) =>  this.updateField('title', val.target.value)}
+                           placeholder=" "
+                    />
+                    <label className="placeholder">
+                        عنوان
+                    </label>
+                </div>
+                {/*<div>&nbsp;</div>*/}
+                {/*<div>&nbsp;</div>*/}
+                <div>&nbsp;</div>
 
-                                <div>&nbsp;</div>
-                                <div>&nbsp;</div>
-                                <div>&nbsp;</div>
+                {
+                    this.state.parentId !== ''
+                        // ? <div>{this.state.parentSelected}</div>
+                    ? (
+                        <>
+                            <div>
+                                <label>آیدی پرسنل:</label>
+                                {this.state.parentId}
+                            </div>
 
-                                {
-                                    this.state.parentId !== ''
-                                        // ? <div>{this.state.parentSelected}</div>
-                                    ? (
-                                        <>
-                                            <div>
-                                                <label>آیدی پرسنل:</label>
-                                                {this.state.parentId}
-                                            </div>
+                            <div>
+                                <label>نوع پرسنل: </label>
+                                {this.state.parentType}
+                            </div>
+                        </>)
+                        : <div className={'d-flex justify-content-center'}>پرسنلی انتخاب نشده!</div>
+                }
 
-                                            <div>
-                                                <label>نوع پرسنل: </label>
-                                                {this.state.parentType}
-                                            </div>
-                                        </>)
-                                        : <div>پرسنلی انتخاب نشده!</div>
-                                }
+                {/*<div>&nbsp;</div>*/}
+                {/*<div>&nbsp;</div>*/}
 
-                                {/*<div>&nbsp;</div>*/}
-                                <div>&nbsp;</div>
+                <div className={'d-flex justify-content-center'}>
+                    <Button style={{width: '80%'}} variant="contained" onClick={() => this.handleOpenModal()}>
+                        انتخاب پرسنل
+                    </Button>
+                </div>
+                <div>&nbsp;</div>
 
-                                <Button variant="contained" onClick={() => this.handleOpenModal()}>
-                                    انتخاب پرسنل
-                                </Button>
+                <div>
+                    <label>
+                        {/*due date:*/}
+                        تاریخ اتمام:
+                    </label>
+                </div>
+                <DatePicker
+                    inputClass={`input form-control`}
 
-                                {/*<EditableLabel placeholder={'نوع پرسنل'} onChange={val => this.updateField('parentType', val)} />*/}
-                                {/*<div>&nbsp;</div>*/}
-                                {/*<EditableLabel placeholder={'آیدی پرسنل'} onChange={val => this.updateField('parentId', val)} />*/}
-                            </CardTitle>
-                            <CardRightContent>
-                                <div>
-                                    <label>
-                                        {/*due date:*/}
-                                        ددلاین:
-                                    </label>
-                                </div>
-                                <DatePicker
-                                    style={{
-                                        width: "100%",
-                                        boxSizing: "border-box",
-                                        height: "26px"
-                                    }}
-                                    format="YYYY/MM/DD"
-                                    onChange={val => {
-                                        // this.updateField('timeLog', val);
-                                        let time = "";
-                                        time += val.year + '/';
-                                        time += val.month + '/';
-                                        time += val.day;
-                                        this.updateField('dueDate', time);
-                                    }}
-                                />
-                                <div>&nbsp;</div>
-                                {/*<EditableLabel placeholder={'timeLog'} onChange={val => this.updateField('timeLog', val)} />*/}
-                                <div>
-                                    <label>
-                                        {/*time log:*/}
-                                        زمان صرف شده:
-                                    </label>
-                                </div>
-                                <DatePicker
-                                    style={{
-                                        width: "100%",
-                                        boxSizing: "border-box",
-                                        height: "26px"
-                                    }}
-                                    disableDayPicker
-                                    format="HH:mm"
-                                    plugins={[
-                                        <TimePicker hideSeconds/>
-                                    ]}
-                                    onChange={val => {
-                                        // this.updateField('timeLog', val);
-                                        let time = "";
-                                        time += val.hour + ':';
-                                        time += val.minute;
-                                        // time += val.second;
-                                        this.updateField('timeLog', time);
-                                    }}
-                                />
-                                <div>&nbsp;</div>
-                                <select defaultValue={'medium'} onChange={val => this.updateField('priority', val.target.value)}>
-                                    <option value={'low'}>کم</option>
-                                    <option value={'medium'}>متوسط</option>
-                                    <option value={'high'}>زیاد</option>
-                                    <option value={'urgent'}>ضروری</option>
-                                </select>
-                            </CardRightContent>
-                        </CardHeader>
-                        <Detail>
-                            <EditableLabel placeholder={'توضیحات'} onChange={val => this.updateField('description', val)} />
-                        </Detail>
-                    </CardWrapper>
-                    <AddButton onClick={this.handleAdd}>اضافه کردن کارت</AddButton>
-                    <CancelButton onClick={onCancel}>بستن</CancelButton>
-                </CardForm>
+                    style={{
+                        width: "100%",
+                        // boxSizing: "border-box",
+                        // height: "26px"
+                    }}
+                    format="YYYY/MM/DD"
+                    onChange={val => {
+                        // this.updateField('timeLog', val);
+                        let time = "";
+                        time += val.year + '/';
+                        time += val.month + '/';
+                        time += val.day;
+                        this.updateField('dueDate', time);
+                    }}
+
+                    weekDays={
+                        [
+                            ["شنبه", "Sat"],
+                            ["یکشنبه", "Sun"],
+                            ["دوشنبه", "Mon"],
+                            ["سه شنبه", "Tue"],
+                            ["چهارشنبه", "Wed"],
+                            ["پنجشنبه", "Thu"],
+                            ["جمعه", "Fri"],
+                        ]
+                    }
+
+                    calendar={persian}
+                    locale={persian_fa}
+                />
+                <div>&nbsp;</div>
+                <div>
+                    <label>
+                        {/*time log:*/}
+                        زمان صرف شده:
+                    </label>
+                </div>
+                <DatePicker
+                    inputClass={`input form-control`}
+
+                    style={{
+                        width: "100%",
+                        // boxSizing: "border-box",
+                        // height: "26px"
+                    }}
+                    disableDayPicker
+                    format="HH:mm"
+                    plugins={[
+                        <TimePicker hideSeconds/>
+                    ]}
+                    onChange={val => {
+                        // this.updateField('timeLog', val);
+                        let time = "";
+                        time += val.hour + ':';
+                        time += val.minute;
+                        // time += val.second;
+                        this.updateField('timeLog', time);
+                    }}
+
+                    weekDays={
+                        [
+                            ["شنبه", "Sat"],
+                            ["یکشنبه", "Sun"],
+                            ["دوشنبه", "Mon"],
+                            ["سه شنبه", "Tue"],
+                            ["چهارشنبه", "Wed"],
+                            ["پنجشنبه", "Thu"],
+                            ["جمعه", "Fri"],
+                        ]
+                    }
+
+                    calendar={persian}
+                    locale={persian_fa}
+                />
+
+                <div>&nbsp;</div>
+
+                <div className={'d-flex justify-content-center'}>
+                    <Select
+                        defaultValue={'medium'}
+                        style={{width: '80%'}}
+                        onChange={val => this.updateField('priority', val.target.value)}
+                    >
+                        <MenuItem value={'low'}>کم</MenuItem>
+                        <MenuItem value={'medium'}>متوسط</MenuItem>
+                        <MenuItem value={'high'}>زیاد</MenuItem>
+                        <MenuItem value={'urgent'}>ضروری</MenuItem>
+                    </Select>
+                </div>
+
+                {/*<select defaultValue={'medium'} onChange={val => this.updateField('priority', val.target.value)}>*/}
+                {/*    <option value={'low'}>کم</option>*/}
+                {/*    <option value={'medium'}>متوسط</option>*/}
+                {/*    <option value={'high'}>زیاد</option>*/}
+                {/*    <option value={'urgent'}>ضروری</option>*/}
+                {/*</select>*/}
+
+                <Detail>
+                    {/*<EditableLabel placeholder={'توضیحات'} onChange={val => this.updateField('description', val)} />*/}
+                    <div className="input-group-register">
+                        <input type="text"
+                               className={`input form-control`}
+                               value={this.state.description}
+                               onChange={(val) =>  this.updateField('description', val.target.value)}
+                               placeholder=" "
+                        />
+                        <label className="placeholder">
+                            توضیحات
+                        </label>
+                    </div>
+                </Detail>
+
+                <button className="btn btn-success" onClick={this.handleAdd}>
+                    اضافه کردن کارت
+                </button>
+                <button className="btn btn-light" onClick={onCancel}>
+                    بستن
+                </button>
+
+                {/*<AddButton onClick={this.handleAdd}>اضافه کردن کارت</AddButton>*/}
+                {/*<CancelButton onClick={onCancel}>بستن</CancelButton>*/}
 
                 <Modal centered size="lg" show={this.state.showParentModal} onHide={() => this.handleCloseModal()}>
                     <Modal.Header closeButton>
@@ -237,7 +307,7 @@ class NewCardForm extends Component {
                     </Modal.Body>
 
                 </Modal>
-            </>
+            </div>
         )
     }
 

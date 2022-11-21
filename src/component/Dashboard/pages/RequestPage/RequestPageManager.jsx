@@ -12,13 +12,11 @@ import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
-
 import {IoIosAddCircleOutline} from "react-icons/io";
 import {TiTimes} from "react-icons/ti";
 import {TiTick} from "react-icons/ti";
 import {BiSearch} from "react-icons/bi";
 import {MdDone} from "react-icons/md";
-
 import '../../../../style/registerPage.css';
 import '../../../../style/paymentPage.css';
 import '../../../../style/searchAccount.css';
@@ -48,6 +46,7 @@ class RequestPage extends Component {
             'محصولات بهداشتی',
             'بیمه',
         ],
+
         addInputContentInModal: '',
         addButtonDisabled: false,
 
@@ -58,7 +57,7 @@ class RequestPage extends Component {
             type: null,
             name: '',
             reason: '',
-            checked: false, // default
+            checked: null, // default
         },
 
         Validations: {
@@ -77,6 +76,7 @@ class RequestPage extends Component {
             .then((data) => this.setState({ requests: data }));
 
     }
+
     render() {
         return (
             <>
@@ -174,43 +174,94 @@ class RequestPage extends Component {
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div className={'d-flex flex-row align-items-baseline'}>
-                                                <label className={'ms-2'}> وضعیت :</label>
+                                        </div>
+                                        <div className={'d-flex flex-row align-items-baseline'}>
+                                            <label className={'ms-2'}> وضعیت :</label>
 
-                                                {
-                                                    request.checked !== 'null'
-                                                        ? (request.checked === 'true'
-                                                        ? <Button
-                                                            variant="success"
-                                                            className={'btn-done'}
-                                                            onClick={() => {
-                                                                this.setState({showStatusModal: 'true'});
-                                                                this.setState({tmpRequest : request})
-                                                            }}
+                                            {
+                                                request.checked !== 'null'
+                                                    ? (request.checked === 'true'
+                                                    ? <Button
+                                                        variant="success"
+                                                        className={'btn-done'}
+                                                        onClick={() => {
+                                                            this.setState({showStatusModal: 'true'});
+                                                            this.setState({tmpRequest : request})
+                                                        }}
+                                                    >
+                                                        قبول شده
+                                                    </Button>
+                                                    : <>
+
+                                                        <OverlayTrigger
+                                                            placement="bottom"
+                                                            delay={{ show: 250, hide: 400 }}
+                                                            overlay={
+                                                                <Tooltip>
+                                                                    <div>
+                                                                        <label>عنوان:</label>
+                                                                        <p>{request.ifFalseTopic}</p>
+                                                                    </div>
+
+                                                                    <div>
+                                                                        <label>دلیل:</label>
+                                                                        <p>{request.ifFalseReason}</p>
+                                                                    </div>
+
+                                                                    <div>
+                                                                        <label>نوع:</label>
+                                                                        <p>{request.ifFalseType}</p>
+                                                                    </div>
+                                                                </Tooltip>
+                                                            }
                                                         >
-                                                            قبول شده
-                                                        </Button>
-                                                        : <>
-                                                            <OverlayTrigger
-                                                                placement="bottom"
-                                                                delay={{ show: 250, hide: 400 }}
-                                                                overlay={
-                                                                    <Tooltip>
-                                                                        <div>
-                                                                            <label>عنوان:</label>
-                                                                            <p>{request.ifFalseTopic}</p>
-                                                                        </div>
+                                                            <Button variant="danger"
+                                                                    className={'btn-reject'}
+                                                                    onClick={() => {
+                                                                        this.setState({showStatusModal: 'true'});
+                                                                        this.setState({tmpRequest : request})
+                                                                    }}
+                                                            >
+                                                                رد شده
+                                                            </Button>
+                                                        </OverlayTrigger>
 
-                                                                        <div>
-                                                                            <label>دلیل:</label>
-                                                                            <p>{request.ifFalseReason}</p>
-                                                                        </div>
+                                                    </>)
+                                                    : <Button
+                                                        variant="secondary"
+                                                        className={'btn-unknown'}
+                                                        onClick={() => {
+                                                            this.setState({showStatusModal: 'true'});
+                                                            this.setState({tmpRequest : request})
+                                                        }}
+                                                    >
+                                                        تعیین نشده
+                                                    </Button>
+                                            }
 
-                                                                        <div>
-                                                                            <label>نوع:</label>
-                                                                            <p>{request.ifFalseType}</p>
-                                                                        </div>
-                                                                    </Tooltip>
+                                            <Modal centered show={this.state.showStatusModal} onHide={() => {
+                                                this.handleCloseType();
+                                            }}>
+                                                <Modal.Header closeButton>
+                                                    <Modal.Title>تغییر وضعیت: </Modal.Title>
+                                                </Modal.Header>
+
+                                                <Modal.Body className="justify-content-center">
+                                                    <FormControl>
+                                                        <RadioGroup
+                                                            row
+                                                            aria-labelledby="demo-row-radio-buttons-group-label"
+                                                            name="row-radio-buttons-group"
+                                                            value={this.state.tmpRequest.checked}
+                                                            // onClick={() => console.log(request.accepted)}
+                                                            onChange={(value) => {
+                                                                let updatedRequests = [...this.state.requests];
+
+                                                                for (const updatedRequestsKey of updatedRequests) {
+                                                                    if (updatedRequestsKey === this.state.tmpRequest) {
+                                                                        updatedRequestsKey.check = value.target.value;
+                                                                        break;
+                                                                    }
                                                                 }
                                                             >
                                                                 <Button variant="danger"
@@ -232,25 +283,18 @@ class RequestPage extends Component {
                                                                 this.setState({tmpRequest : request})
                                                             }}
                                                         >
-                                                            تعیین نشده
-                                                        </Button>
-                                                }
+                                                            <FormControlLabel labelPlacement="top" value="null" control={<Radio />} label="تعیین نشده" />
+                                                            <FormControlLabel labelPlacement="top" value="true" control={<Radio />} label="تایید شده" />
+                                                            <FormControlLabel labelPlacement="top" value="false" control={<Radio />} label="تایید نشده" />
 
-                                                <Modal centered show={this.state.showStatusModal} onHide={() => {
-                                                    this.handleCloseType();
-                                                }}>
-                                                    <Modal.Header closeButton>
-                                                        <Modal.Title>تغییر وضعیت: </Modal.Title>
-                                                    </Modal.Header>
-
-                                                    <Modal.Body className="justify-content-center">
-                                                        <FormControl>
-                                                            <RadioGroup
-                                                                row
-                                                                aria-labelledby="demo-row-radio-buttons-group-label"
-                                                                name="row-radio-buttons-group"
-                                                                value={this.state.tmpRequest.checked}
-                                                                // onClick={() => console.log(request.accepted)}
+                                                        </RadioGroup>
+                                                    </FormControl>
+                                                    <div style={{display: this.state.tmpRequest.checked !== 'false' ? 'none' : 'block'}}>
+                                                        <div className={'input-group-register'}>
+                                                            <input
+                                                                className={'input form-control'}
+                                                                placeholder={' '}
+                                                                value={this.state.tmpRequest.ifFalseTopic}
                                                                 onChange={(value) => {
                                                                     let updatedRequests = [...this.state.requests];
 
@@ -267,11 +311,18 @@ class RequestPage extends Component {
 
                                                                     // console.log(this.state.requests[index])
                                                                 }}
-                                                            >
-
-                                                                <FormControlLabel labelPlacement="top" value="null" control={<Radio />} label="تعیین نشده" />
-                                                                <FormControlLabel labelPlacement="top" value="true" control={<Radio />} label="تایید شده" />
-                                                                <FormControlLabel labelPlacement="top" value="false" control={<Radio />} label="تایید نشده" />
+                                                            />
+                                                            <label className={'placeholder'}>
+                                                                عنوان
+                                                            </label>
+                                                        </div>
+                                                        <div className={'input-group-register'}>
+                                                            <input
+                                                                className={'input form-control'}
+                                                                placeholder={' '}
+                                                                value={this.state.tmpRequest.ifFalseReason}
+                                                                onChange={(value) => {
+                                                                    let updatedRequests = [...this.state.requests];
 
                                                             </RadioGroup>
                                                         </FormControl>
@@ -292,29 +343,20 @@ class RequestPage extends Component {
                                                                                 break;
                                                                             }
                                                                         }
-
-                                                                        this.setState({requests : updatedRequests})
-                                                                    }}
-                                                                />
-                                                                <label className={'placeholder'}>
-                                                                    عنوان
-                                                                </label>
-                                                            </div>
-
-                                                            <div className={'input-group-register'}>
-                                                                <input
-                                                                    className={'input form-control'}
-                                                                    placeholder={' '}
-                                                                    value={this.state.tmpRequest.ifFalseReason}
-                                                                    onChange={(value) => {
-                                                                        let updatedRequests = [...this.state.requests];
-
-                                                                        for (const updatedRequestsKey of updatedRequests) {
-                                                                            if (updatedRequestsKey === this.state.tmpRequest) {
-                                                                                updatedRequestsKey.ifFalseReason = value.target.value;
-                                                                                break;
-                                                                            }
-                                                                        }
+                                                                    this.setState({requests : updatedRequests})
+                                                                }}
+                                                            />
+                                                            <label className={'placeholder'}>
+                                                                دلیل
+                                                            </label>
+                                                        </div>
+                                                        <div className={'input-group-register'}>
+                                                            <input
+                                                                className={'input form-control'}
+                                                                placeholder={' '}
+                                                                value={this.state.tmpRequest.ifFalseType}
+                                                                onChange={(value) => {
+                                                                    let updatedRequests = [...this.state.requests];
 
                                                                         this.setState({requests : updatedRequests})
                                                                     }}
@@ -338,16 +380,14 @@ class RequestPage extends Component {
                                                                                 break;
                                                                             }
                                                                         }
-
-                                                                        this.setState({requests : updatedRequests})
-                                                                    }}
-                                                                />
-                                                                <label className={'placeholder'}>
-                                                                    نوع
-                                                                </label>
-                                                            </div>
-
+                                                                    this.setState({requests : updatedRequests})
+                                                                }}
+                                                            />
+                                                            <label className={'placeholder'}>
+                                                                نوع
+                                                            </label>
                                                         </div>
+                                                    </div>
 
                                                     </Modal.Body>
 
@@ -454,6 +494,7 @@ class RequestPage extends Component {
                                                                         this.setState({addButtonDisabled : false});
                                                                     }}
                                                             >
+
                                                                 <TiTimes size={22} color={'red'}/>
                                                             </button>
                                                             <button className={'col addTypeBtn'}
@@ -495,9 +536,7 @@ class RequestPage extends Component {
                                 </Accordion>
                             </div>
                         </div>
-
                         <div>
-
                             <div className="input-group-register col-12">
                                 <input type='text'
                                        className={`input form-control mb-2 ${this.state.Validations.name_requireReg === false ? "is-invalid" : ""}`}
@@ -528,7 +567,6 @@ class RequestPage extends Component {
                                 </label>
                             </div>
                         </div>
-
                     </Modal.Body>
                     <Modal.Footer className="justify-content-start">
                         <button className="btn btn-success" onClick={(event) => {
@@ -582,6 +620,7 @@ class RequestPage extends Component {
         let name_requireReg = !regCheck.test(this.state.tempFields.name);
 
         if (topic_requireReg && selectedTypeBoolean && name_requireReg) {
+
             let updatedRequests = [...this.state.requests];
             let request = {
                 topic: this.state.tempFields.topic,
@@ -589,10 +628,8 @@ class RequestPage extends Component {
                 name: this.state.tempFields.name,
                 reason: this.state.tempFields.reason,
                 checked: 'null', // null, false, true
-                ifFalseTopic: '',
-                ifFalseReason: '',
-                ifFalseType: ''
             }
+
             updatedRequests.push(request);
             this.setState({requests: updatedRequests});
         }

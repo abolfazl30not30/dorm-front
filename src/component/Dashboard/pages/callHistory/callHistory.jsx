@@ -5,8 +5,10 @@ import {AiOutlineClose, AiOutlinePlus} from "react-icons/ai";
 import {Modal} from 'react-bootstrap'
 import Form from "react-bootstrap/Form";
 import {BiSearch} from "react-icons/bi";
-import {DatePicker} from "react-persian-datepicker";
+import DatePicker from "react-multi-date-picker";
 import './../../../../style/requestPage.css'
+import persian from "react-date-object/calendars/persian";
+import persian_fa from "react-date-object/locales/persian_fa";
 
 class callHistory extends Component {
     state = {
@@ -134,13 +136,36 @@ class callHistory extends Component {
                             </label>
                         </div>
                         <div className='input-group-register mb-3'>
-                            <DatePicker calendarStyles={this.state.calStyles}
-                                        inputFormat="jYYYY/jM/jD"
-                                        className={`input form-control date-picker ${this.state.validations.date_requiredReg === false ? "is-invalid" : ""}`}
-                                        onChange={(e) => {
-                                            this.getValueInputDate(e)
-                                        }}
+                            <DatePicker
+                                inputClass={`input form-control date-picker ${this.state.validations.date_requiredReg === false ? "is-invalid" : ""}`}
+
+                                style={{
+                                    width: "184%",
+                                    // boxSizing: "border-box",
+                                    // height: "26px"
+                                }}
+
+                                format="YYYY/MM/DD"
+                                onChange={(e) => {
+                                    this.getValueInputDate(e)
+                                }}
+
+                                weekDays={
+                                    [
+                                        ["شنبه", "Sat"],
+                                        ["یکشنبه", "Sun"],
+                                        ["دوشنبه", "Mon"],
+                                        ["سه شنبه", "Tue"],
+                                        ["چهارشنبه", "Wed"],
+                                        ["پنجشنبه", "Thu"],
+                                        ["جمعه", "Fri"],
+                                    ]
+                                }
+
+                                calendar={persian}
+                                locale={persian_fa}
                             />
+
                             <label className='placeholder' style={{right: this.state.validations.date_requiredReg === false ? '35px' : '12px'}}>
                                 تاریخ
                                 <span style={{color: 'red'}}>*</span>
