@@ -159,6 +159,12 @@ class CameraHistoryPage extends Component {
                                     value={this.state.dateValue}
                                     onChange={(value) => {this.handleDateValue(value)}}
 
+                                    style={{
+                                        width: "188%",
+                                        // boxSizing: "border-box",
+                                        // height: "26px"
+                                    }}
+
                                     mapDays={({date}) => {
                                         let props = {}
                                         let isWeekend = [6].includes(date.weekDay.index)

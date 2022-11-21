@@ -62,13 +62,13 @@ class TrelloPage extends Component{
             lanes: [
                 {
                     editable: false,
-                    style: { width: '45%', alignItems: 'center', borderRadius: 20, color: '#fff' ,backgroundColor: 'green'},
-                    // cardStyle: {width: '200%'},
+                    style: { width: '45%', alignItems: 'center', borderRadius: 20, color: '#000' ,backgroundColor: '#fff'},
+                    cardStyle: {backgroundColor: '#f9f9f9', boxShadow: '0px 2px 2px 0px #000'},
                     // cardStyle: { width: 500},
                     // style: {backgroundColor: 'yellow'},
                     // cardStyle: { backgroundColor: 'blue' },
                     id: 'lane1',
-                    title: 'Done',
+                    title: 'انجام شده',
                     cards: [
                         {
                             id: 'Card1',
@@ -89,17 +89,19 @@ class TrelloPage extends Component{
                     ]
                 },
                 {
-                    editable: true,
-                    style: { width: '45%', alignItems: 'center', borderRadius: 20, color: '#fff' ,backgroundColor: 'red'},
-                    id: 'lane2',
-                    title: 'To do',
+                    editable: false,
+                    style: { width: '45%', alignItems: 'center', borderRadius: 20, color: '#000' ,backgroundColor: '#fff'},
+                    cardStyle: {backgroundColor: '#f9f9f9', boxShadow: '0px 2px 2px 0px #000'},
+                    id: 'lane3',
+                    title: 'در حال انجام',
                     cards: []
                 },
                 {
-                    editable: false,
-                    style: { width: '45%', alignItems: 'center', borderRadius: 20, color: '#fff' ,backgroundColor: '#ba7931'},
-                    id: 'lane3',
-                    title: 'In progress',
+                    editable: true,
+                    style: { width: '45%', alignItems: 'center', borderRadius: 20, color: '#000' ,backgroundColor: '#fff'},
+                    cardStyle: {backgroundColor: '#f9f9f9', boxShadow: '0px 2px 2px 0px #000'},
+                    id: 'lane2',
+                    title: 'وظیفه های جدید',
                     cards: []
                 },
             ]
