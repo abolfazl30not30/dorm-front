@@ -20,19 +20,20 @@ class HamburgerMenu extends Component {
                         <i className='bi bi-x'/>
                     </button>
                 </div>
+
                 <div className='logo-container'>
                     <img src={logo} className="sidenav-logo" alt="لوگو"/>
                 </div>
                 <ul>
                     <li className='sidenav-item'>
-                        <NavLink activeClassName='active-sidebar' to="/payment" className='sidenav-link'
+                        <NavLink activeClassName='active-sidebar' to="/dashboard/payment" className='sidenav-link'
                                  onClick={window.innerWidth <= 768 && this.context.handleSidebar}>
                             <i className="bi bi-calculator"></i>
                             ثبت فاکتور
                         </NavLink>
                     </li>
                     <li className='sidenav-item'>
-                        <NavLink activeClassName='active-sidebar' to="/Calender" className='sidenav-link'
+                        <NavLink activeClassName='active-sidebar' to="/dashboard/Calender" className='sidenav-link'
                                  onClick={window.innerWidth <= 768 && this.context.handleSidebar}>
                             <i className="bi bi-calendar"></i>
                             تقويم
@@ -46,56 +47,56 @@ class HamburgerMenu extends Component {
                     {/*    </Link>*/}
                     {/*</li>*/}
                     <li className='sidenav-item'>
-                        <NavLink activeClassName='active-sidebar' to="/Request" className='sidenav-link'
+                        <NavLink activeClassName='active-sidebar' to="/dashboard/Request" className='sidenav-link'
                                  onClick={window.innerWidth <= 768 && this.context.handleSidebar}>
                             <i className="bi bi-person-circle"/>
                             درخواست
                         </NavLink>
                     </li>
                     <li className='sidenav-item'>
-                        <NavLink activeClassName='active-sidebar' to="/Request-manager" className='sidenav-link'
+                        <NavLink activeClassName='active-sidebar' to="/dashboard/Request-manager" className='sidenav-link'
                                  onClick={window.innerWidth <= 768 && this.context.handleSidebar}>
                             <i className="bi bi-envelope"></i>
                             درخواست (مدیریت)
                         </NavLink>
                     </li>
                     <li className='sidenav-item'>
-                        <NavLink activeClassName='active-sidebar' to="/camera-history" className='sidenav-link'
+                        <NavLink activeClassName='active-sidebar' to="/dashboard/camera-history" className='sidenav-link'
                                  onClick={window.innerWidth <= 768 && this.context.handleSidebar}>
                             <i className="bi bi-camera-video"></i>
                             دوربین
                         </NavLink>
                     </li>
                     <li className='sidenav-item'>
-                        <NavLink activeClassName='active-sidebar' to="/PaymentHistory" className='sidenav-link'
+                        <NavLink activeClassName='active-sidebar' to="/dashboard/PaymentHistory" className='sidenav-link'
                                  onClick={window.innerWidth <= 768 && this.context.handleSidebar}>
                             <i className="bi bi-layout-text-sidebar"></i>
                             صورتحساب
                         </NavLink>
                     </li>
                     <li className='sidenav-item'>
-                        <NavLink activeClassName='active-sidebar' to="/contacts" className='sidenav-link'
+                        <NavLink activeClassName='active-sidebar' to="/dashboard/contacts" className='sidenav-link'
                                  onClick={window.innerWidth <= 768 && this.context.handleSidebar}>
                             <i className="bi bi-person-rolodex"></i>
                             مخاطبین
                         </NavLink>
                     </li>
                     <li className='sidenav-item'>
-                        <NavLink activeClassName='active-sidebar' to="/CallHistory" className='sidenav-link'
+                        <NavLink activeClassName='active-sidebar' to="/dashboard/CallHistory" className='sidenav-link'
                                  onClick={window.innerWidth <= 768 && this.context.handleSidebar}>
                             <i className="bi bi-telephone"></i>
                             تاریخچه تماس ها
                         </NavLink>
                     </li>
                     <li className='sidenav-item'>
-                        <NavLink activeClassName='active-sidebar' to="/taskManagement" className='sidenav-link'
+                        <NavLink activeClassName='active-sidebar' to="/dashboard/taskManagement" className='sidenav-link'
                                  onClick={window.innerWidth <= 768 && this.context.handleSidebar}>
                             <i className="bi bi-gear"></i>
                             مدیریت وظایف
                         </NavLink>
                     </li>
                     <li className="sidenav-item">
-                        <NavLink activeClassName='active-sidebar' to="/Inventory" className='sidenav-link'
+                        <NavLink activeClassName='active-sidebar' to="/dashboard/Inventory" className='sidenav-link'
                                  onClick={window.innerWidth <= 768 && this.context.handleSidebar}>
                             <i className="bi bi-boxes"></i>
                             انبار
@@ -109,7 +110,7 @@ class HamburgerMenu extends Component {
                         </NavLink>
                     </li>
                     <li className="sidenav-item">
-                        <NavLink activeClassName='active-sidebar' to="/PresenceAbsence" className='sidenav-link'
+                        <NavLink activeClassName='active-sidebar' to="/dashboard/PresenceAbsence" className='sidenav-link'
                                  onClick={window.innerWidth <= 768 && this.context.handleSidebar}>
                             <i className="bi bi-hand-thumbs-up"></i>
                             نوبت نظافت شبانه

@@ -487,10 +487,9 @@ class RequestPage extends Component {
         for (let i = 0; i < valueOfField.length; i++) {
             updatedValidations[nameOfField[i]] = valueOfField[i];
         }
-        // updatedValidations[nameOfField] = valueOfField;
+
         this.setState({Validations : updatedValidations});
 
-        // console.log(this.state.Validations.selectedTypeBoolean)
     }
 
 }

@@ -3,15 +3,21 @@ import HamburgerMenu from './HamburgerMenu.jsx';
 import "../../style/header.css";
 import MainContext from '../../contexts/ContextProvider';
 import Dropdown from 'react-bootstrap/Dropdown';
-import {BsFillPersonFill,BsPerson,BsPersonPlus} from "react-icons/bs"
+import {BsFillPersonFill, BsPerson, BsPersonPlus} from "react-icons/bs"
 import {IoMdExit} from "react-icons/io"
 import {GoTasklist} from "react-icons/go"
 import {AiOutlineHome} from "react-icons/ai";
 import {MdOutlineInventory} from "react-icons/md"
-import {NavLink,Link} from "react-router-dom";
+import {NavLink, Link} from "react-router-dom";
+
 class Header extends Component {
     static contextType = MainContext;
-    state = {}
+    state = {
+        activeStyle: {
+            textDecoration: "underline",
+        },
+        activeClassName: "underline"
+    }
 
     render() {
         return (
@@ -21,28 +27,32 @@ class Header extends Component {
                         <button className='btn' onClick={() => {
                             this.context.handleSidebar()
                         }}><i className="bi bi-list"></i></button>
-                        <ul className="d-flex navbar" >
+                        <ul className="d-flex navbar">
                             <li className='navbar-item'>
-                                <NavLink activeClassName='active-header' to="/" className='sidenav-link' >
-                                    <AiOutlineHome style={{paddingLeft:"7px"}} font-size="20px"/>
+                                <NavLink
+                                    activeClassName='active-header' to="/dashboard" className='sidenav-link' end>
+                                    <AiOutlineHome style={{paddingLeft: "7px"}} font-size="20px"/>
                                     خانه
                                 </NavLink>
                             </li>
                             <li className='navbar-item'>
-                                <NavLink activeClassName='active-header' to="/Register" className='sidenav-link' >
-                                    <BsPersonPlus style={{paddingLeft:"7px"}} font-size="20px"/>
+                                <NavLink activeClassName='active-header' to="/dashboard/Register"
+                                         className='sidenav-link'>
+                                    <BsPersonPlus style={{paddingLeft: "7px"}} font-size="20px"/>
                                     پذیرش
                                 </NavLink>
                             </li>
                             <li className='navbar-item'>
-                                <NavLink  activeClassName='active-header' to="/People" className='sidenav-link' >
-                                    <BsPerson style={{paddingLeft:"7px"}} font-size="20px"/>
+                                <NavLink activeClassName='active-header' to="/dashboard/People"
+                                         className='sidenav-link'>
+                                    <BsPerson style={{paddingLeft: "7px"}} font-size="20px"/>
                                     اشخاص
                                 </NavLink>
                             </li>
                             <li className='navbar-item'>
-                                <NavLink activeClassName='active-header' to="/booking" className='sidenav-link'>
-                                    <MdOutlineInventory style={{paddingLeft:"7px"}} font-size="20px" />
+                                <NavLink activeClassName='active-header' to="/dashboard/booking"
+                                         className='sidenav-link'>
+                                    <MdOutlineInventory style={{paddingLeft: "7px"}} font-size="20px"/>
                                     موجودی و ظرفیت
                                 </NavLink>
                             </li>
@@ -59,7 +69,15 @@ class Header extends Component {
                                     </button>
                                 </div>
                             </Dropdown.Toggle>
-                            <Dropdown.Menu  style={{zIndex:"100",width:"250px",textAlign:"right",borderRadius:"20px",border:"none",padding:"12px",boxShadow:"0px 0px 4px 0px #0000004d"}} >
+                            <Dropdown.Menu style={{
+                                zIndex: "100",
+                                width: "250px",
+                                textAlign: "right",
+                                borderRadius: "20px",
+                                border: "none",
+                                padding: "12px",
+                                boxShadow: "0px 0px 4px 0px #0000004d"
+                            }}>
                                 <div className="dropdown-items">
                                     <Link to="/">
                                         <div className="d-flex align-items-center px-3 py-1 sidebar-profile">
@@ -80,7 +98,7 @@ class Header extends Component {
                                     </Link>
                                 </div>
                                 <div className="dropdown-items">
-                                    <Link to="/taskManagement" >
+                                    <Link to="/taskManagement">
                                         <GoTasklist/>
                                         <span>مشاهده وظایف</span>
                                     </Link>
