@@ -79,7 +79,7 @@ class Header extends Component {
                                 boxShadow: "0px 0px 4px 0px #0000004d"
                             }}>
                                 <div className="dropdown-items">
-                                    <Link to="/">
+                                    <Link to="/dashboard">
                                         <div className="d-flex align-items-center px-3 py-1 sidebar-profile">
                                             <div className="sidebar-profile-img">
                                                 <img className="profile-img"
@@ -98,7 +98,7 @@ class Header extends Component {
                                     </Link>
                                 </div>
                                 <div className="dropdown-items">
-                                    <Link to="/taskManagement">
+                                    <Link to="/dashboard/taskManagement">
                                         <GoTasklist/>
                                         <span>مشاهده وظایف</span>
                                     </Link>

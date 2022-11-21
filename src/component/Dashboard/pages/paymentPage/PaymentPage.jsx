@@ -73,7 +73,7 @@ class PaymentPage extends Component {
             <>
                 <div>
                     <div className="back-btn">
-                        <Link to="/">
+                        <Link to="/dashboard">
                             بازگشت
                             <i className="bi bi-caret-left-fill"/>
                         </Link>

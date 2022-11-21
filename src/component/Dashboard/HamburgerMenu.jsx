@@ -104,7 +104,7 @@ class HamburgerMenu extends Component {
                     </li>
 
                     <li className='sidenav-item'>
-                        <NavLink to="/PersonnelRegister" className='sidenav-link' onClick={window.innerWidth <= 768 && this.context.handleSidebar}>
+                        <NavLink to="/dashboard/PersonnelRegister" className='sidenav-link' onClick={window.innerWidth <= 768 && this.context.handleSidebar}>
                             <i className="bi bi-file-earmark-text" />
                             ثبت پرسنل
                         </NavLink>

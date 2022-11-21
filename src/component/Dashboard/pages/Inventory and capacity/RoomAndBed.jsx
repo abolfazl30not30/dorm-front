@@ -224,7 +224,7 @@ class RoomAndBed extends Component {
             <>
                 <div className='unitContainer'>
                     <div className="back-btn">
-                        <Link to="/booking">
+                        <Link to="/dashboard/booking">
                             بازگشت
                             <i class="bi bi-caret-left-fill"/>
                         </Link>

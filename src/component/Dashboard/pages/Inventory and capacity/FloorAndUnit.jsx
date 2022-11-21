@@ -50,7 +50,7 @@ class FloorAndUnit extends Component {
             <>
                 <div className='floorAndUnit'>
                     <div className="back-btn">
-                        <Link to="/">
+                        <Link to="/dashboard">
                             بازگشت
                             <i class="bi bi-caret-left-fill"/>
                         </Link>
@@ -93,7 +93,7 @@ class FloorAndUnit extends Component {
                                                 {f.units.map((unit) => (
                                                     <div className={`unit col-4`}>
                                                         <Link className={`${unit.empty ? "empty-link" : "full-link"}`}
-                                                              to="/RoomAndBed" onClick={() => {
+                                                              to="/dashboard/RoomAndBed" onClick={() => {
                                                             this.context.handleUnitNumber(unit.number, unit.id)
                                                         }}>
                                                             <TbBuilding fontSize="2rem"/>

@@ -39,7 +39,7 @@ class EditFloorAndUnit extends Component {
                 <div className="p5">
 
                     <div className="back-btn">
-                        <Link to="/booking">
+                        <Link to="/dashboard/booking">
                             بازگشت
                             <i class="bi bi-caret-left-fill"/>
                         </Link>
@@ -91,7 +91,7 @@ class EditFloorAndUnit extends Component {
                         </div>
                     </div>
                     <div className="register">
-                        <Link to="/booking" className="register-btn"><MdDone className='ms-1' />ثـبـت</Link>
+                        <Link to="/dashboard/booking" className="register-btn"><MdDone className='ms-1' />ثـبـت</Link>
                     </div>
                 </div>
 

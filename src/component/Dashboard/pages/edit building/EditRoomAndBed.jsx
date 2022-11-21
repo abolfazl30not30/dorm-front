@@ -101,7 +101,7 @@ class EditRoomAndBed extends Component {
                 <div className="RoomAndBed">
 
                     <div className="back-btn">
-                        <Link to="/RoomAndBed">
+                        <Link to="/dashboard/RoomAndBed">
                             بازگشت
                             <i class="bi bi-caret-left-fill"></i>
                         </Link>
@@ -188,7 +188,7 @@ class EditRoomAndBed extends Component {
                         </div>
                     </div>
                     <div className="register">
-                        <Link to="/RoomAndBed" className="register-btn-room">ثـبـت</Link>
+                        <Link to="/dashboard/RoomAndBed" className="register-btn-room">ثـبـت</Link>
                     </div>
                 </div>
 

@@ -119,7 +119,7 @@ class RequestPage extends Component {
         return (
             <>
                 <div className="back-btn">
-                    <Link to="/">
+                    <Link to="/dashboard">
                         بازگشت
                         <i className="bi bi-caret-left-fill"/>
                     </Link>
@@ -130,7 +130,6 @@ class RequestPage extends Component {
                         درخواست (مدیریت)
                     </h4>
                 </div>
-
                 <div className="row align-items-center ">
                     <div className="col-md-1 col-sm-2 px-0"><label>براساس:</label></div>
                     <div className="col-md-3 col-sm-6 px-0" style={{paddingLeft: "0"}}>

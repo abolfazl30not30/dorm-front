@@ -79,7 +79,7 @@ class RequestPage extends Component {
             <>
                 <div className="px-4">
                     <div className="back-btn">
-                        <Link to="/">
+                        <Link to="/dashboard">
                             بازگشت
                             <i className="bi bi-caret-left-fill"/>
                         </Link>

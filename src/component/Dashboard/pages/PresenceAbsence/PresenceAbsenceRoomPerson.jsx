@@ -156,7 +156,7 @@ class PresenceAbsenceRoomPerson extends Component {
         return (
             <>
                 <div className="back-btn">
-                    <Link to="/PresenceAbsence">
+                    <Link to="/dashboard/PresenceAbsence">
                         بازگشت
                         <i className="bi bi-caret-left-fill"/>
                     </Link>
