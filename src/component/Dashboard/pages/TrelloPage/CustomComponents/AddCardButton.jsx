@@ -1,1 +1,8 @@
-export default ({onClick, t, laneId}) => <button onClick={onClick} style={{borderRadius: 20}}>{t('Click to add card')}</button>
+// import '../../../../../style/'
+
+export default ({onClick, t, laneId}) =>
+    <button onClick={onClick}
+            className={'btn-done'}
+    >
+        {'افزودن وظیفه جدید'}
+    </button>
