@@ -383,7 +383,6 @@ class RequestPage extends Component {
             const response = await fetch(`http://localhost:8089/api/v1/failureReason/${request.failureReasonId}`).then((response) => response.json())
                 .then((data) => this.setState({failure : data}));
         }
-
     }
 
     handleSearchBtn = () => {

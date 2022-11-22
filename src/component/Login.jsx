@@ -15,7 +15,7 @@ class Login extends Component {
     const {user,password} = this.state.account
     return (
       <>
-        <div className="container">
+        <div className="container-login">
           <div className="left-side">
             <div className="title">
               <h2>سعـادت پـرتـال</h2>
@@ -52,11 +52,6 @@ class Login extends Component {
                       className="chk-remember"
                     />
                     <label htmlFor="chk-remember">مرا به خاطر بسپار</label>
-                  </div>
-                  <div className="forgotDiv">
-                    <a href="#" className="forgot">
-                      فراموشی رمز؟
-                    </a>
                   </div>
                 </div>
                 <button className="btn-login">ورود</button>
