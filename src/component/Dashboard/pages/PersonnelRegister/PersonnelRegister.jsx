@@ -131,13 +131,13 @@ class PersonnelRegister extends Component {
                 label: 'مشخصات اولیه',
                 name: 'step 1',
                 content: <BasicInformation />,
-                validator: this.personnelBasicInformation
+                // validator: this.personnelBasicInformation
             },
             {
                 label: 'مشخصات تکمیلی',
                 name: 'step 2',
                 content: <AdditionalInformation />,
-                validator: this.personnelAdditionalInformation,
+                // validator: this.personnelAdditionalInformation,
             },
             {
                 label: 'آپلود مدارک',
@@ -168,8 +168,39 @@ class PersonnelRegister extends Component {
         );
     }
 
-    handleSubmit = () => {
+    handleSubmit = async () => {
+        let newCharacteristic = {...this.context.personnelFields}
 
+        console.log(newCharacteristic)
+        const rawResponse = await fetch('https://api.saadatportal.com/api/v1/characteristic', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(newCharacteristic)
+        });
+
+        var content = await rawResponse.json();
+        console.log(content)
+
+        let personnel = {
+            gender: content.gender,
+            type: content.type,
+            residenceType:"resident",
+            characteristicId:content.id,
+            files: this.context.personnelUploadPage,
+        }
+
+
+        const rawResponse1 = await fetch('https://api.saadatportal.com/api/v1/personnel', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(personnel)
+        });
     }
 
 }

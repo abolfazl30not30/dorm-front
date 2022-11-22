@@ -64,7 +64,7 @@ class RoomAndBed extends Component {
     async componentDidMount() {
 
         console.log(this.context.unitId)
-        const response = await fetch(`http://localhost:8089/api/v1/unit/room/${this.context.unitId}`).then((response) => response.json())
+        const response = await fetch(`https://api.saadatportal.com/api/v1/unit/room/${this.context.unitId}`).then((response) => response.json())
             .then((data) => this.setState({rooms: data, isLoading: false},()=>{
                 if (data.length == 0) {
                     this.setState({isFull: false})
@@ -73,7 +73,7 @@ class RoomAndBed extends Component {
                 }
             }));
 
-        const responseUnit = await fetch(`http://localhost:8089/api/v1/unit/${this.context.unitId}`).then((response) => response.json())
+        const responseUnit = await fetch(`https://api.saadatportal.com/api/v1/unit/${this.context.unitId}`).then((response) => response.json())
             .then((data) => this.setState({unit: data, isLoading: false}));
 
     }
@@ -84,7 +84,7 @@ class RoomAndBed extends Component {
 
     handleSubmit = async () =>{
 
-        const rawResponse = await fetch(`http://localhost:8089/api/v1/bed/${this.state.bedOpen.id}`, {
+        const rawResponse = await fetch(`https://api.saadatportal.com/api/v1/bed/${this.state.bedOpen.id}`, {
             method: 'PATCH',
             headers: {
                 'Accept': 'application/json',
@@ -103,10 +103,10 @@ class RoomAndBed extends Component {
         console.log(bed);
         if(bed.empty === false){
             let person = {}
-            const response = await fetch(`http://localhost:8089/api/v1/person/${bed.person}`).then((response) => response.json())
+            const response = await fetch(`https://api.saadatportal.com/api/v1/person/${bed.person}`).then((response) => response.json())
                 .then((data) => (person = data));
             console.log(person)
-            const response2 = await fetch(`http://localhost:8089/api/v1/characteristic/${person.characteristicId}`).then((response) => response.json())
+            const response2 = await fetch(`https://api.saadatportal.com/api/v1/characteristic/${person.characteristicId}`).then((response) => response.json())
                 .then((data) => this.setState({tempPerson : data}));
         }
         this.setState({show: true})
@@ -138,7 +138,7 @@ class RoomAndBed extends Component {
     }
 
     handleSearchBtn = async () =>{
-        const response = await fetch(`http://localhost:8089/api/v1/characteristic/search?${this.state.searchType}=${this.state.searchInput}`).then((response) => response.json())
+        const response = await fetch(`https://api.saadatportal.com/api/v1/characteristic/search?${this.state.searchType}=${this.state.searchInput}`).then((response) => response.json())
             .then((data) => this.setState({peopleFound: data}));
     }
     render() {
