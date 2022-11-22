@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "../style/loginStyle.css";
+import '../style/registerPage.css';
 import logo from "../img/sadat logo-png.png";
 import * as yup from 'yup'
 
@@ -25,25 +26,38 @@ class Login extends Component {
                 <div className="title-form">
                   <h3>ورود کاربر</h3>
                 </div>
-                <input
-                  type="text"
-                  name="user"
-                  value={user}
-                  onChange={this.handleChange}
-                  className="username input"
-                  placeholder="نام کاربری"
-                />
-                <input
-                  type="password"
-                  name="password"
-                  value={password}
-                  onChange={this.handleChange}
-                  className="password input"
-                  placeholder="گذرواژه"
-                />
-                {this.state.errors.length !== 0 && (
-                  this.state.errors.map((e,i) => (<div className="error my-2" key={i}>{e}</div>))
-                )}
+                <div className={'input-group-register'}>
+                  <input
+                      type="text"
+                      name="user"
+                      value={user}
+                      onChange={this.handleChange}
+                      className={`username input`}
+                      style={{border: this.state.errors.includes('لطفا نام کاربری را وارد کنید') ? '2px solid red' : ''}}
+                      placeholder="نام کاربری"
+                  />
+                  {
+                    this.state.errors.includes('لطفا نام کاربری را وارد کنید')
+                      ? <small className="text-danger">لطفا نام کاربری را وارد کنید</small>
+                        : null
+                  }
+                </div>
+                <div className={'input-group-register'}>
+                  <input
+                      type="password"
+                      name="password"
+                      value={password}
+                      onChange={this.handleChange}
+                      className={`password input`}
+                      style={{border: this.state.errors.includes('رمز عبور باید حداقل 8 کاراکتر باشد') ? '2px solid red' : ''}}
+                      placeholder="گذرواژه"
+                  />
+                  {
+                    this.state.errors.includes('رمز عبور باید حداقل 8 کاراکتر باشد')
+                        ? <small className="text-danger">رمز عبور باید حداقل 8 کاراکتر باشد</small>
+                        : null
+                  }
+                </div>
                 <div className="option-row mt-3">
                   <div className="remember">
                     <input
