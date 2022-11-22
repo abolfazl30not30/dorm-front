@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React, {Component, createRef} from "react";
 import '../../../../style/inventory.css'
 import {BsSearch} from "react-icons/bs";
 import {AiFillCloseCircle, AiOutlineClose, AiOutlinePlus} from "react-icons/ai";
@@ -10,9 +10,17 @@ import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import ToggleButton from "@mui/material/ToggleButton";
 import {IoIosAddCircleOutline} from "react-icons/io";
 import './../../../../style/requestPage.css'
+import {TiTick, TiTimes} from "react-icons/ti";
 
 class inventory extends Component {
+    constructor(props) {
+        super(props);
+        this.inputRef = createRef();
+    }
+
     state = {
+        addButtonDisabled: false,
+        addInputContentInModal: '',
         show: false,
         inventory: [],
         typeSearch:"",
@@ -181,11 +189,60 @@ class inventory extends Component {
                                                                 </ToggleButton>
                                                             )
                                                         }
+
+                                                        <div className={'row'}
+                                                             style={{width: '100%', marginRight: '0px', display: 'none'}}
+                                                             ref={this.inputRef}
+                                                        >
+                                                            <input style={{
+                                                                borderRadius: '0',
+                                                                height: '50px',
+                                                                outline: 'none',
+                                                                color: '#2a2e32b3',
+                                                                border: '0.3px solid #bec6cc',
+                                                                padding: '8px'
+                                                            }}
+                                                                   value={this.state.addInputContentInModal}
+                                                                   onChange={(value) => this.setState({addInputContentInModal : value.target.value})}
+                                                                   className={'col-8'}
+                                                            >
+
+                                                            </input>
+                                                            <button className={'col addTypeBtn'}
+                                                                    onClick={() => {
+                                                                        this.inputRef.current.style.display = 'none';
+                                                                        this.setState({addButtonDisabled : false});
+                                                                    }}
+                                                            >
+                                                                <TiTimes size={22} color={'red'}/>
+                                                            </button>
+                                                            <button className={'col addTypeBtn'}
+                                                                    onClick={() => {
+                                                                        let required = /^\s*$/;
+                                                                        if (!required.test(this.state.addInputContentInModal)) {
+
+                                                                            let updatedChoices = [...this.state.tempChoices];
+                                                                            updatedChoices.push(this.state.addInputContentInModal);
+                                                                            this.setState({tempChoices : updatedChoices});
+
+                                                                            this.inputRef.current.style.display = 'none';
+                                                                            this.setState({addButtonDisabled : false});
+                                                                        }
+                                                                    }}
+                                                            >
+                                                                <TiTick size={22} color={'green'}/>
+                                                            </button>
+                                                        </div>
+
                                                         <button value="add"
                                                                 onClick={() => {
-                                                                    this.handleOpenCategory()
+                                                                    this.inputRef.current.style.display = 'block flex';
+                                                                    this.setState({addInputContentInModal : ''});
+
+                                                                    // this.handleOpenCategory()
                                                                 }}
                                                                 className='col addTypeBtn'
+                                                                disabled={this.state.addButtonDisabled}
                                                         >
                                                             <IoIosAddCircleOutline size={25}/>
                                                         </button>
