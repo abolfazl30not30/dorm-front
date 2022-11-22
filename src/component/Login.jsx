@@ -84,6 +84,7 @@ class Login extends Component {
       this.setState({errors: error.errors})
     }
   }
+
   handleSubmit = (e) => {
     e.preventDefault();
     const result =  this.validate();
