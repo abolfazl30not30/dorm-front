@@ -1,11 +1,8 @@
 import {Component, createRef} from "react";
 import "../../../../style/paymentHistory.css"
 import {DatePicker} from "react-persian-datepicker";
-import {AiOutlineEye} from 'react-icons/ai'
-import {BsCalculator} from 'react-icons/bs'
 
 class PaymentHistory extends Component {
-
     state = {
         calStyles: {
             calendarContainer: "calendarContainer",
@@ -19,14 +16,23 @@ class PaymentHistory extends Component {
             prev: "prev",
             title: "title",
         },
-        payment:[]
-        ,
+        payment: [],
         paymentFilter: [],
         typeTransaction: 'all',
         dataPickerStart: null,
         dataPickerEnd: null,
         dateStart: '',
-        dateEnd: ''
+        dateEnd: '',
+        totalPayment: "",
+        totalReceive: "",
+    }
+
+    async componentDidMount() {
+        const response = await fetch('http://localhost:8089/api/v1/account').then((response) => response.json())
+            .then((data) => this.setState({totalPayment : data.totalPayment ,totalReceive : data.totalReceived}));
+        const response2 = await fetch('http://localhost:8089/api/v1/paymentHistory').then((response) => response.json())
+            .then((data) => this.setState({payment : data}));
+
     }
 
     render() {
@@ -34,12 +40,22 @@ class PaymentHistory extends Component {
             <>
                 <div className="payment-history">
                     <div className='title'>صورتحساب</div>
-                    <form className="d-flex flex-row flex-wrap my-2 align-items-center mt-3" onSubmit={this.handleSubmit}>
+                    <div className="d-flex flex-row mt-4">
+                        <div className='d-flex flex-row ms-3'>
+                            <span className="mx-2">هزینه کل: </span>
+                            <span>{this.state.totalPayment} ريال </span>
+                        </div>
+                        <div className='d-flex flex-row'>
+                            <span className="mx-2">درآمد کل:  </span>
+                            <span>{this.state.totalReceive} ريال </span>
+                        </div>
+                    </div>
+                    <div className="d-flex flex-row flex-wrap my-2 align-items-center">
                         <div className='input-group-filter col-6 col-md my-2 px-2'>
                             <select className='input' ref={this.type}>
                                 <option value='all'>همه تراکنش ها</option>
-                                <option value='withdraw'>برداشت</option>
-                                <option value='deposit'>واریز</option>
+                                <option value='expend'>پرداخت</option>
+                                <option value='receive'>دریافت</option>
                             </select>
                             <label className='placeholder'>نوع تراکنش</label>
                         </div>
@@ -66,26 +82,11 @@ class PaymentHistory extends Component {
                             <label className='placeholder'>تا تاریخ</label>
                         </div>
                         <div className='input-group-filter col-6 col-md my-2 px-2'>
-                            <select className='input' ref={this.count}>
-                                <option value='10'>10</option>
-                                <option value='25'>25</option>
-                                <option value='50'>50</option>
-                                <option value='100'>100</option>
-                            </select>
+                            <input type="text" className='input' ref={this.count}/>
                             <label className='placeholder'>تعداد تراکنش</label>
                         </div>
-                        <button className='btn btn-see col-12 col-md my-2 px-2'><AiOutlineEye className={'ms-1'}/>مشاهده
+                        <button className='btn btn-see col-12 col-md my-2 px-2' onClick={this.handleSubmit}>مشاهده
                         </button>
-                    </form>
-                    <div className="d-flex flex-row my-2">
-                        <div className='d-flex flex-row ms-3'>
-                            <span><BsCalculator className={'ms-1'} />هزینه کل:</span>
-                            <span>50000</span>
-                        </div>
-                        <div className='d-flex flex-row'>
-                            <span><BsCalculator className={'ms-1'} />درآمد کل:</span>
-                            <span>60000</span>
-                        </div>
                     </div>
                     <div className='mx-3' style={{borderBottom: '1px solid #ddd'}}></div>
                     <div className="table-box">
@@ -126,33 +127,53 @@ class PaymentHistory extends Component {
     endDate = createRef();
     count = createRef();
 
-    /*async componentDidMount() {
-        let data;
-        const response = await fetch('https://api.saadatportal.com/api/v1/paymentHistory').then((response) => response.json())
-            .then((data) => this.setState({payment: data}, () => {
-                // console.log(this.state.payment)
-            }));
-    }*/
 
     handleDateStartInput = (value) => {
         // this.setState({dataPickerStart: value})
         let date = new Date(value._d);
-        let convertDate = date.getFullYear() + "/" + date.getMonth() + "/" + date.getDate();
+        let convertDate = date.getFullYear() + "/" + date.getMonth() + "/" + date.getDate() + " 00:00:00";
         this.setState({dateStart: convertDate})
     }
     handleDateEndInput = (value) => {
         // this.setState({dataPickerEnd: value})
         let date = new Date(value._d);
-        let convertDate = date.getFullYear() + "/" + date.getMonth() + "/" + date.getDate();
-        this.setState({dateEnd: date})
+        let convertDate = date.getFullYear() + "/" + date.getMonth() + "/" + date.getDate() + " 00:00:00";
+        this.setState({dateEnd: convertDate})
     }
-    handleSubmit = (e) => {
-        e.preventDefault();
-        const type = this.type.current.value;
-        const startTime = this.state.dateStart;
-        const endTime = this.state.dateEnd;
+    handleSubmit = async () => {
+        let type;
+        switch (this.type.current.value) {
+            case 'all': {
+                type = ["receive", "expend"];
+                break;
+            }
+            case 'receive': {
+                type = ["receive"];
+                break;
+            }
+            case 'expend': {
+                type = ["expend"];
+                break;
+            }
+        }
+        const startDate = this.state.dateStart;
+        const endDate = this.state.dateEnd;
         const count = this.count.current.value;
-
+        console.log(type);
+        console.log(startDate);
+        console.log(endDate);
+        console.log(count);
+        const rawResponse = await fetch('http://localhost:8089/api/v1/paymentHistory/filter', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({paymentType: type, count: count, startDate: startDate, endDate: endDate})
+        });
+        var content = await rawResponse.json();
+        console.log(content);
+        this.setState({payment: content});
         // filter type
         /*( () => {
             switch (type) {

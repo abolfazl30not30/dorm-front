@@ -36,13 +36,13 @@ class RequestPage extends Component {
         failureModalShow: false,
 
         tmpRadioValue: '',
-        tmpRequest: '',
+        tmpRequest: {},
 
         tmpRequestForSubmit: {
-            topic: 'test',
-            type: 'test',
-            name: 'test',
-            reason: 'test',
+            topic: '',
+            type: '',
+            name: '',
+            reason: '',
             checked: 'null', // default
             failureReasonId: '',
         },
@@ -56,10 +56,6 @@ class RequestPage extends Component {
         showOverlay: false,
         showType: false,
 
-        choices: [
-            'محصولات بهداشتی',
-            'بیمه',
-        ],
         addInputContentInModal: '',
         addButtonDisabled: false,
 
@@ -81,36 +77,18 @@ class RequestPage extends Component {
             typeForStatus_requiredReg: '',
         },
 
-        requests : [
-            {
-                topic: 'test',
-                type: 'test',
-                name: 'test',
-                reason: 'test',
-                checked: 'null', // default
-                failureReasonId: '',
-            },
-            {
-                topic: 'test',
-                type: 'test',
-                name: 'test',
-                reason: 'test',
-                checked: 'null', // default
-                failureReasonId: '',
-            }
-        ],
+        requests : [],
 
         failure : {
-            name: 'اسم',
-            reason: 'دلیل',
-            type: 'نوع',
+            name: '',
+            reason: '',
+            type: '',
         }
-
     }
 
     async componentDidMount() {
 
-        const response2 = await fetch('https://api.saadatportal.com/api/v1/request').then((response) => response.json())
+        const response2 = await fetch('http://localhost:8089/api/v1/request').then((response) => response.json())
             .then((data) => this.setState({ requests: data }));
 
     }
@@ -176,8 +154,8 @@ class RequestPage extends Component {
                                             <div className={'col row'}>
                                                 <label className={'col-4'}> وضعیت :</label>
                                                 {
-                                                    request.checked !== 'null'
-                                                        ? (request.checked === 'true'
+                                                    request.checked !== null
+                                                        ? (request.checked === true
                                                             ? <Button
                                                                 disabled={true}
                                                                 variant="success"
@@ -202,16 +180,7 @@ class RequestPage extends Component {
                                                                             className={'col-8'}
                                                                             style={{width: '30%'}}
                                                                             onClick={() => {
-                                                                                this.handleOpenFailureModal();
-                                                                                this.setState({tmpRequest : request});
-
-                                                                                let fromAPI = {
-                                                                                    name: 'اسم123',
-                                                                                    reason: 'دلیل123',
-                                                                                    type: 'نوع123',
-                                                                                }
-
-                                                                                this.setState({failure : fromAPI});
+                                                                                this.handleOpenFailureModal(request);
                                                                             }}
                                                                     >
                                                                         رد شده
@@ -236,9 +205,8 @@ class RequestPage extends Component {
                                                             className={'col-8'}
                                                             style={{width: '30%', marginTop: '5%'}}
                                                             onClick={() => {
-                                                                this.setState({showStatusModal: 'true'});
-                                                                this.setState({tmpRequest : request})
-                                                                this.setState({tmpRadioValue : request.checked});
+                                                                this.handleOpenRegisterSituation(request)
+
                                                             }}
                                                         >
                                                             تعیین وضعیت
@@ -270,10 +238,8 @@ class RequestPage extends Component {
                                                                 <FormControlLabel labelPlacement="top" value="null" control={<Radio />} label="تعیین نشده" />
                                                                 <FormControlLabel labelPlacement="top" value="true" control={<Radio />} label="تایید شده" />
                                                                 <FormControlLabel labelPlacement="top" value="false" control={<Radio />} label="تایید نشده" />
-
                                                             </RadioGroup>
                                                         </FormControl>
-
 
                                                         <div style={{display: this.state.tmpRequestForSubmit.checked !== 'false' ? 'none' : 'block'}}>
                                                             <div className={'input-group-register'}>
@@ -333,6 +299,7 @@ class RequestPage extends Component {
                                                             if (this.handleIsValidStatus()) {
                                                                 this.handleSubmitStatus();
                                                                 this.setState({showStatusModal: false});
+                                                                this.resetFailure();
                                                             }
                                                         }}>ثبت
                                                         </button>
@@ -398,12 +365,25 @@ class RequestPage extends Component {
             </>
         );
     }
+
+    handleOpenRegisterSituation = (request)=> {
+        this.setState({showStatusModal: 'true'});
+        this.setState({tmpRequest : request})
+        this.setState({tmpRadioValue : request.checked});
+    }
+
     handleCloseFailureModal = () => {
         this.setState({failureModalShow: false});
     }
 
-    handleOpenFailureModal = () => {
+    handleOpenFailureModal = async (request) => {
         this.setState({failureModalShow: true});
+
+        if(request.checked === false){
+            const response = await fetch(`http://localhost:8089/api/v1/failureReason/${request.failureReasonId}`).then((response) => response.json())
+                .then((data) => this.setState({failure : data}));
+        }
+
     }
 
     handleSearchBtn = () => {
@@ -473,18 +453,55 @@ class RequestPage extends Component {
         this.setState({requests: updatedRequests});
     }
 
-    handleSubmitStatus = () => {
+    handleSubmitStatus = async () => {
 
-        let updatedRequests = [...this.state.requests];
+        if(this.state.tmpRequest.checked === false){
+            const response = await fetch(`http://localhost:8089/api/v1/failureReason/${this.state.tmpRequest.failureReasonId}`).then((response) => response.json())
+                .then((data) => this.setState({failure : data}));
 
-        for (const updatedRequestsKey of updatedRequests) {
-            if (updatedRequestsKey === this.state.tmpRequest) {
-                updatedRequestsKey.checked = this.state.tmpRequestForSubmit.checked;
-                break;
-            }
+            const rawResponse = await fetch(`http://localhost:8089/api/v1/failureReason`, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(this.state.failure)
+            });
         }
 
-        this.setState({requests : updatedRequests})
+        const rawResponse = await fetch(`http://localhost:8089/api/v1/request/${this.state.tmpRequest.id}`, {
+            method: 'PATCH',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({checked : this.state.tmpRequestForSubmit.checked})
+        });
+
+        const content = await rawResponse.json();
+
+        const response2 = await fetch('http://localhost:8089/api/v1/request').then((response) => response.json())
+            .then((data) => this.setState({ requests: data }));
+
+        // let updatedRequests = [...this.state.requests];
+        //
+        // for (const updatedRequestsKey of updatedRequests) {
+        //     if (updatedRequestsKey === this.state.tmpRequest) {
+        //         updatedRequestsKey.checked = this.state.tmpRequestForSubmit.checked;
+        //         break;
+        //     }
+        // }
+        //
+        // this.setState({requests : updatedRequests})
+    }
+
+    resetFailure = () =>{
+        let temeFaliure = {
+            name: "",
+            reason:"",
+            type:"",
+        }
+        this.setState({failure : temeFaliure});
     }
 
     handleValidations = (valueOfField, nameOfField) => {
@@ -496,13 +513,10 @@ class RequestPage extends Component {
 
         this.setState({Validations : updatedValidations});
 
-
-
     }
 
     handleResetFields = () => {
         this.handleOpenType();
-
         let resetTypeOfTempFields = {...this.state.tempFields};
         resetTypeOfTempFields['type'] = null;
         resetTypeOfTempFields['name'] = '';

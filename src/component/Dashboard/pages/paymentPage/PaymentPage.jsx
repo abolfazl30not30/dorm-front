@@ -51,6 +51,7 @@ class PaymentPage extends Component {
         priceType: "IRR", // default value
         fileName: "",
         fileId: "",
+        paymentType:"receive",
 
         Validations: {
             price_requiredReg: '',
@@ -62,10 +63,9 @@ class PaymentPage extends Component {
     }
 
     async componentDidMount() {
-        const response = await fetch('https://api.saadatportal.com/api/v1/category/search?type=Payment').then((response) => response.json())
+
+        const response2 = await fetch('http://localhost:8089/api/v1/category/search?type=Payment').then((response) => response.json())
             .then((data) => this.setState({choices : data}));
-
-
     }
 
     render() {
@@ -123,9 +123,9 @@ class PaymentPage extends Component {
                             </div>
                         </div>
                         <div className='col-8'>
-                            <label style={{marginRight: "33px"}}>نوع: </label>
+                            <label style={{marginRight: "33px"}}>نوع : </label>
                             <div style={{width: '100%', marginRight: "16px"}}>
-                                <Accordion defaultActiveKey="0"
+                                <Accordion
                                            style={{backgroundColor: this.state.Validations.selectedTypeBoolean ? '' : 'rgba(255, 0, 0, 0.4)'}}
                                 >
                                     <Accordion.Item eventKey="0">
@@ -192,22 +192,37 @@ class PaymentPage extends Component {
                     </div>
                     <div className='second-section d-flex flex-wrap justify-content-start mr-3 row' style={{height: '50%'}}>
                         <div className='col-4 mt-5 mb-3 date-container'>
-                            <label className='mb-3'>تاریخ: </label>
-                            <DatePicker calendarStyles={this.state.styles}
-                                        value={this.state.dataPicker}
-                                        className={`input form-control ${this.state.Validations.date_requiredReg === false ? "is-invalid" : ""}`}
-                                        onChange={value => {
-                                            this.handleDateInput(value)
-                                        }}
-                            />
+                            <div>
+                                <label className='mb-3'>تاریخ: </label>
+                                <DatePicker calendarStyles={this.state.styles}
+                                            value={this.state.dataPicker}
+                                            className={`input form-control ${this.state.Validations.date_requiredReg === false ? "is-invalid" : ""}`}
+                                            onChange={value => {
+                                                this.handleDateInput(value)
+                                            }}
+                                />
 
-                            {
-                                this.state.Validations.date_requiredReg === false
-                                    ? <small
-                                        className="text-danger">این فیلد الزامی است!</small>
-                                    : <div/>
-                            }
-
+                                {
+                                    this.state.Validations.date_requiredReg === false
+                                        ? <small
+                                            className="text-danger">این فیلد الزامی است!</small>
+                                        : <div/>
+                                }
+                            </div>
+                            <div>
+                                <label htmlFor="price" className="mt-3">نوع تراکنش:</label>
+                                <div className="row" style={{marginTop: "10px"}}>
+                                    <div className='col-11 mx-3 p-0'>
+                                        <select className='form-select' style={{height: "50px"}} value={this.state.paymentType}
+                                                onChange={(e) => {
+                                                    this.setState({paymentType:e.target.value})
+                                                }}>
+                                            <option value="expend">پرداخت</option>
+                                            <option value="receive">دریافت</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div className='col-8'>
                             <Form>
@@ -221,7 +236,9 @@ class PaymentPage extends Component {
                             </Form>
                         </div>
                     </div>
+                    <div className="row">
 
+                    </div>
                     <div className='third-section'>
                         <label htmlFor="formFileLg" className="form-label">آپلود فاکتور :</label>
                         <div className="row">
@@ -332,7 +349,7 @@ class PaymentPage extends Component {
     }
 
     handleDeleteFile = async () => {
-        await fetch(`https://api.saadatportal.com/api/v1/file/${this.state.fileId}`, {
+        await fetch(`http://localhost:8089/api/v1/file/${this.state.fileId}`, {
             method: 'DELETE',
         })
             .then(res => res.text())
@@ -363,7 +380,7 @@ class PaymentPage extends Component {
         let formData = new FormData();
         console.log(this.state.uploadFile[0]);
         formData.append('file', this.state.uploadFile[0]);
-        await fetch('https://api.saadatportal.com/api/v1/file', {
+        await fetch('http://localhost:8089/api/v1/file', {
             method: 'POST',
             body: formData
         }).then((response) => response.json())
@@ -436,7 +453,7 @@ class PaymentPage extends Component {
             unit: this.state.priceType,
             value: this.state.price,
             type: this.state.selectedType,
-            paymentType: "receive",
+            paymentType: this.state.paymentType,
             description: this.state.description,
             parentId: "",
             parentType: "Personnel",
@@ -449,7 +466,7 @@ class PaymentPage extends Component {
             payment = Object.assign(payment,file)
         }
         if (result) {
-            const rawResponse = await fetch('https://api.saadatportal.com/api/v1/paymentHistory', {
+            const rawResponse = await fetch('http://localhost:8089/api/v1/paymentHistory', {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',

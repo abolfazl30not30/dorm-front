@@ -102,7 +102,7 @@ class MainPage extends Component {
                 bankAccountExpirationDate: '',
                 cvv2: '', //
                 fullName: '',//
-                parentType: '',
+                parentType: 'pe',
                 gender: 'male',
                 startDate: '',
                 endDate: '',
@@ -488,7 +488,6 @@ class MainPage extends Component {
                             <Route path="/dashboard/taskManagement" element={(<TrelloPage/>)}/>
                             <Route path="/dashboard/PresenceAbsence" element={(<PresenceAbsence/>)}/>
                             <Route path="/dashboard/PresenceAbsencePage2" element={(<PresenceAbsenceRoomPerson/>)}/>
-                            <Route path="/" element={(<EditFloorAndUnit/>)}/>
                         </Routes>
                     </BuildingContext.Provider>
                 </div>

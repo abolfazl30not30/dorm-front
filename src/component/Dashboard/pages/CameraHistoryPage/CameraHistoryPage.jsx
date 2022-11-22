@@ -28,13 +28,18 @@ class CameraHistoryPage extends Component {
         tmpRequest: {
             title: '',
             description: '',
-            unitId: '',
+            unit: '',
             date: '',
-            supervisor: '',
-            Assignee: '',
+            supervisor: '1111111',
+            assignee: '',
         },
         dateValue: '',
         data: []
+    }
+
+    async componentDidMount() {
+        const response = await fetch('http://localhost:8089/api/v1/cameraHistory').then((response) => response.json())
+            .then((data) => this.setState({data: data}));
     }
 
     render() {
@@ -100,7 +105,7 @@ class CameraHistoryPage extends Component {
                                 <th>تاریخ</th>
                                 <th>واحد</th>
                                 <th>نام درخواست کننده</th>
-                                <th>وضعیت</th>
+                                <th>توضیحات</th>
                             </tr>
                             </thead>
 
@@ -111,14 +116,13 @@ class CameraHistoryPage extends Component {
                                     <tr>
                                         <td>{index + 1}</td>
                                         <td>{data.title}</td>
-                                        <td>{data.date}</td>
+                                        <td>{data.date.replace(" 00:00:00","")}</td>
                                         <td>{data.unit}</td>
                                         <td>{data.assignee}</td>
-                                        <td>{data.status}</td>
+                                        <td>{data.description}</td>
                                     </tr>
                                 ))
                             }
-
                             </tbody>
                         </table>
 
@@ -192,7 +196,6 @@ class CameraHistoryPage extends Component {
                                 >
                                     <button type="button" className={"btn btn-secondary mb-2"} onClick={() => {
                                         let updatedTmpRequest = {...this.state.tmpRequest};
-
                                         updatedTmpRequest.dateValue = '';
                                         updatedTmpRequest.date = '';
                                         this.setState({tmpRequest: updatedTmpRequest})
@@ -313,7 +316,7 @@ class CameraHistoryPage extends Component {
 
     handleSubmit = async () => {
 
-        const rawResponse = await fetch('https://api.saadatportal.com/api/v1/cameraHistory', {
+        const rawResponse = await fetch('http://localhost:8089/api/v1/cameraHistory', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -323,16 +326,16 @@ class CameraHistoryPage extends Component {
             body: JSON.stringify(this.state.tmpRequest)
         });
 
-        const response = await fetch('https://api.saadatportal.com/api/v1/cameraHistory').then((response) => response.json())
+        const response = await fetch('http://localhost:8089/api/v1/cameraHistory').then((response) => response.json())
             .then((data) => this.setState({data: data}));
+
         let tmpRequest = {
             title: '',
             description: '',
-            unitId: '',
+            unit: '',
             date: '',
-            dateValue: '',
-            supervisor: '',
-            Assignee: '',
+            supervisor: '1111111',
+            assignee: '',
         }
 
         let resetValidations = {...this.state.validation};
@@ -378,6 +381,7 @@ class CameraHistoryPage extends Component {
 
         this.setState({validation: updatedValidations});
     }
+
     handleDateValue=(value)=>{
         this.setState({dateValue : value});
         console.log(value)

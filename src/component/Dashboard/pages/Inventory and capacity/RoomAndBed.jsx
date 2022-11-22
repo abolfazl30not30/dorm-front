@@ -20,112 +20,6 @@ import ToggleButton from "@mui/material/ToggleButton";
 class RoomAndBed extends Component {
     static contextType = BuildingContext;
     state = {
-        rooms1: [
-            {
-                id: 1, name: 'اتاق 1',
-                beds: [
-                    {id: 11, name: 'تخت 11', empty: true},
-                    {
-                        id: 12, name: 'تخت 12', empty: false,
-                        person: {
-                            id: 1,
-                            firstName: 'ابوافضل',
-                            lastName: 'زارع',
-                            nationalCode: 2500255252,
-                            StartOfStay: '12/34/56',
-                            age: 21,
-                            image: 'https://docs.microsoft.com/answers/storage/attachments/209536-360-f-364211147-1qglvxv1tcq0ohz3fawufrtonzz8nq3e.jpg'
-                        }
-                    },
-                    {id: 13, name: 'تخت 13', empty: true},
-                    {id: 14, name: 'تخت 14', empty: true},
-                    {id: 15, name: 'تخت 15', empty: true},
-
-                ]
-            },
-            {
-                id: 2, name: 'اتاق 2',
-                beds: [
-                    {id: 21, name: 'تخت 21', empty: true},
-                    {
-                        id: 22, name: 'تخت 22', empty: false,
-                        person: {
-                            id: 1,
-                            firstName: 'پوریا',
-                            lastName: 'زارع',
-                            nationalCode: 2500255252,
-                            StartOfStay: '12/34/56',
-                            age: 21,
-                            image: 'https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png'
-                        }
-                    },
-                    {id: 23, name: 'تخت 23', empty: true},
-                    {id: 24, name: '24 تخت', empty: true},
-                    {id: 25, name: 'تخت 25', empty: true},
-
-                ]
-            },
-            {
-                id: 3, name: 'اتاق 3',
-                beds: [
-                    {id: 31, name: '31 تخت', empty: true},
-                    {
-                        id: 32, name: 'تخت 32', empty: false,
-                        person: {
-                            id: 1,
-                            firstName: 'فاضل',
-                            lastName: 'زارع',
-                            nationalCode: 2500255252,
-                            StartOfStay: '12/34/56',
-                            age: 21,
-                            image: 'https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png'
-                        }
-                    },
-                    {id: 33, name: 'تخت 33', empty: true},
-                    {id: 34, name: 'تخت 34', empty: true},
-                    {id: 35, name: 'تخت 35', empty: true},
-
-                ]
-            },
-            {
-                id: 4, name: 'اتاق 4',
-                beds: [
-                    {id: 41, name: '41 تخت', empty: true},
-                    {id: 42, name: '42 تخت', empty: true},
-                    {id: 43, name: 'تخت 43', empty: true},
-                    {id: 44, name: 'تخت 44', empty: true},
-                    {id: 45, name: 'تخت 45', empty: true},
-
-                ]
-            },
-            {
-                id: 4, name: 'اتاق 5',
-                beds: [
-                    {id: 51, name: '51 تخت', empty: true},
-                    {id: 52, name: '52 تخت', empty: true},
-                    {id: 53, name: 'تخت 53', empty: true},
-                    {id: 54, name: '54 تخت', empty: true},
-                    {id: 55, name: 'تخت 55', empty: true},
-
-                ],
-                accessory: [
-                    {id: 51, accName: 'وسایل سرمایشی', count: 2},
-                    {id: 51, accName: "یخچال", count: 1},
-                    {id: 51, accName: "چوب لباسی", count: 10}
-                ]
-            },
-            {
-                id: 6, name: 'اتاق 6',
-                beds: [
-                    {id: 61, name: '61 تخت', empty: true},
-                    {id: 62, name: '62 تخت', empty: true},
-                    {id: 63, name: '63 تخت', empty: true},
-                    {id: 64, name: 'تخت 64', empty: true},
-                    {id: 65, name: 'تخت 65', empty: true},
-
-                ]
-            }
-        ],
 
         isLoading: false,
         isFull: false,
@@ -141,16 +35,18 @@ class RoomAndBed extends Component {
         bedOpen:
             {
                 id: 32, name: 'تخت 32', empty: false,
-                person: {
-                    id: 1,
-                    firstName: 'میلاد',
-                    lastName: 'زارع',
-                    nationalCode: 2500255252,
-                    StartOfStay: '12/34/56',
-                    age: 21,
-                    image: 'https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png'
-                }
+                personId:"",
             },
+
+        tempPerson:{
+            id: 1,
+            firstName: 'میلاد',
+            lastName: 'زارع',
+            nationalCode: 2500255252,
+            StartOfStay: '12/34/56',
+            image: 'https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png'
+        },
+
         roomAccessory: {
             accessories: [
                 {name: 'یخچال', count: 1},
@@ -166,8 +62,9 @@ class RoomAndBed extends Component {
     }
 
     async componentDidMount() {
+
         console.log(this.context.unitId)
-        const response = await fetch(`https://api.saadatportal.com/api/v1/unit/room/${this.context.unitId}`).then((response) => response.json())
+        const response = await fetch(`http://localhost:8089/api/v1/unit/room/${this.context.unitId}`).then((response) => response.json())
             .then((data) => this.setState({rooms: data, isLoading: false},()=>{
                 if (data.length == 0) {
                     this.setState({isFull: false})
@@ -176,7 +73,7 @@ class RoomAndBed extends Component {
                 }
             }));
 
-        const responseUnit = await fetch(`https://api.saadatportal.com/api/v1/unit/${this.context.unitId}`).then((response) => response.json())
+        const responseUnit = await fetch(`http://localhost:8089/api/v1/unit/${this.context.unitId}`).then((response) => response.json())
             .then((data) => this.setState({unit: data, isLoading: false}));
 
     }
@@ -184,12 +81,34 @@ class RoomAndBed extends Component {
     handleClose = () => {
         this.setState({show: false})
     };
-    handleSubmit = () =>{
 
+    handleSubmit = async () =>{
+
+        const rawResponse = await fetch(`http://localhost:8089/api/v1/bed/${this.state.bedOpen.id}`, {
+            method: 'PATCH',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({personId : this.state.selectedPeople , empty :  false})
+        });
+
+        const content = await rawResponse.json();
+        this.handleClose();
     }
-    handleShow = (bed, room) => {
+
+    handleShow = async (bed, room) => {
         this.setState({roomAccessory: room})
         this.setState({bedOpen: bed})
+        console.log(bed);
+        if(bed.empty === false){
+            let person = {}
+            const response = await fetch(`http://localhost:8089/api/v1/person/${bed.person}`).then((response) => response.json())
+                .then((data) => (person = data));
+            console.log(person)
+            const response2 = await fetch(`http://localhost:8089/api/v1/characteristic/${person.characteristicId}`).then((response) => response.json())
+                .then((data) => this.setState({tempPerson : data}));
+        }
         this.setState({show: true})
     };
 
@@ -208,15 +127,18 @@ class RoomAndBed extends Component {
         this.setState({tempRoom: room})
     }
     handleChange = (event, newAlignment) => {
+        console.log(newAlignment)
         this.setState({selectedPeople: newAlignment})
     }
+
     //search
     handleSearchInput = (e) =>{
         const value = e.target.value;
         this.setState({searchInput:value});
     }
+
     handleSearchBtn = async () =>{
-        const response = await fetch(`https://api.saadatportal.com/api/v1/characteristic/search?${this.state.searchType}=${this.state.searchInput}`).then((response) => response.json())
+        const response = await fetch(`http://localhost:8089/api/v1/characteristic/search?${this.state.searchType}=${this.state.searchInput}`).then((response) => response.json())
             .then((data) => this.setState({peopleFound: data}));
     }
     render() {
@@ -309,27 +231,29 @@ class RoomAndBed extends Component {
                             (!this.state.bedOpen.empty) ? (
                                 <div className="d-flex justify-content-center">
                                     <div className='profile-box'>
-                                        <img src={this.state.bedOpen.person.image} width='200' alt=""/>
-                                        <div
-                                            className="name">{this.state.bedOpen.person.firstName} {this.state.bedOpen.person.lastName}</div>
+                                        <img className="profile-img"
+                                             src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="profile"/>
+                                        <div className="name">{this.state.tempPerson.firstName} {this.state.tempPerson.lastName}</div>
                                         <div className='profile-item'><AiOutlineNumber className='ms-2'/>کد
-                                            ملی: {this.state.bedOpen.person.nationalCode}</div>
+                                            ملی: {this.state.tempPerson.nationalCode}</div>
                                         <div className='profile-item'><MdDateRange className='ms-2'/>شروع
-                                            اقامت: {this.state.bedOpen.person.StartOfStay}</div>
+                                            اقامت: {this.state.tempPerson.startDate}</div>
                                         <div className='profile-item'><AiOutlineUser
-                                            className='ms-2'/>سن: {this.state.bedOpen.person.age}</div>
+                                            className='ms-2'/>تاريخ تولد: {this.state.tempPerson.birthDate}</div>
                                     </div>
                                 </div>
                             ) : (
                                 <div className="search-container-popup">
                                     <div className="input-container row align-items-center">
                                         <div className="col-1"><label>براساس:</label></div>
+
                                         <div className="col-3 " style={{paddingLeft: "0"}}>
                                             <Form.Select aria-label="Default select example" style={{height : "50px"}} value={this.state.searchType} onChange={(e)=>{this.setState({searchType:e.target.value})}}>
                                                 <option value="firstName">نام و نام خانوادگی</option>
                                                 <option value="nationalCode">کد ملی</option>
                                             </Form.Select>
                                         </div>
+
                                         <div className="input-group-register col-7 px-0" style={{paddingRight: "0"}}>
                                             <input type="text" id="inputSearch" className="input" placeholder=" " style={{padding:"6px"}} onChange={(e)=>{this.handleSearchInput(e)}}/>
                                             <label className="placeholder">جستوجـو</label>
@@ -339,6 +263,7 @@ class RoomAndBed extends Component {
                                             </button>
                                         </div>
                                     </div>
+
                                     <div className="people-container mt-4">
                                         {this.state.peopleFound.map((poeple)=>(
                                             <ToggleButtonGroup
@@ -350,7 +275,7 @@ class RoomAndBed extends Component {
                                                 aria-label="text alignment"
                                                 style={{width: "100%"}}
                                             >
-                                                <ToggleButton value="hello" style={{display: "block"}}>
+                                                <ToggleButton value={poeple.parentId} style={{display: "block"}}>
                                                     <div className="row">
                                                         <div
                                                             className="col-3 profile-img d-flex align-items-center justify-content-center">
@@ -360,7 +285,7 @@ class RoomAndBed extends Component {
                                                             <div className="col-6">
                                                                 <div className="d-flex">
                                                                     <label>نام و نام خانوادگی: </label>
-                                                                    <p>{poeple.firstName}{poeple.lastName}</p>
+                                                                    <p>{poeple.firstName} {poeple.lastName}</p>
                                                                 </div>
                                                                 <div className="d-flex">
                                                                     <label>نام پدر: </label>
@@ -425,6 +350,7 @@ class RoomAndBed extends Component {
                     <Modal.Header closeButton>
                         <Modal.Title>امکانات اتاق</Modal.Title>
                     </Modal.Header>
+
                     <Modal.Body>
                         {
                             this.state.tempRoom.accessories.map((acc) => (

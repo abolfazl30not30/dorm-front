@@ -28,6 +28,7 @@ class FGInformationPage extends Component {
                                 label={'نام'}
                             />
                         </div>
+
                         <div className="input-group-register col-4">
                             <SimpleTextInput
                                 condition1={this.context.familyGuestInformationValidation.lastName_requiredReg}
@@ -38,6 +39,7 @@ class FGInformationPage extends Component {
                                 label={'نام خانوادگی'}
                             />
                         </div>
+
                         <div className="input-group-register col-4">
                             <SimpleTextInput
                                 condition1={this.context.familyGuestInformationValidation.nationalCode_requiredReg}
@@ -68,6 +70,7 @@ class FGInformationPage extends Component {
                                 label={'محل صدور'}
                             />
                         </div>
+                        
                         <div className="input-group-register col-4">
                             <DateInput value={this.context.valueOfDates.familyGuest.birthDate}
                                        fieldNameString={'familyGuestInformation'}
