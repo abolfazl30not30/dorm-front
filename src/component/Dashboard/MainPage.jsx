@@ -28,7 +28,7 @@ import PresenceAbsenceRoomPerson from './pages/PresenceAbsence/PresenceAbsenceRo
 class MainPage extends Component {
     state = {
 
-        typeofResident: '',
+        typeofResident: 'constant',
         unitNumber: "",
         unitIdPA: "",
         unitNumberPA: "",

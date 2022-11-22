@@ -368,16 +368,19 @@ class MainRegister extends Component {
                 label: 'مشخصات اولیه',
                 name: 'step 1',
                 content: <CInformationPage />,
+                validator: this.constantInformationPageValidation,
             },
             {
                 label: 'مشخصات تکمیلی',
                 name: 'step 2',
                 content: <CInformationFurtherPage />,
+                validator: this.cInformationFurtherPageValidation,
             },
             {
                 label: 'مشخصات بستگان',
                 name: 'step 3',
                 content: <CInformationFamilyPage />,
+                validator: this.cInformationFamilyPageValidation,
             },
             {
                 label: 'آپلود مدارک',
