@@ -28,9 +28,9 @@ class PaymentHistory extends Component {
     }
 
     async componentDidMount() {
-        const response = await fetch('http://localhost:8089/api/v1/account').then((response) => response.json())
+        const response = await fetch('https://api.saadatportal.com/api/v1/account').then((response) => response.json())
             .then((data) => this.setState({totalPayment : data.totalPayment ,totalReceive : data.totalReceived}));
-        const response2 = await fetch('http://localhost:8089/api/v1/paymentHistory').then((response) => response.json())
+        const response2 = await fetch('https://api.saadatportal.com/api/v1/paymentHistory').then((response) => response.json())
             .then((data) => this.setState({payment : data}));
 
     }
@@ -163,7 +163,7 @@ class PaymentHistory extends Component {
         console.log(startDate);
         console.log(endDate);
         console.log(count);
-        const rawResponse = await fetch('http://localhost:8089/api/v1/paymentHistory/filter', {
+        const rawResponse = await fetch('https://api.saadatportal.com/api/v1/paymentHistory/filter', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',

@@ -291,10 +291,10 @@ class ProfilePage extends Component {
 
     async componentDidMount () {
 
-        const response = await fetch(`http://localhost:8089/api/v1/characteristic/${this.context.charId}`).then((response) => response.json())
+        const response = await fetch(`https://api.saadatportal.com/api/v1/characteristic/${this.context.charId}`).then((response) => response.json())
             .then((data) => this.setState({person: data}));
 
-        const response2 = await fetch(`http://localhost:8089/api/v1/person/${this.context.personId}`).then((response) => response.json())
+        const response2 = await fetch(`https://api.saadatportal.com/api/v1/person/${this.context.personId}`).then((response) => response.json())
             .then((data) => this.setState({personObject: data}));
     }
 

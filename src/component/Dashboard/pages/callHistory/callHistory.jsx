@@ -40,7 +40,7 @@ class callHistory extends Component {
     }
 
     async componentDidMount() {
-        const response = await fetch('http://localhost:8089/api/v1/telephoneHistory').then((response) => response.json())
+        const response = await fetch('https://api.saadatportal.com/api/v1/telephoneHistory').then((response) => response.json())
             .then((data) => this.setState({callHistory : data}));
     }
 
@@ -289,7 +289,7 @@ class callHistory extends Component {
             description: this.state.description
         }
 
-        const rawResponse = await fetch('http://localhost:8089/api/v1/telephoneHistory', {
+        const rawResponse = await fetch('https://api.saadatportal.com/api/v1/telephoneHistory', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -298,7 +298,7 @@ class callHistory extends Component {
             body: JSON.stringify(newCall)
         });
 
-        const response = await fetch('http://localhost:8089/api/v1/telephoneHistory').then((response) => response.json())
+        const response = await fetch('https://api.saadatportal.com/api/v1/telephoneHistory').then((response) => response.json())
             .then((data) => this.setState({callHistory : data}));
 
         // this.setState({show: false})

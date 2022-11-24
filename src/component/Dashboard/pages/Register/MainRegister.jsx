@@ -492,7 +492,7 @@ class MainRegister extends Component {
 
 
                 console.log(newCharacteristic)
-                const rawResponse = await fetch('http://localhost:8089/api/v1/characteristic', {
+                const rawResponse = await fetch('https://api.saadatportal.com/api/v1/characteristic', {
                     method: 'POST',
                     headers: {
                         'Accept': 'application/json',
@@ -511,7 +511,7 @@ class MainRegister extends Component {
                     files: this.context.constantUploadPage
                 }
 
-                const rawResponse1 = await fetch('http://localhost:8089/api/v1/person', {
+                const rawResponse1 = await fetch('https://api.saadatportal.com/api/v1/person', {
                     method: 'POST',
                     headers: {
                         'Accept': 'application/json',
@@ -533,7 +533,7 @@ class MainRegister extends Component {
                 newCharacteristic.paymentDate = paymentDate1+" 00:00:00";
 
                 console.log(newCharacteristic)
-                const createdChar = await fetch('http://localhost:8089/api/v1/characteristic', {
+                const createdChar = await fetch('https://api.saadatportal.com/api/v1/characteristic', {
                     method: 'POST',
                     headers: {
                         'Accept': 'application/json',
@@ -553,7 +553,7 @@ class MainRegister extends Component {
                     files: this.context.otherGuestUploadPage
                 }
 
-                const createdPerson = await fetch('http://localhost:8089/api/v1/person', {
+                const createdPerson = await fetch('https://api.saadatportal.com/api/v1/person', {
                     method: 'POST',
                     headers: {
                         'Accept': 'application/json',
@@ -571,7 +571,7 @@ class MainRegister extends Component {
                     childId: respondPerson.id
                 }
 
-                const createGuest = await fetch(`http://localhost:8089/api/v1/person/guest/${this.context.familyGuestInformationFamily.hostId}`, {
+                const createGuest = await fetch(`https://api.saadatportal.com/api/v1/person/guest/${this.context.familyGuestInformationFamily.hostId}`, {
                     method: 'POST',
                     headers: {
                         'Accept': 'application/json',
@@ -594,7 +594,7 @@ class MainRegister extends Component {
                 newCharacteristic.paymentDate = paymentDate1+" 00:00:00";
 
                 console.log(newCharacteristic)
-                const createdChar = await fetch('http://localhost:8089/api/v1/characteristic', {
+                const createdChar = await fetch('https://api.saadatportal.com/api/v1/characteristic', {
                     method: 'POST',
                     headers: {
                         'Accept': 'application/json',
@@ -613,7 +613,7 @@ class MainRegister extends Component {
                     files: this.context.otherGuestUploadPage
                 }
 
-                const createdPerson = await fetch('http://localhost:8089/api/v1/person', {
+                const createdPerson = await fetch('https://api.saadatportal.com/api/v1/person', {
                     method: 'POST',
                     headers: {
                         'Accept': 'application/json',
@@ -625,7 +625,7 @@ class MainRegister extends Component {
 
                 console.log(this.context.otherGuestInformationFamily.hostId)
 
-                const editPersonRespond = await fetch(`http://localhost:8089/api/v1/characteristic/${respondChar.id}`, {
+                const editPersonRespond = await fetch(`https://api.saadatportal.com/api/v1/characteristic/${respondChar.id}`, {
                     method: 'PATCH',
                     headers: {
                         'Accept': 'application/json',
@@ -639,7 +639,7 @@ class MainRegister extends Component {
                     childId: respondPerson.id
                 }
 
-                const createGuest = await fetch(`http://localhost:8089/api/v1/person/guest/${this.context.otherGuestInformationFamily.hostId}`, {
+                const createGuest = await fetch(`https://api.saadatportal.com/api/v1/person/guest/${this.context.otherGuestInformationFamily.hostId}`, {
                     method: 'POST',
                     headers: {
                         'Accept': 'application/json',
