@@ -41,7 +41,7 @@ class CInformationFurtherPage extends Component {
                                        value={this.context.valueOfDates.constantResident.startDate}
                                        valueFieldString={'constantResident'}
                                        fieldNameString={'constantInformationFurther'}
-                                       valueOfInputString={'startDate'}
+                                       valueOfInputString={'reservationDate'}
                                        required={true}
                                        label={'تاریخ شروع پذیرش'}
                                        timeInclude={true}

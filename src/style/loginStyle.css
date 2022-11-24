@@ -30,6 +30,7 @@
   );
   border-radius: 0 10px 10px 0;
 }
+
 .container-login .left-side .title {
   width: 100%;
   height: 25%;
@@ -52,6 +53,7 @@
 .left-side .form-container .login-form {
   width: 65%;
   height: 100%;
+  padding: 1rem;
   background-color: white;
   border-radius: 20px;
   display: flex !important;
@@ -109,6 +111,7 @@
   .option-row
   .remember
   .chk-remember {
+
 }
 .container-login .left-side .form-container .login-form .option-row .remember label {
   font-family: IranSans;
@@ -123,8 +126,8 @@
   font-size: 12px;
 }
 .container-login .left-side .form-container .login-form .btn-login {
-  width: 77%;
-  height: 13%;
+  width: 70%;
+  height: 15%;
   font-family: IranSans;
   font-size: 15px;
   border-radius: 10px;
@@ -140,6 +143,7 @@
   background-color: rgba(236, 240, 241,0.95);
   border-radius: 10px 0 0 10px;
 }
+
 .container-login .right-side img {
   width: 100%;
   height: 100%;

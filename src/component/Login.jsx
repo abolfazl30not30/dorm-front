@@ -26,6 +26,7 @@ class Login extends Component {
                 <div className="title-form">
                   <h3>ورود کاربر</h3>
                 </div>
+
                 <div className={'input-group-register'}>
                   <input
                       type="text"
@@ -89,6 +90,7 @@ class Login extends Component {
     user: yup.string().required('لطفا نام کاربری را وارد کنید'),
     password: yup.string().min(8,'رمز عبور باید حداقل 8 کاراکتر باشد')
   })
+
   validate = async () => {
     try {
       const result = await this.schema.validate(this.state.account, {abortEarly: false});
