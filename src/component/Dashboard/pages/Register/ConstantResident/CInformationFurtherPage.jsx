@@ -14,7 +14,7 @@ class CInformationFurtherPage extends Component {
                 <div className="register-step-box">
                     <h2>مشخصات تکمیلی</h2>
                     <div className='d-flex flex-wrap justify-content-start'>
-                        <div className="input-group-register col-6">
+                        <div className="input-group-register col-md-4 col-12">
                             <SimpleTextInput
                                 condition1={this.context.constantInformationFurtherValidation.phoneNumber_requiredReg}
                                 condition2={this.context.constantInformationFurtherValidation.phoneNumber_telephoneReg}
@@ -25,7 +25,7 @@ class CInformationFurtherPage extends Component {
                                 label={'شماره همراه اقامتگر'}
                             />
                         </div>
-                        <div className="input-group-register col-6">
+                        <div className="input-group-register col-md-4 col-12">
                             <SimpleTextInput
                                 condition1={this.context.constantInformationFurtherValidation.telephoneNumber_requiredReg}
                                 condition3={this.context.constantInformationFurtherValidation.telephoneNumber_homeTelephoneReg}
@@ -36,7 +36,7 @@ class CInformationFurtherPage extends Component {
                                 label={'شماره تلفن منزل'}
                             />
                         </div>
-                        <div className="input-group-register col-6">
+                        <div className="input-group-register col-md-4 col-12">
                             <DateInput condition1={this.context.constantInformationFurtherValidation.startDate_requiredReg}
                                        value={this.context.valueOfDates.constantResident.startDate}
                                        valueFieldString={'constantResident'}
@@ -47,7 +47,7 @@ class CInformationFurtherPage extends Component {
                                        timeInclude={true}
                             />
                         </div>
-                        <div className="input-group-register col-6">
+                        <div className="input-group-register col-md-4 col-12">
                             <DateInput condition1={this.context.constantInformationFurtherValidation.endDate_requiredReg}
                                        value={this.context.valueOfDates.constantResident.endDate}
                                        valueFieldString={'constantResident'}
