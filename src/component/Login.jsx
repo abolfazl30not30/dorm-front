@@ -59,6 +59,11 @@ class Login extends Component {
                         ? <small className="text-danger">رمز عبور باید حداقل 8 کاراکتر باشد</small>
                         : null
                   }
+                  {
+                    this.state.errors.includes('ایمیل یا پسورد صحیح نمی باشد')
+                        ? <small className="text-danger">ایمیل یا پسورد صحیح نمی باشد</small>
+                        : null
+                  }
                 </div>
                 <div className="option-row mt-3">
                   <div className="remember">
@@ -101,18 +106,19 @@ class Login extends Component {
       this.setState({errors: error.errors})
     }
   }
-
   handleSubmit = async (e) => {
     e.preventDefault();
     const result =  this.validate();
-    let getValue = {}
-    result.then((value => {getValue = Object.assign({},value)}));
-    let username = "fazel123";
-    let password = "1234";
-    if(username == getValue.user && password == getValue.password){
-      window.location = '/dashboard';
-    }else {
 
+    let getValue = await result;
+
+    let username = "fazel";
+    let password = "12345678";
+
+    if(username === getValue.user && password === getValue.password){
+        window.location = '/dashboard';
+    }else {
+      this.setState({errors: ['ایمیل یا پسورد صحیح نمی باشد']})
     }
   }
   
