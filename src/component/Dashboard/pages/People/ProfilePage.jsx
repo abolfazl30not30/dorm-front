@@ -1920,15 +1920,18 @@ class ProfilePage extends Component {
                 })();
             case 'violation':
                 return (() => {
+
                     const date = this.date.current.value;
                     const time = this.time.current.value;
                     const description = this.description.current.value;
+
                     const result = {
                         'title': this.state.reportType,
                         'date': date,
                         'time': time,
                         'description': description
                     }
+
                     const newReports = this.state.report.concat(result)
                     this.setState({report: newReports})
                     this.setState({show: false})
