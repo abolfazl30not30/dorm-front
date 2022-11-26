@@ -4,6 +4,10 @@ import "../../../style/slider.css"
 class Home extends Component {
     state = {
     }
+    async componentDidMount() {
+
+    }
+
     render() {
         return (
             <SlideShow/>

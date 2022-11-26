@@ -3,6 +3,7 @@
     width: 100%;
     margin: auto;
 }
+
 .each-slide > div {
     display: flex;
     align-items: center;
@@ -10,6 +11,7 @@
     background-size: cover;
     height: 300px;
 }
+
 .react-slideshow-container .nav[data-type="prev"] span {
     margin-left: 5px;
     border-right: none;
@@ -44,9 +46,11 @@
     margin: 0;
     background: #adceed;
 }
+
 .react-slideshow-container + div.indicators > div:last-of-type {
     margin-right: 10px;
 }
+
 .react-slideshow-wrapper{
-    height: 100vh;
+    height: 70vh;
 }

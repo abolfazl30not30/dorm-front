@@ -7,6 +7,7 @@ import persian_fa from "react-date-object/locales/persian_fa";
 import '../../../../style/EventPageStyle.css';
 import {Modal} from "react-bootstrap";
 
+
 class EventPage extends Component {
 
     state = {
@@ -72,7 +73,7 @@ class EventPage extends Component {
     render() {
         return (
             <>
-                <div className="d-flex flex-md-row flex-column align-items-center p-1">
+                <div className="d-flex flex-md-row flex-column p-1">
                     <div className="col-md-6 col-12 p-3">
                         <div className='d-flex justify-content-center'>
                             <Calendar
@@ -206,6 +207,7 @@ class EventPage extends Component {
                         </ul>
                     </div>
                 </div>
+
                 <Modal centered show={this.state.showType} onHide={() => {
                     this.handleCloseType()
                 }}>
@@ -246,6 +248,7 @@ class EventPage extends Component {
     }
 
     handleSubmitType = (e) => {
+
         e.preventDefault();
         let regCheck = /^\s*$/;
         if (!regCheck.test(this.state.tempInputForModal)) {

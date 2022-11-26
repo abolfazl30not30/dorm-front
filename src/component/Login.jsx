@@ -10,7 +10,8 @@ class Login extends Component {
       user:'',
       password:''
     },
-    errors: []
+    errors: [],
+    getValue:{}
   };
   render() {
     const {user,password} = this.state.account
@@ -101,10 +102,18 @@ class Login extends Component {
     }
   }
 
-  handleSubmit = (e) => {
+  handleSubmit = async (e) => {
     e.preventDefault();
     const result =  this.validate();
-    console.log(result);
+    let getValue = {}
+    result.then((value => {getValue = Object.assign({},value)}));
+    let username = "fazel123";
+    let password = "1234";
+    if(username == getValue.user && password == getValue.password){
+      window.location = '/dashboard';
+    }else {
+
+    }
   }
   
 }
