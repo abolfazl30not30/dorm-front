@@ -265,10 +265,11 @@ class BasicInformation extends Component{
                         }
                         <div className="input-group-register col-4">
                             <SimpleTextInput
+                                condition1={this.context.personnelFieldsValidation.type_requiredReg}
                                 value={this.context.personnelFields.type}
                                 fieldNameString={'personnelFields'}
                                 valueOfInputString={'type'}
-                                label={'نوع'}
+                                label={'نوع پرسنل'}
                             />
                         </div>
                     </div>

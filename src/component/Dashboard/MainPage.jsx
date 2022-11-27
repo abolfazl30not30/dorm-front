@@ -102,7 +102,7 @@ class MainPage extends Component {
                 bankAccountExpirationDate: '',
                 cvv2: '', //
                 fullName: '',//
-                parentType: '',
+                parentType: 'Personnel',
                 gender: 'male',
                 startDate: '',
                 endDate: '',
@@ -265,6 +265,7 @@ class MainPage extends Component {
                 emergencyNumber_MobileOrHomeTelephoneReg: '',
                 email_emailReg: '',
                 healthyStatus_requiredReg: '',
+                type_requiredReg: '',
 
                 //second page
                 major_requiredReg: '',

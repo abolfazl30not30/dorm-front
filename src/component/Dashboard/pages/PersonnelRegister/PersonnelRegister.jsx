@@ -181,16 +181,18 @@ class PersonnelRegister extends Component {
             body: JSON.stringify(newCharacteristic)
         });
 
-        var content = await rawResponse.json();
-        console.log(content)
+        var content2 = await rawResponse.json();
+        console.log(content2)
 
         let personnel = {
-            gender: content.gender,
-            type: content.type,
+            gender: newCharacteristic.gender,
+            type: newCharacteristic.type,
             residenceType:"resident",
-            characteristicId:content.id,
+            characteristicId: newCharacteristic.id,
             files: this.context.personnelUploadPage,
         }
+
+        console.log(personnel.type);
 
 
         const rawResponse1 = await fetch('https://api.saadatportal.com/api/v1/personnel', {
