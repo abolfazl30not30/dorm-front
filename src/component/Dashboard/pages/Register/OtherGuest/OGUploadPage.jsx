@@ -137,7 +137,7 @@ class OGUploadPage extends Component {
                 <div className='upload-container row'>
                     <div className="upload-container-title">
                         <h5>آپلود مدارک</h5>
-                        <p>حداکثر حجم آپلود فایل 10 مگابایت می باشد</p>
+                        <p> توجه: حداکثر حجم آپلود فایل 10 مگابایت می باشد</p>
                     </div>
                     <div className='sections col-md-7'>
                         <Accordion defaultActiveKey="0">

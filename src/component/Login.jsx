@@ -121,7 +121,6 @@ class Login extends Component {
       this.setState({errors: ['ایمیل یا پسورد صحیح نمی باشد']})
     }
   }
-  
-}
+  }
 
 export default Login;
