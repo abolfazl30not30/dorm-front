@@ -1,27 +1,32 @@
 .contact {
     background-color: #fff;
-    padding: 16px;
+    padding: 1rem;
     border-radius: 8px;
     box-shadow: 0 20px 25px 0 rgb(170 179 217 / 20%);
 }
+
 .contact .title {
-    font-size: 18px;
+    font-size: 1.2rem;
     font-weight: 600;
     color: #444;
-    margin-bottom: 16px;
+    margin-bottom: 1rem;
 }
+
 .contact .btn-add {
     background-color: #2ecc71;
-    border-radius: 8px;
+    border-radius: .5rem;
 }
+
 .contact .btn-add:hover {
     background-color: #27ae60 !important;
 }
+
 .table-box {
     overflow-x: auto;
     white-space: nowrap;
-    margin-top: 24px;
+    margin-top: 1.5rem;
 }
+
 .table {
     border: 1px solid #eee !important;
     text-align: right;
@@ -29,44 +34,52 @@
     border-spacing: 0;
     border-collapse: separate;
 }
-.table tbody tr:nth-child(odd)>* {
+
+.table tbody tr:nth-child(odd) > * {
     background-color: #f9f9f9 !important;
 }
-.table tr,.table th,.table td {
+
+.table tr, .table th, .table td {
     border: none;
-    padding: 10px !important;
+    padding: .8rem !important;
 }
+
 .table th {
     font-weight: 600;
-    font-size: 13px;
+    font-size: .9rem;
 }
+
 .table td {
-    font-size: 14px;
+    font-size: .8rem;
 }
+
 .btn-record-contact {
     background-color: #db9b31 !important;
     width: 100%;
     color: #fff !important;;
-    font-size: 18px !important;;
-    margin-top: 16px;
+    font-size: 1.1rem !important;;
+    margin-top: 1rem;
 }
+
 .add-input-contact {
     background-color: #f9f9f9;
-    margin: 8px;
-    padding: 8px;
-    border-radius: 8px;
+    margin: .5rem;
+    padding: .5rem;
+    border-radius: .5rem;
     text-align: center;
-    font-size: 24px;
+    font-size: 1.5rem;
     cursor: pointer;
 }
+
 .btn-delete-input {
     position: absolute;
     left: 16px;
     top: 14px;
     color: red;
-    font-size: 16px;
+    font-size: 1rem;
     cursor: pointer;
 }
+
 .tether-element {
     z-index: 100000;
 }

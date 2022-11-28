@@ -2,6 +2,7 @@
     display: flex;
     justify-content: center;
 }
+
 .typeofResident {
     display: flex;
     justify-content: center;
@@ -16,31 +17,34 @@
     box-shadow: 0 30px 50px 0 rgb(170 179 217 / 20%);
 }
 
-.typeofResident h5{
+.typeofResident h5 {
     font-weight: bold;
     font-size: 1.2rem;
 }
+
 .next-btn {
     text-decoration: none;
     width: 120px;
     text-align: center;
-    color:#000;
+    color: #000;
     background-color: #DB9B31 !important;
-    border:none !important;
+    border: none !important;
 }
 
-.next-btn:hover{
+.next-btn:hover {
     color: #000 !important;
 }
+
 .previous-btn {
     text-decoration: none;
     width: 120px;
     text-align: center;
     color: #DB9B31 !important;
 }
-.previous-btn:hover{
+
+.previous-btn:hover {
     color: #000 !important;
-    background-color: #f3c885 !important; ;
+    background-color: #f3c885 !important;;
 }
 
 .register-step-box {
@@ -59,60 +63,68 @@
     margin-bottom: 2rem;
 }
 
-.input-group-register{
+.input-group-register {
     position: relative;
     padding: .5rem;
+    margin-bottom: 0.5rem;
 }
-.input{
-    padding: 10px;
+
+.input {
+    padding: .6rem;
     height: 50px;
-    border-radius: 8px !important;
+    border-radius: .5rem !important;
     outline: none;
     color: #2a2e32b3;
     background-color: #fff;
     border: 1px solid #bec6cc;
     width: 100%;
 }
-.placeholder{
+
+.placeholder {
     position: absolute;
     top: 20px;
     right: 12px;
-    font-size: 14px;
-    padding: 0 5px;
+    font-size: .9rem;
+    padding: 0 .3rem;
     color: #2b2f33;
     transition: 0.3s;
     pointer-events: none;
 }
+
 label.placeholder {
     background-color: #fff;
     color: #2b2f33;
 }
-.input:focus + .placeholder, .input:not(:placeholder-shown) +.placeholder{
+
+.input:focus + .placeholder, .input:not(:placeholder-shown) + .placeholder {
     top: -5px;
     background-color: #fff;
     color: #2a2e32b3;
-    padding: 0 6px;
+    padding: 0 .4rem;
     opacity: 1;
 }
+
 ._1hzhf {
-    font-size: 14px;
+    font-size: .9rem;
     width: 100%;
 }
-.guest-text{
+
+.guest-text {
     font-weight: bold;
 }
+
 .radio-container {
     display: block;
     position: relative;
-    padding-right: 35px;
-    margin-bottom: 12px;
+    padding-right: 3rem;
+    margin-bottom: .6rem;
     cursor: pointer;
     font-size: 1rem;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    direction:rtl
+    direction: rtl
 }
 
 /* Hide the browser's default radio button */
@@ -164,19 +176,92 @@ label.placeholder {
     border-radius: 50%;
     background: white;
 }
+
 ._53Ji7 {
     padding: 0 1rem;
 }
+
 ._3uApM {
     padding: 0 2rem 2rem 2rem;
 }
+ul._1Lo2h {
+    flex-direction: row-reverse;
+}
+._2Jtxm::before {
+    left: 50%;
+}
+._3uApM {
+    flex-direction: row-reverse;
+}
+
+
+
+.modal-done .icon {
+    position: relative;
+    margin: 0 auto;
+    margin-top: -75px;
+    background: #4caf50;
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+}
+.modal-done .icon span {
+    position: absolute;
+    font-size: 5em;
+    color: #fff;
+    text-align: center;
+    padding-top: 20px;
+}
+.modal-done .glyphicon {
+    position: relative;
+    top: 2px;
+    display: inline-block;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    left: 21px;
+}
+.modal-done .glyphicon-ok:before {
+    content: "\2713";
+}
+.modal-done .title-modal-done {
+    font-size: 3rem;
+    text-align: center;
+    margin: 1rem 0;
+}
+.modal-done .button-show,.modal-done .button-show:hover {
+    background-color: #e8fff3;
+    color: #50cd89;
+    font-size: 1.2rem;
+}
+
+.modal-done .button-close,.modal-done .button-close:hover {
+    background-color: #f5f8fa;
+    color: #7e8299;
+    font-size: 1.2rem;
+}
+
+.modal-done .button-selectBed,.modal-done .button-selectBed:hover {
+    background-color: #f1faff;
+    color: #009ef7;
+    font-size: 1.2rem;
+}
+
+
+
+
+
 @media (max-width: 768px) {
     .typeofResident {
         width: 100%;
     }
+
     ._1hzhf {
         font-size: .8rem;
     }
+
     ._53Ji7 {
         padding: 0;
     }

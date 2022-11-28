@@ -1,11 +1,11 @@
 .calendarContainer {
-    border-radius: 3px;
+    border-radius: .3rem;
     box-shadow: 0 3px 10px #dbdbdb;
     border: 1px solid #cccccc;
     width: 300px;
     margin: auto;
     text-align: center;
-    padding: 10px;
+    padding: .7rem;
     background-color: #fff;
 }
 
@@ -23,18 +23,18 @@
 
 /* Heading */
 .calendarContainer .heading {
-    height: 42px;
+    height: 2.5rem;
     font-weight: bold;
-    margin-bottom: 10px;
+    margin-bottom: .6rem;
 }
 
 .calendarContainer .heading > button {
-    border-radius: 3px;
+    border-radius: .5rem;
     background: none;
-    margin: 5px 0;
+    margin: .4rem 0;
     border: 1px solid #F7F7F7;
     text-align: center;
-    line-height: 30px;
+    line-height: 3rem;
     width: 36px;
     height: 32px;
     cursor: pointer;
@@ -45,11 +45,11 @@
 }
 
 .calendarContainer .heading > span {
-    line-height: 35px;
+    line-height: 3rem;
 }
 
 .calendarContainer .heading svg {
-    width: 10px;
+    width: .6rem;
 }
 
 .calendarContainer .heading .prev {
@@ -61,11 +61,11 @@
 }
 
 .calendarContainer .heading .title {
-    line-height: 32px;
+    line-height: 3rem;
     width: 120px;
     height: 32px;
     font-size: 1em;
-    margin: 5px 0;
+    margin: .3rem 0;
     border: 1px solid #F7F7F7;
     text-align: center;
     display: inline-block;
@@ -74,7 +74,7 @@
 
 /* Day wrapper styles */
 .calendarContainer .dayWrapper {
-    padding: 5;
+    padding: .5rem;
     float: right;
     width: 14.28571429%;
 }
@@ -86,7 +86,7 @@
     outline: none;
     width: 100%;
     height: 36px;
-    border-radius: 3px;
+    border-radius: .25rem;
     cursor: pointer;
 }
 
@@ -112,8 +112,8 @@
 /* Days of week row */
 .calendarContainer .daysOfWeek {
     border-bottom: 1px solid #EEE;
-    margin-bottom: 5px;
-    padding-bottom: 5px;
+    margin-bottom: .3rem;
+    padding-bottom: .3rem;
     display: flex;
     width: 100%;
 }
@@ -137,7 +137,7 @@
     outline: none;
     font-size: 1em;
     background: #fff;
-    padding: 10px 0;
+    padding: .6rem 0;
     cursor: pointer;
 }
 

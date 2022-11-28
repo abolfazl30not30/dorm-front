@@ -8,29 +8,26 @@
     box-shadow: 0 0 20px 0 #4c577d05;
 }
 
-.search-container>div {
+.search-container > div {
     display: flex;
 }
 
-.search-logo {
-    /*margin-left: 20px;*/
-}
 
-.search-container>div>button {
+.search-container > div > button {
     float: left;
     animation: fadeIn 0.5s;
     /*border: none;*/
-    border-radius: 10px;
+    border-radius: .6rem;
     background-color: transparent;
     margin-right: 1%;
 }
 
-.search-container>div>input {
+.search-container > div > input {
     width: 100%;
     height: 40px;
 }
 
-.search-container>div>Accordion {
+.search-container > div > Accordion {
     width: 10%;
 }
 
@@ -47,13 +44,13 @@
 .account-found {
     justify-content: right;
     align-items: center;
-    border-radius: 8px;
-    padding: 16px;
-    margin-top: 16px;
+    border-radius: .5rem;
+    padding: 1rem;
+    margin-top: 1rem;
     background-color: #fff;
     box-shadow: 0 0 20px 0 #4c577d05;
 }
+
 .search-container input {
     max-width: 200px;
 }
-.account-found>FiUser {}

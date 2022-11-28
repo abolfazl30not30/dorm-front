@@ -1,23 +1,23 @@
 .payment-history {
     background-color: #fff;
     padding: 1rem;
-    border-radius: 16px;
+    border-radius: 1rem;
     margin: 1rem;
-    font-size: 15px;
+    font-size: 1rem;
     color: #404040;
 }
 .payment-history .title {
-    font-size: 18px;
+    font-size: 1.1rem;
     font-weight: 600;
 }
 .payment-history .input-group-filter{
     position: relative;
-    padding: 8px;
+    padding: .5rem;
 }
 .payment-history .input{
-    padding: 10px;
+    padding: .6rem;
     height: 50px;
-    border-radius: 8px !important;
+    border-radius: .5rem !important;
     outline: none;
     color: #2a2e32b3;
     background-color: #fff;
@@ -28,8 +28,8 @@
     position: absolute;
     top: 20px;
     right: 12px;
-    font-size: 12px;
-    padding: 0px 5px;
+    font-size: .75rem;
+    padding: 0px .25rem;
     color: #2b2f33;
     transition: 0.3s;
     pointer-events: none;
@@ -38,7 +38,7 @@
     top: 0px;
     background-color: #fff;
     color: #2a2e32b3;
-    padding: 0 6px;
+    padding: 0 .5rem;
     opacity: 1;
 }
 .payment-history .table-box {
@@ -51,14 +51,14 @@
     border-collapse: separate;
 }
 .payment-history .table>:not(caption)>*>* {
-    padding: 16px !important;
+    padding: 1rem !important;
 }
 .payment-history .btn-see {
     color: #000;
     text-decoration: none;
     border-radius: 0.5rem;
     background-color: #20d489;
-    font-size: 16px;
+    font-size: 1rem;
     margin-bottom: 2rem;
     padding: 0.5rem 1rem;
     border: none;

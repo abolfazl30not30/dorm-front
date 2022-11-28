@@ -229,7 +229,7 @@ class CInformationPage extends Component {
                                         />
                                         <label className="placeholder" style={{right: (this.context.constantInformationPageValidation.healthyStatus_requiredReg === false &&
                                                 this.context.constantInformationPage.health === 'true') ? '35px' : '12px'}}>
-                                            توضیحات
+                                             توضیحات بیماری
                                             <span style={{color : 'red'}}>*</span>
                                         </label>
 

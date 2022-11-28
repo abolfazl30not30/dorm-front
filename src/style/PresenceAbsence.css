@@ -1,40 +1,38 @@
-.presence-absence {
-    /*background-color: #fff;*/
-    /*padding: 16px;*/
-    /*border-radius: 8px;*/
-    /*box-shadow: 0 20px 25px 0 rgb(170 179 217 / 20%);*/
-}
 .presence-absence .title-page {
-    font-size: 18px;
+    font-size: 1.2rem;
     font-weight: 600;
     color: #444;
-    margin-bottom: 16px;
+    margin-bottom: 1rem;
 }
+
 .presence-absence .pa-floor {
     box-shadow: 0 20px 25px 0 #aab3d933;
     background-color: #fff;
-    padding: 8px;
-    border-radius: 8px;
+    padding: .5rem;
+    border-radius: .5rem;
     height: 100%;
 }
+
 .pa-floor .title {
-    font-size: 14px;
+    font-size: .8rem;
     font-weight: 600;
     color: #444;
-    margin-bottom: 8px;
+    margin-bottom: .8rem;
     text-align: center;
 }
+
 .pa-floor .units-list {
-    font-size: 14px;
+    font-size: .8rem;
     color: #404040;
     line-height: 24px;
-    padding: 16px;
+    padding: 1rem;
 }
+
 .pa-floor .units-list .units-list-item {
     cursor: pointer;
     color: #7E8299;
-    padding: 6px 10px;
-    border-radius: 8px;
+    padding: .4rem .6rem;
+    border-radius: .5rem;
     transition: .2s;
     text-align: center;
     display: flex;
@@ -42,19 +40,22 @@
     flex-direction: row;
     align-items: center;
 }
+
 .pa-floor .units-list .units-list-item:hover {
     background-color: #f5f8fa;
 }
+
 .pa-floor .units-list a {
     text-decoration: none;
     color: #7E8299;
 }
+
 .switch-group .btn {
-    font-size: 12px;
+    font-size: .8rem;
 }
+
 .switch-group .btn-secondary,
-.switch.btn.btn-secondary
-{
+.switch.btn.btn-secondary {
     --bs-btn-color: #3f4254;
     --bs-btn-bg: #e4e6ef;
     --bs-btn-border-color: none;
@@ -63,9 +64,9 @@
     min-height: 24px;
     min-width: 5.5rem;
 }
-.switch-group .btn-success ,
-.switch.btn.btn-success
-{
+
+.switch-group .btn-success,
+.switch.btn.btn-success {
     --bs-btn-color: #fff;
     --bs-btn-bg: #20d489;
     --bs-btn-border-color: none;
@@ -74,12 +75,16 @@
     min-height: 24px;
     min-width: 5.5rem;
 }
+
 .switch.btn {
-    margin-right: 8px;
+    margin-right: .5rem;
 }
+
 span.switch-off.btn.btn-secondary,
-span.switch-on.btn.btn-success
-{top: -3px;}
+span.switch-on.btn.btn-success {
+    top: -3px;
+}
+
 .switch.btn {
     min-width: 4.5rem;
 }

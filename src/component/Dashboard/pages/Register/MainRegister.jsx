@@ -19,6 +19,12 @@ import OGInformationFamilyPage from "./OtherGuest/OGInformationFamilyPage";
 import OGUploadPage from "./OtherGuest/OGUploadPage";
 
 import BuildingContext from '../../../../contexts/Building'
+import {Modal} from "react-bootstrap";
+import Accordion from "react-bootstrap/Accordion";
+import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
+import ToggleButton from "@mui/material/ToggleButton";
+import {TiTick, TiTimes} from "react-icons/ti";
+import {IoIosAddCircleOutline} from "react-icons/io";
 
 class MainRegister extends Component {
 
@@ -392,7 +398,7 @@ class MainRegister extends Component {
         otherGuestCheck: false,
         familyGuestCheck : false,
         typeofResident : "constant",
-
+        showDoneModal: false
     }
 
     checked = (e) => {
@@ -478,8 +484,37 @@ class MainRegister extends Component {
                         onSubmit={this.handleSubmit}
                     />
                 </div>
+                <Modal centered show={this.state.showDoneModal} className='modal-done'>
+                    <Modal.Body className="px-4">
+                        <div className="d-flex flex-column">
+                            <div className="d-flex flex-column">
+                                <div className="icon">
+                                    <span className="glyphicon glyphicon-ok"></span>
+                                </div>
+                                <div className="title-modal-done">
+                                    موفق!
+                                </div>
+                            </div>
+                            <div className="d-flex flex-row justify-content-between my-3">
+                                <button className='btn button-show' onClick={() =>{this.handleGoToShow()}}>نمایش</button>
+                                <button className='btn button-selectBed' onClick={() =>{this.handleGoToSelectBed()}}>انتخاب تخت</button>
+                                <button className='btn button-close' onClick={() =>{this.handleCloseModal()}}>بستن</button>
+                            </div>
+                        </div>
+                    </Modal.Body>
+                </Modal>
             </>
         );
+    }
+
+    handleCloseModal = () => {
+        this.setState({showDoneModal:false})
+    }
+    handleGoToShow = () => {
+        this.setState({showDoneModal:false})
+    }
+    handleGoToSelectBed = () => {
+        this.setState({showDoneModal:false})
     }
 
     handleSubmit = async()=>{
@@ -650,7 +685,7 @@ class MainRegister extends Component {
                 break;
             }
         }
-
+        this.setState({showDoneModal:true})
         this.goHome();
         this.context.handleReset();
 

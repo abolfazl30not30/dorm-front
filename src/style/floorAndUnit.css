@@ -6,7 +6,7 @@
 .floorAndUnit .back-btn {
     display: flex;
     justify-content: end;
-    padding-top: 10px;
+    padding-top: .6rem;
 
 }
 
@@ -16,7 +16,7 @@
 }
 
 .floorAndUnit .text {
-    margin-top: 38px;
+    margin-top: 2.4rem;
 }
 
 .floorAndUnit .text h4 {
@@ -35,15 +35,15 @@
 
 .floorAndUnit .edit-btn-container {
     display: flex;
-    padding-left: 10px;
-    margin-top: 50px;
+    padding-left: .8rem;
+    margin-top: 3rem;
     justify-content: end;
 }
 
 .floorAndUnit .register-btn-container {
     display: flex;
-    padding-left: 10px;
-    margin-top: 50px;
+    padding-left: .8rem;
+    margin-top: 3rem;
     justify-content: center;
 }
 
@@ -54,7 +54,6 @@
     padding: .5rem 1rem;
     border-radius: .5rem;
 }
-
 
 
 .floorAndUnit .register-btn-container .register-btn {
@@ -87,14 +86,17 @@
     font-weight: bold;
     margin-top: 10px;
 }
-.floorAndUnit .floor-container .floor .show-acc-btn{
-    border:none;
+
+.floorAndUnit .floor-container .floor .show-acc-btn {
+    border: none;
     font-size: .8rem;
-    color:#3498db ;
+    color: #3498db;
 }
+
 .floorAndUnit .floor-container .floor .show-acc-btn:hover {
-    color: #2980b9 ;
+    color: #2980b9;
 }
+
 .floorAndUnit .floor-container .floor .unit-container {
     margin: 25px 0;
 }
