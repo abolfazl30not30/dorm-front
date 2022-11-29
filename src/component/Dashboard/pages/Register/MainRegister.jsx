@@ -523,6 +523,7 @@ class MainRegister extends Component {
                 let newCharacteristic = {...this.context.constantInformationPage,...this.context.constantInformationFurther,...this.context.constantInformationFamily};
                 let birthDate1 = newCharacteristic.birthDate
                 newCharacteristic.birthDate = birthDate1+" 00:00:00";
+                newCharacteristic.personType = "constant";
 
 
 
@@ -566,6 +567,7 @@ class MainRegister extends Component {
 
                 let paymentDate1 = newCharacteristic.paymentDate
                 newCharacteristic.paymentDate = paymentDate1+" 00:00:00";
+                newCharacteristic.personType = 'familyGuest';
 
                 console.log(newCharacteristic)
                 const createdChar = await fetch('https://api.saadatportal.com/api/v1/characteristic', {
@@ -627,6 +629,7 @@ class MainRegister extends Component {
 
                 let paymentDate1 = newCharacteristic.paymentDate
                 newCharacteristic.paymentDate = paymentDate1+" 00:00:00";
+                newCharacteristic.personType = 'otherGuest';
 
                 console.log(newCharacteristic)
                 const createdChar = await fetch('https://api.saadatportal.com/api/v1/characteristic', {

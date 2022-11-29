@@ -8,12 +8,12 @@ import png_icon from '../../../../img/png_icon.png'
 import {FiUser} from "react-icons/fi";
 import {AiOutlineLeft} from "react-icons/ai";
 import {HiOutlineMailOpen} from 'react-icons/hi';
-import {BsTelephone,BsFile} from 'react-icons/bs';
+import {BsTelephone, BsFile} from 'react-icons/bs';
 import {AiOutlineBarcode} from 'react-icons/ai'
 import {AiOutlineUser} from 'react-icons/ai'
 import {Modal} from 'react-bootstrap'
 import {AiOutlineClose} from 'react-icons/ai'
-import { AiFillCloseCircle } from 'react-icons/ai'
+import {AiFillCloseCircle} from 'react-icons/ai'
 import {RiDownloadCloud2Fill} from 'react-icons/ri'
 import {Accordion} from 'react-bootstrap';
 import {Table} from 'react-bootstrap';
@@ -29,11 +29,11 @@ class ProfilePage extends Component {
     static contextType = BuildingContext;
 
     state = {
-        person:{},
+        person: {},
         show: false,
         reportType: 'cleaning',
-        personObject:{},
-        uploadedDoc:{},
+        personObject: {},
+        uploadedDoc: {},
         report: [
             {
                 "title": "cleaning",
@@ -271,8 +271,8 @@ class ProfilePage extends Component {
                 "refundableAmount": "0"
             }
         ],
-        showDeleteModalReport : false,
-        reportTemp : {}
+        showDeleteModalReport: false,
+        reportTemp: {}
     }
     date = createRef();
     description = createRef();
@@ -291,7 +291,7 @@ class ProfilePage extends Component {
     refundableAmount = createRef();
     reason = createRef();
 
-    async componentDidMount () {
+    async componentDidMount() {
 
         const response = await fetch(`https://api.saadatportal.com/api/v1/characteristic/${this.context.charId}`).then((response) => response.json())
             .then((data) => this.setState({person: data}));
@@ -312,11 +312,15 @@ class ProfilePage extends Component {
                                     src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBnUckFxDVe5FOT5vuVfWCvWWY1pUrOPBOFPu9CNZYpABJSYPCigxy9rEc32E6mBamw3c&usqp=CAU"
                                     alt="profile"/>
                                 <div className={'me-3 d-flex flex-column justify-content-center'}>
-                                    <div className="people-name mb-3">{this.state.person.firstName} {this.state.person.lastName}</div>
+                                    <div
+                                        className="people-name mb-3">{this.state.person.firstName} {this.state.person.lastName}</div>
                                     <div className="d-flex flex-md-row flex-column flex-wrap">
-                                        <div className="people-item"><i className="bi bi-upc-scan ms-2"></i>کد ملی: {this.state.person.nationalCode}</div>
-                                        <div className="people-item"><i className="bi bi-telephone ms-2"></i>شماره تماس: {this.state.person.phoneNumber}</div>
-                                        <div className="people-item"><i className="bi bi-person ms-2"></i>نام پدر: {this.state.person.fatherName}</div>
+                                        <div className="people-item"><i className="bi bi-upc-scan ms-2"></i>کد
+                                            ملی: {this.state.person.nationalCode}</div>
+                                        <div className="people-item"><i className="bi bi-telephone ms-2"></i>شماره
+                                            تماس: {this.state.person.phoneNumber}</div>
+                                        <div className="people-item"><i className="bi bi-person ms-2"></i>نام
+                                            پدر: {this.state.person.fatherName}</div>
                                     </div>
                                 </div>
                             </div>
@@ -327,9 +331,489 @@ class ProfilePage extends Component {
                                 id="uncontrolled-tab-example"
                                 className="border-0 w-100"
                             >
-                                <Tab eventKey="more-information" title="اطلاعات بیشتر" style={{backgroundColor:"transparent"}}>
+                                <Tab eventKey="more-information" title="اطلاعات بیشتر"
+                                     style={{backgroundColor: "transparent"}}>
                                     <div className="tabs-content">
-                                        <div className='information d-flex flex-row flex-wrap'>
+                                        {(() => {
+                                            switch (this.state.person.personType) {
+                                                case 'constant':
+                                                    return <>
+                                                        <div className="information d-flex flex-row flex-wrap">
+                                                            <div className='col-12 col-md-4'>
+                                                                <div className="more-info-item">
+                                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                                    <label> نام :</label>
+                                                                    {this.state.person.firstName}
+                                                                </div>
+                                                            </div>
+                                                            <div className='col-12 col-md-4'>
+                                                                <div className="more-info-item">
+                                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                                    <label> نام خانوادگی :</label>
+                                                                    {this.state.person.lastName}
+                                                                </div>
+                                                            </div>
+                                                            <div className='col-12 col-md-4'>
+                                                                <div className="more-info-item">
+                                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                                    <label> کد ملی :</label>
+                                                                    {this.state.person.nationalCode}
+                                                                </div>
+                                                            </div>
+                                                            <div className='col-12 col-md-4'>
+                                                                <div className="more-info-item">
+                                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                                    <label> شماره شناسنامه :</label>
+                                                                    {this.state.person.certificateNumber}
+                                                                </div>
+                                                            </div>
+                                                            <div className='col-12 col-md-4'>
+                                                                <div className="more-info-item">
+                                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                                    <label> محل صدور :</label>
+                                                                    {this.state.person.placeOfIssue}
+                                                                </div>
+                                                            </div>
+                                                            <div className='col-12 col-md-4'>
+                                                                <div className="more-info-item">
+                                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                                    <label> تاریخ تولد :</label>
+                                                                    {this.state.person.birthDate.split(" ")[0]}
+                                                                </div>
+                                                            </div>
+                                                            <div className='col-12 col-md-4'>
+                                                                <div className="more-info-item">
+                                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                                    <label> ملیت :</label>
+                                                                    {this.state.person.nationality}
+                                                                </div>
+                                                            </div>
+                                                            <div className='col-12 col-md-4'>
+                                                                <div className="more-info-item">
+                                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                                    <label> نام پدر :</label>
+                                                                    {this.state.person.fatherName}
+                                                                </div>
+                                                            </div>
+                                                            <div className='col-12 col-md-4'>
+                                                                <div className="more-info-item">
+                                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                                    <label> دین :</label>
+                                                                    {(() => {
+                                                                        switch(this.state.person.religion) {
+                                                                            case 'islam':
+                                                                                return 'اسلام';
+                                                                            case 'christianity':
+                                                                                return 'مسیحیت';
+                                                                            case 'hinduism':
+                                                                                return 'هندوئیسم';
+                                                                            case 'buddhism':
+                                                                                return 'آیین بودایی';
+                                                                            case 'other':
+                                                                                return 'سایر';
+                                                                    }
+                                                                    })()}
+                                                                </div>
+                                                            </div>
+                                                            <div className='col-12 col-md-4'>
+                                                                <div className="more-info-item">
+                                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                                    <label> مذهب :</label>
+                                                                    {this.state.person.subReligion != "" ? this.state.person.subReligion : 'ثبت نشده'}
+                                                                </div>
+                                                            </div>
+                                                            <div className='col-12 col-md-4'>
+                                                                <div className="more-info-item">
+                                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                                    <label> دانشگاه محل تحصیل :</label>
+                                                                    {this.state.person.university != "" ? this.state.person.university : 'ثبت نشده'}
+                                                                </div>
+                                                            </div>
+                                                            <div className='col-12 col-md-4'>
+                                                                <div className="more-info-item">
+                                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                                    <label> شماره دانشجویی :</label>
+                                                                    {this.state.person.studentNumber != "" ? this.state.person.studentNumber : 'ثبت نشده'}
+                                                                </div>
+                                                            </div>
+                                                            <div className='col-12 col-md-4'>
+                                                                <div className="more-info-item">
+                                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                                    <label> شغل پدر :</label>
+                                                                    {this.state.person.fatherJob != "" ? this.state.person.fatherJob : 'ثبت نشده'}
+                                                                </div>
+                                                            </div>
+                                                            <div className='col-12 col-md-4'>
+                                                                <div className="more-info-item">
+                                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                                    <label> وضعیت تاهل :</label>
+                                                                    {(() => {
+                                                                        switch(this.state.person.maritalStatus) {
+                                                                            case 'single':
+                                                                                return 'مجرد';
+                                                                            case 'married':
+                                                                                return 'متاهل';
+                                                                            case 'divorced':
+                                                                                return 'متارکه';
+                                                                        }
+                                                                    })()}
+                                                                </div>
+                                                            </div>
+                                                            {(() => {
+                                                                switch(this.state.person.maritalStatus) {
+                                                                    case 'married':
+                                                                        return <>
+                                                                            <div className='col-12 col-md-4'>
+                                                                                <div className="more-info-item">
+                                                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                                                    <label> نام و نام خانوادگی همسر :</label>
+                                                                                    {this.state.person.spouseFullName != "" ? this.state.person.spouseFullName : 'ثبت نشده'}
+                                                                                </div>
+                                                                            </div>
+                                                                            <div className='col-12 col-md-4'>
+                                                                                <div className="more-info-item">
+                                                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                                                    <label> شغل همسر :</label>
+                                                                                    {this.state.person.spouseJob != "" ? this.state.person.spouseJob : 'ثبت نشده'}
+                                                                                </div>
+                                                                            </div>
+                                                                        </>;
+                                                                }
+                                                            })()}
+                                                            <div className='col-12 col-md-4'>
+                                                                <div className="more-info-item">
+                                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                                    <label> بیماری خاص :</label>
+                                                                    {(() => {
+                                                                        switch(this.state.person.health) {
+                                                                            case true:
+                                                                                return 'بله';
+                                                                            case false:
+                                                                                return 'خیر';
+                                                                        }
+                                                                    })()}
+                                                                </div>
+                                                            </div>
+                                                            {(() => {
+                                                                switch(this.state.person.health) {
+                                                                    case true:
+                                                                        return <>
+                                                                            <div className='col-12 col-md-4'>
+                                                                                <div className="more-info-item">
+                                                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                                                    <label> توضیحات بیماری :</label>
+                                                                                    {this.state.person.healthyStatus != "" ? this.state.person.healthyStatus : 'ثبت نشده'}
+                                                                                </div>
+                                                                            </div>
+                                                                        </>;
+                                                                }
+                                                            })()}
+                                                            <div className='col-12 col-md-4'>
+                                                                <div className="more-info-item">
+                                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                                    <label> شماره همراه اقامتگر :</label>
+                                                                    {this.state.person.phoneNumber}
+                                                                </div>
+                                                            </div>
+                                                            <div className='col-12 col-md-4'>
+                                                                <div className="more-info-item">
+                                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                                    <label> شماره تلفن منزل :</label>
+                                                                    {this.state.person.telephoneNumber}
+                                                                </div>
+                                                            </div>
+                                                            <div className='col-12 col-md-4'>
+                                                                <div className="more-info-item">
+                                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                                    <label> تاریخ شروع پذیرش :</label>
+                                                                    {this.state.person.timePeriod.startDate}
+                                                                </div>
+                                                            </div>
+                                                            <div className='col-12 col-md-4'>
+                                                                <div className="more-info-item">
+                                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                                    <label> تاریخ اتمام پذیرش :</label>
+                                                                    {this.state.person.timePeriod.endDate.split(" ")[0]}
+                                                                </div>
+                                                            </div>
+                                                            <div className='col-12 col-md-4'>
+                                                                <div className="more-info-item">
+                                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                                    <label> آدرس محل سکونت :</label>
+                                                                    {this.state.person.address}
+                                                                </div>
+                                                            </div>
+                                                            <div className="col-12 my-2 me-3"
+                                                                 style={{fontSize: '.9rem', fontWeight: '600'}}>مشخصات
+                                                                بستگان(شخص اول)
+                                                            </div>
+                                                            <div className='col-12 col-md-4'>
+                                                                <div className="more-info-item">
+                                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                                    <label> نام و نام خانوادگی :</label>
+                                                                    {this.state.person.firstPersonFullName}
+                                                                </div>
+                                                            </div>
+                                                            <div className='col-12 col-md-4'>
+                                                                <div className="more-info-item">
+                                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                                    <label> شماره تماس :</label>
+                                                                    {this.state.person.firstPersonPhoneNumber}
+                                                                </div>
+                                                            </div>
+                                                            <div className='col-12 col-md-4'>
+                                                                <div className="more-info-item">
+                                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                                    <label> نام پدر :</label>
+                                                                    {this.state.person.firstPersonFatherName != "" ? this.state.person.firstPersonFatherName : 'ثبت نشده'}
+                                                                </div>
+                                                            </div>
+                                                            <div className='col-12 col-md-4'>
+                                                                <div className="more-info-item">
+                                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                                    <label> نسبت با اقامتگر :</label>
+                                                                    {(() => {
+                                                                        switch(this.state.person.firstPersonRelationshipWithResident) {
+                                                                            case 'father':
+                                                                                return 'پدر';
+                                                                            case 'mother':
+                                                                                return 'مادر';
+                                                                            case 'sister':
+                                                                                return 'خواهر';
+                                                                            case 'brother':
+                                                                                return 'برادر';
+                                                                            case 'other':
+                                                                                return 'غیره';
+                                                                        }
+                                                                    })()}
+                                                                </div>
+                                                            </div>
+                                                            <div className="col-12 my-2 me-3"
+                                                                 style={{fontSize: '.9rem', fontWeight: '600'}}>مشخصات
+                                                                بستگان(شخص دوم)
+                                                            </div>
+                                                            <div className='col-12 col-md-4'>
+                                                                <div className="more-info-item">
+                                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                                    <label> نام و نام خانوادگی :</label>
+                                                                    {this.state.person.secondPersonFullName}
+                                                                </div>
+                                                            </div>
+                                                            <div className='col-12 col-md-4'>
+                                                                <div className="more-info-item">
+                                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                                    <label> شماره تماس :</label>
+                                                                    {this.state.person.secondPersonPhoneNumber}
+                                                                </div>
+                                                            </div>
+                                                            <div className='col-12 col-md-4'>
+                                                                <div className="more-info-item">
+                                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                                    <label> نام پدر :</label>
+                                                                    {this.state.person.secondPersonFatherName != "" ? this.state.person.secondPersonFatherName : 'ثبت نشده'}
+                                                                </div>
+                                                            </div>
+                                                            <div className='col-12 col-md-4'>
+                                                                <div className="more-info-item">
+                                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                                    <label> نسبت با اقامتگر :</label>
+                                                                    {(() => {
+                                                                        switch(this.state.person.secondPersonRelationshipWithResident) {
+                                                                            case 'father':
+                                                                                return 'پدر';
+                                                                            case 'mother':
+                                                                                return 'مادر';
+                                                                            case 'sister':
+                                                                                return 'خواهر';
+                                                                            case 'brother':
+                                                                                return 'برادر';
+                                                                            case 'other':
+                                                                                return 'غیره';
+                                                                        }
+                                                                    })()}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </>;
+                                                case 'familyGuest':
+                                                    return <>
+                                                        <div className="information d-flex flex-row flex-wrap">
+                                                            <div className='col-12 col-md-4'>
+                                                                <div className="more-info-item">
+                                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                                    <label> نام :</label>
+                                                                    {this.state.person.firstName}
+                                                                </div>
+                                                            </div>
+                                                            <div className='col-12 col-md-4'>
+                                                                <div className="more-info-item">
+                                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                                    <label> نام خانوادگی :</label>
+                                                                    {this.state.person.lastName}
+                                                                </div>
+                                                            </div>
+                                                            <div className='col-12 col-md-4'>
+                                                                <div className="more-info-item">
+                                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                                    <label> کد ملی :</label>
+                                                                    {this.state.person.nationalCode}
+                                                                </div>
+                                                            </div>
+                                                            <div className='col-12 col-md-4'>
+                                                                <div className="more-info-item">
+                                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                                    <label> شماره شناسنامه :</label>
+                                                                    {this.state.person.certificateNumber}
+                                                                </div>
+                                                            </div>
+                                                            <div className='col-12 col-md-4'>
+                                                                <div className="more-info-item">
+                                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                                    <label> محل صدور :</label>
+                                                                    {this.state.person.placeOfIssue}
+                                                                </div>
+                                                            </div>
+                                                            <div className='col-12 col-md-4'>
+                                                                <div className="more-info-item">
+                                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                                    <label> تاریخ تولد :</label>
+                                                                    {this.state.person.birthDate.split(" ")[0]}
+                                                                </div>
+                                                            </div>
+                                                            <div className='col-12 col-md-4'>
+                                                                <div className="more-info-item">
+                                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                                    <label> تاریخ شروع پذیرش :</label>
+                                                                    {this.state.person.timePeriod.startDate}
+                                                                </div>
+                                                            </div>
+                                                            <div className='col-12 col-md-4'>
+                                                                <div className="more-info-item">
+                                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                                    <label> تاریخ اتمام پذیرش :</label>
+                                                                    {this.state.person.timePeriod.endDate.split(" ")[0]}
+                                                                </div>
+                                                            </div>
+
+                                                            <div className='col-12 col-md-4'>
+                                                                <div className="more-info-item">
+                                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                                    <label> شماره همراه اقامتگر :</label>
+                                                                    {this.state.person.paymentDate.split(" ")[0]}
+                                                                </div>
+                                                            </div>
+                                                            <div className='col-12 col-md-4'>
+                                                                <div className="more-info-item">
+                                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                                    <label> شماره تلفن منزل :</label>
+                                                                    {this.state.person.telephoneNumber}
+                                                                </div>
+                                                            </div>
+
+                                                            <div className='col-12 col-md-4'>
+                                                                <div className="more-info-item">
+                                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                                    <label> آدرس محل سکونت :</label>
+                                                                    {this.state.person.address}
+                                                                </div>
+                                                            </div>
+                                                            <div className="col-12 my-2 me-3"
+                                                                 style={{fontSize: '.9rem', fontWeight: '600'}}>مشخصات
+                                                                بستگان(شخص اول)
+                                                            </div>
+                                                            <div className='col-12 col-md-4'>
+                                                                <div className="more-info-item">
+                                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                                    <label> نام و نام خانوادگی :</label>
+                                                                    {this.state.person.firstPersonFullName}
+                                                                </div>
+                                                            </div>
+                                                            <div className='col-12 col-md-4'>
+                                                                <div className="more-info-item">
+                                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                                    <label> شماره تماس :</label>
+                                                                    {this.state.person.firstPersonPhoneNumber}
+                                                                </div>
+                                                            </div>
+                                                            <div className='col-12 col-md-4'>
+                                                                <div className="more-info-item">
+                                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                                    <label> نام پدر :</label>
+                                                                    {this.state.person.firstPersonFatherName != "" ? this.state.person.firstPersonFatherName : 'ثبت نشده'}
+                                                                </div>
+                                                            </div>
+                                                            <div className='col-12 col-md-4'>
+                                                                <div className="more-info-item">
+                                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                                    <label> نسبت با اقامتگر :</label>
+                                                                    {(() => {
+                                                                        switch(this.state.person.firstPersonRelationshipWithResident) {
+                                                                            case 'father':
+                                                                                return 'پدر';
+                                                                            case 'mother':
+                                                                                return 'مادر';
+                                                                            case 'sister':
+                                                                                return 'خواهر';
+                                                                            case 'brother':
+                                                                                return 'برادر';
+                                                                            case 'other':
+                                                                                return 'غیره';
+                                                                        }
+                                                                    })()}
+                                                                </div>
+                                                            </div>
+                                                            <div className="col-12 my-2 me-3"
+                                                                 style={{fontSize: '.9rem', fontWeight: '600'}}>مشخصات
+                                                                بستگان(شخص دوم)
+                                                            </div>
+                                                            <div className='col-12 col-md-4'>
+                                                                <div className="more-info-item">
+                                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                                    <label> نام و نام خانوادگی :</label>
+                                                                    {this.state.person.secondPersonFullName}
+                                                                </div>
+                                                            </div>
+                                                            <div className='col-12 col-md-4'>
+                                                                <div className="more-info-item">
+                                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                                    <label> شماره تماس :</label>
+                                                                    {this.state.person.secondPersonPhoneNumber}
+                                                                </div>
+                                                            </div>
+                                                            <div className='col-12 col-md-4'>
+                                                                <div className="more-info-item">
+                                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                                    <label> نام پدر :</label>
+                                                                    {this.state.person.secondPersonFatherName != "" ? this.state.person.secondPersonFatherName : 'ثبت نشده'}
+                                                                </div>
+                                                            </div>
+                                                            <div className='col-12 col-md-4'>
+                                                                <div className="more-info-item">
+                                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                                    <label> نسبت با اقامتگر :</label>
+                                                                    {(() => {
+                                                                        switch(this.state.person.secondPersonRelationshipWithResident) {
+                                                                            case 'father':
+                                                                                return 'پدر';
+                                                                            case 'mother':
+                                                                                return 'مادر';
+                                                                            case 'sister':
+                                                                                return 'خواهر';
+                                                                            case 'brother':
+                                                                                return 'برادر';
+                                                                            case 'other':
+                                                                                return 'غیره';
+                                                                        }
+                                                                    })()}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </>;
+                                                case 'otherGuest':
+                                                    return console.log('otherGuest');
+                                            }
+                                        })()}
+                                        {/*<div className='information d-flex flex-row flex-wrap'>
                                             <div className='col-12 col-md-4'>
                                                 <div className="more-info-item">
                                                     <i className="bi bi-caret-left ms-1"></i>
@@ -438,7 +922,7 @@ class ProfilePage extends Component {
                                             <div className='col-12 col-md-4'>
                                                 <div className="more-info-item">
                                                     <i className="bi bi-caret-left ms-1"></i>
-                                                    <label>  ملیت :</label>
+                                                    <label> ملیت :</label>
                                                     {this.state.person.nationality}
                                                 </div>
                                             </div>
@@ -477,11 +961,10 @@ class ProfilePage extends Component {
                                                     {this.state.person.alias}
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div>*/}
                                     </div>
-
                                 </Tab>
-                                <Tab eventKey="records" title="سوابق" style={{backgroundColor:"transparent"}}>
+                                <Tab eventKey="records" title="سوابق" style={{backgroundColor: "transparent"}}>
                                     <div className="tabs-content">
                                         <button className='btn-done' onClick={() => {
                                             this.handleShow()
@@ -502,7 +985,7 @@ class ProfilePage extends Component {
                                                         </thead>
                                                         <tbody>
                                                         {
-                                                            this.state.report.map((c,i) => (
+                                                            this.state.report.map((c, i) => (
                                                                 c.title === 'cleaning' ? (
                                                                     <tr>
                                                                         {/*<td>{a+1}</td>*/}
@@ -512,13 +995,15 @@ class ProfilePage extends Component {
                                                                             <OverlayTrigger
                                                                                 placement="bottom"
                                                                                 overlay={
-                                                                                    <Tooltip className="deleteTooltip" >
+                                                                                    <Tooltip className="deleteTooltip">
                                                                                         حذف
                                                                                     </Tooltip>
                                                                                 }
                                                                             >
-                                                                                <button className='btn floor-close-btn' onClick={ () => this.handleOpenModalReport(c) }>
-                                                                                    <AiFillCloseCircle color="#F1416C" /></button>
+                                                                                <button className='btn floor-close-btn'
+                                                                                        onClick={() => this.handleOpenModalReport(c)}>
+                                                                                    <AiFillCloseCircle color="#F1416C"/>
+                                                                                </button>
                                                                             </OverlayTrigger>
                                                                         </td>
                                                                     </tr>
@@ -545,7 +1030,7 @@ class ProfilePage extends Component {
                                                         </thead>
                                                         <tbody>
                                                         {
-                                                            this.state.report.map((d,i) => (
+                                                            this.state.report.map((d, i) => (
 
                                                                 d.title === 'delayInArrival' ? (
                                                                     <tr>
@@ -556,13 +1041,15 @@ class ProfilePage extends Component {
                                                                             <OverlayTrigger
                                                                                 placement="bottom"
                                                                                 overlay={
-                                                                                    <Tooltip className="deleteTooltip" >
+                                                                                    <Tooltip className="deleteTooltip">
                                                                                         حذف
                                                                                     </Tooltip>
                                                                                 }
                                                                             >
-                                                                                <button className='btn floor-close-btn' onClick={ () => this.handleOpenModalReport(d) }>
-                                                                                    <AiFillCloseCircle color="#F1416C" /></button>
+                                                                                <button className='btn floor-close-btn'
+                                                                                        onClick={() => this.handleOpenModalReport(d)}>
+                                                                                    <AiFillCloseCircle color="#F1416C"/>
+                                                                                </button>
                                                                             </OverlayTrigger>
                                                                         </td>
                                                                     </tr>
@@ -592,7 +1079,7 @@ class ProfilePage extends Component {
                                                         </thead>
                                                         <tbody>
                                                         {
-                                                            this.state.report.map((e,i) => (
+                                                            this.state.report.map((e, i) => (
 
                                                                 e.title === 'exit' ? (
                                                                     <tr>
@@ -606,13 +1093,15 @@ class ProfilePage extends Component {
                                                                             <OverlayTrigger
                                                                                 placement="bottom"
                                                                                 overlay={
-                                                                                    <Tooltip className="deleteTooltip" >
+                                                                                    <Tooltip className="deleteTooltip">
                                                                                         حذف
                                                                                     </Tooltip>
                                                                                 }
                                                                             >
-                                                                                <button className='btn floor-close-btn' onClick={ () => this.handleOpenModalReport(e) }>
-                                                                                    <AiFillCloseCircle color="#F1416C" /></button>
+                                                                                <button className='btn floor-close-btn'
+                                                                                        onClick={() => this.handleOpenModalReport(e)}>
+                                                                                    <AiFillCloseCircle color="#F1416C"/>
+                                                                                </button>
                                                                             </OverlayTrigger>
                                                                         </td>
                                                                     </tr>
@@ -640,7 +1129,7 @@ class ProfilePage extends Component {
                                                         </thead>
                                                         <tbody>
                                                         {
-                                                            this.state.report.map((v,i) => (
+                                                            this.state.report.map((v, i) => (
 
                                                                 v.title === 'violation' ? (
                                                                     <tr>
@@ -652,13 +1141,15 @@ class ProfilePage extends Component {
                                                                             <OverlayTrigger
                                                                                 placement="bottom"
                                                                                 overlay={
-                                                                                    <Tooltip className="deleteTooltip" >
+                                                                                    <Tooltip className="deleteTooltip">
                                                                                         حذف
                                                                                     </Tooltip>
                                                                                 }
                                                                             >
-                                                                                <button className='btn floor-close-btn' onClick={ () => this.handleOpenModalReport(v) }>
-                                                                                    <AiFillCloseCircle color="#F1416C" /></button>
+                                                                                <button className='btn floor-close-btn'
+                                                                                        onClick={() => this.handleOpenModalReport(v)}>
+                                                                                    <AiFillCloseCircle color="#F1416C"/>
+                                                                                </button>
                                                                             </OverlayTrigger>
                                                                         </td>
                                                                     </tr>
@@ -685,7 +1176,7 @@ class ProfilePage extends Component {
                                                         </thead>
                                                         <tbody>
                                                         {
-                                                            this.state.report.map((p,i) => (
+                                                            this.state.report.map((p, i) => (
 
                                                                 this.state.person.title === 'penalty' ? (
                                                                     <tr>
@@ -696,13 +1187,15 @@ class ProfilePage extends Component {
                                                                             <OverlayTrigger
                                                                                 placement="bottom"
                                                                                 overlay={
-                                                                                    <Tooltip className="deleteTooltip" >
+                                                                                    <Tooltip className="deleteTooltip">
                                                                                         حذف
                                                                                     </Tooltip>
                                                                                 }
                                                                             >
-                                                                                <button className='btn floor-close-btn' onClick={ () => this.handleOpenModalReport(p) }>
-                                                                                    <AiFillCloseCircle color="#F1416C" /></button>
+                                                                                <button className='btn floor-close-btn'
+                                                                                        onClick={() => this.handleOpenModalReport(p)}>
+                                                                                    <AiFillCloseCircle color="#F1416C"/>
+                                                                                </button>
                                                                             </OverlayTrigger>
                                                                         </td>
                                                                     </tr>
@@ -733,7 +1226,7 @@ class ProfilePage extends Component {
                                                         </thead>
                                                         <tbody>
                                                         {
-                                                            this.state.report.map((d,i) => (
+                                                            this.state.report.map((d, i) => (
 
                                                                 d.title === 'discharge' ? (
                                                                     <tr>
@@ -748,13 +1241,15 @@ class ProfilePage extends Component {
                                                                             <OverlayTrigger
                                                                                 placement="bottom"
                                                                                 overlay={
-                                                                                    <Tooltip className="deleteTooltip" >
+                                                                                    <Tooltip className="deleteTooltip">
                                                                                         حذف
                                                                                     </Tooltip>
                                                                                 }
                                                                             >
-                                                                                <button className='btn floor-close-btn' onClick={ () => this.handleOpenModalReport(d) }>
-                                                                                    <AiFillCloseCircle color="#F1416C" /></button>
+                                                                                <button className='btn floor-close-btn'
+                                                                                        onClick={() => this.handleOpenModalReport(d)}>
+                                                                                    <AiFillCloseCircle color="#F1416C"/>
+                                                                                </button>
                                                                             </OverlayTrigger>
                                                                         </td>
                                                                     </tr>
@@ -783,7 +1278,7 @@ class ProfilePage extends Component {
                                                         </thead>
                                                         <tbody>
                                                         {
-                                                            this.state.report.map((cc,i) => (
+                                                            this.state.report.map((cc, i) => (
 
                                                                 cc.title === 'cancelContract' ? (
                                                                     <tr>
@@ -796,13 +1291,15 @@ class ProfilePage extends Component {
                                                                             <OverlayTrigger
                                                                                 placement="bottom"
                                                                                 overlay={
-                                                                                    <Tooltip className="deleteTooltip" >
+                                                                                    <Tooltip className="deleteTooltip">
                                                                                         حذف
                                                                                     </Tooltip>
                                                                                 }
                                                                             >
-                                                                                <button className='btn floor-close-btn' onClick={ () => this.handleOpenModalReport(cc) }>
-                                                                                    <AiFillCloseCircle color="#F1416C" /></button>
+                                                                                <button className='btn floor-close-btn'
+                                                                                        onClick={() => this.handleOpenModalReport(cc)}>
+                                                                                    <AiFillCloseCircle color="#F1416C"/>
+                                                                                </button>
                                                                             </OverlayTrigger>
                                                                         </td>
                                                                     </tr>
@@ -818,7 +1315,8 @@ class ProfilePage extends Component {
                                         </Accordion>
                                     </div>
                                 </Tab>
-                                <Tab eventKey="documents" title="مدارک" className='records' style={{backgroundColor:"transparent"}}>
+                                <Tab eventKey="documents" title="مدارک" className='records'
+                                     style={{backgroundColor: "transparent"}}>
                                     <div className="tabs-content">
                                         <Accordion defaultActiveKey="0">
                                             <Accordion.Item eventKey="0">
@@ -828,66 +1326,71 @@ class ProfilePage extends Component {
                                                         <OverlayTrigger
                                                             placement="bottom"
                                                             overlay={
-                                                                <Tooltip className="deleteTooltip" >
+                                                                <Tooltip className="deleteTooltip">
                                                                     دانلود
                                                                 </Tooltip>
                                                             }
                                                         >
-                                                            <div className="record-item" onClick={ () => this.downloadFile() }>
+                                                            <div className="record-item"
+                                                                 onClick={() => this.downloadFile()}>
                                                                 <div className='ms-2'>صفحه اول</div>
-                                                                <RiDownloadCloud2Fill />
+                                                                <RiDownloadCloud2Fill/>
                                                             </div>
                                                         </OverlayTrigger>
                                                         <OverlayTrigger
                                                             placement="bottom"
                                                             overlay={
-                                                                <Tooltip className="deleteTooltip" >
+                                                                <Tooltip className="deleteTooltip">
                                                                     دانلود
                                                                 </Tooltip>
                                                             }
                                                         >
-                                                            <div className="record-item" onClick={ () => this.downloadFile() }>
+                                                            <div className="record-item"
+                                                                 onClick={() => this.downloadFile()}>
                                                                 <div className='ms-2'>صفحه دوم</div>
-                                                                <RiDownloadCloud2Fill />
+                                                                <RiDownloadCloud2Fill/>
                                                             </div>
                                                         </OverlayTrigger>
                                                         <OverlayTrigger
                                                             placement="bottom"
                                                             overlay={
-                                                                <Tooltip className="deleteTooltip" >
+                                                                <Tooltip className="deleteTooltip">
                                                                     دانلود
                                                                 </Tooltip>
                                                             }
                                                         >
-                                                            <div className="record-item" onClick={ () => this.downloadFile() }>
+                                                            <div className="record-item"
+                                                                 onClick={() => this.downloadFile()}>
                                                                 <div className='ms-2'>صفحه سوم</div>
-                                                                <RiDownloadCloud2Fill />
+                                                                <RiDownloadCloud2Fill/>
                                                             </div>
                                                         </OverlayTrigger>
                                                         <OverlayTrigger
                                                             placement="bottom"
                                                             overlay={
-                                                                <Tooltip className="deleteTooltip" >
+                                                                <Tooltip className="deleteTooltip">
                                                                     دانلود
                                                                 </Tooltip>
                                                             }
                                                         >
-                                                            <div className="record-item" onClick={ () => this.downloadFile() }>
+                                                            <div className="record-item"
+                                                                 onClick={() => this.downloadFile()}>
                                                                 <div className='ms-2'>صفحه چهارم</div>
-                                                                <RiDownloadCloud2Fill />
+                                                                <RiDownloadCloud2Fill/>
                                                             </div>
                                                         </OverlayTrigger>
                                                         <OverlayTrigger
                                                             placement="bottom"
                                                             overlay={
-                                                                <Tooltip className="deleteTooltip" >
+                                                                <Tooltip className="deleteTooltip">
                                                                     دانلود
                                                                 </Tooltip>
                                                             }
                                                         >
-                                                            <div className="record-item" onClick={ () => this.downloadFile() }>
+                                                            <div className="record-item"
+                                                                 onClick={() => this.downloadFile()}>
                                                                 <div className='ms-2'>کل صفحات</div>
-                                                                <RiDownloadCloud2Fill />
+                                                                <RiDownloadCloud2Fill/>
                                                             </div>
                                                         </OverlayTrigger>
 
@@ -901,27 +1404,29 @@ class ProfilePage extends Component {
                                                     <OverlayTrigger
                                                         placement="bottom"
                                                         overlay={
-                                                            <Tooltip className="deleteTooltip" >
+                                                            <Tooltip className="deleteTooltip">
                                                                 دانلود
                                                             </Tooltip>
                                                         }
                                                     >
-                                                        <div className="record-item" onClick={ () => this.downloadFile() }>
+                                                        <div className="record-item"
+                                                             onClick={() => this.downloadFile()}>
                                                             <div className='ms-2'>صفحه اول</div>
-                                                            <RiDownloadCloud2Fill />
+                                                            <RiDownloadCloud2Fill/>
                                                         </div>
                                                     </OverlayTrigger>
                                                     <OverlayTrigger
                                                         placement="bottom"
                                                         overlay={
-                                                            <Tooltip className="deleteTooltip" >
+                                                            <Tooltip className="deleteTooltip">
                                                                 دانلود
                                                             </Tooltip>
                                                         }
                                                     >
-                                                        <div className="record-item" onClick={ () => this.downloadFile() }>
+                                                        <div className="record-item"
+                                                             onClick={() => this.downloadFile()}>
                                                             <div className='ms-2'>صفحه دوم</div>
-                                                            <RiDownloadCloud2Fill />
+                                                            <RiDownloadCloud2Fill/>
                                                         </div>
                                                     </OverlayTrigger>
                                                 </Accordion.Body>
@@ -933,14 +1438,15 @@ class ProfilePage extends Component {
                                                     <OverlayTrigger
                                                         placement="bottom"
                                                         overlay={
-                                                            <Tooltip className="deleteTooltip" >
+                                                            <Tooltip className="deleteTooltip">
                                                                 دانلود
                                                             </Tooltip>
                                                         }
                                                     >
-                                                        <div className="record-item" onClick={ () => this.downloadFile() }>
+                                                        <div className="record-item"
+                                                             onClick={() => this.downloadFile()}>
                                                             <div className='ms-2'>عکس پرسنلی</div>
-                                                            <RiDownloadCloud2Fill />
+                                                            <RiDownloadCloud2Fill/>
                                                         </div>
                                                     </OverlayTrigger>
                                                 </Accordion.Body>
@@ -951,14 +1457,15 @@ class ProfilePage extends Component {
                                                     <OverlayTrigger
                                                         placement="bottom"
                                                         overlay={
-                                                            <Tooltip className="deleteTooltip" >
+                                                            <Tooltip className="deleteTooltip">
                                                                 دانلود
                                                             </Tooltip>
                                                         }
                                                     >
-                                                        <div className="record-item" onClick={ () => this.downloadFile() }>
+                                                        <div className="record-item"
+                                                             onClick={() => this.downloadFile()}>
                                                             <div className='ms-2'>پرینت ثبت نام دانشگاه</div>
-                                                            <RiDownloadCloud2Fill />
+                                                            <RiDownloadCloud2Fill/>
                                                         </div>
                                                     </OverlayTrigger>
                                                 </Accordion.Body>
@@ -1305,20 +1812,20 @@ class ProfilePage extends Component {
         }
     }
     handleOpenModalReport = (c) => {
-        this.setState({ showDeleteModalReport: true });
-        this.setState({reportTemp: c });
+        this.setState({showDeleteModalReport: true});
+        this.setState({reportTemp: c});
 
     }
     handleCloseModalReport = () => {
-        this.setState({ showDeleteModalReport: false });
+        this.setState({showDeleteModalReport: false});
     }
 
     handleDeleteReport = () => {
         let index = this.state.report.indexOf(this.state.reportTemp)
         let updatedReport = [...this.state.report];
-        updatedReport.splice(index,1);
-        this.setState({report : updatedReport});
-        this.setState({showDeleteModalReport:false})
+        updatedReport.splice(index, 1);
+        this.setState({report: updatedReport});
+        this.setState({showDeleteModalReport: false})
     }
     downloadFile = () => {
         console.log('Download')
