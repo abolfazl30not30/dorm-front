@@ -13,6 +13,7 @@ import Home from "./component/Dashboard/pages/Home";
 import FloorAndUnit from "./component/Dashboard/pages/Inventory and capacity/FloorAndUnit";
 import EditFloorAndUnit from "./component/Dashboard/pages/edit building/EditFloorAndUnit";
 import RoomAndBed from "./component/Dashboard/pages/Inventory and capacity/RoomAndBed";
+import ForgotPassword from "./component/ForgotPassword";
 
 class App extends Component {
     state = {}
@@ -23,6 +24,7 @@ class App extends Component {
                 <BrowserRouter>
                     <Routes>
                         <Route exact path="/" element={(<Login/>)}/>
+                        <Route exact path="/forgot-password" element={(<ForgotPassword/>)}/>
                         <Route path="/dashboard/*" element={(<MainDashboard/>)}/>
                     </Routes>
                 </BrowserRouter>

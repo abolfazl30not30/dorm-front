@@ -3,7 +3,7 @@ import "../style/loginStyle.css";
 import '../style/registerPage.css';
 import logo from "../img/sadat logo-png.png";
 import * as yup from 'yup'
-
+import {Link} from "react-router-dom"
 class Login extends Component {
   state = {
     account:{
@@ -28,45 +28,46 @@ class Login extends Component {
                   <h3>ورود کاربر</h3>
                 </div>
 
-                <div className={'input-group-register'}>
+                <div className={'form-group mt-2 mb-4'}  style={{width:"80%"}}>
                   <input
                       type="text"
                       name="user"
                       value={user}
                       onChange={this.handleChange}
-                      className={`username input`}
-                      style={{border: this.state.errors.includes('لطفا نام کاربری را وارد کنید') ? '2px solid red' : ''}}
+                      className={'form-control input username'}
+                      style={{border: this.state.errors.includes('لطفا نام کاربری را وارد کنید') ? '1px solid red' : ''}}
                       placeholder="نام کاربری"
                   />
                   {
                     this.state.errors.includes('لطفا نام کاربری را وارد کنید')
-                      ? <small className="text-danger">لطفا نام کاربری را وارد کنید</small>
+                      ? <small className="text-danger" style={{fontSize:"10px"}}>لطفا نام کاربری را وارد کنید</small>
                         : null
                   }
                 </div>
-                <div className={'input-group-register'}>
+                <div className="form-group mb-4" style={{width:"80%"}}>
                   <input
                       type="password"
                       name="password"
                       value={password}
                       onChange={this.handleChange}
-                      className={`password input`}
-                      style={{border: this.state.errors.includes('رمز عبور باید حداقل 8 کاراکتر باشد') ? '2px solid red' : ''}}
+                      className={`form-control input password`}
+                      style={{border: this.state.errors.includes('رمز عبور باید حداقل 8 کاراکتر باشد') ? '1px solid red' : ''}}
                       placeholder="گذرواژه"
                   />
                   {
                     this.state.errors.includes('رمز عبور باید حداقل 8 کاراکتر باشد')
-                        ? <small className="text-danger">رمز عبور باید حداقل 8 کاراکتر باشد</small>
+                        ? <small className="form-text text-danger" style={{fontSize:"10px"}}>رمز عبور باید حداقل 8 کاراکتر باشد</small>
                         : null
                   }
                   {
                     this.state.errors.includes('ایمیل یا پسورد صحیح نمی باشد')
-                        ? <small className="text-danger">ایمیل یا پسورد صحیح نمی باشد</small>
+                        ? <small className="form-text text-danger" style={{fontSize:"10px"}}>ایمیل یا پسورد صحیح نمی باشد</small>
                         : null
                   }
                 </div>
-                <div className="option-row mt-3">
-                  <div className="remember">
+                <button className="btn-login">ورود</button>
+                <div className="option-row mt-4 mb-2">
+                  <div className="remember d-flex align-item-center">
                     <input
                       type="checkbox"
                       id="chk-remember"
@@ -74,8 +75,13 @@ class Login extends Component {
                     />
                     <label htmlFor="chk-remember">مرا به خاطر بسپار</label>
                   </div>
+                  <div className="forgotDiv">
+                    <Link to="/forgot-password" className="forgot">
+                      فراموشی رمز؟
+                    </Link>
+                  </div>
                 </div>
-                <button className="btn-login">ورود</button>
+
               </form>
             </div>
           </div>
