@@ -5,7 +5,7 @@
 .unitContainer .back-btn {
     display: flex;
     justify-content: end;
-    padding-top: 10px;
+    padding-top: .6rem;
 
 }
 
@@ -15,7 +15,7 @@
 }
 
 .unitContainer .text {
-    margin-top: 38px;
+    margin-top: 2.4rem;
 }
 
 .unitContainer .text h4 {
@@ -30,17 +30,18 @@
     font-size: 1rem;
     color: #676767;
 }
+
 .unitContainer .edit-btn-container {
     display: flex;
-    padding-left: 10px;
-    margin-top: 50px;
+    padding-left: .6rem;
+    margin-top: 3rem;
     justify-content: end;
 }
 
 .unitContainer .register-btn-container {
     display: flex;
-    padding-left: 10px;
-    margin-top: 50px;
+    padding-left: .8rem;
+    margin-top: 3rem;
     justify-content: center;
 }
 
@@ -48,68 +49,71 @@
     text-decoration: none;
     color: #000;
     background: #f1c40f;
-    padding: 10px 34px;
+    padding: .8rem 2rem;
     border-radius: 12px;
 }
-
 
 
 .unitContainer .register-btn-container .register-btn {
     text-decoration: none;
     color: #000;
     background: #2ecc71;
-    padding: 15px 44px;
-    border-radius: 12px;
+    padding: 1rem 2.5rem;
+    border-radius: .7rem;
 }
 
 .unitContainer .unit-name {
-    margin: 50px 22px 27px 0;
+    margin: 3rem 2.4rem 2.6rem 0;
 }
 
 .unitContainer .unit-name .unit-title {
-    margin-right: 10px;
+    margin-right: .8rem;
     font-size: 1.6rem;
     color: #555;
 
 }
-.unitContainer .unit-name .show-acc-btn{
+
+.unitContainer .unit-name .show-acc-btn {
     border: none;
-    margin-top:12px;
+    margin-top: .8rem;
     font-size: .8rem;
-    color:#3498db ;
+    color: #3498db;
 }
-.unitContainer .unit-name .show-acc-btn:hover{
-    color: #2980b9 ;
+
+.unitContainer .unit-name .show-acc-btn:hover {
+    color: #2980b9;
     font-size: 1rem;
     font-weight: bold;
 }
+
 .room-box {
     background-color: #fff;
     margin: 4%;
     padding: 2%;
-    border-radius: 10px;
+    border-radius: .6rem;
     box-shadow: 0px 0px 4px rgb(0 0 0 / 10%);
 }
 
 .room-box .title {
-    margin-top: 10px;
+    margin-top: .6rem;
     margin-bottom: 1rem;
     text-align: center;
-    font-size: 17px;
+    font-size: 1rem;
     font-weight: bold;
 }
-.room-box .show-acc-btn{
-    border:none;
+
+.room-box .show-acc-btn {
+    border: none;
     font-size: .8rem;
-    color:#3498db ;
+    color: #3498db;
 }
-.room-box .show-acc-btn:hover{
+
+.room-box .show-acc-btn:hover {
     color: #2980b9 !important;
 }
 
 .bed-box {
     border: 1px dashed #ddd;
-    margin: 0.5rem;
     padding: 0.5rem;
     border-radius: 0.5rem;
     text-align: center;
@@ -117,15 +121,13 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    /* color: #181C32;
-    border-color: #EFF2F5;
-    background-color: #EFF2F5; */
 }
 
 .bed-box.full {
     color: #F1416C;
     background-color: #FFEFF3;
 }
+
 .bed-box.empty {
     color: #0e8c46;
     background-color: #f4fff8;
@@ -134,13 +136,15 @@
 .bed-box.full button.btn.btn-primary {
     color: #f1416c;
 }
+
 .bed-box.empty button.btn.btn-primary {
     color: #0e8c46;
 }
+
 .bed-box .title {
     font-size: .9rem;
     font-weight: normal;
-    margin: 10px 0;
+    margin: .6rem 0;
 }
 
 .room-box a {
@@ -203,7 +207,7 @@ button.btn.btn-primary:hover {
 }
 
 .profile-box .name {
-    margin: 32px 0 16px 0;
+    margin: 2rem 0 1rem 0;
     font-size: 1.4rem;
     color: #3F4254;
 }
@@ -211,6 +215,6 @@ button.btn.btn-primary:hover {
 .profile-box .profile-item {
     font-size: .8rem;
     font-weight: 500;
-    margin: 4px 0;
+    margin: .25rem 0;
     color: #555760;
 }

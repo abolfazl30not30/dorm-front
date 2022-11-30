@@ -1,5 +1,5 @@
 .text{
-    margin-bottom: 50px;
+    margin-bottom: 3rem;
 }
 
 .upload-container {
@@ -12,31 +12,31 @@
 }
 
 .upload-container-title h5{
-    font-size: 22px;
+    font-size: 1.4rem;
     font-weight: bold;
-    margin-top: 10px;
+    margin-top: .6rem;
 }
 
 .upload-container-title p{
-    font-size: 12px;
-    margin-top: 15px;
-    color: #3483E2;
+    font-size: .8rem;
+    margin-top: 1rem;
+    color: #F1416C;
 }
 .upload-logo-container {
     background-color: #f2f6ff;
     opacity: 0.68;
-    border-radius: 15px;
+    border-radius: 1rem;
     border: 1px dashed #3483E2;
     text-align: center;
 }
 
 .upload-icon {
     width: 70%;
-    margin-top: 50px;
+    margin-top: 3rem;
 }
 
 .pdf-icon {
-    width: 30px;
+    width: 2rem;
     margin-left: 2%;
 }
 
@@ -45,10 +45,6 @@
     margin-left: 2%;
 }
 
-.sections {
-    /*margin-left: 10%;*/
-    /*display: inline-block;*/
-}
 
 .inputs {
     margin-left: 2%;
@@ -59,13 +55,13 @@
     /* background-color: #eee; */
     color: #444;
     cursor: pointer;
-    padding: 18px;
+    padding: 1.1rem;
     width: 100%;
     text-align: left;
     border: none;
     outline: none;
     transition: 0.4s;
-    border-radius: 10px;
+    border-radius: .6rem;
 }
 
 .tab {
@@ -73,22 +69,23 @@
 }
 .upload-title span{
     align-items: center;
-    font-size: 12px;
+    font-size: .8rem;
     color: #676767;
 }
 .file-container{
-    margin-top:10px;
-    background-color: #f4fff8;
+
+    margin-top: .6rem;
+    background-color: #f9f9f9;
     width: 100%;
     height: 30px;
     display: flex;
     align-items: center;
-    border-radius: 10px;
+    border-radius: .6rem;
     box-shadow: 0 0 3px  rgba(0, 0, 0, 0.25);
     justify-content: space-around;
 }
 .file-container h6{
-    margin-top: 10px;
+    margin-top: .6rem;
 }
 .deleteBtn{
     background-color: transparent;

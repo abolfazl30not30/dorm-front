@@ -6,11 +6,11 @@
 
 .image-container {
     background-color: #fff;
-    border-radius: 16px;
-    margin-bottom: 32px;
+    border-radius: 1rem;
+    margin-bottom: 2rem;
     display: flex;
     flex-direction: column;
-    padding: 24px;
+    padding: 1.5rem;
 }
 
 .image-container img {
@@ -25,17 +25,18 @@
 
 .tab-container {
     background-color: #fff;
-    border-radius: 16px;
-    padding: 16px;
+    border-radius: 1rem;
+    padding: 1rem;
 }
 
 .information {
-    font-size: 14px;
+    font-size: .8rem;
 }
 
 .information label,
 .information svg {
     color: #7c7c7c;
+    margin-left: 0.25rem;
 }
 
 .test {
@@ -44,7 +45,7 @@
 
 .nav-tabs .nav-link {
     color: #000;
-    font-size: 15px;
+    font-size: 1rem;
 }
 
 .nav-tabs .nav-item.show .nav-link,
@@ -58,10 +59,10 @@
     border: none;
     text-align: right;
     width: fit-content;
-    padding: 8px;
-    margin-bottom: 16px;
-    border-radius: 4px;
-    font-size: 14px;
+    padding: .5rem;
+    margin-bottom: 1rem;
+    border-radius: .25rem;
+    font-size: .8rem;
     background-color: #eee;
     color: #444;
 }
@@ -72,12 +73,12 @@
 
 .input-report-box {
     position: relative;
-    padding: 8px;
+    padding: .5rem;
 }
 
 .report-modal .input {
-    padding: 10px;
-    border-radius: 8px !important;
+    padding: .6rem;
+    border-radius: .5rem !important;
     outline: none;
     color: #2a2e32b3;
     background-color: #fff;
@@ -90,8 +91,8 @@
     position: absolute;
     top: 18px;
     right: 20px;
-    font-size: 16px;
-    padding: 0px 5px;
+    font-size: 1rem;
+    padding: 0px .3rem;
     color: #2b2f33;
     transition: 0.3s;
     pointer-events: none;
@@ -106,7 +107,7 @@
     top: -8px;
     background-color: #fff;
     color: #2a2e32b3;
-    padding: 0 6px;
+    padding: 0 .4rem;
     opacity: 1;
 }
 
@@ -138,11 +139,11 @@
 
 .table th {
     font-weight: 600;
-    font-size: 13px;
+    font-size: .8rem;
 }
 
 .table td {
-    font-size: 14px;
+    font-size: .8rem;
 }
 
 .deleteTooltip > .tooltip-inner {
@@ -152,7 +153,7 @@
 }
 
 .deleteTooltip > .tooltip-arrow::before {
-    border-bottom: 5px solid #d7d7d7 !important;
+    border-bottom: .4rem solid #d7d7d7 !important;
 }
 
 .record-item {
@@ -162,10 +163,10 @@
     background-color: #f9f9f9;
     width: 125px;
     justify-content: center;
-    padding: 8px;
+    padding: .5rem;
     margin-bottom: 0.5rem;
     border-radius: 0.5rem;
-    font-size: 14px;
+    font-size: .8rem;
 }
 
 .accordion-body {
@@ -218,6 +219,7 @@ ul.nav.nav-tabs {
 .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
     font-weight: bold;
 }
+
 .more-info-item {
     border: 1px dashed #eee;
     margin: 0.5rem;

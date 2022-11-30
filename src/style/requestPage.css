@@ -1,6 +1,7 @@
 .css-vqmohf-MuiButtonBase-root-MuiRadio-root.Mui-checked {
     color: #db9b31;
 }
+
 .btn-done {
     color: #000;
     text-decoration: none;
@@ -18,7 +19,7 @@
     box-shadow: none;
 }
 
-.btn-done.disabled, .btn-done:disabled,.btn-done:disabled .btn {
+.btn-done.disabled, .btn-done:disabled, .btn-done:disabled .btn {
     background-color: #20d489;
 }
 
@@ -27,18 +28,19 @@
     text-decoration: none;
     border-radius: 0.5rem;
     background-color: #f1416c;
-    font-size: 16px;
+    font-size: 1rem;
     margin-bottom: 2rem;
     padding: 0.5rem 1rem;
     border: none;
 }
+
 .btn-reject:hover {
     background-color: #d9214e;
     color: #fff;
     box-shadow: none;
 }
 
-.btn-reject.disabled, .btn-reject:disabled,.btn-reject:disabled .btn {
+.btn-reject.disabled, .btn-reject:disabled, .btn-reject:disabled .btn {
     background-color: #f1416c;
 }
 
@@ -47,19 +49,21 @@
     background-color: #E4E6EF;
     text-decoration: none;
     border-radius: 0.5rem;
-    font-size: 16px;
+    font-size: 1rem;
     margin-bottom: 2rem;
     padding: 0.5rem 1rem;
     border: none;
 }
+
 .btn-unknown:hover {
     background-color: #b5b5c3;
     box-shadow: none;
 }
 
-.btn-unknown.disabled, .btn-unknown:disabled,.btn-unknown:disabled .btn {
+.btn-unknown.disabled, .btn-unknown:disabled, .btn-unknown:disabled .btn {
     background-color: #E4E6EF;
 }
+
 .container {
     display: block;
     width: 100%;
@@ -68,9 +72,84 @@
     box-shadow: none;
     background: none;
 }
-.request-item {
-    font-size: .8rem;
-}
-.request-item label {
+
+.request-page-card {
+    background-color: #fff;
+    padding: 1rem;
+    border-radius: 1rem;
     font-size: 1rem;
+    color: #404040;
+}
+
+.search-box {
+    display: flex;
+    flex-direction: row;
+    background-color: #f9f9f9;
+    max-width: 400px;
+    box-shadow: 0px 0px 20px 0px rgba(76, 87, 125, 0.02);
+    font-size: .9rem;
+    margin-bottom: 1rem;
+}
+
+.search-box input {
+    border: none;
+    border-radius: 0.5rem 0 0 0.5rem;
+    outline: 0;
+    text-indent: .6rem;
+}
+
+.search-box .form-floating > .form-select {
+    border: none;
+    border-left: 1px solid #ced4da;
+    border-radius: 0 0.5rem 0.5rem 0;
+    font-size: .9rem;
+}
+
+.request-item {
+    background-color: #fff;
+    box-shadow: 0px 0px 20px 0px rgba(76, 87, 125, 0.02);
+    padding: 1rem;
+    border-radius: .5rem;
+    font-size: .9rem;
+}
+
+.request-item .request-item-title {
+    /*font-weight: bold;*/
+    margin-left: .5rem;
+}
+
+.request-item .request-accept {
+    background-color: #e8fff3 !important;
+    color: #50cd89 !important;
+    padding: 0.325rem .5rem !important;
+    font-size: .85rem;
+}
+
+.request-item .request-reject {
+    background-color: #fff5f8 !important;
+    color: #f1416c !important;
+    padding: 0.325rem .5rem !important;
+    font-size: .85rem;
+}
+
+.request-item .request-unknown {
+    background-color: #fff8dd !important;
+    color: #ffc700 !important;
+    padding: 0.325rem .5rem !important;
+    font-size: .85rem;
+}
+
+.request-item .request-edit {
+    background-color: #f5f8fa !important;
+    color: #7e8299 !important;
+    padding: 0.325rem .5rem !important;
+    font-size: .85rem;
+}
+
+.css-ahj2mt-MuiTypography-root {
+    font-family: Peyda !important;
+}
+
+.modal-footer {
+    justify-content: center !important;
 }
