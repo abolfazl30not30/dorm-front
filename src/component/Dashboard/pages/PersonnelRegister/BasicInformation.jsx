@@ -2,9 +2,18 @@ import {Component} from "react";
 import SimpleTextInput from "../../../CustomInputs/SimpleTextInput";
 import BuildingContext from "../../../../contexts/Building";
 import DateInput from "../../../CustomInputs/DateInput";
+import {IconButton} from "@mui/material";
+import { IoAddOutline } from "react-icons/io5";
+import {Modal} from "react-bootstrap";
 
 class BasicInformation extends Component{
     static contextType = BuildingContext;
+
+    state = {
+        types: [],
+        tmpTypeInput: '',
+        names: []
+    }
 
     render() {
         return (
@@ -263,10 +272,113 @@ class BasicInformation extends Component{
                                 <></>
                             )
                         }
+                        <div className="input-group-register col-md-3 col-10">
+                            <select className='input'
+                                    style={{border: this.context.specificValidations.personnelFieldsValidation.type_requiredReg === false ? '2px solid red' : ''}}
+                                    value={this.context.personnelFields.type}
+                                    onChange={(e) =>  this.context.handleFields(e.target.value, 'personnelFields', 'type')}
+                            >
+                                <option selected="selected" value={''}/>
+                                {
+                                    this.state.names.map((t, index) => (
+                                        <option value={t}>{t}</option>
+                                    ))
+                                }
+                            </select>
+                            <label className="placeholder">
+                                نوع
+                                <span style={{color: 'red'}}>*</span>
+                            </label>
+                            {
+                                this.context.specificValidations.personnelFieldsValidation.type_requiredReg === false
+                                ? <small className="text-danger">لطفا نوع را انتخاب کنید!</small>
+                                    : null
+                            }
+                        </div>
+                        <div className="col-md-1 col-2 d-flex align-item-center">
+                            <IconButton color="primary" onClick={() => {
+                                this.handleOpenAddModal();
+
+                                // console.log(this.state.names);
+                                // this.handleAddType();
+                            }}>
+                                <IoAddOutline size={30} width={'50%'} height={'50%'}/>
+                            </IconButton>
+                        </div>
                     </div>
                 </div>
+
+                <Modal centered={true} show={this.state.show} onHide={() => this.handleCloseAddModal()}>
+                    <Modal.Header closeButton={true}>
+                        اضافه کردن نوع
+                    </Modal.Header>
+                    <Modal.Body>
+                        <input
+                            type="text"
+                            className={`input form-control`}
+                            onChange={(e) => this.setState({tmpTypeInput : e.target.value})}
+                            placeholder='نوع'
+                        />
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <button className="btn btn-success" onClick={(event) => {
+                            if(this.handleIsValid(event)){
+                                this.handleAddType();
+                                this.handleCloseAddModal();
+
+                            }
+                        }}>ثبت
+                        </button>
+
+                        <button className="btn btn-light" onClick={() => {
+                            this.handleCloseAddModal()
+                        }}>بستن
+                        </button>
+                    </Modal.Footer>
+                </Modal>
             </>
         );
+    }
+
+    handleIsValid = () => {
+        let regCheck = /^\s*$/;
+
+        let input_requiredReg = !regCheck.test(this.state.tmpTypeInput);
+
+        return input_requiredReg;
+    }
+
+    handleOpenAddModal = () => {
+        this.setState({show : true});
+    }
+
+    handleCloseAddModal = () => {
+        this.setState({show : false});
+    }
+
+    handleAddNames = () => {
+        for (let i = 0; i < this.state.types.length; i++) {
+            let updatedNames = [...this.state.names];
+            updatedNames.push(this.state.types[i].name);
+
+            this.setState({names : updatedNames});
+        }
+    }
+
+    componentDidMount = async () => {
+        const response = await fetch(`https://api.saadatportal.com/api/v1/category/search?type=Personnel`).then((response) => response.json())
+            .then((data) => {
+                this.setState({types : data}, () => this.handleAddNames())
+            });
+    }
+
+    handleAddType = () => {
+        let updatedNames = [...this.state.names];
+        updatedNames.push(this.state.tmpTypeInput);
+
+        this.context.handleFields(this.state.tmpTypeInput, 'personnelFields', 'type')
+
+        this.setState({names : updatedNames})
     }
 
 }
