@@ -133,16 +133,16 @@ class AdditionalInformation extends Component{
                                 label={'نام و نام خانوادگی مالک کارت'}
                             />
                         </div>
-                        {/*<div className="input-group-register col-4">*/}
-                        {/*    <SimpleTextInput*/}
-                        {/*        condition1={this.context.personnelFieldsValidation.parentType_requiredReg}*/}
-                        {/*        value={this.context.personnelFields.parentType}*/}
-                        {/*        fieldNameString={'personnelFields'}*/}
-                        {/*        valueOfInputString={'parentType'}*/}
-                        {/*        label={'نوع پرسنل'}*/}
-                        {/*        required={true}*/}
-                        {/*    />*/}
-                        {/*</div>*/}
+                        <div className="input-group-register col-md-4 col-12">
+                            <SimpleTextInput
+                                condition1={this.context.personnelFieldsValidation.parentType_requiredReg}
+                                value={this.context.personnelFields.parentType}
+                                fieldNameString={'personnelFields'}
+                                valueOfInputString={'parentType'}
+                                label={'نوع پرسنل'}
+                                required={true}
+                            />
+                        </div>
                     </div>
                 </div>
             </>
