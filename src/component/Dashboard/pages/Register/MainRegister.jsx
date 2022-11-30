@@ -20,6 +20,7 @@ import OGUploadPage from "./OtherGuest/OGUploadPage";
 
 import BuildingContext from '../../../../contexts/Building'
 import {Modal} from "react-bootstrap";
+import {Link} from "react-router-dom";
 import Accordion from "react-bootstrap/Accordion";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import ToggleButton from "@mui/material/ToggleButton";
@@ -496,9 +497,9 @@ class MainRegister extends Component {
                                 </div>
                             </div>
                             <div className="d-flex flex-row justify-content-between my-3">
-                                <button className='btn button-show' onClick={() =>{this.handleGoToShow()}}>نمایش</button>
-                                <button className='btn button-selectBed' onClick={() =>{this.handleGoToSelectBed()}}>انتخاب تخت</button>
-                                <button className='btn button-close' onClick={() =>{this.handleCloseModal()}}>بستن</button>
+                                <Link to="/dashboard/People/profile"  className='btn button-show' onClick={() =>{this.handleGoToShow()}}>نمایش</Link>
+                                <Link to="/dashboard/booking" className='btn button-selectBed' onClick={() =>{this.handleGoToSelectBed()}}>انتخاب تخت</Link>
+                                <Link to="" className='btn button-close' onClick={() =>{this.handleCloseModal()}}>بستن</Link>
                             </div>
                         </div>
                     </Modal.Body>
@@ -525,10 +526,9 @@ class MainRegister extends Component {
                 newCharacteristic.birthDate = birthDate1+" 00:00:00";
                 newCharacteristic.personType = "constant";
 
+                console.log(newCharacteristic);
 
-
-                console.log(newCharacteristic)
-                const rawResponse = await fetch('https://api.saadatportal.com/api/v1/characteristic', {
+                const createChar = await fetch('https://api.saadatportal.com/api/v1/characteristic', {
                     method: 'POST',
                     headers: {
                         'Accept': 'application/json',
@@ -537,17 +537,16 @@ class MainRegister extends Component {
                     body: JSON.stringify(newCharacteristic)
                 });
 
-                var content = await rawResponse.json();
-                console.log(content)
+                var respondChar = await createChar.json();
 
                 let person = {
                     residenceType:"resident",
                     accommodationType:"permanent",
-                    characteristicId:content.id,
+                    characteristicId: respondChar.id,
                     files: this.context.constantUploadPage
                 }
 
-                const rawResponse1 = await fetch('https://api.saadatportal.com/api/v1/person', {
+                const createPerson = await fetch('https://api.saadatportal.com/api/v1/person', {
                     method: 'POST',
                     headers: {
                         'Accept': 'application/json',
@@ -555,6 +554,20 @@ class MainRegister extends Component {
                     },
                     body: JSON.stringify(person)
                 });
+
+                var respondPerson = await createPerson.json();
+
+                const editPersonRespond = await fetch(`https://api.saadatportal.com/api/v1/characteristic/${respondChar.id}`, {
+                    method: 'PATCH',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({parentId:respondPerson.id})
+                });
+
+                this.context.handlePersonId(respondPerson.id, respondChar.id);
+
                 break;
             }
 
@@ -569,7 +582,6 @@ class MainRegister extends Component {
                 newCharacteristic.paymentDate = paymentDate1+" 00:00:00";
                 newCharacteristic.personType = 'familyGuest';
 
-                console.log(newCharacteristic)
                 const createdChar = await fetch('https://api.saadatportal.com/api/v1/characteristic', {
                     method: 'POST',
                     headers: {
@@ -616,7 +628,7 @@ class MainRegister extends Component {
                     },
                     body: JSON.stringify(guest)
                 });
-
+                this.context.handlePersonId(respondPerson.id, respondChar.id);
                 break;
             }
 
@@ -685,13 +697,12 @@ class MainRegister extends Component {
                     },
                     body: JSON.stringify(guest)
                 });
+                this.context.handlePersonId(respondPerson.id, respondChar.id);
                 break;
             }
         }
-        this.setState({showDoneModal:true})
-        this.goHome();
-        this.context.handleReset();
 
+        this.setState({showDoneModal:true})
     }
 }
 
