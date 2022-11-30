@@ -53,59 +53,61 @@
 }
 
 .left-side .form-container .login-form {
-    width: 65%;
-    height: 100%;
-    padding: 1rem;
-    background-color: white;
-    border-radius: 1.25rem;
-    display: flex !important;
-    flex-direction: column;
-    align-items: center;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);
+  width: 100%;
+  min-height: 65%;
+  display: flex;
+  justify-content: center;
+}
+
+.left-side .form-container .login-form {
+  width: 65%;
+  height: 100%;
+  padding: 1rem;
+  background-color: white;
+  border-radius: 20px;
+  display: flex !important;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
 }
 
 .left-side .form-container .login-form .title-form {
-    width: 80%;
-    height: 20%;
-    display: flex;
-    align-items: center;
+  width: 80%;
+  display: flex;
+  align-items: center;
 }
 
 .left-side .form-container .login-form h3 {
-    font-size: 1.2rem;
+  font-family: IranSans;
+  font-size: 1rem;
 }
 
 .left-side .form-container .login-form .input {
-    width: 100%;
-    height: 50px;
-    border-radius: 1.25rem;
-    margin-bottom: 4%;
-    padding-right: .5rem;
-    background-color: #e6e6e6;
-    border: none;
+  font-size: 0.8rem;
+  font-family: IranSans;
+  background-color: #f9f9f9;
+  border: none;
 }
 
 .container-login .left-side .form-container .login-form .username {
-    background-image: url(../img/user.png);
-    background-position: 7px 10px;
-    background-repeat: no-repeat;
-    background-size: 25px 23px;
+  background-image: url(../img/user.png);
+  background-position: 8px 15px;
+  background-repeat: no-repeat;
+  background-size: 20px 18px;
 }
 
 .container-login .left-side .form-container .login-form .password {
-    background-image: url(../img/key.png);
-    background-position: 7px 10px;
-    background-repeat: no-repeat;
-    background-size: 25px 23px;
+  background-image: url(../img/key.png);
+  background-position: 8px 15px;
+  background-repeat: no-repeat;
+  background-size: 20px 18px;
 }
 
 .container-login .left-side .form-container .login-form .option-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 75%;
-    height: 10%;
-    margin-bottom: 10%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 75%;
 }
 
 .container-login .left-side .form-container .login-form .option-row .remember {
@@ -113,13 +115,13 @@
 }
 
 .container-login
-.left-side
-.form-container
-.login-form
-.option-row
-.remember
-.chk-remember {
-
+  .left-side
+  .form-container
+  .login-form
+  .option-row
+  .remember
+  .chk-remember {
+  margin-left:0.2rem;
 }
 
 .container-login .left-side .form-container .login-form .option-row .remember label {
@@ -137,15 +139,15 @@
 }
 
 .container-login .left-side .form-container .login-form .btn-login {
-    width: 70%;
-    height: 15%;
-    font-family: IranSans;
-    font-size: 1rem;
-    border-radius: .6rem;
-    border: none;
-    cursor: pointer;
-    background-color: #2980b9;
-    color: #fff;
+  width: 80%;
+  height: 2.7rem;
+  font-family: IranSans;
+  font-size: 15px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  background-color: #2980b9;
+  color: #fff;
 }
 
 .container-login .right-side {
@@ -158,5 +160,31 @@
 .container-login .right-side img {
     width: 100%;
     height: 100%;
+}
+
+@media screen and (max-width: 768px) {
+  .container-login{
+    flex-wrap: wrap;
+    width: 85%;
+  }
+  .container-login .right-side{
+    width: 100%;
+  }
+  .container-login .left-side{
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .container-login{
+    flex-wrap: wrap;
+    width: 95%;
+  }
+  .container-login .right-side{
+    width: 100%;
+  }
+  .container-login .left-side{
+    width: 100%;
+  }
 }
   

@@ -12,11 +12,13 @@ import {TiTimes} from "react-icons/ti";
 import {TiTick} from "react-icons/ti";
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
-
+import '../../../../style/registerPage.css';
+import '../../../../style/paymentPage.css';
 import '../../../../style/searchAccount.css';
 import Form from "react-bootstrap/Form";
 import {BiSearch} from "react-icons/bi";
 import {MdDone} from "react-icons/md";
+import axios from "axios";
 
 class RequestPage extends Component {
 
@@ -64,7 +66,8 @@ class RequestPage extends Component {
     async componentDidMount() {
         // const response1 = await fetch('https://api.saadatportal.com/api/v1/category/search?type=Request').then((response) => response.json())
         //     .then((data) => this.setState({ choices: data }));
-
+        const response1 = await axios.get("https://api.saadatportal.com/api/v1/request");
+        console.log(response1)
         const response2 = await fetch('https://api.saadatportal.com/api/v1/request').then((response) => response.json())
             .then((data) => this.setState({requests: data}));
 
