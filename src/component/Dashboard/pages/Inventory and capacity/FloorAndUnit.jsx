@@ -10,9 +10,11 @@ import {TbBuilding} from 'react-icons/tb';
 import {IoMdMore} from "react-icons/io";
 import {EditText, EditTextarea} from 'react-edit-text';
 import 'react-edit-text/dist/index.css';
-import {Button, Modal} from 'react-bootstrap'
+import {Modal} from 'react-bootstrap'
 import {BiChevronLeft} from 'react-icons/bi'
 import { FiEdit2 } from 'react-icons/fi'
+import "../../../../style/paymentHistory.css"
+import {Button} from "@mui/material";
 
 
 class FloorAndUnit extends Component {
@@ -27,6 +29,14 @@ class FloorAndUnit extends Component {
         tempFloor: {
             accessories: []
         },
+        logData: [
+            {
+                floor: '2',
+                unit: '3',
+                room: '2',
+                bed: '5'
+            }
+        ],
     }
 
     async componentDidMount() {
@@ -40,8 +50,6 @@ class FloorAndUnit extends Component {
                     this.setState({isFullUnit: true})
                 }
             }));
-
-
     }
 
 
@@ -70,7 +78,17 @@ class FloorAndUnit extends Component {
                         </div>
                     ) : (
                         <div>
-                            <div className={this.state.isFullUnit ? "edit-btn-container" : "register-btn-container"}>
+                            <div className={`d-flex justify-content-between ${this.state.isFullUnit ? "edit-btn-container" : "register-btn-container"}`}>
+                                <div>
+                                    <Link to="room_log">
+                                        <button className={'btn btn-success'}>
+                                            گزارش گیری
+                                        </button>
+                                        {/*<Button variant="contained">*/}
+                                        {/*    گزارش گیری*/}
+                                        {/*</Button>*/}
+                                    </Link>
+                                </div>
                                 <Link to="edit-floor-and-unit"
                                       className={this.state.isFullUnit ? "edit-btn" : "register-btn"}>
                                     {this.state.isFullUnit ? (<h6><FiEdit2 className='ms-1' />ویرایش</h6>) : (<h6> ثبت طبقه و واحد</h6>)}
@@ -120,18 +138,18 @@ class FloorAndUnit extends Component {
                         <div className="table-box">
                             <table className="table">
                                 <thead>
-                                    <tr>
-                                        <th>نام</th>
-                                        <th>تعداد</th>
-                                    </tr>
+                                <tr>
+                                    <th>نام</th>
+                                    <th>تعداد</th>
+                                </tr>
                                 </thead>
                                 <tbody>
                                 {
                                     this.state.tempFloor.accessories.map((acc) => (
-                                    <tr>
-                                        <td>{acc.name}</td>
-                                        <td>{acc.count}</td>
-                                    </tr>
+                                        <tr>
+                                            <td>{acc.name}</td>
+                                            <td>{acc.count}</td>
+                                        </tr>
                                     ))
                                 }
                                 </tbody>

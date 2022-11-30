@@ -23,6 +23,7 @@ import Inventory from './pages/inventory/inventory';
 import PersonnelRegister from "./pages/PersonnelRegister/PersonnelRegister";
 import PresenceAbsence from "./pages/PresenceAbsence/presenceAbsence";
 import PresenceAbsenceRoomPerson from './pages/PresenceAbsence/PresenceAbsenceRoomPerson'
+import RoomLog from "./pages/Inventory and capacity/RoomLog";
 
 
 class MainPage extends Component {
@@ -493,6 +494,7 @@ class MainPage extends Component {
                             <Route path="/taskManagement" element={(<TrelloPage/>)}/>
                             <Route path="/PresenceAbsence" element={(<PresenceAbsence/>)}/>
                             <Route path="/PresenceAbsencePage2" element={(<PresenceAbsenceRoomPerson/>)}/>
+                            <Route path="booking/room_log" element={(<RoomLog/>)}/>
                         </Routes>
                     </BuildingContext.Provider>
                 </div>
