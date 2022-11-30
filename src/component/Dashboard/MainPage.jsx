@@ -102,14 +102,11 @@ class MainPage extends Component {
                 bankAccountExpirationDate: '',
                 cvv2: '', //
                 fullName: '',//
-                parentType: 'Personnel',
+                parentType: 'pe',
                 gender: 'male',
                 startDate: '',
                 endDate: '',
-                type: '',
             },
-
-            personnelUploadPage: [],
 
             //MAIN REGISTER
             //############################################################################## first page
@@ -265,7 +262,6 @@ class MainPage extends Component {
                 emergencyNumber_MobileOrHomeTelephoneReg: '',
                 email_emailReg: '',
                 healthyStatus_requiredReg: '',
-                type_requiredReg: '',
 
                 //second page
                 major_requiredReg: '',
@@ -452,7 +448,6 @@ class MainPage extends Component {
                         constantUploadPage: this.state.fields.constantUploadPage, // UploadPage
                         familyGuestUploadPage: this.state.fields.familyGuestUploadPage, // UploadPage
                         otherGuestUploadPage: this.state.fields.otherGuestUploadPage, // UploadPage
-                        personnelUploadPage: this.state.fields.personnelUploadPage,
 
                         handleTypeofResident: this.handleTypeofResident,
                         handleUnitNumber: this.handleUnitNumber,

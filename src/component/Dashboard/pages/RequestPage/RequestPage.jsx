@@ -68,6 +68,8 @@ class RequestPage extends Component {
     async componentDidMount() {
         // const response1 = await fetch('https://api.saadatportal.com/api/v1/category/search?type=Request').then((response) => response.json())
         //     .then((data) => this.setState({ choices: data }));
+        const response1 = await axios.get("https://api.saadatportal.com/api/v1/request");
+        console.log(response1)
         const response2 = await fetch('https://api.saadatportal.com/api/v1/request').then((response) => response.json())
             .then((data) => this.setState({ requests: data }));
 
