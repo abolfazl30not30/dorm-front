@@ -12,8 +12,8 @@ class PersonnelRegister extends Component {
         let requiredReg = /^\s*$/;
         let numberReg = /^\s*[0-9]*\s*$/;
         let phoneNumberReg = /^(\s*09\d{9}\s*)$/; // iranian telephone number '09---------'
-        let homeTelephoneReg = /^\d{3}-\d{8}$/; // 012-34567890
-        let MobileOrHomeTelephoneReg = /^(\s*09\d{9}\s*|\d{3}-\d{8})$/
+        let homeTelephoneReg = /^[0]\d{10}$/; // 012-34567890
+        let MobileOrHomeTelephoneReg = /^(\s*09\d{9}\s*|[0]\d{10})$/
         let emailReg = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/
 
         let firstName_requiredReg = !requiredReg.test(this.context.personnelFields.firstName);
@@ -33,6 +33,7 @@ class PersonnelRegister extends Component {
         let nationality_requiredReg = !requiredReg.test(this.context.personnelFields.nationality);
         let maritalStatus_requiredReg = !requiredReg.test(this.context.personnelFields.maritalStatus);
         let healthyStatus_requiredReg = !requiredReg.test(this.context.personnelFields.healthyStatus);
+        let type_requiredReg = !requiredReg.test(this.context.personnelFields.type);
 
         let nationalCode_numberReg = numberReg.test(this.context.personnelFields.nationalCode);
         let certificateNumber_numberReg = numberReg.test(this.context.personnelFields.certificateNumber);
@@ -51,21 +52,23 @@ class PersonnelRegister extends Component {
         }
 
         this.context.handleSpecificValidations([firstName_requiredReg, lastName_requiredReg,
-            nationalCode_requiredReg, placeOfIssue_requiredReg, certificateNumber_requiredReg, phoneNumber_requiredReg,
-            address_requiredReg, telephoneNumber_requiredReg, emergencyNumber_requiredReg,
-            birthPlace_requiredReg, birthDate_requiredReg, education_requiredReg,
-            postalCode_requiredReg, email_requiredReg, nationality_requiredReg,
-            maritalStatus_requiredReg, nationalCode_numberReg,
-            certificateNumber_numberReg, postalCode_numberReg, phoneNumber_phoneNumberReg,
-            telephoneNumber_homeTelephoneReg, emergencyNumber_MobileOrHomeTelephoneReg, email_emailReg, healthyStatus_requiredReg],
+                nationalCode_requiredReg, placeOfIssue_requiredReg, certificateNumber_requiredReg, phoneNumber_requiredReg,
+                address_requiredReg, telephoneNumber_requiredReg, emergencyNumber_requiredReg,
+                birthPlace_requiredReg, birthDate_requiredReg, education_requiredReg,
+                postalCode_requiredReg, email_requiredReg, nationality_requiredReg,
+                maritalStatus_requiredReg, nationalCode_numberReg,
+                certificateNumber_numberReg, postalCode_numberReg, phoneNumber_phoneNumberReg,
+                telephoneNumber_homeTelephoneReg, emergencyNumber_MobileOrHomeTelephoneReg, email_emailReg, healthyStatus_requiredReg,
+                type_requiredReg],
             ['firstName_requiredReg', 'lastName_requiredReg',
-            'nationalCode_requiredReg', 'placeOfIssue_requiredReg', 'certificateNumber_requiredReg', 'phoneNumber_requiredReg',
-            'address_requiredReg', 'telephoneNumber_requiredReg', 'emergencyNumber_requiredReg',
-            'birthPlace_requiredReg', 'birthDate_requiredReg', 'education_requiredReg',
-            'postalCode_requiredReg', 'email_requiredReg', 'nationality_requiredReg',
-            'maritalStatus_requiredReg', 'nationalCode_numberReg',
-            'certificateNumber_numberReg', 'postalCode_numberReg', 'phoneNumber_phoneNumberReg',
-            'telephoneNumber_homeTelephoneReg', 'emergencyNumber_MobileOrHomeTelephoneReg', 'email_emailReg', 'healthyStatus_requiredReg'], 'personnelFieldsValidation')
+                'nationalCode_requiredReg', 'placeOfIssue_requiredReg', 'certificateNumber_requiredReg', 'phoneNumber_requiredReg',
+                'address_requiredReg', 'telephoneNumber_requiredReg', 'emergencyNumber_requiredReg',
+                'birthPlace_requiredReg', 'birthDate_requiredReg', 'education_requiredReg',
+                'postalCode_requiredReg', 'email_requiredReg', 'nationality_requiredReg',
+                'maritalStatus_requiredReg', 'nationalCode_numberReg',
+                'certificateNumber_numberReg', 'postalCode_numberReg', 'phoneNumber_phoneNumberReg',
+                'telephoneNumber_homeTelephoneReg', 'emergencyNumber_MobileOrHomeTelephoneReg', 'email_emailReg',
+                'healthyStatus_requiredReg', 'type_requiredReg'], 'personnelFieldsValidation')
 
         return firstName_requiredReg && lastName_requiredReg &&
             nationalCode_requiredReg && certificateNumber_requiredReg && phoneNumber_requiredReg &&
@@ -75,7 +78,7 @@ class PersonnelRegister extends Component {
             maritalStatus_requiredReg && nationalCode_numberReg &&
             certificateNumber_numberReg && postalCode_numberReg && phoneNumber_phoneNumberReg &&
             telephoneNumber_homeTelephoneReg && emergencyNumber_MobileOrHomeTelephoneReg && email_emailReg &&
-            healthyStatus_requiredReg;
+            healthyStatus_requiredReg && type_requiredReg;
     }
 
     personnelAdditionalInformation = () => {
@@ -168,8 +171,41 @@ class PersonnelRegister extends Component {
         );
     }
 
-    handleSubmit = () => {
+    handleSubmit = async () => {
+        let newCharacteristic = {...this.context.personnelFields}
 
+        console.log(newCharacteristic)
+        const rawResponse = await fetch('https://api.saadatportal.com/api/v1/characteristic', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(newCharacteristic)
+        });
+
+        var content2 = await rawResponse.json();
+        console.log(content2)
+
+        let personnel = {
+            gender: newCharacteristic.gender,
+            type: newCharacteristic.type,
+            residenceType:"resident",
+            characteristicId: content2.id,
+            files: this.context.personnelUploadPage,
+        }
+
+        console.log(personnel.type);
+
+
+        const rawResponse1 = await fetch('https://api.saadatportal.com/api/v1/personnel', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(personnel)
+        });
     }
 
 }
