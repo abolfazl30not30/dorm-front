@@ -26,15 +26,15 @@ const SlideShow = () => {
             <div className="slide-container">
                 <Slide {...properties}>
                     <div className="each-slide">
-                        <div style={{ backgroundImage: `url(${slideImages[0]})`,height:"100vh" }}>
+                        <div style={{ backgroundImage: `url(${slideImages[0]})`,height:"70vh" }}>
                         </div>
                     </div>
                     <div className="each-slide">
-                        <div style={{ backgroundImage: `url(${slideImages[1]})`,height:"100vh" }}>
+                        <div style={{ backgroundImage: `url(${slideImages[1]})`,height:"70vh" }}>
                         </div>
                     </div>
                     <div className="each-slide">
-                        <div style={{ backgroundImage: `url(${slideImages[2]})`,height:"100vh"}}>
+                        <div style={{ backgroundImage: `url(${slideImages[2]})`,height:"70vh"}}>
                         </div>
                     </div>
                 </Slide>

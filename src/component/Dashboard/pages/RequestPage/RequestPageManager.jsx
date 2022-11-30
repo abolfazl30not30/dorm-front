@@ -211,7 +211,7 @@ class RequestPage extends Component {
                                                                             className={'col-8'}
                                                                             style={{width: '30%'}}
                                                                             onClick={() => {
-                                                                                this.handleOpenFailureModal();
+                                                                                this.handleOpenFailureModal(request);
                                                                                 // this.setState({showStatusModal: 'true'});
                                                                                 this.setState({tmpRequest : request});
 
@@ -671,8 +671,15 @@ class RequestPage extends Component {
         this.setState({failureModalShow: false});
     }
 
-    handleOpenFailureModal = () => {
+    handleOpenFailureModal = async (request) => {
         this.setState({failureModalShow: true});
+
+
+        if(request.checked === false){
+            const response = await fetch(`http://localhost:8089/api/v1/failureReason/${request.failureReasonId}`).then((response) => response.json())
+                .then((data) => this.setState({failure : data}));
+        }
+
     }
 
     handleSearchBtn = () => {

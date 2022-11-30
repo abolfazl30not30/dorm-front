@@ -162,6 +162,7 @@ class EditFloorAndUnit extends Component {
         });
 
         var content = await rawResponse.json();
+
         const newFloor = this.state.floor.concat(
             {
                 empty: true,

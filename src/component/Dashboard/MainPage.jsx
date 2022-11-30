@@ -469,29 +469,29 @@ class MainPage extends Component {
                     }}
                     >
                         <Routes>
-                            <Route exact path="/dashboard" element={(<Home/>)}/>
-                            <Route path="/dashboard/booking" element={(<FloorAndUnit/>)}/>
-                            <Route path="/dashboard/booking/edit-floor-and-unit" element={(<EditFloorAndUnit/>)}/>
-                            <Route path="/dashboard/RoomAndBed" element={(<RoomAndBed/>)}/>
-                            <Route path='/dashboard/RoomAndBed/edit-room-and-bed' element={(<EditRoomAndBed/>)}/>
-                            <Route path="/dashboard/people" element={(<SearchAccount/>)}/>
-                            <Route path="/dashboard/people/profile" element={(<ProfilePage/>)}/>
-                            <Route path='/dashboard/payment' element={(<PaymentPage/>)}/>
-                            <Route path='/dashboard/contacts' element={(<Contacts/>)}/>
-                            <Route path='/dashboard/CallHistory' element={(<CallHistory/>)}/>
-                            <Route path='/dashboard/Inventory' element={(<Inventory/>)}/>
-                            <Route path="/dashboard/Register" element={(<MainRegister/>)}/>
-                            <Route path="/dashboard/edit" element={(<EditFloorAndUnit/>)}/>
-                            <Route path="/dashboard/Calender" element={(<EventPage/>)}/>
-                            <Route path="/dashboard/Request" element={(<RequestPage/>)}/>
-                            <Route path="/dashboard/PersonnelRegister" element={(<PersonnelRegister/>)}/>
-                            <Route path="/dashboard/Request-manager" element={(<RequestPageManager/>)}/>
-                            <Route path="/dashboard/Request" element={(<RequestPage/>)}/>
-                            <Route path="/dashboard/camera-history" element={(<CameraHistoryPage/>)}/>
-                            <Route path="/dashboard/PaymentHistory" element={(<PaymentHistory/>)}/>
-                            <Route path="/dashboard/taskManagement" element={(<TrelloPage/>)}/>
-                            <Route path="/dashboard/PresenceAbsence" element={(<PresenceAbsence/>)}/>
-                            <Route path="/dashboard/PresenceAbsencePage2" element={(<PresenceAbsenceRoomPerson/>)}/>
+                            <Route path="/" element={(<Home/>)}/>
+                            <Route path="/booking" element={(<FloorAndUnit/>)}/>
+                            <Route path="/booking/edit-floor-and-unit" element={(<EditFloorAndUnit/>)}/>
+                            <Route path="/RoomAndBed" element={(<RoomAndBed/>)}/>
+                            <Route path='/RoomAndBed/edit-room-and-bed' element={(<EditRoomAndBed/>)}/>
+                            <Route path="/people" element={(<SearchAccount/>)}/>
+                            <Route path="/people/profile" element={(<ProfilePage/>)}/>
+                            <Route path='/payment' element={(<PaymentPage/>)}/>
+                            <Route path='/contacts' element={(<Contacts/>)}/>
+                            <Route path='/CallHistory' element={(<CallHistory/>)}/>
+                            <Route path='/Inventory' element={(<Inventory/>)}/>
+                            <Route path="/Register" element={(<MainRegister/>)}/>
+                            <Route path="/edit" element={(<EditFloorAndUnit/>)}/>
+                            <Route path="/Calender" element={(<EventPage/>)}/>
+                            <Route path="/Request" element={(<RequestPage/>)}/>
+                            <Route path="/PersonnelRegister" element={(<PersonnelRegister/>)}/>
+                            <Route path="/Request-manager" element={(<RequestPageManager/>)}/>
+                            <Route path="/Request" element={(<RequestPage/>)}/>
+                            <Route path="/camera-history" element={(<CameraHistoryPage/>)}/>
+                            <Route path="/PaymentHistory" element={(<PaymentHistory/>)}/>
+                            <Route path="/taskManagement" element={(<TrelloPage/>)}/>
+                            <Route path="/PresenceAbsence" element={(<PresenceAbsence/>)}/>
+                            <Route path="/PresenceAbsencePage2" element={(<PresenceAbsenceRoomPerson/>)}/>
                         </Routes>
                     </BuildingContext.Provider>
                 </div>

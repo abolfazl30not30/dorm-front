@@ -14,7 +14,7 @@ class OGInformationPage extends Component {
                 <div className="register-step-box">
                     <h2>مهمان (متفرقه)</h2>
                     <div className='d-flex flex-wrap justify-content-start'>
-                        <div className="input-group-register col-4">
+                        <div className="input-group-register col-md-4 col-12">
                             <SimpleTextInput
                                 condition1={this.context.otherGuestInformationValidation.firstName_requiredReg}
                                 value={this.context.otherGuestInformation.firstName}
@@ -24,7 +24,7 @@ class OGInformationPage extends Component {
                                 required={true}
                             />
                         </div>
-                        <div className="input-group-register col-4">
+                        <div className="input-group-register col-md-4 col-12">
                             <SimpleTextInput
                                 condition1={this.context.otherGuestInformationValidation.lastName_requiredReg}
                                 value={this.context.otherGuestInformation.lastName}
@@ -34,7 +34,7 @@ class OGInformationPage extends Component {
                                 required={true}
                             />
                         </div>
-                        <div className="input-group-register col-4">
+                        <div className="input-group-register col-md-4 col-12">
                             <SimpleTextInput
                                 condition1={this.context.otherGuestInformationValidation.nationalCode_requiredReg}
                                 condition4={this.context.otherGuestInformationValidation.nationalCode_numberReg}
@@ -45,7 +45,7 @@ class OGInformationPage extends Component {
                                 required={true}
                             />
                         </div>
-                        <div className="input-group-register col-4">
+                        <div className="input-group-register col-md-4 col-12">
                             <SimpleTextInput
                                 condition1={this.context.otherGuestInformationValidation.certificateNumber_requiredReg}
                                 condition4={this.context.otherGuestInformationValidation.certificateNumber_numberReg}
@@ -56,7 +56,7 @@ class OGInformationPage extends Component {
                                 required={true}
                             />
                         </div>
-                        <div className="input-group-register col-4">
+                        <div className="input-group-register col-md-4 col-12">
                             <DateInput value={this.context.valueOfDates.otherGuest.birthDate}
                                        valueFieldString={'otherGuest'}
                                        fieldNameString={'otherGuestInformation'}
@@ -65,7 +65,7 @@ class OGInformationPage extends Component {
                                        timeInclude={false}
                             />
                         </div>
-                        <div className="input-group-register col-4">
+                        <div className="input-group-register col-md-4 col-12">
                             <SimpleTextInput
                                 value={this.context.otherGuestInformation.placeOfIssue}
                                 fieldNameString={'otherGuestInformation'}
@@ -73,7 +73,7 @@ class OGInformationPage extends Component {
                                 label={'محل صدور'}
                             />
                         </div>
-                        <div className="input-group-register col-4">
+                        <div className="input-group-register col-md-4 col-12">
                             <DateInput condition1={this.context.otherGuestInformationValidation.startDate_requiredReg}
                                        value={this.context.valueOfDates.otherGuest.startDate}
                                        valueFieldString={'otherGuest'}
@@ -84,7 +84,7 @@ class OGInformationPage extends Component {
                                        timeInclude={true}
                             />
                         </div>
-                        <div className="input-group-register col-4">
+                        <div className="input-group-register col-md-4 col-12">
                             <DateInput timeInclude={true}
                                        condition1={this.context.otherGuestInformationValidation.endDate_requiredReg}
                                        value={this.context.valueOfDates.otherGuest.endDate}
@@ -95,7 +95,7 @@ class OGInformationPage extends Component {
                                        label={'تاریخ اتمام پذیرش'}
                             />
                         </div>
-                        <div className="input-group-register col-4">
+                        <div className="input-group-register col-md-4 col-12">
                             <DateInput value={this.context.valueOfDates.otherGuest.paymentDate}
                                        valueFieldString={'otherGuest'}
                                        fieldNameString={'otherGuestInformation'}
@@ -104,7 +104,7 @@ class OGInformationPage extends Component {
                                        timeInclude={false}
                             />
                         </div>
-                        <div className="input-group-register col-4">
+                        <div className="input-group-register col-md-4 col-12">
                             <SimpleTextInput
                                 condition4={this.context.otherGuestInformationValidation.rentPaymentAmount_numberReg}
                                 value={this.context.otherGuestInformation.rentPaymentAmount}
@@ -113,7 +113,7 @@ class OGInformationPage extends Component {
                                 label={'مبلغ پرداخت اجاره'}
                             />
                         </div>
-                        <div className="input-group-register col-4">
+                        <div className="input-group-register col-md-4 col-12">
                             <SimpleTextInput
                                 condition4={this.context.otherGuestInformationValidation.depositPaymentAmount_numberReg}
                                 value={this.context.otherGuestInformation.depositPaymentAmount}
@@ -122,7 +122,7 @@ class OGInformationPage extends Component {
                                 label={'مبلغ پرداخت ودیعه'}
                             />
                         </div>
-                        <div className="input-group-register col-4">
+                        <div className="input-group-register col-md-4 col-12">
                             <SimpleTextInput
                                 condition4={this.context.otherGuestInformationValidation.discountPaymentAmount_numberReg}
                                 value={this.context.otherGuestInformation.discountPaymentAmount}
@@ -131,7 +131,6 @@ class OGInformationPage extends Component {
                                 label={' مبلغ پرداخت تخفیف'}
                             />
                         </div>
-
                     </div>
                 </div>
             </>

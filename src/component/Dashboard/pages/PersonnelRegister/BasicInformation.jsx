@@ -12,7 +12,7 @@ class BasicInformation extends Component{
                 <div className="register-step-box">
                     <h2>مشخصات اولیه</h2>
                     <div className='d-flex flex-wrap justify-content-start'>
-                        <div className="input-group-register col-4">
+                        <div className="input-group-register col-md-4 col-12">
                             <SimpleTextInput
                                 condition1={this.context.personnelFieldsValidation.firstName_requiredReg}
                                 value={this.context.personnelFields.firstName}
@@ -22,7 +22,7 @@ class BasicInformation extends Component{
                                 required={true}
                             />
                         </div>
-                        <div className="input-group-register col-4">
+                        <div className="input-group-register col-md-4 col-12">
                             <SimpleTextInput
                                 condition1={this.context.personnelFieldsValidation.lastName_requiredReg}
                                 value={this.context.personnelFields.lastName}
@@ -32,7 +32,7 @@ class BasicInformation extends Component{
                                 required={true}
                             />
                         </div>
-                        <div className="input-group-register col-4">
+                        <div className="input-group-register col-md-4 col-12">
                             <SimpleTextInput
                                 condition1={this.context.personnelFieldsValidation.nationalCode_requiredReg}
                                 condition4={this.context.personnelFieldsValidation.nationalCode_numberReg}
@@ -43,7 +43,7 @@ class BasicInformation extends Component{
                                 required={true}
                             />
                         </div>
-                        <div className="input-group-register col-4">
+                        <div className="input-group-register col-md-4 col-12">
                             <SimpleTextInput
                                 condition1={this.context.personnelFieldsValidation.placeOfIssue_requiredReg}
                                 value={this.context.personnelFields.placeOfIssue}
@@ -53,7 +53,7 @@ class BasicInformation extends Component{
                                 required={true}
                             />
                         </div>
-                        <div className="input-group-register col-4">
+                        <div className="input-group-register col-md-4 col-12">
                             <SimpleTextInput
                                 condition1={this.context.personnelFieldsValidation.certificateNumber_requiredReg}
                                 condition4={this.context.personnelFieldsValidation.certificateNumber_numberReg}
@@ -64,7 +64,7 @@ class BasicInformation extends Component{
                                 required={true}
                             />
                         </div>
-                        <div className="input-group-register col-4">
+                        <div className="input-group-register col-md-4 col-12">
                             <SimpleTextInput
                                 condition1={this.context.personnelFieldsValidation.phoneNumber_requiredReg}
                                 condition2={this.context.personnelFieldsValidation.phoneNumber_phoneNumberReg}
@@ -75,7 +75,7 @@ class BasicInformation extends Component{
                                 required={true}
                             />
                         </div>
-                        <div className="input-group-register col-4">
+                        <div className="input-group-register col-md-4 col-12">
                             <SimpleTextInput
                                 condition1={this.context.personnelFieldsValidation.address_requiredReg}
                                 value={this.context.personnelFields.address}
@@ -85,7 +85,7 @@ class BasicInformation extends Component{
                                 required={true}
                             />
                         </div>
-                        <div className="input-group-register col-4">
+                        <div className="input-group-register col-md-4 col-12">
                             <SimpleTextInput
                                 condition1={this.context.personnelFieldsValidation.telephoneNumber_requiredReg}
                                 condition3={this.context.personnelFieldsValidation.telephoneNumber_homeTelephoneReg}
@@ -96,7 +96,7 @@ class BasicInformation extends Component{
                                 required={true}
                             />
                         </div>
-                        <div className="input-group-register col-4">
+                        <div className="input-group-register col-md-4 col-12">
                             <SimpleTextInput
                                 condition1={this.context.personnelFieldsValidation.emergencyNumber_requiredReg}
                                 condition6={this.context.personnelFieldsValidation.emergencyNumber_MobileOrHomeTelephoneReg}
@@ -107,7 +107,7 @@ class BasicInformation extends Component{
                                 required={true}
                             />
                         </div>
-                        <div className="input-group-register col-4">
+                        <div className="input-group-register col-md-4 col-12">
                             <SimpleTextInput
                                 condition1={this.context.personnelFieldsValidation.birthPlace_requiredReg}
                                 value={this.context.personnelFields.birthPlace}
@@ -117,7 +117,7 @@ class BasicInformation extends Component{
                                 required={true}
                             />
                         </div>
-                        <div className="input-group-register col-4">
+                        <div className="input-group-register col-md-4 col-12">
                             <DateInput
                                 condition1={this.context.personnelFieldsValidation.birthDate_requiredReg}
                                 value={this.context.valueOfDates.personnel.birthDate}
@@ -129,7 +129,7 @@ class BasicInformation extends Component{
                                 timeInclude={false}
                             />
                         </div>
-                        <div className="input-group-register col-4">
+                        <div className="input-group-register col-md-4 col-12">
                             <select
                                 className={'input'}
                                 value={this.context.personnelFields.gender}
@@ -140,7 +140,7 @@ class BasicInformation extends Component{
                             </select>
                             <label className="placeholder">جنسیت</label>
                         </div>
-                        <div className="input-group-register col-4">
+                        <div className="input-group-register col-md-4 col-12">
                             <SimpleTextInput
                                 condition1={this.context.personnelFieldsValidation.education_requiredReg}
                                 value={this.context.personnelFields.education}
@@ -150,7 +150,7 @@ class BasicInformation extends Component{
                                 required={true}
                             />
                         </div>
-                        <div className="input-group-register col-4">
+                        <div className="input-group-register col-md-4 col-12">
                             <SimpleTextInput
                                 condition1={this.context.personnelFieldsValidation.postalCode_requiredReg}
                                 condition4={this.context.personnelFieldsValidation.personnelFieldsValidation}
@@ -161,7 +161,7 @@ class BasicInformation extends Component{
                                 required={true}
                             />
                         </div>
-                        <div className="input-group-register col-4">
+                        <div className="input-group-register col-md-4 col-12">
                             <SimpleTextInput
                                 condition1={this.context.personnelFieldsValidation.email_requiredReg}
                                 condition7={this.context.personnelFieldsValidation.email_emailReg}
@@ -172,7 +172,7 @@ class BasicInformation extends Component{
                                 required={true}
                             />
                         </div>
-                        <div className="input-group-register col-4">
+                        <div className="input-group-register col-md-4 col-12">
                             <SimpleTextInput
                                 condition1={this.context.personnelFieldsValidation.nationality_requiredReg}
                                 value={this.context.personnelFields.nationality}
@@ -182,7 +182,7 @@ class BasicInformation extends Component{
                                 required={true}
                             />
                         </div>
-                        <div className="input-group-register col-4">
+                        <div className="input-group-register col-md-4 col-12">
                             <select
                                 className={'input'}
                                 value={this.context.personnelFields.maritalStatus}
@@ -194,7 +194,7 @@ class BasicInformation extends Component{
                             <label className="placeholder">وضعیت تاهل</label>
 
                         </div>
-                        <div className="input-group-register col-4">
+                        <div className="input-group-register col-md-4 col-12">
                             <select className='input'
                                     value={this.context.personnelFields.religion}
                                     onChange={(e) =>  this.context.handleFields(e.target.value, 'personnelFields', 'religion')}
@@ -207,7 +207,7 @@ class BasicInformation extends Component{
                             </select>
                             <label className="placeholder">دین</label>
                         </div>
-                        <div className="input-group-register col-4">
+                        <div className="input-group-register col-md-4 col-12">
                             <SimpleTextInput
                                 value={this.context.personnelFields.subReligion}
                                 fieldNameString={'personnelFields'}
@@ -223,7 +223,7 @@ class BasicInformation extends Component{
                         {/*        label={'وضعیت سلامت'}*/}
                         {/*    />*/}
                         {/*</div>*/}
-                        <div className="input-group-register col-4">
+                        <div className="input-group-register col-md-4 col-12">
                             <select className='input'
                                     value={this.context.personnelFields.health}
                                     onChange={(e) =>  this.context.handleFields(e.target.value, 'personnelFields', 'health')}

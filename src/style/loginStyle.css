@@ -8,9 +8,10 @@
   font-family: IranSans;
 }
 
-.container {
+.container-login {
   display: flex;
-  flex: row;
+  flex-direction: row;
+  padding: 0;
   width: 75%;
   height: 80vh;
   margin: 10vh auto;
@@ -19,7 +20,7 @@
   background-size: cover;
   border-radius: 10px;
 }
-.container .left-side {
+.container-login .left-side {
   width: 50%;
   height: 100%;
   background: linear-gradient(
@@ -29,19 +30,20 @@
   );
   border-radius: 0 10px 10px 0;
 }
-.container .left-side .title {
+
+.container-login .left-side .title {
   width: 100%;
   height: 25%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.container .left-side .title h2 {
+.container-login .left-side .title h2 {
   font-family: IranSans;
   font-size: 35px;
   color: #000;
 }
-.container .left-side .form-container {
+.container-login .left-side .form-container {
   width: 100%;
   height: 60%;
   display: flex;
@@ -51,6 +53,7 @@
 .left-side .form-container .login-form {
   width: 65%;
   height: 100%;
+  padding: 1rem;
   background-color: white;
   border-radius: 20px;
   display: flex !important;
@@ -69,7 +72,7 @@
   font-size: 1.2vw;
 }
 .left-side .form-container .login-form .input {
-  width: 80%;
+  width: 100%;
   height: 50px;
   border-radius: 20px;
   margin-bottom: 4%;
@@ -78,19 +81,19 @@
   background-color: #e6e6e6;
   border: none;
 }
-.container .left-side .form-container .login-form .username {
+.container-login .left-side .form-container .login-form .username {
   background-image: url(../img/user.png);
   background-position: 7px 10px;
   background-repeat: no-repeat;
   background-size: 25px 23px;
 }
-.container .left-side .form-container .login-form .password {
+.container-login .left-side .form-container .login-form .password {
   background-image: url(../img/key.png);
   background-position: 7px 10px;
   background-repeat: no-repeat;
   background-size: 25px 23px;
 }
-.container .left-side .form-container .login-form .option-row {
+.container-login .left-side .form-container .login-form .option-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -98,32 +101,33 @@
   height: 10%;
   margin-bottom: 10%;
 }
-.container .left-side .form-container .login-form .option-row .remember {
+.container-login .left-side .form-container .login-form .option-row .remember {
 
 }
-.container
+.container-login
   .left-side
   .form-container
   .login-form
   .option-row
   .remember
   .chk-remember {
+
 }
-.container .left-side .form-container .login-form .option-row .remember label {
+.container-login .left-side .form-container .login-form .option-row .remember label {
   font-family: IranSans;
   color: #000;
   text-decoration: none;
   font-size: 12px;
 }
-.container .left-side .form-container .login-form .option-row .forgot {
+.container-login .left-side .form-container .login-form .option-row .forgot {
   font-family: IranSans;
   color: #000;
   text-decoration: none;
   font-size: 12px;
 }
-.container .left-side .form-container .login-form .btn-login {
-  width: 77%;
-  height: 13%;
+.container-login .left-side .form-container .login-form .btn-login {
+  width: 70%;
+  height: 15%;
   font-family: IranSans;
   font-size: 15px;
   border-radius: 10px;
@@ -133,13 +137,14 @@
   color: #fff;
 }
 
-.container .right-side {
+.container-login .right-side {
   width: 50%;
   height: 100%;
   background-color: rgba(236, 240, 241,0.95);
   border-radius: 10px 0 0 10px;
 }
-.container .right-side img {
+
+.container-login .right-side img {
   width: 100%;
   height: 100%;
 }

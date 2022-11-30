@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "../style/loginStyle.css";
+import '../style/registerPage.css';
 import logo from "../img/sadat logo-png.png";
 import * as yup from 'yup'
 
@@ -9,13 +10,14 @@ class Login extends Component {
       user:'',
       password:''
     },
-    errors: []
+    errors: [],
+    getValue:{}
   };
   render() {
     const {user,password} = this.state.account
     return (
       <>
-        <div className="container">
+        <div className="container-login">
           <div className="left-side">
             <div className="title">
               <h2>سعـادت پـرتـال</h2>
@@ -25,25 +27,44 @@ class Login extends Component {
                 <div className="title-form">
                   <h3>ورود کاربر</h3>
                 </div>
-                <input
-                  type="text"
-                  name="user"
-                  value={user}
-                  onChange={this.handleChange}
-                  className="username input"
-                  placeholder="نام کاربری"
-                />
-                <input
-                  type="password"
-                  name="password"
-                  value={password}
-                  onChange={this.handleChange}
-                  className="password input"
-                  placeholder="گذرواژه"
-                />
-                {this.state.errors.length !== 0 && (
-                  this.state.errors.map((e,i) => (<div className="error my-2" key={i}>{e}</div>))
-                )}
+
+                <div className={'input-group-register'}>
+                  <input
+                      type="text"
+                      name="user"
+                      value={user}
+                      onChange={this.handleChange}
+                      className={`username input`}
+                      style={{border: this.state.errors.includes('لطفا نام کاربری را وارد کنید') ? '2px solid red' : ''}}
+                      placeholder="نام کاربری"
+                  />
+                  {
+                    this.state.errors.includes('لطفا نام کاربری را وارد کنید')
+                      ? <small className="text-danger">لطفا نام کاربری را وارد کنید</small>
+                        : null
+                  }
+                </div>
+                <div className={'input-group-register'}>
+                  <input
+                      type="password"
+                      name="password"
+                      value={password}
+                      onChange={this.handleChange}
+                      className={`password input`}
+                      style={{border: this.state.errors.includes('رمز عبور باید حداقل 8 کاراکتر باشد') ? '2px solid red' : ''}}
+                      placeholder="گذرواژه"
+                  />
+                  {
+                    this.state.errors.includes('رمز عبور باید حداقل 8 کاراکتر باشد')
+                        ? <small className="text-danger">رمز عبور باید حداقل 8 کاراکتر باشد</small>
+                        : null
+                  }
+                  {
+                    this.state.errors.includes('ایمیل یا پسورد صحیح نمی باشد')
+                        ? <small className="text-danger">ایمیل یا پسورد صحیح نمی باشد</small>
+                        : null
+                  }
+                </div>
                 <div className="option-row mt-3">
                   <div className="remember">
                     <input
@@ -52,11 +73,6 @@ class Login extends Component {
                       className="chk-remember"
                     />
                     <label htmlFor="chk-remember">مرا به خاطر بسپار</label>
-                  </div>
-                  <div className="forgotDiv">
-                    <a href="#" className="forgot">
-                      فراموشی رمز؟
-                    </a>
                   </div>
                 </div>
                 <button className="btn-login">ورود</button>
@@ -80,6 +96,7 @@ class Login extends Component {
     user: yup.string().required('لطفا نام کاربری را وارد کنید'),
     password: yup.string().min(8,'رمز عبور باید حداقل 8 کاراکتر باشد')
   })
+
   validate = async () => {
     try {
       const result = await this.schema.validate(this.state.account, {abortEarly: false});
@@ -89,12 +106,21 @@ class Login extends Component {
       this.setState({errors: error.errors})
     }
   }
-  handleSubmit = (e) => {
+  handleSubmit = async (e) => {
     e.preventDefault();
     const result =  this.validate();
-    console.log(result);
+
+    let getValue = await result;
+
+    let username = "fazel";
+    let password = "12345678";
+
+    if(username === getValue.user && password === getValue.password){
+        window.location = '/dashboard';
+    }else {
+      this.setState({errors: ['ایمیل یا پسورد صحیح نمی باشد']})
+    }
   }
-  
-}
+  }
 
 export default Login;

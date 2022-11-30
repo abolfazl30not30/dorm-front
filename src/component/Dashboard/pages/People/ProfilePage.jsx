@@ -296,17 +296,723 @@ class ProfilePage extends Component {
 
         const response2 = await fetch(`https://api.saadatportal.com/api/v1/person/${this.context.personId}`).then((response) => response.json())
             .then((data) => this.setState({personObject: data}));
+        console.log(this.state.person)
     }
 
     render() {
         return (
             <>
-                <div className='profile-container row'> {/*given photo*/}
+
+                <div className="px-3 mb-5">
+                    <div className="d-flex flex-column container">
+                        <div className="d-flex flex-row justify-content-center profile-card">
+                            <div className={'d-flex flex-md-row flex-column align-items-center'}>
+                                <img
+                                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBnUckFxDVe5FOT5vuVfWCvWWY1pUrOPBOFPu9CNZYpABJSYPCigxy9rEc32E6mBamw3c&usqp=CAU"
+                                    alt="profile"/>
+                                <div className={'me-3 d-flex flex-column justify-content-center'}>
+                                    <div className="people-name mb-3">{this.state.person.firstName} {this.state.person.lastName}</div>
+                                    <div className="d-flex flex-md-row flex-column flex-wrap">
+                                        <div className="people-item"><i className="bi bi-upc-scan ms-2"></i>کد ملی: {this.state.person.nationalCode}</div>
+                                        <div className="people-item"><i className="bi bi-telephone ms-2"></i>شماره تماس: {this.state.person.phoneNumber}</div>
+                                        <div className="people-item"><i className="bi bi-person ms-2"></i>نام پدر: {this.state.person.fatherName}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            {/*<div className='information d-flex flex-md-row flex-column'>
+                                <div className='ms-5'>
+                                    <div className='col p-2'>
+                                        <AiOutlineUser className='ms-2'/>
+                                        <label> نام :</label>
+                                        {this.state.person.firstName}
+                                    </div>
+                                    <div className='col p-2'>
+                                        <AiOutlineUser className='ms-2'/>
+                                        <label> نام خانوادگی :</label>
+                                        {this.state.person.lastName}
+                                    </div>
+                                    <div className='col p-2'>
+                                        <AiOutlineBarcode className='ms-2'/>
+                                        <label> کد ملی :</label>
+                                        {this.state.person.nationalCode}
+                                    </div>
+                                </div>
+                                <div>
+                                    <div className='col p-2'>
+                                        <BsTelephone className='ms-2'/>
+                                        <label> شماره تلفن :</label>
+                                        {this.state.person.phoneNumber}
+                                    </div>
+                                    <div className='col p-2'>
+                                        <HiOutlineMailOpen className='ms-2'/>
+                                        <label> ایمیل :</label>
+                                        {this.state.person.email}
+                                    </div>
+                                </div>
+                            </div>*/}
+                        </div>
+                        <div className="tab">
+                            <Tabs
+                                defaultActiveKey="profile"
+                                id="uncontrolled-tab-example"
+                                className="border-0 w-100"
+                            >
+                                <Tab eventKey="records" title="سوابق" style={{backgroundColor:"transparent"}}>
+                                    <div className="tabs-content">
+                                        <button className='btn-done' onClick={() => {
+                                            this.handleShow()
+                                        }}>ثبت گزارش
+                                        </button>
+                                        <Accordion defaultActiveKey="0">
+                                            <Accordion.Item eventKey="0">
+                                                <Accordion.Header>نوبت نظافت شبانه</Accordion.Header>
+                                                <Accordion.Body>
+                                                    <Table>
+                                                        <thead>
+                                                        <tr>
+                                                            {/*<th>شماره</th>*/}
+                                                            <th>تاریخ</th>
+                                                            <th>توضیحات</th>
+                                                            <th>عملیات</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        {
+                                                            this.state.report.map((c,i) => (
+                                                                c.title === 'cleaning' ? (
+                                                                    <tr>
+                                                                        {/*<td>{a+1}</td>*/}
+                                                                        <td>{c.date}</td>
+                                                                        <td>{c.description}</td>
+                                                                        <td>
+                                                                            <OverlayTrigger
+                                                                                placement="bottom"
+                                                                                overlay={
+                                                                                    <Tooltip className="deleteTooltip" >
+                                                                                        حذف
+                                                                                    </Tooltip>
+                                                                                }
+                                                                            >
+                                                                                <button className='btn floor-close-btn' onClick={ () => this.handleOpenModalReport(c) }>
+                                                                                    <AiFillCloseCircle color="#F1416C" /></button>
+                                                                            </OverlayTrigger>
+                                                                        </td>
+                                                                    </tr>
+                                                                ) : (
+                                                                    console.log()
+                                                                )
+                                                            ))
+                                                        }
+                                                        </tbody>
+                                                    </Table>
+                                                </Accordion.Body>
+                                            </Accordion.Item>
+                                            <Accordion.Item eventKey="1">
+                                                <Accordion.Header>تأخیر در ورود</Accordion.Header>
+                                                <Accordion.Body>
+                                                    <Table>
+                                                        <thead>
+                                                        <tr>
+                                                            {/*<th>شماره</th>*/}
+                                                            <th>تاریخ</th>
+                                                            <th>ساعت</th>
+                                                            <th>عملیات</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        {
+                                                            this.state.report.map((d,i) => (
+
+                                                                d.title === 'delayInArrival' ? (
+                                                                    <tr>
+                                                                        {/*<td>{i+1}</td>*/}
+                                                                        <td>{d.date}</td>
+                                                                        <td>{d.time}</td>
+                                                                        <td>
+                                                                            <OverlayTrigger
+                                                                                placement="bottom"
+                                                                                overlay={
+                                                                                    <Tooltip className="deleteTooltip" >
+                                                                                        حذف
+                                                                                    </Tooltip>
+                                                                                }
+                                                                            >
+                                                                                <button className='btn floor-close-btn' onClick={ () => this.handleOpenModalReport(d) }>
+                                                                                    <AiFillCloseCircle color="#F1416C" /></button>
+                                                                            </OverlayTrigger>
+                                                                        </td>
+                                                                    </tr>
+                                                                ) : (
+                                                                    console.log()
+                                                                )
+                                                            ))
+                                                        }
+                                                        </tbody>
+                                                    </Table>
+                                                </Accordion.Body>
+                                            </Accordion.Item>
+                                            <Accordion.Item eventKey="2">
+                                                <Accordion.Header>خروج</Accordion.Header>
+                                                <Accordion.Body>
+                                                    <Table>
+                                                        <thead>
+                                                        <tr>
+                                                            {/*<th>شماره</th>*/}
+                                                            <th>از تاريخ</th>
+                                                            <th>تا تاريخ</th>
+                                                            <th>آدرس مقصد</th>
+                                                            <th>شماره تماس مقصد</th>
+                                                            <th>نسبت</th>
+                                                            <th>عملیات</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        {
+                                                            this.state.report.map((e,i) => (
+
+                                                                e.title === 'exit' ? (
+                                                                    <tr>
+                                                                        {/*<td>{i+1}</td>*/}
+                                                                        <td>{e.startDate}</td>
+                                                                        <td>{e.endDate}</td>
+                                                                        <td>{e.destinationAddress}</td>
+                                                                        <td>{e.destinationPhoneNumber}</td>
+                                                                        <td>{e.relation}</td>
+                                                                        <td>
+                                                                            <OverlayTrigger
+                                                                                placement="bottom"
+                                                                                overlay={
+                                                                                    <Tooltip className="deleteTooltip" >
+                                                                                        حذف
+                                                                                    </Tooltip>
+                                                                                }
+                                                                            >
+                                                                                <button className='btn floor-close-btn' onClick={ () => this.handleOpenModalReport(e) }>
+                                                                                    <AiFillCloseCircle color="#F1416C" /></button>
+                                                                            </OverlayTrigger>
+                                                                        </td>
+                                                                    </tr>
+                                                                ) : (
+                                                                    console.log()
+                                                                )
+                                                            ))
+                                                        }
+                                                        </tbody>
+                                                    </Table>
+                                                </Accordion.Body>
+                                            </Accordion.Item>
+                                            <Accordion.Item eventKey="3">
+                                                <Accordion.Header>ثبت تخلف</Accordion.Header>
+                                                <Accordion.Body>
+                                                    <Table>
+                                                        <thead>
+                                                        <tr>
+                                                            {/*<th>شماره</th>*/}
+                                                            <th>گزارش تخلف</th>
+                                                            <th>تاریخ</th>
+                                                            <th>ساعت</th>
+                                                            <th>عملیات</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        {
+                                                            this.state.report.map((v,i) => (
+
+                                                                v.title === 'violation' ? (
+                                                                    <tr>
+                                                                        {/*<td>{i+1}</td>*/}
+                                                                        <td>{v.description}</td>
+                                                                        <td>{v.date}</td>
+                                                                        <td>{v.time}</td>
+                                                                        <td>
+                                                                            <OverlayTrigger
+                                                                                placement="bottom"
+                                                                                overlay={
+                                                                                    <Tooltip className="deleteTooltip" >
+                                                                                        حذف
+                                                                                    </Tooltip>
+                                                                                }
+                                                                            >
+                                                                                <button className='btn floor-close-btn' onClick={ () => this.handleOpenModalReport(v) }>
+                                                                                    <AiFillCloseCircle color="#F1416C" /></button>
+                                                                            </OverlayTrigger>
+                                                                        </td>
+                                                                    </tr>
+                                                                ) : (
+                                                                    console.log()
+                                                                )
+                                                            ))
+                                                        }
+                                                        </tbody>
+                                                    </Table>
+                                                </Accordion.Body>
+                                            </Accordion.Item>
+                                            <Accordion.Item eventKey="4">
+                                                <Accordion.Header>ثبت جریمه</Accordion.Header>
+                                                <Accordion.Body>
+                                                    <Table>
+                                                        <thead>
+                                                        <tr>
+                                                            {/*<th>شماره</th>*/}
+                                                            <th>دلیل جریمه</th>
+                                                            <th>نوع جریمه</th>
+                                                            <th>عملیات</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        {
+                                                            this.state.report.map((p,i) => (
+
+                                                                this.state.person.title === 'penalty' ? (
+                                                                    <tr>
+                                                                        {/*<td>{i+1}</td>*/}
+                                                                        <td>{this.state.person.description}</td>
+                                                                        <td>{this.state.person.typePenalty}</td>
+                                                                        <td>
+                                                                            <OverlayTrigger
+                                                                                placement="bottom"
+                                                                                overlay={
+                                                                                    <Tooltip className="deleteTooltip" >
+                                                                                        حذف
+                                                                                    </Tooltip>
+                                                                                }
+                                                                            >
+                                                                                <button className='btn floor-close-btn' onClick={ () => this.handleOpenModalReport(p) }>
+                                                                                    <AiFillCloseCircle color="#F1416C" /></button>
+                                                                            </OverlayTrigger>
+                                                                        </td>
+                                                                    </tr>
+                                                                ) : (
+                                                                    console.log()
+                                                                )
+                                                            ))
+                                                        }
+                                                        </tbody>
+                                                    </Table>
+                                                </Accordion.Body>
+                                            </Accordion.Item>
+                                            <Accordion.Item eventKey="5">
+                                                <Accordion.Header>اعلام تخلیه</Accordion.Header>
+                                                <Accordion.Body>
+                                                    <Table>
+                                                        <thead>
+                                                        <tr>
+                                                            {/*<th>شماره</th>*/}
+                                                            <th>تاریخ اعلام تخلیه</th>
+                                                            <th>تاریخ تخلیه</th>
+                                                            <th>تاریخ عودت ودیعه</th>
+                                                            <th>کسر ضرر و زیان</th>
+                                                            <th>علت کسر ضر و زیان</th>
+                                                            <th>مبلغ قابل عودت</th>
+                                                            <th>عملیات</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        {
+                                                            this.state.report.map((d,i) => (
+
+                                                                d.title === 'discharge' ? (
+                                                                    <tr>
+                                                                        {/*<td>{i+1}</td>*/}
+                                                                        <td>{d.dischargeDateAnnounce}</td>
+                                                                        <td>{d.dischargeDate}</td>
+                                                                        <td>{d.depositReturnDate}</td>
+                                                                        <td>{d.deductionOfLosses}</td>
+                                                                        <td>{d.deductionOfLossesReason}</td>
+                                                                        <td>{d.refundableAmount}</td>
+                                                                        <td>
+                                                                            <OverlayTrigger
+                                                                                placement="bottom"
+                                                                                overlay={
+                                                                                    <Tooltip className="deleteTooltip" >
+                                                                                        حذف
+                                                                                    </Tooltip>
+                                                                                }
+                                                                            >
+                                                                                <button className='btn floor-close-btn' onClick={ () => this.handleOpenModalReport(d) }>
+                                                                                    <AiFillCloseCircle color="#F1416C" /></button>
+                                                                            </OverlayTrigger>
+                                                                        </td>
+                                                                    </tr>
+                                                                ) : (
+                                                                    console.log()
+                                                                )
+                                                            ))
+                                                        }
+                                                        </tbody>
+                                                    </Table>
+                                                </Accordion.Body>
+                                            </Accordion.Item>
+                                            <Accordion.Item eventKey="6">
+                                                <Accordion.Header>لغو قرارداد</Accordion.Header>
+                                                <Accordion.Body>
+                                                    <Table>
+                                                        <thead>
+                                                        <tr>
+                                                            {/*<th>شماره</th>*/}
+                                                            <th>تاریخ</th>
+                                                            <th>علت</th>
+                                                            <th>کسر ضرر و زیان</th>
+                                                            <th>مبلغ قابل عودت</th>
+                                                            <th>عملیات</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        {
+                                                            this.state.report.map((cc,i) => (
+
+                                                                cc.title === 'cancelContract' ? (
+                                                                    <tr>
+                                                                        {/*<td>{i+1}</td>*/}
+                                                                        <td>{cc.date}</td>
+                                                                        <td>{cc.reason}</td>
+                                                                        <td>{cc.deductionOfLosses}</td>
+                                                                        <td>{cc.refundableAmount}</td>
+                                                                        <td>
+                                                                            <OverlayTrigger
+                                                                                placement="bottom"
+                                                                                overlay={
+                                                                                    <Tooltip className="deleteTooltip" >
+                                                                                        حذف
+                                                                                    </Tooltip>
+                                                                                }
+                                                                            >
+                                                                                <button className='btn floor-close-btn' onClick={ () => this.handleOpenModalReport(cc) }>
+                                                                                    <AiFillCloseCircle color="#F1416C" /></button>
+                                                                            </OverlayTrigger>
+                                                                        </td>
+                                                                    </tr>
+                                                                ) : (
+                                                                    console.log()
+                                                                )
+                                                            ))
+                                                        }
+                                                        </tbody>
+                                                    </Table>
+                                                </Accordion.Body>
+                                            </Accordion.Item>
+                                        </Accordion>
+                                    </div>
+                                </Tab>
+                                <Tab eventKey="documents" title="مدارک" className='records' style={{backgroundColor:"transparent"}}>
+                                    <div className="tabs-content">
+                                        <Accordion defaultActiveKey="0">
+                                            <Accordion.Item eventKey="0">
+                                                <Accordion.Header>شناسنامه</Accordion.Header>
+                                                <Accordion.Body>
+                                                    <div className="d-flex flex-column">
+                                                        <OverlayTrigger
+                                                            placement="bottom"
+                                                            overlay={
+                                                                <Tooltip className="deleteTooltip" >
+                                                                    دانلود
+                                                                </Tooltip>
+                                                            }
+                                                        >
+                                                            <div className="record-item" onClick={ () => this.downloadFile() }>
+                                                                <div className='ms-2'>صفحه اول</div>
+                                                                <RiDownloadCloud2Fill />
+                                                            </div>
+                                                        </OverlayTrigger>
+                                                        <OverlayTrigger
+                                                            placement="bottom"
+                                                            overlay={
+                                                                <Tooltip className="deleteTooltip" >
+                                                                    دانلود
+                                                                </Tooltip>
+                                                            }
+                                                        >
+                                                            <div className="record-item" onClick={ () => this.downloadFile() }>
+                                                                <div className='ms-2'>صفحه دوم</div>
+                                                                <RiDownloadCloud2Fill />
+                                                            </div>
+                                                        </OverlayTrigger>
+                                                        <OverlayTrigger
+                                                            placement="bottom"
+                                                            overlay={
+                                                                <Tooltip className="deleteTooltip" >
+                                                                    دانلود
+                                                                </Tooltip>
+                                                            }
+                                                        >
+                                                            <div className="record-item" onClick={ () => this.downloadFile() }>
+                                                                <div className='ms-2'>صفحه سوم</div>
+                                                                <RiDownloadCloud2Fill />
+                                                            </div>
+                                                        </OverlayTrigger>
+                                                        <OverlayTrigger
+                                                            placement="bottom"
+                                                            overlay={
+                                                                <Tooltip className="deleteTooltip" >
+                                                                    دانلود
+                                                                </Tooltip>
+                                                            }
+                                                        >
+                                                            <div className="record-item" onClick={ () => this.downloadFile() }>
+                                                                <div className='ms-2'>صفحه چهارم</div>
+                                                                <RiDownloadCloud2Fill />
+                                                            </div>
+                                                        </OverlayTrigger>
+                                                        <OverlayTrigger
+                                                            placement="bottom"
+                                                            overlay={
+                                                                <Tooltip className="deleteTooltip" >
+                                                                    دانلود
+                                                                </Tooltip>
+                                                            }
+                                                        >
+                                                            <div className="record-item" onClick={ () => this.downloadFile() }>
+                                                                <div className='ms-2'>کل صفحات</div>
+                                                                <RiDownloadCloud2Fill />
+                                                            </div>
+                                                        </OverlayTrigger>
+
+                                                    </div>
+                                                </Accordion.Body>
+                                            </Accordion.Item>
+
+                                            <Accordion.Item eventKey="1">
+                                                <Accordion.Header>کارت ملی</Accordion.Header>
+                                                <Accordion.Body>
+                                                    <OverlayTrigger
+                                                        placement="bottom"
+                                                        overlay={
+                                                            <Tooltip className="deleteTooltip" >
+                                                                دانلود
+                                                            </Tooltip>
+                                                        }
+                                                    >
+                                                        <div className="record-item" onClick={ () => this.downloadFile() }>
+                                                            <div className='ms-2'>صفحه اول</div>
+                                                            <RiDownloadCloud2Fill />
+                                                        </div>
+                                                    </OverlayTrigger>
+                                                    <OverlayTrigger
+                                                        placement="bottom"
+                                                        overlay={
+                                                            <Tooltip className="deleteTooltip" >
+                                                                دانلود
+                                                            </Tooltip>
+                                                        }
+                                                    >
+                                                        <div className="record-item" onClick={ () => this.downloadFile() }>
+                                                            <div className='ms-2'>صفحه دوم</div>
+                                                            <RiDownloadCloud2Fill />
+                                                        </div>
+                                                    </OverlayTrigger>
+                                                </Accordion.Body>
+                                            </Accordion.Item>
+
+                                            <Accordion.Item eventKey="2">
+                                                <Accordion.Header>عکس پرسنلی</Accordion.Header>
+                                                <Accordion.Body>
+                                                    <OverlayTrigger
+                                                        placement="bottom"
+                                                        overlay={
+                                                            <Tooltip className="deleteTooltip" >
+                                                                دانلود
+                                                            </Tooltip>
+                                                        }
+                                                    >
+                                                        <div className="record-item" onClick={ () => this.downloadFile() }>
+                                                            <div className='ms-2'>عکس پرسنلی</div>
+                                                            <RiDownloadCloud2Fill />
+                                                        </div>
+                                                    </OverlayTrigger>
+                                                </Accordion.Body>
+                                            </Accordion.Item>
+                                            <Accordion.Item eventKey="3">
+                                                <Accordion.Header>پرینت ثبت نام دانشگاه</Accordion.Header>
+                                                <Accordion.Body>
+                                                    <OverlayTrigger
+                                                        placement="bottom"
+                                                        overlay={
+                                                            <Tooltip className="deleteTooltip" >
+                                                                دانلود
+                                                            </Tooltip>
+                                                        }
+                                                    >
+                                                        <div className="record-item" onClick={ () => this.downloadFile() }>
+                                                            <div className='ms-2'>پرینت ثبت نام دانشگاه</div>
+                                                            <RiDownloadCloud2Fill />
+                                                        </div>
+                                                    </OverlayTrigger>
+                                                </Accordion.Body>
+                                            </Accordion.Item>
+                                        </Accordion>
+                                    </div>
+                                </Tab>
+                                <Tab eventKey="more-information" title="اطلاعات بیشتر" style={{backgroundColor:"transparent"}}>
+                                    <div className="tabs-content">
+                                        <div className='information d-flex flex-row flex-wrap'>
+                                            <div className='col-12 col-md-4'>
+                                                <div className="more-info-item">
+                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                    <label> نام :</label>
+                                                    {this.state.person.firstName}
+                                                </div>
+                                            </div>
+                                            <div className='col-12 col-md-4'>
+                                                <div className="more-info-item">
+                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                    <label> نام خانوادگی :</label>
+                                                    {this.state.person.lastName}
+                                                </div>
+                                            </div>
+                                            <div className='col-12 col-md-4'>
+                                                <div className="more-info-item">
+                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                    <label> کد ملی :</label>
+                                                    {this.state.person.nationalCode}
+                                                </div>
+                                            </div>
+                                            <div className='col-12 col-md-4'>
+                                                <div className="more-info-item">
+                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                    <label> شماره گواهی :</label>
+                                                    {this.state.person.certificateNumber}
+                                                </div>
+                                            </div>
+                                            <div className='col-12 col-md-4'>
+                                                <div className="more-info-item">
+                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                    <label> شماره تماس :</label>
+                                                    {this.state.person.phoneNumber}
+                                                </div>
+                                            </div>
+                                            <div className='col-12 col-md-4'>
+                                                <div className="more-info-item">
+                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                    <label> آدرس :</label>
+                                                    {this.state.person.address}
+                                                </div>
+                                            </div>
+                                            <div className='col-12 col-md-4'>
+                                                <div className="more-info-item">
+                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                    <label> شماره تلفن :</label>
+                                                    {this.state.person.telephoneNumber}
+                                                </div>
+                                            </div>
+                                            <div className='col-12 col-md-4'>
+                                                <div className="more-info-item">
+                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                    <label> نام پدر :</label>
+                                                    {this.state.person.fatherName}
+                                                </div>
+                                            </div>
+                                            <div className='col-12 col-md-4'>
+                                                <div className="more-info-item">
+                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                    <label> شماره تلفن اضطراری :</label>
+                                                    {this.state.person.emergencyNumber}
+                                                </div>
+                                            </div>
+                                            <div className='col-12 col-md-4'>
+                                                <div className="more-info-item">
+                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                    <label> محل تولد :</label>
+                                                    {this.state.person.placeOfIssue}
+                                                </div>
+                                            </div>
+                                            <div className='col-12 col-md-4'>
+                                                <div className="more-info-item">
+                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                    <label> تاریخ تولد :</label>
+                                                    {this.state.person.birthDate}
+                                                </div>
+                                            </div>
+                                            <div className='col-12 col-md-4'>
+                                                <div className="more-info-item">
+                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                    <label> شغل :</label>
+                                                    {this.state.person.job}
+                                                </div>
+                                            </div>
+                                            <div className='col-12 col-md-4'>
+                                                <div className="more-info-item">
+                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                    <label> تحصیلات :</label>
+                                                    {this.state.person.education}
+                                                </div>
+                                            </div>
+                                            <div className='col-12 col-md-4'>
+                                                <div className="more-info-item">
+                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                    <label> کد پستی :</label>
+                                                    {this.state.person.postalCode}
+                                                </div>
+                                            </div>
+                                            <div className='col-12 col-md-4'>
+                                                <div className="more-info-item">
+                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                    <label> ایمیل :</label>
+                                                    {this.state.person.email}
+                                                </div>
+                                            </div>
+                                            <div className='col-12 col-md-4'>
+                                                <div className="more-info-item">
+                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                    <label>  ملیت :</label>
+                                                    {this.state.person.nationality}
+                                                </div>
+                                            </div>
+                                            <div className='col-12 col-md-4'>
+                                                <div className="more-info-item">
+                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                    <label> وضعیت تاهل :</label>
+                                                    {this.state.person.maritalStatus}
+                                                </div>
+                                            </div>
+                                            <div className='col-12 col-md-4'>
+                                                <div className="more-info-item">
+                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                    <label> دین :</label>
+                                                    {this.state.person.religion}
+                                                </div>
+                                            </div>
+                                            <div className='col-12 col-md-4'>
+                                                <div className="more-info-item">
+                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                    <label> مذهب :</label>
+                                                    {this.state.person.subReligion}
+                                                </div>
+                                            </div>
+                                            <div className='col-12 col-md-4'>
+                                                <div className="more-info-item">
+                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                    <label> وضعیت سلامتی :</label>
+                                                    {this.state.person.healthyStatus}
+                                                </div>
+                                            </div>
+                                            <div className='col-12 col-md-4'>
+                                                <div className="more-info-item">
+                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                    <label> نام مستعار :</label>
+                                                    {this.state.person.alias}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </Tab>
+                            </Tabs>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                {/*<div className='profile-container row px-3 mb-4'> given photo
                     <div className='image-container'>
-                        <div className="d-flex flex-column flex-md-row justify-content-around align-items-center w-100">
-                            <img
-                                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBnUckFxDVe5FOT5vuVfWCvWWY1pUrOPBOFPu9CNZYpABJSYPCigxy9rEc32E6mBamw3c&usqp=CAU"
-                                alt="profile"/>
+                        <div className="d-flex flex-column align-items-center w-100">
+                            <div className={'d-flex flex-column flex-md-row justify-content-around align-items-center w-100'}>
+                                <div className={'d-flex flex-row align-items-center'}>
+                                    <img
+                                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBnUckFxDVe5FOT5vuVfWCvWWY1pUrOPBOFPu9CNZYpABJSYPCigxy9rEc32E6mBamw3c&usqp=CAU"
+                                        alt="profile"/>
+                                    <div>{this.state.person.firstName} {this.state.person.lastName}</div>
+                                </div>
                                 <div className='information d-flex flex-md-row flex-column'>
                                     <div className='ms-5'>
                                         <div className='col p-2'>
@@ -338,6 +1044,9 @@ class ProfilePage extends Component {
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+
+
                         </div>
                     </div>
                     <div className='tab-container'>
@@ -347,7 +1056,7 @@ class ProfilePage extends Component {
                             className="mb-3"
                         >
                             <Tab eventKey="records" title="سوابق" style={{backgroundColor:"transparent"}}>
-                                <button className='btn-add-report' onClick={() => {
+                                <button className='btn-done' onClick={() => {
                                     this.handleShow()
                                 }}>ثبت گزارش
                                 </button>
@@ -358,7 +1067,7 @@ class ProfilePage extends Component {
                                             <Table>
                                                 <thead>
                                                 <tr>
-                                                    {/*<th>شماره</th>*/}
+                                                    <th>شماره</th>
                                                     <th>تاریخ</th>
                                                     <th>توضیحات</th>
                                                     <th>عملیات</th>
@@ -369,7 +1078,7 @@ class ProfilePage extends Component {
                                                     this.state.report.map((c,i) => (
                                                         c.title === 'cleaning' ? (
                                                                 <tr>
-                                                                    {/*<td>{a+1}</td>*/}
+                                                                    <td>{a+1}</td>
                                                                     <td>{c.date}</td>
                                                                     <td>{c.description}</td>
                                                                     <td>
@@ -401,7 +1110,7 @@ class ProfilePage extends Component {
                                             <Table>
                                                 <thead>
                                                 <tr>
-                                                    {/*<th>شماره</th>*/}
+                                                    <th>شماره</th>
                                                     <th>تاریخ</th>
                                                     <th>ساعت</th>
                                                     <th>عملیات</th>
@@ -413,7 +1122,7 @@ class ProfilePage extends Component {
 
                                                         d.title === 'delayInArrival' ? (
                                                             <tr>
-                                                                {/*<td>{i+1}</td>*/}
+                                                                <td>{i+1}</td>
                                                                 <td>{d.date}</td>
                                                                 <td>{d.time}</td>
                                                                 <td>
@@ -445,7 +1154,7 @@ class ProfilePage extends Component {
                                             <Table>
                                                 <thead>
                                                 <tr>
-                                                    {/*<th>شماره</th>*/}
+                                                    <th>شماره</th>
                                                     <th>از تاريخ</th>
                                                     <th>تا تاريخ</th>
                                                     <th>آدرس مقصد</th>
@@ -460,7 +1169,7 @@ class ProfilePage extends Component {
 
                                                         e.title === 'exit' ? (
                                                             <tr>
-                                                                {/*<td>{i+1}</td>*/}
+                                                                <td>{i+1}</td>
                                                                 <td>{e.startDate}</td>
                                                                 <td>{e.endDate}</td>
                                                                 <td>{e.destinationAddress}</td>
@@ -495,7 +1204,7 @@ class ProfilePage extends Component {
                                             <Table>
                                                 <thead>
                                                 <tr>
-                                                    {/*<th>شماره</th>*/}
+                                                    <th>شماره</th>
                                                     <th>گزارش تخلف</th>
                                                     <th>تاریخ</th>
                                                     <th>ساعت</th>
@@ -508,7 +1217,7 @@ class ProfilePage extends Component {
 
                                                         v.title === 'violation' ? (
                                                             <tr>
-                                                                {/*<td>{i+1}</td>*/}
+                                                                <td>{i+1}</td>
                                                                 <td>{v.description}</td>
                                                                 <td>{v.date}</td>
                                                                 <td>{v.time}</td>
@@ -541,7 +1250,7 @@ class ProfilePage extends Component {
                                             <Table>
                                                 <thead>
                                                 <tr>
-                                                    {/*<th>شماره</th>*/}
+                                                    <th>شماره</th>
                                                     <th>دلیل جریمه</th>
                                                     <th>نوع جریمه</th>
                                                     <th>عملیات</th>
@@ -553,7 +1262,7 @@ class ProfilePage extends Component {
 
                                                         this.state.person.title === 'penalty' ? (
                                                             <tr>
-                                                                {/*<td>{i+1}</td>*/}
+                                                                <td>{i+1}</td>
                                                                 <td>{this.state.person.description}</td>
                                                                 <td>{this.state.person.typePenalty}</td>
                                                                 <td>
@@ -585,7 +1294,7 @@ class ProfilePage extends Component {
                                             <Table>
                                                 <thead>
                                                 <tr>
-                                                    {/*<th>شماره</th>*/}
+                                                    <th>شماره</th>
                                                     <th>تاریخ اعلام تخلیه</th>
                                                     <th>تاریخ تخلیه</th>
                                                     <th>تاریخ عودت ودیعه</th>
@@ -601,7 +1310,7 @@ class ProfilePage extends Component {
 
                                                         d.title === 'discharge' ? (
                                                             <tr>
-                                                                {/*<td>{i+1}</td>*/}
+                                                                <td>{i+1}</td>
                                                                 <td>{d.dischargeDateAnnounce}</td>
                                                                 <td>{d.dischargeDate}</td>
                                                                 <td>{d.depositReturnDate}</td>
@@ -637,7 +1346,7 @@ class ProfilePage extends Component {
                                             <Table>
                                                 <thead>
                                                 <tr>
-                                                    {/*<th>شماره</th>*/}
+                                                    <th>شماره</th>
                                                     <th>تاریخ</th>
                                                     <th>علت</th>
                                                     <th>کسر ضرر و زیان</th>
@@ -651,7 +1360,7 @@ class ProfilePage extends Component {
 
                                                         cc.title === 'cancelContract' ? (
                                                             <tr>
-                                                                {/*<td>{i+1}</td>*/}
+                                                                <td>{i+1}</td>
                                                                 <td>{cc.date}</td>
                                                                 <td>{cc.reason}</td>
                                                                 <td>{cc.deductionOfLosses}</td>
@@ -829,96 +1538,117 @@ class ProfilePage extends Component {
 
 
 
-                                {/*<img className='test' src={pdf_icon}/>
+                                <img className='test' src={pdf_icon}/>
                                 <img className='test' src={pdf_icon}/>
                                 <img className='test' src={pdf_icon}/>
                                 <img className='test' src={png_icon}/>
                                 <img className='test' src={png_icon}/>
-                                <img className='test' src={png_icon}/>*/}
+                                <img className='test' src={png_icon}/>
                             </Tab>
                             <Tab eventKey="more-information" title="اطلاعات بیشتر" style={{backgroundColor:"transparent"}}>
                                     <div className='information d-flex flex-row flex-wrap'>
                                         <p className='col-12 col-md-4'>
+                                            <i className="bi bi-caret-left ms-1"></i>
                                             <label> نام :</label>
                                             {this.state.person.firstName}
                                         </p>
                                         <p className='col-12 col-md-4'>
+                                            <i className="bi bi-caret-left ms-1"></i>
                                             <label> نام خانوادگی :</label>
                                             {this.state.person.lastName}
                                         </p>
                                         <p className='col-12 col-md-4'>
+                                            <i className="bi bi-caret-left ms-1"></i>
                                             <label> کد ملی :</label>
                                             {this.state.person.nationalCode}
                                         </p>
                                         <p className='col-12 col-md-4'>
+                                            <i className="bi bi-caret-left ms-1"></i>
                                             <label> شماره گواهی :</label>
                                             {this.state.person.certificateNumber}
                                         </p>
                                         <p className='col-12 col-md-4'>
+                                            <i className="bi bi-caret-left ms-1"></i>
                                             <label> شماره تماس :</label>
                                             {this.state.person.phoneNumber}
                                         </p>
                                         <p className='col-12 col-md-4'>
+                                            <i className="bi bi-caret-left ms-1"></i>
                                             <label> آدرس :</label>
                                             {this.state.person.address}
                                         </p>
                                         <p className='col-12 col-md-4'>
+                                            <i className="bi bi-caret-left ms-1"></i>
                                             <label> شماره تلفن :</label>
                                             {this.state.person.telephoneNumber}
                                         </p>
                                         <p className='col-12 col-md-4'>
+                                            <i className="bi bi-caret-left ms-1"></i>
                                             <label> نام پدر :</label>
                                             {this.state.person.fatherName}
                                         </p>
                                         <p className='col-12 col-md-4'>
+                                            <i className="bi bi-caret-left ms-1"></i>
                                             <label> شماره تلفن اضطراری :</label>
                                             {this.state.person.emergencyNumber}
                                         </p>
                                         <p className='col-12 col-md-4'>
+                                            <i className="bi bi-caret-left ms-1"></i>
                                             <label> محل تولد :</label>
                                             {this.state.person.placeOfIssue}
                                         </p>
                                         <p className='col-12 col-md-4'>
+                                            <i className="bi bi-caret-left ms-1"></i>
                                             <label> تاریخ تولد :</label>
                                             {this.state.person.birthDate}
                                         </p>
                                         <p className='col-12 col-md-4'>
+                                            <i className="bi bi-caret-left ms-1"></i>
                                             <label> شغل :</label>
                                             {this.state.person.job}
                                         </p>
                                         <p className='col-12 col-md-4'>
+                                            <i className="bi bi-caret-left ms-1"></i>
                                             <label> تحصیلات :</label>
                                             {this.state.person.education}
                                         </p>
                                         <p className='col-12 col-md-4'>
+                                            <i className="bi bi-caret-left ms-1"></i>
                                             <label> کد پستی :</label>
                                             {this.state.person.postalCode}
                                         </p>
                                         <p className='col-12 col-md-4'>
+                                            <i className="bi bi-caret-left ms-1"></i>
                                             <label> ایمیل :</label>
                                             {this.state.person.email}
                                         </p>
                                         <p className='col-12 col-md-4'>
+                                            <i className="bi bi-caret-left ms-1"></i>
                                             <label>  ملیت :</label>
                                             {this.state.person.nationality}
                                         </p>
                                         <p className='col-12 col-md-4'>
+                                            <i className="bi bi-caret-left ms-1"></i>
                                             <label> وضعیت تاهل :</label>
                                             {this.state.person.maritalStatus}
                                         </p>
                                         <p className='col-12 col-md-4'>
+                                            <i className="bi bi-caret-left ms-1"></i>
                                             <label> دین :</label>
                                             {this.state.person.religion}
                                         </p>
                                         <p className='col-12 col-md-4'>
+                                            <i className="bi bi-caret-left ms-1"></i>
                                             <label> مذهب :</label>
                                             {this.state.person.subReligion}
                                         </p>
                                         <p className='col-12 col-md-4'>
+                                            <i className="bi bi-caret-left ms-1"></i>
                                             <label> وضعیت سلامتی :</label>
                                             {this.state.person.healthyStatus}
                                         </p>
                                         <p className='col-12 col-md-4'>
+                                            <i className="bi bi-caret-left ms-1"></i>
                                             <label> نام مستعار :</label>
                                             {this.state.person.alias}
                                         </p>
@@ -926,7 +1656,7 @@ class ProfilePage extends Component {
                             </Tab>
                         </Tabs>
                     </div>
-                </div>
+                </div>*/}
 
                 <Modal className='report-modal' centered show={this.state.show}>
                     <Modal.Header>
@@ -1098,7 +1828,7 @@ class ProfilePage extends Component {
                                 }
                             })()}
                             <div className="input-report-box">
-                                <button className='btn btn-record-report'>ثبت</button>
+                                <button className='btn-done w-100'>ثبت</button>
                             </div>
                         </form>
                     </Modal.Body>
@@ -1190,15 +1920,18 @@ class ProfilePage extends Component {
                 })();
             case 'violation':
                 return (() => {
+
                     const date = this.date.current.value;
                     const time = this.time.current.value;
                     const description = this.description.current.value;
+
                     const result = {
                         'title': this.state.reportType,
                         'date': date,
                         'time': time,
                         'description': description
                     }
+
                     const newReports = this.state.report.concat(result)
                     this.setState({report: newReports})
                     this.setState({show: false})

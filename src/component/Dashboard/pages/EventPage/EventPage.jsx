@@ -7,6 +7,7 @@ import persian_fa from "react-date-object/locales/persian_fa";
 import '../../../../style/EventPageStyle.css';
 import {Modal} from "react-bootstrap";
 
+
 class EventPage extends Component {
 
     state = {
@@ -72,9 +73,9 @@ class EventPage extends Component {
     render() {
         return (
             <>
-                <div className="row p-1">
-                    <div className="custom-container col-7" style={{justifyContent: 'left'}}>
-                        <div className=''>
+                <div className="d-flex flex-md-row flex-column p-1">
+                    <div className="col-md-6 col-12 p-3">
+                        <div className='d-flex justify-content-center'>
                             <Calendar
                                 value={this.state.value}
                                 onChange={(value) => this.handleCalendarVar(value)}
@@ -161,7 +162,7 @@ class EventPage extends Component {
                             </Calendar>
                         </div>
                         <div className={'d-flex justify-content-center'}>
-                            <div className={'mt-2 eventDay'}>
+                            <div className={'mt-3 eventDay'}>
                                 <div style={{textAlign: 'center'}}>
                                     <h6 className={'p-2'}>
                                         مناسبت های روز
@@ -178,36 +179,35 @@ class EventPage extends Component {
                             </div>
                         </div>
                     </div>
-                    <div className={'d-flex row col-5'}>
-                        <div style={{
-                            backgroundColor: "#fff",
-                            textAlign: 'center',
-                            boxShadow: '0 0 5px #8798ad',
-                            borderRadius: "10px"
-                        }}>
-                            <button className={'btn btn-success m-4'}
-                                    onClick={() => {
-                                        this.handleOpenType();
-                                        this.setState({tempInputForModal: ''})
-                                    }}>
-                                اضافه کردن رویداد
-                            </button>
-                            <h5 className={'mb-3'}>
-                                رویداد های من
-                            </h5>
-                            <ul className="list-group" style={{alignItems: 'center'}}>
-                                {
-                                    this.state.customEvents.map((event, key) => {
-                                        return (event.dayOfYear === this.state.dayOfYear) && (event.year === this.state.year) ?
-                                            <li className={'p-3 list-group-item'} key={key}
-                                                style={{width: '50%'}}>{event.description}</li> :
-                                            null
-                                    })
-                                }
-                            </ul>
-                        </div>
+                    <div className={'col-md-6 col-12 my-3'} style={{
+                        backgroundColor: "#fff",
+                        textAlign: 'center',
+                        boxShadow: '0 0 5px #8798ad',
+                        borderRadius: "10px"
+                    }}>
+                        <button className={'btn btn-success m-4'}
+                                onClick={() => {
+                                    this.handleOpenType();
+                                    this.setState({tempInputForModal: ''})
+                                }}>
+                            اضافه کردن رویداد
+                        </button>
+                        <h5 className={'mb-3'}>
+                            رویداد های من
+                        </h5>
+                        <ul className="list-group" style={{alignItems: 'center'}}>
+                            {
+                                this.state.customEvents.map((event, key) => {
+                                    return (event.dayOfYear === this.state.dayOfYear) && (event.year === this.state.year) ?
+                                        <li className={'p-3 list-group-item'} key={key}
+                                            style={{width: '50%'}}>{event.description}</li> :
+                                        null
+                                })
+                            }
+                        </ul>
                     </div>
                 </div>
+
                 <Modal centered show={this.state.showType} onHide={() => {
                     this.handleCloseType()
                 }}>
@@ -248,6 +248,7 @@ class EventPage extends Component {
     }
 
     handleSubmitType = (e) => {
+
         e.preventDefault();
         let regCheck = /^\s*$/;
         if (!regCheck.test(this.state.tempInputForModal)) {
