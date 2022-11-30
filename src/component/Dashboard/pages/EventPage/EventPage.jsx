@@ -6,7 +6,8 @@ import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
 import '../../../../style/EventPageStyle.css';
 import {Modal} from "react-bootstrap";
-
+import {toast, ToastContainer} from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 class EventPage extends Component {
 
@@ -15,7 +16,8 @@ class EventPage extends Component {
         month: 'default', // number format
         day: 'default', // number format
 
-        tempInputForModal: '',
+        tempEventName: '',
+        tempEventDescription: '',
         showType: false, // for Modal
 
         value: 'default',
@@ -48,10 +50,10 @@ class EventPage extends Component {
         ],
         customEvents: [
             // {
-            //     year: 1401,
-            //     dayOfYear: 197,
-            //     description: 'test1',
-            // },
+            //     date: '1401/9/9 00:00:00',
+            //     eventName: 'test',
+            //     eventDescription: 'test'
+            // }
             // {
             //     year: '',
             //     dayOfYear: '',
@@ -74,6 +76,18 @@ class EventPage extends Component {
         return (
             <>
                 <div className="d-flex flex-md-row flex-column p-1">
+                    <ToastContainer
+                        position="top-right"
+                        autoClose={5000}
+                        hideProgressBar={false}
+                        newestOnTop={false}
+                        closeOnClick
+                        rtl={true}
+                        pauseOnFocusLoss
+                        draggable
+                        pauseOnHover
+                        theme="light"
+                    />
                     <div className="col-md-6 col-12 p-3">
                         <div className='d-flex justify-content-center'>
                             <Calendar
@@ -87,7 +101,12 @@ class EventPage extends Component {
                                     let isWeekend = [6].includes(date.weekDay.index);
 
                                     for (let i = 0; i < this.state.customEvents.length; i++) {
-                                        if (this.state.customEvents[i].year === date.year && this.state.customEvents[i].dayOfYear === date.dayOfYear) {
+                                        let day = parseInt(date.day) < 10 ? ('0' + parseInt(date.day)) : parseInt(date.day);
+                                        let month = (parseInt(date.month) < 10 ? ('0' + parseInt(date.month)) : parseInt(date.month));
+
+                                        let tmpFormatDate = date.year + '/' + month + '/' + day  + " 00:00:00";
+                                        // console.log(day)
+                                        if (this.state.customEvents[i].date === tmpFormatDate) {
                                             // props.className = "highlight highlight-green";
                                             props.className += " border border-success border-1";
                                         }
@@ -189,6 +208,17 @@ class EventPage extends Component {
                                 onClick={() => {
                                     this.handleOpenType();
                                     this.setState({tempInputForModal: ''})
+
+                                    console.log(this.state.customEvents)
+
+                                    let today = new Date().toLocaleDateString('fa-IR-u-nu-latn', {year:'numeric',month:'2-digit',day:'2-digit'})
+
+                                    // let day = parseInt(today.getDay()) < 10 ? ('0' + parseInt(today.getDay())) : parseInt(today.getDay());
+                                    // let month = (parseInt(today.getMonth()) < 10 ? ('0' + parseInt(today.getMonth())) : parseInt(today.getMonth()));
+
+                                    // console.log(today.getYear() + '/' + month + '/' + day + ' 00:00:00')
+                                    console.log(today)
+                                    // console.log(parseInt("09"))
                                 }}>
                             اضافه کردن رویداد
                         </button>
@@ -198,9 +228,13 @@ class EventPage extends Component {
                         <ul className="list-group" style={{alignItems: 'center'}}>
                             {
                                 this.state.customEvents.map((event, key) => {
-                                    return (event.dayOfYear === this.state.dayOfYear) && (event.year === this.state.year) ?
+                                    let day = parseInt(this.state.day) < 10 ? ('0' + parseInt(this.state.day)) : parseInt(this.state.day);
+                                    let month = (parseInt(this.state.month) < 10 ? ('0' + parseInt(this.state.month)) : parseInt(this.state.month));
+
+                                    let tmpFormatDate = this.state.year + '/' + month + '/' + day + ' 00:00:00';
+                                    return (event.date === tmpFormatDate) ?
                                         <li className={'p-3 list-group-item'} key={key}
-                                            style={{width: '50%'}}>{event.description}</li> :
+                                            style={{width: '50%'}}>{event.eventDescription}</li> :
                                         null
                                 })
                             }
@@ -217,8 +251,14 @@ class EventPage extends Component {
                     <Modal.Body className="justify-content-center">
                         <input type='text'
                                className='form-control mt-3 mb-3 input'
-                               onChange={(e) => this.handleInputChange(e)}
+                               onChange={(e) => this.handleEventName(e)}
                                placeholder="رویداد جدید"/>
+
+                        <input type='text'
+                               className='form-control mt-3 mb-3 input'
+                               onChange={(e) => this.handleEventDescription(e)}
+                               placeholder="توضیحات"/>
+
                     </Modal.Body>
                     <Modal.Footer className="justify-content-start">
                         <button className="btn btn-success" onClick={(event) => {
@@ -243,22 +283,39 @@ class EventPage extends Component {
         this.setState({showType: false});
     }
 
-    handleInputChange = (e) => {
-        this.setState({tempInputForModal: e.target.value});
+    handleEventName = (e) => {
+        this.setState({tempEventName: e.target.value});
     }
 
-    handleSubmitType = (e) => {
+    handleEventDescription = (e) => {
+        this.setState({tempEventDescription: e.target.value});
+    }
+
+    handleSubmitType = async (e) => {
 
         e.preventDefault();
         let regCheck = /^\s*$/;
-        if (!regCheck.test(this.state.tempInputForModal)) {
+        if (!regCheck.test(this.state.tempEventName) && !regCheck.test(this.state.tempEventDescription)) {
             let updatedCustomEvents = [...this.state.customEvents];
-            updatedCustomEvents.push({
-                year: this.state.year,
-                dayOfYear: this.state.dayOfYear,
-                description: this.state.tempInputForModal
+
+            let newCustomEvent = {
+                date: parseInt(this.state.year) + '/' + parseInt(this.state.month) + '/' + parseInt(this.state.day) + " 00:00:00",
+                eventName: this.state.tempEventName,
+                eventDescription: this.state.tempEventDescription
+            }
+            updatedCustomEvents.push({newCustomEvent});
+
+            // this.setState({customEvents: updatedCustomEvents});
+
+            const postEvent = await fetch('https://api.saadatportal.com/api/v1/notification', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(newCustomEvent)
             });
-            this.setState({customEvents: updatedCustomEvents});
+
             // console.log(updatedCustomEvents)
         }
         this.setState({showType: false});
@@ -294,7 +351,63 @@ class EventPage extends Component {
                 this.setState({isHoliday: data.is_holiday});
                 // console.log(data);
             });
+    }
 
+    handleNotif = () => {
+        let today = new Date().toLocaleDateString('fa-IR-u-nu-latn', {year:'numeric',month:'2-digit',day:'2-digit'}) + ' 00:00:00';
+        console.log(today)
+
+        for (let i = 0; i < this.state.customEvents.length; i++) {
+            console.log(2)
+            if (this.state.customEvents[i].date === today) {
+                toast(<div>
+                        <h4>{this.state.customEvents[i].eventName}</h4>
+                        <p>{this.state.customEvents[i].eventDescription}</p>
+                    </div>, {
+                        position: "top-right",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                    }
+                )
+            }
+        }
+    }
+
+    componentDidMount = async () => {
+        const response = await fetch('https://api.saadatportal.com/api/v1/notification').then((response) => response.json())
+            .then((data) => this.setState({customEvents: data}, () => this.handleNotif()));
+
+        // let today = new Date()
+        // let day = parseInt(this.state.day) < 10 ? ('0' + parseInt(this.state.day)) : parseInt(this.state.day);
+        // let month = (parseInt(this.state.month) < 10 ? ('0' + parseInt(this.state.month)) : parseInt(this.state.month));
+
+        // let today = new Date().toLocaleDateString('fa-IR-u-nu-latn', {year:'numeric',month:'2-digit',day:'2-digit'}) + ' 00:00:00';
+        // console.log(today)
+        //
+        // for (let i = 0; i < this.state.customEvents.length; i++) {
+        //     console.log(2)
+        //     if (this.state.customEvents[i].date === today) {
+        //         toast(<div>
+        //                 <h4>{this.state.customEvents[i].eventName}</h4>
+        //                 <p>{this.state.customEvents[i].eventDescription}</p>
+        //             </div>, {
+        //                 position: "top-right",
+        //                 autoClose: 5000,
+        //                 hideProgressBar: false,
+        //                 closeOnClick: true,
+        //                 pauseOnHover: true,
+        //                 draggable: true,
+        //                 progress: undefined,
+        //                 theme: "light",
+        //             }
+        //         )
+        //     }
+        // }
     }
 
     handleHolidaysFromAPI = async (year, month, day) => {
