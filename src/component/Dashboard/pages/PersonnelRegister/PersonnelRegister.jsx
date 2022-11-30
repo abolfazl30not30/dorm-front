@@ -12,8 +12,8 @@ class PersonnelRegister extends Component {
         let requiredReg = /^\s*$/;
         let numberReg = /^\s*[0-9]*\s*$/;
         let phoneNumberReg = /^(\s*09\d{9}\s*)$/; // iranian telephone number '09---------'
-        let homeTelephoneReg = /^\d{3}-\d{8}$/; // 012-34567890
-        let MobileOrHomeTelephoneReg = /^(\s*09\d{9}\s*|\d{3}-\d{8})$/
+        let homeTelephoneReg = /^[0]\d{10}$/; // 012-34567890
+        let MobileOrHomeTelephoneReg = /^(\s*09\d{9}\s*|[0]\d{10})$/
         let emailReg = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/
 
         let firstName_requiredReg = !requiredReg.test(this.context.personnelFields.firstName);
