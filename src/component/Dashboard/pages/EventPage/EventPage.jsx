@@ -104,8 +104,10 @@ class EventPage extends Component {
                                         let day = parseInt(date.day) < 10 ? ('0' + parseInt(date.day)) : parseInt(date.day);
                                         let month = (parseInt(date.month) < 10 ? ('0' + parseInt(date.month)) : parseInt(date.month));
 
-                                        let tmpFormatDate = date.year + '/' + month + '/' + day  + " 00:00:00";
-                                        // console.log(day)
+                                        let tmpFormatDate = date.year + '/' + month + '/' + day;
+
+                                        // console.log(tmpFormatDate)
+
                                         if (this.state.customEvents[i].date === tmpFormatDate) {
                                             // props.className = "highlight highlight-green";
                                             props.className += " border border-success border-1";
@@ -209,15 +211,11 @@ class EventPage extends Component {
                                     this.handleOpenType();
                                     this.setState({tempInputForModal: ''})
 
-                                    console.log(this.state.customEvents)
-
-                                    let today = new Date().toLocaleDateString('fa-IR-u-nu-latn', {year:'numeric',month:'2-digit',day:'2-digit'})
-
                                     // let day = parseInt(today.getDay()) < 10 ? ('0' + parseInt(today.getDay())) : parseInt(today.getDay());
                                     // let month = (parseInt(today.getMonth()) < 10 ? ('0' + parseInt(today.getMonth())) : parseInt(today.getMonth()));
 
                                     // console.log(today.getYear() + '/' + month + '/' + day + ' 00:00:00')
-                                    console.log(today)
+
                                     // console.log(parseInt("09"))
                                 }}>
                             اضافه کردن رویداد
@@ -231,7 +229,7 @@ class EventPage extends Component {
                                     let day = parseInt(this.state.day) < 10 ? ('0' + parseInt(this.state.day)) : parseInt(this.state.day);
                                     let month = (parseInt(this.state.month) < 10 ? ('0' + parseInt(this.state.month)) : parseInt(this.state.month));
 
-                                    let tmpFormatDate = this.state.year + '/' + month + '/' + day + ' 00:00:00';
+                                    let tmpFormatDate = this.state.year + '/' + month + '/' + day;
                                     return (event.date === tmpFormatDate) ?
                                         <li className={'p-3 list-group-item'} key={key}
                                             style={{width: '50%'}}>{event.eventDescription}</li> :
@@ -298,14 +296,17 @@ class EventPage extends Component {
         if (!regCheck.test(this.state.tempEventName) && !regCheck.test(this.state.tempEventDescription)) {
             let updatedCustomEvents = [...this.state.customEvents];
 
+            // let day = parseInt(this.state.day) < 10 ? ('0' + parseInt(this.state.day)) : parseInt(this.state.day);
+            // let month = (parseInt(this.state.month) < 10 ? ('0' + parseInt(this.state.month)) : parseInt(this.state.month));
+
             let newCustomEvent = {
-                date: parseInt(this.state.year) + '/' + parseInt(this.state.month) + '/' + parseInt(this.state.day) + " 00:00:00",
+                date: parseInt(this.state.year) + '/' + parseInt(this.state.month) + '/' + parseInt(this.state.day),
                 eventName: this.state.tempEventName,
                 eventDescription: this.state.tempEventDescription
             }
             updatedCustomEvents.push({newCustomEvent});
 
-            // this.setState({customEvents: updatedCustomEvents});
+            this.setState({customEvents: updatedCustomEvents});
 
             const postEvent = await fetch('https://api.saadatportal.com/api/v1/notification', {
                 method: 'POST',
@@ -354,7 +355,7 @@ class EventPage extends Component {
     }
 
     handleNotif = () => {
-        let today = new Date().toLocaleDateString('fa-IR-u-nu-latn', {year:'numeric',month:'2-digit',day:'2-digit'}) + ' 00:00:00';
+        let today = new Date().toLocaleDateString('fa-IR-u-nu-latn', {year:'numeric',month:'2-digit',day:'2-digit'});
         console.log(today)
 
         for (let i = 0; i < this.state.customEvents.length; i++) {
