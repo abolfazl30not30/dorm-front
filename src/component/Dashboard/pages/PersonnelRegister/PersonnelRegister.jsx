@@ -12,8 +12,8 @@ class PersonnelRegister extends Component {
         let requiredReg = /^\s*$/;
         let numberReg = /^\s*[0-9]*\s*$/;
         let phoneNumberReg = /^(\s*09\d{9}\s*)$/; // iranian telephone number '09---------'
-        let homeTelephoneReg = /^\d{3}-\d{8}$/; // 012-34567890
-        let MobileOrHomeTelephoneReg = /^(\s*09\d{9}\s*|\d{3}-\d{8})$/
+        let homeTelephoneReg = /^[0]\d{10}$/; // 012-34567890
+        let MobileOrHomeTelephoneReg = /^(\s*09\d{9}\s*|[0]\d{10})$/
         let emailReg = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/
 
         let firstName_requiredReg = !requiredReg.test(this.context.personnelFields.firstName);
@@ -131,13 +131,13 @@ class PersonnelRegister extends Component {
                 label: 'مشخصات اولیه',
                 name: 'step 1',
                 content: <BasicInformation />,
-                validator: this.personnelBasicInformation
+                // validator: this.personnelBasicInformation
             },
             {
                 label: 'مشخصات تکمیلی',
                 name: 'step 2',
                 content: <AdditionalInformation />,
-                validator: this.personnelAdditionalInformation,
+                // validator: this.personnelAdditionalInformation,
             },
             {
                 label: 'آپلود مدارک',
@@ -168,8 +168,41 @@ class PersonnelRegister extends Component {
         );
     }
 
-    handleSubmit = () => {
+    handleSubmit = async () => {
+        let newCharacteristic = {...this.context.personnelFields}
 
+        console.log(newCharacteristic)
+        const rawResponse = await fetch('https://api.saadatportal.com/api/v1/characteristic', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(newCharacteristic)
+        });
+
+        var content2 = await rawResponse.json();
+        console.log(content2)
+
+        let personnel = {
+            gender: newCharacteristic.gender,
+            type: newCharacteristic.type,
+            residenceType:"resident",
+            characteristicId: newCharacteristic.id,
+            files: this.context.personnelUploadPage,
+        }
+
+        console.log(personnel.type);
+
+
+        const rawResponse1 = await fetch('https://api.saadatportal.com/api/v1/personnel', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(personnel)
+        });
     }
 
 }

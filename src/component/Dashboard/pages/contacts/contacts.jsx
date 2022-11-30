@@ -20,8 +20,8 @@ class contacts extends Component {
     }
 
     async componentDidMount() {
-        const response = await fetch('https://api.saadatportal.com/api/v1/phoneBook').then((response) => response.json())
-            .then((data) => this.setState({contacts : data}));
+         const response = await fetch('https://api.saadatportal.com/api/v1/phoneBook').then((response) => response.json())
+             .then((data) => this.setState({contacts : data}));
     }
 
     render() {
