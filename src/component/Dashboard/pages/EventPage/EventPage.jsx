@@ -75,7 +75,7 @@ class EventPage extends Component {
     render() {
         return (
             <>
-                <div className="d-flex flex-md-row flex-column p-1">
+                <div className="d-flex flex-column p-1">
                     <ToastContainer
                         position="top-right"
                         autoClose={5000}
@@ -88,156 +88,215 @@ class EventPage extends Component {
                         pauseOnHover
                         theme="light"
                     />
-                    <div className="col-md-6 col-12 p-3">
-                        <div className='d-flex justify-content-center'>
-                            <Calendar
-                                value={this.state.value}
-                                onChange={(value) => this.handleCalendarVar(value)}
 
-                                mapDays={({date}) => {
-                                    this.handleHolidaysFromAPI(date.year, date.month.number, date.day, date);
-                                    let props = {}
 
-                                    let isWeekend = [6].includes(date.weekDay.index);
+                    <div className="d-flex flex-md-row flex-column">
+                        <div className="col-md-6 col-12 p-2">
+                            <div className='d-flex justify-content-center'>
+                                <Calendar
+                                    value={this.state.value}
+                                    onChange={(value) => this.handleCalendarVar(value)}
 
-                                    for (let i = 0; i < this.state.customEvents.length; i++) {
-                                        let day = parseInt(date.day) < 10 ? ('0' + parseInt(date.day)) : parseInt(date.day);
-                                        let month = (parseInt(date.month) < 10 ? ('0' + parseInt(date.month)) : parseInt(date.month));
+                                    mapDays={({date}) => {
+                                        this.handleHolidaysFromAPI(date.year, date.month.number, date.day, date);
+                                        let props = {}
 
-                                        let tmpFormatDate = date.year + '/' + month + '/' + day;
+                                        let isWeekend = [6].includes(date.weekDay.index);
 
-                                        // console.log(tmpFormatDate)
+                                        for (let i = 0; i < this.state.customEvents.length; i++) {
+                                            let day = parseInt(date.day) < 10 ? ('0' + parseInt(date.day)) : parseInt(date.day);
+                                            let month = (parseInt(date.month) < 10 ? ('0' + parseInt(date.month)) : parseInt(date.month));
 
-                                        if (this.state.customEvents[i].date === tmpFormatDate) {
-                                            // props.className = "highlight highlight-green";
-                                            props.className += " border border-success border-1";
+                                            let tmpFormatDate = date.year + '/' + month + '/' + day;
+
+                                            // console.log(tmpFormatDate)
+
+                                            if (this.state.customEvents[i].date === tmpFormatDate) {
+                                                // props.className = "highlight highlight-green";
+                                                props.className += " border border-success border-1";
+                                            }
                                         }
-                                    }
 
-                                    // console.log(date.month.number)
+                                        // console.log(date.month.number)
 
-                                    for (let i = 0; i < this.state.holidaysOfMonth.length; i++) {
-                                        if (this.state.holidaysOfMonth[i].year === date.year && this.state.holidaysOfMonth[i].month === date.month.number && this.state.holidaysOfMonth[i].day === date.day) {
+                                        for (let i = 0; i < this.state.holidaysOfMonth.length; i++) {
+                                            if (this.state.holidaysOfMonth[i].year === date.year && this.state.holidaysOfMonth[i].month === date.month.number && this.state.holidaysOfMonth[i].day === date.day) {
+                                                props.className += " highlight highlight-red";
+                                            }
+                                        }
+
+                                        // console.log(this.state.holidaysOfMonth)
+
+                                        if (isWeekend)
                                             props.className += " highlight highlight-red";
-                                        }
-                                    }
 
-                                    // console.log(this.state.holidaysOfMonth)
-
-                                    if (isWeekend)
-                                        props.className += " highlight highlight-red";
-
-                                    return props
-                                }}
-
-                                plugins={[
-                                    <DatePickerHeader position="left"/>
-                                ]}
-
-                                weekDays={
-                                    [
-                                        ["شنبه", "Sat"],
-                                        ["یکشنبه", "Sun"],
-                                        ["دوشنبه", "Mon"],
-                                        ["سه شنبه", "Tue"],
-                                        ["چهارشنبه", "Wed"],
-                                        ["پنجشنبه", "Thu"],
-                                        ["جمعه", "Fri"],
-                                    ]
-                                }
-                                months={[
-                                    ["فروردین", "فروردین"],
-                                    ["اردیبهشت", "اردیبهشت"],
-                                    ["خرداد", "خرداد"],
-                                    ["تیر", "تیر"],
-                                    ["مرداد", "مرداد"],
-                                    ["شهریور", "شهریور"],
-                                    ["مهر", "مهر"],
-                                    ["آبان", "آبان"],
-                                    ["آذر", "آذر"],
-                                    ["دی", "دی"],
-                                    ["بهمن", "بهمن"],
-                                    ["اسفند", "اسفند"]
-                                ]}
-                                calendar={persian}
-                                locale={persian_fa}
-                            >
-                                <button
-                                    className={' btn btn-lg'}
-                                    onClick={() => {
-                                        this.setState({value: new Date()});
-                                        console.log(this.state.value)
+                                        return props
                                     }}
-                                >
-                                    برو به امروز
-                                </button>
-                                {/*<button*/}
-                                {/*    className={' btn btn-lg'}*/}
-                                {/*    onClick={() => {*/}
-                                {/*        console.log(this.state.value)*/}
-                                {/*    }}*/}
-                                {/*>*/}
-                                {/*    print*/}
-                                {/*</button>*/}
 
-                            </Calendar>
-                        </div>
-                        <div className={'d-flex justify-content-center'}>
-                            <div className={'mt-3 eventDay'}>
-                                <div style={{textAlign: 'center'}}>
-                                    <h6 className={'p-2'}>
-                                        مناسبت های روز
-                                    </h6>
-                                </div>
-                                <ul className="p-2">
-                                    {
-                                        this.state.eventsFromAPI.map((event, key) => (
-                                            <li key={key} className={'p-1'}
-                                                style={{fontSize: "10px"}}>{event.description}</li>
-                                        ))
+                                    plugins={[
+                                        <DatePickerHeader position="left"/>
+                                    ]}
+
+                                    weekDays={
+                                        [
+                                            ["شنبه", "Sat"],
+                                            ["یکشنبه", "Sun"],
+                                            ["دوشنبه", "Mon"],
+                                            ["سه شنبه", "Tue"],
+                                            ["چهارشنبه", "Wed"],
+                                            ["پنجشنبه", "Thu"],
+                                            ["جمعه", "Fri"],
+                                        ]
                                     }
-                                </ul>
+                                    months={[
+                                        ["فروردین", "فروردین"],
+                                        ["اردیبهشت", "اردیبهشت"],
+                                        ["خرداد", "خرداد"],
+                                        ["تیر", "تیر"],
+                                        ["مرداد", "مرداد"],
+                                        ["شهریور", "شهریور"],
+                                        ["مهر", "مهر"],
+                                        ["آبان", "آبان"],
+                                        ["آذر", "آذر"],
+                                        ["دی", "دی"],
+                                        ["بهمن", "بهمن"],
+                                        ["اسفند", "اسفند"]
+                                    ]}
+                                    calendar={persian}
+                                    locale={persian_fa}
+                                >
+                                    <button
+                                        className={' btn btn-lg'}
+                                        onClick={() => {
+                                            this.setState({value: new Date()});
+                                            console.log(this.state.value)
+                                        }}
+                                    >
+                                        برو به امروز
+                                    </button>
+                                    {/*<button*/}
+                                    {/*    className={' btn btn-lg'}*/}
+                                    {/*    onClick={() => {*/}
+                                    {/*        console.log(this.state.value)*/}
+                                    {/*    }}*/}
+                                    {/*>*/}
+                                    {/*    print*/}
+                                    {/*</button>*/}
+
+                                </Calendar>
+                            </div>
+                        </div>
+                        <div className="col-md-6 col-12 p-2">
+                            <div className='d-flex justify-content-center h-100'>
+                                <div className={'eventDay'}>
+                                    <div style={{textAlign: 'center'}}>
+                                        <h6 className={'mt-3'}>
+                                            مناسبت های روز
+                                        </h6>
+                                    </div>
+                                    <ul className="p-2">
+                                        {
+                                            this.state.eventsFromAPI.map((event, key) => (
+                                                <li key={key} className={'p-1'}
+                                                    style={{fontSize: "10px"}}>{event.description}</li>
+                                            ))
+                                        }
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div className={'col-md-6 col-12 my-3'} style={{
-                        backgroundColor: "#fff",
-                        textAlign: 'center',
-                        boxShadow: '0 0 5px #8798ad',
-                        borderRadius: "10px"
-                    }}>
-                        <button className={'btn btn-success m-4'}
-                                onClick={() => {
-                                    this.handleOpenType();
-                                    this.setState({tempInputForModal: ''})
 
-                                    // let day = parseInt(today.getDay()) < 10 ? ('0' + parseInt(today.getDay())) : parseInt(today.getDay());
-                                    // let month = (parseInt(today.getMonth()) < 10 ? ('0' + parseInt(today.getMonth())) : parseInt(today.getMonth()));
+                    <div className="col-12">
+                        <div className="event-list">
+                            <div className="d-flex flex-row justify-content-between">
+                                <div className='title'>رویداد های من</div>
+                                <button className={'btn-done'}
+                                        onClick={() => {
+                                            this.handleOpenType();
+                                            this.setState({tempInputForModal: ''})
 
-                                    // console.log(today.getYear() + '/' + month + '/' + day + ' 00:00:00')
+                                            // let day = parseInt(today.getDay()) < 10 ? ('0' + parseInt(today.getDay())) : parseInt(today.getDay());
+                                            // let month = (parseInt(today.getMonth()) < 10 ? ('0' + parseInt(today.getMonth())) : parseInt(today.getMonth()));
 
-                                    // console.log(parseInt("09"))
-                                }}>
-                            اضافه کردن رویداد
-                        </button>
-                        <h5 className={'mb-3'}>
-                            رویداد های من
-                        </h5>
-                        <ul className="list-group" style={{alignItems: 'center'}}>
-                            {
-                                this.state.customEvents.map((event, key) => {
-                                    let day = parseInt(this.state.day) < 10 ? ('0' + parseInt(this.state.day)) : parseInt(this.state.day);
-                                    let month = (parseInt(this.state.month) < 10 ? ('0' + parseInt(this.state.month)) : parseInt(this.state.month));
+                                            // console.log(today.getYear() + '/' + month + '/' + day + ' 00:00:00')
 
-                                    let tmpFormatDate = this.state.year + '/' + month + '/' + day;
-                                    return (event.date === tmpFormatDate) ?
-                                        <li className={'p-3 list-group-item'} key={key}
-                                            style={{width: '50%'}}>{event.eventDescription}</li> :
-                                        null
-                                })
-                            }
-                        </ul>
+                                            // console.log(parseInt("09"))
+                                        }}>
+                                    اضافه کردن رویداد
+                                </button>
+                            </div>
+                            <div className="table-box">
+                                <table className='table'>
+                                    <thead>
+                                    <tr>
+
+                                        <th>نام</th>
+                                        <th>تاریخ</th>
+                                        <th>توضیحات</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {
+                                        this.state.customEvents.map((event, index) => {
+                                            let day = parseInt(this.state.day) < 10 ? ('0' + parseInt(this.state.day)) : parseInt(this.state.day);
+                                            let month = (parseInt(this.state.month) < 10 ? ('0' + parseInt(this.state.month)) : parseInt(this.state.month));
+                                            let tmpFormatDate = this.state.year + '/' + month + '/' + day;
+                                            return <tr>
+                                        <td>{event.eventName}</td>
+                                        <td>{event.date}</td>
+                                        <td>{event.eventDescription}</td>
+                                        </tr>
+                                        })
+                                    }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
+
+
+                    {/*<div className={'col-md-6 col-12 my-3'} style={{*/}
+                    {/*    backgroundColor: "#fff",*/}
+                    {/*    textAlign: 'center',*/}
+                    {/*    boxShadow: '0 0 5px #8798ad',*/}
+                    {/*    borderRadius: "10px"*/}
+                    {/*}}>*/}
+                    {/*    <button className={'btn btn-success m-4'}*/}
+                    {/*            onClick={() => {*/}
+                    {/*                this.handleOpenType();*/}
+                    {/*                this.setState({tempInputForModal: ''})*/}
+
+                    {/*                // let day = parseInt(today.getDay()) < 10 ? ('0' + parseInt(today.getDay())) : parseInt(today.getDay());*/}
+                    {/*                // let month = (parseInt(today.getMonth()) < 10 ? ('0' + parseInt(today.getMonth())) : parseInt(today.getMonth()));*/}
+
+                    {/*                // console.log(today.getYear() + '/' + month + '/' + day + ' 00:00:00')*/}
+
+                    {/*                // console.log(parseInt("09"))*/}
+                    {/*            }}>*/}
+                    {/*        اضافه کردن رویداد*/}
+                    {/*    </button>*/}
+                    {/*    <h5 className={'mb-3'}>*/}
+                    {/*        رویداد های من*/}
+                    {/*    </h5>*/}
+                    {/*    <ul className="list-group">*/}
+                    {/*        {*/}
+                    {/*            this.state.customEvents.map((event, key) => {*/}
+                    {/*                let day = parseInt(this.state.day) < 10 ? ('0' + parseInt(this.state.day)) : parseInt(this.state.day);*/}
+                    {/*                let month = (parseInt(this.state.month) < 10 ? ('0' + parseInt(this.state.month)) : parseInt(this.state.month));*/}
+
+                    {/*                let tmpFormatDate = this.state.year + '/' + month + '/' + day;*/}
+
+                    {/*                return <li className={'p-3 list-group-item'} key={key}>{event.eventName}</li>*/}
+
+                    {/*                /*return (event.date === tmpFormatDate) ?*/}
+                    {/*                    <li className={'p-3 list-group-item'} key={key}>{event.eventName}</li> :*/}
+                    {/*                    null/*/}
+                    {/*            })*/}
+                    {/*        }*/}
+                    {/*    </ul>*/}
+                    {/*</div>*/}
+
                 </div>
 
                 <Modal centered show={this.state.showType} onHide={() => {
@@ -247,18 +306,31 @@ class EventPage extends Component {
                         <Modal.Title>افزودن رویداد جدید</Modal.Title>
                     </Modal.Header>
                     <Modal.Body className="justify-content-center">
-                        <input type='text'
-                               className='form-control mt-3 mb-3 input'
-                               onChange={(e) => this.handleEventName(e)}
-                               placeholder="رویداد جدید"/>
-
-                        <input type='text'
-                               className='form-control mt-3 mb-3 input'
-                               onChange={(e) => this.handleEventDescription(e)}
-                               placeholder="توضیحات"/>
-
+                        <div className="input-group-register col-12">
+                            <input type='text'
+                                   className='form-control input'
+                                   onChange={(e) => this.handleEventName(e)}
+                                   placeholder=" "/>
+                            <label className="placeholder">نام رویداد</label>
+                        </div>
+                        {/*<div className="input-group-register col-12">
+                            <textarea type='text'
+                                      className='form-control mt-3 mb-3 input'
+                                      onChange={(e) => this.handleEventDescription(e)}
+                                      placeholder=" "/>
+                            <label className="placeholder">توضیحات</label>
+                        </div>*/}
+                        <div className="input-group-register col-12">
+                                <textarea
+                                    className="input form-control"
+                                    onChange={(e) => this.handleEventDescription(e)}
+                                    placeholder=" "
+                                >
+                                </textarea>
+                            <label className="placeholder">توضیحات</label>
+                        </div>
                     </Modal.Body>
-                    <Modal.Footer className="justify-content-start">
+                    <Modal.Footer className="justify-content-center">
                         <button className="btn btn-success" onClick={(event) => {
                             this.handleSubmitType(event)
                         }}>ثبت
@@ -355,7 +427,11 @@ class EventPage extends Component {
     }
 
     handleNotif = () => {
-        let today = new Date().toLocaleDateString('fa-IR-u-nu-latn', {year:'numeric',month:'2-digit',day:'2-digit'});
+        let today = new Date().toLocaleDateString('fa-IR-u-nu-latn', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit'
+        });
         console.log(today)
 
         for (let i = 0; i < this.state.customEvents.length; i++) {
