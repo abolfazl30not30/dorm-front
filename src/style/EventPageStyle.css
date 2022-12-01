@@ -8,3 +8,43 @@
     width: 100%;
     box-shadow: 0 0 5px #8798ad;
 }
+
+.event-list {
+    background-color: #fff;
+    padding: 1rem;
+    border-radius: 1rem;
+    margin: 1rem;
+    font-size: 1rem;
+    color: #404040;
+}
+.event-list .title {
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+.event-list .table-box {
+    overflow-x: auto;
+    white-space: nowrap;
+}
+.event-list .table-box table {
+    border-radius: 0.65rem;
+    border-spacing: 0;
+    border-collapse: separate;
+}
+.event-list .table>:not(caption)>*>* {
+    padding: 1rem !important;
+}
+.event-list .btn-see {
+    color: #000;
+    text-decoration: none;
+    border-radius: 0.5rem;
+    background-color: #20d489;
+    font-size: 1rem;
+    margin-bottom: 2rem;
+    padding: 0.5rem 1rem;
+    border: none;
+    height: 50px;
+}
+.event-list .btn-see:hover {
+    background-color: #19b674 !important;
+    color: #fff !important;
+}
