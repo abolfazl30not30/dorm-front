@@ -1,5 +1,4 @@
 import {Component} from "react";
-import Navbar from "./navbar";
 import Section from "./section";
 import TaskContext from "../../../../contexts/tasks";
 import Modal from "react-bootstrap/Modal";
@@ -10,21 +9,14 @@ import {DragDropContext} from "react-beautiful-dnd";
 class TrelloPage extends Component {
     state = {
         searchPersonnelModal: false,
-        name: "Pedram Monazzami",
-        email: "pedram.monazzami@gmail.com",
         TaskClicked: false,
         NewTaskClicked: false,
         ClickedTask: {},
-        orders: [
-            [],
-            [],
-            []
-        ],
         tasks: [],
         tempName: "",
         tempDescription: "",
         tempDueDate: new Date(),
-        tempTimeLog: new Date(),
+        tempTimeLog: '',
         tempPriority: "",
         tempPersonnelId: "",
     }
@@ -120,7 +112,7 @@ class TrelloPage extends Component {
     };
 
     onSubmitChanges = async () => {
-
+        console.log(this.state.ClickedTask)
         const patchTask = await fetch(`https://api.saadatportal.com/api/v1/task/${this.state.ClickedTask.id}`, {
             method: 'PATCH',
             headers: {
@@ -129,12 +121,12 @@ class TrelloPage extends Component {
             },
             body: JSON.stringify(this.state.ClickedTask)
         })
-
+        await this.componentDidMount()
         this.onClose()
     };
 //----------------------------------------------------------------------------------------------------------------------
 // handler functions for drag and drop ---------------------------------------------------------------------------------
-    onDragEnd = (result) => {
+    onDragEnd = async (result) => {
         if (!result.destination) {
             return;
         }
@@ -143,36 +135,34 @@ class TrelloPage extends Component {
         }
 
         const targetTask = this.state.tasks.find(task => task.id === result.draggableId)
-        const updatedTasks = [...this.state.tasks]
-        const index = updatedTasks.indexOf(targetTask)
+        targetTask.status = result.destination.droppableId;
 
-        switch (result.destination.droppableId){
-            case ("To Do"):
-                targetTask.status = "todo";
-                updatedTasks[index] = targetTask;
-                this.setState({tasks: updatedTasks})
-                break
-
-            case ("In Progress"):
-                targetTask.status = "inProgress";
-                updatedTasks[index] = targetTask;
-                this.setState({tasks: updatedTasks})
-                break
-
-            case ("Done"):
-                targetTask.status = "done";
-                updatedTasks[index] = targetTask;
-                this.setState({tasks: updatedTasks})
-                break
+        const patchTask = await fetch(`https://api.saadatportal.com/api/v1/task/${targetTask.id}`, {
+            method: 'PATCH',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(targetTask)
+        })
+        await this.componentDidMount()
+    }
+    handleDelete = async (id) => {
+        const deleteTask = await fetch(`https://api.saadatportal.com/api/v1/task/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
             }
-        }
+        })
+        await this.componentDidMount()
+
+    }
 //----------------------------------------------------------------------------------------------------------------------
 
     componentDidMount = async () => {
         const getTasks = await fetch('https://api.saadatportal.com/api/v1/task').then((response) => response.json())
             .then((data) => this.setState({tasks : data}))
-        // const getPersonnels = await fetch('https://api.saadatportal.com/api/v1/personnel').then((respond) => respond.json())
-        //     .then((data) => )
     }
 
     render() {
@@ -191,11 +181,11 @@ class TrelloPage extends Component {
                             handleTaskClicked: this.handleTaskClicked,
                             onClose: this.onClose,
                             onNewTask: this.onNewTask,
+                            handleDelete: this.handleDelete
                         }}>
 
-                        {/* top navbar */}
+                        {/* New Task button*/}
                         <button className="btn btn-lg btn-success w-100" onClick={this.onNewTask}>New Task</button>
-                        {/*<Navbar />*/}
 
                         {/* 3 main categories (To Do, In Progress, Done) */}
                         <div className="justify-content-center d-flex row">

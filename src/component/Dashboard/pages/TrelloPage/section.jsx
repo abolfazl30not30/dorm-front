@@ -8,7 +8,7 @@ class Section extends Component {
     static contextType = TaskContext;
     render() {
         return (
-            <Droppable droppableId={this.props.title}>
+            <Droppable droppableId={this.props.status}>
                 {(provided) =>(
                     <div className="p-3 pb-5 section-container" style={{borderRadius: "10px", height: "auto", userSelect: "none"}} ref={provided.innerRef} {...provided.droppableProps}>
                             {this.context.tasks.map((task, index)=> (
