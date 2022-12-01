@@ -24,10 +24,6 @@ import {Link} from "react-router-dom";
 class Setting extends Component {
     static contextType = BuildingContext;
 
-    constructor(props) {
-        super(props);
-        this.unselectAll = createRef();
-    }
     state = {
         images: [
             // {
@@ -60,11 +56,12 @@ class Setting extends Component {
                         انتخاب عکس
                     </h4>
                 </div>
-                <button onClick={() => {
+                <button
+                    className={'btn btn-danger'}
+                    onClick={() => {
                     this.context.handleResetSlider();
                     this.handleUnselect(this.state.e);
                 }}
-                        ref={this.unselectAll}
                 >
                     حذف همه انتخاب ها
                 </button>
@@ -79,7 +76,6 @@ class Setting extends Component {
                                  returnImages={(e) => {
                                      this.setState({e : e})
                                      this.handleImages(e, false)
-                                     // this.unselectAll.current.focus()
                                  }}
                         />
                     </div>

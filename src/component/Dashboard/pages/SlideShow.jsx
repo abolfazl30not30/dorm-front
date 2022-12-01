@@ -59,9 +59,6 @@ class SlideShow extends Component{
         return (
             <>
                 <div className="slide-container">
-                    <button onClick={() => console.log(this.context.slider)}>
-                        test
-                    </button>
                     <Slide {...properties}>
                         {
                             this.context.slider.map((e, index) => (
