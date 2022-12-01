@@ -272,7 +272,20 @@ class ProfilePage extends Component {
             }
         ],
         showDeleteModalReport: false,
-        reportTemp: {}
+        reportTemp: {},
+
+        hasBirthPage1: false,
+        hasBirthPage2: false,
+        hasBirthPage3: false,
+        hasBirthPage4: false,
+        hasBirthAllPage: false,
+        hasCartPage1: false,
+        hasCartPage2: false,
+        hasCartAllPage: false,
+        hasPersonnelImg: false,
+        hasRegister: false,
+        hasRegisterUni: false,
+
     }
     date = createRef();
     description = createRef();
@@ -297,8 +310,13 @@ class ProfilePage extends Component {
             .then((data) => this.setState({person: data}));
 
         const response2 = await fetch(`https://api.saadatportal.com/api/v1/person/${this.context.personId}`).then((response) => response.json())
-            .then((data) => this.setState({personObject: data}));
-        console.log(this.state.person)
+            .then((data) => this.setState({personObject: data}, () => {
+                console.log(this.state.personObject.files);
+                this.existDocFile(this.state.personObject.files);
+                this.setState({docFile: this.state.personObject.files})
+            }));
+
+
     }
 
     render() {
@@ -400,7 +418,7 @@ class ProfilePage extends Component {
                                                                     <i className="bi bi-caret-left ms-1"></i>
                                                                     <label> دین :</label>
                                                                     {(() => {
-                                                                        switch(this.state.person.religion) {
+                                                                        switch (this.state.person.religion) {
                                                                             case 'islam':
                                                                                 return 'اسلام';
                                                                             case 'christianity':
@@ -411,7 +429,7 @@ class ProfilePage extends Component {
                                                                                 return 'آیین بودایی';
                                                                             case 'other':
                                                                                 return 'سایر';
-                                                                    }
+                                                                        }
                                                                     })()}
                                                                 </div>
                                                             </div>
@@ -448,7 +466,7 @@ class ProfilePage extends Component {
                                                                     <i className="bi bi-caret-left ms-1"></i>
                                                                     <label> وضعیت تاهل :</label>
                                                                     {(() => {
-                                                                        switch(this.state.person.maritalStatus) {
+                                                                        switch (this.state.person.maritalStatus) {
                                                                             case 'single':
                                                                                 return 'مجرد';
                                                                             case 'married':
@@ -460,13 +478,14 @@ class ProfilePage extends Component {
                                                                 </div>
                                                             </div>
                                                             {(() => {
-                                                                switch(this.state.person.maritalStatus) {
+                                                                switch (this.state.person.maritalStatus) {
                                                                     case 'married':
                                                                         return <>
                                                                             <div className='col-12 col-md-4'>
                                                                                 <div className="more-info-item">
                                                                                     <i className="bi bi-caret-left ms-1"></i>
-                                                                                    <label> نام و نام خانوادگی همسر :</label>
+                                                                                    <label> نام و نام خانوادگی همسر
+                                                                                        :</label>
                                                                                     {this.state.person.spouseFullName != "" ? this.state.person.spouseFullName : 'ثبت نشده'}
                                                                                 </div>
                                                                             </div>
@@ -485,7 +504,7 @@ class ProfilePage extends Component {
                                                                     <i className="bi bi-caret-left ms-1"></i>
                                                                     <label> بیماری خاص :</label>
                                                                     {(() => {
-                                                                        switch(this.state.person.health) {
+                                                                        switch (this.state.person.health) {
                                                                             case true:
                                                                                 return 'بله';
                                                                             case false:
@@ -495,7 +514,7 @@ class ProfilePage extends Component {
                                                                 </div>
                                                             </div>
                                                             {(() => {
-                                                                switch(this.state.person.health) {
+                                                                switch (this.state.person.health) {
                                                                     case true:
                                                                         return <>
                                                                             <div className='col-12 col-md-4'>
@@ -573,7 +592,7 @@ class ProfilePage extends Component {
                                                                     <i className="bi bi-caret-left ms-1"></i>
                                                                     <label> نسبت با اقامتگر :</label>
                                                                     {(() => {
-                                                                        switch(this.state.person.firstPersonRelationshipWithResident) {
+                                                                        switch (this.state.person.firstPersonRelationshipWithResident) {
                                                                             case 'father':
                                                                                 return 'پدر';
                                                                             case 'mother':
@@ -618,7 +637,7 @@ class ProfilePage extends Component {
                                                                     <i className="bi bi-caret-left ms-1"></i>
                                                                     <label> نسبت با اقامتگر :</label>
                                                                     {(() => {
-                                                                        switch(this.state.person.secondPersonRelationshipWithResident) {
+                                                                        switch (this.state.person.secondPersonRelationshipWithResident) {
                                                                             case 'father':
                                                                                 return 'پدر';
                                                                             case 'mother':
@@ -1155,77 +1174,97 @@ class ProfilePage extends Component {
                                                 <Accordion.Header>شناسنامه</Accordion.Header>
                                                 <Accordion.Body>
                                                     <div className="d-flex flex-column">
-                                                        <OverlayTrigger
+                                                        {
+                                                            this.state.hasBirthPage1 && (
+                                                            <OverlayTrigger
                                                             placement="bottom"
                                                             overlay={
-                                                                <Tooltip className="deleteTooltip">
-                                                                    دانلود
-                                                                </Tooltip>
-                                                            }
-                                                        >
+                                                            <Tooltip className="deleteTooltip">
+                                                            دانلود
+                                                            </Tooltip>
+                                                        }
+                                                            >
                                                             <div className="record-item"
-                                                                 onClick={() => this.downloadFile()}>
-                                                                <div className='ms-2'>صفحه اول</div>
-                                                                <RiDownloadCloud2Fill/>
+                                                            onClick={() => this.downloadFile(this.state.docFile.birthPage1)}>
+                                                            <div className='ms-2'>صفحه اول</div>
+                                                            <RiDownloadCloud2Fill/>
                                                             </div>
-                                                        </OverlayTrigger>
-                                                        <OverlayTrigger
-                                                            placement="bottom"
-                                                            overlay={
-                                                                <Tooltip className="deleteTooltip">
-                                                                    دانلود
-                                                                </Tooltip>
-                                                            }
-                                                        >
-                                                            <div className="record-item"
-                                                                 onClick={() => this.downloadFile()}>
-                                                                <div className='ms-2'>صفحه دوم</div>
-                                                                <RiDownloadCloud2Fill/>
-                                                            </div>
-                                                        </OverlayTrigger>
-                                                        <OverlayTrigger
-                                                            placement="bottom"
-                                                            overlay={
-                                                                <Tooltip className="deleteTooltip">
-                                                                    دانلود
-                                                                </Tooltip>
-                                                            }
-                                                        >
-                                                            <div className="record-item"
-                                                                 onClick={() => this.downloadFile()}>
-                                                                <div className='ms-2'>صفحه سوم</div>
-                                                                <RiDownloadCloud2Fill/>
-                                                            </div>
-                                                        </OverlayTrigger>
-                                                        <OverlayTrigger
-                                                            placement="bottom"
-                                                            overlay={
-                                                                <Tooltip className="deleteTooltip">
-                                                                    دانلود
-                                                                </Tooltip>
-                                                            }
-                                                        >
-                                                            <div className="record-item"
-                                                                 onClick={() => this.downloadFile()}>
-                                                                <div className='ms-2'>صفحه چهارم</div>
-                                                                <RiDownloadCloud2Fill/>
-                                                            </div>
-                                                        </OverlayTrigger>
-                                                        <OverlayTrigger
-                                                            placement="bottom"
-                                                            overlay={
-                                                                <Tooltip className="deleteTooltip">
-                                                                    دانلود
-                                                                </Tooltip>
-                                                            }
-                                                        >
-                                                            <div className="record-item"
-                                                                 onClick={() => this.downloadFile()}>
-                                                                <div className='ms-2'>کل صفحات</div>
-                                                                <RiDownloadCloud2Fill/>
-                                                            </div>
-                                                        </OverlayTrigger>
+                                                            </OverlayTrigger>
+                                                            )
+                                                        }
 
+                                                        {
+                                                            this.state.hasBirthPage2 && (
+                                                                <OverlayTrigger
+                                                                    placement="bottom"
+                                                                    overlay={
+                                                                        <Tooltip className="deleteTooltip">
+                                                                            دانلود
+                                                                        </Tooltip>
+                                                                    }
+                                                                >
+                                                                    <div className="record-item"
+                                                                         onClick={() => this.downloadFile(this.state.docFile.birthPage2)}>
+                                                                        <div className='ms-2'>صفحه دوم</div>
+                                                                        <RiDownloadCloud2Fill/>
+                                                                    </div>
+                                                                </OverlayTrigger>
+                                                            )
+                                                        }
+                                                        {
+                                                            this.state.hasBirthPage3 && (
+                                                                <OverlayTrigger
+                                                                    placement="bottom"
+                                                                    overlay={
+                                                                        <Tooltip className="deleteTooltip">
+                                                                            دانلود
+                                                                        </Tooltip>
+                                                                    }
+                                                                >
+                                                                    <div className="record-item"
+                                                                         onClick={() => this.downloadFile()}>
+                                                                        <div className='ms-2'>صفحه سوم</div>
+                                                                        <RiDownloadCloud2Fill/>
+                                                                    </div>
+                                                                </OverlayTrigger>
+                                                            )
+                                                        }
+                                                        {
+                                                            this.state.hasBirthPage4 && (
+                                                                <OverlayTrigger
+                                                                    placement="bottom"
+                                                                    overlay={
+                                                                        <Tooltip className="deleteTooltip">
+                                                                            دانلود
+                                                                        </Tooltip>
+                                                                    }
+                                                                >
+                                                                    <div className="record-item"
+                                                                         onClick={() => this.downloadFile()}>
+                                                                        <div className='ms-2'>صفحه چهارم</div>
+                                                                        <RiDownloadCloud2Fill/>
+                                                                    </div>
+                                                                </OverlayTrigger>
+                                                            )
+                                                        }
+                                                        {
+                                                            this.state.hasBirthAllPage && (
+                                                                <OverlayTrigger
+                                                                    placement="bottom"
+                                                                    overlay={
+                                                                        <Tooltip className="deleteTooltip">
+                                                                            دانلود
+                                                                        </Tooltip>
+                                                                    }
+                                                                >
+                                                                    <div className="record-item"
+                                                                         onClick={() => this.downloadFile()}>
+                                                                        <div className='ms-2'>کل صفحات</div>
+                                                                        <RiDownloadCloud2Fill/>
+                                                                    </div>
+                                                                </OverlayTrigger>
+                                                            )
+                                                        }
                                                     </div>
                                                 </Accordion.Body>
                                             </Accordion.Item>
@@ -1233,73 +1272,130 @@ class ProfilePage extends Component {
                                             <Accordion.Item eventKey="1">
                                                 <Accordion.Header>کارت ملی</Accordion.Header>
                                                 <Accordion.Body>
-                                                    <OverlayTrigger
-                                                        placement="bottom"
-                                                        overlay={
-                                                            <Tooltip className="deleteTooltip">
-                                                                دانلود
-                                                            </Tooltip>
-                                                        }
-                                                    >
-                                                        <div className="record-item"
-                                                             onClick={() => this.downloadFile()}>
-                                                            <div className='ms-2'>صفحه اول</div>
-                                                            <RiDownloadCloud2Fill/>
-                                                        </div>
-                                                    </OverlayTrigger>
-                                                    <OverlayTrigger
-                                                        placement="bottom"
-                                                        overlay={
-                                                            <Tooltip className="deleteTooltip">
-                                                                دانلود
-                                                            </Tooltip>
-                                                        }
-                                                    >
-                                                        <div className="record-item"
-                                                             onClick={() => this.downloadFile()}>
-                                                            <div className='ms-2'>صفحه دوم</div>
-                                                            <RiDownloadCloud2Fill/>
-                                                        </div>
-                                                    </OverlayTrigger>
+                                                    {
+                                                        this.state.hasCartPage1 && (
+                                                            <OverlayTrigger
+                                                                placement="bottom"
+                                                                overlay={
+                                                                    <Tooltip className="deleteTooltip">
+                                                                        دانلود
+                                                                    </Tooltip>
+                                                                }
+                                                            >
+                                                                <div className="record-item"
+                                                                     onClick={() => this.downloadFile()}>
+                                                                    <div className='ms-2'>صفحه اول</div>
+                                                                    <RiDownloadCloud2Fill/>
+                                                                </div>
+                                                            </OverlayTrigger>
+                                                        )
+                                                    }
+                                                    {
+                                                        this.state.hasCartPage2 && (
+                                                            <OverlayTrigger
+                                                                placement="bottom"
+                                                                overlay={
+                                                                    <Tooltip className="deleteTooltip">
+                                                                        دانلود
+                                                                    </Tooltip>
+                                                                }
+                                                            >
+                                                                <div className="record-item"
+                                                                     onClick={() => this.downloadFile()}>
+                                                                    <div className='ms-2'>صفحه دوم</div>
+                                                                    <RiDownloadCloud2Fill/>
+                                                                </div>
+                                                            </OverlayTrigger>
+                                                        )
+                                                    }
+                                                    {
+                                                        this.state.hasCartAllPage && (
+                                                            <OverlayTrigger
+                                                                placement="bottom"
+                                                                overlay={
+                                                                    <Tooltip className="deleteTooltip">
+                                                                        دانلود
+                                                                    </Tooltip>
+                                                                }
+                                                            >
+                                                                <div className="record-item"
+                                                                     onClick={() => this.downloadFile()}>
+                                                                    <div className='ms-2'>کل صفحات</div>
+                                                                    <RiDownloadCloud2Fill/>
+                                                                </div>
+                                                            </OverlayTrigger>
+                                                        )
+                                                    }
                                                 </Accordion.Body>
                                             </Accordion.Item>
 
                                             <Accordion.Item eventKey="2">
                                                 <Accordion.Header>عکس پرسنلی</Accordion.Header>
                                                 <Accordion.Body>
-                                                    <OverlayTrigger
-                                                        placement="bottom"
-                                                        overlay={
-                                                            <Tooltip className="deleteTooltip">
-                                                                دانلود
-                                                            </Tooltip>
-                                                        }
-                                                    >
-                                                        <div className="record-item"
-                                                             onClick={() => this.downloadFile()}>
-                                                            <div className='ms-2'>عکس پرسنلی</div>
-                                                            <RiDownloadCloud2Fill/>
-                                                        </div>
-                                                    </OverlayTrigger>
+                                                    {
+                                                        this.state.hasPersonnelImg && (
+                                                            <OverlayTrigger
+                                                                placement="bottom"
+                                                                overlay={
+                                                                    <Tooltip className="deleteTooltip">
+                                                                        دانلود
+                                                                    </Tooltip>
+                                                                }
+                                                            >
+                                                                <div className="record-item"
+                                                                     onClick={() => this.downloadFile()}>
+                                                                    <div className='ms-2'>عکس پرسنلی</div>
+                                                                    <RiDownloadCloud2Fill/>
+                                                                </div>
+                                                            </OverlayTrigger>
+                                                        )
+                                                    }
                                                 </Accordion.Body>
                                             </Accordion.Item>
                                             <Accordion.Item eventKey="3">
+                                                <Accordion.Header>پرینت ثبت نام </Accordion.Header>
+                                                <Accordion.Body>
+                                                    {
+                                                        this.state.hasRegister && (
+                                                            <OverlayTrigger
+                                                                placement="bottom"
+                                                                overlay={
+                                                                    <Tooltip className="deleteTooltip">
+                                                                        دانلود
+                                                                    </Tooltip>
+                                                                }
+                                                            >
+                                                                <div className="record-item"
+                                                                        onClick={() => this.downloadFile("registerUni")}>
+                                                                    <div className='ms-2'>پرینت ثبت نام</div>
+                                                                    <RiDownloadCloud2Fill/>
+                                                                </div>
+                                                            </OverlayTrigger>
+                                                        )
+                                                    }
+                                                </Accordion.Body>
+                                            </Accordion.Item>
+                                            <Accordion.Item eventKey="4">
                                                 <Accordion.Header>پرینت ثبت نام دانشگاه</Accordion.Header>
                                                 <Accordion.Body>
-                                                    <OverlayTrigger
-                                                        placement="bottom"
-                                                        overlay={
-                                                            <Tooltip className="deleteTooltip">
-                                                                دانلود
-                                                            </Tooltip>
-                                                        }
-                                                    >
-                                                        <div className="record-item"
-                                                             onClick={() => this.downloadFile()}>
-                                                            <div className='ms-2'>پرینت ثبت نام دانشگاه</div>
-                                                            <RiDownloadCloud2Fill/>
-                                                        </div>
-                                                    </OverlayTrigger>
+                                                    {
+                                                        this.state.hasRegisterUni && (
+                                                            <OverlayTrigger
+                                                                placement="bottom"
+                                                                overlay={
+                                                                    <Tooltip className="deleteTooltip">
+                                                                        دانلود
+                                                                    </Tooltip>
+                                                                }
+                                                            >
+                                                                <div className="record-item"
+                                                                     onClick={() => this.downloadFile()}>
+                                                                    <div className='ms-2'> ثبت نام دانشگاه</div>
+                                                                    <RiDownloadCloud2Fill color="#000"/>
+                                                                </div>
+                                                            </OverlayTrigger>
+                                                        )
+                                                    }
                                                 </Accordion.Body>
                                             </Accordion.Item>
                                         </Accordion>
@@ -1659,8 +1755,50 @@ class ProfilePage extends Component {
         this.setState({report: updatedReport});
         this.setState({showDeleteModalReport: false})
     }
-    downloadFile = () => {
-        console.log('Download')
+    downloadFile = async (fileId) => {
+            const response2 = await fetch(`https://api.saadatportal.com/api/v1/file/${fileId}`).then((response) => response.blob())
+            .then((blob) =>{
+                var file = window.URL.createObjectURL(blob);
+                window.location.assign(file);
+            });
+        console.log(response2)
+    }
+
+    existDocFile = (docFile) => {
+        console.log(docFile)
+        if(docFile.hasOwnProperty('birthPage1')){
+            this.setState({hasBirthPage1:true});
+        }
+        if(docFile.hasOwnProperty('birthPage2')){
+            this.setState({hasBirthPage2:true});
+        }
+        if(docFile.hasOwnProperty('birthPage3')){
+            this.setState({hasBirthPage3:true});
+        }
+        if(docFile.hasOwnProperty('birthPage4')){
+            this.setState({hasBirthPage4:true});
+        }
+        if(docFile.hasOwnProperty('birthAllPage')){
+            this.setState({hasBirthAllPage:true});
+        }
+        if(docFile.hasOwnProperty('cardPage1')){
+            this.setState({hasCartPage1:true});
+        }
+        if(docFile.hasOwnProperty('cardPage2')){
+            this.setState({hasCartPage2:true});
+        }
+        if(docFile.hasOwnProperty('cardAllPage')){
+            this.setState({hasCartAllPage:true});
+        }
+        if(docFile.hasOwnProperty('personnelImg')){
+            this.setState({hasPersonnelImg:true});
+        }
+        if(docFile.hasOwnProperty('register')){
+            this.setState({hasRegister:true});
+        }
+        if(docFile.hasOwnProperty('registerUni')){
+            this.setState({hasRegisterUni:true});
+        }
     }
 }
 
