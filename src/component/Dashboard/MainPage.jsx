@@ -735,20 +735,22 @@ class MainPage extends Component {
     handleImageSlider = (name, id) => {
         let updatedState = {...this.state};
 
-        updatedState.fields.slider.push({
-            name: name,
-            fileId: id
-        })
-
         if (!updatedState.fields.slider.includes({
             name: name,
             fileId: id
         })) {
-            this.setState({updatedState})
+            updatedState.fields.slider.push({
+                name: name,
+                fileId: id
+            })
         }
+
+        this.setState({updatedState})
+
     }
 
     handleResetSlider = () => {
+        // console.log(this.state.fields.slider)
         let updatedState = {...this.state};
 
         updatedState.fields.slider = []
