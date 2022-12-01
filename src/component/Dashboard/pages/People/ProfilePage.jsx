@@ -22,7 +22,7 @@ import Tooltip from 'react-bootstrap/Tooltip';
 import BuildingContext from "../../../../contexts/Building";
 import DateInput from "../../../CustomInputs/DateInput";
 import {DatePicker} from "react-persian-datepicker";
-
+import axios from "axios"
 
 class ProfilePage extends Component {
 
@@ -1176,20 +1176,20 @@ class ProfilePage extends Component {
                                                     <div className="d-flex flex-column">
                                                         {
                                                             this.state.hasBirthPage1 && (
-                                                            <OverlayTrigger
-                                                            placement="bottom"
-                                                            overlay={
-                                                            <Tooltip className="deleteTooltip">
-                                                            دانلود
-                                                            </Tooltip>
-                                                        }
-                                                            >
-                                                            <div className="record-item"
-                                                            onClick={() => this.downloadFile(this.state.docFile.birthPage1)}>
-                                                            <div className='ms-2'>صفحه اول</div>
-                                                            <RiDownloadCloud2Fill/>
-                                                            </div>
-                                                            </OverlayTrigger>
+                                                                <OverlayTrigger
+                                                                    placement="bottom"
+                                                                    overlay={
+                                                                        <Tooltip className="deleteTooltip">
+                                                                            دانلود
+                                                                        </Tooltip>
+                                                                    }
+                                                                >
+                                                                    <div className="record-item"
+                                                                         onClick={() => this.downloadFile(this.state.docFile.birthPage1)}>
+                                                                        <div className='ms-2'>صفحه اول</div>
+                                                                        <RiDownloadCloud2Fill/>
+                                                                    </div>
+                                                                </OverlayTrigger>
                                                             )
                                                         }
 
@@ -1366,7 +1366,7 @@ class ProfilePage extends Component {
                                                                 }
                                                             >
                                                                 <div className="record-item"
-                                                                        onClick={() => this.downloadFile("registerUni")}>
+                                                                     onClick={() => this.downloadFile("registerUni")}>
                                                                     <div className='ms-2'>پرینت ثبت نام</div>
                                                                     <RiDownloadCloud2Fill/>
                                                                 </div>
@@ -1755,49 +1755,63 @@ class ProfilePage extends Component {
         this.setState({report: updatedReport});
         this.setState({showDeleteModalReport: false})
     }
-    downloadFile = async (fileId) => {
-            const response2 = await fetch(`https://api.saadatportal.com/api/v1/file/${fileId}`).then((response) => response.blob())
-            .then((blob) =>{
-                var file = window.URL.createObjectURL(blob);
-                window.location.assign(file);
+    downloadFile =  async (fileId) => {
+        var filename = "";
+
+        const response = await fetch(`http://localhost:8089/api/v1/file/f51b6282c6e64e0a82788cf528e5ff60`,{
+            method:"GET"
+        }).then((result) => {
+            console.log(result);
+            return result.json();
+        })
+            .then((blob) => {
+                // if (blob != null) {
+                //     var url = window.URL.createObjectURL(blob);
+                //     var a = document.createElement('a');
+                //     a.href = url;
+                //     a.download = filename;
+                //     document.body.appendChild(a);
+                //     a.click();
+                //     a.remove();
+                // }
             });
-        console.log(response2)
+
     }
 
     existDocFile = (docFile) => {
         console.log(docFile)
-        if(docFile.hasOwnProperty('birthPage1')){
-            this.setState({hasBirthPage1:true});
+        if (docFile.hasOwnProperty('birthPage1')) {
+            this.setState({hasBirthPage1: true});
         }
-        if(docFile.hasOwnProperty('birthPage2')){
-            this.setState({hasBirthPage2:true});
+        if (docFile.hasOwnProperty('birthPage2')) {
+            this.setState({hasBirthPage2: true});
         }
-        if(docFile.hasOwnProperty('birthPage3')){
-            this.setState({hasBirthPage3:true});
+        if (docFile.hasOwnProperty('birthPage3')) {
+            this.setState({hasBirthPage3: true});
         }
-        if(docFile.hasOwnProperty('birthPage4')){
-            this.setState({hasBirthPage4:true});
+        if (docFile.hasOwnProperty('birthPage4')) {
+            this.setState({hasBirthPage4: true});
         }
-        if(docFile.hasOwnProperty('birthAllPage')){
-            this.setState({hasBirthAllPage:true});
+        if (docFile.hasOwnProperty('birthAllPage')) {
+            this.setState({hasBirthAllPage: true});
         }
-        if(docFile.hasOwnProperty('cardPage1')){
-            this.setState({hasCartPage1:true});
+        if (docFile.hasOwnProperty('cardPage1')) {
+            this.setState({hasCartPage1: true});
         }
-        if(docFile.hasOwnProperty('cardPage2')){
-            this.setState({hasCartPage2:true});
+        if (docFile.hasOwnProperty('cardPage2')) {
+            this.setState({hasCartPage2: true});
         }
-        if(docFile.hasOwnProperty('cardAllPage')){
-            this.setState({hasCartAllPage:true});
+        if (docFile.hasOwnProperty('cardAllPage')) {
+            this.setState({hasCartAllPage: true});
         }
-        if(docFile.hasOwnProperty('personnelImg')){
-            this.setState({hasPersonnelImg:true});
+        if (docFile.hasOwnProperty('personnelImg')) {
+            this.setState({hasPersonnelImg: true});
         }
-        if(docFile.hasOwnProperty('register')){
-            this.setState({hasRegister:true});
+        if (docFile.hasOwnProperty('register')) {
+            this.setState({hasRegister: true});
         }
-        if(docFile.hasOwnProperty('registerUni')){
-            this.setState({hasRegisterUni:true});
+        if (docFile.hasOwnProperty('registerUni')) {
+            this.setState({hasRegisterUni: true});
         }
     }
 }
