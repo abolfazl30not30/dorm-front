@@ -19,6 +19,8 @@ import ReactLoading from 'react-loading';
 import Alert from 'react-bootstrap/Alert';
 import moment from 'moment-jalali';
 
+/*import React from "@types/react";*/
+
 class PaymentPage extends Component {
     state = {
         choices: [],
@@ -51,82 +53,78 @@ class PaymentPage extends Component {
         priceType: "IRR", // default value
         fileName: "",
         fileId: "",
-        paymentType:"receive",
+        paymentType: "receive",
 
         Validations: {
             price_requiredReg: '',
             price_numberReg: '',
             selectedTypeBoolean: true,
             date_requiredReg: '',
-        }
-
+        },
+        showDoneModal: false
     }
 
     async componentDidMount() {
 
         const response2 = await fetch('https://api.saadatportal.com/api/v1/category/search?type=Payment').then((response) => response.json())
-            .then((data) => this.setState({choices : data}));
+            .then((data) => this.setState({choices: data}));
     }
 
     render() {
         return (
             <>
-                <div>
-                    <div className="back-btn">
-                        <Link to="/dashboard">
-                            بازگشت
-                            <i className="bi bi-caret-left-fill"/>
-                        </Link>
-                    </div>
-                    <div className="text">
+                <div className="back-btn mb-2">
+                    <Link to="/dashboard">
+                        بازگشت
+                        <i className="bi bi-caret-left-fill"/>
+                    </Link>
+                </div>
+                <div className="payment-box">
+                    <div className="title">
                         <h4>ثبت فاکتور</h4>
                     </div>
-
-                    <div className='first-section row'>
-                        <div className='col-4'>
-                            <label htmlFor="price">مبلغ :</label>
-                            <div className="row" style={{marginTop: "20px"}}>
-                                <div className='col-3 m-0 p-0'>
-                                    <select className='form-select' style={{height: "50px"}} value={this.state.priceType}
-                                            onChange={(e) => {
-                                                this.handlePriceType(e)
-                                            }}>
-                                        <option value="IRR">ریال</option>
-                                        <option value="USD">دلار</option>
-                                    </select>
-                                </div>
-                                <div className='form-group col-9 m-0 p-0'>
-                                    <input id="price"
-                                           type='text'
-                                           value={this.state.price}
-                                           className={`input form-control ${(this.state.Validations.price_requiredReg && this.state.Validations.price_numberReg) === false ? "is-invalid" : ""}`}
-                                           style={{height: "50px", width: "90%"}} onChange={(e) => {
-                                        this.handlePriceInput(e)
-                                    }}/>
-
-                                    {
-                                        this.state.Validations.price_requiredReg === false
-                                            ? <small
-                                                className="text-danger">این فیلد الزامی است!</small>
-                                            : <div/>
-                                    }
-
-                                    {
-                                        (this.state.Validations.price_numberReg === false && this.state.Validations.price_requiredReg === true)
-                                            ? <small
-                                                className="text-danger">عدد وارد کنید!</small>
-                                            : <div/>
-                                    }
-
-                                    {/*<TextField id="filled-basic" label="قیمت" variant="filled" />*/}
-                                </div>
-                            </div>
+                    <div className="d-flex flex-wrap flex-md-row flex-column">
+                        <div className="input-group-register col-md-2 col-12">
+                            <select className='form-select input'
+                                    value={this.state.priceType}
+                                    onChange={(e) => {
+                                        this.handlePriceType(e)
+                                    }}>
+                                <option value="IRR">ریال</option>
+                                <option value="USD">دلار</option>
+                            </select>
+                            <label className="placeholder">واحد</label>
                         </div>
-                        <div className='col-8'>
-                            <label style={{marginRight: "33px"}}>نوع : </label>
-                            <div style={{width: '100%', marginRight: "16px"}}>
+                        <div className="input-group-register col-md-4 col-12">
+                            <input id="price"
+                                   type='number'
+                                   value={this.state.price}
+                                   className={`input form-control ${(this.state.Validations.price_requiredReg && this.state.Validations.price_numberReg) === false ? "is-invalid" : ""}`}
+                                   onChange={(e) => {
+                                       this.handlePriceInput(e)
+                                   }}/>
+                            <label className="placeholder">مبلغ</label>
+
+                            {
+                                this.state.Validations.price_requiredReg === false
+                                    ? <small
+                                        className="text-danger">این فیلد الزامی است!</small>
+                                    : <div/>
+                            }
+
+                            {
+                                (this.state.Validations.price_numberReg === false && this.state.Validations.price_requiredReg === true)
+                                    ? <small
+                                        className="text-danger">عدد وارد کنید!</small>
+                                    : <div/>
+                            }
+
+                        </div>
+                        <div className="input-group-register col-md-6 col-12">
+                            <div>
                                 <Accordion
-                                           style={{backgroundColor: this.state.Validations.selectedTypeBoolean ? '' : 'rgba(255, 0, 0, 0.4)'}}
+                                    className='p-0'
+                                    style={{backgroundColor: this.state.Validations.selectedTypeBoolean ? '' : 'rgba(255, 0, 0, 0.4)'}}
                                 >
                                     <Accordion.Item eventKey="0">
                                         <Accordion.Header>
@@ -164,9 +162,11 @@ class PaymentPage extends Component {
                                                                     <div className="d-flex justify-content-center"
                                                                          style={{position: "relative"}}>
                                                                         <div className="close-btn-div">
-                                                                            <button className="close-btn" onClick={() => {
-                                                                                this.handleDeleteType(i)
-                                                                            }}><AiFillCloseCircle color="#F1416C"/></button>
+                                                                            <button className="close-btn"
+                                                                                    onClick={() => {
+                                                                                        this.handleDeleteType(i)
+                                                                                    }}><AiFillCloseCircle
+                                                                                color="#F1416C"/></button>
                                                                         </div>
                                                                         <div className="">{type}</div>
                                                                     </div>
@@ -188,64 +188,40 @@ class PaymentPage extends Component {
                                     </Accordion.Item>
                                 </Accordion>
                             </div>
+                            <label className="placeholder placeholder-typePayment">نوع</label>
                         </div>
-                    </div>
-                    <div className='second-section d-flex flex-wrap justify-content-start mr-3 row' style={{height: '50%'}}>
-                        <div className='col-4 mt-5 mb-3 date-container'>
-                            <div>
-                                <label className='mb-3'>تاریخ: </label>
-                                <DatePicker calendarStyles={this.state.styles}
-                                            value={this.state.dataPicker}
-                                            className={`input form-control ${this.state.Validations.date_requiredReg === false ? "is-invalid" : ""}`}
-                                            onChange={value => {
-                                                this.handleDateInput(value)
-                                            }}
-                                />
-
-                                {
-                                    this.state.Validations.date_requiredReg === false
-                                        ? <small
-                                            className="text-danger">این فیلد الزامی است!</small>
-                                        : <div/>
-                                }
-                            </div>
-                            <div>
-                                <label htmlFor="price" className="mt-3">نوع تراکنش:</label>
-                                <div className="row" style={{marginTop: "10px"}}>
-                                    <div className='col-11 mx-3 p-0'>
-                                        <select className='form-select' style={{height: "50px"}} value={this.state.paymentType}
-                                                onChange={(e) => {
-                                                    this.setState({paymentType:e.target.value})
-                                                }}>
-                                            <option value="expend">پرداخت</option>
-                                            <option value="receive">دریافت</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
+                        <div className="input-group-register col-md-2 col-12 date-container">
+                            <DatePicker calendarStyles={this.state.styles}
+                                        value={this.state.dataPicker}
+                                        className={`input form-control ${this.state.Validations.date_requiredReg === false ? "is-invalid" : ""}`}
+                                        onChange={value => {
+                                            this.handleDateInput(value)
+                                        }}
+                            />
+                            <label className="placeholder" style={{
+                                top: '-8px',
+                                backgroundColor: '#fff',
+                                color: '#2a2e32b3',
+                                padding: '0 0.4rem',
+                                opacity: '1',
+                            }}>تاریخ</label>
                         </div>
-                        <div className='col-8'>
-                            <Form>
-                                <Form.Group className="mb-3 mt-5" controlId="exampleForm.ControlTextarea1">
-                                    <Form.Label style={{marginRight: '30px'}}>توضیحات: </Form.Label>
-                                    <Form.Control as="textarea" rows={8} value={this.state.description}
-                                                  style={{marginRight: '30px', width: '95%'}} onChange={(e) => {
-                                        this.handleDescriptionInput(e)
-                                    }}/>
-                                </Form.Group>
-                            </Form>
+                        <div className="input-group-register col-md-10 col-12">
+                                <textarea className="input form-control" value={this.state.description} placeholder=" "
+                                          onChange={(e) => {
+                                              this.handleDescriptionInput(e)
+                                          }}></textarea>
+                            <label className="placeholder">توضیحات</label>
                         </div>
-                    </div>
-                    <div className="row">
-
                     </div>
                     <div className='third-section'>
                         <label htmlFor="formFileLg" className="form-label">آپلود فاکتور :</label>
                         <div className="row">
                             <div className="col-6">
-                                <input className="form-control form-control " id="formFileLg" type="file" onChange={(e) => {
-                                    this.handleInputFile(e)
-                                }}/>
+                                <input className="form-control form-control " id="formFileLg" type="file"
+                                       onChange={(e) => {
+                                           this.handleInputFile(e)
+                                       }}/>
                             </div>
                             <div className="col-6">
                                 {this.state.isUpload && !this.state.hasError ? (
@@ -267,7 +243,8 @@ class PaymentPage extends Component {
                                         </div>
                                     ) : (
                                         <button className="uploadBtn" onClick={this.handleUpload}
-                                                disabled={this.state.isLoading}><MdCloudUpload fontSize="35px"/></button>
+                                                disabled={this.state.isLoading}><MdCloudUpload fontSize="35px"/>
+                                        </button>
                                     )
                                 )}
 
@@ -291,17 +268,17 @@ class PaymentPage extends Component {
 
 
                     </div>
-
                     <div className='fourth-section mt-5 mb-3 d-flex justify-content-center'>
                         <button type="button"
-                                className="btn btn-success "
-                                style={{width: '50%'}}
+                                className="btn-done"
+                                style={{width: '5rem'}}
                                 onClick={this.handleSubmitPayment}
                         >
                             ثبت
                         </button>
                     </div>
                 </div>
+
                 <Modal centered show={this.state.showType} onHide={() => {
                     this.handleCloseType()
                 }}>
@@ -313,7 +290,7 @@ class PaymentPage extends Component {
                                className='form-control mt-3 mb-3 input'
                                onChange={(e) => this.handleInputChange(e)} placeholder="نوع جدید"/>
                     </Modal.Body>
-                    <Modal.Footer className="justify-content-start">
+                    <Modal.Footer className="justify-content-center">
                         <button className="btn btn-success" onClick={(event) => {
                             this.handleSubmitType(event)
                         }}>ثبت
@@ -323,6 +300,27 @@ class PaymentPage extends Component {
                         }}>بستن
                         </button>
                     </Modal.Footer>
+                </Modal>
+
+                <Modal centered show={this.state.showDoneModal} className='modal-done'>
+                    <Modal.Body className="px-4">
+                        <div className="d-flex flex-column">
+                            <div className="d-flex flex-column">
+                                <div className="icon">
+                                    <span className="glyphicon glyphicon-ok"></span>
+                                </div>
+                                <div className="title-modal-done">
+                                    موفق!
+                                </div>
+                            </div>
+                            <div className="d-flex flex-row justify-content-between my-3">
+                                <Link to="/dashboard/PaymentHistory" className='btn button-show'
+                                      onClick={() => this.setState({showDoneModal: false})}>رفتن به صورتحساب</Link>
+                                <Link to="" className='btn button-close'
+                                      onClick={() => this.setState({showDoneModal: false})}>بستن</Link>
+                            </div>
+                        </div>
+                    </Modal.Body>
                 </Modal>
             </>
         );
@@ -459,11 +457,13 @@ class PaymentPage extends Component {
             parentType: "Personnel",
         }
         if (this.state.fileId !== "") {
-            let file = {file:{
+            let file = {
+                file: {
                     name: this.state.fileName,
-                    fileId:this.state.fileId
-                }}
-            payment = Object.assign(payment,file)
+                    fileId: this.state.fileId
+                }
+            }
+            payment = Object.assign(payment, file)
         }
         if (result) {
             const rawResponse = await fetch('https://api.saadatportal.com/api/v1/paymentHistory', {
@@ -484,7 +484,8 @@ class PaymentPage extends Component {
                 fileName: "",
                 fileId: "",
                 isUpload: false,
-            })
+            });
+            this.setState({showDoneModal: true})
         } else {
             console.log("ERROR")
         }

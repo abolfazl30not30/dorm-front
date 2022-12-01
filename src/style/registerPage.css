@@ -232,20 +232,20 @@ ul._1Lo2h {
     margin: 1rem 0;
 }
 .modal-done .button-show,.modal-done .button-show:hover {
-    background-color: #e8fff3;
-    color: #50cd89;
+    background-color: #e8fff3 !important;
+    color: #50cd89 !important;;
     font-size: 1.2rem;
 }
 
 .modal-done .button-close,.modal-done .button-close:hover {
-    background-color: #f5f8fa;
-    color: #7e8299;
+    background-color: #f5f8fa !important;;
+    color: #7e8299 !important;;
     font-size: 1.2rem;
 }
 
 .modal-done .button-selectBed,.modal-done .button-selectBed:hover {
-    background-color: #f1faff;
-    color: #009ef7;
+    background-color: #f1faff !important;;
+    color: #009ef7 !important;;
     font-size: 1.2rem;
 }
 
