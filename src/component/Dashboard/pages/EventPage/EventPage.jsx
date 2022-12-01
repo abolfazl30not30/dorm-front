@@ -227,7 +227,7 @@ class EventPage extends Component {
                                 </button>
                             </div>
                             <div className="table-box">
-                                <table className='table'>
+                                <table className='table mt-4'>
                                     <thead>
                                     <tr>
 
@@ -238,15 +238,21 @@ class EventPage extends Component {
                                     </thead>
                                     <tbody>
                                     {
-                                        this.state.customEvents.map((event, index) => {
+                                        this.state.customEvents.map((event, key) => {
                                             let day = parseInt(this.state.day) < 10 ? ('0' + parseInt(this.state.day)) : parseInt(this.state.day);
                                             let month = (parseInt(this.state.month) < 10 ? ('0' + parseInt(this.state.month)) : parseInt(this.state.month));
                                             let tmpFormatDate = this.state.year + '/' + month + '/' + day;
-                                            return <tr>
-                                        <td>{event.eventName}</td>
-                                        <td>{event.date}</td>
-                                        <td>{event.eventDescription}</td>
-                                        </tr>
+
+
+                                            return (event.date === tmpFormatDate) ?
+                                                <>
+                                                    <tr key={key}>
+                                                        <td>{event.eventName}</td>
+                                                        <td>{event.date}</td>
+                                                        <td>{event.eventDescription}</td>
+                                                    </tr>
+                                                </> :
+                                                null
                                         })
                                     }
                                     </tbody>
@@ -256,46 +262,47 @@ class EventPage extends Component {
                     </div>
 
 
-                    {/*<div className={'col-md-6 col-12 my-3'} style={{*/}
-                    {/*    backgroundColor: "#fff",*/}
-                    {/*    textAlign: 'center',*/}
-                    {/*    boxShadow: '0 0 5px #8798ad',*/}
-                    {/*    borderRadius: "10px"*/}
-                    {/*}}>*/}
-                    {/*    <button className={'btn btn-success m-4'}*/}
-                    {/*            onClick={() => {*/}
-                    {/*                this.handleOpenType();*/}
-                    {/*                this.setState({tempInputForModal: ''})*/}
+                    {/*<div className={'col-md-6 col-12 my-3'} style={{
+                        backgroundColor: "#fff",
+                        textAlign: 'center',
+                        boxShadow: '0 0 5px #8798ad',
+                        borderRadius: "10px"
+                    }}>
+                        <button className={'btn btn-success m-4'}
+                                onClick={() => {
+                                    this.handleOpenType();
+                                    this.setState({tempInputForModal: ''})
 
-                    {/*                // let day = parseInt(today.getDay()) < 10 ? ('0' + parseInt(today.getDay())) : parseInt(today.getDay());*/}
-                    {/*                // let month = (parseInt(today.getMonth()) < 10 ? ('0' + parseInt(today.getMonth())) : parseInt(today.getMonth()));*/}
+                                    // let day = parseInt(today.getDay()) < 10 ? ('0' + parseInt(today.getDay())) : parseInt(today.getDay());
+                                    // let month = (parseInt(today.getMonth()) < 10 ? ('0' + parseInt(today.getMonth())) : parseInt(today.getMonth()));
 
-                    {/*                // console.log(today.getYear() + '/' + month + '/' + day + ' 00:00:00')*/}
+                                    // console.log(today.getYear() + '/' + month + '/' + day + ' 00:00:00')
 
-                    {/*                // console.log(parseInt("09"))*/}
-                    {/*            }}>*/}
-                    {/*        اضافه کردن رویداد*/}
-                    {/*    </button>*/}
-                    {/*    <h5 className={'mb-3'}>*/}
-                    {/*        رویداد های من*/}
-                    {/*    </h5>*/}
-                    {/*    <ul className="list-group">*/}
-                    {/*        {*/}
-                    {/*            this.state.customEvents.map((event, key) => {*/}
-                    {/*                let day = parseInt(this.state.day) < 10 ? ('0' + parseInt(this.state.day)) : parseInt(this.state.day);*/}
-                    {/*                let month = (parseInt(this.state.month) < 10 ? ('0' + parseInt(this.state.month)) : parseInt(this.state.month));*/}
+                                    // console.log(parseInt("09"))
+                                }}>
+                            اضافه کردن رویداد
+                        </button>
+                        <h5 className={'mb-3'}>
+                            رویداد های من
+                        </h5>
+                        <ul className="list-group">
+                            {
+                                this.state.customEvents.map((event, key) => {
+                                    let day = parseInt(this.state.day) < 10 ? ('0' + parseInt(this.state.day)) : parseInt(this.state.day);
+                                    let month = (parseInt(this.state.month) < 10 ? ('0' + parseInt(this.state.month)) : parseInt(this.state.month));
 
-                    {/*                let tmpFormatDate = this.state.year + '/' + month + '/' + day;*/}
+                                    let tmpFormatDate = this.state.year + '/' + month + '/' + day;
 
-                    {/*                return <li className={'p-3 list-group-item'} key={key}>{event.eventName}</li>*/}
+                                    return <li className={'p-3 list-group-item'} key={key}>{event.eventName}</li>
 
-                    {/*                /*return (event.date === tmpFormatDate) ?*/}
-                    {/*                    <li className={'p-3 list-group-item'} key={key}>{event.eventName}</li> :*/}
-                    {/*                    null/*/}
-                    {/*            })*/}
-                    {/*        }*/}
-                    {/*    </ul>*/}
-                    {/*</div>*/}
+                                    return (event.date === tmpFormatDate) ?
+                                        <li className={'p-3 list-group-item'} key={key}>{event.eventName}</li> :
+                                        null
+                                })
+
+                            }
+                        </ul>
+                    </div>*/}
 
                 </div>
 
