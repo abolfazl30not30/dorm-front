@@ -1,555 +1,345 @@
-import {Component, createRef} from "react";
-import Board from 'react-trello'
-import {Modal} from "react-bootstrap";
-import {EditText} from "react-edit-text";
-import DatePicker from "react-multi-date-picker";
-import TimePicker from "react-multi-date-picker/plugins/time_picker";
+import {Component} from "react";
+import Navbar from "./navbar";
+import Section from "./section";
+import TaskContext from "../../../../contexts/tasks";
+import Modal from "react-bootstrap/Modal";
+import {FormControl, InputLabel, MenuItem, Select, TextField} from "@mui/material";
+import Calender from "./calender";
+import {DragDropContext} from "react-beautiful-dnd";
 
-import AddCardButton from "./CustomComponents/AddCardButton";
-import Card from "./CustomComponents/Card";
-import NewCardForm from "./CustomComponents/NewCardForm";
-import '../../../../style/trelloStyle.css';
-import {Button} from "@mui/material";
-import Form from "react-bootstrap/Form";
-import {BiSearch} from "react-icons/bi";
-// import React from "@types/react";
-
-class TrelloPage extends Component{
-
-    constructor(props) {
-        super(props);
-        this.addTagInputs = createRef();
-        this.selectPriorityRef = createRef();
+class TrelloPage extends Component {
+    state = {
+        searchPersonnelModal: false,
+        name: "Pedram Monazzami",
+        email: "pedram.monazzami@gmail.com",
+        TaskClicked: false,
+        NewTaskClicked: false,
+        ClickedTask: {},
+        orders: [
+            [],
+            [],
+            []
+        ],
+        tasks: [],
+        tempName: "",
+        tempDescription: "",
+        tempDueDate: new Date(),
+        tempTimeLog: new Date(),
+        tempPriority: "",
+        tempPersonnelId: "",
     }
 
+    handleOpenPersonnelModal = () => {
+        this.setState({searchPersonnelModal : true})
+    }
 
-    state = {
-        showChangeParentModal: false,
-        parentSelected: '',
+    //
+    handleTaskClicked = (id) => {
+        this.setState({TaskClicked: true})
+        const targetTask = {...this.state.tasks.find(task => task.id === id)}
+        this.setState({ClickedTask: targetTask})
+    }
 
-        // inputs in modal for changing parent
-        searchBase: '',
+// handler functions for new task button -------------------------------------------------------------------------------
+    onNewTask = () => {
+        this.setState({NewTaskClicked: true})
+    };
 
-        // Selected Card
-        selectedCard: '',
+    handleName = (input) => {
+        this.setState({tempTitle: input.target.value})
+    }
 
-        // For Modals
-        cardClickedId: '',
-        cardClickedLane: '',
-        timeLogPlaceholder: '',
-        dueDatePlaceholder: '',
-        priorityDefaultValue: '',
+    handleDescription = (input) => {
+        this.setState({tempDescription: input.target.value})
+    }
 
-        parentsFound: [
-            {
-                type: 'first',
-                id: '12332',
+    handleDueDate = (input) => {
+        this.setState({tempDue: input})
+    }
+
+    handlePriority = (input) => {
+        this.setState({tempPriority: input.target.value})
+    }
+
+    onClose = () => {
+        this.setState({NewTaskClicked: false})
+        this.setState({TaskClicked: false})
+    };
+
+    onDone = async () => {
+        let year = this.state.tempDueDate.getFullYear();
+        let month = this.state.tempDueDate.getMonth();
+        let day = this.state.tempDueDate.getDay();
+
+        let formattedDueDate = year + '/' + month + '/' + day;
+        const postNewTask = await fetch('https://api.saadatportal.com/api/v1/task', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
             },
-            {
-                type: 'second',
-                id: '12425',
+            body: JSON.stringify({
+                name: this.state.tempName,
+                timeLog: 12,
+                dueDate: formattedDueDate,
+                description: this.state.tempDescription,
+                priority: this.state.tempPriority,
+                status: "todo",
+                personnelId: "b7f6f6b2afae4ac5994aafdfd9a8a987"
+            })
+        })
+        this.setState({tempTitle: "", tempDescription: "", tempDue: new Date(), tempPriority: ""})
+        this.onClose()
+
+        await this.componentDidMount();
+    };
+//----------------------------------------------------------------------------------------------------------------------
+// handler functions for edit task -------------------------------------------------------------------------------------
+    handleChangeName = (input) => {
+        const updatedTask = this.state.ClickedTask;
+        updatedTask.name = input.target.value;
+        this.setState({ClickedTask: updatedTask})
+    };
+
+    handleChangeDescription = (input) => {
+        const updatedTask = this.state.ClickedTask;
+        updatedTask.description = input.target.value;
+        this.setState({ClickedTask: updatedTask})
+    };
+
+    handleChangeDueDate = (input) => {
+        const updatedTask = this.state.ClickedTask;
+        updatedTask.dueDate = input.target.value;
+        this.setState({ClickedTask: updatedTask})
+    };
+
+    handleChangePriority = (input) => {
+        const updatedTask = this.state.ClickedTask;
+        updatedTask.priority = input.target.value;
+        this.setState({ClickedTask: updatedTask})
+    };
+
+    onSubmitChanges = async () => {
+
+        const patchTask = await fetch(`https://api.saadatportal.com/api/v1/task/${this.state.ClickedTask.id}`, {
+            method: 'PATCH',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
             },
-            {
-                type: 'third',
-                id: '34494',
-            }
-        ],
+            body: JSON.stringify(this.state.ClickedTask)
+        })
 
-
-        showModal: false,
-
-        data :{
-            lanes: [
-                {
-                    editable: false,
-                    style: { width: '45%', alignItems: 'center', borderRadius: 20, color: '#000' ,backgroundColor: '#fff'},
-                    cardStyle: {backgroundColor: '#f9f9f9', boxShadow: '0px 2px 2px 0px #000'},
-                    // cardStyle: { width: 500},
-                    // style: {backgroundColor: 'yellow'},
-                    // cardStyle: { backgroundColor: 'blue' },
-                    id: 'lane1',
-                    title: 'انجام شده',
-                    cards: [
-                        {
-                            id: 'Card1',
-                            title: 'Write Blog',
-                            description: 'Can AI make memes',
-                            label: '30 mins' ,
-                            dueDate: '2022/2/2',
-                            timeLog: '2',
-                            editable: false
-                        },
-                        {
-                            id: 'Card2',
-                            title: 'Pay Rent',
-                            description: 'Transfer via NEFT',
-                            label: '5 mins',
-                            editable: false,
-                        }
-                    ]
-                },
-                {
-                    editable: false,
-                    style: { width: '45%', alignItems: 'center', borderRadius: 20, color: '#000' ,backgroundColor: '#fff'},
-                    cardStyle: {backgroundColor: '#f9f9f9', boxShadow: '0px 2px 2px 0px #000'},
-                    id: 'lane3',
-                    title: 'در حال انجام',
-                    cards: []
-                },
-                {
-                    editable: true,
-                    style: { width: '45%', alignItems: 'center', borderRadius: 20, color: '#000' ,backgroundColor: '#fff'},
-                    cardStyle: {backgroundColor: '#f9f9f9', boxShadow: '0px 2px 2px 0px #000'},
-                    id: 'lane2',
-                    title: 'وظیفه های جدید',
-                    cards: []
-                },
-            ]
-
+        this.onClose()
+    };
+//----------------------------------------------------------------------------------------------------------------------
+// handler functions for drag and drop ---------------------------------------------------------------------------------
+    onDragEnd = (result) => {
+        if (!result.destination) {
+            return;
         }
+        if (result.destination.droppableId === result.source.droppableId) {
+            return;
+        }
+
+        const targetTask = this.state.tasks.find(task => task.id === result.draggableId)
+        const updatedTasks = [...this.state.tasks]
+        const index = updatedTasks.indexOf(targetTask)
+
+        switch (result.destination.droppableId){
+            case ("To Do"):
+                targetTask.status = "todo";
+                updatedTasks[index] = targetTask;
+                this.setState({tasks: updatedTasks})
+                break
+
+            case ("In Progress"):
+                targetTask.status = "inProgress";
+                updatedTasks[index] = targetTask;
+                this.setState({tasks: updatedTasks})
+                break
+
+            case ("Done"):
+                targetTask.status = "done";
+                updatedTasks[index] = targetTask;
+                this.setState({tasks: updatedTasks})
+                break
+            }
+        }
+//----------------------------------------------------------------------------------------------------------------------
+
+    componentDidMount = async () => {
+        const getTasks = await fetch('https://api.saadatportal.com/api/v1/task').then((response) => response.json())
+            .then((data) => this.setState({tasks : data}))
+        // const getPersonnels = await fetch('https://api.saadatportal.com/api/v1/personnel').then((respond) => respond.json())
+        //     .then((data) => )
     }
 
     render() {
-
-        const components = {
-            AddCardLink: AddCardButton,
-            Card: Card,
-            NewCardForm : NewCardForm,
-                };
         return (
-            <>
-                <div>
-                    <Board
-                        onDataChange={(newData) => this.setState({data: newData})}
-                        components={components}
-                        data={this.state.data}
-                        style={{backgroundColor: 'rgb(247, 247, 247)'}}
+            <DragDropContext
+            onDragEnd={this.onDragEnd}
+            onDragUpdate={this.onDragUpdate}>
+                <div style={{overflowX: "hidden"}}>
+                    <TaskContext.Provider
+                        value={{
+                            name: this.state.name,
+                            email: this.state.email,
+                            tasks: this.state.tasks,
+                            TaskClicked: this.state.TaskClicked,
+                            newTaskClicked: this.state.NewTaskClicked,
+                            handleTaskClicked: this.handleTaskClicked,
+                            onClose: this.onClose,
+                            onNewTask: this.onNewTask,
+                        }}>
 
-                        onCardClick={(cardId, metadata, laneId) => {
-                            this.setState({cardClickedId : cardId});
-                            this.setState({cardClickedLane : laneId});
-                            this.handleOpen();
+                        {/* top navbar */}
+                        <button className="btn btn-lg btn-success w-100" onClick={this.onNewTask}>New Task</button>
+                        {/*<Navbar />*/}
 
-                            console.log(this.state.data.lanes)
-
-                            this.state.data.lanes.map((lane) => {
-                                if (lane.id === laneId) {
-                                    for (let i = 0; i < lane.cards.length; i++) {
-                                        if (lane.cards[i].id === cardId) {
-                                            this.setState({timeLogPlaceholder : lane.cards[i].timeLog});
-                                            this.setState({dueDatePlaceholder : lane.cards[i].dueDate});
-                                            this.setState({priorityDefaultValue : lane.cards[i].priority});
-                                            this.setState({selectedCard: lane.cards[i]})
-                                        }
-                                    }
-                                }
-                            })
-
-                            // console.log(cardId)
-                            // console.log(laneId)
-
-                            // console.log(this.state.cardClickedId);
-                            // console.log(this.state.cardClickedLane);
-                        }}
-
-                    />
-                </div>
-
-                <Modal centered show={this.state.showModal} onHide={() => {
-                    this.handleClose()
-                }}>
-                    <Modal.Header closeButton>
-                        <Modal.Title>
-                            {
-                                this.state.data.lanes.map((lane, key) => {
-                                    if (lane.id === this.state.cardClickedLane) {
-                                        for (let i = 0; i < lane.cards.length; i++) {
-                                            if (lane.cards[i].id === this.state.cardClickedId) {
-                                                // console.log('123')
-                                                return(
-                                                    <div key={key}>
-                                                        <div>
-                                                            <div className="title">
-                                                                <EditText className="editable"
-                                                                          showEditButton
-                                                                          onSave={(object) => this.handleEditTitle(object)}
-                                                                          defaultValue={lane.cards[i].title}
-                                                                />
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                );
-                                            }
-                                        }
-                                    }
-                                })
-                            }
-                        </Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body className="justify-content-center">
-                        {
-                            this.state.data.lanes.map((lane, key) => {
-                                if (lane.id === this.state.cardClickedLane) {
-                                    for (let i = 0; i < lane.cards.length; i++) {
-                                        if (lane.cards[i].id === this.state.cardClickedId) {
-                                            return(
-                                                <div key={key}>
-                                                    <div>
-                                                        <div className="title">
-                                                            <label className={'m-۱'}>
-                                                                توضیحات :
-                                                            </label>
-                                                            <EditText className={'editable m-3'}
-                                                                      showEditButton
-                                                                      onSave={(object) => this.handleEditDescription(object)}
-                                                                      defaultValue={lane.cards[i].description}
-                                                            />
-                                                        </div>
-
-                                                        <div className={'d-flex mb-3 row'}>
-                                                            <div className={'col-6'}>
-                                                                <label>
-                                                                    {/*time log:*/}
-                                                                    زمان صرف شده:
-                                                                </label>
-                                                                <DatePicker
-                                                                    style={{
-                                                                        marginRight: '5%',
-                                                                        width: "50%",
-                                                                        boxSizing: "border-box",
-                                                                        height: "26px"
-                                                                    }}
-                                                                    disableDayPicker
-                                                                    format="HH:mm"
-                                                                    plugins={[
-                                                                        <TimePicker hideSeconds/>
-                                                                    ]}
-                                                                    placeholder=
-                                                                        {this.state.timeLogPlaceholder !== undefined
-                                                                            ? (this.state.timeLogPlaceholder + 'h')
-                                                                            : this.state.timeLogPlaceholder}
-                                                                    // value={this.handleTimeLogValue()}
-                                                                    onChange={val => {
-                                                                        // this.updateField('timeLog', val);
-                                                                        let time = "";
-                                                                        time += val.hour + ':';
-                                                                        time += val.minute;
-                                                                        // time += val.second;
-                                                                        this.handleEditTimeLog(time, 'timeLog');
-                                                                    }}
-                                                                />
-                                                            </div>
-                                                            <div className={'col-6'}>
-                                                                <label>
-                                                                    {/*due date:*/}
-                                                                    ددلاین:
-                                                                </label>
-                                                                <DatePicker
-                                                                    style={{
-                                                                        marginRight: '5%',
-                                                                        width: "50%",
-                                                                        boxSizing: "border-box",
-                                                                        height: "26px"
-                                                                    }}
-                                                                    format="YYYY/MM/DD"
-                                                                    placeholder={this.state.dueDatePlaceholder}
-                                                                    onChange={val => {
-                                                                        let time = "";
-                                                                        time += val.year + '/';
-                                                                        time += val.month + '/';
-                                                                        time += val.day;
-                                                                        this.handleEditTimeLog(time, 'dueDate');
-                                                                    }}
-                                                                />
-                                                            </div>
-                                                        </div>
-
-                                                        {
-                                                            lane.cards[i].parentId === ''
-                                                            ? (
-                                                                <>
-                                                                    <div className={'d-flex justify-content-center'}>
-
-                                                                        <Button variant={'contained'} onClick={() => this.setState({showChangeParentModal : true})}>
-                                                                            اضافه کردن پرسنل
-                                                                        </Button>
-
-                                                                    </div>
-                                                                </>
-                                                                )
-                                                                : (
-                                                                    <>
-                                                                        <div className={'d-flex mb-3 row'}>
-                                                                            <div className={'col-6'}>
-                                                                                <label>
-                                                                                    {/*parent type:*/}
-                                                                                    نوع پرسنل:
-                                                                                </label>
-                                                                                {
-                                                                                    lane.cards[i].parentType
-                                                                                }
-                                                                                {/*<input type={'text'} className={'form-control'}/> /!* doing nothing *!/*/}
-                                                                            </div>
-                                                                            <div className={'col-6'}>
-                                                                                <label>
-                                                                                    {/*parent ID:*/}
-                                                                                    آیدی پرسنل:
-                                                                                </label>
-                                                                                {/*<input type={'text'} className={'form-control'}/> /!* doing nothing *!/*/}
-                                                                                {
-                                                                                    lane.cards[i].parentId
-                                                                                }
-                                                                            </div>
-                                                                        </div>
-
-                                                                        <div className={'d-flex justify-content-center'}>
-
-                                                                            <Button variant={'contained'} onClick={() => this.setState({showChangeParentModal : true})}>
-                                                                                عوض کردن پرسنل
-                                                                            </Button>
-
-                                                                        </div>
-                                                                    </>
-                                                                )
-                                                        }
-
-                                                        <div className={'d-flex justify-content-center mb-3'}>
-                                                            <div className={'col-12'}>
-                                                                <label>
-                                                                    {/*priority:*/}
-                                                                    اولویت:
-                                                                </label>
-                                                                <select
-                                                                    ref={this.selectPriorityRef}
-                                                                    className="form-select"
-                                                                    defaultValue={this.state.priorityDefaultValue}
-                                                                    onChange={val => {
-                                                                        this.handleEditPriority(val.target.value);
-                                                                        this.setState({priorityDefaultValue : val.target.value})
-                                                                    }}
-                                                                    style={{
-                                                                        border: `4px solid ${this.state.priorityDefaultValue === undefined || this.state.priorityDefaultValue === 'medium' ? 'orange' : (
-                                                                            this.state.priorityDefaultValue === 'low' ? 'yellow' : (this.state.priorityDefaultValue === 'high' ? "red" : "rgba(0, 0, 255, 0.6)")
-                                                                        )}`
-                                                                    }}
-                                                                >
-                                                                    <option value={'medium'}>متوسط</option>
-                                                                    <option value={'low'}>کم</option>
-                                                                    <option value={'high'}>زیاد</option>
-                                                                    <option value={'urgent'}>ضروری</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-
-                                                    </div>
-                                                </div>
-                                            );
-                                        }
-                                    }
-                                }
-                            })
-                        }
-                    </Modal.Body>
-                </Modal>
-
-                <Modal
-                    centered show={this.state.showChangeParentModal}
-                    size={'xl'}
-                    onHide={() => this.setState({showChangeParentModal : false})}
-                >
-
-                    <Modal.Header>عوض کردن پرسنل</Modal.Header>
-                    <Modal.Body>
-                        <div className="row align-items-center ">
-                            <div className="col-md-1 col-sm-2 px-0"><label>براساس:</label></div>
-                            <div className="col-md-3 col-sm-6 px-0" style={{paddingLeft: "0"}}>
-                                <Form.Select aria-label="Default select example"
-                                             style={{height:"50px",fontSize:"14px"}}
-                                             value={this.state.searchBase}
-                                             onChange={(value) => this.setState({searchBase : value.target.value})}>
-                                    <option value="name">نام پرسنل</option>
-                                    <option value="type">آیدی پرسنل</option>
-                                    <option value="topic">نوع پرسنل</option>
-                                </Form.Select>
+                        {/* 3 main categories (To Do, In Progress, Done) */}
+                        <div className="justify-content-center d-flex row">
+                            <div className="col-xl-4 col-lg-4 ml-3 col-md-4 col-sm-4 col-10 mt-5">
+                                <h3 className="text-center" style={{userSelect: "none"}}>TO DO</h3>
+                                <Section index={0} status={"todo"} title={"To Do"}/>
                             </div>
-                            <div className="input-group-register col-md-7 col-sm-11 px-0 d-flex" style={{paddingRight: "0"}}>
-                                <input type="text"
-                                       id="inputSearch"
-                                       className="input"
-                                       placeholder="جسـتوجـو"
-                                       style={{padding:"6px"}}
-                                       onChange={(value) => this.setState({searchContent : value.target.value})}/>
-                                <button className="btn outline-secondary" onClick={() => this.handleSearch}><BiSearch fontSize="25px" onClick={this.handleSearchBtn}/>
-                                </button>
+                            <div className="col-xl-4 col-lg-4 ml-3 col-md-4 col-sm-4 col-10 mt-5">
+                                <h3 className="text-center" style={{userSelect: "none"}}>In Progress</h3>
+                                <Section index={1} status={"inProgress"} title={"In Progress"}/>
+                            </div>
+                            <div className="col-xl-4 col-lg-4 ml-3 col-md-4 col-sm-4 col-10 mt-5">
+                                <h3 className="text-center" style={{userSelect: "none"}}>Done</h3>
+                                <Section index={3} status={"done"} title={"Done"}/>
                             </div>
                         </div>
 
-                        {
-                            this.state.parentsFound.map((parent, key) => {
-                                return (
-                                    <Button
-                                        onClick={() => {
-                                            this.setState({showChangeParentModal : false});
-                                            this.setState({parentSelected: parent})
-                                            this.handleEditParent(parent);
-                                        }}
-                                        style={{width: '50%'}}
-                                        variant={'text'}
-                                        key={key}
+                    </TaskContext.Provider>
+
+                    {/* New Task modal */}
+                    <Modal
+                        show={this.state.NewTaskClicked}
+                        onHide={this.onClose}
+                        centered={true}
+                    >
+                        <Modal.Header closeButton={true}>
+                            <Modal.Title>New task</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            <div className={'d-flex justify-content-center'}>
+                                <button className={'btn btn-success'} onClick={this.handleOpenPersonnelModal}>
+                                    انتخاب پرسنل
+                                </button>
+                            </div>
+                            <div>
+
+                                {/* Task name input field */}
+                                <TextField className="w-100 mt-3" id="standard-basic" label="عنوان" variant="standard" onChange={this.handleName}/>
+
+                                {/* Task description input field */}
+                                <TextField className="w-100 mt-5" id="standard-basic" label="توضیحات" variant="standard" onChange={this.handleDescription}/>
+
+                                {/* Date picker component */}
+                                <Calender handleChange={this.handleDueDate} tempValue={this.state.tempDueDate}/>
+
+                                {/* Task priority selector */}
+                                <FormControl fullWidth className="mt-5">
+                                    <InputLabel id="priority-field">Priority</InputLabel>
+                                    <Select
+                                        labelId="priority-field"
+                                        label="Priority"
+                                        onChange={this.handlePriority}
                                     >
-                                        <table>
-                                            <thead>
-                                            <tr>
-                                                <th className={'p-3'}>آیدی پرسنل</th>
-                                                <th className={'p-3'}>نوع پرسنل</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            <tr>
-                                                <td>{parent.id}</td>
-                                                <td>{parent.type}</td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
+                                        <MenuItem className="bg-success" style={{color: "#FFFFFF"}} value={"low"}>Low</MenuItem>
+                                        <MenuItem className="bg-warning" style={{color: "#FFFFFF"}} value={"medium"}>Medium</MenuItem>
+                                        <MenuItem className="bg-danger" style={{color: "#FFFFFF"}} value={"high"}>High</MenuItem>
+                                    </Select>
+                                </FormControl>
+                            </div>
 
-                                        {/*<div style={{color: 'red', display: 'block'}}>{parent.id}آیدی پرسنل: </div>*/}
-                                        {/*<div>&nbsp;</div>*/}
-                                        {/*<div>{parent.type}نوع پرسنل: </div>*/}
+                        </Modal.Body>
+                        <Modal.Footer>
 
-                                    </Button>
-                                )
-                            })
-                        }
+                            {/* Close button for new task modal */}
+                            <button className="btn btn-secondary" onClick={this.onClose}>Close</button>
 
-                    </Modal.Body>
+                            {/* Done button for submitting new task */}
+                            <button className="btn btn-primary" onClick={this.onDone}>Done</button>
 
-                </Modal>
+                        </Modal.Footer>
+                    </Modal>
 
-            </>
+                    {/* Edit Task modal */}
+                    <Modal
+                        show={this.state.TaskClicked}
+                        onHide={this.onClose}
+                        centered={true}
+                    >
+                        <Modal.Header closeButton={true}>
+                            <h2>Edit Task</h2>
+                        </Modal.Header>
+                        <Modal.Body>
+
+                            {/* Name editor field */}
+                            <TextField value={this.state.ClickedTask.name} className="w-100 mt-3" id="standard-basic" label="Name" variant="standard" onChange={this.handleChangeName}/>
+
+                            {/* Description editor field */}
+                            <TextField value={this.state.ClickedTask.description} className="w-100 mt-5" id="standard-basic" label="Description" variant="standard" onChange={this.handleChangeDescription}/>
+
+                            {/* Date picker field */}
+                            <Calender handleChange={this.handleChangeDueDate} tempValue={this.state.ClickedTask.dueDate}/>
+
+                            {/* Priority selector field */}
+                            <FormControl fullWidth className="mt-5">
+                                <InputLabel id="priority-field">Priority</InputLabel>
+                                <Select
+                                    value={this.state.ClickedTask.priority}
+                                    labelId="priority-field"
+                                    label="Priority"
+                                    onChange={this.handleChangePriority}
+                                >
+                                    <MenuItem className="bg-success" style={{color: "#FFFFFF"}} value={"low"}>Low</MenuItem>
+                                    <MenuItem className="bg-warning" style={{color: "#FFFFFF"}} value={"medium"}>Medium</MenuItem>
+                                    <MenuItem className="bg-danger" style={{color: "#FFFFFF"}} value={"high"}>High</MenuItem>
+                                </Select>
+                            </FormControl>
+
+                        </Modal.Body>
+                        <Modal.Footer>
+
+                            {/* Cancel button for editing task */}
+                            <button className="btn btn-secondary" onClick={this.onClose}>Cancel</button>
+
+                            {/* Submit button to change task */}
+                            <button className="btn btn-primary" onClick={this.onSubmitChanges}>Submit</button>
+                        </Modal.Footer>
+
+                    </Modal>
+                    <Modal show={this.state.searchPersonnelModal}>
+                        <Modal.Body>
+                            <div className="d-flex justify-content-center">
+                                <div className="search-box">
+                                    <div className="form-floating">
+                                        <select className="form-select" id="floatingSelect"
+                                                aria-label="Floating label select example"
+                                                value={this.state.searchBase}
+                                                onChange={(value) => this.setState({searchBase: value.target.value})}>
+                                            <option value="name">نام درخواست کننده</option>
+                                            <option value="type">نوع</option>
+                                            <option value="topic">عنوان</option>
+                                        </select>
+                                        <label htmlFor="floatingSelect">براساس</label>
+                                    </div>
+                                    <input type="text"
+                                           id="inputSearch"
+                                           placeholder="جسـتجـو..."
+                                           onChange={(value) => this.setState({searchContent: value.target.value})}/>
+                                </div>
+                            </div>
+                        </Modal.Body>
+                    </Modal>
+                </div>
+            </DragDropContext>
         );
-    }
-
-    handleSearch = () => {
-
-    }
-
-    handleOpen = () => {
-        this.setState({showModal: true});
-    }
-
-    handleClose = () => {
-        this.setState({showModal: false});
-    }
-
-    handleSubmit = (e) => {
-
-    }
-
-    handleEditTitle = (object) => {
-        let updatedData = {...this.state.data};
-        updatedData.lanes.map((lane) => {
-            if (lane.id === this.state.cardClickedLane) {
-                for (let i = 0; i < lane.cards.length; i++) {
-                    if (lane.cards[i].id === this.state.cardClickedId) {
-                        lane.cards[i].title = object.value;
-                    }
-                }
-            }
-        })
-
-        this.setState({data : updatedData});
-    }
-
-    handleEditDescription = (object) => {
-        let updatedData = {...this.state.data};
-        updatedData.lanes.map((lane) => {
-            if (lane.id === this.state.cardClickedLane) {
-                for (let i = 0; i < lane.cards.length; i++) {
-                    if (lane.cards[i].id === this.state.cardClickedId) {
-                        lane.cards[i].description = object.value;
-                    }
-                }
-            }
-        })
-
-        this.setState({data : updatedData});
-    }
-
-    handleEditTag = (object, indexOfTag) => {
-        let updatedData = {...this.state.data};
-        updatedData.lanes.map((lane) => {
-            if (lane.id === this.state.cardClickedLane) {
-                for (let i = 0; i < lane.cards.length; i++) {
-                    if (lane.cards[i].id === this.state.cardClickedId) {
-                        lane.cards[i].tags[indexOfTag].title = object.value;
-                    }
-                }
-            }
-        })
-
-        this.setState({data : updatedData});
-    }
-
-    handleEditTimeLog = (time, typeOfTimeString) => {
-        let updatedData = {...this.state.data};
-        updatedData.lanes.map((lane) => {
-            if (lane.id === this.state.cardClickedLane) {
-                for (let i = 0; i < lane.cards.length; i++) {
-                    if (lane.cards[i].id === this.state.cardClickedId) {
-                        lane.cards[i][typeOfTimeString] = time;
-                    }
-                }
-            }
-        })
-
-        this.setState({data : updatedData});
-    }
-
-    handleTimeLogValue = () => {
-        let updatedData = {...this.state.data};
-        updatedData.lanes.map((lane) => {
-            if (lane.id === this.state.cardClickedLane) {
-                for (let i = 0; i < lane.cards.length; i++) {
-                    if (lane.cards[i].id === this.state.cardClickedId) {
-                        return lane.cards[i].timeLog
-                    }
-                }
-            }
-        })
-    }
-
-    handleEditPriority = (value) => {
-        this.setState({forTest : value})
-
-        let updatedData = {...this.state.data};
-        updatedData.lanes.map((lane) => {
-            if (lane.id === this.state.cardClickedLane) {
-                for (let i = 0; i < lane.cards.length; i++) {
-                    if (lane.cards[i].id === this.state.cardClickedId) {
-                        lane.cards[i].priority = value;
-                    }
-                }
-            }
-        })
-
-        this.setState({data : updatedData});
-    }
-
-    handleEditParent = (parent) => {
-        let updatedData = {...this.state.data};
-
-        updatedData.lanes.map((lane) => {
-            if (lane.id === this.state.cardClickedLane) {
-                for (let i = 0; i < lane.cards.length; i++) {
-                    if (lane.cards[i].id === this.state.cardClickedId) {
-                        lane.cards[i].parentId = parent.id;
-                        lane.cards[i].parentType = parent.type;
-                    }
-                }
-            }
-        })
-
-        this.setState({data : updatedData});
     }
 }
 
