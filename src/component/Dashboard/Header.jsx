@@ -7,6 +7,7 @@ import {BsFillPersonFill, BsPerson, BsPersonPlus} from "react-icons/bs"
 import {IoMdExit} from "react-icons/io"
 import {GoTasklist} from "react-icons/go"
 import {AiOutlineHome} from "react-icons/ai";
+import {MdSettings} from "react-icons/md";
 import {MdOutlineInventory} from "react-icons/md"
 import {NavLink, Link} from "react-router-dom";
 
@@ -101,6 +102,12 @@ class Header extends Component {
                                     <Link to="/dashboard/taskManagement">
                                         <GoTasklist/>
                                         <span>مشاهده وظایف</span>
+                                    </Link>
+                                </div>
+                                <div className="dropdown-items">
+                                    <Link to="/dashboard/setting">
+                                        <MdSettings/>
+                                        <span>تنظیمات</span>
                                     </Link>
                                 </div>
                                 <div className="dropdown-items">
