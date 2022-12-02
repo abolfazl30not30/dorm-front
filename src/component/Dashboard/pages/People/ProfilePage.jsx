@@ -311,10 +311,13 @@ class ProfilePage extends Component {
 
         const response2 = await fetch(`https://api.saadatportal.com/api/v1/person/${this.context.personId}`).then((response) => response.json())
             .then((data) => this.setState({personObject: data}, () => {
-                console.log(this.state.personObject.files);
                 this.existDocFile(this.state.personObject.files);
                 this.setState({docFile: this.state.personObject.files})
             }));
+
+        const fileResponse = await fetch(`https://api.saadatportal.com/api/v1/responseFile/search?parentType=Person&parentId=${this.context.personId}`).then((response) => response.json())
+            .then((data) => {console.log(data)});
+
 
 
     }
