@@ -50,247 +50,11 @@ class ProfilePage extends Component {
         show: false,
         reportType: 'cleaning',
         personObject: {},
-        report: [
-            {
-                "title": "cleaning",
-                "date": "1",
-                "description": "2"
-            },
-            {
-                "title": "delayInArrival",
-                "date": "2",
-                "time": "0"
-            },
-            {
-                "title": "exit",
-                "timePeriod": {
-                    "startDate": "0",
-                    "endDate": ""
-                },
-                "destinationAddress": "0",
-                "destinationPhoneNumber": "",
-                "relation": ""
-            },
-            {
-                "title": "violation",
-                "date": "0",
-                "time": "0",
-                "description": "0"
-            },
-            {
-                "title": "penalty",
-                "typePenalty": "cash",
-                "description": "0"
-            },
-            {
-                "title": "discharge",
-                "dischargeDateAnnounce": "",
-                "dischargeDate": "0",
-                "depositReturnDate": "",
-                "deductionOfLosses": "",
-                "deductionOfLossesReason": "",
-                "refundableAmount": ""
-            },
-            {
-                "title": "cancelContract",
-                "data": "0",
-                "reason": "0",
-                "deductionOfLosses": "",
-                "refundableAmount": "0"
-            },
-            {
-                "title": "cleaning",
-                "date": "1",
-                "description": "2"
-            },
-            {
-                "title": "delayInArrival",
-                "date": "2",
-                "time": "0"
-            },
-            {
-                "title": "exit",
-                "timePeriod": {
-                    "startDate": "0",
-                    "endDate": ""
-                },
-                "destinationAddress": "0",
-                "destinationPhoneNumber": "",
-                "relation": ""
-            },
-            {
-                "title": "violation",
-                "date": "0",
-                "time": "0",
-                "description": "0"
-            },
-            {
-                "title": "penalty",
-                "typePenalty": "cash",
-                "description": "0"
-            },
-            {
-                "title": "discharge",
-                "dischargeDateAnnounce": "",
-                "dischargeDate": "0",
-                "depositReturnDate": "",
-                "deductionOfLosses": "",
-                "deductionOfLossesReason": "",
-                "refundableAmount": ""
-            },
-            {
-                "title": "cancelContract",
-                "data": "0",
-                "reason": "0",
-                "deductionOfLosses": "",
-                "refundableAmount": "0"
-            },
-            {
-                "title": "cleaning",
-                "date": "1",
-                "description": "2"
-            },
-            {
-                "title": "delayInArrival",
-                "date": "2",
-                "time": "0"
-            },
-            {
-                "title": "exit",
-                "timePeriod": {
-                    "startDate": "0",
-                    "endDate": ""
-                },
-                "destinationAddress": "0",
-                "destinationPhoneNumber": "",
-                "relation": ""
-            },
-            {
-                "title": "violation",
-                "date": "0",
-                "time": "0",
-                "description": "0"
-            },
-            {
-                "title": "penalty",
-                "typePenalty": "cash",
-                "description": "0"
-            },
-            {
-                "title": "discharge",
-                "dischargeDateAnnounce": "",
-                "dischargeDate": "0",
-                "depositReturnDate": "",
-                "deductionOfLosses": "",
-                "deductionOfLossesReason": "",
-                "refundableAmount": ""
-            },
-            {
-                "title": "cancelContract",
-                "data": "0",
-                "reason": "0",
-                "deductionOfLosses": "",
-                "refundableAmount": "0"
-            },
-            {
-                "title": "cleaning",
-                "date": "1",
-                "description": "2"
-            },
-            {
-                "title": "delayInArrival",
-                "date": "2",
-                "time": "0"
-            },
-            {
-                "title": "exit",
-                "timePeriod": {
-                    "startDate": "0",
-                    "endDate": ""
-                },
-                "destinationAddress": "0",
-                "destinationPhoneNumber": "",
-                "relation": ""
-            },
-            {
-                "title": "violation",
-                "date": "0",
-                "time": "0",
-                "description": "0"
-            },
-            {
-                "title": "penalty",
-                "typePenalty": "cash",
-                "description": "0"
-            },
-            {
-                "title": "discharge",
-                "dischargeDateAnnounce": "",
-                "dischargeDate": "0",
-                "depositReturnDate": "",
-                "deductionOfLosses": "",
-                "deductionOfLossesReason": "",
-                "refundableAmount": ""
-            },
-            {
-                "title": "cancelContract",
-                "data": "0",
-                "reason": "0",
-                "deductionOfLosses": "",
-                "refundableAmount": "0"
-            },
-            {
-                "title": "cleaning",
-                "date": "1",
-                "description": "2"
-            },
-            {
-                "title": "delayInArrival",
-                "date": "2",
-                "time": "0"
-            },
-            {
-                "title": "exit",
-                "timePeriod": {
-                    "startDate": "0",
-                    "endDate": ""
-                },
-                "destinationAddress": "0",
-                "destinationPhoneNumber": "",
-                "relation": ""
-            },
-            {
-                "title": "violation",
-                "date": "0",
-                "time": "0",
-                "description": "0"
-            },
-            {
-                "title": "penalty",
-                "typePenalty": "cash",
-                "description": "0"
-            },
-            {
-                "title": "discharge",
-                "dischargeDateAnnounce": "",
-                "dischargeDate": "0",
-                "depositReturnDate": "",
-                "deductionOfLosses": "",
-                "deductionOfLossesReason": "",
-                "refundableAmount": ""
-            },
-            {
-                "title": "cancelContract",
-                "data": "0",
-                "reason": "0",
-                "deductionOfLosses": "",
-                "refundableAmount": "0"
-            }
-        ],
+        report: [],
         showDeleteModalReport: false,
         reportTemp: {},
-        docFile : {},
-        fileDetails:[],
+        docFile: {},
+        fileDetails: [],
         profileImgUrl: null,
         hasBirthPage1: false,
         hasBirthPage2: false,
@@ -321,6 +85,7 @@ class ProfilePage extends Component {
     deductionOfLossesReason = createRef();
     refundableAmount = createRef();
     reason = createRef();
+    penaltyAmount = createRef();
 
     async componentDidMount() {
 
@@ -329,18 +94,20 @@ class ProfilePage extends Component {
 
         const response2 = await fetch(`https://api.saadatportal.com/api/v1/person/${this.context.personId}`).then((response) => response.json())
             .then((data) => this.setState({personObject: data}));
-        if(this.state.person.profileId !== null){
+
+        if (this.state.person.profileId !== null) {
             const response3 = await fetch(`https://api.saadatportal.com/api/v1/file/${this.state.person.profileId}`).then((response) => response.blob())
                 .then((data) => {
                     const objectUrl = URL.createObjectURL(data);
                     console.log(objectUrl);
-                    this.setState({profileImgUrl:objectUrl})
+                    this.setState({profileImgUrl: objectUrl})
                 });
         }
 
         const fileRespond = await fetch(`https://api.saadatportal.com/api/v1/responseFile/search?parentType=Person&parentId=${this.context.personId}`).then((response) => response.json())
-            .then((data) => this.setState({fileDetails: data},()=>{
-                this.setState({docFile : this.state.personObject.files});
+            .then((data) => this.setState({fileDetails: data}, () => {
+                this.setState({docFile: this.state.personObject.files});
+                this.setState({report: this.state.personObject.record});
                 this.existDocFile(this.state.personObject.files);
             }));
 
@@ -1482,7 +1249,7 @@ class ProfilePage extends Component {
                                                         this.setState({updatedDateValues})
                                                     }}
 
-                                                    mapDays={({ date }) => {
+                                                    mapDays={({date}) => {
                                                         let props = {}
                                                         let isWeekend = [6].includes(date.weekDay.index)
 
@@ -1510,10 +1277,10 @@ class ProfilePage extends Component {
                                                 >
                                                     <Button
                                                         onClick={() => {
-                                                                let updatedDateValues = {...this.state};
-                                                                updatedDateValues.dateValues.cleaningDate = {};
-                                                                this.setState({updatedDateValues})
-                                                            }
+                                                            let updatedDateValues = {...this.state};
+                                                            updatedDateValues.dateValues.cleaningDate = {};
+                                                            this.setState({updatedDateValues})
+                                                        }
                                                         }
                                                     >
                                                         ریست
@@ -1552,7 +1319,7 @@ class ProfilePage extends Component {
                                                         this.setState({updatedDateValues})
                                                     }}
 
-                                                    mapDays={({ date }) => {
+                                                    mapDays={({date}) => {
                                                         let props = {}
                                                         let isWeekend = [6].includes(date.weekDay.index)
 
@@ -1608,7 +1375,7 @@ class ProfilePage extends Component {
                                                         this.setState({updatedDateValues})
                                                     }}
                                                     plugins={[
-                                                        <TimePicker />
+                                                        <TimePicker/>
                                                     ]}
                                                 >
                                                     <Button
@@ -1650,7 +1417,7 @@ class ProfilePage extends Component {
                                                         this.setState({updatedDateValues})
                                                     }}
 
-                                                    mapDays={({ date }) => {
+                                                    mapDays={({date}) => {
                                                         let props = {}
                                                         let isWeekend = [6].includes(date.weekDay.index)
 
@@ -1712,7 +1479,7 @@ class ProfilePage extends Component {
                                                         this.setState({updatedDateValues})
                                                     }}
 
-                                                    mapDays={({ date }) => {
+                                                    mapDays={({date}) => {
                                                         let props = {}
                                                         let isWeekend = [6].includes(date.weekDay.index)
 
@@ -1796,7 +1563,7 @@ class ProfilePage extends Component {
                                                         this.setState({updatedDateValues})
                                                     }}
 
-                                                    mapDays={({ date }) => {
+                                                    mapDays={({date}) => {
                                                         let props = {}
                                                         let isWeekend = [6].includes(date.weekDay.index)
 
@@ -1852,7 +1619,7 @@ class ProfilePage extends Component {
                                                         this.setState({updatedDateValues})
                                                     }}
                                                     plugins={[
-                                                        <TimePicker />
+                                                        <TimePicker/>
                                                     ]}
                                                 >
                                                     <Button
@@ -1870,7 +1637,7 @@ class ProfilePage extends Component {
                                             </div>
                                         </>;
                                     case 'penalty':
-                                        return <>
+                                        return (<>
                                             <div className='input-report-box'>
                                                 <input type="text" ref={this.description} className="input"
                                                        placeholder=" "/>
@@ -1883,13 +1650,19 @@ class ProfilePage extends Component {
                                                 </select>
                                                 <label className="placeholder">نوع جریمه</label>
                                             </div>
-                                        </>;
+                                            <div className='input-report-box'>
+                                                <input type="text" ref={this.penaltyAmount} className="input"
+                                                       placeholder=" "/>
+                                                <label className="placeholder">مقدار جریمه</label>
+                                            </div>
+
+                                        </>);
                                     case 'discharge':
                                         return <>
                                             <div className='input-report-box'>
                                                 {/*<input type="text" ref={this.dischargeDateAnnounce} className="input"*/}
                                                 {/*       placeholder=" "/>*/}
-                                                  <DatePicker
+                                                <DatePicker
                                                     // fixMainPosition={false}
                                                     ref={this.dischargeDateAnnounce}
                                                     calendarPosition={`top`}
@@ -1909,7 +1682,7 @@ class ProfilePage extends Component {
                                                         this.setState({updatedDateValues})
                                                     }}
 
-                                                    mapDays={({ date }) => {
+                                                    mapDays={({date}) => {
                                                         let props = {}
                                                         let isWeekend = [6].includes(date.weekDay.index)
 
@@ -1951,7 +1724,7 @@ class ProfilePage extends Component {
                                             <div className='input-report-box'>
                                                 {/*<input type="text" ref={this.dischargeDate} className="input"*/}
                                                 {/*       placeholder=" "/>*/}
-                                                  <DatePicker
+                                                <DatePicker
                                                     // fixMainPosition={false}
                                                     ref={this.dischargeDate}
                                                     calendarPosition={`top`}
@@ -1971,7 +1744,7 @@ class ProfilePage extends Component {
                                                         this.setState({updatedDateValues})
                                                     }}
 
-                                                    mapDays={({ date }) => {
+                                                    mapDays={({date}) => {
                                                         let props = {}
                                                         let isWeekend = [6].includes(date.weekDay.index)
 
@@ -2013,7 +1786,7 @@ class ProfilePage extends Component {
                                             <div className='input-report-box'>
                                                 {/*<input type="text" ref={this.depositReturnDate} className="input"*/}
                                                 {/*       placeholder=" "/>*/}
-                                                  <DatePicker
+                                                <DatePicker
                                                     // fixMainPosition={false}
                                                     ref={this.depositReturnDate}
                                                     calendarPosition={`top`}
@@ -2033,7 +1806,7 @@ class ProfilePage extends Component {
                                                         this.setState({updatedDateValues})
                                                     }}
 
-                                                    mapDays={({ date }) => {
+                                                    mapDays={({date}) => {
                                                         let props = {}
                                                         let isWeekend = [6].includes(date.weekDay.index)
 
@@ -2116,7 +1889,7 @@ class ProfilePage extends Component {
                                                         this.setState({updatedDateValues})
                                                     }}
 
-                                                    mapDays={({ date }) => {
+                                                    mapDays={({date}) => {
                                                         let props = {}
                                                         let isWeekend = [6].includes(date.weekDay.index)
 
@@ -2228,18 +2001,33 @@ class ProfilePage extends Component {
         e.preventDefault();
         // console.log(this.state.dateValues.cleaningDate)
         const type = this.state.reportType;
-        this.setState({reports: type})
+
+        this.setState({reports: type});
         switch (type) {
             case 'cleaning':
-                return (() => {
+                return (async () => {
                     const date = this.state.dateValues.cleaningDate;
                     const formattedDate = date.year + '/' + date.month + '/' + date.day
                     const description = this.description.current.value;
                     const result = {
                         'title': this.state.reportType,
                         'date': formattedDate,
-                        'description': description
+                        'checkCleaning': true,
+                        'description': description,
+                        'personId': this.state.personObject.id
                     }
+
+                    const rawResponse = await fetch('https://api.saadatportal.com/api/v1/record', {
+                        method: 'POST',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(result)
+                    });
+                    const content = await rawResponse.json();
+                    console.log(content);
+
                     const newReports = this.state.report.concat(result);
                     this.setState({report: newReports});
                     this.setState({show: false});
@@ -2247,7 +2035,7 @@ class ProfilePage extends Component {
                     console.log(formattedDate)
                 })();
             case 'delayInArrival':
-                return (() => {
+                return (async () => {
                     const date = this.state.dateValues.delayInArrivalDate;
                     const formattedDate = date.year + '/' + date.month + '/' + date.day
                     const time = this.state.dateValues.delayInArriveTime;
@@ -2256,8 +2044,21 @@ class ProfilePage extends Component {
                     const result = {
                         'title': this.state.reportType,
                         'date': formattedDate,
-                        'time': formattedTime
+                        'hour': formattedTime,
+                        'personId': this.state.personObject.id
                     }
+
+                    const rawResponse = await fetch('https://api.saadatportal.com/api/v1/record', {
+                        method: 'POST',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(result)
+                    });
+                    const content = await rawResponse.json();
+                    console.log(content);
+
                     const newReports = this.state.report.concat(result)
                     this.setState({report: newReports})
                     this.setState({show: false})
@@ -2265,7 +2066,7 @@ class ProfilePage extends Component {
                 })();
 
             case 'exit':
-                return (() => {
+                return (async () => {
                     const startDate = this.state.dateValues.exitStartDate;
                     const endDate = this.state.dateValues.exitEndDate;
                     const formattedStartDate = startDate.year + '/' + startDate.month + '/' + startDate.day;
@@ -2275,53 +2076,92 @@ class ProfilePage extends Component {
                     const relation = this.relation.current.value;
                     const result = {
                         'title': this.state.reportType,
-                        'timePeriod': {
-                            "startDate": formattedStartDate,
-                            "endDate": formattedEndDate
-                        },
+                        "startDate": formattedStartDate,
+                        "endDate": formattedEndDate,
                         'destinationAddress': destinationAddress,
                         'destinationPhoneNumber': destinationPhoneNumber,
-                        'relation': relation
+                        'relation': relation,
+                        'personId': this.state.personObject.id
                     }
+
+                    const rawResponse = await fetch('https://api.saadatportal.com/api/v1/record', {
+                        method: 'POST',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(result)
+                    });
+                    const content = await rawResponse.json();
+                    console.log(content);
+
                     const newReports = this.state.report.concat(result)
                     this.setState({report: newReports})
                     this.setState({show: false})
                 })();
-            case 'violation':
-                return (() => {
 
+            case 'violation':
+                return (async () => {
                     const date = this.state.dateValues.violationDate;
                     const formattedDate = date.year + '/' + date.month + '/' + date.day
                     const time = this.state.dateValues.violationTime;
                     const formattedTime = time.hour + ':' + time.minute
                     const description = this.description.current.value;
-
                     const result = {
                         'title': this.state.reportType,
                         'date': formattedDate,
-                        'time': formattedTime,
-                        'description': description
+                        'hour': formattedTime,
+                        'description': description,
+                        'personId': this.state.personObject.id
                     }
+
+                    const rawResponse = await fetch('https://api.saadatportal.com/api/v1/record', {
+                        method: 'POST',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(result)
+                    });
+                    const content = await rawResponse.json();
+
+                    console.log(content);
 
                     const newReports = this.state.report.concat(result)
                     this.setState({report: newReports})
                     this.setState({show: false})
                 })();
             case 'penalty':
-                return (() => {
+                return (async () => {
                     const description = this.description.current.value;
                     const typePenalty = this.typePenalty.current.value;
+                    const penaltyAmount = this.penaltyAmount.current.value;
                     const result = {
                         'title': this.state.reportType,
-                        'typePenalty': typePenalty,
-                        'description': description
+                        'penaltyType': typePenalty,
+                        'description': description,
+                        'penaltyAmount': penaltyAmount,
+                        'personId': this.state.personObject.id
                     }
+
+                    const rawResponse = await fetch('https://api.saadatportal.com/api/v1/record', {
+                        method: 'POST',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(result)
+                    });
+                    const content = await rawResponse.json();
+                    console.log(content);
+
                     const newReports = this.state.report.concat(result)
                     this.setState({report: newReports})
                     this.setState({show: false})
+
                 })();
             case 'discharge':
-                return (() => {
+                return (async () => {
                     const dischargeDateAnnounce = this.state.dateValues.dischargeDateAnnounce;
                     const dischargeDate = this.state.dateValues.dischargeDate;
                     const depositReturnDate = this.state.dateValues.depositReturnDate;
@@ -2335,20 +2175,33 @@ class ProfilePage extends Component {
                     const refundableAmount = this.refundableAmount.current.value;
                     const result = {
                         'title': this.state.reportType,
-                        'dischargeDateAnnounce': formattedDischargeDateAnnounce,
-                        'dischargeDate': formattedDischargeDate,
-                        'depositReturnDate': formattedDepositReturnDate,
-                        'deductionOfLosses': deductionOfLosses,
-                        'deductionOfLossesReason': deductionOfLossesReason,
-                        'refundableAmount': refundableAmount
+                        'startDate': formattedDischargeDateAnnounce,
+                        'endDate': formattedDischargeDate,
+                        'date': formattedDepositReturnDate,
+                        'penaltyAmount': deductionOfLosses,
+                        'description': deductionOfLossesReason,
+                        'returnedAmount': refundableAmount,
+                        'personId': this.state.personObject.id
                     }
+
+                    const rawResponse = await fetch('https://api.saadatportal.com/api/v1/record', {
+                        method: 'POST',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(result)
+                    });
+                    const content = await rawResponse.json();
+                    console.log(content);
+
                     const newReports = this.state.report.concat(result)
                     this.setState({report: newReports})
                     this.setState({show: false})
                 })();
 
             case 'cancelContract':
-                return (() => {
+                return (async () => {
                     const date = this.state.dateValues.cancelContractDate;
                     const formattedDate = date.year + '/' + date.month + '/' + date.day;
                     const reason = this.reason.current.value;
@@ -2358,9 +2211,22 @@ class ProfilePage extends Component {
                         'title': this.state.reportType,
                         'data': formattedDate,
                         'reason': reason,
-                        'deductionOfLosses': deductionOfLosses,
-                        'refundableAmount': refundableAmount
+                        'penaltyAmount': deductionOfLosses,
+                        'returnedAmount': refundableAmount,
+                        'personId': this.state.personObject.id
                     }
+
+                    const rawResponse = await fetch('https://api.saadatportal.com/api/v1/record', {
+                        method: 'POST',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(result)
+                    });
+                    const content = await rawResponse.json();
+                    console.log(content);
+
                     const newReports = this.state.report.concat(result)
                     this.setState({report: newReports})
                     this.setState({show: false})
@@ -2384,11 +2250,13 @@ class ProfilePage extends Component {
         this.setState({showDeleteModalReport: false})
     }
 
-    downloadFile =  async (fileId) => {
-        const file = this.state.fileDetails.find(({ fileId }) => fileId === fileId);
-        var filename = file.originalName ;
+    downloadFile = async (fileId) => {
+        const file = this.state.fileDetails.find(({fileId}) => fileId === fileId);
+        var filename = file.originalName;
 
-        const response = await fetch(`https://api.saadatportal.com/api/v1/file/${fileId}`).then((result) => {return result.blob();})
+        const response = await fetch(`https://api.saadatportal.com/api/v1/file/${fileId}`).then((result) => {
+            return result.blob();
+        })
             .then((blob) => {
                 if (blob != null) {
                     var url = window.URL.createObjectURL(blob);
@@ -2422,7 +2290,7 @@ class ProfilePage extends Component {
             this.setState({hasBirthAllPage: true});
         }
         if (docFile.hasOwnProperty('cardPage1')) {
-                this.setState({hasCartPage1: true});
+            this.setState({hasCartPage1: true});
         }
         if (docFile.hasOwnProperty('cardPage2')) {
             this.setState({hasCartPage2: true});
