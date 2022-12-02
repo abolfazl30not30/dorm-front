@@ -20,16 +20,29 @@ import {Table} from 'react-bootstrap';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
 import BuildingContext from "../../../../contexts/Building";
-import DateInput from "../../../CustomInputs/DateInput";
-import {DatePicker} from "react-persian-datepicker";
+import DatePicker from "react-multi-date-picker";
 import axios from "axios"
 import data from "bootstrap/js/src/dom/data";
+import persian from "react-date-object/calendars/persian";
+import persian_fa from "react-date-object/locales/persian_fa";
+import {Button} from "@mui/material";
 
 class ProfilePage extends Component {
 
     static contextType = BuildingContext;
 
     state = {
+        dateValues: {
+            cleaningDate: '',
+            delayInArrivalDate: '',
+            exitStartDate: '',
+            exitEndDate: '',
+            violationDate: '',
+            dischargeDateAnnounce: '',
+            dischargeDate: '',
+            depositReturnDate: '',
+            cancelContractDate: '',
+        },
         person: {},
         show: false,
         reportType: 'cleaning',
@@ -830,6 +843,7 @@ class ProfilePage extends Component {
                                     <div className="tabs-content">
                                         <button className='btn-done' onClick={() => {
                                             this.handleShow()
+                                            this.handleResetFields();
                                         }}>ثبت گزارش
                                         </button>
                                         <Accordion defaultActiveKey="0">
@@ -1426,7 +1440,10 @@ class ProfilePage extends Component {
                     <Modal.Body>
                         <form className="my-3 mx-2" onSubmit={this.handleSubmit}>
                             <div className='input-report-box'>
-                                <select className='input' onChange={this.reportType}>
+                                <select className='input' onChange={(e) => {
+                                    this.reportType(e);
+                                    this.handleResetFields();
+                                }}>
                                     <option value='cleaning'>نوبت نظافت شبانه</option>
                                     <option value='delayInArrival'>تأخیر در ورود</option>
                                     <option value='exit'>خروج</option>
@@ -1442,12 +1459,63 @@ class ProfilePage extends Component {
                                     case 'cleaning':
                                         return <>
                                             <div className='input-report-box'>
+                                                <DatePicker
+                                                    // fixMainPosition={false}
+                                                    ref={this.date}
+                                                    calendarPosition={`top`}
+                                                    digits={['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']}
+                                                    format={`YYYY/MM/DD`}
+                                                    inputClass={`input form-control date-picker`}
 
-                                                <DatePicker calendarStyles={this.state.calStyles}
-                                                            inputFormat="jYYYY/jM/jD"
-                                                            className='input form-control date-picker'
-                                                            ref={this.date}
-                                                />
+
+                                                    containerStyle={{
+                                                        width: "100%"
+                                                    }}
+
+                                                    value={this.state.dateValues.cleaningDate}
+                                                    onChange={(value) => {
+                                                        let updatedDateValues = {...this.state};
+                                                        updatedDateValues.dateValues.cleaningDate = value;
+                                                        this.setState({updatedDateValues})
+                                                    }}
+
+                                                    mapDays={({ date }) => {
+                                                        let props = {}
+                                                        let isWeekend = [6].includes(date.weekDay.index)
+
+                                                        if (isWeekend)
+                                                            props.className = "highlight highlight-red";
+
+                                                        return props
+                                                    }}
+
+                                                    weekDays={
+                                                        [
+                                                            ["شنبه", "Sat"],
+                                                            ["یکشنبه", "Sun"],
+                                                            ["دوشنبه", "Mon"],
+                                                            ["سه شنبه", "Tue"],
+                                                            ["چهارشنبه", "Wed"],
+                                                            ["پنجشنبه", "Thu"],
+                                                            ["جمعه", "Fri"],
+                                                        ]
+                                                    }
+
+                                                    calendar={persian}
+                                                    locale={persian_fa}
+
+                                                >
+                                                    <Button
+                                                        onClick={() => {
+                                                                let updatedDateValues = {...this.state};
+                                                                updatedDateValues.dateValues.cleaningDate = {};
+                                                                this.setState({updatedDateValues})
+                                                            }
+                                                        }
+                                                    >
+                                                        ریست
+                                                    </Button>
+                                                </DatePicker>
                                                 {/*<input type="text" ref={this.date} className="input" placeholder=" "/>*/}
                                                 <label className="placeholder">تاریخ</label>
                                             </div>
@@ -1460,7 +1528,64 @@ class ProfilePage extends Component {
                                     case 'delayInArrival':
                                         return <>
                                             <div className='input-report-box'>
-                                                <input type="text" ref={this.date} className="input" placeholder=" "/>
+                                                {/*<input type="text" ref={this.date} className="input" placeholder=" "/>*/}
+                                                <DatePicker
+                                                    // fixMainPosition={false}
+                                                    ref={this.date}
+                                                    calendarPosition={`top`}
+                                                    digits={['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']}
+                                                    format={`YYYY/MM/DD`}
+                                                    inputClass={`input form-control date-picker`}
+
+
+                                                    containerStyle={{
+                                                        width: "100%"
+                                                    }}
+
+                                                    value={this.state.dateValues.delayInArrivalDate}
+                                                    onChange={(value) => {
+                                                        let updatedDateValues = {...this.state};
+                                                        updatedDateValues.dateValues.delayInArrivalDate = value;
+                                                        this.setState({updatedDateValues})
+                                                    }}
+
+                                                    mapDays={({ date }) => {
+                                                        let props = {}
+                                                        let isWeekend = [6].includes(date.weekDay.index)
+
+                                                        if (isWeekend)
+                                                            props.className = "highlight highlight-red";
+
+                                                        return props
+                                                    }}
+
+                                                    weekDays={
+                                                        [
+                                                            ["شنبه", "Sat"],
+                                                            ["یکشنبه", "Sun"],
+                                                            ["دوشنبه", "Mon"],
+                                                            ["سه شنبه", "Tue"],
+                                                            ["چهارشنبه", "Wed"],
+                                                            ["پنجشنبه", "Thu"],
+                                                            ["جمعه", "Fri"],
+                                                        ]
+                                                    }
+
+                                                    calendar={persian}
+                                                    locale={persian_fa}
+
+                                                >
+                                                    <Button
+                                                        onClick={() => {
+                                                            let updatedDateValues = {...this.state};
+                                                            updatedDateValues.dateValues.delayInArrivalDate = {};
+                                                            this.setState({updatedDateValues})
+                                                        }
+                                                        }
+                                                    >
+                                                        ریست
+                                                    </Button>
+                                                </DatePicker>
                                                 <label className="placeholder">تاریخ</label>
                                             </div>
                                             <div className='input-report-box'>
@@ -1471,13 +1596,127 @@ class ProfilePage extends Component {
                                     case 'exit':
                                         return <>
                                             <div className='input-report-box'>
-                                                <input type="text" ref={this.startDate} className="input"
-                                                       placeholder=" "/>
+                                                {/*<input type="text" ref={this.startDate} className="input"*/}
+                                                {/*       placeholder=" "/>*/}
+                                                <DatePicker
+                                                    // fixMainPosition={false}
+                                                    ref={this.startDate}
+                                                    calendarPosition={`top`}
+                                                    digits={['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']}
+                                                    format={`YYYY/MM/DD`}
+                                                    inputClass={`input form-control date-picker`}
+
+
+                                                    containerStyle={{
+                                                        width: "100%"
+                                                    }}
+
+                                                    value={this.state.dateValues.exitStartDate}
+                                                    onChange={(value) => {
+                                                        let updatedDateValues = {...this.state};
+                                                        updatedDateValues.dateValues.exitStartDate = value;
+                                                        this.setState({updatedDateValues})
+                                                    }}
+
+                                                    mapDays={({ date }) => {
+                                                        let props = {}
+                                                        let isWeekend = [6].includes(date.weekDay.index)
+
+                                                        if (isWeekend)
+                                                            props.className = "highlight highlight-red";
+
+                                                        return props
+                                                    }}
+
+                                                    weekDays={
+                                                        [
+                                                            ["شنبه", "Sat"],
+                                                            ["یکشنبه", "Sun"],
+                                                            ["دوشنبه", "Mon"],
+                                                            ["سه شنبه", "Tue"],
+                                                            ["چهارشنبه", "Wed"],
+                                                            ["پنجشنبه", "Thu"],
+                                                            ["جمعه", "Fri"],
+                                                        ]
+                                                    }
+
+                                                    calendar={persian}
+                                                    locale={persian_fa}
+
+                                                >
+                                                    <Button
+                                                        onClick={() => {
+                                                            let updatedDateValues = {...this.state};
+                                                            updatedDateValues.dateValues.exitStartDate = {};
+                                                            this.setState({updatedDateValues})
+                                                        }
+                                                        }
+                                                    >
+                                                        ریست
+                                                    </Button>
+                                                </DatePicker>
                                                 <label className="placeholder">از تاريخ</label>
                                             </div>
                                             <div className='input-report-box'>
-                                                <input type="text" ref={this.endDate} className="input"
-                                                       placeholder=" "/>
+                                                {/*<input type="text" ref={this.endDate} className="input"*/}
+                                                {/*       placeholder=" "/>*/}
+                                                <DatePicker
+                                                    // fixMainPosition={false}
+                                                    ref={this.endDate}
+                                                    calendarPosition={`top`}
+                                                    digits={['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']}
+                                                    format={`YYYY/MM/DD`}
+                                                    inputClass={`input form-control date-picker`}
+
+
+                                                    containerStyle={{
+                                                        width: "100%"
+                                                    }}
+
+                                                    value={this.state.dateValues.exitEndDate}
+                                                    onChange={(value) => {
+                                                        let updatedDateValues = {...this.state};
+                                                        updatedDateValues.dateValues.exitEndDate = value;
+                                                        this.setState({updatedDateValues})
+                                                    }}
+
+                                                    mapDays={({ date }) => {
+                                                        let props = {}
+                                                        let isWeekend = [6].includes(date.weekDay.index)
+
+                                                        if (isWeekend)
+                                                            props.className = "highlight highlight-red";
+
+                                                        return props
+                                                    }}
+
+                                                    weekDays={
+                                                        [
+                                                            ["شنبه", "Sat"],
+                                                            ["یکشنبه", "Sun"],
+                                                            ["دوشنبه", "Mon"],
+                                                            ["سه شنبه", "Tue"],
+                                                            ["چهارشنبه", "Wed"],
+                                                            ["پنجشنبه", "Thu"],
+                                                            ["جمعه", "Fri"],
+                                                        ]
+                                                    }
+
+                                                    calendar={persian}
+                                                    locale={persian_fa}
+
+                                                >
+                                                    <Button
+                                                        onClick={() => {
+                                                            let updatedDateValues = {...this.state};
+                                                            updatedDateValues.dateValues.exitEndDate = {};
+                                                            this.setState({updatedDateValues})
+                                                        }
+                                                        }
+                                                    >
+                                                        ریست
+                                                    </Button>
+                                                </DatePicker>
                                                 <label className="placeholder">تا تاريخ</label>
                                             </div>
                                             <div className='input-report-box'>
@@ -1504,7 +1743,64 @@ class ProfilePage extends Component {
                                                 <label className="placeholder">گزارش تخلف</label>
                                             </div>
                                             <div className='input-report-box'>
-                                                <input type="text" ref={this.date} className="input" placeholder=" "/>
+                                                {/*<input type="text" ref={this.date} className="input" placeholder=" "/>*/}
+                                                <DatePicker
+                                                    // fixMainPosition={false}
+                                                    ref={this.date}
+                                                    calendarPosition={`top`}
+                                                    digits={['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']}
+                                                    format={`YYYY/MM/DD`}
+                                                    inputClass={`input form-control date-picker`}
+
+
+                                                    containerStyle={{
+                                                        width: "100%"
+                                                    }}
+
+                                                    value={this.state.dateValues.violationDate}
+                                                    onChange={(value) => {
+                                                        let updatedDateValues = {...this.state};
+                                                        updatedDateValues.dateValues.violationDate = value;
+                                                        this.setState({updatedDateValues})
+                                                    }}
+
+                                                    mapDays={({ date }) => {
+                                                        let props = {}
+                                                        let isWeekend = [6].includes(date.weekDay.index)
+
+                                                        if (isWeekend)
+                                                            props.className = "highlight highlight-red";
+
+                                                        return props
+                                                    }}
+
+                                                    weekDays={
+                                                        [
+                                                            ["شنبه", "Sat"],
+                                                            ["یکشنبه", "Sun"],
+                                                            ["دوشنبه", "Mon"],
+                                                            ["سه شنبه", "Tue"],
+                                                            ["چهارشنبه", "Wed"],
+                                                            ["پنجشنبه", "Thu"],
+                                                            ["جمعه", "Fri"],
+                                                        ]
+                                                    }
+
+                                                    calendar={persian}
+                                                    locale={persian_fa}
+
+                                                >
+                                                    <Button
+                                                        onClick={() => {
+                                                            let updatedDateValues = {...this.state};
+                                                            updatedDateValues.dateValues.violationDate = {};
+                                                            this.setState({updatedDateValues})
+                                                        }
+                                                        }
+                                                    >
+                                                        ریست
+                                                    </Button>
+                                                </DatePicker>
                                                 <label className="placeholder">تاریخ</label>
                                             </div>
                                             <div className='input-report-box'>
@@ -1530,18 +1826,189 @@ class ProfilePage extends Component {
                                     case 'discharge':
                                         return <>
                                             <div className='input-report-box'>
-                                                <input type="text" ref={this.dischargeDateAnnounce} className="input"
-                                                       placeholder=" "/>
+                                                {/*<input type="text" ref={this.dischargeDateAnnounce} className="input"*/}
+                                                {/*       placeholder=" "/>*/}
+                                                  <DatePicker
+                                                    // fixMainPosition={false}
+                                                    ref={this.dischargeDateAnnounce}
+                                                    calendarPosition={`top`}
+                                                    digits={['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']}
+                                                    format={`YYYY/MM/DD`}
+                                                    inputClass={`input form-control date-picker`}
+
+
+                                                    containerStyle={{
+                                                        width: "100%"
+                                                    }}
+
+                                                    value={this.state.dateValues.dischargeDateAnnounce}
+                                                    onChange={(value) => {
+                                                        let updatedDateValues = {...this.state};
+                                                        updatedDateValues.dateValues.dischargeDateAnnounce = value;
+                                                        this.setState({updatedDateValues})
+                                                    }}
+
+                                                    mapDays={({ date }) => {
+                                                        let props = {}
+                                                        let isWeekend = [6].includes(date.weekDay.index)
+
+                                                        if (isWeekend)
+                                                            props.className = "highlight highlight-red";
+
+                                                        return props
+                                                    }}
+
+                                                    weekDays={
+                                                        [
+                                                            ["شنبه", "Sat"],
+                                                            ["یکشنبه", "Sun"],
+                                                            ["دوشنبه", "Mon"],
+                                                            ["سه شنبه", "Tue"],
+                                                            ["چهارشنبه", "Wed"],
+                                                            ["پنجشنبه", "Thu"],
+                                                            ["جمعه", "Fri"],
+                                                        ]
+                                                    }
+
+                                                    calendar={persian}
+                                                    locale={persian_fa}
+
+                                                >
+                                                    <Button
+                                                        onClick={() => {
+                                                            let updatedDateValues = {...this.state};
+                                                            updatedDateValues.dateValues.dischargeDateAnnounce = {};
+                                                            this.setState({updatedDateValues})
+                                                        }
+                                                        }
+                                                    >
+                                                        ریست
+                                                    </Button>
+                                                </DatePicker>
                                                 <label className="placeholder">تاریخ اعلام تخلیه</label>
                                             </div>
                                             <div className='input-report-box'>
-                                                <input type="text" ref={this.dischargeDate} className="input"
-                                                       placeholder=" "/>
+                                                {/*<input type="text" ref={this.dischargeDate} className="input"*/}
+                                                {/*       placeholder=" "/>*/}
+                                                  <DatePicker
+                                                    // fixMainPosition={false}
+                                                    ref={this.dischargeDate}
+                                                    calendarPosition={`top`}
+                                                    digits={['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']}
+                                                    format={`YYYY/MM/DD`}
+                                                    inputClass={`input form-control date-picker`}
+
+
+                                                    containerStyle={{
+                                                        width: "100%"
+                                                    }}
+
+                                                    value={this.state.dateValues.dischargeDate}
+                                                    onChange={(value) => {
+                                                        let updatedDateValues = {...this.state};
+                                                        updatedDateValues.dateValues.dischargeDate = value;
+                                                        this.setState({updatedDateValues})
+                                                    }}
+
+                                                    mapDays={({ date }) => {
+                                                        let props = {}
+                                                        let isWeekend = [6].includes(date.weekDay.index)
+
+                                                        if (isWeekend)
+                                                            props.className = "highlight highlight-red";
+
+                                                        return props
+                                                    }}
+
+                                                    weekDays={
+                                                        [
+                                                            ["شنبه", "Sat"],
+                                                            ["یکشنبه", "Sun"],
+                                                            ["دوشنبه", "Mon"],
+                                                            ["سه شنبه", "Tue"],
+                                                            ["چهارشنبه", "Wed"],
+                                                            ["پنجشنبه", "Thu"],
+                                                            ["جمعه", "Fri"],
+                                                        ]
+                                                    }
+
+                                                    calendar={persian}
+                                                    locale={persian_fa}
+
+                                                >
+                                                    <Button
+                                                        onClick={() => {
+                                                            let updatedDateValues = {...this.state};
+                                                            updatedDateValues.dateValues.dischargeDate = {};
+                                                            this.setState({updatedDateValues})
+                                                        }
+                                                        }
+                                                    >
+                                                        ریست
+                                                    </Button>
+                                                </DatePicker>
                                                 <label className="placeholder">تاریخ تخلیه</label>
                                             </div>
                                             <div className='input-report-box'>
-                                                <input type="text" ref={this.depositReturnDate} className="input"
-                                                       placeholder=" "/>
+                                                {/*<input type="text" ref={this.depositReturnDate} className="input"*/}
+                                                {/*       placeholder=" "/>*/}
+                                                  <DatePicker
+                                                    // fixMainPosition={false}
+                                                    ref={this.depositReturnDate}
+                                                    calendarPosition={`top`}
+                                                    digits={['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']}
+                                                    format={`YYYY/MM/DD`}
+                                                    inputClass={`input form-control date-picker`}
+
+
+                                                    containerStyle={{
+                                                        width: "100%"
+                                                    }}
+
+                                                    value={this.state.dateValues.depositReturnDate}
+                                                    onChange={(value) => {
+                                                        let updatedDateValues = {...this.state};
+                                                        updatedDateValues.dateValues.depositReturnDate = value;
+                                                        this.setState({updatedDateValues})
+                                                    }}
+
+                                                    mapDays={({ date }) => {
+                                                        let props = {}
+                                                        let isWeekend = [6].includes(date.weekDay.index)
+
+                                                        if (isWeekend)
+                                                            props.className = "highlight highlight-red";
+
+                                                        return props
+                                                    }}
+
+                                                    weekDays={
+                                                        [
+                                                            ["شنبه", "Sat"],
+                                                            ["یکشنبه", "Sun"],
+                                                            ["دوشنبه", "Mon"],
+                                                            ["سه شنبه", "Tue"],
+                                                            ["چهارشنبه", "Wed"],
+                                                            ["پنجشنبه", "Thu"],
+                                                            ["جمعه", "Fri"],
+                                                        ]
+                                                    }
+
+                                                    calendar={persian}
+                                                    locale={persian_fa}
+
+                                                >
+                                                    <Button
+                                                        onClick={() => {
+                                                            let updatedDateValues = {...this.state};
+                                                            updatedDateValues.dateValues.depositReturnDate = {};
+                                                            this.setState({updatedDateValues})
+                                                        }
+                                                        }
+                                                    >
+                                                        ریست
+                                                    </Button>
+                                                </DatePicker>
                                                 <label className="placeholder">تاریخ عودت ودیعه</label>
                                             </div>
                                             <div className='input-report-box'>
@@ -1567,7 +2034,64 @@ class ProfilePage extends Component {
                                                 <label className="placeholder">روز</label>
                                             </div>*/}
                                             <div className='input-report-box'>
-                                                <input type="text" ref={this.date} className="input" placeholder=" "/>
+                                                {/*<input type="text" ref={this.date} className="input" placeholder=" "/>*/}
+                                                <DatePicker
+                                                    // fixMainPosition={false}
+                                                    ref={this.date}
+                                                    calendarPosition={`top`}
+                                                    digits={['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']}
+                                                    format={`YYYY/MM/DD`}
+                                                    inputClass={`input form-control date-picker`}
+
+
+                                                    containerStyle={{
+                                                        width: "100%"
+                                                    }}
+
+                                                    value={this.state.dateValues.cancelContractDate}
+                                                    onChange={(value) => {
+                                                        let updatedDateValues = {...this.state};
+                                                        updatedDateValues.dateValues.cancelContractDate = value;
+                                                        this.setState({updatedDateValues})
+                                                    }}
+
+                                                    mapDays={({ date }) => {
+                                                        let props = {}
+                                                        let isWeekend = [6].includes(date.weekDay.index)
+
+                                                        if (isWeekend)
+                                                            props.className = "highlight highlight-red";
+
+                                                        return props
+                                                    }}
+
+                                                    weekDays={
+                                                        [
+                                                            ["شنبه", "Sat"],
+                                                            ["یکشنبه", "Sun"],
+                                                            ["دوشنبه", "Mon"],
+                                                            ["سه شنبه", "Tue"],
+                                                            ["چهارشنبه", "Wed"],
+                                                            ["پنجشنبه", "Thu"],
+                                                            ["جمعه", "Fri"],
+                                                        ]
+                                                    }
+
+                                                    calendar={persian}
+                                                    locale={persian_fa}
+
+                                                >
+                                                    <Button
+                                                        onClick={() => {
+                                                            let updatedDateValues = {...this.state};
+                                                            updatedDateValues.dateValues.cancelContractDate = {};
+                                                            this.setState({updatedDateValues})
+                                                        }
+                                                        }
+                                                    >
+                                                        ریست
+                                                    </Button>
+                                                </DatePicker>
                                                 <label className="placeholder">تاریخ</label>
                                             </div>
                                             <div className='input-report-box'>
@@ -1612,6 +2136,23 @@ class ProfilePage extends Component {
         );
     }
 
+    handleResetFields = () => {
+        let resetFields = {...this.state.dateValues};
+        resetFields = {
+            cleaningDate: '',
+            delayInArrivalDate: '',
+            exitStartDate: '',
+            exitEndDate: '',
+            violationDate: '',
+            dischargeDateAnnounce: '',
+            dischargeDate: '',
+            depositReturnDate: '',
+            cancelContractDate: '',
+        }
+        this.setState({dateValues: resetFields})
+
+        console.log(this.state.dateValues)
+    }
     handleClose = () => {
         this.setState({show: false})
     };
@@ -1624,31 +2165,35 @@ class ProfilePage extends Component {
     }
     handleSubmit = (e) => {
         e.preventDefault();
+        // console.log(this.state.dateValues.cleaningDate)
         const type = this.state.reportType;
         this.setState({reports: type})
         switch (type) {
             case 'cleaning':
                 return (() => {
-                    const date = this.date.current.value;
+                    const date = this.state.dateValues.cleaningDate;
+                    const formattedDate = date.year + '/' + date.month + '/' + date.day
                     const description = this.description.current.value;
                     const result = {
                         'title': this.state.reportType,
-                        'date': date,
+                        'date': formattedDate,
                         'description': description
                     }
                     const newReports = this.state.report.concat(result);
                     this.setState({report: newReports});
                     this.setState({show: false});
 
+                    console.log(formattedDate)
                 })();
             case 'delayInArrival':
                 return (() => {
-                    const date = this.date.current.value;
+                    const date = this.state.dateValues.delayInArrivalDate;
+                    const formattedDate = date.year + '/' + date.month + '/' + date.day
                     const time = this.time.current.value;
 
                     const result = {
                         'title': this.state.reportType,
-                        'date': date,
+                        'date': formattedDate,
                         'time': time
                     }
                     const newReports = this.state.report.concat(result)
@@ -1659,16 +2204,18 @@ class ProfilePage extends Component {
 
             case 'exit':
                 return (() => {
-                    const startDate = this.startDate.current.value;
-                    const endDate = this.endDate.current.value;
+                    const startDate = this.state.dateValues.exitStartDate;
+                    const endDate = this.state.dateValues.exitEndDate;
+                    const formattedStartDate = startDate.year + '/' + startDate.month + '/' + startDate.day;
+                    const formattedEndDate = endDate.year + '/' + endDate.month + '/' + endDate.day;
                     const destinationAddress = this.destinationAddress.current.value;
                     const destinationPhoneNumber = this.destinationPhoneNumber.current.value;
                     const relation = this.relation.current.value;
                     const result = {
                         'title': this.state.reportType,
                         'timePeriod': {
-                            "startDate": startDate,
-                            "endDate": endDate
+                            "startDate": formattedStartDate,
+                            "endDate": formattedEndDate
                         },
                         'destinationAddress': destinationAddress,
                         'destinationPhoneNumber': destinationPhoneNumber,
@@ -1681,13 +2228,14 @@ class ProfilePage extends Component {
             case 'violation':
                 return (() => {
 
-                    const date = this.date.current.value;
+                    const date = this.state.dateValues.violationDate;
+                    const formattedDate = date.year + '/' + date.month + '/' + date.day
                     const time = this.time.current.value;
                     const description = this.description.current.value;
 
                     const result = {
                         'title': this.state.reportType,
-                        'date': date,
+                        'date': formattedDate,
                         'time': time,
                         'description': description
                     }
@@ -1711,17 +2259,22 @@ class ProfilePage extends Component {
                 })();
             case 'discharge':
                 return (() => {
-                    const dischargeDateAnnounce = this.dischargeDateAnnounce.current.value;
-                    const dischargeDate = this.dischargeDate.current.value;
-                    const depositReturnDate = this.depositReturnDate.current.value;
+                    const dischargeDateAnnounce = this.state.dateValues.dischargeDateAnnounce;
+                    const dischargeDate = this.state.dateValues.dischargeDate;
+                    const depositReturnDate = this.state.dateValues.depositReturnDate;
+
+                    let formattedDischargeDateAnnounce = dischargeDateAnnounce.year + '/' + dischargeDateAnnounce.month + '/' + dischargeDateAnnounce.day;
+                    let formattedDischargeDate = dischargeDate.year + '/' + dischargeDate.month + '/' + dischargeDate.day;
+                    let formattedDepositReturnDate = depositReturnDate.year + '/' + depositReturnDate.month + '/' + depositReturnDate.day;
+
                     const deductionOfLosses = this.deductionOfLosses.current.value;
                     const deductionOfLossesReason = this.deductionOfLossesReason.current.value;
                     const refundableAmount = this.refundableAmount.current.value;
                     const result = {
                         'title': this.state.reportType,
-                        'dischargeDateAnnounce': dischargeDateAnnounce,
-                        'dischargeDate': dischargeDate,
-                        'depositReturnDate': depositReturnDate,
+                        'dischargeDateAnnounce': formattedDischargeDateAnnounce,
+                        'dischargeDate': formattedDischargeDate,
+                        'depositReturnDate': formattedDepositReturnDate,
                         'deductionOfLosses': deductionOfLosses,
                         'deductionOfLossesReason': deductionOfLossesReason,
                         'refundableAmount': refundableAmount
@@ -1733,13 +2286,14 @@ class ProfilePage extends Component {
 
             case 'cancelContract':
                 return (() => {
-                    const date = this.date.current.value;
+                    const date = this.state.dateValues.cancelContractDate;
+                    const formattedDate = date.year + '/' + date.month + '/' + date.day;
                     const reason = this.reason.current.value;
                     const deductionOfLosses = this.deductionOfLosses.current.value;
                     const refundableAmount = this.refundableAmount.current.value;
                     const result = {
                         'title': this.state.reportType,
-                        'data': date,
+                        'data': formattedDate,
                         'reason': reason,
                         'deductionOfLosses': deductionOfLosses,
                         'refundableAmount': refundableAmount
