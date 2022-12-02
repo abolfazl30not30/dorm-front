@@ -25,6 +25,7 @@ class Login extends Component {
                         <div className="title">
                             <h2>سعـادت پـرتـال</h2>
                         </div>
+                        <button onClick={() => console.log(this.state.account.user)}>asd</button>
                         <div className="form-container">
                             <form className="login-form" onSubmit={this.handleSubmit}>
                                 <div className="title-form">
@@ -63,7 +64,7 @@ class Login extends Component {
                                             : null
                                     }
                                     {
-                                        this.state.errors.includes('شما امکان دسترسی به سیستم ندارید')
+                                        this.state.errors.includes('شما امکان دسترسی به سیستم ندارید') && !this.state.errors.includes('لطفا نام کاربری را وارد کنید')
                                             ? <small className="form-text text-danger" style={{fontSize:"10px"}}>شما امکان دسترسی به سیستم ندارید</small>
                                             : null
                                     }
@@ -118,6 +119,7 @@ class Login extends Component {
         // if(username === getValue.user && password === getValue.email){
         //     window.location = '/dashboard';
 
+        let response = '';
         const postEmail = await fetch('https://api.saadatportal.com/api/v1/email/forgot/password', {
             method: 'POST',
             headers: {
@@ -128,24 +130,21 @@ class Login extends Component {
                 username: this.state.account.user,
                 email: this.state.account.email
             })
-        }).then();
+        }).then((res) => response = res);
 
-        let respondForgotPassword = await postEmail.json();
+        // let respondForgotPassword = await postEmail.json();
 
-        console.log(respondForgotPassword)
+        console.log(response)
 
-        if (respondForgotPassword.status === 200) {
-            window.location = '/dashboard';
+        if (response.status === 200) {
+            window.location = '/';
             console.log('success')
             this.setState({errors: []})
-        } else if (respondForgotPassword.status === 500){
-            if (!this.state.errors.includes('لطفا نام کاربری را وارد کنید')){
+        } else if (response.status === 500){
+            if (!this.state.errors.includes('لطفا نام کاربری را وارد کنید') && !this.state.errors.includes('ایمیل معتبر نیست')){
                 this.setState({errors: ['شما امکان دسترسی به سیستم ندارید']})
             }
-            if (!this.state.errors.includes('ایمیل معتبر نیست')) {
-                this.setState({errors: ['شما امکان دسترسی به سیستم ندارید']})
-            }
-        } else if (respondForgotPassword.status === 403){
+        } else if (response.status === 403){
             this.setState({errors: ['ایمیل صحیح نمی باشد']})
         }
 
