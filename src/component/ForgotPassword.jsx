@@ -10,7 +10,7 @@ class Login extends Component {
     state = {
         account:{
             user:'',
-            password:''
+            email:''
         },
         errors: [],
         getValue:{}
@@ -54,17 +54,22 @@ class Login extends Component {
                                         value={email}
                                         onChange={this.handleChange}
                                         className={`form-control input password`}
-                                        style={{border: this.state.errors.includes('رمز عبور باید حداقل 8 کاراکتر باشد') ? '1px solid red' : ''}}
+                                        style={{border: this.state.errors.includes('ایمیل معتبر نیست') ? '1px solid red' : ''}}
                                         placeholder="ایمیل"
                                     />
                                     {
-                                        this.state.errors.includes('رمز عبور باید حداقل 8 کاراکتر باشد')
-                                            ? <small className="form-text text-danger" style={{fontSize:"10px"}}>رمز عبور باید حداقل 8 کاراکتر باشد</small>
+                                        this.state.errors.includes('ایمیل معتبر نیست')
+                                            ? <small className="form-text text-danger" style={{fontSize:"10px"}}>ایمیل معتبر نیست</small>
                                             : null
                                     }
                                     {
-                                        this.state.errors.includes('ایمیل یا پسورد صحیح نمی باشد')
-                                            ? <small className="form-text text-danger" style={{fontSize:"10px"}}>ایمیل یا پسورد صحیح نمی باشد</small>
+                                        this.state.errors.includes('شما امکان دسترسی به سیستم ندارید')
+                                            ? <small className="form-text text-danger" style={{fontSize:"10px"}}>شما امکان دسترسی به سیستم ندارید</small>
+                                            : null
+                                    }
+                                    {
+                                        this.state.errors.includes('ایمیل صحیح نمی باشد')
+                                            ? <small className="form-text text-danger" style={{fontSize:"10px"}}>ایمیل صحیح نمی باشد</small>
                                             : null
                                     }
                                 </div>
@@ -88,7 +93,7 @@ class Login extends Component {
     }
     schema = yup.object().shape({
         user: yup.string().required('لطفا نام کاربری را وارد کنید'),
-        password: yup.string().min(8,'رمز عبور باید حداقل 8 کاراکتر باشد')
+        email: yup.string().email('ایمیل معتبر نیست').required('ایمیل معتبر نیست')
     })
 
     validate = async () => {
@@ -107,14 +112,48 @@ class Login extends Component {
 
         let getValue = await result;
 
-        let username = "fazel";
-        let password = "12345678";
+        // let username = "fazel";
+        // let password = "12345678";
 
-        if(username === getValue.user && password === getValue.password){
+        // if(username === getValue.user && password === getValue.email){
+        //     window.location = '/dashboard';
+
+        const postEmail = await fetch('https://api.saadatportal.com/api/v1/email/forgot/password', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                username: this.state.account.user,
+                email: this.state.account.email
+            })
+        }).then();
+
+        let respondForgotPassword = await postEmail.json();
+
+        console.log(respondForgotPassword)
+
+        if (respondForgotPassword.status === 200) {
             window.location = '/dashboard';
-        }else {
-            this.setState({errors: ['ایمیل یا پسورد صحیح نمی باشد']})
+            console.log('success')
+            this.setState({errors: []})
+        } else if (respondForgotPassword.status === 500){
+            if (!this.state.errors.includes('لطفا نام کاربری را وارد کنید')){
+                this.setState({errors: ['شما امکان دسترسی به سیستم ندارید']})
+            }
+            if (!this.state.errors.includes('ایمیل معتبر نیست')) {
+                this.setState({errors: ['شما امکان دسترسی به سیستم ندارید']})
+            }
+        } else if (respondForgotPassword.status === 403){
+            this.setState({errors: ['ایمیل صحیح نمی باشد']})
         }
+
+        // if ()
+
+        // }else {
+        //     this.setState({errors: ['ایمیل یا پسورد صحیح نمی باشد']})
+        // }
     }
 }
 
