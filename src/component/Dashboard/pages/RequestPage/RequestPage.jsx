@@ -189,7 +189,7 @@ class RequestPage extends Component {
                                                             ? (request.checked === true
                                                                 ? <Button className={'request-accept'}>قبول شده</Button>
                                                                 : <Button className={'request-reject'} onClick={() => {
-                                                                            this.setState({failureModalShow: true})
+                                                                            this.handleOpenFailureModal(request);
                                                                         }}>رد شده</Button>)
                                                             : <Button className={'request-unknown'}>تعیین نشده</Button>
                                                     }
@@ -452,6 +452,18 @@ class RequestPage extends Component {
                 </Modal>
             </>
         );
+    }
+
+    handleOpenFailureModal = async (request) => {
+        this.setState({failureModalShow: true});
+        // console.log(request)
+
+        // if(request.checked === 'false'){
+        const response = await fetch(`https://api.saadatportal.com/api/v1/failureReason/${request.failureReason}`).then((response) => response.json())
+            .then((data) => this.setState({failure : data}));
+
+        // }
+
     }
 
     handleResetFields = () => {

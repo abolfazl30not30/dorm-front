@@ -86,22 +86,16 @@ class RequestPage extends Component {
                 type: 'test',
                 name: 'test',
                 reason: 'test',
-                checked: 'false', // default
+                checked: false, // default
                 failureReasonId: '',
-                // ifFalseTopic: 'ifFalseTopic',
-                // ifFalseReason: 'ifFalseReason',
-                // ifFalseType: 'ifFalseType'
             },
             {
                 topic: 'test',
                 type: 'test',
                 name: 'test',
                 reason: 'test',
-                checked: 'true', // default
+                checked: true, // default
                 failureReasonId: '',
-                // ifFalseTopic: 'ifFalseTopic',
-                // ifFalseReason: 'ifFalseReason',
-                // ifFalseType: 'ifFalseType'
             }
         ],
 
@@ -146,6 +140,9 @@ class RequestPage extends Component {
                                        onChange={(value) => this.setState({searchContent: value.target.value})}/>
                             </div>
                         </div>
+                        <button onClick={() => console.log(this.state.requests)}>
+                            asd
+                        </button>
                         <div className="d-flex flex-row flex-wrap">
                             {
                                 this.state.requests.map((request, index, curr) => (
@@ -177,23 +174,30 @@ class RequestPage extends Component {
                                                         <i className="bi bi-chevron-left ms-1"/>
                                                         <div className="request-item-title">وضعیت:</div>
                                                         {
-                                                            request.checked !== 'null'
-                                                                ? (request.checked === 'true'
+                                                            request.checked !== null
+                                                                ? (request.checked === true
                                                                     ? <Button className={'request-accept'} disabled={true}>قبول شده</Button>
                                                                     : <Button className={'request-reject'} onClick={() => {
-                                                                        this.handleOpenFailureModal();
+                                                                        this.handleOpenFailureModal(request);
                                                                     }}>رد شده</Button>)
                                                                 : <Button className={'request-unknown'} disabled={true}>تعیین نشده</Button>
                                                         }
                                                     </div>
                                                     <div>
                                                         <Button
+                                                            disabled={request.checked !== null}
                                                             className={'request-edit'}
                                                             onClick={() => {
+                                                                let resetFailure = {
+                                                                    name: '',
+                                                                    reason: '',
+                                                                    type: '',
+                                                                }
+                                                                this.setState({failure: resetFailure})
                                                                 this.handleEditButton(request);
                                                             }}
                                                         >
-                                                            <i className="bi bi-pencil ms-1"></i>
+                                                            <i className="bi bi-pencil ms-1"/>
                                                             ویرایش
                                                         </Button>
                                                     </div>
@@ -221,7 +225,7 @@ class RequestPage extends Component {
                                                                     <FormControlLabel labelPlacement="top" value="false" control={<Radio />} label="تایید نشده" />
                                                                 </RadioGroup>
                                                             </FormControl>
-                                                            <div style={{display: this.state.tmpRequestForSubmit.checked !== 'false' ? 'none' : 'block'}}>
+                                                            <div style={{display: this.state.tmpRequestForSubmit.checked !== false ? 'none' : 'block'}}>
                                                                 <div className={'input-group-register'}>
                                                                     <input
                                                                         className={'input form-control'}
@@ -346,17 +350,18 @@ class RequestPage extends Component {
     }
 
     handleEditRadioGroup = (value) => {
-        this.setState({tmpRadioValue : value.target.value})
+        let formattedValue = value.target.value === "null" ? null : (value.target.value === "true")
+        this.setState({tmpRadioValue : formattedValue})
         let updatedTmpRequestForSubmit = {...this.state.tmpRequestForSubmit};
-        updatedTmpRequestForSubmit.checked = value.target.value;
+        updatedTmpRequestForSubmit.checked = formattedValue;
         this.setState({tmpRequestForSubmit : updatedTmpRequestForSubmit});
     }
 
-    handleEditButton = (request) => {
-        this.setState({showStatusModal: 'true'});
-        this.setState({tmpRequest : request})
-        this.setState({tmpRadioValue : request.checked});
-        this.setState({tmpRequestForSubmit : request})
+    handleEditButton = async (request) => {
+        this.setState({showStatusModal: true});
+        this.setState({tmpRequest: request})
+        this.setState({tmpRadioValue: request.checked});
+        this.setState({tmpRequestForSubmit: request})
     }
 
     handleCloseFailureModal = () => {
@@ -371,11 +376,8 @@ class RequestPage extends Component {
     handleOpenFailureModal = async (request) => {
         this.setState({failureModalShow: true});
 
-
-        // if(request.checked === 'false'){
-            const response = await fetch(`https://api.saadatportal.com/api/v1/failureReason/${request.failureReasonId}`).then((response) => response.json())
-                .then((data) => this.setState({failure : data}));
-        // }
+        const response = await fetch(`https://api.saadatportal.com/api/v1/failureReason/${request.failureReason}`).then((response) => response.json())
+            .then((data) => this.setState({failure : data}));
 
     }
 
@@ -404,7 +406,7 @@ class RequestPage extends Component {
 
         // this.state.failure.type =
         let typeForStatus_requiredReg = !regCheck.test(this.state.failure.type);
-        if (this.state.tmpRadioValue === 'null' || this.state.tmpRadioValue === 'true') {
+        if (this.state.tmpRequestForSubmit.checked === null || this.state.tmpRequestForSubmit.checked === true) {
             typeForStatus_requiredReg = true;
         }
         this.handleValidations([typeForStatus_requiredReg], ['typeForStatus_requiredReg']);
@@ -420,18 +422,21 @@ class RequestPage extends Component {
             if (updatedRequestsKey === this.state.tmpRequest) {
                 if (this.state.tmpRequestForSubmit.checked === false) {
                     let failureReasonId= '';
-                    const getFailureReasonId = await fetch(`https://api.saadatportal.com/api/v1/failureReason}`, {
+
+                    const getFailureReasonId = await fetch('https://api.saadatportal.com/api/v1/failureReason', {
                         method: 'POST',
                         headers: {
                             'Accept': 'application/json',
                             'Content-Type': 'application/json'
                         },
                         body: JSON.stringify({
-                            name: 'test',
-                            type: 'test',
-                            reason: 'test'
+                            name: this.state.failure.name,
+                            type: this.state.failure.type,
+                            reason: this.state.failure.reason
                         })
-                    }).then((response) => failureReasonId = response.id);
+                    });
+
+                    var content = await getFailureReasonId.json();
 
                     const patchFailRequest = await fetch(`https://api.saadatportal.com/api/v1/request/${updatedRequestsKey.id}`, {
                         method: 'PATCH',
@@ -440,8 +445,8 @@ class RequestPage extends Component {
                             'Content-Type': 'application/json'
                         },
                         body: JSON.stringify({
-                            checked: this.state.tmpRequestForSubmit.checked,
-                            failureReasonId: failureReasonId
+                            checked: false,
+                            failureReasonId: content.id
                         })
                     });
                 } else if (this.state.tmpRequestForSubmit.checked === true) {
@@ -456,23 +461,11 @@ class RequestPage extends Component {
                         })
                     });
                 }
-                updatedRequestsKey.checked = this.state.tmpRequestForSubmit.checked;
                 break;
             }
         }
 
         await this.componentDidMount();
-
-        // const postRequest = await fetch('https://api.saadatportal.com/api/v1/request', {
-        //     method: 'PATCH',
-        //     headers: {
-        //         'Accept': 'application/json',
-        //         'Content-Type': 'application/json'
-        //     },
-        //     body: JSON.stringify(request)
-        // });
-
-        this.setState({requests: updatedRequests})
     }
 
     handleValidations = (valueOfField, nameOfField) => {
@@ -487,25 +480,6 @@ class RequestPage extends Component {
         // console.log(this.state.Validations.selectedTypeBoolean)
 
     }
-
-    // handleResetFields = () => {
-    //     this.handleOpenType();
-    //
-    //     let resetTypeOfTempFields = {...this.state.tempFields};
-    //     resetTypeOfTempFields['type'] = null;
-    //     resetTypeOfTempFields['name'] = '';
-    //     resetTypeOfTempFields['reason'] = '';
-    //     resetTypeOfTempFields['topic'] = '';
-    //     resetTypeOfTempFields['checked'] = null;
-    //
-    //     let resetValidations = {...this.state.Validations};
-    //     resetValidations['selectedTypeBoolean'] = true;
-    //     resetValidations['topic_requireReg'] = '';
-    //     resetValidations['name_requireReg'] = '';
-    //
-    //     this.setState({tempFields : resetTypeOfTempFields});
-    //     this.setState({Validations : resetValidations});
-    // }
 }
 
 export default RequestPage;
