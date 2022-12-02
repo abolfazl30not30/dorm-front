@@ -23,6 +23,7 @@ import BuildingContext from "../../../../contexts/Building";
 import DateInput from "../../../CustomInputs/DateInput";
 import {DatePicker} from "react-persian-datepicker";
 import axios from "axios"
+import data from "bootstrap/js/src/dom/data";
 
 class ProfilePage extends Component {
 
@@ -33,7 +34,6 @@ class ProfilePage extends Component {
         show: false,
         reportType: 'cleaning',
         personObject: {},
-        uploadedDoc: {},
         report: [
             {
                 "title": "cleaning",
@@ -273,6 +273,8 @@ class ProfilePage extends Component {
         ],
         showDeleteModalReport: false,
         reportTemp: {},
+        docFile : {},
+        fileDetails:[],
 
         hasBirthPage1: false,
         hasBirthPage2: false,
@@ -310,15 +312,13 @@ class ProfilePage extends Component {
             .then((data) => this.setState({person: data}));
 
         const response2 = await fetch(`https://api.saadatportal.com/api/v1/person/${this.context.personId}`).then((response) => response.json())
-            .then((data) => this.setState({personObject: data}, () => {
+            .then((data) => this.setState({personObject: data}));
+
+        const fileRespond = await fetch(`https://api.saadatportal.com/api/v1/responseFile/search?parentType=Person&parentId=${this.context.personId}`).then((response) => response.json())
+            .then((data) => this.setState({fileDetails: data},()=>{
+                this.setState({docFile : this.state.personObject.files});
                 this.existDocFile(this.state.personObject.files);
-                this.setState({docFile: this.state.personObject.files})
             }));
-
-        const fileResponse = await fetch(`https://api.saadatportal.com/api/v1/responseFile/search?parentType=Person&parentId=${this.context.personId}`).then((response) => response.json())
-            .then((data) => {console.log(data)});
-
-
 
     }
 
@@ -1225,7 +1225,7 @@ class ProfilePage extends Component {
                                                                     }
                                                                 >
                                                                     <div className="record-item"
-                                                                         onClick={() => this.downloadFile()}>
+                                                                         onClick={() => this.downloadFile(this.state.docFile.birthPage3)}>
                                                                         <div className='ms-2'>صفحه سوم</div>
                                                                         <RiDownloadCloud2Fill/>
                                                                     </div>
@@ -1243,7 +1243,7 @@ class ProfilePage extends Component {
                                                                     }
                                                                 >
                                                                     <div className="record-item"
-                                                                         onClick={() => this.downloadFile()}>
+                                                                         onClick={() => this.downloadFile(this.state.docFile.birthPage4)}>
                                                                         <div className='ms-2'>صفحه چهارم</div>
                                                                         <RiDownloadCloud2Fill/>
                                                                     </div>
@@ -1261,7 +1261,7 @@ class ProfilePage extends Component {
                                                                     }
                                                                 >
                                                                     <div className="record-item"
-                                                                         onClick={() => this.downloadFile()}>
+                                                                         onClick={() => this.downloadFile(this.state.docFile.birthAllPage)}>
                                                                         <div className='ms-2'>کل صفحات</div>
                                                                         <RiDownloadCloud2Fill/>
                                                                     </div>
@@ -1286,7 +1286,7 @@ class ProfilePage extends Component {
                                                                 }
                                                             >
                                                                 <div className="record-item"
-                                                                     onClick={() => this.downloadFile()}>
+                                                                     onClick={() => this.downloadFile(this.state.docFile.cardPage1)}>
                                                                     <div className='ms-2'>صفحه اول</div>
                                                                     <RiDownloadCloud2Fill/>
                                                                 </div>
@@ -1304,7 +1304,7 @@ class ProfilePage extends Component {
                                                                 }
                                                             >
                                                                 <div className="record-item"
-                                                                     onClick={() => this.downloadFile()}>
+                                                                     onClick={() => this.downloadFile(this.state.docFile.cardPage2)}>
                                                                     <div className='ms-2'>صفحه دوم</div>
                                                                     <RiDownloadCloud2Fill/>
                                                                 </div>
@@ -1322,7 +1322,7 @@ class ProfilePage extends Component {
                                                                 }
                                                             >
                                                                 <div className="record-item"
-                                                                     onClick={() => this.downloadFile()}>
+                                                                     onClick={() => this.downloadFile(this.state.docFile.cardAllPage)}>
                                                                     <div className='ms-2'>کل صفحات</div>
                                                                     <RiDownloadCloud2Fill/>
                                                                 </div>
@@ -1346,7 +1346,7 @@ class ProfilePage extends Component {
                                                                 }
                                                             >
                                                                 <div className="record-item"
-                                                                     onClick={() => this.downloadFile()}>
+                                                                     onClick={() => this.downloadFile(this.state.docFile.personnelImg)}>
                                                                     <div className='ms-2'>عکس پرسنلی</div>
                                                                     <RiDownloadCloud2Fill/>
                                                                 </div>
@@ -1369,7 +1369,7 @@ class ProfilePage extends Component {
                                                                 }
                                                             >
                                                                 <div className="record-item"
-                                                                     onClick={() => this.downloadFile("registerUni")}>
+                                                                     onClick={() => this.downloadFile(this.state.docFile.register)}>
                                                                     <div className='ms-2'>پرینت ثبت نام</div>
                                                                     <RiDownloadCloud2Fill/>
                                                                 </div>
@@ -1392,7 +1392,7 @@ class ProfilePage extends Component {
                                                                 }
                                                             >
                                                                 <div className="record-item"
-                                                                     onClick={() => this.downloadFile()}>
+                                                                     onClick={() => this.downloadFile(this.state.docFile.registerUni)}>
                                                                     <div className='ms-2'> ثبت نام دانشگاه</div>
                                                                     <RiDownloadCloud2Fill color="#000"/>
                                                                 </div>
@@ -1758,30 +1758,28 @@ class ProfilePage extends Component {
         this.setState({report: updatedReport});
         this.setState({showDeleteModalReport: false})
     }
-    downloadFile =  async (fileId) => {
-        var filename = "";
 
-        const response = await fetch(`http://localhost:8089/api/v1/file/f51b6282c6e64e0a82788cf528e5ff60`,{
-            method:"GET"
-        }).then((result) => {
-            console.log(result);
-            return result.json();
-        })
+    downloadFile =  async (fileId) => {
+        const file = this.state.fileDetails.find(({ fileId }) => fileId === fileId);
+        var filename = file.originalName ;
+
+        const response = await fetch(`https://api.saadatportal.com/api/v1/file/${fileId}`).then((result) => {return result.blob();})
             .then((blob) => {
-                // if (blob != null) {
-                //     var url = window.URL.createObjectURL(blob);
-                //     var a = document.createElement('a');
-                //     a.href = url;
-                //     a.download = filename;
-                //     document.body.appendChild(a);
-                //     a.click();
-                //     a.remove();
-                // }
+                if (blob != null) {
+                    var url = window.URL.createObjectURL(blob);
+                    var a = document.createElement('a');
+                    a.href = url;
+                    a.download = filename;
+                    document.body.appendChild(a);
+                    a.click();
+                    a.remove();
+                }
             });
 
     }
 
     existDocFile = (docFile) => {
+        console.log(docFile);
         console.log(docFile)
         if (docFile.hasOwnProperty('birthPage1')) {
             this.setState({hasBirthPage1: true});
@@ -1799,7 +1797,7 @@ class ProfilePage extends Component {
             this.setState({hasBirthAllPage: true});
         }
         if (docFile.hasOwnProperty('cardPage1')) {
-            this.setState({hasCartPage1: true});
+                this.setState({hasCartPage1: true});
         }
         if (docFile.hasOwnProperty('cardPage2')) {
             this.setState({hasCartPage2: true});
