@@ -275,7 +275,7 @@ class ProfilePage extends Component {
         reportTemp: {},
         docFile : {},
         fileDetails:[],
-
+        profileImgUrl: null,
         hasBirthPage1: false,
         hasBirthPage2: false,
         hasBirthPage3: false,
@@ -313,6 +313,14 @@ class ProfilePage extends Component {
 
         const response2 = await fetch(`https://api.saadatportal.com/api/v1/person/${this.context.personId}`).then((response) => response.json())
             .then((data) => this.setState({personObject: data}));
+        if(this.state.person.profileId !== null){
+            const response3 = await fetch(`https://api.saadatportal.com/api/v1/file/${this.state.person.profileId}`).then((response) => response.blob())
+                .then((data) => {
+                    const objectUrl = URL.createObjectURL(data);
+                    console.log(objectUrl);
+                    this.setState({profileImgUrl:objectUrl})
+                });
+        }
 
         const fileRespond = await fetch(`https://api.saadatportal.com/api/v1/responseFile/search?parentType=Person&parentId=${this.context.personId}`).then((response) => response.json())
             .then((data) => this.setState({fileDetails: data},()=>{
@@ -330,7 +338,7 @@ class ProfilePage extends Component {
                         <div className="d-flex flex-row justify-content-center profile-card">
                             <div className={'d-flex flex-md-row flex-column align-items-center'}>
                                 <img
-                                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBnUckFxDVe5FOT5vuVfWCvWWY1pUrOPBOFPu9CNZYpABJSYPCigxy9rEc32E6mBamw3c&usqp=CAU"
+                                    src={this.state.profileImgUrl !== null ? (this.state.profileImgUrl) : ("https://cdn-icons-png.flaticon.com/512/149/149071.png")}
                                     alt="profile"/>
                                 <div className={'me-3 d-flex flex-column justify-content-center'}>
                                     <div

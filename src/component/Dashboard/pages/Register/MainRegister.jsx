@@ -527,6 +527,12 @@ class MainRegister extends Component {
                 newCharacteristic.birthDate = birthDate1+" 00:00:00";
                 newCharacteristic.personType = "constant";
 
+                const profileImg = this.context.constantUploadPage.find(({name}) => name === "personnelImg");
+                if(profileImg !== undefined){
+                    console.log(profileImg);
+                    newCharacteristic.profileId = profileImg.fileId;
+                }
+
                 console.log(newCharacteristic);
 
                 const createChar = await fetch('https://api.saadatportal.com/api/v1/characteristic', {
@@ -579,8 +585,16 @@ class MainRegister extends Component {
                 let birthDate1 = newCharacteristic.birthDate
                 newCharacteristic.birthDate = birthDate1+" 00:00:00"
 
+
                 let paymentDate1 = newCharacteristic.paymentDate
                 newCharacteristic.paymentDate = paymentDate1+" 00:00:00";
+
+                const profileImg = this.context.familyGuestUploadPage.find(({name}) => name === "personnelImg");
+                if(profileImg !== undefined){
+                    console.log(profileImg);
+                    newCharacteristic.profileId = profileImg.fileId;
+                }
+
                 newCharacteristic.personType = 'familyGuest';
 
                 const createdChar = await fetch('https://api.saadatportal.com/api/v1/characteristic', {
@@ -600,7 +614,7 @@ class MainRegister extends Component {
                     residenceType:"resident",
                     accommodationType:"permanent",
                     characteristicId: respondChar.id,
-                    files: this.context.otherGuestUploadPage
+                    files: this.context.familyGuestUploadPage
                 }
 
                 const createdPerson = await fetch('https://api.saadatportal.com/api/v1/person', {
@@ -642,6 +656,13 @@ class MainRegister extends Component {
 
                 let paymentDate1 = newCharacteristic.paymentDate
                 newCharacteristic.paymentDate = paymentDate1+" 00:00:00";
+
+                const profileImg = this.context.otherGuestUploadPage.find(({name}) => name === "personnelImg");
+                if(profileImg !== undefined){
+                    console.log(profileImg);
+                    newCharacteristic.profileId = profileImg.fileId;
+                }
+
                 newCharacteristic.personType = 'otherGuest';
 
                 console.log(newCharacteristic)
