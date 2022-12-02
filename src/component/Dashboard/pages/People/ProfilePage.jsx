@@ -21,6 +21,7 @@ import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
 import BuildingContext from "../../../../contexts/Building";
 import DatePicker from "react-multi-date-picker";
+import TimePicker from "react-multi-date-picker/plugins/time_picker";
 import axios from "axios"
 import data from "bootstrap/js/src/dom/data";
 import persian from "react-date-object/calendars/persian";
@@ -35,9 +36,11 @@ class ProfilePage extends Component {
         dateValues: {
             cleaningDate: '',
             delayInArrivalDate: '',
+            delayInArriveTime: '',
             exitStartDate: '',
             exitEndDate: '',
             violationDate: '',
+            violationTime: '',
             dischargeDateAnnounce: '',
             dischargeDate: '',
             depositReturnDate: '',
@@ -1589,7 +1592,36 @@ class ProfilePage extends Component {
                                                 <label className="placeholder">تاریخ</label>
                                             </div>
                                             <div className='input-report-box'>
-                                                <input type="text" ref={this.time} className="input" placeholder=" "/>
+                                                {/*<input type="text" ref={this.time} className="input" placeholder=" "/>*/}
+                                                <DatePicker
+                                                    ref={this.time}
+                                                    disableDayPicker
+                                                    format="HH:mm:ss"
+                                                    inputClass={`input form-control date-picker`}
+                                                    containerStyle={{
+                                                        width: "100%"
+                                                    }}
+                                                    value={this.state.dateValues.delayInArriveTime}
+                                                    onChange={(value) => {
+                                                        let updatedDateValues = {...this.state};
+                                                        updatedDateValues.dateValues.delayInArriveTime = value;
+                                                        this.setState({updatedDateValues})
+                                                    }}
+                                                    plugins={[
+                                                        <TimePicker />
+                                                    ]}
+                                                >
+                                                    <Button
+                                                        onClick={() => {
+                                                            let updatedDateValues = {...this.state};
+                                                            updatedDateValues.dateValues.delayInArriveTime = {};
+                                                            this.setState({updatedDateValues})
+                                                        }
+                                                        }
+                                                    >
+                                                        ریست
+                                                    </Button>
+                                                </DatePicker>
                                                 <label className="placeholder">ساعت</label>
                                             </div>
                                         </>;
@@ -1804,7 +1836,36 @@ class ProfilePage extends Component {
                                                 <label className="placeholder">تاریخ</label>
                                             </div>
                                             <div className='input-report-box'>
-                                                <input type="text" ref={this.time} className="input" placeholder=" "/>
+                                                {/*<input type="text" ref={this.time} className="input" placeholder=" "/>*/}
+                                                <DatePicker
+                                                    ref={this.time}
+                                                    disableDayPicker
+                                                    format="HH:mm:ss"
+                                                    inputClass={`input form-control date-picker`}
+                                                    containerStyle={{
+                                                        width: "100%"
+                                                    }}
+                                                    value={this.state.dateValues.violationTime}
+                                                    onChange={(value) => {
+                                                        let updatedDateValues = {...this.state};
+                                                        updatedDateValues.dateValues.violationTime = value;
+                                                        this.setState({updatedDateValues})
+                                                    }}
+                                                    plugins={[
+                                                        <TimePicker />
+                                                    ]}
+                                                >
+                                                    <Button
+                                                        onClick={() => {
+                                                            let updatedDateValues = {...this.state};
+                                                            updatedDateValues.dateValues.violationTime = {};
+                                                            this.setState({updatedDateValues})
+                                                        }
+                                                        }
+                                                    >
+                                                        ریست
+                                                    </Button>
+                                                </DatePicker>
                                                 <label className="placeholder">ساعت</label>
                                             </div>
                                         </>;
@@ -2189,12 +2250,13 @@ class ProfilePage extends Component {
                 return (() => {
                     const date = this.state.dateValues.delayInArrivalDate;
                     const formattedDate = date.year + '/' + date.month + '/' + date.day
-                    const time = this.time.current.value;
+                    const time = this.state.dateValues.delayInArriveTime;
+                    const formattedTime = time.hour + ':' + time.minute;
 
                     const result = {
                         'title': this.state.reportType,
                         'date': formattedDate,
-                        'time': time
+                        'time': formattedTime
                     }
                     const newReports = this.state.report.concat(result)
                     this.setState({report: newReports})
@@ -2230,13 +2292,14 @@ class ProfilePage extends Component {
 
                     const date = this.state.dateValues.violationDate;
                     const formattedDate = date.year + '/' + date.month + '/' + date.day
-                    const time = this.time.current.value;
+                    const time = this.state.dateValues.violationTime;
+                    const formattedTime = time.hour + ':' + time.minute
                     const description = this.description.current.value;
 
                     const result = {
                         'title': this.state.reportType,
                         'date': formattedDate,
-                        'time': time,
+                        'time': formattedTime,
                         'description': description
                     }
 
