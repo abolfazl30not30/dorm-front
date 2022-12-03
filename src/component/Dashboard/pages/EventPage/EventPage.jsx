@@ -398,6 +398,8 @@ class EventPage extends Component {
 
             // console.log(updatedCustomEvents)
         }
+
+        await this.componentDidMount();
         this.setState({showType: false});
 
     }
