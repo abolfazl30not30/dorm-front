@@ -494,7 +494,9 @@ class PaymentPage extends Component {
 
     handleDateInput = (value) => {
         this.setState({dataPicker: value})
-        let convertDate = value.year + '/' + value.month + '/' + value.day;
+        let month = value.month < 10 ? ('0' + value.month) : value.month;
+        let day = value.day < 10 ? ('0' + value.day) : value.day;
+        let convertDate = value.year  + '/' + month + '/' + day;
         // let date = new Date(value._d);
         // let convertDate = date.getFullYear() + "/" + date.getMonth() + "/" + date.getDate() + " " + "00:" + "00:" + "00";
         this.setState({date: convertDate})

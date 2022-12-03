@@ -1,21 +1,12 @@
 import {Component, createRef} from "react";
 import "../../../../style/paymentHistory.css"
-import {DatePicker} from "react-persian-datepicker";
+import DatePicker from "react-multi-date-picker";
+import persian from "react-date-object/calendars/persian";
+import persian_fa from "react-date-object/locales/persian_fa";
+import {Button} from "@mui/material";
 
 class PaymentHistory extends Component {
     state = {
-        calStyles: {
-            calendarContainer: "calendarContainer",
-            dayPickerContainer: "dayPickerContainer",
-            monthsList: "monthsList",
-            daysOfWeek: "daysOfWeek",
-            dayWrapper: "dayWrapper",
-            selected: "selected",
-            heading: "heading",
-            next: "next",
-            prev: "prev",
-            title: "title",
-        },
         payment: [],
         paymentFilter: [],
         typeTransaction: 'all',
@@ -60,26 +51,146 @@ class PaymentHistory extends Component {
                             <label className='placeholder'>نوع تراکنش</label>
                         </div>
                         <div className='input-group-filter col-6 col-md my-2 px-2'>
-                            <DatePicker calendarStyles={this.state.calStyles}
-                                        inputFormat="jYYYY/jM/jD"
-                                        className='input form-control date-picker'
-                                        ref={this.startDate}
-                                        onChange={value => {
-                                            this.handleDateStartInput(value)
-                                        }}
-                            />
-                            <label className='placeholder'>از تاریخ</label>
+                            {/*<DatePicker calendarStyles={this.state.calStyles}*/}
+                            {/*            inputFormat="jYYYY/jM/jD"*/}
+                            {/*            className='input form-control date-picker'*/}
+                            {/*            ref={this.startDate}*/}
+                            {/*            onChange={value => {*/}
+                            {/*                this.handleDateStartInput(value)*/}
+                            {/*            }}*/}
+                            {/*/>*/}
+                            {/*<label className='placeholder'>از تاریخ</label>*/}
+
+                            <DatePicker
+                                // fixMainPosition={false}
+                                calendarPosition={`top`}
+                                digits={['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']}
+                                format={`YYYY/MM/DD`}
+
+
+                                containerStyle={{
+                                    width: "100%"
+                                }}
+
+                                inputClass={`input form-control`}
+                                value={this.state.dateStart}
+                                onChange={(value) => {
+                                    this.handleDateStartInput(value)
+                                }}
+
+                                mapDays={({ date }) => {
+                                    let props = {}
+                                    let isWeekend = [6].includes(date.weekDay.index)
+
+                                    if (isWeekend)
+                                        props.className = "highlight highlight-red";
+
+                                    return props
+                                }}
+
+                                weekDays={
+                                    [
+                                        ["شنبه", "Sat"],
+                                        ["یکشنبه", "Sun"],
+                                        ["دوشنبه", "Mon"],
+                                        ["سه شنبه", "Tue"],
+                                        ["چهارشنبه", "Wed"],
+                                        ["پنجشنبه", "Thu"],
+                                        ["جمعه", "Fri"],
+                                    ]
+                                }
+
+                                calendar={persian}
+                                locale={persian_fa}
+
+                            >
+                                <Button
+                                    onClick={() => {
+                                        this.setState({dateStart: {}})
+                                    }
+                                    }
+                                >
+                                    ریست
+                                </Button>
+                            </DatePicker>
+                            <label className="placeholder" style={{
+                                top: '-8px',
+                                backgroundColor: '#fff',
+                                color: '#2a2e32b3',
+                                padding: '0 0.4rem',
+                                opacity: '1',
+                            }}>از تاریخ</label>
                         </div>
                         <div className='input-group-filter col-6 col-md my-2 px-2'>
-                            <DatePicker calendarStyles={this.state.calStyles}
-                                        inputFormat="jYYYY/jM/jD"
-                                        className='input form-control'
-                                        ref={this.endDate}
-                                        onChange={value => {
-                                            this.handleDateEndInput(value)
-                                        }}
-                            />
-                            <label className='placeholder'>تا تاریخ</label>
+                            {/*<DatePicker calendarStyles={this.state.calStyles}*/}
+                            {/*            inputFormat="jYYYY/jM/jD"*/}
+                            {/*            className='input form-control'*/}
+                            {/*            ref={this.endDate}*/}
+                            {/*            onChange={value => {*/}
+                            {/*                this.handleDateEndInput(value)*/}
+                            {/*            }}*/}
+                            {/*/>*/}
+                            {/*<label className='placeholder'>تا تاریخ</label>*/}
+
+                            <DatePicker
+                                // fixMainPosition={false}
+                                calendarPosition={`top`}
+                                digits={['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']}
+                                format={`YYYY/MM/DD`}
+
+
+                                containerStyle={{
+                                    width: "100%"
+                                }}
+
+                                inputClass={`input form-control`}
+                                value={this.state.dateEnd}
+                                onChange={(value) => {
+                                    this.handleDateEndInput(value)
+                                }}
+
+                                mapDays={({ date }) => {
+                                    let props = {}
+                                    let isWeekend = [6].includes(date.weekDay.index)
+
+                                    if (isWeekend)
+                                        props.className = "highlight highlight-red";
+
+                                    return props
+                                }}
+
+                                weekDays={
+                                    [
+                                        ["شنبه", "Sat"],
+                                        ["یکشنبه", "Sun"],
+                                        ["دوشنبه", "Mon"],
+                                        ["سه شنبه", "Tue"],
+                                        ["چهارشنبه", "Wed"],
+                                        ["پنجشنبه", "Thu"],
+                                        ["جمعه", "Fri"],
+                                    ]
+                                }
+
+                                calendar={persian}
+                                locale={persian_fa}
+
+                            >
+                                <Button
+                                    onClick={() => {
+                                        this.setState({dateEnd: {}})
+                                    }
+                                    }
+                                >
+                                    ریست
+                                </Button>
+                            </DatePicker>
+                            <label className="placeholder" style={{
+                                top: '-8px',
+                                backgroundColor: '#fff',
+                                color: '#2a2e32b3',
+                                padding: '0 0.4rem',
+                                opacity: '1',
+                            }}>تا تاریخ</label>
                         </div>
                         <div className='input-group-filter col-6 col-md my-2 px-2'>
                             <input type="text" className='input' ref={this.count}/>
@@ -130,14 +241,20 @@ class PaymentHistory extends Component {
 
     handleDateStartInput = (value) => {
         // this.setState({dataPickerStart: value})
-        let date = new Date(value._d);
-        let convertDate = date.getFullYear() + "/" + date.getMonth() + "/" + date.getDate() + " 00:00:00";
+        // let date = new Date(value._d);
+        // let convertDate = date.getFullYear() + "/" + date.getMonth() + "/" + date.getDate() + " 00:00:00";
+        let month = value.month < 10 ? ('0' + value.month) : value.month;
+        let day = value.day < 10 ? ('0' + value.day) : value.day;
+        let convertDate = value.year  + '/' + month + '/' + day;
         this.setState({dateStart: convertDate})
     }
     handleDateEndInput = (value) => {
         // this.setState({dataPickerEnd: value})
-        let date = new Date(value._d);
-        let convertDate = date.getFullYear() + "/" + date.getMonth() + "/" + date.getDate() + " 00:00:00";
+        // let date = new Date(value._d);
+        // let convertDate = date.getFullYear() + "/" + date.getMonth() + "/" + date.getDate() + " 00:00:00";
+        let month = value.month < 10 ? ('0' + value.month) : value.month;
+        let day = value.day < 10 ? ('0' + value.day) : value.day;
+        let convertDate = value.year  + '/' + month + '/' + day;
         this.setState({dateEnd: convertDate})
     }
     handleSubmit = async () => {
