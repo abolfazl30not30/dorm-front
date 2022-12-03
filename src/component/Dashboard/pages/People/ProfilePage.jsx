@@ -67,6 +67,7 @@ class ProfilePage extends Component {
         hasPersonnelImg: false,
         hasRegister: false,
         hasRegisterUni: false,
+        registerLoading : false,
 
     }
     date = createRef();
@@ -827,7 +828,7 @@ class ProfilePage extends Component {
 
                                                                 p.title === 'penalty' ? (
                                                                     <tr>
-                                                                        <td>{p.penaltyType}</td>
+                                                                        <td>{p.penaltyType === "financial" ? ("نقدی") : ("تنبیهی")}</td>
                                                                         <td>{p.penaltyAmount}</td>
                                                                         <td>{p.description}</td>
                                                                         <td>
@@ -1641,8 +1642,8 @@ class ProfilePage extends Component {
                                         return (<>
                                             <div className='input-report-box'>
                                                 <select ref={this.typePenalty} className='input'>
-                                                    <option value='cash'>نقدی</option>
-                                                    <option value='punishment'>تنبیهی</option>
+                                                    <option value='financial'>نقدی</option>
+                                                    <option value='nonFinancial'>تنبیهی</option>
                                                 </select>
                                                 <label className="placeholder">نوع جریمه</label>
                                             </div>
@@ -1947,7 +1948,7 @@ class ProfilePage extends Component {
                                 }
                             })()}
                             <div className="input-report-box">
-                                <button className='btn-done w-100'>ثبت</button>
+                                <button className='btn-done w-100' disabled={this.state.registerLoading}>ثبت</button>
                             </div>
                         </form>
                     </Modal.Body>
@@ -2007,11 +2008,12 @@ class ProfilePage extends Component {
         switch (type) {
             case 'cleaning':
                 return (async () => {
+                    this.setState({registerLoading:true});
                     const date = this.state.dateValues.cleaningDate;
                     const formattedDate = date.year + '/' + date.month + '/' + date.day
                     const description = this.description.current.value;
                     const result = {
-                        'title': this.state.reportType,
+                        'title': "cleaning",
                         'date': formattedDate,
                         'checkCleaning': true,
                         'description': description,
@@ -2025,25 +2027,27 @@ class ProfilePage extends Component {
                             'Content-Type': 'application/json'
                         },
                         body: JSON.stringify(result)
-                    });
-                    const content = await rawResponse.json();
-                    console.log(content);
-
-                    const newReports = this.state.report.concat(result);
-                    this.setState({report: newReports});
-                    this.setState({show: false});
-
-                    console.log(formattedDate)
+                    }).then((response) => response.json())
+                        .then((result) => {
+                            this.setState({registerLoading:false});
+                            const newReports = this.state.report.concat(result);
+                            this.setState({report: newReports});
+                            this.setState({show: false});
+                        })
+                        .catch((error) => {
+                            this.setState({registerLoading:false})
+                        });
                 })();
             case 'delayInArrival':
                 return (async () => {
+                    this.setState({registerLoading:true});
                     const date = this.state.dateValues.delayInArrivalDate;
                     const formattedDate = date.year + '/' + date.month + '/' + date.day
                     const time = this.state.dateValues.delayInArriveTime;
                     const formattedTime = time.hour + ':' + time.minute;
 
                     const result = {
-                        'title': this.state.reportType,
+                        'title': "delayInArrival",
                         'date': formattedDate,
                         'hour': formattedTime,
                         'personId': this.state.personObject.id
@@ -2056,18 +2060,21 @@ class ProfilePage extends Component {
                             'Content-Type': 'application/json'
                         },
                         body: JSON.stringify(result)
-                    });
-                    const content = await rawResponse.json();
-                    console.log(content);
-
-                    const newReports = this.state.report.concat(result)
-                    this.setState({report: newReports})
-                    this.setState({show: false})
-                    console.log(this.state.report);
+                    }).then((response) => response.json())
+                        .then((result) => {
+                            this.setState({registerLoading:false});
+                            const newReports = this.state.report.concat(result)
+                            this.setState({report: newReports})
+                            this.setState({show: false})
+                        })
+                        .catch((error) => {
+                            this.setState({registerLoading:false})
+                        });
                 })();
-
+                
             case 'exit':
                 return (async () => {
+                    this.setState({registerLoading:true});
                     const startDate = this.state.dateValues.exitStartDate;
                     const endDate = this.state.dateValues.exitEndDate;
                     const formattedStartDate = startDate.year + '/' + startDate.month + '/' + startDate.day;
@@ -2076,7 +2083,7 @@ class ProfilePage extends Component {
                     const destinationPhoneNumber = this.destinationPhoneNumber.current.value;
                     const relation = this.relation.current.value;
                     const result = {
-                        'title': this.state.reportType,
+                        'title': "exit",
                         "startDate": formattedStartDate,
                         "endDate": formattedEndDate,
                         'destinationAddress': destinationAddress,
@@ -2092,24 +2099,29 @@ class ProfilePage extends Component {
                             'Content-Type': 'application/json'
                         },
                         body: JSON.stringify(result)
-                    });
-                    const content = await rawResponse.json();
-                    console.log(content);
-
-                    const newReports = this.state.report.concat(result)
-                    this.setState({report: newReports})
-                    this.setState({show: false})
+                    }).then((response) => response.json())
+                        .then((result) => {
+                            this.setState({registerLoading:false})
+                            const newReports = this.state.report.concat(result)
+                            this.setState({report: newReports})
+                            this.setState({show: false})
+                        })
+                        .catch((error) => {
+                            this.setState({registerLoading:false})
+                        });
+                    
                 })();
 
             case 'violation':
                 return (async () => {
+                    this.setState({registerLoading:true});
                     const date = this.state.dateValues.violationDate;
                     const formattedDate = date.year + '/' + date.month + '/' + date.day
                     const time = this.state.dateValues.violationTime;
                     const formattedTime = time.hour + ':' + time.minute
                     const description = this.description.current.value;
                     const result = {
-                        'title': this.state.reportType,
+                        'title': "violation",
                         'date': formattedDate,
                         'hour': formattedTime,
                         'description': description,
@@ -2123,22 +2135,26 @@ class ProfilePage extends Component {
                             'Content-Type': 'application/json'
                         },
                         body: JSON.stringify(result)
-                    });
-                    const content = await rawResponse.json();
-
-                    console.log(content);
-
-                    const newReports = this.state.report.concat(result)
-                    this.setState({report: newReports})
-                    this.setState({show: false})
+                    }).then((response) => response.json())
+                        .then((result) => {
+                            this.setState({registerLoading:false})
+                            const newReports = this.state.report.concat(result)
+                            this.setState({report: newReports})
+                            this.setState({show: false})
+                        })
+                        .catch((error) => {
+                            this.setState({registerLoading:false})
+                        });
+                    
                 })();
             case 'penalty':
                 return (async () => {
+                    this.setState({registerLoading:true});
                     const description = this.description.current.value;
                     const typePenalty = this.typePenalty.current.value;
                     const penaltyAmount = this.penaltyAmount.current.value;
                     const result = {
-                        'title': this.state.reportType,
+                        'title': "penalty",
                         'penaltyType': typePenalty,
                         'description': description,
                         'penaltyAmount': penaltyAmount,
@@ -2152,18 +2168,22 @@ class ProfilePage extends Component {
                             'Content-Type': 'application/json'
                         },
                         body: JSON.stringify(result)
-                    });
-                    const content = await rawResponse.json();
-                    console.log(content);
-
-                    const newReports = this.state.report.concat(result)
-                    this.setState({report: newReports})
-                    this.setState({show: false})
-
+                        
+                    }).then((response) => response.json())
+                        .then((res) => {
+                            this.setState({registerLoading:false})
+                            const newReports = this.state.report.concat(result)
+                            this.setState({report: newReports})
+                            this.setState({show: false})
+                        })
+                        .catch((error) => {
+                            this.setState({registerLoading:false})
+                        });
+                    
                 })();
             case 'discharge':
                 return (async () => {
-
+                    this.setState({registerLoading:true});
                     const dischargeDateAnnounce = this.state.dateValues.dischargeDateAnnounce;
                     const dischargeDate = this.state.dateValues.dischargeDate;
                     const depositReturnDate = this.state.dateValues.depositReturnDate;
@@ -2176,7 +2196,7 @@ class ProfilePage extends Component {
                     const deductionOfLossesReason = this.deductionOfLossesReason.current.value;
                     const refundableAmount = this.refundableAmount.current.value;
                     const result = {
-                        'title': this.state.reportType,
+                        'title': "discharge",
                         'startDate': formattedDischargeDateAnnounce,
                         'endDate': formattedDischargeDate,
                         'date': formattedDepositReturnDate,
@@ -2193,28 +2213,31 @@ class ProfilePage extends Component {
                             'Content-Type': 'application/json'
                         },
                         body: JSON.stringify(result)
-                    });
+                    }).then((response) => response.json())
+                        .then((res) => {
+                            this.setState({registerLoading:false});
+                            const newReports = this.state.report.concat(result)
+                            this.setState({report: newReports})
+                            this.setState({show: false})
 
-                    const content = await rawResponse.json();
-                    console.log(content);
-
-                    const newReports = this.state.report.concat(result)
-                    this.setState({report: newReports})
-                    this.setState({show: false})
-
+                        })
+                        .catch((error) => {
+                            this.setState({registerLoading:false})
+                        });
+                    
                 })();
 
             case 'cancelContract':
                 return (async () => {
-
+                    this.setState({registerLoading:true});
                     const date = this.state.dateValues.cancelContractDate;
                     const formattedDate = date.year + '/' + date.month + '/' + date.day;
                     const reason = this.reason.current.value;
                     const deductionOfLosses = this.deductionOfLosses.current.value;
                     const refundableAmount = this.refundableAmount.current.value;
                     const result = {
-                        'title': this.state.reportType,
-                        'data': formattedDate,
+                        'title': "cancelContract",
+                        'date': formattedDate,
                         'description': reason,
                         'penaltyAmount': deductionOfLosses,
                         'returnedAmount': refundableAmount,
@@ -2228,14 +2251,17 @@ class ProfilePage extends Component {
                             'Content-Type': 'application/json'
                         },
                         body: JSON.stringify(result)
-                    });
-                    const content = await rawResponse.json();
-                    console.log(content);
-
-                    const newReports = this.state.report.concat(result)
-                    this.setState({report: newReports})
-                    this.setState({show: false})
-
+                    }).then((response) => response.json())
+                        .then((res) => {
+                            this.setState({registerLoading:false})
+                            const newReports = this.state.report.concat(result)
+                            this.setState({report: newReports})
+                            this.setState({show: false})
+                        })
+                        .catch((error) => {
+                            this.setState({registerLoading:false})
+                        });
+                    
                 })();
         }
     }
@@ -2248,12 +2274,20 @@ class ProfilePage extends Component {
         this.setState({showDeleteModalReport: false});
     }
 
-    handleDeleteReport = () => {
-        let index = this.state.report.indexOf(this.state.reportTemp)
-        let updatedReport = [...this.state.report];
-        updatedReport.splice(index, 1);
-        this.setState({report: updatedReport});
-        this.setState({showDeleteModalReport: false})
+    handleDeleteReport = async () => {
+        await fetch(`https://api.saadatportal.com/api/v1/record/${this.state.reportTemp.id}`, {
+            method: 'DELETE',
+        }).then(res => res.text())
+            .then((res) =>{
+                let index = this.state.report.indexOf(this.state.reportTemp)
+                let updatedReport = [...this.state.report];
+                updatedReport.splice(index, 1);
+                this.setState({report: updatedReport});
+                this.setState({showDeleteModalReport: false})
+            }).catch((error)=>{
+                console.log(error);
+                this.setState({showDeleteModalReport: false})
+            })
     }
 
     downloadFile = async (fileId) => {
