@@ -83,7 +83,6 @@ class RoomAndBed extends Component {
     };
 
     handleSubmit = async () =>{
-
         const rawResponse = await fetch(`https://api.saadatportal.com/api/v1/bed/${this.state.bedOpen.id}`, {
             method: 'PATCH',
             headers: {
@@ -91,16 +90,24 @@ class RoomAndBed extends Component {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({personId : this.state.selectedPeople , empty :  false})
-        });
+        }).then((res)=>res.json())
+            .then((result)=>{
+                let updateState = [...this.state.rooms];
+                let roomIndex = this.state.rooms.indexOf(this.state.roomAccessory);
 
-        const content = await rawResponse.json();
+                let bedIndex =  this.state.rooms[roomIndex].beds.indexOf(this.state.bedOpen);
+                updateState[roomIndex].beds[bedIndex].empty = false;
+                this.setState({rooms:updateState});
+            }).catch((error)=>{
+                console.log(error)
+            })
+
         this.handleClose();
     }
 
     handleShow = async (bed, room) => {
         this.setState({roomAccessory: room})
         this.setState({bedOpen: bed})
-        console.log(bed);
         if(bed.empty === false){
             let person = {}
             const response = await fetch(`https://api.saadatportal.com/api/v1/person/${bed.person}`).then((response) => response.json())
@@ -132,9 +139,11 @@ class RoomAndBed extends Component {
     }
 
     //search
-    handleSearchInput = (e) =>{
+    handleSearchInput = async (e) =>{
         const value = e.target.value;
         this.setState({searchInput:value});
+        const response = await fetch(`https://api.saadatportal.com/api/v1/characteristic/search?${this.state.searchType}=${e.target.value}`).then((response) => response.json())
+            .then((data) => this.setState({peopleFound: data}));
     }
 
     handleSearchBtn = async () =>{

@@ -106,9 +106,11 @@ class SearchAccount extends Component {
     }
 
     //search
-    handleSearchInput = (e) =>{
+    handleSearchInput = async (e) =>{
         const value = e.target.value;
         this.setState({searchInput:value});
+        const response = await fetch(`https://api.saadatportal.com/api/v1/characteristic/search?${this.state.searchType}=${e.target.value}`).then((response) => response.json())
+            .then((data) => this.setState({accountFound: data}));
     }
 
     handleSearchBtn = async () =>{
