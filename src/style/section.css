@@ -1,0 +1,9 @@
+.section-container {
+    background-color: #fff;
+    width: 100%;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 10px;
+    min-height: 100px;
+    box-shadow: 0 0 6px 0 #0000002e;
+}

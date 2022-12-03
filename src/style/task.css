@@ -1,0 +1,10 @@
+.task-container {
+    background-color: #EBEBEB;
+    border-radius: 0 0 10px 10px;
+}
+
+.delete-btn {
+    height: 35px;
+    border: none;
+    border-radius: 10px 10px 0 0;
+}

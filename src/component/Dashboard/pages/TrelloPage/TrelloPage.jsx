@@ -1,555 +1,680 @@
-import {Component, createRef} from "react";
-import Board from 'react-trello'
-import {Modal} from "react-bootstrap";
-import {EditText} from "react-edit-text";
-import DatePicker from "react-multi-date-picker";
-import TimePicker from "react-multi-date-picker/plugins/time_picker";
-
-import AddCardButton from "./CustomComponents/AddCardButton";
-import Card from "./CustomComponents/Card";
-import NewCardForm from "./CustomComponents/NewCardForm";
-import '../../../../style/trelloStyle.css';
-import {Button} from "@mui/material";
+import React, {Component} from "react";
+import Section from "./section";
+import TaskContext from "../../../../contexts/tasks";
+import Modal from "react-bootstrap/Modal";
+import {Button, FormControl, InputLabel, MenuItem, Paper, Select} from "@mui/material";
+import {DragDropContext} from "react-beautiful-dnd";
 import Form from "react-bootstrap/Form";
 import {BiSearch} from "react-icons/bi";
-// import React from "@types/react";
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import '../../../../style/registerPage.css';
+import '../../../../style/paymentHistory.css';
+import '../../../../style/trelloPage.css';
+import NumberPicker from "react-widgets/NumberPicker";
+import "react-widgets/styles.css";
+import {MdDone} from "react-icons/md";
+import persian from "react-date-object/calendars/persian";
+import persian_fa from "react-date-object/locales/persian_fa";
+import DatePicker from "react-multi-date-picker";
 
-class TrelloPage extends Component{
+class TrelloPage extends Component {
+    state = {
+        taskPersonnel: {},
+        selectedParent: {},
+        parentsFound: [],
+        searchBase: "fullName",
+        searchContent: "",
+        showChangeParentModal: false,
+        taskClicked: false,
+        NewTaskClicked: false,
+        clickedTask: {},
+        tasks: [],
+        tempName: "",
+        tempDescription: "",
+        tempDueDate: {},
+        tempHourTimeLog: 0,
+        tempMinuteTimeLog: 0,
+        tempPriority: "",
+        tempPersonnelId: "",
+        parentNotFound: false
 
-    constructor(props) {
-        super(props);
-        this.addTagInputs = createRef();
-        this.selectPriorityRef = createRef();
     }
 
+    handleTaskClicked = async (id) => {
+        this.setState({taskClicked: true})
+        const targetTask = {...this.state.tasks.find(task => task.id === id)}
+        this.setState({clickedTask: targetTask, tempDueDate: targetTask.dueDate})
+        const Hour = parseInt(targetTask.timeLog)
+        const Minute = Math.ceil((targetTask.timeLog - Hour)*60)
+        const getParent = await fetch(`https://api.saadatportal.com/api/v1/characteristic/search?parentId=${targetTask.personnelId}`)
+            .then((response) => response.json()).then((data) => {this.setState({taskPersonnel: data[0]})})
 
-    state = {
-        showChangeParentModal: false,
-        parentSelected: '',
+        this.setState({
+            tempHourTimeLog: Hour,
+            tempMinuteTimeLog: Minute
+        })
+    }
 
-        // inputs in modal for changing parent
-        searchBase: '',
+// handler functions for new task button -------------------------------------------------------------------------------
+    onNewTask = () => {
+        this.setState({
+            selectedParent: {},
+            NewTaskClicked: true,
+            tempName: "",
+            tempDescription: "",
+            tempDueDate: {},
+            tempHourTimeLog: 0,
+            tempMinuteTimeLog: 0,
+            tempPriority: "",
+            tempPersonnelId: "",
+        })
+    };
 
-        // Selected Card
-        selectedCard: '',
+    handleName = (input) => {
+        this.setState({tempName: input.target.value})
+    }
 
-        // For Modals
-        cardClickedId: '',
-        cardClickedLane: '',
-        timeLogPlaceholder: '',
-        dueDatePlaceholder: '',
-        priorityDefaultValue: '',
+    handleDescription = (input) => {
+        this.setState({tempDescription: input.target.value})
+    }
 
-        parentsFound: [
-            {
-                type: 'first',
-                id: '12332',
+    handleHourTimeLog = (input) => {
+        this.setState({tempHourTimeLog: input})
+    }
+
+    handleMinuteTimeLog = (input) => {
+        this.setState({tempMinuteTimeLog: input})
+    }
+
+    handleDueDate = (input) => {
+        this.setState({tempDueDate: input})
+    }
+
+    handlePriority = (input) => {
+        this.setState({tempPriority: input.target.value})
+    }
+
+    onClose = () => {
+        this.setState({NewTaskClicked: false})
+        this.setState({taskClicked: false})
+    };
+
+    onDone = async () => {
+        const parsedTimeLog = this.state.tempHourTimeLog + (this.state.tempMinuteTimeLog / 60)
+        let year = this.state.tempDueDate.year;
+        let month = this.state.tempDueDate.month;
+        let day = this.state.tempDueDate.day;
+
+        const formattedDueDate = year + '/' + month + '/' + day;
+        const postNewTask = await fetch('https://api.saadatportal.com/api/v1/task', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
             },
-            {
-                type: 'second',
-                id: '12425',
+            body: JSON.stringify({
+                name: this.state.tempName,
+                timeLog: parsedTimeLog,
+                dueDate: formattedDueDate,
+                description: this.state.tempDescription,
+                priority: this.state.tempPriority,
+                status: "todo",
+                personnelId: this.state.selectedParent.parentId
+            })
+        })
+        this.setState({
+            tempName: "",
+            tempDescription: "",
+            tempDueDate: {},
+            tempHourTimeLog: 0,
+            tempMinuteTimeLog: 0,
+            tempPriority: "",
+            tempPersonnelId: "",})
+        this.onClose()
+
+
+        await this.componentDidMount();
+    };
+//----------------------------------------------------------------------------------------------------------------------
+// handler functions for edit task -------------------------------------------------------------------------------------
+    handleChangeName = (input) => {
+        const updatedTask = this.state.clickedTask;
+        updatedTask.name = input.target.value;
+        this.setState({clickedTask: updatedTask})
+    };
+
+    handleChangeHourTimeLog = (input) => {
+        this.setState({tempHourTimeLog: input})
+
+    }
+
+    handleChangeMinuteTimeLog = (input) => {
+        this.setState({tempMinuteTimeLog: input})
+    }
+
+    handleChangeDescription = (input) => {
+        const updatedTask = this.state.clickedTask;
+        updatedTask.description = input.target.value;
+        this.setState({clickedTask: updatedTask})
+    };
+
+    handleChangeDueDate = (input) => {
+        const updatedTask = this.state.clickedTask;
+        updatedTask.dueDate = input.target.value;
+        this.setState({clickedTask: updatedTask})
+    };
+
+    handleChangePriority = (input) => {
+        const updatedTask = this.state.clickedTask;
+        updatedTask.priority = input.target.value;
+        this.setState({clickedTask: updatedTask})
+    };
+
+    onSubmitChanges = async () => {
+        const updatedTask = {...this.state.clickedTask};
+        updatedTask.timeLog = this.state.tempHourTimeLog + (this.state.tempMinuteTimeLog / 60)
+
+        updatedTask.dueDate = this.state.tempDueDate
+        const patchTask = await fetch(`https://api.saadatportal.com/api/v1/task/${this.state.clickedTask.id}`, {
+            method: 'PATCH',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
             },
-            {
-                type: 'third',
-                id: '34494',
+            body: JSON.stringify(updatedTask)
+        })
+        await this.componentDidMount()
+        this.onClose()
+    };
+//----------------------------------------------------------------------------------------------------------------------
+// handler functions for drag and drop ---------------------------------------------------------------------------------
+    onDragEnd = async (result) => {
+        if (!result.destination) {
+            return;
+        }
+        if (result.destination.droppableId === result.source.droppableId) {
+            return;
+        }
+
+        const targetTask = this.state.tasks.find(task => task.id === result.draggableId)
+        const updatedTasks = [...this.state.tasks]
+        const index = updatedTasks.indexOf(targetTask);
+        targetTask.status = result.destination.droppableId;
+        updatedTasks[index] = targetTask;
+        this.setState({tasks: updatedTasks})
+        const patchTask = await fetch(`https://api.saadatportal.com/api/v1/task/${targetTask.id}`, {
+            method: 'PATCH',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(targetTask)
+        })
+        await this.componentDidMount()
+    }
+    handleDelete = async (id) => {
+        let updatedTasks = [...this.state.tasks]
+        updatedTasks = updatedTasks.filter((task) => {return task.id !== id});
+        this.setState({tasks: updatedTasks})
+        const deleteTask = await fetch(`https://api.saadatportal.com/api/v1/task/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
             }
-        ],
+        })
+        await this.componentDidMount()
+    }
 
-
-        showModal: false,
-
-        data :{
-            lanes: [
-                {
-                    editable: false,
-                    style: { width: '45%', alignItems: 'center', borderRadius: 20, color: '#000' ,backgroundColor: '#fff'},
-                    cardStyle: {backgroundColor: '#f9f9f9', boxShadow: '0px 2px 2px 0px #000'},
-                    // cardStyle: { width: 500},
-                    // style: {backgroundColor: 'yellow'},
-                    // cardStyle: { backgroundColor: 'blue' },
-                    id: 'lane1',
-                    title: 'انجام شده',
-                    cards: [
-                        {
-                            id: 'Card1',
-                            title: 'Write Blog',
-                            description: 'Can AI make memes',
-                            label: '30 mins' ,
-                            dueDate: '2022/2/2',
-                            timeLog: '2',
-                            editable: false
-                        },
-                        {
-                            id: 'Card2',
-                            title: 'Pay Rent',
-                            description: 'Transfer via NEFT',
-                            label: '5 mins',
-                            editable: false,
-                        }
-                    ]
-                },
-                {
-                    editable: false,
-                    style: { width: '45%', alignItems: 'center', borderRadius: 20, color: '#000' ,backgroundColor: '#fff'},
-                    cardStyle: {backgroundColor: '#f9f9f9', boxShadow: '0px 2px 2px 0px #000'},
-                    id: 'lane3',
-                    title: 'در حال انجام',
-                    cards: []
-                },
-                {
-                    editable: true,
-                    style: { width: '45%', alignItems: 'center', borderRadius: 20, color: '#000' ,backgroundColor: '#fff'},
-                    cardStyle: {backgroundColor: '#f9f9f9', boxShadow: '0px 2px 2px 0px #000'},
-                    id: 'lane2',
-                    title: 'وظیفه های جدید',
-                    cards: []
-                },
-            ]
-
+    handleParentNotFound = () => {
+        if (this.state.parentsFound.length === 0) {
+            this.setState({parentNotFound: true})
+        }
+        else {
+            this.setState({parentNotFound: false})
         }
     }
 
+    handleSearch = async () => {
+        const getParents = await fetch(`https://api.saadatportal.com/api/v1/characteristic/search?${this.state.searchBase}=${this.state.searchContent}`)
+            .then((response) => response.json())
+            .then((data) => this.setState({parentsFound : data}, () => {this.handleParentNotFound()}))
+    }
+
+//----------------------------------------------------------------------------------------------------------------------
+
+    componentDidMount = async () => {
+        const getTasks = await fetch('https://api.saadatportal.com/api/v1/task').then((response) => response.json())
+            .then((data) => this.setState({tasks : data}))
+    }
+
     render() {
-
-        const components = {
-            AddCardLink: AddCardButton,
-            Card: Card,
-            NewCardForm : NewCardForm,
-                };
         return (
-            <>
-                <div>
-                    <Board
-                        onDataChange={(newData) => this.setState({data: newData})}
-                        components={components}
-                        data={this.state.data}
-                        style={{backgroundColor: 'rgb(247, 247, 247)'}}
+            <DragDropContext
+            onDragEnd={this.onDragEnd}
+            onDragUpdate={this.onDragUpdate}>
+                <div style={{overflowX: "hidden"}}>
+                    <TaskContext.Provider
+                        value={{
+                            name: this.state.name,
+                            email: this.state.email,
+                            tasks: this.state.tasks,
+                            taskClicked: this.state.taskClicked,
+                            newTaskClicked: this.state.NewTaskClicked,
+                            handleTaskClicked: this.handleTaskClicked,
+                            onClose: this.onClose,
+                            onNewTask: this.onNewTask,
+                            handleDelete: this.handleDelete
+                        }}>
 
-                        onCardClick={(cardId, metadata, laneId) => {
-                            this.setState({cardClickedId : cardId});
-                            this.setState({cardClickedLane : laneId});
-                            this.handleOpen();
-
-                            console.log(this.state.data.lanes)
-
-                            this.state.data.lanes.map((lane) => {
-                                if (lane.id === laneId) {
-                                    for (let i = 0; i < lane.cards.length; i++) {
-                                        if (lane.cards[i].id === cardId) {
-                                            this.setState({timeLogPlaceholder : lane.cards[i].timeLog});
-                                            this.setState({dueDatePlaceholder : lane.cards[i].dueDate});
-                                            this.setState({priorityDefaultValue : lane.cards[i].priority});
-                                            this.setState({selectedCard: lane.cards[i]})
-                                        }
-                                    }
-                                }
-                            })
-
-                            // console.log(cardId)
-                            // console.log(laneId)
-
-                            // console.log(this.state.cardClickedId);
-                            // console.log(this.state.cardClickedLane);
-                        }}
-
-                    />
-                </div>
-
-                <Modal centered show={this.state.showModal} onHide={() => {
-                    this.handleClose()
-                }}>
-                    <Modal.Header closeButton>
-                        <Modal.Title>
-                            {
-                                this.state.data.lanes.map((lane, key) => {
-                                    if (lane.id === this.state.cardClickedLane) {
-                                        for (let i = 0; i < lane.cards.length; i++) {
-                                            if (lane.cards[i].id === this.state.cardClickedId) {
-                                                // console.log('123')
-                                                return(
-                                                    <div key={key}>
-                                                        <div>
-                                                            <div className="title">
-                                                                <EditText className="editable"
-                                                                          showEditButton
-                                                                          onSave={(object) => this.handleEditTitle(object)}
-                                                                          defaultValue={lane.cards[i].title}
-                                                                />
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                );
-                                            }
-                                        }
-                                    }
-                                })
-                            }
-                        </Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body className="justify-content-center">
-                        {
-                            this.state.data.lanes.map((lane, key) => {
-                                if (lane.id === this.state.cardClickedLane) {
-                                    for (let i = 0; i < lane.cards.length; i++) {
-                                        if (lane.cards[i].id === this.state.cardClickedId) {
-                                            return(
-                                                <div key={key}>
-                                                    <div>
-                                                        <div className="title">
-                                                            <label className={'m-۱'}>
-                                                                توضیحات :
-                                                            </label>
-                                                            <EditText className={'editable m-3'}
-                                                                      showEditButton
-                                                                      onSave={(object) => this.handleEditDescription(object)}
-                                                                      defaultValue={lane.cards[i].description}
-                                                            />
-                                                        </div>
-
-                                                        <div className={'d-flex mb-3 row'}>
-                                                            <div className={'col-6'}>
-                                                                <label>
-                                                                    {/*time log:*/}
-                                                                    زمان صرف شده:
-                                                                </label>
-                                                                <DatePicker
-                                                                    style={{
-                                                                        marginRight: '5%',
-                                                                        width: "50%",
-                                                                        boxSizing: "border-box",
-                                                                        height: "26px"
-                                                                    }}
-                                                                    disableDayPicker
-                                                                    format="HH:mm"
-                                                                    plugins={[
-                                                                        <TimePicker hideSeconds/>
-                                                                    ]}
-                                                                    placeholder=
-                                                                        {this.state.timeLogPlaceholder !== undefined
-                                                                            ? (this.state.timeLogPlaceholder + 'h')
-                                                                            : this.state.timeLogPlaceholder}
-                                                                    // value={this.handleTimeLogValue()}
-                                                                    onChange={val => {
-                                                                        // this.updateField('timeLog', val);
-                                                                        let time = "";
-                                                                        time += val.hour + ':';
-                                                                        time += val.minute;
-                                                                        // time += val.second;
-                                                                        this.handleEditTimeLog(time, 'timeLog');
-                                                                    }}
-                                                                />
-                                                            </div>
-                                                            <div className={'col-6'}>
-                                                                <label>
-                                                                    {/*due date:*/}
-                                                                    ددلاین:
-                                                                </label>
-                                                                <DatePicker
-                                                                    style={{
-                                                                        marginRight: '5%',
-                                                                        width: "50%",
-                                                                        boxSizing: "border-box",
-                                                                        height: "26px"
-                                                                    }}
-                                                                    format="YYYY/MM/DD"
-                                                                    placeholder={this.state.dueDatePlaceholder}
-                                                                    onChange={val => {
-                                                                        let time = "";
-                                                                        time += val.year + '/';
-                                                                        time += val.month + '/';
-                                                                        time += val.day;
-                                                                        this.handleEditTimeLog(time, 'dueDate');
-                                                                    }}
-                                                                />
-                                                            </div>
-                                                        </div>
-
-                                                        {
-                                                            lane.cards[i].parentId === ''
-                                                            ? (
-                                                                <>
-                                                                    <div className={'d-flex justify-content-center'}>
-
-                                                                        <Button variant={'contained'} onClick={() => this.setState({showChangeParentModal : true})}>
-                                                                            اضافه کردن پرسنل
-                                                                        </Button>
-
-                                                                    </div>
-                                                                </>
-                                                                )
-                                                                : (
-                                                                    <>
-                                                                        <div className={'d-flex mb-3 row'}>
-                                                                            <div className={'col-6'}>
-                                                                                <label>
-                                                                                    {/*parent type:*/}
-                                                                                    نوع پرسنل:
-                                                                                </label>
-                                                                                {
-                                                                                    lane.cards[i].parentType
-                                                                                }
-                                                                                {/*<input type={'text'} className={'form-control'}/> /!* doing nothing *!/*/}
-                                                                            </div>
-                                                                            <div className={'col-6'}>
-                                                                                <label>
-                                                                                    {/*parent ID:*/}
-                                                                                    آیدی پرسنل:
-                                                                                </label>
-                                                                                {/*<input type={'text'} className={'form-control'}/> /!* doing nothing *!/*/}
-                                                                                {
-                                                                                    lane.cards[i].parentId
-                                                                                }
-                                                                            </div>
-                                                                        </div>
-
-                                                                        <div className={'d-flex justify-content-center'}>
-
-                                                                            <Button variant={'contained'} onClick={() => this.setState({showChangeParentModal : true})}>
-                                                                                عوض کردن پرسنل
-                                                                            </Button>
-
-                                                                        </div>
-                                                                    </>
-                                                                )
-                                                        }
-
-                                                        <div className={'d-flex justify-content-center mb-3'}>
-                                                            <div className={'col-12'}>
-                                                                <label>
-                                                                    {/*priority:*/}
-                                                                    اولویت:
-                                                                </label>
-                                                                <select
-                                                                    ref={this.selectPriorityRef}
-                                                                    className="form-select"
-                                                                    defaultValue={this.state.priorityDefaultValue}
-                                                                    onChange={val => {
-                                                                        this.handleEditPriority(val.target.value);
-                                                                        this.setState({priorityDefaultValue : val.target.value})
-                                                                    }}
-                                                                    style={{
-                                                                        border: `4px solid ${this.state.priorityDefaultValue === undefined || this.state.priorityDefaultValue === 'medium' ? 'orange' : (
-                                                                            this.state.priorityDefaultValue === 'low' ? 'yellow' : (this.state.priorityDefaultValue === 'high' ? "red" : "rgba(0, 0, 255, 0.6)")
-                                                                        )}`
-                                                                    }}
-                                                                >
-                                                                    <option value={'medium'}>متوسط</option>
-                                                                    <option value={'low'}>کم</option>
-                                                                    <option value={'high'}>زیاد</option>
-                                                                    <option value={'urgent'}>ضروری</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-
-                                                    </div>
-                                                </div>
-                                            );
-                                        }
-                                    }
-                                }
-                            })
-                        }
-                    </Modal.Body>
-                </Modal>
-
-                <Modal
-                    centered show={this.state.showChangeParentModal}
-                    size={'xl'}
-                    onHide={() => this.setState({showChangeParentModal : false})}
-                >
-
-                    <Modal.Header>عوض کردن پرسنل</Modal.Header>
-                    <Modal.Body>
-                        <div className="row align-items-center ">
-                            <div className="col-md-1 col-sm-2 px-0"><label>براساس:</label></div>
-                            <div className="col-md-3 col-sm-6 px-0" style={{paddingLeft: "0"}}>
-                                <Form.Select aria-label="Default select example"
-                                             style={{height:"50px",fontSize:"14px"}}
-                                             value={this.state.searchBase}
-                                             onChange={(value) => this.setState({searchBase : value.target.value})}>
-                                    <option value="name">نام پرسنل</option>
-                                    <option value="type">آیدی پرسنل</option>
-                                    <option value="topic">نوع پرسنل</option>
-                                </Form.Select>
-                            </div>
-                            <div className="input-group-register col-md-7 col-sm-11 px-0 d-flex" style={{paddingRight: "0"}}>
-                                <input type="text"
-                                       id="inputSearch"
-                                       className="input"
-                                       placeholder="جسـتوجـو"
-                                       style={{padding:"6px"}}
-                                       onChange={(value) => this.setState({searchContent : value.target.value})}/>
-                                <button className="btn outline-secondary" onClick={() => this.handleSearch}><BiSearch fontSize="25px" onClick={this.handleSearchBtn}/>
-                                </button>
-                            </div>
+                        {/* New Task button*/}
+                        <div className={"d-flex justify-content-center"}>
+                            <button className="btn btn-lg btn-success w-50" onClick={this.onNewTask}>افزودن وظیفه</button>
                         </div>
 
-                        {
-                            this.state.parentsFound.map((parent, key) => {
-                                return (
-                                    <Button
-                                        onClick={() => {
-                                            this.setState({showChangeParentModal : false});
-                                            this.setState({parentSelected: parent})
-                                            this.handleEditParent(parent);
+                        {/* 3 main categories (To Do, In Progress, Done) */}
+                        <div className="justify-content-center d-flex row">
+                            <div className="col-xl-3 col-lg-3 ml-3 col-md-3 col-sm-10 col-10 mt-5">
+                                <h3 className="text-center" style={{userSelect: "none", marginRight: "20px"}}>برای انجام</h3>
+                                <Section index={0} status={"todo"}/>
+                            </div>
+                            <div className="col-xl-3 col-lg-3 ml-3 col-md-3 col-sm-10 col-10 mt-5">
+                                <h3 className="text-center" style={{userSelect: "none", marginRight: "20px"}}>در حال انجام</h3>
+                                <Section index={1} status={"inProgress"}/>
+                            </div>
+                            <div className="col-xl-3 col-lg-3 ml-3 col-md-3 col-sm-10 col-10 mt-5" style={{flexDirection: "column"}}>
+                                <h3 className="text-center" style={{userSelect: "none", marginRight: "20px"}}>انجام شده</h3>
+                                <Section index={3} status={"done"}/>
+                            </div>
+                        </div>
+                    </TaskContext.Provider>
+
+                    {/* New Task modal */}
+                    <Modal
+                        show={this.state.NewTaskClicked}
+                        onHide={this.onClose}
+                        centered={true}
+                    >
+                        <Modal.Header closeButton={true}>
+                            <Modal.Title>وظیفه جدید</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            <div>
+                                {/* Name field */}
+                                <div className="input-group-register col-md-4 col-12"
+                                     style={{width: '100%'}}
+                                >
+                                    <input type="text"
+                                           className={`input form-control`}
+                                           value={this.state.tempName}
+                                           onChange={this.handleName}
+                                           placeholder=" "
+                                    />
+                                    <label className="placeholder">
+                                        عنوان
+                                    </label>
+                                </div>
+
+                                {/* Time Log field */}
+                                <div className={"text-center d-flex justify-content-center"} style={{flexDirection: "column"}}>
+                                    <div className={"mt-3"}>زمان صرف شده</div>
+                                    <div className={"d-flex justify-content-center mt-1"}>
+                                        <div className={"text-center w-25"} style={{marginLeft: "10px"}}>
+                                            <label>ساعت</label>
+                                            <NumberPicker
+                                                value={this.state.tempHourTimeLog}
+                                                min={0}
+                                                precision={1}
+                                                defaultValue={1}
+                                                step={1}
+                                                onChange={this.handleHourTimeLog}
+                                                />
+                                        </div>
+                                        <div className={"text-center w-25"}>
+                                            <label>دقیقه</label>
+                                            <NumberPicker
+                                                value={this.state.tempMinuteTimeLog}
+                                                min={0}
+                                                precision={1}
+                                                defaultValue={0}
+                                                step={1}
+                                                onChange={this.handleMinuteTimeLog}
+                                                />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className={'input-group-register input-group-filter my-4 px-2'}>
+                                    <label className={''}>
+                                        تاریخ اتمام
+                                    </label>
+                                    {/* Date picker component */}
+                                    <DatePicker
+                                        placeholder=" "
+                                        calendarPosition={`top`}
+                                        digits={['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']}
+                                        format={`YYYY/MM/DD`}
+
+                                        containerStyle={{
+                                            width: "100%"
                                         }}
-                                        style={{width: '50%'}}
-                                        variant={'text'}
-                                        key={key}
+
+                                        inputClass={`input form-control`}
+                                        value={this.state.tempDueDate}
+                                        onChange={this.handleDueDate}
+
+                                        mapDays={({ date }) => {
+                                            let props = {}
+                                            let isWeekend = [6].includes(date.weekDay.index)
+
+                                            if (isWeekend)
+                                                props.className = "highlight highlight-red";
+
+                                            return props
+                                        }}
+
+                                        weekDays={
+                                            [
+                                                ["شنبه", "Sat"],
+                                                ["یکشنبه", "Sun"],
+                                                ["دوشنبه", "Mon"],
+                                                ["سه شنبه", "Tue"],
+                                                ["چهارشنبه", "Wed"],
+                                                ["پنجشنبه", "Thu"],
+                                                ["جمعه", "Fri"],
+                                            ]
+                                        }
+
+                                        calendar={persian}
+                                        locale={persian_fa}
+
                                     >
-                                        <table>
-                                            <thead>
-                                            <tr>
-                                                <th className={'p-3'}>آیدی پرسنل</th>
-                                                <th className={'p-3'}>نوع پرسنل</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            <tr>
-                                                <td>{parent.id}</td>
-                                                <td>{parent.type}</td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
+                                        <Button
+                                            onClick={() => {
+                                                this.setState({tempDueDate: {}})
+                                            }}
+                                        >
+                                            ریست
+                                        </Button>
+                                    </DatePicker>
 
-                                        {/*<div style={{color: 'red', display: 'block'}}>{parent.id}آیدی پرسنل: </div>*/}
-                                        {/*<div>&nbsp;</div>*/}
-                                        {/*<div>{parent.type}نوع پرسنل: </div>*/}
+                                </div>
 
-                                    </Button>
-                                )
-                            })
-                        }
+                                {/* Personnel section */}
+                                <div className={"m-2"}>
+                                    <div className={"d-flex justify-content-start"}>
+                                        <button className={'btn-done'} onClick={() => this.setState({
+                                            showChangeParentModal : true,
+                                            parentNotFound: false,
+                                            parentsFound: [],
+                                            searchContent: "",
+                                            searchBase: "fullName"
+                                        })}>
+                                            <MdDone className='ms-1'/>
+                                            انتخاب پرسنل
+                                        </button>
+                                    </div>
 
-                    </Modal.Body>
+                                    {/* Personnel data */}
+                                    <div className={"personnel-detail p-2"}>
+                                        <div style={{marginRight: "15px"}}>
+                                            نام پرسنل : {this.state.selectedParent.fullName}
+                                        </div>
+                                    </div>
+                                </div>
 
-                </Modal>
+                                {/* Priority selector field */}
+                                <div className={"d-flex justify-content-start m-2"}>
+                                    <FormControl className="w-50 mt-4">
+                                        <div className={"d-flex justify-content-center"}>
+                                            <InputLabel className={"priority-input text-center"} id="priority-field">اولویت</InputLabel>
+                                        </div>
+                                        <Select
+                                            value={this.state.tempPriority}
+                                            sx={{ height: 50, borderRadius: 2}}
+                                            labelId="priority-field"
+                                            label="اولویت"
+                                            onChange={this.handlePriority}
+                                        >
+                                            <MenuItem value={"low"}><div className={"d-flex align-items-center"}><div className={"bg-primary m-3"} style={{borderRadius: "50%", width: "15px", height: "15px",}}></div>کم</div></MenuItem>
+                                            <MenuItem value={"medium"}><div className={"d-flex align-items-center"}><div className={"bg-warning m-3"} style={{borderRadius: "50%", width: "15px", height: "15px"}}></div>متوسط</div></MenuItem>
+                                            <MenuItem value={"high"}><div className={"d-flex align-items-center"}><div className={"m-3"} style={{backgroundColor: "#F35C2E", borderRadius: "50%", width: "15px", height: "15px"}}></div>زیاد</div></MenuItem>
+                                            <MenuItem value={"urgent"}><div className={"d-flex align-items-center"}><div className={"m-3"} style={{backgroundColor: "#88000d", borderRadius: "50%", width: "15px", height: "15px"}}></div>ضروری</div></MenuItem>
+                                        </Select>
+                                    </FormControl>
+                                </div>
 
-            </>
+                                {/* Description field */}
+                                <div className="mt-4 input-group-register col-md-4 col-12"
+                                     style={{width: '100%'}}
+                                >
+                                    <input type="text"
+                                           value={this.state.tempDescription}
+                                           className={`input form-control`}
+                                           onChange={this.handleDescription}
+                                           placeholder=" "
+                                    />
+                                    <label className="placeholder">
+                                        توضیحات
+                                    </label>
+                                </div>
+                            </div>
+                        </Modal.Body>
+                        <Modal.Footer>
+
+                            {/* Close button for new task modal */}
+                            <button className="btn-done" onClick={this.onDone}>ثبت</button>
+
+                            {/* Done button for submitting new task */}
+                            <button className="btn btn-light" onClick={this.onClose}>بستن</button>
+
+                        </Modal.Footer>
+                    </Modal>
+
+                    {/* Edit Task modal */}
+                    <Modal
+                        show={this.state.taskClicked}
+                        onHide={this.onClose}
+                        centered={true}
+                    >
+                        <Modal.Header closeButton={true}>
+                            <h2>ویرایش وظیفه</h2>
+                        </Modal.Header>
+                        <Modal.Body>
+                            {/* Personnel data */}
+                            <div className={"personnel-detail p-2 mt-4"}>
+                                <div style={{marginRight: "15px"}}>
+                                    نام پرسنل : {this.state.taskPersonnel.fullName}
+                                </div>
+                            </div>
+
+                            <div className={"d-flex align-items-center justify-content-center mt-2"}>
+                                {/* Name editor field */}
+                                <div className="input-group-register col-md-4 col-12"
+                                     style={{width: '70%'}}
+                                >
+                                    <input type="text"
+                                           className={`input form-control`}
+                                           value={this.state.clickedTask.name}
+                                           onChange={this.handleChangeName}
+                                           placeholder=" "
+                                    />
+                                    <label className="placeholder">
+                                        عنوان
+                                    </label>
+                                </div>
+
+                                {/* Edit Priority selector field */}
+                                    <FormControl className="mt-4" style={{width: "30%", marginBottom: "31px"}}>
+                                        <div className={"d-flex justify-content-center"}>
+                                            <InputLabel className={"priority-input text-center"} id="priority-field">اولویت</InputLabel>
+                                        </div>
+                                        <Select
+                                            value={this.state.clickedTask.priority}
+                                            sx={{ height: 50, borderRadius: 2}}
+                                            labelId="priority-field"
+                                            label="اولویت"
+                                            onChange={this.handleChangePriority}
+                                        >
+                                            <MenuItem value={"low"}><div className={"d-flex align-items-center"}><div className={"bg-primary m-3"} style={{borderRadius: "50%", width: "15px", height: "15px",}}></div>کم</div></MenuItem>
+                                            <MenuItem value={"medium"}><div className={"d-flex align-items-center"}><div className={"bg-warning m-3"} style={{borderRadius: "50%", width: "15px", height: "15px"}}></div>متوسط</div></MenuItem>
+                                            <MenuItem value={"high"}><div className={"d-flex align-items-center"}><div className={"m-3"} style={{backgroundColor: "#F35C2E", borderRadius: "50%", width: "15px", height: "15px"}}></div>زیاد</div></MenuItem>
+                                            <MenuItem value={"urgent"}><div className={"d-flex align-items-center"}><div className={"m-3"} style={{backgroundColor: "#88000d", borderRadius: "50%", width: "15px", height: "15px"}}></div>ضروری</div></MenuItem>
+                                        </Select>
+                                    </FormControl>
+                            </div>
+
+                            {/* Date picker field */}
+
+                            {/* Edit Time Log field */}
+                            <div className={"text-center d-flex justify-content-center"} style={{flexDirection: "column"}}>
+                                <div className={"my-1"}>زمان صرف شده</div>
+                                <div className={"d-flex justify-content-center mt-1"}>
+                                    <div className={"text-center w-25"}>
+                                        <label>ساعت</label>
+                                        <NumberPicker
+                                            value={this.state.tempHourTimeLog}
+                                            min={0}
+                                            precision={1}
+                                            defaultValue={0}
+                                            step={1}
+                                            onChange={this.handleChangeHourTimeLog}
+                                        />
+                                    </div>
+                                    <div className={"text-center w-25"}>
+                                        <label>دقیقه</label>
+                                        <NumberPicker
+                                            value={this.state.tempMinuteTimeLog}
+                                            min={0}
+                                            precision={1}
+                                            defaultValue={1}
+                                            step={1}
+                                            onChange={this.handleChangeMinuteTimeLog}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            
+
+                            {/* Description editor field */}
+                            <div className="input-group-register col-md-4 col-12 mt-4"
+                                 style={{width: '100%'}}
+                            >
+                                <input type="text"
+                                       className={`input form-control`}
+                                       value={this.state.clickedTask.description}
+                                       onChange={this.handleChangeDescription}
+                                       placeholder=" "
+                                />
+                                <label className="placeholder">
+                                    توضیحات
+                                </label>
+                            </div>
+                        </Modal.Body>
+                        <Modal.Footer>
+                            {/* Close button for new task modal */}
+                            <button className="btn-done" onClick={this.onSubmitChanges}>ثبت</button>
+
+                            {/* Done button for submitting new task */}
+                            <button className="btn btn-light" onClick={this.onClose}>بستن</button>
+                        </Modal.Footer>
+
+                    </Modal>
+
+                    {/* Choose personnel modal */}
+                    <Modal
+                        centered show={this.state.showChangeParentModal}
+                        size={'xl'}
+                        onHide={() => this.setState({showChangeParentModal : false})}
+                    >
+                        <Modal.Header>انتخاب پرسنل</Modal.Header>
+                        <Modal.Body>
+                            <div className="row align-items-center">
+                                <div className="col-md-1 col-sm-2 px-0"><label>براساس:</label></div>
+                                <div className="col-md-3 col-sm-6 px-0">
+                                    <Form.Select aria-label="Default select example"
+                                                 style={{height:"50px",fontSize:"14px"}}
+                                                 value={this.state.searchBase}
+                                                 onChange={(value) => this.setState({searchBase : value.target.value})}>
+                                        <option value="fullName">نام پرسنل</option>
+                                        <option value="nationalCode">کد ملی پرسنل</option>
+                                        <option value="parentType">نوع پرسنل</option>
+                                    </Form.Select>
+                                </div>
+                                <div className="input-group-register col-md-7 col-sm-11 px-0 d-flex mt-2" style={{paddingRight: "0"}}>
+                                    <input type="text"
+                                           id="inputSearch"
+                                           className="input"
+                                           placeholder="جسـتوجـو"
+                                           style={{padding:"6px"}}
+
+                                           onChange={(value) => this.setState({searchContent : value.target.value})}/>
+                                    <button className="btn outline-secondary" onClick={this.handleSearch}><BiSearch fontSize="25px"/></button>
+                                </div>
+                            </div>
+
+                            <div>
+                                <Paper>
+                                    <TableContainer sx={{ maxHeight: 440 }}>
+                                        <Table stickyHeader aria-label="sticky table">
+                                            <TableHead>
+                                                <TableRow>
+                                                    <TableCell align={'right'}>
+                                                        #
+                                                    </TableCell>
+                                                    <TableCell align={'right'}>
+                                                        نام
+                                                    </TableCell>
+                                                    <TableCell align={'right'}>
+                                                        کد ملی
+                                                    </TableCell>
+                                                    <TableCell align={'right'}>
+                                                        شماره تماس
+                                                    </TableCell>
+                                                </TableRow>
+                                            </TableHead>
+                                            <TableBody>
+                                                    {
+                                                        this.state.parentsFound.map((parent, index) => {
+                                                            return (
+                                                                <TableRow hover onClick={() => {
+                                                                    this.setState({showChangeParentModal : false});
+                                                                    this.setState({selectedParent: parent});
+                                                                }}
+                                                                >
+                                                                    <TableCell align={"right"}>
+                                                                        {index + 1}
+                                                                    </TableCell>
+                                                                    <TableCell align={'right'}>
+                                                                        {parent.fullName}
+                                                                    </TableCell>
+                                                                    <TableCell align={'right'}>
+                                                                        {parent.nationalCode}
+                                                                    </TableCell>
+                                                                    <TableCell align={'right'}>
+                                                                        {parent.phoneNumber}
+                                                                    </TableCell>
+                                                                </TableRow>
+                                                            )})}
+                                            </TableBody>
+                                        </Table>
+                                    </TableContainer>
+                                </Paper>
+                                <h3 hidden={!this.state.parentNotFound} className={"mt-5 text-center text-danger"}>پرسنلی یافت نشد!</h3>
+                            </div>
+                        </Modal.Body>
+
+                    </Modal>
+
+
+                </div>
+            </DragDropContext>
         );
-    }
-
-    handleSearch = () => {
-
-    }
-
-    handleOpen = () => {
-        this.setState({showModal: true});
-    }
-
-    handleClose = () => {
-        this.setState({showModal: false});
-    }
-
-    handleSubmit = (e) => {
-
-    }
-
-    handleEditTitle = (object) => {
-        let updatedData = {...this.state.data};
-        updatedData.lanes.map((lane) => {
-            if (lane.id === this.state.cardClickedLane) {
-                for (let i = 0; i < lane.cards.length; i++) {
-                    if (lane.cards[i].id === this.state.cardClickedId) {
-                        lane.cards[i].title = object.value;
-                    }
-                }
-            }
-        })
-
-        this.setState({data : updatedData});
-    }
-
-    handleEditDescription = (object) => {
-        let updatedData = {...this.state.data};
-        updatedData.lanes.map((lane) => {
-            if (lane.id === this.state.cardClickedLane) {
-                for (let i = 0; i < lane.cards.length; i++) {
-                    if (lane.cards[i].id === this.state.cardClickedId) {
-                        lane.cards[i].description = object.value;
-                    }
-                }
-            }
-        })
-
-        this.setState({data : updatedData});
-    }
-
-    handleEditTag = (object, indexOfTag) => {
-        let updatedData = {...this.state.data};
-        updatedData.lanes.map((lane) => {
-            if (lane.id === this.state.cardClickedLane) {
-                for (let i = 0; i < lane.cards.length; i++) {
-                    if (lane.cards[i].id === this.state.cardClickedId) {
-                        lane.cards[i].tags[indexOfTag].title = object.value;
-                    }
-                }
-            }
-        })
-
-        this.setState({data : updatedData});
-    }
-
-    handleEditTimeLog = (time, typeOfTimeString) => {
-        let updatedData = {...this.state.data};
-        updatedData.lanes.map((lane) => {
-            if (lane.id === this.state.cardClickedLane) {
-                for (let i = 0; i < lane.cards.length; i++) {
-                    if (lane.cards[i].id === this.state.cardClickedId) {
-                        lane.cards[i][typeOfTimeString] = time;
-                    }
-                }
-            }
-        })
-
-        this.setState({data : updatedData});
-    }
-
-    handleTimeLogValue = () => {
-        let updatedData = {...this.state.data};
-        updatedData.lanes.map((lane) => {
-            if (lane.id === this.state.cardClickedLane) {
-                for (let i = 0; i < lane.cards.length; i++) {
-                    if (lane.cards[i].id === this.state.cardClickedId) {
-                        return lane.cards[i].timeLog
-                    }
-                }
-            }
-        })
-    }
-
-    handleEditPriority = (value) => {
-        this.setState({forTest : value})
-
-        let updatedData = {...this.state.data};
-        updatedData.lanes.map((lane) => {
-            if (lane.id === this.state.cardClickedLane) {
-                for (let i = 0; i < lane.cards.length; i++) {
-                    if (lane.cards[i].id === this.state.cardClickedId) {
-                        lane.cards[i].priority = value;
-                    }
-                }
-            }
-        })
-
-        this.setState({data : updatedData});
-    }
-
-    handleEditParent = (parent) => {
-        let updatedData = {...this.state.data};
-
-        updatedData.lanes.map((lane) => {
-            if (lane.id === this.state.cardClickedLane) {
-                for (let i = 0; i < lane.cards.length; i++) {
-                    if (lane.cards[i].id === this.state.cardClickedId) {
-                        lane.cards[i].parentId = parent.id;
-                        lane.cards[i].parentType = parent.type;
-                    }
-                }
-            }
-        })
-
-        this.setState({data : updatedData});
     }
 }
 

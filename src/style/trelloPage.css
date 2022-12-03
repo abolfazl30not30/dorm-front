@@ -1,0 +1,9 @@
+.personnel-detail {
+    margin-top: -20px;
+    display: flex;
+    align-items: center;
+    height: 50px;
+    border: 10px #2b2f33;
+    border-radius: 10px;
+    background-color: whitesmoke;
+}
