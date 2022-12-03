@@ -241,7 +241,7 @@ class TrelloPage extends Component {
     }
 
     handleSearch = async () => {
-        const getParents = await fetch(`https://api.saadatportal.com/api/v1/characteristic/search?${this.state.searchBase}=${this.state.searchContent}`)
+        const getParents = await fetch(`https://api.saadatportal.com/api/v1/characteristic/search?${this.state.searchBase}=${this.state.searchContent}&parentType=Personnel`)
             .then((response) => response.json())
             .then((data) => this.setState({parentsFound : data}, () => {this.handleParentNotFound()}))
     }

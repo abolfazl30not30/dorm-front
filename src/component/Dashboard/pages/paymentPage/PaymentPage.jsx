@@ -213,6 +213,17 @@ class PaymentPage extends Component {
                                           }}></textarea>
                             <label className="placeholder">توضیحات</label>
                         </div>
+                        <div className="input-group-register col-md-2 col-12">
+                            <select className='form-select input'
+                                    value={this.state.paymentType}
+                                    onChange={(e) => {
+                                        this.setState({paymentType:e.target.value})
+                                    }}>
+                                <option value="receive">دریافت</option>
+                                <option value="expend">پرداخت</option>
+                            </select>
+                            <label className="placeholder">واحد</label>
+                        </div>
                     </div>
                     <div className='third-section'>
                         <label htmlFor="formFileLg" className="form-label">آپلود فاکتور :</label>
@@ -453,7 +464,7 @@ class PaymentPage extends Component {
             type: this.state.selectedType,
             paymentType: this.state.paymentType,
             description: this.state.description,
-            parentId: "",
+            parentId: "123",
             parentType: "Personnel",
         }
         if (this.state.fileId !== "") {
