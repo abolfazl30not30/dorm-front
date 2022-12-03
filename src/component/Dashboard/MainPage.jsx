@@ -25,6 +25,7 @@ import PresenceAbsence from "./pages/PresenceAbsence/presenceAbsence";
 import PresenceAbsenceRoomPerson from './pages/PresenceAbsence/PresenceAbsenceRoomPerson'
 import RoomLog from "./pages/Inventory and capacity/RoomLog";
 import Setting from "./pages/Setting/Setting";
+import Log from "./pages/log/log"
 
 
 class MainPage extends Component {
@@ -501,6 +502,7 @@ class MainPage extends Component {
                             <Route path="/PresenceAbsencePage2" element={(<PresenceAbsenceRoomPerson/>)}/>
                             <Route path="/setting" element={(<Setting/>)}/>
                             <Route path="booking/room_log" element={(<RoomLog/>)}/>
+                            <Route path="/log" element={(<Log/>)}/>
                         </Routes>
                     </BuildingContext.Provider>
                 </div>
