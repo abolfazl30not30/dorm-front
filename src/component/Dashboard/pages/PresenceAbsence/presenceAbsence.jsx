@@ -74,9 +74,6 @@ class PresenceAbsence extends Component {
                         )}
                     </div>
                 </div>
-                <button onClick={() => console.log(this.state.floor)}>
-                    asd
-                </button>
             </>
         );
     }
