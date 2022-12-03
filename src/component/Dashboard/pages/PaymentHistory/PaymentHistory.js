@@ -107,7 +107,7 @@ class PaymentHistory extends Component {
                                     <tr>
                                         <td>{index + 1}</td>
                                         <td>{peyment.type}</td>
-                                        <td>{new Date(peyment.date).toLocaleDateString('fa-IR')}</td>
+                                        <td>{peyment.date}</td>
                                         <td>{peyment.amount.value}</td>
                                         <td>{peyment.parentId}</td>
                                         <td>{peyment.description}</td>

@@ -2,7 +2,7 @@ import {Component} from "react";
 import {Link} from "react-router-dom";
 import Accordion from "react-bootstrap/Accordion";
 import Form from 'react-bootstrap/Form';
-import {DatePicker} from 'react-persian-datepicker';
+import DatePicker from "react-multi-date-picker";
 import 'react-persian-datepicker/lib/styles/basic.css'
 import 'react-calendar/dist/Calendar.css';
 import "react-datepicker/dist/react-datepicker.css";
@@ -18,6 +18,9 @@ import {RiFileUploadFill} from "react-icons/ri";
 import ReactLoading from 'react-loading';
 import Alert from 'react-bootstrap/Alert';
 import moment from 'moment-jalali';
+import persian from "react-date-object/calendars/persian";
+import persian_fa from "react-date-object/locales/persian_fa";
+import {Button} from "@mui/material";
 
 /*import React from "@types/react";*/
 
@@ -191,13 +194,58 @@ class PaymentPage extends Component {
                             <label className="placeholder placeholder-typePayment">نوع</label>
                         </div>
                         <div className="input-group-register col-md-2 col-12 date-container">
-                            <DatePicker calendarStyles={this.state.styles}
-                                        value={this.state.dataPicker}
-                                        className={`input form-control ${this.state.Validations.date_requiredReg === false ? "is-invalid" : ""}`}
-                                        onChange={value => {
-                                            this.handleDateInput(value)
-                                        }}
-                            />
+                            <DatePicker
+                                // fixMainPosition={false}
+                                calendarPosition={`top`}
+                                digits={['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']}
+                                format={`YYYY/MM/DD`}
+
+
+                                containerStyle={{
+                                    width: "100%"
+                                }}
+
+                                inputClass={`input form-control`}
+                                value={this.state.dataPicker}
+                                onChange={(value) => {
+                                    this.handleDateInput(value)
+                                }}
+
+                                mapDays={({ date }) => {
+                                    let props = {}
+                                    let isWeekend = [6].includes(date.weekDay.index)
+
+                                    if (isWeekend)
+                                        props.className = "highlight highlight-red";
+
+                                    return props
+                                }}
+
+                                weekDays={
+                                    [
+                                        ["شنبه", "Sat"],
+                                        ["یکشنبه", "Sun"],
+                                        ["دوشنبه", "Mon"],
+                                        ["سه شنبه", "Tue"],
+                                        ["چهارشنبه", "Wed"],
+                                        ["پنجشنبه", "Thu"],
+                                        ["جمعه", "Fri"],
+                                    ]
+                                }
+
+                                calendar={persian}
+                                locale={persian_fa}
+
+                            >
+                                <Button
+                                    onClick={() => {
+                                        this.setState({dataPicker: {}})
+                                        }
+                                    }
+                                >
+                                    ریست
+                                </Button>
+                            </DatePicker>
                             <label className="placeholder" style={{
                                 top: '-8px',
                                 backgroundColor: '#fff',
@@ -446,8 +494,9 @@ class PaymentPage extends Component {
 
     handleDateInput = (value) => {
         this.setState({dataPicker: value})
-        let date = new Date(value._d);
-        let convertDate = date.getFullYear() + "/" + date.getMonth() + "/" + date.getDate() + " " + "00:" + "00:" + "00";
+        let convertDate = value.year + '/' + value.month + '/' + value.day;
+        // let date = new Date(value._d);
+        // let convertDate = date.getFullYear() + "/" + date.getMonth() + "/" + date.getDate() + " " + "00:" + "00:" + "00";
         this.setState({date: convertDate})
     }
 
