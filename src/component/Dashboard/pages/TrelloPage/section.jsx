@@ -13,7 +13,7 @@ class Section extends Component {
                     <div className="p-3 pb-5 section-container" style={{borderRadius: "10px", height: "auto", userSelect: "none"}} ref={provided.innerRef} {...provided.droppableProps}>
                             {this.context.tasks.map((task, index)=> (
                                 task.status === this.props.status ?
-                                    <Task key={index} index={index} id={task.id} name={task.name} dueDate={task.dueDate} description={task.description} priority={task.priority} />
+                                    <Task key={index} index={index} id={task.id} name={task.name} priority={task.priority} />
                                 : null
                             ))}
                         {provided.placeholder}
