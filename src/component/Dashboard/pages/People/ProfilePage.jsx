@@ -20,259 +20,54 @@ import {Table} from 'react-bootstrap';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
 import BuildingContext from "../../../../contexts/Building";
-import DateInput from "../../../CustomInputs/DateInput";
-import {DatePicker} from "react-persian-datepicker";
-
+import DatePicker from "react-multi-date-picker";
+import TimePicker from "react-multi-date-picker/plugins/time_picker";
+import axios from "axios"
+import data from "bootstrap/js/src/dom/data";
+import persian from "react-date-object/calendars/persian";
+import persian_fa from "react-date-object/locales/persian_fa";
+import {Button} from "@mui/material";
 
 class ProfilePage extends Component {
 
     static contextType = BuildingContext;
 
     state = {
+        dateValues: {
+            cleaningDate: '',
+            delayInArrivalDate: '',
+            delayInArriveTime: '',
+            exitStartDate: '',
+            exitEndDate: '',
+            violationDate: '',
+            violationTime: '',
+            dischargeDateAnnounce: '',
+            dischargeDate: '',
+            depositReturnDate: '',
+            cancelContractDate: '',
+        },
         person: {},
         show: false,
         reportType: 'cleaning',
         personObject: {},
-        uploadedDoc: {},
-        report: [
-            {
-                "title": "cleaning",
-                "date": "1",
-                "description": "2"
-            },
-            {
-                "title": "delayInArrival",
-                "date": "2",
-                "time": "0"
-            },
-            {
-                "title": "exit",
-                "timePeriod": {
-                    "startDate": "0",
-                    "endDate": ""
-                },
-                "destinationAddress": "0",
-                "destinationPhoneNumber": "",
-                "relation": ""
-            },
-            {
-                "title": "violation",
-                "date": "0",
-                "time": "0",
-                "description": "0"
-            },
-            {
-                "title": "penalty",
-                "typePenalty": "cash",
-                "description": "0"
-            },
-            {
-                "title": "discharge",
-                "dischargeDateAnnounce": "",
-                "dischargeDate": "0",
-                "depositReturnDate": "",
-                "deductionOfLosses": "",
-                "deductionOfLossesReason": "",
-                "refundableAmount": ""
-            },
-            {
-                "title": "cancelContract",
-                "data": "0",
-                "reason": "0",
-                "deductionOfLosses": "",
-                "refundableAmount": "0"
-            },
-            {
-                "title": "cleaning",
-                "date": "1",
-                "description": "2"
-            },
-            {
-                "title": "delayInArrival",
-                "date": "2",
-                "time": "0"
-            },
-            {
-                "title": "exit",
-                "timePeriod": {
-                    "startDate": "0",
-                    "endDate": ""
-                },
-                "destinationAddress": "0",
-                "destinationPhoneNumber": "",
-                "relation": ""
-            },
-            {
-                "title": "violation",
-                "date": "0",
-                "time": "0",
-                "description": "0"
-            },
-            {
-                "title": "penalty",
-                "typePenalty": "cash",
-                "description": "0"
-            },
-            {
-                "title": "discharge",
-                "dischargeDateAnnounce": "",
-                "dischargeDate": "0",
-                "depositReturnDate": "",
-                "deductionOfLosses": "",
-                "deductionOfLossesReason": "",
-                "refundableAmount": ""
-            },
-            {
-                "title": "cancelContract",
-                "data": "0",
-                "reason": "0",
-                "deductionOfLosses": "",
-                "refundableAmount": "0"
-            },
-            {
-                "title": "cleaning",
-                "date": "1",
-                "description": "2"
-            },
-            {
-                "title": "delayInArrival",
-                "date": "2",
-                "time": "0"
-            },
-            {
-                "title": "exit",
-                "timePeriod": {
-                    "startDate": "0",
-                    "endDate": ""
-                },
-                "destinationAddress": "0",
-                "destinationPhoneNumber": "",
-                "relation": ""
-            },
-            {
-                "title": "violation",
-                "date": "0",
-                "time": "0",
-                "description": "0"
-            },
-            {
-                "title": "penalty",
-                "typePenalty": "cash",
-                "description": "0"
-            },
-            {
-                "title": "discharge",
-                "dischargeDateAnnounce": "",
-                "dischargeDate": "0",
-                "depositReturnDate": "",
-                "deductionOfLosses": "",
-                "deductionOfLossesReason": "",
-                "refundableAmount": ""
-            },
-            {
-                "title": "cancelContract",
-                "data": "0",
-                "reason": "0",
-                "deductionOfLosses": "",
-                "refundableAmount": "0"
-            },
-            {
-                "title": "cleaning",
-                "date": "1",
-                "description": "2"
-            },
-            {
-                "title": "delayInArrival",
-                "date": "2",
-                "time": "0"
-            },
-            {
-                "title": "exit",
-                "timePeriod": {
-                    "startDate": "0",
-                    "endDate": ""
-                },
-                "destinationAddress": "0",
-                "destinationPhoneNumber": "",
-                "relation": ""
-            },
-            {
-                "title": "violation",
-                "date": "0",
-                "time": "0",
-                "description": "0"
-            },
-            {
-                "title": "penalty",
-                "typePenalty": "cash",
-                "description": "0"
-            },
-            {
-                "title": "discharge",
-                "dischargeDateAnnounce": "",
-                "dischargeDate": "0",
-                "depositReturnDate": "",
-                "deductionOfLosses": "",
-                "deductionOfLossesReason": "",
-                "refundableAmount": ""
-            },
-            {
-                "title": "cancelContract",
-                "data": "0",
-                "reason": "0",
-                "deductionOfLosses": "",
-                "refundableAmount": "0"
-            },
-            {
-                "title": "cleaning",
-                "date": "1",
-                "description": "2"
-            },
-            {
-                "title": "delayInArrival",
-                "date": "2",
-                "time": "0"
-            },
-            {
-                "title": "exit",
-                "timePeriod": {
-                    "startDate": "0",
-                    "endDate": ""
-                },
-                "destinationAddress": "0",
-                "destinationPhoneNumber": "",
-                "relation": ""
-            },
-            {
-                "title": "violation",
-                "date": "0",
-                "time": "0",
-                "description": "0"
-            },
-            {
-                "title": "penalty",
-                "typePenalty": "cash",
-                "description": "0"
-            },
-            {
-                "title": "discharge",
-                "dischargeDateAnnounce": "",
-                "dischargeDate": "0",
-                "depositReturnDate": "",
-                "deductionOfLosses": "",
-                "deductionOfLossesReason": "",
-                "refundableAmount": ""
-            },
-            {
-                "title": "cancelContract",
-                "data": "0",
-                "reason": "0",
-                "deductionOfLosses": "",
-                "refundableAmount": "0"
-            }
-        ],
+        report: [],
         showDeleteModalReport: false,
-        reportTemp: {}
+        reportTemp: {},
+        docFile: {},
+        fileDetails: [],
+        profileImgUrl: null,
+        hasBirthPage1: false,
+        hasBirthPage2: false,
+        hasBirthPage3: false,
+        hasBirthPage4: false,
+        hasBirthAllPage: false,
+        hasCartPage1: false,
+        hasCartPage2: false,
+        hasCartAllPage: false,
+        hasPersonnelImg: false,
+        hasRegister: false,
+        hasRegisterUni: false,
+
     }
     date = createRef();
     description = createRef();
@@ -290,6 +85,7 @@ class ProfilePage extends Component {
     deductionOfLossesReason = createRef();
     refundableAmount = createRef();
     reason = createRef();
+    penaltyAmount = createRef();
 
     async componentDidMount() {
 
@@ -298,7 +94,23 @@ class ProfilePage extends Component {
 
         const response2 = await fetch(`https://api.saadatportal.com/api/v1/person/${this.context.personId}`).then((response) => response.json())
             .then((data) => this.setState({personObject: data}));
-        console.log(this.state.person)
+
+        if (this.state.person.profileId !== null) {
+            const response3 = await fetch(`https://api.saadatportal.com/api/v1/file/${this.state.person.profileId}`).then((response) => response.blob())
+                .then((data) => {
+                    const objectUrl = URL.createObjectURL(data);
+                    console.log(objectUrl);
+                    this.setState({profileImgUrl: objectUrl})
+                });
+        }
+
+        const fileRespond = await fetch(`https://api.saadatportal.com/api/v1/responseFile/search?parentType=Person&parentId=${this.context.personId}`).then((response) => response.json())
+            .then((data) => this.setState({fileDetails: data}, () => {
+                this.setState({docFile: this.state.personObject.files});
+                this.setState({report: this.state.personObject.record},()=>{console.log(this.state.personObject.record)});
+                this.existDocFile(this.state.personObject.files);
+            }));
+
     }
 
     render() {
@@ -309,7 +121,7 @@ class ProfilePage extends Component {
                         <div className="d-flex flex-row justify-content-center profile-card">
                             <div className={'d-flex flex-md-row flex-column align-items-center'}>
                                 <img
-                                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBnUckFxDVe5FOT5vuVfWCvWWY1pUrOPBOFPu9CNZYpABJSYPCigxy9rEc32E6mBamw3c&usqp=CAU"
+                                    src={this.state.profileImgUrl !== null ? (this.state.profileImgUrl) : ("https://cdn-icons-png.flaticon.com/512/149/149071.png")}
                                     alt="profile"/>
                                 <div className={'me-3 d-flex flex-column justify-content-center'}>
                                     <div
@@ -400,7 +212,7 @@ class ProfilePage extends Component {
                                                                     <i className="bi bi-caret-left ms-1"></i>
                                                                     <label> دین :</label>
                                                                     {(() => {
-                                                                        switch(this.state.person.religion) {
+                                                                        switch (this.state.person.religion) {
                                                                             case 'islam':
                                                                                 return 'اسلام';
                                                                             case 'christianity':
@@ -411,7 +223,7 @@ class ProfilePage extends Component {
                                                                                 return 'آیین بودایی';
                                                                             case 'other':
                                                                                 return 'سایر';
-                                                                    }
+                                                                        }
                                                                     })()}
                                                                 </div>
                                                             </div>
@@ -448,7 +260,7 @@ class ProfilePage extends Component {
                                                                     <i className="bi bi-caret-left ms-1"></i>
                                                                     <label> وضعیت تاهل :</label>
                                                                     {(() => {
-                                                                        switch(this.state.person.maritalStatus) {
+                                                                        switch (this.state.person.maritalStatus) {
                                                                             case 'single':
                                                                                 return 'مجرد';
                                                                             case 'married':
@@ -460,13 +272,14 @@ class ProfilePage extends Component {
                                                                 </div>
                                                             </div>
                                                             {(() => {
-                                                                switch(this.state.person.maritalStatus) {
+                                                                switch (this.state.person.maritalStatus) {
                                                                     case 'married':
                                                                         return <>
                                                                             <div className='col-12 col-md-4'>
                                                                                 <div className="more-info-item">
                                                                                     <i className="bi bi-caret-left ms-1"></i>
-                                                                                    <label> نام و نام خانوادگی همسر :</label>
+                                                                                    <label> نام و نام خانوادگی همسر
+                                                                                        :</label>
                                                                                     {this.state.person.spouseFullName != "" ? this.state.person.spouseFullName : 'ثبت نشده'}
                                                                                 </div>
                                                                             </div>
@@ -485,7 +298,7 @@ class ProfilePage extends Component {
                                                                     <i className="bi bi-caret-left ms-1"></i>
                                                                     <label> بیماری خاص :</label>
                                                                     {(() => {
-                                                                        switch(this.state.person.health) {
+                                                                        switch (this.state.person.health) {
                                                                             case true:
                                                                                 return 'بله';
                                                                             case false:
@@ -495,7 +308,7 @@ class ProfilePage extends Component {
                                                                 </div>
                                                             </div>
                                                             {(() => {
-                                                                switch(this.state.person.health) {
+                                                                switch (this.state.person.health) {
                                                                     case true:
                                                                         return <>
                                                                             <div className='col-12 col-md-4'>
@@ -573,7 +386,7 @@ class ProfilePage extends Component {
                                                                     <i className="bi bi-caret-left ms-1"></i>
                                                                     <label> نسبت با اقامتگر :</label>
                                                                     {(() => {
-                                                                        switch(this.state.person.firstPersonRelationshipWithResident) {
+                                                                        switch (this.state.person.firstPersonRelationshipWithResident) {
                                                                             case 'father':
                                                                                 return 'پدر';
                                                                             case 'mother':
@@ -618,7 +431,7 @@ class ProfilePage extends Component {
                                                                     <i className="bi bi-caret-left ms-1"></i>
                                                                     <label> نسبت با اقامتگر :</label>
                                                                     {(() => {
-                                                                        switch(this.state.person.secondPersonRelationshipWithResident) {
+                                                                        switch (this.state.person.secondPersonRelationshipWithResident) {
                                                                             case 'father':
                                                                                 return 'پدر';
                                                                             case 'mother':
@@ -800,6 +613,7 @@ class ProfilePage extends Component {
                                     <div className="tabs-content">
                                         <button className='btn-done' onClick={() => {
                                             this.handleShow()
+                                            this.handleResetFields();
                                         }}>ثبت گزارش
                                         </button>
                                         <Accordion defaultActiveKey="0">
@@ -868,7 +682,7 @@ class ProfilePage extends Component {
                                                                     <tr>
                                                                         {/*<td>{i+1}</td>*/}
                                                                         <td>{d.date}</td>
-                                                                        <td>{d.time}</td>
+                                                                        <td>{d.hour}</td>
                                                                         <td>
                                                                             <OverlayTrigger
                                                                                 placement="bottom"
@@ -968,7 +782,7 @@ class ProfilePage extends Component {
                                                                         {/*<td>{i+1}</td>*/}
                                                                         <td>{v.description}</td>
                                                                         <td>{v.date}</td>
-                                                                        <td>{v.time}</td>
+                                                                        <td>{v.hour}</td>
                                                                         <td>
                                                                             <OverlayTrigger
                                                                                 placement="bottom"
@@ -1001,8 +815,9 @@ class ProfilePage extends Component {
                                                         <thead>
                                                         <tr>
                                                             {/*<th>شماره</th>*/}
-                                                            <th>دلیل جریمه</th>
                                                             <th>نوع جریمه</th>
+                                                            <th>مقدار جریمه</th>
+                                                            <th>دلیل جریمه</th>
                                                             <th>عملیات</th>
                                                         </tr>
                                                         </thead>
@@ -1010,11 +825,11 @@ class ProfilePage extends Component {
                                                         {
                                                             this.state.report.map((p, i) => (
 
-                                                                this.state.person.title === 'penalty' ? (
+                                                                p.title === 'penalty' ? (
                                                                     <tr>
-                                                                        {/*<td>{i+1}</td>*/}
-                                                                        <td>{this.state.person.description}</td>
-                                                                        <td>{this.state.person.typePenalty}</td>
+                                                                        <td>{p.penaltyType}</td>
+                                                                        <td>{p.penaltyAmount}</td>
+                                                                        <td>{p.description}</td>
                                                                         <td>
                                                                             <OverlayTrigger
                                                                                 placement="bottom"
@@ -1063,12 +878,12 @@ class ProfilePage extends Component {
                                                                 d.title === 'discharge' ? (
                                                                     <tr>
                                                                         {/*<td>{i+1}</td>*/}
-                                                                        <td>{d.dischargeDateAnnounce}</td>
-                                                                        <td>{d.dischargeDate}</td>
-                                                                        <td>{d.depositReturnDate}</td>
-                                                                        <td>{d.deductionOfLosses}</td>
-                                                                        <td>{d.deductionOfLossesReason}</td>
-                                                                        <td>{d.refundableAmount}</td>
+                                                                        <td>{d.startDate}</td>
+                                                                        <td>{d.endDate}</td>
+                                                                        <td>{d.date}</td>
+                                                                        <td>{d.penaltyAmount}</td>
+                                                                        <td>{d.description}</td>
+                                                                        <td>{d.returnedAmount}</td>
                                                                         <td>
                                                                             <OverlayTrigger
                                                                                 placement="bottom"
@@ -1116,9 +931,9 @@ class ProfilePage extends Component {
                                                                     <tr>
                                                                         {/*<td>{i+1}</td>*/}
                                                                         <td>{cc.date}</td>
-                                                                        <td>{cc.reason}</td>
-                                                                        <td>{cc.deductionOfLosses}</td>
-                                                                        <td>{cc.refundableAmount}</td>
+                                                                        <td>{cc.description}</td>
+                                                                        <td>{cc.penaltyAmount}</td>
+                                                                        <td>{cc.returnedAmount}</td>
                                                                         <td>
                                                                             <OverlayTrigger
                                                                                 placement="bottom"
@@ -1155,77 +970,97 @@ class ProfilePage extends Component {
                                                 <Accordion.Header>شناسنامه</Accordion.Header>
                                                 <Accordion.Body>
                                                     <div className="d-flex flex-column">
-                                                        <OverlayTrigger
-                                                            placement="bottom"
-                                                            overlay={
-                                                                <Tooltip className="deleteTooltip">
-                                                                    دانلود
-                                                                </Tooltip>
-                                                            }
-                                                        >
-                                                            <div className="record-item"
-                                                                 onClick={() => this.downloadFile()}>
-                                                                <div className='ms-2'>صفحه اول</div>
-                                                                <RiDownloadCloud2Fill/>
-                                                            </div>
-                                                        </OverlayTrigger>
-                                                        <OverlayTrigger
-                                                            placement="bottom"
-                                                            overlay={
-                                                                <Tooltip className="deleteTooltip">
-                                                                    دانلود
-                                                                </Tooltip>
-                                                            }
-                                                        >
-                                                            <div className="record-item"
-                                                                 onClick={() => this.downloadFile()}>
-                                                                <div className='ms-2'>صفحه دوم</div>
-                                                                <RiDownloadCloud2Fill/>
-                                                            </div>
-                                                        </OverlayTrigger>
-                                                        <OverlayTrigger
-                                                            placement="bottom"
-                                                            overlay={
-                                                                <Tooltip className="deleteTooltip">
-                                                                    دانلود
-                                                                </Tooltip>
-                                                            }
-                                                        >
-                                                            <div className="record-item"
-                                                                 onClick={() => this.downloadFile()}>
-                                                                <div className='ms-2'>صفحه سوم</div>
-                                                                <RiDownloadCloud2Fill/>
-                                                            </div>
-                                                        </OverlayTrigger>
-                                                        <OverlayTrigger
-                                                            placement="bottom"
-                                                            overlay={
-                                                                <Tooltip className="deleteTooltip">
-                                                                    دانلود
-                                                                </Tooltip>
-                                                            }
-                                                        >
-                                                            <div className="record-item"
-                                                                 onClick={() => this.downloadFile()}>
-                                                                <div className='ms-2'>صفحه چهارم</div>
-                                                                <RiDownloadCloud2Fill/>
-                                                            </div>
-                                                        </OverlayTrigger>
-                                                        <OverlayTrigger
-                                                            placement="bottom"
-                                                            overlay={
-                                                                <Tooltip className="deleteTooltip">
-                                                                    دانلود
-                                                                </Tooltip>
-                                                            }
-                                                        >
-                                                            <div className="record-item"
-                                                                 onClick={() => this.downloadFile()}>
-                                                                <div className='ms-2'>کل صفحات</div>
-                                                                <RiDownloadCloud2Fill/>
-                                                            </div>
-                                                        </OverlayTrigger>
+                                                        {
+                                                            this.state.hasBirthPage1 && (
+                                                                <OverlayTrigger
+                                                                    placement="bottom"
+                                                                    overlay={
+                                                                        <Tooltip className="deleteTooltip">
+                                                                            دانلود
+                                                                        </Tooltip>
+                                                                    }
+                                                                >
+                                                                    <div className="record-item"
+                                                                         onClick={() => this.downloadFile(this.state.docFile.birthPage1)}>
+                                                                        <div className='ms-2'>صفحه اول</div>
+                                                                        <RiDownloadCloud2Fill/>
+                                                                    </div>
+                                                                </OverlayTrigger>
+                                                            )
+                                                        }
 
+                                                        {
+                                                            this.state.hasBirthPage2 && (
+                                                                <OverlayTrigger
+                                                                    placement="bottom"
+                                                                    overlay={
+                                                                        <Tooltip className="deleteTooltip">
+                                                                            دانلود
+                                                                        </Tooltip>
+                                                                    }
+                                                                >
+                                                                    <div className="record-item"
+                                                                         onClick={() => this.downloadFile(this.state.docFile.birthPage2)}>
+                                                                        <div className='ms-2'>صفحه دوم</div>
+                                                                        <RiDownloadCloud2Fill/>
+                                                                    </div>
+                                                                </OverlayTrigger>
+                                                            )
+                                                        }
+                                                        {
+                                                            this.state.hasBirthPage3 && (
+                                                                <OverlayTrigger
+                                                                    placement="bottom"
+                                                                    overlay={
+                                                                        <Tooltip className="deleteTooltip">
+                                                                            دانلود
+                                                                        </Tooltip>
+                                                                    }
+                                                                >
+                                                                    <div className="record-item"
+                                                                         onClick={() => this.downloadFile(this.state.docFile.birthPage3)}>
+                                                                        <div className='ms-2'>صفحه سوم</div>
+                                                                        <RiDownloadCloud2Fill/>
+                                                                    </div>
+                                                                </OverlayTrigger>
+                                                            )
+                                                        }
+                                                        {
+                                                            this.state.hasBirthPage4 && (
+                                                                <OverlayTrigger
+                                                                    placement="bottom"
+                                                                    overlay={
+                                                                        <Tooltip className="deleteTooltip">
+                                                                            دانلود
+                                                                        </Tooltip>
+                                                                    }
+                                                                >
+                                                                    <div className="record-item"
+                                                                         onClick={() => this.downloadFile(this.state.docFile.birthPage4)}>
+                                                                        <div className='ms-2'>صفحه چهارم</div>
+                                                                        <RiDownloadCloud2Fill/>
+                                                                    </div>
+                                                                </OverlayTrigger>
+                                                            )
+                                                        }
+                                                        {
+                                                            this.state.hasBirthAllPage && (
+                                                                <OverlayTrigger
+                                                                    placement="bottom"
+                                                                    overlay={
+                                                                        <Tooltip className="deleteTooltip">
+                                                                            دانلود
+                                                                        </Tooltip>
+                                                                    }
+                                                                >
+                                                                    <div className="record-item"
+                                                                         onClick={() => this.downloadFile(this.state.docFile.birthAllPage)}>
+                                                                        <div className='ms-2'>کل صفحات</div>
+                                                                        <RiDownloadCloud2Fill/>
+                                                                    </div>
+                                                                </OverlayTrigger>
+                                                            )
+                                                        }
                                                     </div>
                                                 </Accordion.Body>
                                             </Accordion.Item>
@@ -1233,73 +1068,130 @@ class ProfilePage extends Component {
                                             <Accordion.Item eventKey="1">
                                                 <Accordion.Header>کارت ملی</Accordion.Header>
                                                 <Accordion.Body>
-                                                    <OverlayTrigger
-                                                        placement="bottom"
-                                                        overlay={
-                                                            <Tooltip className="deleteTooltip">
-                                                                دانلود
-                                                            </Tooltip>
-                                                        }
-                                                    >
-                                                        <div className="record-item"
-                                                             onClick={() => this.downloadFile()}>
-                                                            <div className='ms-2'>صفحه اول</div>
-                                                            <RiDownloadCloud2Fill/>
-                                                        </div>
-                                                    </OverlayTrigger>
-                                                    <OverlayTrigger
-                                                        placement="bottom"
-                                                        overlay={
-                                                            <Tooltip className="deleteTooltip">
-                                                                دانلود
-                                                            </Tooltip>
-                                                        }
-                                                    >
-                                                        <div className="record-item"
-                                                             onClick={() => this.downloadFile()}>
-                                                            <div className='ms-2'>صفحه دوم</div>
-                                                            <RiDownloadCloud2Fill/>
-                                                        </div>
-                                                    </OverlayTrigger>
+                                                    {
+                                                        this.state.hasCartPage1 && (
+                                                            <OverlayTrigger
+                                                                placement="bottom"
+                                                                overlay={
+                                                                    <Tooltip className="deleteTooltip">
+                                                                        دانلود
+                                                                    </Tooltip>
+                                                                }
+                                                            >
+                                                                <div className="record-item"
+                                                                     onClick={() => this.downloadFile(this.state.docFile.cardPage1)}>
+                                                                    <div className='ms-2'>صفحه اول</div>
+                                                                    <RiDownloadCloud2Fill/>
+                                                                </div>
+                                                            </OverlayTrigger>
+                                                        )
+                                                    }
+                                                    {
+                                                        this.state.hasCartPage2 && (
+                                                            <OverlayTrigger
+                                                                placement="bottom"
+                                                                overlay={
+                                                                    <Tooltip className="deleteTooltip">
+                                                                        دانلود
+                                                                    </Tooltip>
+                                                                }
+                                                            >
+                                                                <div className="record-item"
+                                                                     onClick={() => this.downloadFile(this.state.docFile.cardPage2)}>
+                                                                    <div className='ms-2'>صفحه دوم</div>
+                                                                    <RiDownloadCloud2Fill/>
+                                                                </div>
+                                                            </OverlayTrigger>
+                                                        )
+                                                    }
+                                                    {
+                                                        this.state.hasCartAllPage && (
+                                                            <OverlayTrigger
+                                                                placement="bottom"
+                                                                overlay={
+                                                                    <Tooltip className="deleteTooltip">
+                                                                        دانلود
+                                                                    </Tooltip>
+                                                                }
+                                                            >
+                                                                <div className="record-item"
+                                                                     onClick={() => this.downloadFile(this.state.docFile.cardAllPage)}>
+                                                                    <div className='ms-2'>کل صفحات</div>
+                                                                    <RiDownloadCloud2Fill/>
+                                                                </div>
+                                                            </OverlayTrigger>
+                                                        )
+                                                    }
                                                 </Accordion.Body>
                                             </Accordion.Item>
 
                                             <Accordion.Item eventKey="2">
                                                 <Accordion.Header>عکس پرسنلی</Accordion.Header>
                                                 <Accordion.Body>
-                                                    <OverlayTrigger
-                                                        placement="bottom"
-                                                        overlay={
-                                                            <Tooltip className="deleteTooltip">
-                                                                دانلود
-                                                            </Tooltip>
-                                                        }
-                                                    >
-                                                        <div className="record-item"
-                                                             onClick={() => this.downloadFile()}>
-                                                            <div className='ms-2'>عکس پرسنلی</div>
-                                                            <RiDownloadCloud2Fill/>
-                                                        </div>
-                                                    </OverlayTrigger>
+                                                    {
+                                                        this.state.hasPersonnelImg && (
+                                                            <OverlayTrigger
+                                                                placement="bottom"
+                                                                overlay={
+                                                                    <Tooltip className="deleteTooltip">
+                                                                        دانلود
+                                                                    </Tooltip>
+                                                                }
+                                                            >
+                                                                <div className="record-item"
+                                                                     onClick={() => this.downloadFile(this.state.docFile.personnelImg)}>
+                                                                    <div className='ms-2'>عکس پرسنلی</div>
+                                                                    <RiDownloadCloud2Fill/>
+                                                                </div>
+                                                            </OverlayTrigger>
+                                                        )
+                                                    }
                                                 </Accordion.Body>
                                             </Accordion.Item>
                                             <Accordion.Item eventKey="3">
+                                                <Accordion.Header>پرینت ثبت نام </Accordion.Header>
+                                                <Accordion.Body>
+                                                    {
+                                                        this.state.hasRegister && (
+                                                            <OverlayTrigger
+                                                                placement="bottom"
+                                                                overlay={
+                                                                    <Tooltip className="deleteTooltip">
+                                                                        دانلود
+                                                                    </Tooltip>
+                                                                }
+                                                            >
+                                                                <div className="record-item"
+                                                                     onClick={() => this.downloadFile(this.state.docFile.register)}>
+                                                                    <div className='ms-2'>پرینت ثبت نام</div>
+                                                                    <RiDownloadCloud2Fill/>
+                                                                </div>
+                                                            </OverlayTrigger>
+                                                        )
+                                                    }
+                                                </Accordion.Body>
+                                            </Accordion.Item>
+                                            <Accordion.Item eventKey="4">
                                                 <Accordion.Header>پرینت ثبت نام دانشگاه</Accordion.Header>
                                                 <Accordion.Body>
-                                                    <OverlayTrigger
-                                                        placement="bottom"
-                                                        overlay={
-                                                            <Tooltip className="deleteTooltip">
-                                                                دانلود
-                                                            </Tooltip>
-                                                        }
-                                                    >
-                                                        <div className="record-item"
-                                                             onClick={() => this.downloadFile()}>
-                                                            <div className='ms-2'>پرینت ثبت نام دانشگاه</div>
-                                                            <RiDownloadCloud2Fill/>
-                                                        </div>
-                                                    </OverlayTrigger>
+                                                    {
+                                                        this.state.hasRegisterUni && (
+                                                            <OverlayTrigger
+                                                                placement="bottom"
+                                                                overlay={
+                                                                    <Tooltip className="deleteTooltip">
+                                                                        دانلود
+                                                                    </Tooltip>
+                                                                }
+                                                            >
+                                                                <div className="record-item"
+                                                                     onClick={() => this.downloadFile(this.state.docFile.registerUni)}>
+                                                                    <div className='ms-2'> ثبت نام دانشگاه</div>
+                                                                    <RiDownloadCloud2Fill color="#000"/>
+                                                                </div>
+                                                            </OverlayTrigger>
+                                                        )
+                                                    }
                                                 </Accordion.Body>
                                             </Accordion.Item>
                                         </Accordion>
@@ -1319,7 +1211,10 @@ class ProfilePage extends Component {
                     <Modal.Body>
                         <form className="my-3 mx-2" onSubmit={this.handleSubmit}>
                             <div className='input-report-box'>
-                                <select className='input' onChange={this.reportType}>
+                                <select className='input' onChange={(e) => {
+                                    this.reportType(e);
+                                    this.handleResetFields();
+                                }}>
                                     <option value='cleaning'>نوبت نظافت شبانه</option>
                                     <option value='delayInArrival'>تأخیر در ورود</option>
                                     <option value='exit'>خروج</option>
@@ -1335,12 +1230,63 @@ class ProfilePage extends Component {
                                     case 'cleaning':
                                         return <>
                                             <div className='input-report-box'>
+                                                <DatePicker
+                                                    // fixMainPosition={false}
+                                                    ref={this.date}
+                                                    calendarPosition={`top`}
+                                                    digits={['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']}
+                                                    format={`YYYY/MM/DD`}
+                                                    inputClass={`input form-control date-picker`}
 
-                                                <DatePicker calendarStyles={this.state.calStyles}
-                                                            inputFormat="jYYYY/jM/jD"
-                                                            className='input form-control date-picker'
-                                                            ref={this.date}
-                                                />
+
+                                                    containerStyle={{
+                                                        width: "100%"
+                                                    }}
+
+                                                    value={this.state.dateValues.cleaningDate}
+                                                    onChange={(value) => {
+                                                        let updatedDateValues = {...this.state};
+                                                        updatedDateValues.dateValues.cleaningDate = value;
+                                                        this.setState({updatedDateValues})
+                                                    }}
+
+                                                    mapDays={({date}) => {
+                                                        let props = {}
+                                                        let isWeekend = [6].includes(date.weekDay.index)
+
+                                                        if (isWeekend)
+                                                            props.className = "highlight highlight-red";
+
+                                                        return props
+                                                    }}
+
+                                                    weekDays={
+                                                        [
+                                                            ["شنبه", "Sat"],
+                                                            ["یکشنبه", "Sun"],
+                                                            ["دوشنبه", "Mon"],
+                                                            ["سه شنبه", "Tue"],
+                                                            ["چهارشنبه", "Wed"],
+                                                            ["پنجشنبه", "Thu"],
+                                                            ["جمعه", "Fri"],
+                                                        ]
+                                                    }
+
+                                                    calendar={persian}
+                                                    locale={persian_fa}
+
+                                                >
+                                                    <Button
+                                                        onClick={() => {
+                                                            let updatedDateValues = {...this.state};
+                                                            updatedDateValues.dateValues.cleaningDate = {};
+                                                            this.setState({updatedDateValues})
+                                                        }
+                                                        }
+                                                    >
+                                                        ریست
+                                                    </Button>
+                                                </DatePicker>
                                                 {/*<input type="text" ref={this.date} className="input" placeholder=" "/>*/}
                                                 <label className="placeholder">تاریخ</label>
                                             </div>
@@ -1353,24 +1299,224 @@ class ProfilePage extends Component {
                                     case 'delayInArrival':
                                         return <>
                                             <div className='input-report-box'>
-                                                <input type="text" ref={this.date} className="input" placeholder=" "/>
+                                                {/*<input type="text" ref={this.date} className="input" placeholder=" "/>*/}
+                                                <DatePicker
+                                                    // fixMainPosition={false}
+                                                    ref={this.date}
+                                                    calendarPosition={`top`}
+                                                    digits={['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']}
+                                                    format={`YYYY/MM/DD`}
+                                                    inputClass={`input form-control date-picker`}
+
+
+                                                    containerStyle={{
+                                                        width: "100%"
+                                                    }}
+
+                                                    value={this.state.dateValues.delayInArrivalDate}
+                                                    onChange={(value) => {
+                                                        let updatedDateValues = {...this.state};
+                                                        updatedDateValues.dateValues.delayInArrivalDate = value;
+                                                        this.setState({updatedDateValues})
+                                                    }}
+
+                                                    mapDays={({date}) => {
+                                                        let props = {}
+                                                        let isWeekend = [6].includes(date.weekDay.index)
+
+                                                        if (isWeekend)
+                                                            props.className = "highlight highlight-red";
+
+                                                        return props
+                                                    }}
+
+                                                    weekDays={
+                                                        [
+                                                            ["شنبه", "Sat"],
+                                                            ["یکشنبه", "Sun"],
+                                                            ["دوشنبه", "Mon"],
+                                                            ["سه شنبه", "Tue"],
+                                                            ["چهارشنبه", "Wed"],
+                                                            ["پنجشنبه", "Thu"],
+                                                            ["جمعه", "Fri"],
+                                                        ]
+                                                    }
+
+                                                    calendar={persian}
+                                                    locale={persian_fa}
+
+                                                >
+                                                    <Button
+                                                        onClick={() => {
+                                                            let updatedDateValues = {...this.state};
+                                                            updatedDateValues.dateValues.delayInArrivalDate = {};
+                                                            this.setState({updatedDateValues})
+                                                        }
+                                                        }
+                                                    >
+                                                        ریست
+                                                    </Button>
+                                                </DatePicker>
                                                 <label className="placeholder">تاریخ</label>
                                             </div>
                                             <div className='input-report-box'>
-                                                <input type="text" ref={this.time} className="input" placeholder=" "/>
+                                                {/*<input type="text" ref={this.time} className="input" placeholder=" "/>*/}
+                                                <DatePicker
+                                                    ref={this.time}
+                                                    disableDayPicker
+                                                    format="HH:mm:ss"
+                                                    inputClass={`input form-control date-picker`}
+                                                    containerStyle={{
+                                                        width: "100%"
+                                                    }}
+                                                    value={this.state.dateValues.delayInArriveTime}
+                                                    onChange={(value) => {
+                                                        let updatedDateValues = {...this.state};
+                                                        updatedDateValues.dateValues.delayInArriveTime = value;
+                                                        this.setState({updatedDateValues})
+                                                    }}
+                                                    plugins={[
+                                                        <TimePicker/>
+                                                    ]}
+                                                >
+                                                    <Button
+                                                        onClick={() => {
+                                                            let updatedDateValues = {...this.state};
+                                                            updatedDateValues.dateValues.delayInArriveTime = {};
+                                                            this.setState({updatedDateValues})
+                                                        }
+                                                        }
+                                                    >
+                                                        ریست
+                                                    </Button>
+                                                </DatePicker>
                                                 <label className="placeholder">ساعت</label>
                                             </div>
                                         </>;
                                     case 'exit':
                                         return <>
                                             <div className='input-report-box'>
-                                                <input type="text" ref={this.startDate} className="input"
-                                                       placeholder=" "/>
+                                                {/*<input type="text" ref={this.startDate} className="input"*/}
+                                                {/*       placeholder=" "/>*/}
+                                                <DatePicker
+                                                    // fixMainPosition={false}
+                                                    ref={this.startDate}
+                                                    calendarPosition={`top`}
+                                                    digits={['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']}
+                                                    format={`YYYY/MM/DD`}
+                                                    inputClass={`input form-control date-picker`}
+
+
+                                                    containerStyle={{
+                                                        width: "100%"
+                                                    }}
+
+                                                    value={this.state.dateValues.exitStartDate}
+                                                    onChange={(value) => {
+                                                        let updatedDateValues = {...this.state};
+                                                        updatedDateValues.dateValues.exitStartDate = value;
+                                                        this.setState({updatedDateValues})
+                                                    }}
+
+                                                    mapDays={({date}) => {
+                                                        let props = {}
+                                                        let isWeekend = [6].includes(date.weekDay.index)
+
+                                                        if (isWeekend)
+                                                            props.className = "highlight highlight-red";
+
+                                                        return props
+                                                    }}
+
+                                                    weekDays={
+                                                        [
+                                                            ["شنبه", "Sat"],
+                                                            ["یکشنبه", "Sun"],
+                                                            ["دوشنبه", "Mon"],
+                                                            ["سه شنبه", "Tue"],
+                                                            ["چهارشنبه", "Wed"],
+                                                            ["پنجشنبه", "Thu"],
+                                                            ["جمعه", "Fri"],
+                                                        ]
+                                                    }
+
+                                                    calendar={persian}
+                                                    locale={persian_fa}
+
+                                                >
+                                                    <Button
+                                                        onClick={() => {
+                                                            let updatedDateValues = {...this.state};
+                                                            updatedDateValues.dateValues.exitStartDate = {};
+                                                            this.setState({updatedDateValues})
+                                                        }
+                                                        }
+                                                    >
+                                                        ریست
+                                                    </Button>
+                                                </DatePicker>
                                                 <label className="placeholder">از تاريخ</label>
                                             </div>
                                             <div className='input-report-box'>
-                                                <input type="text" ref={this.endDate} className="input"
-                                                       placeholder=" "/>
+                                                {/*<input type="text" ref={this.endDate} className="input"*/}
+                                                {/*       placeholder=" "/>*/}
+                                                <DatePicker
+                                                    // fixMainPosition={false}
+                                                    ref={this.endDate}
+                                                    calendarPosition={`top`}
+                                                    digits={['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']}
+                                                    format={`YYYY/MM/DD`}
+                                                    inputClass={`input form-control date-picker`}
+
+
+                                                    containerStyle={{
+                                                        width: "100%"
+                                                    }}
+
+                                                    value={this.state.dateValues.exitEndDate}
+                                                    onChange={(value) => {
+                                                        let updatedDateValues = {...this.state};
+                                                        updatedDateValues.dateValues.exitEndDate = value;
+                                                        this.setState({updatedDateValues})
+                                                    }}
+
+                                                    mapDays={({date}) => {
+                                                        let props = {}
+                                                        let isWeekend = [6].includes(date.weekDay.index)
+
+                                                        if (isWeekend)
+                                                            props.className = "highlight highlight-red";
+
+                                                        return props
+                                                    }}
+
+                                                    weekDays={
+                                                        [
+                                                            ["شنبه", "Sat"],
+                                                            ["یکشنبه", "Sun"],
+                                                            ["دوشنبه", "Mon"],
+                                                            ["سه شنبه", "Tue"],
+                                                            ["چهارشنبه", "Wed"],
+                                                            ["پنجشنبه", "Thu"],
+                                                            ["جمعه", "Fri"],
+                                                        ]
+                                                    }
+
+                                                    calendar={persian}
+                                                    locale={persian_fa}
+
+                                                >
+                                                    <Button
+                                                        onClick={() => {
+                                                            let updatedDateValues = {...this.state};
+                                                            updatedDateValues.dateValues.exitEndDate = {};
+                                                            this.setState({updatedDateValues})
+                                                        }
+                                                        }
+                                                    >
+                                                        ریست
+                                                    </Button>
+                                                </DatePicker>
                                                 <label className="placeholder">تا تاريخ</label>
                                             </div>
                                             <div className='input-report-box'>
@@ -1397,21 +1543,102 @@ class ProfilePage extends Component {
                                                 <label className="placeholder">گزارش تخلف</label>
                                             </div>
                                             <div className='input-report-box'>
-                                                <input type="text" ref={this.date} className="input" placeholder=" "/>
+                                                {/*<input type="text" ref={this.date} className="input" placeholder=" "/>*/}
+                                                <DatePicker
+                                                    // fixMainPosition={false}
+                                                    ref={this.date}
+                                                    calendarPosition={`top`}
+                                                    digits={['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']}
+                                                    format={`YYYY/MM/DD`}
+                                                    inputClass={`input form-control date-picker`}
+
+
+                                                    containerStyle={{
+                                                        width: "100%"
+                                                    }}
+
+                                                    value={this.state.dateValues.violationDate}
+                                                    onChange={(value) => {
+                                                        let updatedDateValues = {...this.state};
+                                                        updatedDateValues.dateValues.violationDate = value;
+                                                        this.setState({updatedDateValues})
+                                                    }}
+
+                                                    mapDays={({date}) => {
+                                                        let props = {}
+                                                        let isWeekend = [6].includes(date.weekDay.index)
+
+                                                        if (isWeekend)
+                                                            props.className = "highlight highlight-red";
+
+                                                        return props
+                                                    }}
+
+                                                    weekDays={
+                                                        [
+                                                            ["شنبه", "Sat"],
+                                                            ["یکشنبه", "Sun"],
+                                                            ["دوشنبه", "Mon"],
+                                                            ["سه شنبه", "Tue"],
+                                                            ["چهارشنبه", "Wed"],
+                                                            ["پنجشنبه", "Thu"],
+                                                            ["جمعه", "Fri"],
+                                                        ]
+                                                    }
+
+                                                    calendar={persian}
+                                                    locale={persian_fa}
+
+                                                >
+                                                    <Button
+                                                        onClick={() => {
+                                                            let updatedDateValues = {...this.state};
+                                                            updatedDateValues.dateValues.violationDate = {};
+                                                            this.setState({updatedDateValues})
+                                                        }
+                                                        }
+                                                    >
+                                                        ریست
+                                                    </Button>
+                                                </DatePicker>
                                                 <label className="placeholder">تاریخ</label>
                                             </div>
                                             <div className='input-report-box'>
-                                                <input type="text" ref={this.time} className="input" placeholder=" "/>
+                                                {/*<input type="text" ref={this.time} className="input" placeholder=" "/>*/}
+                                                <DatePicker
+                                                    ref={this.time}
+                                                    disableDayPicker
+                                                    format="HH:mm:ss"
+                                                    inputClass={`input form-control date-picker`}
+                                                    containerStyle={{
+                                                        width: "100%"
+                                                    }}
+                                                    value={this.state.dateValues.violationTime}
+                                                    onChange={(value) => {
+                                                        let updatedDateValues = {...this.state};
+                                                        updatedDateValues.dateValues.violationTime = value;
+                                                        this.setState({updatedDateValues})
+                                                    }}
+                                                    plugins={[
+                                                        <TimePicker/>
+                                                    ]}
+                                                >
+                                                    <Button
+                                                        onClick={() => {
+                                                            let updatedDateValues = {...this.state};
+                                                            updatedDateValues.dateValues.violationTime = {};
+                                                            this.setState({updatedDateValues})
+                                                        }
+                                                        }
+                                                    >
+                                                        ریست
+                                                    </Button>
+                                                </DatePicker>
                                                 <label className="placeholder">ساعت</label>
                                             </div>
                                         </>;
                                     case 'penalty':
-                                        return <>
-                                            <div className='input-report-box'>
-                                                <input type="text" ref={this.description} className="input"
-                                                       placeholder=" "/>
-                                                <label className="placeholder">دلیل جریمه</label>
-                                            </div>
+                                        return (<>
                                             <div className='input-report-box'>
                                                 <select ref={this.typePenalty} className='input'>
                                                     <option value='cash'>نقدی</option>
@@ -1419,22 +1646,204 @@ class ProfilePage extends Component {
                                                 </select>
                                                 <label className="placeholder">نوع جریمه</label>
                                             </div>
-                                        </>;
+                                            <div className='input-report-box'>
+                                                <input type="text" ref={this.penaltyAmount} className="input"
+                                                       placeholder=" "/>
+                                                <label className="placeholder">مقدار جریمه</label>
+                                            </div>
+                                            <div className='input-report-box'>
+                                                <input type="text" ref={this.description} className="input"
+                                                       placeholder=" "/>
+                                                <label className="placeholder">دلیل جریمه</label>
+                                            </div>
+
+                                        </>);
                                     case 'discharge':
                                         return <>
                                             <div className='input-report-box'>
-                                                <input type="text" ref={this.dischargeDateAnnounce} className="input"
-                                                       placeholder=" "/>
+                                                {/*<input type="text" ref={this.dischargeDateAnnounce} className="input"*/}
+                                                {/*       placeholder=" "/>*/}
+                                                <DatePicker
+                                                    // fixMainPosition={false}
+                                                    ref={this.dischargeDateAnnounce}
+                                                    calendarPosition={`top`}
+                                                    digits={['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']}
+                                                    format={`YYYY/MM/DD`}
+                                                    inputClass={`input form-control date-picker`}
+
+
+                                                    containerStyle={{
+                                                        width: "100%"
+                                                    }}
+
+                                                    value={this.state.dateValues.dischargeDateAnnounce}
+                                                    onChange={(value) => {
+                                                        let updatedDateValues = {...this.state};
+                                                        updatedDateValues.dateValues.dischargeDateAnnounce = value;
+                                                        this.setState({updatedDateValues})
+                                                    }}
+
+                                                    mapDays={({date}) => {
+                                                        let props = {}
+                                                        let isWeekend = [6].includes(date.weekDay.index)
+
+                                                        if (isWeekend)
+                                                            props.className = "highlight highlight-red";
+
+                                                        return props
+                                                    }}
+
+                                                    weekDays={
+                                                        [
+                                                            ["شنبه", "Sat"],
+                                                            ["یکشنبه", "Sun"],
+                                                            ["دوشنبه", "Mon"],
+                                                            ["سه شنبه", "Tue"],
+                                                            ["چهارشنبه", "Wed"],
+                                                            ["پنجشنبه", "Thu"],
+                                                            ["جمعه", "Fri"],
+                                                        ]
+                                                    }
+
+                                                    calendar={persian}
+                                                    locale={persian_fa}
+
+                                                >
+                                                    <Button
+                                                        onClick={() => {
+                                                            let updatedDateValues = {...this.state};
+                                                            updatedDateValues.dateValues.dischargeDateAnnounce = {};
+                                                            this.setState({updatedDateValues})
+                                                        }
+                                                        }
+                                                    >
+                                                        ریست
+                                                    </Button>
+                                                </DatePicker>
                                                 <label className="placeholder">تاریخ اعلام تخلیه</label>
                                             </div>
                                             <div className='input-report-box'>
-                                                <input type="text" ref={this.dischargeDate} className="input"
-                                                       placeholder=" "/>
+                                                {/*<input type="text" ref={this.dischargeDate} className="input"*/}
+                                                {/*       placeholder=" "/>*/}
+                                                <DatePicker
+                                                    // fixMainPosition={false}
+                                                    ref={this.dischargeDate}
+                                                    calendarPosition={`top`}
+                                                    digits={['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']}
+                                                    format={`YYYY/MM/DD`}
+                                                    inputClass={`input form-control date-picker`}
+
+
+                                                    containerStyle={{
+                                                        width: "100%"
+                                                    }}
+
+                                                    value={this.state.dateValues.dischargeDate}
+                                                    onChange={(value) => {
+                                                        let updatedDateValues = {...this.state};
+                                                        updatedDateValues.dateValues.dischargeDate = value;
+                                                        this.setState({updatedDateValues})
+                                                    }}
+
+                                                    mapDays={({date}) => {
+                                                        let props = {}
+                                                        let isWeekend = [6].includes(date.weekDay.index)
+
+                                                        if (isWeekend)
+                                                            props.className = "highlight highlight-red";
+
+                                                        return props
+                                                    }}
+
+                                                    weekDays={
+                                                        [
+                                                            ["شنبه", "Sat"],
+                                                            ["یکشنبه", "Sun"],
+                                                            ["دوشنبه", "Mon"],
+                                                            ["سه شنبه", "Tue"],
+                                                            ["چهارشنبه", "Wed"],
+                                                            ["پنجشنبه", "Thu"],
+                                                            ["جمعه", "Fri"],
+                                                        ]
+                                                    }
+
+                                                    calendar={persian}
+                                                    locale={persian_fa}
+
+                                                >
+                                                    <Button
+                                                        onClick={() => {
+                                                            let updatedDateValues = {...this.state};
+                                                            updatedDateValues.dateValues.dischargeDate = {};
+                                                            this.setState({updatedDateValues})
+                                                        }
+                                                        }
+                                                    >
+                                                        ریست
+                                                    </Button>
+                                                </DatePicker>
                                                 <label className="placeholder">تاریخ تخلیه</label>
                                             </div>
                                             <div className='input-report-box'>
-                                                <input type="text" ref={this.depositReturnDate} className="input"
-                                                       placeholder=" "/>
+                                                {/*<input type="text" ref={this.depositReturnDate} className="input"*/}
+                                                {/*       placeholder=" "/>*/}
+                                                <DatePicker
+                                                    // fixMainPosition={false}
+                                                    ref={this.depositReturnDate}
+                                                    calendarPosition={`top`}
+                                                    digits={['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']}
+                                                    format={`YYYY/MM/DD`}
+                                                    inputClass={`input form-control date-picker`}
+
+
+                                                    containerStyle={{
+                                                        width: "100%"
+                                                    }}
+
+                                                    value={this.state.dateValues.depositReturnDate}
+                                                    onChange={(value) => {
+                                                        let updatedDateValues = {...this.state};
+                                                        updatedDateValues.dateValues.depositReturnDate = value;
+                                                        this.setState({updatedDateValues})
+                                                    }}
+
+                                                    mapDays={({date}) => {
+                                                        let props = {}
+                                                        let isWeekend = [6].includes(date.weekDay.index)
+
+                                                        if (isWeekend)
+                                                            props.className = "highlight highlight-red";
+
+                                                        return props
+                                                    }}
+
+                                                    weekDays={
+                                                        [
+                                                            ["شنبه", "Sat"],
+                                                            ["یکشنبه", "Sun"],
+                                                            ["دوشنبه", "Mon"],
+                                                            ["سه شنبه", "Tue"],
+                                                            ["چهارشنبه", "Wed"],
+                                                            ["پنجشنبه", "Thu"],
+                                                            ["جمعه", "Fri"],
+                                                        ]
+                                                    }
+
+                                                    calendar={persian}
+                                                    locale={persian_fa}
+
+                                                >
+                                                    <Button
+                                                        onClick={() => {
+                                                            let updatedDateValues = {...this.state};
+                                                            updatedDateValues.dateValues.depositReturnDate = {};
+                                                            this.setState({updatedDateValues})
+                                                        }
+                                                        }
+                                                    >
+                                                        ریست
+                                                    </Button>
+                                                </DatePicker>
                                                 <label className="placeholder">تاریخ عودت ودیعه</label>
                                             </div>
                                             <div className='input-report-box'>
@@ -1460,7 +1869,64 @@ class ProfilePage extends Component {
                                                 <label className="placeholder">روز</label>
                                             </div>*/}
                                             <div className='input-report-box'>
-                                                <input type="text" ref={this.date} className="input" placeholder=" "/>
+                                                {/*<input type="text" ref={this.date} className="input" placeholder=" "/>*/}
+                                                <DatePicker
+                                                    // fixMainPosition={false}
+                                                    ref={this.date}
+                                                    calendarPosition={`top`}
+                                                    digits={['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']}
+                                                    format={`YYYY/MM/DD`}
+                                                    inputClass={`input form-control date-picker`}
+
+
+                                                    containerStyle={{
+                                                        width: "100%"
+                                                    }}
+
+                                                    value={this.state.dateValues.cancelContractDate}
+                                                    onChange={(value) => {
+                                                        let updatedDateValues = {...this.state};
+                                                        updatedDateValues.dateValues.cancelContractDate = value;
+                                                        this.setState({updatedDateValues})
+                                                    }}
+
+                                                    mapDays={({date}) => {
+                                                        let props = {}
+                                                        let isWeekend = [6].includes(date.weekDay.index)
+
+                                                        if (isWeekend)
+                                                            props.className = "highlight highlight-red";
+
+                                                        return props
+                                                    }}
+
+                                                    weekDays={
+                                                        [
+                                                            ["شنبه", "Sat"],
+                                                            ["یکشنبه", "Sun"],
+                                                            ["دوشنبه", "Mon"],
+                                                            ["سه شنبه", "Tue"],
+                                                            ["چهارشنبه", "Wed"],
+                                                            ["پنجشنبه", "Thu"],
+                                                            ["جمعه", "Fri"],
+                                                        ]
+                                                    }
+
+                                                    calendar={persian}
+                                                    locale={persian_fa}
+
+                                                >
+                                                    <Button
+                                                        onClick={() => {
+                                                            let updatedDateValues = {...this.state};
+                                                            updatedDateValues.dateValues.cancelContractDate = {};
+                                                            this.setState({updatedDateValues})
+                                                        }
+                                                        }
+                                                    >
+                                                        ریست
+                                                    </Button>
+                                                </DatePicker>
                                                 <label className="placeholder">تاریخ</label>
                                             </div>
                                             <div className='input-report-box'>
@@ -1505,6 +1971,23 @@ class ProfilePage extends Component {
         );
     }
 
+    handleResetFields = () => {
+        let resetFields = {...this.state.dateValues};
+        resetFields = {
+            cleaningDate: '',
+            delayInArrivalDate: '',
+            exitStartDate: '',
+            exitEndDate: '',
+            violationDate: '',
+            dischargeDateAnnounce: '',
+            dischargeDate: '',
+            depositReturnDate: '',
+            cancelContractDate: '',
+        }
+        this.setState({dateValues: resetFields})
+
+        console.log(this.state.dateValues)
+    }
     handleClose = () => {
         this.setState({show: false})
     };
@@ -1517,33 +2000,66 @@ class ProfilePage extends Component {
     }
     handleSubmit = (e) => {
         e.preventDefault();
+        // console.log(this.state.dateValues.cleaningDate)
         const type = this.state.reportType;
-        this.setState({reports: type})
+
+        this.setState({reports: type});
         switch (type) {
             case 'cleaning':
-                return (() => {
-                    const date = this.date.current.value;
+                return (async () => {
+                    const date = this.state.dateValues.cleaningDate;
+                    const formattedDate = date.year + '/' + date.month + '/' + date.day
                     const description = this.description.current.value;
                     const result = {
                         'title': this.state.reportType,
-                        'date': date,
-                        'description': description
+                        'date': formattedDate,
+                        'checkCleaning': true,
+                        'description': description,
+                        'personId': this.state.personObject.id
                     }
+
+                    const rawResponse = await fetch('https://api.saadatportal.com/api/v1/record', {
+                        method: 'POST',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(result)
+                    });
+                    const content = await rawResponse.json();
+                    console.log(content);
+
                     const newReports = this.state.report.concat(result);
                     this.setState({report: newReports});
                     this.setState({show: false});
 
+                    console.log(formattedDate)
                 })();
             case 'delayInArrival':
-                return (() => {
-                    const date = this.date.current.value;
-                    const time = this.time.current.value;
+                return (async () => {
+                    const date = this.state.dateValues.delayInArrivalDate;
+                    const formattedDate = date.year + '/' + date.month + '/' + date.day
+                    const time = this.state.dateValues.delayInArriveTime;
+                    const formattedTime = time.hour + ':' + time.minute;
 
                     const result = {
                         'title': this.state.reportType,
-                        'date': date,
-                        'time': time
+                        'date': formattedDate,
+                        'hour': formattedTime,
+                        'personId': this.state.personObject.id
                     }
+
+                    const rawResponse = await fetch('https://api.saadatportal.com/api/v1/record', {
+                        method: 'POST',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(result)
+                    });
+                    const content = await rawResponse.json();
+                    console.log(content);
+
                     const newReports = this.state.report.concat(result)
                     this.setState({report: newReports})
                     this.setState({show: false})
@@ -1551,95 +2067,175 @@ class ProfilePage extends Component {
                 })();
 
             case 'exit':
-                return (() => {
-                    const startDate = this.startDate.current.value;
-                    const endDate = this.endDate.current.value;
+                return (async () => {
+                    const startDate = this.state.dateValues.exitStartDate;
+                    const endDate = this.state.dateValues.exitEndDate;
+                    const formattedStartDate = startDate.year + '/' + startDate.month + '/' + startDate.day;
+                    const formattedEndDate = endDate.year + '/' + endDate.month + '/' + endDate.day;
                     const destinationAddress = this.destinationAddress.current.value;
                     const destinationPhoneNumber = this.destinationPhoneNumber.current.value;
                     const relation = this.relation.current.value;
                     const result = {
                         'title': this.state.reportType,
-                        'timePeriod': {
-                            "startDate": startDate,
-                            "endDate": endDate
-                        },
+                        "startDate": formattedStartDate,
+                        "endDate": formattedEndDate,
                         'destinationAddress': destinationAddress,
                         'destinationPhoneNumber': destinationPhoneNumber,
-                        'relation': relation
+                        'relation': relation,
+                        'personId': this.state.personObject.id
                     }
+
+                    const rawResponse = await fetch('https://api.saadatportal.com/api/v1/record', {
+                        method: 'POST',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(result)
+                    });
+                    const content = await rawResponse.json();
+                    console.log(content);
+
                     const newReports = this.state.report.concat(result)
                     this.setState({report: newReports})
                     this.setState({show: false})
                 })();
+
             case 'violation':
-                return (() => {
-
-                    const date = this.date.current.value;
-                    const time = this.time.current.value;
+                return (async () => {
+                    const date = this.state.dateValues.violationDate;
+                    const formattedDate = date.year + '/' + date.month + '/' + date.day
+                    const time = this.state.dateValues.violationTime;
+                    const formattedTime = time.hour + ':' + time.minute
                     const description = this.description.current.value;
-
                     const result = {
                         'title': this.state.reportType,
-                        'date': date,
-                        'time': time,
-                        'description': description
+                        'date': formattedDate,
+                        'hour': formattedTime,
+                        'description': description,
+                        'personId': this.state.personObject.id
                     }
+
+                    const rawResponse = await fetch('https://api.saadatportal.com/api/v1/record', {
+                        method: 'POST',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(result)
+                    });
+                    const content = await rawResponse.json();
+
+                    console.log(content);
 
                     const newReports = this.state.report.concat(result)
                     this.setState({report: newReports})
                     this.setState({show: false})
                 })();
             case 'penalty':
-                return (() => {
+                return (async () => {
                     const description = this.description.current.value;
                     const typePenalty = this.typePenalty.current.value;
+                    const penaltyAmount = this.penaltyAmount.current.value;
                     const result = {
                         'title': this.state.reportType,
-                        'typePenalty': typePenalty,
-                        'description': description
+                        'penaltyType': typePenalty,
+                        'description': description,
+                        'penaltyAmount': penaltyAmount,
+                        'personId': this.state.personObject.id
                     }
+
+                    const rawResponse = await fetch('https://api.saadatportal.com/api/v1/record', {
+                        method: 'POST',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(result)
+                    });
+                    const content = await rawResponse.json();
+                    console.log(content);
+
                     const newReports = this.state.report.concat(result)
                     this.setState({report: newReports})
                     this.setState({show: false})
+
                 })();
             case 'discharge':
-                return (() => {
-                    const dischargeDateAnnounce = this.dischargeDateAnnounce.current.value;
-                    const dischargeDate = this.dischargeDate.current.value;
-                    const depositReturnDate = this.depositReturnDate.current.value;
+                return (async () => {
+
+                    const dischargeDateAnnounce = this.state.dateValues.dischargeDateAnnounce;
+                    const dischargeDate = this.state.dateValues.dischargeDate;
+                    const depositReturnDate = this.state.dateValues.depositReturnDate;
+
+                    let formattedDischargeDateAnnounce = dischargeDateAnnounce.year + '/' + dischargeDateAnnounce.month + '/' + dischargeDateAnnounce.day;
+                    let formattedDischargeDate = dischargeDate.year + '/' + dischargeDate.month + '/' + dischargeDate.day;
+                    let formattedDepositReturnDate = depositReturnDate.year + '/' + depositReturnDate.month + '/' + depositReturnDate.day;
+
                     const deductionOfLosses = this.deductionOfLosses.current.value;
                     const deductionOfLossesReason = this.deductionOfLossesReason.current.value;
                     const refundableAmount = this.refundableAmount.current.value;
                     const result = {
                         'title': this.state.reportType,
-                        'dischargeDateAnnounce': dischargeDateAnnounce,
-                        'dischargeDate': dischargeDate,
-                        'depositReturnDate': depositReturnDate,
-                        'deductionOfLosses': deductionOfLosses,
-                        'deductionOfLossesReason': deductionOfLossesReason,
-                        'refundableAmount': refundableAmount
+                        'startDate': formattedDischargeDateAnnounce,
+                        'endDate': formattedDischargeDate,
+                        'date': formattedDepositReturnDate,
+                        'penaltyAmount': deductionOfLosses,
+                        'description': deductionOfLossesReason,
+                        'returnedAmount': refundableAmount,
+                        'personId': this.state.personObject.id
                     }
+
+                    const rawResponse = await fetch('https://api.saadatportal.com/api/v1/record', {
+                        method: 'POST',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(result)
+                    });
+
+                    const content = await rawResponse.json();
+                    console.log(content);
+
                     const newReports = this.state.report.concat(result)
                     this.setState({report: newReports})
                     this.setState({show: false})
+
                 })();
 
             case 'cancelContract':
-                return (() => {
-                    const date = this.date.current.value;
+                return (async () => {
+
+                    const date = this.state.dateValues.cancelContractDate;
+                    const formattedDate = date.year + '/' + date.month + '/' + date.day;
                     const reason = this.reason.current.value;
                     const deductionOfLosses = this.deductionOfLosses.current.value;
                     const refundableAmount = this.refundableAmount.current.value;
                     const result = {
                         'title': this.state.reportType,
-                        'data': date,
-                        'reason': reason,
-                        'deductionOfLosses': deductionOfLosses,
-                        'refundableAmount': refundableAmount
+                        'data': formattedDate,
+                        'description': reason,
+                        'penaltyAmount': deductionOfLosses,
+                        'returnedAmount': refundableAmount,
+                        'personId': this.state.personObject.id
                     }
+
+                    const rawResponse = await fetch('https://api.saadatportal.com/api/v1/record', {
+                        method: 'POST',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(result)
+                    });
+                    const content = await rawResponse.json();
+                    console.log(content);
+
                     const newReports = this.state.report.concat(result)
                     this.setState({report: newReports})
                     this.setState({show: false})
+
                 })();
         }
     }
@@ -1659,8 +2255,62 @@ class ProfilePage extends Component {
         this.setState({report: updatedReport});
         this.setState({showDeleteModalReport: false})
     }
-    downloadFile = () => {
-        console.log('Download')
+
+    downloadFile = async (fileId) => {
+        const file = this.state.fileDetails.find(({fileId}) => fileId === fileId);
+        var filename = file.originalName;
+
+        const response = await fetch(`https://api.saadatportal.com/api/v1/file/${fileId}`).then((result) => {
+            return result.blob();
+        })
+            .then((blob) => {
+                if (blob != null) {
+                    var url = window.URL.createObjectURL(blob);
+                    var a = document.createElement('a');
+                    a.href = url;
+                    a.download = filename;
+                    document.body.appendChild(a);
+                    a.click();
+                    a.remove();
+                }
+            });
+
+    }
+
+    existDocFile = (docFile) => {
+        if (docFile.hasOwnProperty('birthPage1')) {
+            this.setState({hasBirthPage1: true});
+        }
+        if (docFile.hasOwnProperty('birthPage2')) {
+            this.setState({hasBirthPage2: true});
+        }
+        if (docFile.hasOwnProperty('birthPage3')) {
+            this.setState({hasBirthPage3: true});
+        }
+        if (docFile.hasOwnProperty('birthPage4')) {
+            this.setState({hasBirthPage4: true});
+        }
+        if (docFile.hasOwnProperty('birthAllPage')) {
+            this.setState({hasBirthAllPage: true});
+        }
+        if (docFile.hasOwnProperty('cardPage1')) {
+            this.setState({hasCartPage1: true});
+        }
+        if (docFile.hasOwnProperty('cardPage2')) {
+            this.setState({hasCartPage2: true});
+        }
+        if (docFile.hasOwnProperty('cardAllPage')) {
+            this.setState({hasCartAllPage: true});
+        }
+        if (docFile.hasOwnProperty('personnelImg')) {
+            this.setState({hasPersonnelImg: true});
+        }
+        if (docFile.hasOwnProperty('register')) {
+            this.setState({hasRegister: true});
+        }
+        if (docFile.hasOwnProperty('registerUni')) {
+            this.setState({hasRegisterUni: true});
+        }
     }
 }
 
