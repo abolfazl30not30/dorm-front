@@ -139,9 +139,9 @@ class PresenceAbsenceRoomPerson extends Component {
         isLoading: false
     }
 
-    async componentDidMount() {
-        /*const response = await fetch(`https://api.saadatportal.com/api/v1/unit/room/${this.context.unitIdPA}`).then((response) => response.json())
-            .then((data) => console.log(data));*/
+    componentDidMount = async () => {
+        const getRooms = await fetch(`https://api.saadatportal.com/api/v1/unit/person/${this.context.unitId}`).then((response) => response.json())
+            .then((data) => this.setState({rooms: data}));
 
         /*const responseUnit = await fetch(`https://api.saadatportal.com/api/v1/unit/${this.context.unitIdPA}`).then((response) => response.json())
             .then((data) => this.setState({unit: data, isLoading: false}));*/
@@ -171,8 +171,8 @@ class PresenceAbsenceRoomPerson extends Component {
                             </div>
                         ) : (
                             <div className='row'>
-                                {this.state.roomApi.map((r) => (
-                                    r.empty ? '' : (<div className="col-12 col-md-4 p-2">
+                                {this.state.rooms.map((r) => (
+                                    <div className="col-12 col-md-4 p-2">
                                         <div className='pa-floor'>
                                             <div className="title"><BsDoorClosed style={{fontSize:"20px"}} className={'ms-1'} />اتاق {r.roomNumber}</div>
                                             <div className='units-list row'>
@@ -208,7 +208,7 @@ class PresenceAbsenceRoomPerson extends Component {
                                                 }
                                             </div>
                                         </div>
-                                    </div>)
+                                    </div>
                                 ))}
                             </div>
                         )
