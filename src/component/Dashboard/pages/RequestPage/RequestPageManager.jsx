@@ -140,9 +140,6 @@ class RequestPage extends Component {
                                        onChange={(value) => this.setState({searchContent: value.target.value})}/>
                             </div>
                         </div>
-                        <button onClick={() => console.log(this.state.requests)}>
-                            asd
-                        </button>
                         <div className="d-flex flex-row flex-wrap">
                             {
                                 this.state.requests.map((request, index, curr) => (
