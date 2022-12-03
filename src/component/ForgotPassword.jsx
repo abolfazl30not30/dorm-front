@@ -113,6 +113,13 @@ class Login extends Component {
 
         let getValue = await result;
 
+        // let username = "fazel";
+        // let password = "12345678";
+
+        // if(username === getValue.user && password === getValue.email){
+        //     window.location = '/dashboard';
+
+
         let response = '';
         const postEmail = await fetch('https://api.saadatportal.com/api/v1/email/forgot/password', {
             method: 'POST',
@@ -126,7 +133,9 @@ class Login extends Component {
             })
         }).then((res) => response = res);
 
-        // console.log(response)
+        // let respondForgotPassword = await postEmail.json();
+
+        console.log(response)
 
         if (response.status === 200) {
             window.location = '/';
@@ -139,6 +148,12 @@ class Login extends Component {
         } else if (response.status === 403){
             this.setState({errors: ['ایمیل صحیح نمی باشد']})
         }
+
+        // if ()
+
+        // }else {
+        //     this.setState({errors: ['ایمیل یا پسورد صحیح نمی باشد']})
+        // }
     }
 }
 
