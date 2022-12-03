@@ -59,7 +59,6 @@ class inventory extends Component {
                                     <option value="deficiency">کاستی</option>
                                     <option value="onHand">دارایی</option>
                                 </Form.Select>
-                                <label className='placeholder'>نوع</label>
                             </div>
                         </div>
                     </div>

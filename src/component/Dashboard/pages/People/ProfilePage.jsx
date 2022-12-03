@@ -1237,7 +1237,6 @@ class ProfilePage extends Component {
                                                     calendarPosition={`top`}
                                                     digits={['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']}
                                                     format={`YYYY/MM/DD`}
-                                                    inputClass={`input form-control date-picker`}
 
 
                                                     containerStyle={{
@@ -1250,7 +1249,6 @@ class ProfilePage extends Component {
                                                         updatedDateValues.dateValues.cleaningDate = value;
                                                         this.setState({updatedDateValues})
                                                     }}
-
                                                     mapDays={({date}) => {
                                                         let props = {}
                                                         let isWeekend = [6].includes(date.weekDay.index)
@@ -2114,7 +2112,9 @@ class ProfilePage extends Component {
 
             case 'violation':
                 return (async () => {
+
                     this.setState({registerLoading:true});
+
                     const date = this.state.dateValues.violationDate;
                     const formattedDate = date.year + '/' + date.month + '/' + date.day
                     const time = this.state.dateValues.violationTime;
@@ -2167,8 +2167,7 @@ class ProfilePage extends Component {
                             'Accept': 'application/json',
                             'Content-Type': 'application/json'
                         },
-                        body: JSON.stringify(result)
-                        
+                        body: JSON.stringify(result)                     
                     }).then((response) => response.json())
                         .then((res) => {
                             this.setState({registerLoading:false})
@@ -2224,7 +2223,6 @@ class ProfilePage extends Component {
                         .catch((error) => {
                             this.setState({registerLoading:false})
                         });
-                    
                 })();
 
             case 'cancelContract':
@@ -2261,7 +2259,6 @@ class ProfilePage extends Component {
                         .catch((error) => {
                             this.setState({registerLoading:false})
                         });
-                    
                 })();
         }
     }

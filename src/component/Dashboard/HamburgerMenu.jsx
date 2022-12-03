@@ -10,7 +10,7 @@ class HamburgerMenu extends Component {
 
     render() {
         return (
-            <div style={
+            <div className='overflow-auto' style={
                 this.context.activeMenu ? {display: "none"} : {display: "block"}
             }>
                 <div className='close-icon'>
@@ -114,6 +114,13 @@ class HamburgerMenu extends Component {
                                  onClick={window.innerWidth <= 768 && this.context.handleSidebar}>
                             <i className="bi bi-hand-thumbs-up"></i>
                             نوبت نظافت شبانه
+                        </NavLink>
+                    </li>
+                    <li className="sidenav-item">
+                        <NavLink activeClassName='active-sidebar' to="/dashboard/log" className='sidenav-link'
+                                 onClick={window.innerWidth <= 768 && this.context.handleSidebar}>
+                            <i className="bi bi-clock-history"></i>
+                            تاریخپه کارها
                         </NavLink>
                     </li>
                 </ul>

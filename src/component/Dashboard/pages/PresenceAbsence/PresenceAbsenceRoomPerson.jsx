@@ -139,9 +139,9 @@ class PresenceAbsenceRoomPerson extends Component {
         isLoading: false
     }
 
-    async componentDidMount() {
-        /*const response = await fetch(`https://api.saadatportal.com/api/v1/unit/room/${this.context.unitIdPA}`).then((response) => response.json())
-            .then((data) => console.log(data));*/
+    componentDidMount = async () => {
+        const getRooms = await fetch(`https://api.saadatportal.com/api/v1/unit/person/${this.context.unitId}`).then((response) => response.json())
+            .then((data) => this.setState({rooms: data}));
 
         /*const responseUnit = await fetch(`https://api.saadatportal.com/api/v1/unit/${this.context.unitIdPA}`).then((response) => response.json())
             .then((data) => this.setState({unit: data, isLoading: false}));*/
@@ -163,7 +163,7 @@ class PresenceAbsenceRoomPerson extends Component {
                 </div>
                 <div className="presence-absence">
                     <div className="title-page">نوبت نظافت شبانه</div>
-                    <div className="title-page" style={{fontSize:'14px'}}><i className="bi bi-building ms-2"></i>واحد {this.context.unitNumberPA}</div>
+                    <div className="title-page" style={{fontSize:'14px'}}><i className="bi bi-building ms-2"/>واحد {this.context.unitNumberPA}</div>
                     {
                         this.state.isLoading ? (
                             <div className='row' style={{marginTop: "60px"}}>
@@ -171,44 +171,50 @@ class PresenceAbsenceRoomPerson extends Component {
                             </div>
                         ) : (
                             <div className='row'>
-                                {this.state.roomApi.map((r) => (
-                                    r.empty ? '' : (<div className="col-12 col-md-4 p-2">
+                                {this.state.rooms.map((r) => (
+                                    <div className="col-12 col-md-4 p-2">
                                         <div className='pa-floor'>
                                             <div className="title"><BsDoorClosed style={{fontSize:"20px"}} className={'ms-1'} />اتاق {r.roomNumber}</div>
                                             <div className='units-list row'>
                                                 {
                                                     r.information.map((b) => (
-                                                        b.empty ? '' : (
-
-                                                            <OverlayTrigger
-                                                                overlay={
-                                                                    <Tooltip id={`tooltip-${b.personId}`}>
-                                                                        کد ملی:{b.personNationalCode}
-                                                                    </Tooltip>
-                                                                }
-                                                            >
-                                                                <div className='units-list-item col-12 my-2'>
-                                                                    <div>
-                                                                        <i className="bi bi-person ms-1"></i>
-                                                                        {b.personName} (تخت {b.bedName})
-                                                                    </div>
-                                                                    <BootstrapSwitchButton onlabel='انجام شد' onstyle='success'
-                                                                                           offlabel='انجام نشد'
-                                                                                           offstyle='secondary'
-                                                                                           checked={false}
-                                                                                           class='me-2'
-                                                                                           onChange={(e) => {
-                                                                                               this.handleGetStatus(e, b.personId)
-                                                                                           }}
-                                                                    />
+                                                        <OverlayTrigger
+                                                            overlay={
+                                                                <Tooltip id={`tooltip-${b.personId}`}>
+                                                                    کد ملی:{b.personNationalCode}
+                                                                </Tooltip>
+                                                            }
+                                                        >
+                                                            <div className='units-list-item col-12 my-2'>
+                                                                <div>
+                                                                    <i className="bi bi-person ms-1"/>
+                                                                    {
+                                                                        b.personId === null
+                                                                        ? <p>تخت خالی است!</p>
+                                                                            : <p>{b.personName} تخت {b.bedName}</p>
+                                                                    }
                                                                 </div>
-                                                            </OverlayTrigger>
-                                                    )
+                                                                {
+                                                                    b.personId !== null
+                                                                    ? <BootstrapSwitchButton onlabel='انجام شد' onstyle='success'
+                                                                                             offlabel='انجام نشد'
+                                                                                             offstyle='secondary'
+                                                                                             checked={b.checked}
+                                                                                             disabled={b.checked}
+                                                                                             class='me-2'
+                                                                                             onChange={(e) => {
+                                                                                                 this.handleGetStatus(e, b.personId)
+                                                                                             }}
+                                                                        />
+                                                                        : null
+                                                                }
+                                                            </div>
+                                                        </OverlayTrigger>
                                                     ))
                                                 }
                                             </div>
                                         </div>
-                                    </div>)
+                                    </div>
                                 ))}
                             </div>
                         )
@@ -218,22 +224,32 @@ class PresenceAbsenceRoomPerson extends Component {
         );
     }
 
-    handleGetStatus = (checked, id) => {
-        var today = new Date();
-        const dd = String(today.getDate()).padStart(2, '0');
-        const mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-        const yyyy = today.getFullYear();
-        const hh = String(today.getHours()).padStart(2, '0');
-        const MM = String(today.getMinutes()).padStart(2, '0');
-        const ss = String(today.getSeconds()).padStart(2, '0');
-        today = `${mm}/${dd}/${yyyy} ${hh}:${MM}:${ss}`
+    handleGetStatus = async (checked, id) => {
+        let today = new Date().toLocaleDateString('fa-IR-u-nu-latn', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            formatMatcher: 'basic'
+        });
 
         const report = {
             "date": today,
-            "title": "حضور و غیاب",
+            "title": "cleaning",
             "personId": id,
             "checkCleaning": checked
         }
+
+        const postReport = await fetch('https://api.saadatportal.com/api/v1/record', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(report)
+        });
+
+        var respond = await postReport.json();
+
         console.log(report);
     }
 

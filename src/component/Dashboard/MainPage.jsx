@@ -25,6 +25,7 @@ import PresenceAbsence from "./pages/PresenceAbsence/presenceAbsence";
 import PresenceAbsenceRoomPerson from './pages/PresenceAbsence/PresenceAbsenceRoomPerson'
 import RoomLog from "./pages/Inventory and capacity/RoomLog";
 import Setting from "./pages/Setting/Setting";
+import Log from "./pages/log/log"
 
 
 class MainPage extends Component {
@@ -230,6 +231,7 @@ class MainPage extends Component {
             otherGuestUploadPage: [],
             //##############################################################################
 
+            slider: []
         },
         errors: {
             required: 'این فیلد الزامی است!',
@@ -411,6 +413,7 @@ class MainPage extends Component {
             <>
                 <div className='d-flex flex-column pt-4 px-3'>
                     <BuildingContext.Provider value={{
+                        slider: this.state.fields.slider,
                         personnelFields: this.state.fields.personnelFields,
                         personnelFieldsValidation: this.state.specificValidations.personnelFieldsValidation,
                         unitId: this.state.unitId,
@@ -469,6 +472,8 @@ class MainPage extends Component {
                         handleUploadedFile: this.handleUploadedFile,
                         handleDeleteUploadedFile: this.handleDeleteUploadedFile,
                         handleReset: this.handleReset,
+                        handleImageSlider: this.handleImageSlider,
+                        handleResetSlider: this.handleResetSlider
                     }}
                     >
                         <Routes>
@@ -497,6 +502,7 @@ class MainPage extends Component {
                             <Route path="/PresenceAbsencePage2" element={(<PresenceAbsenceRoomPerson/>)}/>
                             <Route path="/setting" element={(<Setting/>)}/>
                             <Route path="booking/room_log" element={(<RoomLog/>)}/>
+                            <Route path="/log" element={(<Log/>)}/>
                         </Routes>
                     </BuildingContext.Provider>
                 </div>
@@ -647,7 +653,6 @@ class MainPage extends Component {
 
             otherGuestUploadPage: [],
             //##############################################################################
-
         };
 
         this.setState({valueOfDates : resetDateValues});
@@ -727,6 +732,32 @@ class MainPage extends Component {
         this.setState({specificValidations: newSpecificValidations});
         console.log(this.state.fields)
         // console.log(this.state.fields.otherGuestInformationFurther)
+    }
+
+    handleImageSlider = (name, id) => {
+        let updatedState = {...this.state};
+
+        if (!updatedState.fields.slider.includes({
+            name: name,
+            fileId: id
+        })) {
+            updatedState.fields.slider.push({
+                name: name,
+                fileId: id
+            })
+        }
+
+        this.setState({updatedState})
+
+    }
+
+    handleResetSlider = () => {
+        // console.log(this.state.fields.slider)
+        let updatedState = {...this.state};
+
+        updatedState.fields.slider = []
+
+        this.setState({updatedState})
     }
 }
 
