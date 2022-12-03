@@ -1233,6 +1233,7 @@ class ProfilePage extends Component {
                                             <div className='input-report-box'>
                                                 <DatePicker
                                                     // fixMainPosition={false}
+                                                    inputClass={"input form-control date-picker"}
                                                     ref={this.date}
                                                     calendarPosition={`top`}
                                                     digits={['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']}
