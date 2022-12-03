@@ -107,7 +107,7 @@ class ProfilePage extends Component {
         const fileRespond = await fetch(`https://api.saadatportal.com/api/v1/responseFile/search?parentType=Person&parentId=${this.context.personId}`).then((response) => response.json())
             .then((data) => this.setState({fileDetails: data}, () => {
                 this.setState({docFile: this.state.personObject.files});
-                this.setState({report: this.state.personObject.record});
+                this.setState({report: this.state.personObject.record},()=>{console.log(this.state.personObject.record)});
                 this.existDocFile(this.state.personObject.files);
             }));
 
@@ -682,7 +682,7 @@ class ProfilePage extends Component {
                                                                     <tr>
                                                                         {/*<td>{i+1}</td>*/}
                                                                         <td>{d.date}</td>
-                                                                        <td>{d.time}</td>
+                                                                        <td>{d.hour}</td>
                                                                         <td>
                                                                             <OverlayTrigger
                                                                                 placement="bottom"
@@ -782,7 +782,7 @@ class ProfilePage extends Component {
                                                                         {/*<td>{i+1}</td>*/}
                                                                         <td>{v.description}</td>
                                                                         <td>{v.date}</td>
-                                                                        <td>{v.time}</td>
+                                                                        <td>{v.hour}</td>
                                                                         <td>
                                                                             <OverlayTrigger
                                                                                 placement="bottom"
@@ -815,8 +815,9 @@ class ProfilePage extends Component {
                                                         <thead>
                                                         <tr>
                                                             {/*<th>شماره</th>*/}
-                                                            <th>دلیل جریمه</th>
                                                             <th>نوع جریمه</th>
+                                                            <th>مقدار جریمه</th>
+                                                            <th>دلیل جریمه</th>
                                                             <th>عملیات</th>
                                                         </tr>
                                                         </thead>
@@ -824,11 +825,11 @@ class ProfilePage extends Component {
                                                         {
                                                             this.state.report.map((p, i) => (
 
-                                                                this.state.person.title === 'penalty' ? (
+                                                                p.title === 'penalty' ? (
                                                                     <tr>
-                                                                        {/*<td>{i+1}</td>*/}
-                                                                        <td>{this.state.person.description}</td>
-                                                                        <td>{this.state.person.typePenalty}</td>
+                                                                        <td>{p.penaltyType}</td>
+                                                                        <td>{p.penaltyAmount}</td>
+                                                                        <td>{p.description}</td>
                                                                         <td>
                                                                             <OverlayTrigger
                                                                                 placement="bottom"
@@ -877,12 +878,12 @@ class ProfilePage extends Component {
                                                                 d.title === 'discharge' ? (
                                                                     <tr>
                                                                         {/*<td>{i+1}</td>*/}
-                                                                        <td>{d.dischargeDateAnnounce}</td>
-                                                                        <td>{d.dischargeDate}</td>
-                                                                        <td>{d.depositReturnDate}</td>
-                                                                        <td>{d.deductionOfLosses}</td>
-                                                                        <td>{d.deductionOfLossesReason}</td>
-                                                                        <td>{d.refundableAmount}</td>
+                                                                        <td>{d.startDate}</td>
+                                                                        <td>{d.endDate}</td>
+                                                                        <td>{d.date}</td>
+                                                                        <td>{d.penaltyAmount}</td>
+                                                                        <td>{d.description}</td>
+                                                                        <td>{d.returnedAmount}</td>
                                                                         <td>
                                                                             <OverlayTrigger
                                                                                 placement="bottom"
@@ -930,9 +931,9 @@ class ProfilePage extends Component {
                                                                     <tr>
                                                                         {/*<td>{i+1}</td>*/}
                                                                         <td>{cc.date}</td>
-                                                                        <td>{cc.reason}</td>
-                                                                        <td>{cc.deductionOfLosses}</td>
-                                                                        <td>{cc.refundableAmount}</td>
+                                                                        <td>{cc.description}</td>
+                                                                        <td>{cc.penaltyAmount}</td>
+                                                                        <td>{cc.returnedAmount}</td>
                                                                         <td>
                                                                             <OverlayTrigger
                                                                                 placement="bottom"
@@ -1639,11 +1640,6 @@ class ProfilePage extends Component {
                                     case 'penalty':
                                         return (<>
                                             <div className='input-report-box'>
-                                                <input type="text" ref={this.description} className="input"
-                                                       placeholder=" "/>
-                                                <label className="placeholder">دلیل جریمه</label>
-                                            </div>
-                                            <div className='input-report-box'>
                                                 <select ref={this.typePenalty} className='input'>
                                                     <option value='cash'>نقدی</option>
                                                     <option value='punishment'>تنبیهی</option>
@@ -1654,6 +1650,11 @@ class ProfilePage extends Component {
                                                 <input type="text" ref={this.penaltyAmount} className="input"
                                                        placeholder=" "/>
                                                 <label className="placeholder">مقدار جریمه</label>
+                                            </div>
+                                            <div className='input-report-box'>
+                                                <input type="text" ref={this.description} className="input"
+                                                       placeholder=" "/>
+                                                <label className="placeholder">دلیل جریمه</label>
                                             </div>
 
                                         </>);
@@ -2162,6 +2163,7 @@ class ProfilePage extends Component {
                 })();
             case 'discharge':
                 return (async () => {
+
                     const dischargeDateAnnounce = this.state.dateValues.dischargeDateAnnounce;
                     const dischargeDate = this.state.dateValues.dischargeDate;
                     const depositReturnDate = this.state.dateValues.depositReturnDate;
@@ -2192,16 +2194,19 @@ class ProfilePage extends Component {
                         },
                         body: JSON.stringify(result)
                     });
+
                     const content = await rawResponse.json();
                     console.log(content);
 
                     const newReports = this.state.report.concat(result)
                     this.setState({report: newReports})
                     this.setState({show: false})
+
                 })();
 
             case 'cancelContract':
                 return (async () => {
+
                     const date = this.state.dateValues.cancelContractDate;
                     const formattedDate = date.year + '/' + date.month + '/' + date.day;
                     const reason = this.reason.current.value;
@@ -2210,7 +2215,7 @@ class ProfilePage extends Component {
                     const result = {
                         'title': this.state.reportType,
                         'data': formattedDate,
-                        'reason': reason,
+                        'description': reason,
                         'penaltyAmount': deductionOfLosses,
                         'returnedAmount': refundableAmount,
                         'personId': this.state.personObject.id
@@ -2230,6 +2235,7 @@ class ProfilePage extends Component {
                     const newReports = this.state.report.concat(result)
                     this.setState({report: newReports})
                     this.setState({show: false})
+
                 })();
         }
     }
@@ -2272,8 +2278,6 @@ class ProfilePage extends Component {
     }
 
     existDocFile = (docFile) => {
-        console.log(docFile);
-        console.log(docFile)
         if (docFile.hasOwnProperty('birthPage1')) {
             this.setState({hasBirthPage1: true});
         }
