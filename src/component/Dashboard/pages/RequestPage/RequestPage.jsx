@@ -149,7 +149,10 @@ class RequestPage extends Component {
                                 <input type="text"
                                        id="inputSearch"
                                        placeholder="جسـتجـو..."
-                                       onChange={(value) => this.setState({searchContent: value.target.value})}/>
+                                       onChange={(e) => {
+                                           this.handleSearchInput(e)
+                                       }}/>
+                                <div className="search-icon"><i className="bi bi-search"></i></div>
                             </div>
                         </div>
 
@@ -189,8 +192,8 @@ class RequestPage extends Component {
                                                             ? (request.checked === true
                                                                 ? <Button className={'request-accept'}>قبول شده</Button>
                                                                 : <Button className={'request-reject'} onClick={() => {
-                                                                            this.handleOpenFailureModal(request);
-                                                                        }}>رد شده</Button>)
+                                                                    this.handleOpenFailureModal(request);
+                                                                }}>رد شده</Button>)
                                                             : <Button className={'request-unknown'}>تعیین نشده</Button>
                                                     }
 
@@ -221,7 +224,7 @@ class RequestPage extends Component {
                             <div className={'input-group-register'}>
                                 <input type='text'
                                        className={`input form-control col 
-                                       ${ this.state.Validations.topic_requireReg === false  ? "is-invalid" : ""}
+                                       ${this.state.Validations.topic_requireReg === false ? "is-invalid" : ""}
                                        `}
                                        onChange={(e) =>
                                            this.handleInputChange(e, 'topic')}
@@ -230,7 +233,7 @@ class RequestPage extends Component {
                                 <label className={'placeholder'}
                                        style={{right: this.state.Validations.topic_requireReg === false ? '35px' : '12px'}}>
                                     &nbsp;عنوان
-                                    <span style={{color : 'red'}}>*</span>
+                                    <span style={{color: 'red'}}>*</span>
                                 </label>
 
                                 {
@@ -257,7 +260,8 @@ class RequestPage extends Component {
                                                         this.state.Validations.selectedTypeBoolean // ifSelected condition
                                                             ? null
                                                             : <div className="d-flex justify-content-center mb-3">
-                                                                <small className="text-danger">یکی از گزینه های زیر را انتخاب
+                                                                <small className="text-danger">یکی از گزینه های زیر را
+                                                                    انتخاب
                                                                     کنید!</small>
                                                             </div>
                                                     }
@@ -277,7 +281,11 @@ class RequestPage extends Component {
                                                         }
 
                                                         <div className={'row'}
-                                                             style={{width: '100%', marginRight: '0px', display: 'none'}}
+                                                             style={{
+                                                                 width: '100%',
+                                                                 marginRight: '0px',
+                                                                 display: 'none'
+                                                             }}
                                                              ref={this.inputRef}
                                                         >
                                                             <input style={{
@@ -289,7 +297,7 @@ class RequestPage extends Component {
                                                                 padding: '8px'
                                                             }}
                                                                    value={this.state.addInputContentInModal}
-                                                                   onChange={(value) => this.setState({addInputContentInModal : value.target.value})}
+                                                                   onChange={(value) => this.setState({addInputContentInModal: value.target.value})}
                                                                    className={'col-8'}
                                                             >
 
@@ -297,7 +305,7 @@ class RequestPage extends Component {
                                                             <button className={'col addTypeBtn'}
                                                                     onClick={() => {
                                                                         this.inputRef.current.style.display = 'none';
-                                                                        this.setState({addButtonDisabled : false});
+                                                                        this.setState({addButtonDisabled: false});
                                                                     }}
                                                             >
                                                                 <TiTimes size={22} color={'red'}/>
@@ -309,10 +317,10 @@ class RequestPage extends Component {
 
                                                                             let updatedChoices = [...this.state.choices];
                                                                             updatedChoices.push(this.state.addInputContentInModal);
-                                                                            this.setState({choices : updatedChoices});
+                                                                            this.setState({choices: updatedChoices});
 
                                                                             this.inputRef.current.style.display = 'none';
-                                                                            this.setState({addButtonDisabled : false});
+                                                                            this.setState({addButtonDisabled: false});
                                                                         }
                                                                     }}
                                                             >
@@ -324,8 +332,8 @@ class RequestPage extends Component {
                                                         <button value="add"
                                                                 onClick={() => {
                                                                     this.inputRef.current.style.display = 'block flex';
-                                                                    this.setState({addInputContentInModal : ''});
-                                                                    this.setState({addButtonDisabled : true});
+                                                                    this.setState({addInputContentInModal: ''});
+                                                                    this.setState({addButtonDisabled: true});
                                                                 }}
                                                                 ref={this.refForAdd}
                                                                 className='col addTypeBtn'
@@ -346,9 +354,10 @@ class RequestPage extends Component {
                                        onChange={(e) => this.handleInputChange(e, 'name')}
                                        placeholder=" "
                                 />
-                                <label className={'placeholder'} style={{right: this.state.Validations.name_requireReg === false ? '35px' : '12px'}}>
+                                <label className={'placeholder'}
+                                       style={{right: this.state.Validations.name_requireReg === false ? '35px' : '12px'}}>
                                     درخواست کننده
-                                    <span style={{color : 'red'}}>*</span>
+                                    <span style={{color: 'red'}}>*</span>
                                 </label>
 
                                 {
@@ -365,9 +374,10 @@ class RequestPage extends Component {
                                        onChange={(e) => this.handleInputChange(e, 'description')}
                                        placeholder=" "
                                 />
-                                <label className={'placeholder'} style={{right: this.state.Validations.description_requireReg === false ? '35px' : '12px'}}>
+                                <label className={'placeholder'}
+                                       style={{right: this.state.Validations.description_requireReg === false ? '35px' : '12px'}}>
                                     توضیحات
-                                    <span style={{color : 'red'}}>*</span>
+                                    <span style={{color: 'red'}}>*</span>
                                 </label>
 
                                 {
@@ -379,14 +389,16 @@ class RequestPage extends Component {
 
                             </div>
                             <div className="input-group-register ">
-                                <textarea  className={`input form-control mb-2 ${this.state.Validations.reason_requireReg === false ? "is-invalid" : ""}`}
-                                           onChange={(e) => this.handleInputChange(e, 'reason')}
-                                           placeholder=" "
-                                           rows='5'
+                                <textarea
+                                    className={`input form-control mb-2 ${this.state.Validations.reason_requireReg === false ? "is-invalid" : ""}`}
+                                    onChange={(e) => this.handleInputChange(e, 'reason')}
+                                    placeholder=" "
+                                    rows='5'
                                 />
-                                <label className={'placeholder'} style={{right: this.state.Validations.reason_requireReg === false ? '35px' : '12px'}}>
+                                <label className={'placeholder'}
+                                       style={{right: this.state.Validations.reason_requireReg === false ? '35px' : '12px'}}>
                                     دلیل
-                                    <span style={{color : 'red'}}>*</span>
+                                    <span style={{color: 'red'}}>*</span>
                                 </label>
 
                                 {
@@ -460,7 +472,7 @@ class RequestPage extends Component {
 
         // if(request.checked === 'false'){
         const response = await fetch(`https://api.saadatportal.com/api/v1/failureReason/${request.failureReason}`).then((response) => response.json())
-            .then((data) => this.setState({failure : data}));
+            .then((data) => this.setState({failure: data}));
 
         // }
 
@@ -572,7 +584,14 @@ class RequestPage extends Component {
 
     }
 
-    handleCloseFailureModal= () => {
+    handleSearchInput = async (e) =>{
+        const value = e.target.value;
+        this.setState({searchInput:value});
+        const response = await fetch(`https://api.saadatportal.com/api/v1/characteristic/search?${this.state.searchType}=${e.target.value}`).then((response) => response.json())
+            .then((data) => this.setState({accountFound: data}));
+    }
+
+    handleCloseFailureModal = () => {
         this.setState({failureModalShow: false})
     }
 

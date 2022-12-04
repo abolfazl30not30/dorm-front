@@ -7,6 +7,7 @@ import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
 import DatePicker from "react-multi-date-picker";
 import {MdDone} from "react-icons/md";
+import "../../../../style/cameraHistory.css"
 // import React from "@types/react";
 
 import '../../../../style/registerPage.css';
@@ -53,7 +54,7 @@ class CameraHistoryPage extends Component {
                     </Link>
                 </div>
 
-                <div className="payment-history">
+                <div className="payment-history camera-history">
                     <div className={'d-flex flex-row justify-content-between aligns-item-center'}>
 
                         <h4>
@@ -69,7 +70,31 @@ class CameraHistoryPage extends Component {
                         </div>
                     </div>
 
-                    <div className="row align-items-center ">
+
+                    <div className="search-box">
+                        <div className="form-floating">
+                            <select className="form-select" id="floatingSelect"
+                                    aria-label="Floating label select example"
+                                    value={this.state.searchType}
+                                    onChange={(e) => {
+                                        this.setState({searchType: e.target.value})
+                                    }}>
+                                <option value="fullName">نام درخواست کننده</option>
+                                <option value="title">عنوان</option>
+                            </select>
+                            <label htmlFor="floatingSelect">براساس</label>
+                        </div>
+                        <input type="text"
+                               id="inputSearch"
+                               placeholder="جسـتجـو..."
+                               onChange={(e) => {
+                                   this.handleSearchInput(e)
+                               }}/>
+                        <div className="search-icon"><i className="bi bi-search"></i></div>
+                    </div>
+
+
+                    {/*<div className="row align-items-center ">
                         <div className="col-md-1 col-sm-2 px-0"><label>براساس:</label></div>
                         <div className="col-md-3 col-sm-6 px-0" style={{paddingLeft: "0"}}>
                             <Form.Select aria-label="Default select example" style={{height: "50px", fontSize: "14px"}}
@@ -86,13 +111,9 @@ class CameraHistoryPage extends Component {
                                    style={{padding: "6px"}} onChange={(e) => {
                                 this.handleSearchInput(e)
                             }}/>
-
-                            <button className="btn outline-secondary"><BiSearch fontSize="25px"
-                                                                                onClick={this.handleSearchBtn}/>
-                            </button>
-
+                            <div className="search-icon"><i className="bi bi-search"></i></div>
                         </div>
-                    </div>
+                    </div>*/}
 
                     <div className={'table-box'}>
 
@@ -397,6 +418,13 @@ class CameraHistoryPage extends Component {
         let updatedTmpRequest = {...this.state.tmpRequest};
         updatedTmpRequest[nameOfField] = e.target.value;
         this.setState({tmpRequest: updatedTmpRequest});
+    }
+
+    handleSearchInput = async (e) =>{
+        const value = e.target.value;
+        this.setState({searchInput:value});
+        const response = await fetch(`https://api.saadatportal.com/api/v1/characteristic/search?${this.state.searchType}=${e.target.value}`).then((response) => response.json())
+            .then((data) => this.setState({accountFound: data}));
     }
 }
 

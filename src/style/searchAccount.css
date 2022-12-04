@@ -54,3 +54,26 @@
 .search-container input {
     max-width: 200px;
 }
+
+
+.peoples-found {
+    background-color: #fff;
+    /*padding: 1rem;*/
+    box-shadow: 0 0 20px 0 #4c577d05;
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+}
+.people-image {
+    width: 100px;
+    height: 100px;
+    margin-left: 1rem;
+}
+.people-image img {
+    width: 100%;
+    height: 100%;
+    border-radius: 100%;
+}
+.people-item {
+    margin-left: .5rem;
+    color: #000000a6;
+}

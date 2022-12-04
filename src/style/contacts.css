@@ -83,3 +83,16 @@
 .tether-element {
     z-index: 100000;
 }
+.contact .search-box {
+    background-color: #fff;
+    box-shadow: none;
+}
+.contact .search-box .form-floating > .form-select {
+    background-color: #f9f9f9;
+}
+.contact .search-box input {
+    background-color: #f9f9f9;
+}
+.contact .search-box .search-icon {
+    background-color: #f9f9f9;
+}

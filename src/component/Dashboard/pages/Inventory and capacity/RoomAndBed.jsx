@@ -253,26 +253,24 @@ class RoomAndBed extends Component {
                                 </div>
                             ) : (
                                 <div className="search-container-popup">
-                                    <div className="input-container row align-items-center">
-                                        <div className="col-1"><label>براساس:</label></div>
-
-                                        <div className="col-3 " style={{paddingLeft: "0"}}>
-                                            <Form.Select aria-label="Default select example" style={{height : "50px"}} value={this.state.searchType} onChange={(e)=>{this.setState({searchType:e.target.value})}}>
-                                                <option value="firstName">نام و نام خانوادگی</option>
-                                                <option value="nationalCode">کد ملی</option>
-                                            </Form.Select>
-                                        </div>
-
-                                        <div className="input-group-register col-7 px-0" style={{paddingRight: "0"}}>
-                                            <input type="text" id="inputSearch" className="input" placeholder=" " style={{padding:"6px"}} onChange={(e)=>{this.handleSearchInput(e)}}/>
-                                            <label className="placeholder">جستوجـو</label>
-                                        </div>
-                                        <div className="col-1" style={{paddingRight: "0"}}>
-                                            <button className="btn outline-secondary"><BiSearch fontSize="25px" onClick={this.handleSearchBtn}/>
-                                            </button>
+                                    <div className="d-flex justify-content-center w-100">
+                                        <div className="search-box">
+                                            <div className="form-floating">
+                                                <select className="form-select" id="floatingSelect"
+                                                        aria-label="Floating label select example"
+                                                        value={this.state.searchType} onChange={(e)=>{this.setState({searchType:e.target.value})}}>
+                                                    <option value="firstName">نام و نام خانوادگی</option>
+                                                    <option value="nationalCode">کد ملی</option>
+                                                </select>
+                                                <label htmlFor="floatingSelect">نوع</label>
+                                            </div>
+                                            <input type="text"
+                                                   id="inputSearch"
+                                                   placeholder="جسـتجـو..."
+                                                   onChange={(e)=>{this.handleSearchInput(e)}}/>
+                                            <div className="search-icon"><i className="bi bi-search"></i></div>
                                         </div>
                                     </div>
-
                                     <div className="people-container mt-4">
                                         {this.state.peopleFound.map((poeple)=>(
                                             <ToggleButtonGroup
@@ -335,6 +333,7 @@ class RoomAndBed extends Component {
                     }
 
                 </Modal>
+
                 <Modal centered show={this.state.showAccessory} onClick={() => {
                     this.handleCloseAccessory()
                 }}>
@@ -342,16 +341,29 @@ class RoomAndBed extends Component {
                         <Modal.Title>امکانات واحد</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        {
-                            this.state.unit.accessories.map((acc) => (
-                                <div className='d-flex flex-row my-2 w-50'>
-                                    <div className='ms-3'><BiChevronLeft/>{acc.name}</div>
-                                    <div className='me-auto'>{acc.count} عدد</div>
-                                </div>
-                            ))
-                        }
+                        <div className="table-box">
+                            <table className="table">
+                                <thead>
+                                <tr>
+                                    <th>نام</th>
+                                    <th>تعداد</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {
+                                    this.state.unit.accessories.map((acc) => (
+                                        <tr>
+                                            <td>{acc.name}</td>
+                                            <td>{acc.count}</td>
+                                        </tr>
+                                    ))
+                                }
+                                </tbody>
+                            </table>
+                        </div>
                     </Modal.Body>
                 </Modal>
+
 
                 <Modal centered show={this.state.showRoomAccessory} onClick={() => {
                     this.handleCloseRoomAcc()
@@ -359,18 +371,30 @@ class RoomAndBed extends Component {
                     <Modal.Header closeButton>
                         <Modal.Title>امکانات اتاق</Modal.Title>
                     </Modal.Header>
-
                     <Modal.Body>
-                        {
-                            this.state.tempRoom.accessories.map((acc) => (
-                                <div className='d-flex flex-row my-2 w-50'>
-                                    <div className='ms-3'><BiChevronLeft/>{acc.name}</div>
-                                    <div className='me-auto'>{acc.count} عدد</div>
-                                </div>
-                            ))
-                        }
+                        <div className="table-box">
+                            <table className="table">
+                                <thead>
+                                <tr>
+                                    <th>نام</th>
+                                    <th>تعداد</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {
+                                    this.state.tempRoom.accessories.map((acc) => (
+                                        <tr>
+                                            <td>{acc.name}</td>
+                                            <td>{acc.count}</td>
+                                        </tr>
+                                    ))
+                                }
+                                </tbody>
+                            </table>
+                        </div>
                     </Modal.Body>
                 </Modal>
+
             </>
         );
     }

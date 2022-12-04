@@ -137,7 +137,10 @@ class RequestPage extends Component {
                                 <input type="text"
                                        id="inputSearch"
                                        placeholder="جسـتجـو..."
-                                       onChange={(value) => this.setState({searchContent: value.target.value})}/>
+                                       onChange={(e) => {
+                                           this.handleSearchInput(e)
+                                       }}/>
+                                <div className="search-icon"><i className="bi bi-search"></i></div>
                             </div>
                         </div>
                         <div className="d-flex flex-row flex-wrap">
@@ -476,6 +479,13 @@ class RequestPage extends Component {
 
         // console.log(this.state.Validations.selectedTypeBoolean)
 
+    }
+
+    handleSearchInput = async (e) =>{
+        const value = e.target.value;
+        this.setState({searchInput:value});
+        const response = await fetch(`https://api.saadatportal.com/api/v1/characteristic/search?${this.state.searchType}=${e.target.value}`).then((response) => response.json())
+            .then((data) => this.setState({accountFound: data}));
     }
 }
 

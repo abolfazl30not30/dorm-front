@@ -218,3 +218,23 @@ button.btn.btn-primary:hover {
     margin: .25rem 0;
     color: #555760;
 }
+._4GdcU {
+    white-space: pre-wrap !important;
+}
+
+.search-container-popup .search-box {
+    background-color: #fff;
+    box-shadow: none;
+}
+.search-container-popup .search-box .form-floating > .form-select {
+    background-color: #f9f9f9;
+}
+.search-container-popup .search-box input {
+    background-color: #f9f9f9;
+}
+.search-container-popup .search-box .search-icon {
+    background-color: #f9f9f9;
+}
+.search-container-popup select#floatingSelect1 {
+    border-radius: 0;
+}

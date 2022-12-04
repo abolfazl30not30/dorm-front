@@ -48,41 +48,36 @@ class inventory extends Component {
                         this.handleShow()
                     }}><AiOutlinePlus className='ms-2'/>افزودن
                     </button>
-                    <div className="row align-items-center">
-                        <div className="col-md-1 col-sm-1 px-3 d-flex align-items-center "><label>نوع:</label></div>
-                        <div className="col-md-6 col-sm-6 px-0" style={{paddingLeft: "0"}}>
-                            <div className='input-group-filter col-6 col-md my-2 px-2'>
-                                <Form.Select aria-label="Default select example" style={{height: "50px", fontSize: "14px"}}
-                                             value={this.state.typeSearch} onChange={(e) => {this.handleFilterType(e)}}>
-                                    <option value="">همه</option>
-                                    <option value="needs">نیازمندی</option>
-                                    <option value="deficiency">کاستی</option>
-                                    <option value="onHand">دارایی</option>
-                                </Form.Select>
-                            </div>
+                    <div className="search-box">
+                        <div className="form-floating">
+                            <select className="form-select" id="floatingSelect"
+                                    aria-label="Floating label select example"
+                                    value={this.state.typeSearch}
+                                    onChange={(e) => {this.handleFilterType(e)}}>
+                                <option value="">همه</option>
+                                <option value="needs">نیازمندی</option>
+                                <option value="deficiency">کاستی</option>
+                                <option value="onHand">دارایی</option>
+                            </select>
+                            <label htmlFor="floatingSelect">نوع</label>
                         </div>
-                    </div>
-                    <div className="row align-items-center">
-                        <div className="col-md-1 col-sm-2 px-0"><label>براساس:</label></div>
-                        <div className="col-md-3 col-sm-6 px-0" style={{paddingLeft: "0"}}>
-                            <Form.Select aria-label="Default select example" style={{height: "50px", fontSize: "14px"}}
-                                         value={this.state.searchType} onChange={(e) => {
-                                this.setState({searchType: e.target.value})
-                            }}>
+                        <div className="form-floating">
+                            <select className="form-select" id="floatingSelect1"
+                                    aria-label="Floating label select example"
+                                    value={this.state.searchType}
+                                    onChange={(value) => this.setState({searchType: value.target.value})}>
                                 <option value="name">نام</option>
                                 <option value="category">دسته بندی</option>
-                            </Form.Select>
+                            </select>
+                            <label htmlFor="floatingSelect1">براساس</label>
                         </div>
-                        <div className="input-group-register col-md-7 col-sm-11 px-0 d-flex"
-                             style={{paddingRight: "0"}}>
-                            <input type="text" id="inputSearch" className="input" placeholder="جسـتوجـو"
-                                   style={{padding: "6px"}} onChange={(e) => {
-                                this.handleSearchInput(e)
-                            }}/>
-
-                            <button className="btn outline-secondary" onClick={this.handleSearchBtn}><BiSearch fontSize="25px" />
-                            </button>
-                        </div>
+                        <input type="text"
+                               id="inputSearch"
+                               placeholder="جسـتجـو..."
+                               onChange={(e) => {
+                                   this.handleSearchInput(e)
+                               }}/>
+                        <div className="search-icon"><i className="bi bi-search"></i></div>
                     </div>
                     <div className="table-box">
                         <table className='table'>

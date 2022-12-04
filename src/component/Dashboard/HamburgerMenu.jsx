@@ -10,7 +10,7 @@ class HamburgerMenu extends Component {
 
     render() {
         return (
-            <div className='overflow-auto' style={
+            <div className='sidebar' style={
                 this.context.activeMenu ? {display: "none"} : {display: "block"}
             }>
                 <div className='close-icon'>
