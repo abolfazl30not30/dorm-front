@@ -75,7 +75,7 @@ class OGInformationFamilyPage extends Component {
                                                 </div>
                                                 <div className="d-flex">
                                                     <label>تاریخ پذیرش :</label>
-                                                    <p>{poeple.reservationDate}</p>
+                                                    <p>{poeple.timePeriod.startDate}</p>
                                                 </div>
                                             </div>
                                         </div>

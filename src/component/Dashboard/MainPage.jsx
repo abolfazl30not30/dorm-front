@@ -181,7 +181,7 @@ class MainPage extends Component {
                 address: '',
                 telephoneNumber: '',
                 phoneNumber: '',
-                reservationDate: '',
+                startDate: '',
                 endDate: '',
             },
 
@@ -604,7 +604,7 @@ class MainPage extends Component {
                 address: '',
                 telephoneNumber: '',
                 phoneNumber: '',
-                reservationDate: '',
+                startDate: '',
                 endDate: '',
             },
 

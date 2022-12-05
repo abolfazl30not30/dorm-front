@@ -251,7 +251,7 @@ class MainRegister extends Component {
         let phoneNumber_requiredReg = !requiredReg.test(this.context.constantInformationFurther.phoneNumber);
         let phoneNumber_telephoneReg = telephoneReg.test(this.context.constantInformationFurther.phoneNumber);
 
-        let startDate_requiredReg = !requiredReg.test(this.context.constantInformationFurther.reservationDate);
+        let startDate_requiredReg = !requiredReg.test(this.context.constantInformationFurther.startDate);
         let endDate_requiredReg = !requiredReg.test(this.context.constantInformationFurther.endDate);
 
         this.context.handleSpecificValidations([address_requiredReg, telephoneNumber_requiredReg, telephoneNumber_homeTelephoneReg,
@@ -523,7 +523,7 @@ class MainRegister extends Component {
         switch (this.state.typeofResident){
             case "constant" : {
                 let newCharacteristic = {...this.context.constantInformationPage,...this.context.constantInformationFurther,...this.context.constantInformationFamily};
-                let birthDate1 = newCharacteristic.birthDate
+                let birthDate1 = newCharacteristic.birthDate;
                 newCharacteristic.birthDate = birthDate1+" 00:00:00";
                 newCharacteristic.personType = "constant";
 
@@ -719,8 +719,10 @@ class MainRegister extends Component {
                     },
                     body: JSON.stringify(guest)
                 });
+
                 this.context.handlePersonId(respondPerson.id, respondChar.id);
                 break;
+
             }
         }
         this.setState({showDoneModal:true})

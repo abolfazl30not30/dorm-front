@@ -169,12 +169,9 @@ class SearchAccount extends Component {
                     ))}
                     &nbsp;
                 </div>
-
-
             </>
         );
     }
-
     //search
     handleSearchInput = async (e) => {
         const value = e.target.value;
