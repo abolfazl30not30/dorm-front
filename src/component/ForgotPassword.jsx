@@ -25,7 +25,6 @@ class Login extends Component {
                         <div className="title">
                             <h2>سعـادت پـرتـال</h2>
                         </div>
-                        <button onClick={() => console.log(this.state.account.user)}>asd</button>
                         <div className="form-container">
                             <form className="login-form" onSubmit={this.handleSubmit}>
                                 <div className="title-form">
