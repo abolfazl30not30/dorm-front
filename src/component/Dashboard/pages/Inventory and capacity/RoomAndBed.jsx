@@ -43,10 +43,12 @@ class RoomAndBed extends Component {
             firstName: 'میلاد',
             lastName: 'زارع',
             nationalCode: 2500255252,
-            StartOfStay: '12/34/56',
+            timePeriod: {
+                startDate:"123",
+                endDate:"123"
+            },
             image: 'https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png'
         },
-
         roomAccessory: {
             accessories: [
                 {name: 'یخچال', count: 1},
@@ -57,7 +59,7 @@ class RoomAndBed extends Component {
             accessories: []
         },
         searchInput:"",
-        searchType:"firstName",
+        searchType:"fullName",
         peopleFound:[],
     }
 
@@ -97,6 +99,7 @@ class RoomAndBed extends Component {
 
                 let bedIndex =  this.state.rooms[roomIndex].beds.indexOf(this.state.bedOpen);
                 updateState[roomIndex].beds[bedIndex].empty = false;
+                updateState[roomIndex].beds[bedIndex].person = this.state.selectedPeople;
                 this.setState({rooms:updateState});
             }).catch((error)=>{
                 console.log(error)
@@ -112,7 +115,7 @@ class RoomAndBed extends Component {
             let person = {}
             const response = await fetch(`https://api.saadatportal.com/api/v1/person/${bed.person}`).then((response) => response.json())
                 .then((data) => (person = data));
-            console.log(person)
+
             const response2 = await fetch(`https://api.saadatportal.com/api/v1/characteristic/${person.characteristicId}`).then((response) => response.json())
                 .then((data) => this.setState({tempPerson : data}));
         }
@@ -142,14 +145,10 @@ class RoomAndBed extends Component {
     handleSearchInput = async (e) =>{
         const value = e.target.value;
         this.setState({searchInput:value});
-        const response = await fetch(`https://api.saadatportal.com/api/v1/characteristic/search?${this.state.searchType}=${e.target.value}`).then((response) => response.json())
+        const response = await fetch(`https://api.saadatportal.com/api/v1/characteristic/search?parentType=Person&${this.state.searchType}=${e.target.value}`).then((response) => response.json())
             .then((data) => this.setState({peopleFound: data}));
     }
 
-    handleSearchBtn = async () =>{
-        const response = await fetch(`https://api.saadatportal.com/api/v1/characteristic/search?${this.state.searchType}=${this.state.searchInput}`).then((response) => response.json())
-            .then((data) => this.setState({peopleFound: data}));
-    }
     render() {
         return (
             <>
@@ -246,7 +245,7 @@ class RoomAndBed extends Component {
                                         <div className='profile-item'><AiOutlineNumber className='ms-2'/>کد
                                             ملی: {this.state.tempPerson.nationalCode}</div>
                                         <div className='profile-item'><MdDateRange className='ms-2'/>شروع
-                                            اقامت: {this.state.tempPerson.startDate}</div>
+                                            اقامت: {this.state.tempPerson.timePeriod.startDate}</div>
                                         <div className='profile-item'><AiOutlineUser
                                             className='ms-2'/>تاريخ تولد: {this.state.tempPerson.birthDate}</div>
                                     </div>
@@ -259,7 +258,7 @@ class RoomAndBed extends Component {
                                                 <select className="form-select" id="floatingSelect"
                                                         aria-label="Floating label select example"
                                                         value={this.state.searchType} onChange={(e)=>{this.setState({searchType:e.target.value})}}>
-                                                    <option value="firstName">نام و نام خانوادگی</option>
+                                                    <option value="fullName">نام و نام خانوادگی</option>
                                                     <option value="nationalCode">کد ملی</option>
                                                 </select>
                                                 <label htmlFor="floatingSelect">نوع</label>
@@ -331,7 +330,6 @@ class RoomAndBed extends Component {
                             </button>
                         </Modal.Footer>) : (<></>)
                     }
-
                 </Modal>
 
                 <Modal centered show={this.state.showAccessory} onClick={() => {

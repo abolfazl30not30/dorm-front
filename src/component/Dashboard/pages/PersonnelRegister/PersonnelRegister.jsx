@@ -174,8 +174,14 @@ class PersonnelRegister extends Component {
     handleSubmit = async () => {
         let newCharacteristic = {...this.context.personnelFields}
 
+        const profileImg = this.context.personnelUploadPage.find(({name}) => name === "personnelImg");
+        if(profileImg !== undefined){
+            console.log(profileImg);
+            newCharacteristic.profileId = profileImg.fileId;
+        }
+
         console.log(newCharacteristic)
-        const rawResponse = await fetch('https://api.saadatportal.com/api/v1/characteristic', {
+        const newChar = await fetch('https://api.saadatportal.com/api/v1/characteristic', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -184,21 +190,18 @@ class PersonnelRegister extends Component {
             body: JSON.stringify(newCharacteristic)
         });
 
-        var content2 = await rawResponse.json();
-        console.log(content2)
+        var respondChar = await newChar.json();
 
         let personnel = {
             gender: newCharacteristic.gender,
             type: newCharacteristic.type,
             residenceType:"resident",
-            characteristicId: content2.id,
-            files: this.context.personnelUploadPage,
+            characteristicId: respondChar.id,
+                files: this.context.personnelUploadPage,
         }
 
-        console.log(personnel.type);
 
-
-        const rawResponse1 = await fetch('https://api.saadatportal.com/api/v1/personnel', {
+        const newPerssonel = await fetch('https://api.saadatportal.com/api/v1/personnel', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -206,6 +209,18 @@ class PersonnelRegister extends Component {
             },
             body: JSON.stringify(personnel)
         });
+
+        var respondPerssonel = await newPerssonel.json();
+
+        const editCharRespond = await fetch(`https://api.saadatportal.com/api/v1/characteristic/${respondChar.id}`, {
+            method: 'PATCH',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({parentId : respondPerssonel.id})
+        });
+
     }
 
 }

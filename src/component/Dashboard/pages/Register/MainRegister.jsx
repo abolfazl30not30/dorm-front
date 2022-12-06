@@ -525,7 +525,6 @@ class MainRegister extends Component {
                 let newCharacteristic = {...this.context.constantInformationPage,...this.context.constantInformationFurther,...this.context.constantInformationFamily};
                 let birthDate1 = newCharacteristic.birthDate;
                 newCharacteristic.birthDate = birthDate1+" 00:00:00";
-                newCharacteristic.personType = "constant";
 
                 const profileImg = this.context.constantUploadPage.find(({name}) => name === "personnelImg");
                 if(profileImg !== undefined){
@@ -590,12 +589,12 @@ class MainRegister extends Component {
                 newCharacteristic.paymentDate = paymentDate1+" 00:00:00";
 
                 const profileImg = this.context.familyGuestUploadPage.find(({name}) => name === "personnelImg");
+
                 if(profileImg !== undefined){
                     console.log(profileImg);
                     newCharacteristic.profileId = profileImg.fileId;
                 }
 
-                newCharacteristic.personType = 'familyGuest';
 
                 const createdChar = await fetch('https://api.saadatportal.com/api/v1/characteristic', {
                     method: 'POST',
@@ -663,9 +662,6 @@ class MainRegister extends Component {
                     newCharacteristic.profileId = profileImg.fileId;
                 }
 
-                newCharacteristic.personType = 'otherGuest';
-
-                console.log(newCharacteristic)
                 const createdChar = await fetch('https://api.saadatportal.com/api/v1/characteristic', {
                     method: 'POST',
                     headers: {
@@ -722,7 +718,6 @@ class MainRegister extends Component {
 
                 this.context.handlePersonId(respondPerson.id, respondChar.id);
                 break;
-
             }
         }
         this.setState({showDoneModal:true})

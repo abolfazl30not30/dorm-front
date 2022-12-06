@@ -34,7 +34,8 @@ class callHistory extends Component {
             callerName_requiredReg: '',
             date_requiredReg: '',
             phoneNumber_requiredReg: '',
-        }
+        },
+        searchType:"title",
     }
 
     async componentDidMount() {
@@ -57,9 +58,9 @@ class callHistory extends Component {
                                     aria-label="Floating label select example"
                                     value={this.state.searchType}
                                     onChange={(value) => this.setState({searchType: value.target.value})}>
-                                <option value="fullName">نام و نام خانوادگی</option>
-                                <option value="nationalCode">شماره همراه</option>
-                                <option value="phoneNumber"> تلفن ثابت</option>
+                                <option value="title">عنوان</option>
+                                <option value="callerName">نام تماس گیرنده </option>
+                                <option value="phoneNumber"> شماره تماس</option>
                             </select>
                             <label htmlFor="floatingSelect">براساس</label>
                         </div>
@@ -288,8 +289,8 @@ class callHistory extends Component {
     handleSearchInput = async (e) =>{
         const value = e.target.value;
         this.setState({searchInput:value});
-        const response = await fetch(`https://api.saadatportal.com/api/v1/characteristic/search?${this.state.searchType}=${e.target.value}`).then((response) => response.json())
-            .then((data) => this.setState({accountFound: data}));
+        const response = await fetch(`https://api.saadatportal.com/api/v1/telephoneHistory/search?${this.state.searchType}=${e.target.value}`).then((response) => response.json())
+            .then((data) => this.setState({callHistory: data}));
     }
 }
 

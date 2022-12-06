@@ -68,7 +68,6 @@ class MainPage extends Component {
         },
 
         fields: {
-
             personnelFields: {
                 id: '',
                 firstName: '',
@@ -136,6 +135,8 @@ class MainPage extends Component {
                 maritalStatus: 'single', // default value (first option)
                 spouseFullName: '',
                 spouseJob: '',
+                parentType: 'Person',
+                personType : "constant",
                 health: 'false', // default value (first option)
                 healthyStatus: '',
             },
@@ -151,6 +152,8 @@ class MainPage extends Component {
                 startDate: '',
                 endDate: '',
                 paymentDate: '',
+                parentType: 'Person',
+                personType : "familyGuest",
                 rentPaymentAmount: '',
                 depositPaymentAmount: '',
                 discountPaymentAmount: '',
@@ -167,6 +170,8 @@ class MainPage extends Component {
                 startDate: '',
                 endDate: '',
                 paymentDate: '',
+                parentType: 'Person',
+                personType : "otherGuest",
                 rentPaymentAmount: '',
                 depositPaymentAmount: '',
                 discountPaymentAmount: '',

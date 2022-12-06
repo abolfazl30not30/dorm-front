@@ -35,7 +35,9 @@ class CameraHistoryPage extends Component {
             assignee: '',
         },
         dateValue: '',
-        data: []
+        data: [],
+        searchType : "title",
+
     }
 
     async componentDidMount() {
@@ -79,8 +81,8 @@ class CameraHistoryPage extends Component {
                                     onChange={(e) => {
                                         this.setState({searchType: e.target.value})
                                     }}>
-                                <option value="fullName">نام درخواست کننده</option>
                                 <option value="title">عنوان</option>
+                                <option value="assignee">نام درخواست کننده</option>
                             </select>
                             <label htmlFor="floatingSelect">براساس</label>
                         </div>
@@ -311,12 +313,13 @@ class CameraHistoryPage extends Component {
                         <button className="btn-done" onClick={() => {
                             if (this.handleIsValid()) {
                                 this.handleSubmit();
+                                this.handleCloseModal();
                             }
                         }}>ثبت
                         </button>
 
                         <button className="btn btn-light" onClick={() => {
-                            this.handleCloseModal()
+                            this.handleCloseModal();
                         }}>بستن
 
                         </button>
@@ -422,9 +425,8 @@ class CameraHistoryPage extends Component {
 
     handleSearchInput = async (e) =>{
         const value = e.target.value;
-        this.setState({searchInput:value});
-        const response = await fetch(`https://api.saadatportal.com/api/v1/characteristic/search?${this.state.searchType}=${e.target.value}`).then((response) => response.json())
-            .then((data) => this.setState({accountFound: data}));
+        const response = await fetch(`https://api.saadatportal.com/api/v1/cameraHistory/search?${this.state.searchType}=${e.target.value}`).then((response) => response.json())
+            .then((data) => this.setState({data: data}));
     }
 }
 

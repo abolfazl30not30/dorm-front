@@ -376,7 +376,9 @@ class PaymentPage extends Component {
                                 <Link to="/dashboard/PaymentHistory" className='btn button-show'
                                       onClick={() => this.setState({showDoneModal: false})}>رفتن به صورتحساب</Link>
                                 <Link to="" className='btn button-close'
-                                      onClick={() => this.setState({showDoneModal: false})}>بستن</Link>
+                                      onClick={() => {this.setState({showDoneModal: false});
+                                          window.location.reload(false);
+                                      }}>بستن</Link>
                             </div>
                         </div>
                     </Modal.Body>

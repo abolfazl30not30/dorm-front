@@ -92,15 +92,10 @@ class FGInformationFamilyPage extends Component {
     handleSearchInput = async (e) =>{
         const value = e.target.value;
         this.setState({searchInput:value});
-
-        const response = await fetch(`https://api.saadatportal.com/api/v1/characteristic/search?${this.state.searchType}=${value}`).then((response) => response.json())
+        const response = await fetch(`https://api.saadatportal.com/api/v1/characteristic/search?parentType=Person&${this.state.searchType}=${value}`).then((response) => response.json())
             .then((data) => this.setState({peopleFound: data}));
     }
 
-    handleSearchBtn = async () =>{
-        const response = await fetch(`https://api.saadatportal.com/api/v1/characteristic/search?${this.state.searchType}=${this.state.searchInput}`).then((response) => response.json())
-            .then((data) => this.setState({peopleFound: data}));
-    }
 
     handleChange = (event, newAlignment) => {
         this.setState({selectedPeople: newAlignment})

@@ -65,30 +65,7 @@ class RequestPage extends Component {
 
         },
 
-        requests: [
-            {
-                topic: 'test',
-                type: 'test',
-                name: 'test',
-                reason: 'test',
-                checked: 'false', // default
-                failureReasonId: '',
-                // ifFalseTopic: 'ifFalseTopic',
-                // ifFalseReason: 'ifFalseReason',
-                // ifFalseType: 'ifFalseType'
-            },
-            {
-                topic: 'test',
-                type: 'test',
-                name: 'test',
-                reason: 'test',
-                checked: 'true', // default
-                failureReasonId: '',
-                // ifFalseTopic: 'ifFalseTopic',
-                // ifFalseReason: 'ifFalseReason',
-                // ifFalseType: 'ifFalseType'
-            }
-        ],
+        requests: [],
 
         failure: {
             name: 'asd1',
@@ -140,9 +117,9 @@ class RequestPage extends Component {
                                             aria-label="Floating label select example"
                                             value={this.state.searchBase}
                                             onChange={(value) => this.setState({searchBase: value.target.value})}>
-                                        <option value="name">نام درخواست کننده</option>
+                                        <option value="name">عنوان</option>
+                                        <option value="assignee">نام درخواست کننده</option>
                                         <option value="type">نوع</option>
-                                        <option value="topic">عنوان</option>
                                     </select>
                                     <label htmlFor="floatingSelect">براساس</label>
                                 </div>
@@ -586,9 +563,8 @@ class RequestPage extends Component {
 
     handleSearchInput = async (e) =>{
         const value = e.target.value;
-        this.setState({searchInput:value});
-        const response = await fetch(`https://api.saadatportal.com/api/v1/characteristic/search?${this.state.searchType}=${e.target.value}`).then((response) => response.json())
-            .then((data) => this.setState({accountFound: data}));
+        const response = await fetch(`https://api.saadatportal.com/api/v1/request/search?${this.state.searchBase}=${value}`).then((response) => response.json())
+            .then((data) => this.setState({searchBase: data}));
     }
 
     handleCloseFailureModal = () => {

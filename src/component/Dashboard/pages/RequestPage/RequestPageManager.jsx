@@ -76,28 +76,10 @@ class RequestPage extends Component {
             selectedTypeBoolean: true,
             topic_requireReg: '',
             name_requireReg: '',
-
             typeForStatus_requiredReg: '',
         },
 
-        requests : [
-            {
-                topic: 'test',
-                type: 'test',
-                name: 'test',
-                reason: 'test',
-                checked: false, // default
-                failureReasonId: '',
-            },
-            {
-                topic: 'test',
-                type: 'test',
-                name: 'test',
-                reason: 'test',
-                checked: true, // default
-                failureReasonId: '',
-            }
-        ],
+        requests : [],
 
         failure : {
             name: '',
@@ -128,9 +110,9 @@ class RequestPage extends Component {
                                             aria-label="Floating label select example"
                                             value={this.state.searchBase}
                                             onChange={(value) => this.setState({searchBase: value.target.value})}>
-                                        <option value="name">نام درخواست کننده</option>
+                                        <option value="name">عنوان</option>
+                                        <option value="assignee">نام درخواست کننده</option>
                                         <option value="type">نوع</option>
-                                        <option value="topic">عنوان</option>
                                     </select>
                                     <label htmlFor="floatingSelect">براساس</label>
                                 </div>
@@ -152,7 +134,7 @@ class RequestPage extends Component {
                                                 <div className='d-flex flex-row mb-2'>
                                                     <i className="bi bi-chevron-left ms-1"/>
                                                     <div className="request-item-title">عنوان:</div>
-                                                    <div>{request.topic}</div>
+                                                    <div>{request.name}</div>
                                                 </div>
                                                 <div className='d-flex flex-row mb-2'>
                                                     <i className="bi bi-chevron-left ms-1"/>
@@ -162,7 +144,7 @@ class RequestPage extends Component {
                                                 <div className='d-flex flex-row mb-2'>
                                                     <i className="bi bi-chevron-left ms-1"/>
                                                     <div className="request-item-title">درخواست کننده:</div>
-                                                    <div>{request.name}</div>
+                                                    <div>{request.assignee}</div>
                                                 </div>
                                                 <div className='d-flex flex-row mb-2'>
                                                     <i className="bi bi-chevron-left ms-1"/>
@@ -375,10 +357,8 @@ class RequestPage extends Component {
 
     handleOpenFailureModal = async (request) => {
         this.setState({failureModalShow: true});
-
         const response = await fetch(`https://api.saadatportal.com/api/v1/failureReason/${request.failureReason}`).then((response) => response.json())
             .then((data) => this.setState({failure : data}));
-
     }
 
     handleSearchBtn = () => {
@@ -483,9 +463,8 @@ class RequestPage extends Component {
 
     handleSearchInput = async (e) =>{
         const value = e.target.value;
-        this.setState({searchInput:value});
-        const response = await fetch(`https://api.saadatportal.com/api/v1/characteristic/search?${this.state.searchType}=${e.target.value}`).then((response) => response.json())
-            .then((data) => this.setState({accountFound: data}));
+        const response = await fetch(`https://api.saadatportal.com/api/v1/request/search?${this.state.searchBase}=${value}`).then((response) => response.json())
+            .then((data) => this.setState({requests : data}));
     }
 }
 

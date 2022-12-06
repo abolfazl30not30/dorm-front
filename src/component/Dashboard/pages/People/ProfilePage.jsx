@@ -2306,7 +2306,6 @@ class ProfilePage extends Component {
                     a.remove();
                 }
             });
-
     }
 
     existDocFile = (docFile) => {

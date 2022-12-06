@@ -29,7 +29,7 @@ class EditFloorAndUnit extends Component {
     }
 
     async componentDidMount() {
-        const response = await fetch('https://api.saadatportal.com/api/v1/floor').then((response) => response.json())
+        const response = await fetch('https://api.saadatportal.com/api/v1/floor/search?sort=name').then((response) => response.json())
             .then((data) => this.setState({ floor: data, isLoading: false }));
     }
 

@@ -167,6 +167,8 @@
     margin-bottom: 0.5rem;
     border-radius: 0.5rem;
     font-size: .8rem;
+    box-shadow: 0 0 2px 0 #0000005e;
+    cursor: pointer;
 }
 
 .accordion-body {

@@ -354,11 +354,13 @@ class inventory extends Component {
             body: JSON.stringify(newInventory)
         });
 
-        const response = await fetch('https://api.saadatportal.com/api/v1/inventory').then((response) => response.json())
-            .then((data) => this.setState({inventory: data}));
         this.setState({show: false})
 
-        this.setState({type:"needs",tempChoices:[],selectedCategory:null,selectedCategoryBoolean: true})
+        this.setState({type:"needs",tempChoices:[],selectedCategory:null,selectedCategoryBoolean: true});
+
+        const response = await fetch('https://api.saadatportal.com/api/v1/inventory').then((response) => response.json())
+            .then((data) => this.setState({inventory: data}));
+
     }
 
     handleSearchInput = async (e) => {

@@ -4,6 +4,7 @@ import DatePicker from "react-multi-date-picker";
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
 import {Button} from "@mui/material";
+import {RiDownloadCloud2Fill} from "react-icons/ri";
 
 class PaymentHistory extends Component {
     state = {
@@ -21,6 +22,7 @@ class PaymentHistory extends Component {
     async componentDidMount() {
         const response = await fetch('https://api.saadatportal.com/api/v1/account').then((response) => response.json())
             .then((data) => this.setState({totalPayment : data.totalPayment ,totalReceive : data.totalReceived}));
+
         const response2 = await fetch('https://api.saadatportal.com/api/v1/paymentHistory').then((response) => response.json())
             .then((data) => this.setState({payment : data}));
 
@@ -138,7 +140,6 @@ class PaymentHistory extends Component {
                                 digits={['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']}
                                 format={`YYYY/MM/DD`}
 
-
                                 containerStyle={{
                                     width: "100%"
                                 }}
@@ -205,11 +206,13 @@ class PaymentHistory extends Component {
                             <thead>
                             <tr>
                                 <th>#</th>
+                                <th>نوع تراکنش</th>
                                 <th>نوع</th>
                                 <th>تاریخ</th>
                                 <th>مقدار</th>
                                 <th>پرداخت کننده</th>
                                 <th>توضیحات</th>
+                                <th>فايل فاكتور</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -217,11 +220,20 @@ class PaymentHistory extends Component {
                                 this.state.payment.map((peyment, index) => (
                                     <tr>
                                         <td>{index + 1}</td>
+                                        <td>{peyment.paymentType === "expend" ? ("پرداخت"):("دریافت")}</td>
                                         <td>{peyment.type}</td>
                                         <td>{peyment.date}</td>
                                         <td>{peyment.amount.value}</td>
                                         <td>{peyment.parentId}</td>
                                         <td>{peyment.description}</td>
+                                        <td>{Object.keys(peyment.file).length !== 0 &&(
+                                            <div className="record-item"
+                                                 onClick={() => this.downloadFile(peyment.file)}>
+                                                <div className='ms-2'>دانلود</div>
+                                                <RiDownloadCloud2Fill/>
+                                            </div>
+                                        )}
+                                        </td>
                                     </tr>
                                 ))
                             }
@@ -273,20 +285,31 @@ class PaymentHistory extends Component {
                 break;
             }
         }
-        const startDate = this.state.dateStart;
-        const endDate = this.state.dateEnd;
-        const count = this.count.current.value;
-        console.log(type);
-        console.log(startDate);
-        console.log(endDate);
-        console.log(count);
+
+        let startDate = this.state.dateStart;
+        if(Object.keys(startDate).length === 0){
+             startDate = "";
+        }
+
+        let endDate = this.state.dateEnd;
+        if(Object.keys(endDate).length === 0){
+             endDate = "";
+        }
+
+        const count = parseInt(this.count.current.value);
+        const result = {
+            paymentType: type,
+            count: count,
+            startDate: startDate,
+            endDate: endDate
+        }
         const rawResponse = await fetch('https://api.saadatportal.com/api/v1/paymentHistory/filter', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({paymentType: type, count: count, startDate: startDate, endDate: endDate})
+            body: JSON.stringify(result)
         });
         var content = await rawResponse.json();
         console.log(content);
@@ -338,6 +361,25 @@ class PaymentHistory extends Component {
         /*console.log(startTime)*/
     }
 
+    downloadFile = async (file) => {
+
+        var filename = Object.keys(file)[0];
+
+        const response = await fetch(`https://api.saadatportal.com/api/v1/file/${Object.values(file)[0]}`).then((result) => {
+            return result.blob();
+        })
+            .then((blob) => {
+                if (blob != null) {
+                    var url = window.URL.createObjectURL(blob);
+                    var a = document.createElement('a');
+                    a.href = url;
+                    a.download = filename;
+                    document.body.appendChild(a);
+                    a.click();
+                    a.remove();
+                }
+            });
+    }
 }
 
 export default PaymentHistory;
