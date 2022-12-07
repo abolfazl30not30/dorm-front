@@ -23,22 +23,21 @@ class OGInformationFamilyPage extends Component {
             <>
                 <div className="register-step-box">
                     <h2>انتخاب ميزبان</h2>
-                    <div className="input-container row align-items-center">
-                        <div className="col-1"><label>براساس:</label></div>
-                        <div className="col-3 " style={{paddingLeft: "0"}}>
-                            <Form.Select aria-label="Default select example" style={{height : "50px"}} value={this.state.searchType} onChange={(e)=>{this.setState({searchType:e.target.value})}}>
+                    <div className="search-box">
+                        <div className="form-floating">
+                            <select className="form-select" id="floatingSelect"
+                                    aria-label="Floating label select example"
+                                    value={this.state.searchType} onChange={(e)=>{this.setState({searchType:e.target.value})}}>
                                 <option value="fullName">نام و نام خانوادگی</option>
                                 <option value="nationalCode">کد ملی</option>
-                            </Form.Select>
+                            </select>
+                            <label htmlFor="floatingSelect">براساس</label>
                         </div>
-                        <div className="input-group-register col-7 px-0" style={{paddingRight: "0"}}>
-                            <input type="text" id="inputSearch" className="input" placeholder=" " style={{padding:"6px"}} onChange={(e)=>{this.handleSearchInput(e)}}/>
-                            <label className="placeholder">جستوجـو</label>
-                        </div>
-                        <div className="col-1" style={{paddingRight: "0"}}>
-                            <button className="btn outline-secondary"><BiSearch fontSize="25px" onClick={this.handleSearchBtn}/>
-                            </button>
-                        </div>
+                        <input type="text"
+                               id="inputSearch"
+                               placeholder="جسـتجـو..."
+                               onChange={(e)=>{this.handleSearchInput(e)}}/>
+                        <div className="search-icon"><i className="bi bi-search"></i></div>
                     </div>
                     <div className="people-container mt-4">
                         {this.state.peopleFound.map((poeple)=>(

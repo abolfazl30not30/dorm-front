@@ -4,6 +4,9 @@ import BasicInformation from "./BasicInformation";
 import AdditionalInformation from "./AdditionalInformation";
 import UploadPage from "./UploadPage";
 import BuildingContext from "../../../../contexts/Building";
+import {Modal} from "react-bootstrap";
+import {Link} from "react-router-dom";
+/*import React from "@types/react";*/
 
 class PersonnelRegister extends Component {
     static contextType = BuildingContext;
@@ -148,7 +151,7 @@ class PersonnelRegister extends Component {
                 content: <UploadPage />,
             }
         ],
-
+        showDoneModal: false
     }
 
     render() {
@@ -167,10 +170,38 @@ class PersonnelRegister extends Component {
                         onSubmit={this.handleSubmit}
                     />
                 </div>
+                <Modal centered show={this.state.showDoneModal} className='modal-done'>
+                    <Modal.Body className="px-4">
+                        <div className="d-flex flex-column">
+                            <div className="d-flex flex-column">
+                                <div className="icon">
+                                    <span className="glyphicon glyphicon-ok"></span>
+                                </div>
+                                <div className="title-modal-done">
+                                    موفق!
+                                </div>
+                            </div>
+                            <div className="d-flex flex-row justify-content-between my-3">
+                                <Link to="/dashboard/People/profile"  className='btn button-show' onClick={() =>{this.handleGoToShow()}}>نمایش</Link>
+                                <Link to="" className='btn button-close' onClick={() =>{this.handleCloseModal()}}>بستن</Link>
+                            </div>
+                        </div>
+                    </Modal.Body>
+                </Modal>
             </>
         );
     }
 
+    handleCloseModal = () => {
+        this.setState({showDoneModal:false})
+        window.location.reload(false);
+    }
+    handleGoToShow = () => {
+        this.setState({showDoneModal:false})
+    }
+    handleGoToSelectBed = () => {
+        this.setState({showDoneModal:false})
+    }
     handleSubmit = async () => {
         let newCharacteristic = {...this.context.personnelFields}
 
@@ -220,7 +251,7 @@ class PersonnelRegister extends Component {
             },
             body: JSON.stringify({parentId : respondPerssonel.id})
         });
-
+        this.setState({showDoneModal:true})
     }
 
 }

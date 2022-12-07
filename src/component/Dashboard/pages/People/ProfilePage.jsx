@@ -67,7 +67,7 @@ class ProfilePage extends Component {
         hasPersonnelImg: false,
         hasRegister: false,
         hasRegisterUni: false,
-        registerLoading : false,
+        registerLoading: false,
 
     }
     date = createRef();
@@ -108,9 +108,13 @@ class ProfilePage extends Component {
         const fileRespond = await fetch(`https://api.saadatportal.com/api/v1/responseFile/search?parentType=Person&parentId=${this.context.personId}`).then((response) => response.json())
             .then((data) => this.setState({fileDetails: data}, () => {
                 this.setState({docFile: this.state.personObject.files});
-                this.setState({report: this.state.personObject.record},()=>{console.log(this.state.personObject.record)});
+                this.setState({report: this.state.personObject.record}, () => {
+                    console.log(this.state.personObject.record)
+                });
                 this.existDocFile(this.state.personObject.files);
             }));
+        console.log(this.state.person)
+        console.log(this.state.personObject)
 
     }
 
@@ -134,13 +138,27 @@ class ProfilePage extends Component {
                                             تماس: {this.state.person.phoneNumber}</div>
                                         <div className="people-item"><i className="bi bi-person ms-2"></i>نام
                                             پدر: {this.state.person.fatherName}</div>
+                                        <div className="people-item">
+                                            <i className="bi bi-person ms-2"></i>
+                                            نوع اقامتگر:
+                                            {(() => {
+                                                switch (this.state.person.personType) {
+                                                    case 'constant':
+                                                        return 'اقامتگر ثابت';
+                                                    case 'familyGuest':
+                                                        return 'بستگان درجه یک';
+                                                    case 'otherGuest':
+                                                        return 'متفرقه';
+                                                }
+                                            })()}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div className="tab">
                             <Tabs
-                                defaultActiveKey="profile"
+                                defaultActiveKey="more-information"
                                 id="uncontrolled-tab-example"
                                 className="border-0 w-100"
                             >
@@ -451,7 +469,133 @@ class ProfilePage extends Component {
                                                     </>;
                                                 case 'familyGuest':
                                                     return <>
-                                                        <div>familyGuest</div>
+                                                        <div className="information d-flex flex-row flex-wrap">
+                                                            <div className='col-12 col-md-4'>
+                                                                <div className="more-info-item">
+                                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                                    <label> نام :</label>
+                                                                    {this.state.person.firstName}
+                                                                </div>
+                                                            </div>
+                                                            <div className='col-12 col-md-4'>
+                                                                <div className="more-info-item">
+                                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                                    <label> نام خانوادگی :</label>
+                                                                    {this.state.person.lastName}
+                                                                </div>
+                                                            </div>
+                                                            <div className='col-12 col-md-4'>
+                                                                <div className="more-info-item">
+                                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                                    <label> نسبت با اقامتگر :</label>
+                                                                    {(() => {
+                                                                        switch (this.state.person.relationshipWithResident) {
+                                                                            case 'father':
+                                                                                return 'پدر';
+                                                                            case 'mother':
+                                                                                return 'مادر';
+                                                                            case 'sister':
+                                                                                return 'خواهر';
+                                                                            case 'brother':
+                                                                                return 'برادر';
+                                                                            case 'other':
+                                                                                return 'غیره';
+                                                                        }
+                                                                    })()}
+                                                                </div>
+                                                            </div>
+                                                            <div className='col-12 col-md-4'>
+                                                                <div className="more-info-item">
+                                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                                    <label> کد ملی :</label>
+                                                                    {this.state.person.nationalCode}
+                                                                </div>
+                                                            </div>
+                                                            <div className='col-12 col-md-4'>
+                                                                <div className="more-info-item">
+                                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                                    <label> شماره شناسنامه :</label>
+                                                                    {this.state.person.certificateNumber}
+                                                                </div>
+                                                            </div>
+                                                            <div className='col-12 col-md-4'>
+                                                                <div className="more-info-item">
+                                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                                    <label> محل صدور :</label>
+                                                                    {this.state.person.placeOfIssue != "" ? this.state.person.placeOfIssue : 'ثبت نشده'}
+                                                                </div>
+                                                            </div>
+                                                            <div className='col-12 col-md-4'>
+                                                                <div className="more-info-item">
+                                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                                    <label> تاریخ تولد :</label>
+                                                                    {this.state.person.birthDate != "" ? this.state.person.birthDate.split(" ")[0] : 'ثبت نشده'}
+                                                                </div>
+                                                            </div>
+                                                            <div className='col-12 col-md-4'>
+                                                                <div className="more-info-item">
+                                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                                    <label> تاریخ شروع پذیرش :</label>
+                                                                    {this.state.person.timePeriod.startDate.split(" ")[0]}
+                                                                </div>
+                                                            </div>
+                                                            <div className='col-12 col-md-4'>
+                                                                <div className="more-info-item">
+                                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                                    <label> تاریخ اتمام پذیرش :</label>
+                                                                    {this.state.person.timePeriod.endDate.split(" ")[0]}
+                                                                </div>
+                                                            </div>
+                                                            <div className='col-12 col-md-4'>
+                                                                <div className="more-info-item">
+                                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                                    <label> تاریخ پرداخت :</label>
+                                                                    {this.state.person.paymentDate}
+                                                                </div>
+                                                            </div>
+                                                            <div className='col-12 col-md-4'>
+                                                                <div className="more-info-item">
+                                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                                    <label> مبلغ پرداخت اجاره :</label>
+                                                                    {this.state.person.depositPaymentAmount != "" ? this.state.person.depositPaymentAmount : 'ثبت نشده'}
+                                                                </div>
+                                                            </div>
+                                                            <div className='col-12 col-md-4'>
+                                                                <div className="more-info-item">
+                                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                                    <label> مبلغ پرداخت ودیعه :</label>
+                                                                    {this.state.person.rentPaymentAmount != "" ? this.state.person.rentPaymentAmount : 'ثبت نشده'}
+                                                                </div>
+                                                            </div>
+                                                            <div className='col-12 col-md-4'>
+                                                                <div className="more-info-item">
+                                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                                    <label> مبلغ پرداخت اجاره :</label>
+                                                                    {this.state.person.discountPaymentAmount != "" ? this.state.person.discountPaymentAmount : 'ثبت نشده'}
+                                                                </div>
+                                                            </div>
+                                                            <div className='col-12 col-md-4'>
+                                                                <div className="more-info-item">
+                                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                                    <label> آدرس محل سکونت :</label>
+                                                                    {this.state.person.address}
+                                                                </div>
+                                                            </div>
+                                                            <div className='col-12 col-md-4'>
+                                                                <div className="more-info-item">
+                                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                                    <label> شماره همراه اقامتگر :</label>
+                                                                    {this.state.person.phoneNumber}
+                                                                </div>
+                                                            </div>
+                                                            <div className='col-12 col-md-4'>
+                                                                <div className="more-info-item">
+                                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                                    <label> شماره تلفن منزل :</label>
+                                                                    {this.state.person.telephoneNumber}
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </>;
                                                 case 'otherGuest':
                                                     return <>
@@ -459,155 +603,6 @@ class ProfilePage extends Component {
                                                     </>;
                                             }
                                         })()}
-                                        {/*<div className='information d-flex flex-row flex-wrap'>
-                                            <div className='col-12 col-md-4'>
-                                                <div className="more-info-item">
-                                                    <i className="bi bi-caret-left ms-1"></i>
-                                                    <label> نام :</label>
-                                                    {this.state.person.firstName}
-                                                </div>
-                                            </div>
-                                            <div className='col-12 col-md-4'>
-                                                <div className="more-info-item">
-                                                    <i className="bi bi-caret-left ms-1"></i>
-                                                    <label> نام خانوادگی :</label>
-                                                    {this.state.person.lastName}
-                                                </div>
-                                            </div>
-                                            <div className='col-12 col-md-4'>
-                                                <div className="more-info-item">
-                                                    <i className="bi bi-caret-left ms-1"></i>
-                                                    <label> کد ملی :</label>
-                                                    {this.state.person.nationalCode}
-                                                </div>
-                                            </div>
-                                            <div className='col-12 col-md-4'>
-                                                <div className="more-info-item">
-                                                    <i className="bi bi-caret-left ms-1"></i>
-                                                    <label> شماره گواهی :</label>
-                                                    {this.state.person.certificateNumber}
-                                                </div>
-                                            </div>
-                                            <div className='col-12 col-md-4'>
-                                                <div className="more-info-item">
-                                                    <i className="bi bi-caret-left ms-1"></i>
-                                                    <label> شماره تماس :</label>
-                                                    {this.state.person.phoneNumber}
-                                                </div>
-                                            </div>
-                                            <div className='col-12 col-md-4'>
-                                                <div className="more-info-item">
-                                                    <i className="bi bi-caret-left ms-1"></i>
-                                                    <label> آدرس :</label>
-                                                    {this.state.person.address}
-                                                </div>
-                                            </div>
-                                            <div className='col-12 col-md-4'>
-                                                <div className="more-info-item">
-                                                    <i className="bi bi-caret-left ms-1"></i>
-                                                    <label> شماره تلفن :</label>
-                                                    {this.state.person.telephoneNumber}
-                                                </div>
-                                            </div>
-                                            <div className='col-12 col-md-4'>
-                                                <div className="more-info-item">
-                                                    <i className="bi bi-caret-left ms-1"></i>
-                                                    <label> نام پدر :</label>
-                                                    {this.state.person.fatherName}
-                                                </div>
-                                            </div>
-                                            <div className='col-12 col-md-4'>
-                                                <div className="more-info-item">
-                                                    <i className="bi bi-caret-left ms-1"></i>
-                                                    <label> شماره تلفن اضطراری :</label>
-                                                    {this.state.person.emergencyNumber}
-                                                </div>
-                                            </div>
-                                            <div className='col-12 col-md-4'>
-                                                <div className="more-info-item">
-                                                    <i className="bi bi-caret-left ms-1"></i>
-                                                    <label> محل تولد :</label>
-                                                    {this.state.person.placeOfIssue}
-                                                </div>
-                                            </div>
-                                            <div className='col-12 col-md-4'>
-                                                <div className="more-info-item">
-                                                    <i className="bi bi-caret-left ms-1"></i>
-                                                    <label> تاریخ تولد :</label>
-                                                    {this.state.person.birthDate}
-                                                </div>
-                                            </div>
-                                            <div className='col-12 col-md-4'>
-                                                <div className="more-info-item">
-                                                    <i className="bi bi-caret-left ms-1"></i>
-                                                    <label> شغل :</label>
-                                                    {this.state.person.job}
-                                                </div>
-                                            </div>
-                                            <div className='col-12 col-md-4'>
-                                                <div className="more-info-item">
-                                                    <i className="bi bi-caret-left ms-1"></i>
-                                                    <label> تحصیلات :</label>
-                                                    {this.state.person.education}
-                                                </div>
-                                            </div>
-                                            <div className='col-12 col-md-4'>
-                                                <div className="more-info-item">
-                                                    <i className="bi bi-caret-left ms-1"></i>
-                                                    <label> کد پستی :</label>
-                                                    {this.state.person.postalCode}
-                                                </div>
-                                            </div>
-                                            <div className='col-12 col-md-4'>
-                                                <div className="more-info-item">
-                                                    <i className="bi bi-caret-left ms-1"></i>
-                                                    <label> ایمیل :</label>
-                                                    {this.state.person.email}
-                                                </div>
-                                            </div>
-                                            <div className='col-12 col-md-4'>
-                                                <div className="more-info-item">
-                                                    <i className="bi bi-caret-left ms-1"></i>
-                                                    <label> ملیت :</label>
-                                                    {this.state.person.nationality}
-                                                </div>
-                                            </div>
-                                            <div className='col-12 col-md-4'>
-                                                <div className="more-info-item">
-                                                    <i className="bi bi-caret-left ms-1"></i>
-                                                    <label> وضعیت تاهل :</label>
-                                                    {this.state.person.maritalStatus}
-                                                </div>
-                                            </div>
-                                            <div className='col-12 col-md-4'>
-                                                <div className="more-info-item">
-                                                    <i className="bi bi-caret-left ms-1"></i>
-                                                    <label> دین :</label>
-                                                    {this.state.person.religion}
-                                                </div>
-                                            </div>
-                                            <div className='col-12 col-md-4'>
-                                                <div className="more-info-item">
-                                                    <i className="bi bi-caret-left ms-1"></i>
-                                                    <label> مذهب :</label>
-                                                    {this.state.person.subReligion}
-                                                </div>
-                                            </div>
-                                            <div className='col-12 col-md-4'>
-                                                <div className="more-info-item">
-                                                    <i className="bi bi-caret-left ms-1"></i>
-                                                    <label> وضعیت سلامتی :</label>
-                                                    {this.state.person.healthyStatus}
-                                                </div>
-                                            </div>
-                                            <div className='col-12 col-md-4'>
-                                                <div className="more-info-item">
-                                                    <i className="bi bi-caret-left ms-1"></i>
-                                                    <label> نام مستعار :</label>
-                                                    {this.state.person.alias}
-                                                </div>
-                                            </div>
-                                        </div>*/}
                                     </div>
                                 </Tab>
                                 <Tab eventKey="records" title="سوابق" style={{backgroundColor: "transparent"}}>
@@ -2007,7 +2002,7 @@ class ProfilePage extends Component {
         switch (type) {
             case 'cleaning':
                 return (async () => {
-                    this.setState({registerLoading:true});
+                    this.setState({registerLoading: true});
                     const date = this.state.dateValues.cleaningDate;
                     const formattedDate = date.year + '/' + date.month + '/' + date.day
                     const description = this.description.current.value;
@@ -2028,18 +2023,18 @@ class ProfilePage extends Component {
                         body: JSON.stringify(result)
                     }).then((response) => response.json())
                         .then((result) => {
-                            this.setState({registerLoading:false});
+                            this.setState({registerLoading: false});
                             const newReports = this.state.report.concat(result);
                             this.setState({report: newReports});
                             this.setState({show: false});
                         })
                         .catch((error) => {
-                            this.setState({registerLoading:false})
+                            this.setState({registerLoading: false})
                         });
                 })();
             case 'delayInArrival':
                 return (async () => {
-                    this.setState({registerLoading:true});
+                    this.setState({registerLoading: true});
                     const date = this.state.dateValues.delayInArrivalDate;
                     const formattedDate = date.year + '/' + date.month + '/' + date.day
                     const time = this.state.dateValues.delayInArriveTime;
@@ -2061,19 +2056,19 @@ class ProfilePage extends Component {
                         body: JSON.stringify(result)
                     }).then((response) => response.json())
                         .then((result) => {
-                            this.setState({registerLoading:false});
+                            this.setState({registerLoading: false});
                             const newReports = this.state.report.concat(result)
                             this.setState({report: newReports})
                             this.setState({show: false})
                         })
                         .catch((error) => {
-                            this.setState({registerLoading:false})
+                            this.setState({registerLoading: false})
                         });
                 })();
-                
+
             case 'exit':
                 return (async () => {
-                    this.setState({registerLoading:true});
+                    this.setState({registerLoading: true});
                     const startDate = this.state.dateValues.exitStartDate;
                     const endDate = this.state.dateValues.exitEndDate;
                     const formattedStartDate = startDate.year + '/' + startDate.month + '/' + startDate.day;
@@ -2100,21 +2095,21 @@ class ProfilePage extends Component {
                         body: JSON.stringify(result)
                     }).then((response) => response.json())
                         .then((result) => {
-                            this.setState({registerLoading:false})
+                            this.setState({registerLoading: false})
                             const newReports = this.state.report.concat(result)
                             this.setState({report: newReports})
                             this.setState({show: false})
                         })
                         .catch((error) => {
-                            this.setState({registerLoading:false})
+                            this.setState({registerLoading: false})
                         });
-                    
+
                 })();
 
             case 'violation':
                 return (async () => {
 
-                    this.setState({registerLoading:true});
+                    this.setState({registerLoading: true});
 
                     const date = this.state.dateValues.violationDate;
                     const formattedDate = date.year + '/' + date.month + '/' + date.day
@@ -2138,19 +2133,19 @@ class ProfilePage extends Component {
                         body: JSON.stringify(result)
                     }).then((response) => response.json())
                         .then((result) => {
-                            this.setState({registerLoading:false})
+                            this.setState({registerLoading: false})
                             const newReports = this.state.report.concat(result)
                             this.setState({report: newReports})
                             this.setState({show: false})
                         })
                         .catch((error) => {
-                            this.setState({registerLoading:false})
+                            this.setState({registerLoading: false})
                         });
-                    
+
                 })();
             case 'penalty':
                 return (async () => {
-                    this.setState({registerLoading:true});
+                    this.setState({registerLoading: true});
                     const description = this.description.current.value;
                     const typePenalty = this.typePenalty.current.value;
                     const penaltyAmount = this.penaltyAmount.current.value;
@@ -2168,22 +2163,22 @@ class ProfilePage extends Component {
                             'Accept': 'application/json',
                             'Content-Type': 'application/json'
                         },
-                        body: JSON.stringify(result)                     
+                        body: JSON.stringify(result)
                     }).then((response) => response.json())
                         .then((res) => {
-                            this.setState({registerLoading:false})
+                            this.setState({registerLoading: false})
                             const newReports = this.state.report.concat(result)
                             this.setState({report: newReports})
                             this.setState({show: false})
                         })
                         .catch((error) => {
-                            this.setState({registerLoading:false})
+                            this.setState({registerLoading: false})
                         });
-                    
+
                 })();
             case 'discharge':
                 return (async () => {
-                    this.setState({registerLoading:true});
+                    this.setState({registerLoading: true});
                     const dischargeDateAnnounce = this.state.dateValues.dischargeDateAnnounce;
                     const dischargeDate = this.state.dateValues.dischargeDate;
                     const depositReturnDate = this.state.dateValues.depositReturnDate;
@@ -2215,20 +2210,20 @@ class ProfilePage extends Component {
                         body: JSON.stringify(result)
                     }).then((response) => response.json())
                         .then((res) => {
-                            this.setState({registerLoading:false});
+                            this.setState({registerLoading: false});
                             const newReports = this.state.report.concat(result)
                             this.setState({report: newReports})
                             this.setState({show: false})
 
                         })
                         .catch((error) => {
-                            this.setState({registerLoading:false})
+                            this.setState({registerLoading: false})
                         });
                 })();
 
             case 'cancelContract':
                 return (async () => {
-                    this.setState({registerLoading:true});
+                    this.setState({registerLoading: true});
                     const date = this.state.dateValues.cancelContractDate;
                     const formattedDate = date.year + '/' + date.month + '/' + date.day;
                     const reason = this.reason.current.value;
@@ -2252,13 +2247,13 @@ class ProfilePage extends Component {
                         body: JSON.stringify(result)
                     }).then((response) => response.json())
                         .then((res) => {
-                            this.setState({registerLoading:false})
+                            this.setState({registerLoading: false})
                             const newReports = this.state.report.concat(result)
                             this.setState({report: newReports})
                             this.setState({show: false})
                         })
                         .catch((error) => {
-                            this.setState({registerLoading:false})
+                            this.setState({registerLoading: false})
                         });
                 })();
         }
@@ -2276,13 +2271,13 @@ class ProfilePage extends Component {
         await fetch(`https://api.saadatportal.com/api/v1/record/${this.state.reportTemp.id}`, {
             method: 'DELETE',
         }).then(res => res.text())
-            .then((res) =>{
+            .then((res) => {
                 let index = this.state.report.indexOf(this.state.reportTemp)
                 let updatedReport = [...this.state.report];
                 updatedReport.splice(index, 1);
                 this.setState({report: updatedReport});
                 this.setState({showDeleteModalReport: false})
-            }).catch((error)=>{
+            }).catch((error) => {
                 console.log(error);
                 this.setState({showDeleteModalReport: false})
             })

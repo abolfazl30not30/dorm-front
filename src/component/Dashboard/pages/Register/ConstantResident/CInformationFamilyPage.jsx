@@ -96,11 +96,11 @@ class CInformationFamilyPage extends Component {
                                     value={this.context.constantInformationFamily.secondPersonRelationshipWithResident}
                                     onChange={(e) =>  this.context.handleFields(e.target.value, 'constantInformationFamily', 'secondPersonRelationshipWithResident')}
                             >
-                                <option>پدر</option>
-                                <option>مادر</option>
-                                <option>خواهر</option>
-                                <option>برادر</option>
-                                <option>غیره</option>
+                                <option value='father'>پدر</option>
+                                <option value='mother'>مادر</option>
+                                <option value='sister'>خواهر</option>
+                                <option value='brother'>برادر</option>
+                                <option value='other'>غیره</option>
                             </select>
                             <label className="placeholder">نسبت با اقامتگر</label>
                         </div>
