@@ -60,6 +60,14 @@ class SlideShow extends Component{
             <>
                 <div className="slide-container">
                     <Slide {...properties}>
+                        <div className="each-slide">
+                            <div style={{ backgroundImage: `url('${this.state.sliderImg.image12}')`,height:"70vh"}}>
+                            </div>
+                        </div>
+                        <div className="each-slide">
+                            <div style={{ backgroundImage: `url('${this.state.sliderImg.image11}')`,height:"70vh"}}>
+                            </div>
+                        </div>
                         {
                             this.context.slider.map((e, index) => (
                                 <div className="each-slide">

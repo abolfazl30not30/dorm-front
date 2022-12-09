@@ -29,6 +29,8 @@ class RequestPage extends Component {
     }
 
     state = {
+        showModalForAddingType: false,
+
         searchBase: 'name',
         searchContent: '',
 
@@ -62,7 +64,7 @@ class RequestPage extends Component {
             name_requireReg: '',
             description_requireReg: '',
             reason_requireReg: '',
-
+            addInputContentInModal_requiredReg: ''
         },
 
         requests: [],
@@ -249,6 +251,7 @@ class RequestPage extends Component {
                                                         onChange={this.handleAlignment}
                                                         aria-label="text alignment"
                                                     >
+
                                                         {
                                                             this.state.choices.map((c, key) =>
                                                                 <ToggleButton value={c} className='col' key={key}>
@@ -257,64 +260,12 @@ class RequestPage extends Component {
                                                             )
                                                         }
 
-                                                        <div className={'row'}
-                                                             style={{
-                                                                 width: '100%',
-                                                                 marginRight: '0px',
-                                                                 display: 'none'
-                                                             }}
-                                                             ref={this.inputRef}
-                                                        >
-                                                            <input style={{
-                                                                borderRadius: '0',
-                                                                height: '50px',
-                                                                outline: 'none',
-                                                                color: '#2a2e32b3',
-                                                                border: '0.3px solid #bec6cc',
-                                                                padding: '8px'
-                                                            }}
-                                                                   value={this.state.addInputContentInModal}
-                                                                   onChange={(value) => this.setState({addInputContentInModal: value.target.value})}
-                                                                   className={'col-8'}
-                                                            >
-
-                                                            </input>
-                                                            <button className={'col addTypeBtn'}
-                                                                    onClick={() => {
-                                                                        this.inputRef.current.style.display = 'none';
-                                                                        this.setState({addButtonDisabled: false});
-                                                                    }}
-                                                            >
-                                                                <TiTimes size={22} color={'red'}/>
-                                                            </button>
-                                                            <button className={'col addTypeBtn'}
-                                                                    onClick={() => {
-                                                                        let required = /^\s*$/;
-                                                                        if (!required.test(this.state.addInputContentInModal)) {
-
-                                                                            let updatedChoices = [...this.state.choices];
-                                                                            updatedChoices.push(this.state.addInputContentInModal);
-                                                                            this.setState({choices: updatedChoices});
-
-                                                                            this.inputRef.current.style.display = 'none';
-                                                                            this.setState({addButtonDisabled: false});
-                                                                        }
-                                                                    }}
-                                                            >
-                                                                <TiTick size={22} color={'green'}/>
-                                                            </button>
-                                                        </div>
-
-
                                                         <button value="add"
                                                                 onClick={() => {
-                                                                    this.inputRef.current.style.display = 'block flex';
+                                                                    this.setState({showModalForAddingType: true, showType: false})
                                                                     this.setState({addInputContentInModal: ''});
-                                                                    this.setState({addButtonDisabled: true});
                                                                 }}
-                                                                ref={this.refForAdd}
                                                                 className='col addTypeBtn'
-                                                                disabled={this.state.addButtonDisabled}
                                                         >
                                                             <IoIosAddCircleOutline size={25}/>
                                                         </button>
@@ -439,8 +390,68 @@ class RequestPage extends Component {
                         </div>
                     </Modal.Body>
                 </Modal>
+
+                <Modal centered show={this.state.showModalForAddingType} onHide={() => this.setState({showModalForAddingType: false, showType: true})}> {/* for adding new type */}
+                    <Modal.Header closeButton>
+                        افزودن نوع جدید
+                    </Modal.Header>
+                    <Modal.Body>
+                        <div className="input-group-register col-md-4 col-12 w-100">
+                            <input type='text'
+                                   value={this.state.addInputContentInModal}
+                                   className={`input form-control col
+                                           ${this.state.Validations.addInputContentInModal_requiredReg === false ? "is-invalid" : ""}
+                                           `}
+                                   onChange={(value) => this.setState({addInputContentInModal: value.target.value})}
+                                   placeholder=" "
+                            />
+                            <label className={'placeholder'}
+                                   style={{right: this.state.Validations.addInputContentInModal_requiredReg === false ? '35px' : '12px'}}>
+                                &nbsp;درخواست جدید
+                                <span style={{color: 'red'}}>*</span>
+                            </label>
+                        </div>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <button className="btn-done" onClick={this.handleSubmitNewType}>ثبت
+                        </button>
+                        <button className="btn btn-light" onClick={this.handleCloseAddingType}>بستن
+                        </button>
+                    </Modal.Footer>
+                </Modal>
             </>
         );
+    }
+
+    handleCloseAddingType = () => {
+        let updatedValidation = {...this.state.Validations};
+        updatedValidation.addInputContentInModal_requiredReg = '';
+
+        this.setState({addInputContentInModal: '', showType: true})
+        this.setState({showModalForAddingType: false})
+        this.setState({Validations: updatedValidation});
+    }
+
+    handleSubmitNewType = () => {
+        let required = /^\s*$/;
+        let updatedValidation = {...this.state.Validations};
+        updatedValidation.addInputContentInModal_requiredReg = !required.test(this.state.addInputContentInModal);
+        this.setState({Validations: updatedValidation});
+
+        if (!required.test(this.state.addInputContentInModal)) {
+
+            let updatedChoices = [...this.state.choices];
+            updatedChoices.push(this.state.addInputContentInModal);
+            this.setState({choices: updatedChoices});
+
+            this.setState({showModalForAddingType: false})
+
+            let updatedValidation = {...this.state.Validations};
+            updatedValidation.addInputContentInModal_requiredReg = '';
+            this.setState({Validations: updatedValidation});
+
+            this.setState({addInputContentInModal: '', showType: true})
+        }
     }
 
     handleOpenFailureModal = async (request) => {
