@@ -195,14 +195,41 @@ class BasicInformation extends Component{
                             <select
                                 className={'input'}
                                 value={this.context.personnelFields.maritalStatus}
-                                onChange={(e) => this.context.handleFields(e.target.value, 'personnelFields', 'maritalStatus')}
+                                onChange={(e) => {
+                                    this.context.handleFields(e.target.value, 'personnelFields', 'maritalStatus');
+                                    this.context.handleResetPersonnelSpouseJobAndFullName();
+                                }}
                             >
                                 <option value={'single'}>مجرد</option>
                                 <option value={'married'}>متاهل</option>
                             </select>
                             <label className="placeholder">وضعیت تاهل</label>
-
                         </div>
+                        {
+                            this.context.personnelFields.maritalStatus === 'married'
+                            ?
+                                <>
+                                    <div className="input-group-register col-md-4 col-12">
+                                        <SimpleTextInput
+                                            condition1={this.context.personnelFieldsValidation.spouseFullName_requiredReg}
+                                            value={this.context.personnelFields.spouseFullName}
+                                            fieldNameString={'personnelFields'}
+                                            valueOfInputString={'spouseFullName'}
+                                            label={'نام و نام خانوادگی همسر'}
+                                            required={true}
+                                        />
+                                    </div>
+                                    <div className="input-group-register col-md-4 col-12">
+                                        <SimpleTextInput
+                                            value={this.context.personnelFields.spouseJob}
+                                            fieldNameString={'personnelFields'}
+                                            valueOfInputString={'spouseJob'}
+                                            label={'شغل همسر'}
+                                        />
+                                    </div>
+                                </>
+                                : null
+                        }
                         <div className="input-group-register col-md-4 col-12">
                             <select className='input'
                                     value={this.context.personnelFields.religion}
@@ -224,14 +251,6 @@ class BasicInformation extends Component{
                                 label={'مذهب'}
                             />
                         </div>
-                        {/*<div className="input-group-register col-4">*/}
-                        {/*    <SimpleTextInput*/}
-                        {/*        value={this.context.personnelFields.health}*/}
-                        {/*        fieldNameString={'personnelFields'}*/}
-                        {/*        valueOfInputString={'health'}*/}
-                        {/*        label={'وضعیت سلامت'}*/}
-                        {/*    />*/}
-                        {/*</div>*/}
                         <div className="input-group-register col-md-4 col-12">
                             <select className='input'
                                     value={this.context.personnelFields.health}

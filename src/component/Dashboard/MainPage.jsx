@@ -479,7 +479,8 @@ class MainPage extends Component {
                         handleDeleteUploadedFile: this.handleDeleteUploadedFile,
                         handleReset: this.handleReset,
                         handleImageSlider: this.handleImageSlider,
-                        handleResetSlider: this.handleResetSlider
+                        handleResetSlider: this.handleResetSlider,
+                        handleResetPersonnelSpouseJobAndFullName: this.handleResetPersonnelSpouseJobAndFullName
                     }}
                     >
                         <Routes>
@@ -764,6 +765,15 @@ class MainPage extends Component {
         updatedState.fields.slider = []
 
         this.setState({updatedState})
+    }
+
+    handleResetPersonnelSpouseJobAndFullName = () => {
+        let updatedValues = {...this.state.fields};
+
+        updatedValues.personnelFields.spouseFullName = '';
+        updatedValues.personnelFields.spouseJob = '';
+
+        this.setState({fields: updatedValues});
     }
 }
 

@@ -37,6 +37,7 @@ class PersonnelRegister extends Component {
         let maritalStatus_requiredReg = !requiredReg.test(this.context.personnelFields.maritalStatus);
         let healthyStatus_requiredReg = !requiredReg.test(this.context.personnelFields.healthyStatus);
         let type_requiredReg = !requiredReg.test(this.context.personnelFields.type);
+        let spouseFullName_requiredReg = !requiredReg.test(this.context.personnelFields.spouseFullName);
 
         let nationalCode_numberReg = numberReg.test(this.context.personnelFields.nationalCode);
         let certificateNumber_numberReg = numberReg.test(this.context.personnelFields.certificateNumber);
@@ -53,6 +54,9 @@ class PersonnelRegister extends Component {
         if (this.context.personnelFields.health === 'false') {
             healthyStatus_requiredReg = true;
         }
+        if (this.context.personnelFields.maritalStatus === 'single') {
+            spouseFullName_requiredReg = true;
+        }
 
         this.context.handleSpecificValidations([firstName_requiredReg, lastName_requiredReg,
                 nationalCode_requiredReg, placeOfIssue_requiredReg, certificateNumber_requiredReg, phoneNumber_requiredReg,
@@ -62,7 +66,7 @@ class PersonnelRegister extends Component {
                 maritalStatus_requiredReg, nationalCode_numberReg,
                 certificateNumber_numberReg, postalCode_numberReg, phoneNumber_phoneNumberReg,
                 telephoneNumber_homeTelephoneReg, emergencyNumber_MobileOrHomeTelephoneReg, email_emailReg, healthyStatus_requiredReg,
-                type_requiredReg],
+                type_requiredReg, spouseFullName_requiredReg],
             ['firstName_requiredReg', 'lastName_requiredReg',
                 'nationalCode_requiredReg', 'placeOfIssue_requiredReg', 'certificateNumber_requiredReg', 'phoneNumber_requiredReg',
                 'address_requiredReg', 'telephoneNumber_requiredReg', 'emergencyNumber_requiredReg',
@@ -71,7 +75,7 @@ class PersonnelRegister extends Component {
                 'maritalStatus_requiredReg', 'nationalCode_numberReg',
                 'certificateNumber_numberReg', 'postalCode_numberReg', 'phoneNumber_phoneNumberReg',
                 'telephoneNumber_homeTelephoneReg', 'emergencyNumber_MobileOrHomeTelephoneReg', 'email_emailReg',
-                'healthyStatus_requiredReg', 'type_requiredReg'], 'personnelFieldsValidation')
+                'healthyStatus_requiredReg', 'type_requiredReg', 'spouseFullName_requiredReg'], 'personnelFieldsValidation')
 
         return firstName_requiredReg && lastName_requiredReg &&
             nationalCode_requiredReg && certificateNumber_requiredReg && phoneNumber_requiredReg &&
@@ -81,7 +85,7 @@ class PersonnelRegister extends Component {
             maritalStatus_requiredReg && nationalCode_numberReg &&
             certificateNumber_numberReg && postalCode_numberReg && phoneNumber_phoneNumberReg &&
             telephoneNumber_homeTelephoneReg && emergencyNumber_MobileOrHomeTelephoneReg && email_emailReg &&
-            healthyStatus_requiredReg && type_requiredReg;
+            healthyStatus_requiredReg && type_requiredReg && spouseFullName_requiredReg;
     }
 
     personnelAdditionalInformation = () => {
@@ -90,7 +94,6 @@ class PersonnelRegister extends Component {
         let homeTelephoneReg = /^(\d{3}-\d{8}|\s*)$/; // 012-34567890
 
         let major_requiredReg = !requiredReg.test(this.context.personnelFields.major);
-        let spouseFullName_requiredReg = !requiredReg.test(this.context.personnelFields.spouseFullName);
         let bankName_requiredReg = !requiredReg.test(this.context.personnelFields.bankName);
         let cardNumber_requiredReg = !requiredReg.test(this.context.personnelFields.cardNumber);
         let bankAccountNumber_requiredReg = !requiredReg.test(this.context.personnelFields.bankAccountNumber);
@@ -107,12 +110,12 @@ class PersonnelRegister extends Component {
         let bankAccountNumber_numberReg = numberReg.test(this.context.personnelFields.bankAccountNumber)
         let bankAccountShabaNumber_numberReg = numberReg.test(this.context.personnelFields.bankAccountShabaNumber)
 
-        this.context.handleSpecificValidations([major_requiredReg, spouseFullName_requiredReg,
+        this.context.handleSpecificValidations([major_requiredReg,
                 bankName_requiredReg, cardNumber_requiredReg, bankAccountNumber_requiredReg, bankAccountOwnerName_requiredReg,
                 bankAccountShabaNumber_requiredReg,
                 parentType_requiredReg, parentId_requiredReg, gender_requiredReg, cardNumber_numberReg,
                 bankAccountNumber_numberReg, bankAccountShabaNumber_numberReg],
-            ['major_requiredReg', 'spouseFullName_requiredReg',
+            ['major_requiredReg',
                 'bankName_requiredReg', 'cardNumber_requiredReg', 'bankAccountNumber_requiredReg', 'bankAccountOwnerName_requiredReg',
                 'bankAccountShabaNumber_requiredReg',
                 'parentType_requiredReg', 'parentId_requiredReg', 'gender_requiredReg', 'cardNumber_numberReg',
@@ -120,7 +123,7 @@ class PersonnelRegister extends Component {
 
         // console.log (this.context.valueOfDates.personnel.bankAccountExpirationDate)
 
-        return major_requiredReg && spouseFullName_requiredReg &&
+        return major_requiredReg &&
             bankName_requiredReg && cardNumber_requiredReg && bankAccountNumber_requiredReg && bankAccountOwnerName_requiredReg &&
             bankAccountShabaNumber_requiredReg &&
             parentType_requiredReg && parentId_requiredReg && gender_requiredReg && cardNumber_numberReg &&

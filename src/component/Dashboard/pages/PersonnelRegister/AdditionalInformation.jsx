@@ -33,24 +33,6 @@ class AdditionalInformation extends Component{
                         </div>
                         <div className="input-group-register col-md-4 col-12">
                             <SimpleTextInput
-                                condition1={this.context.personnelFieldsValidation.spouseFullName_requiredReg}
-                                value={this.context.personnelFields.spouseFullName}
-                                fieldNameString={'personnelFields'}
-                                valueOfInputString={'spouseFullName'}
-                                label={'نام و نام خانوادگی همسر'}
-                                required={true}
-                            />
-                        </div>
-                        <div className="input-group-register col-md-4 col-12">
-                            <SimpleTextInput
-                                value={this.context.personnelFields.spouseJob}
-                                fieldNameString={'personnelFields'}
-                                valueOfInputString={'spouseJob'}
-                                label={'شغل همسر'}
-                            />
-                        </div>
-                        <div className="input-group-register col-md-4 col-12">
-                            <SimpleTextInput
                                 condition1={this.context.personnelFieldsValidation.bankName_requiredReg}
                                 value={this.context.personnelFields.bankName}
                                 fieldNameString={'personnelFields'}
