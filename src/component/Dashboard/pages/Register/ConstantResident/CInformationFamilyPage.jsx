@@ -105,6 +105,47 @@ class CInformationFamilyPage extends Component {
                             <label className="placeholder">نسبت با اقامتگر</label>
                         </div>
                     </div>
+                    <div className='d-flex flex-wrap justify-content-start mt-4'>
+                        <div className='col-12 pe-3 mb-3'>شخص سوم</div>
+                        <div className="input-group-register col-md-4 col-12">
+                            <SimpleTextInput
+                                value={this.context.constantInformationFamily.thirdPersonFullName}
+                                fieldNameString={'constantInformationFamily'}
+                                valueOfInputString={'thirdPersonFullName'}
+                                label={'نام و نام خانوادگی'}
+                            />
+                        </div>
+                        <div className="input-group-register col-md-4 col-12">
+                            <SimpleTextInput
+                                condition2={this.context.constantInformationFamilyValidation.thirdPersonPhoneNumber_telephoneReg}
+                                value={this.context.constantInformationFamily.thirdPersonPhoneNumber}
+                                fieldNameString={'constantInformationFamily'}
+                                valueOfInputString={'thirdPersonPhoneNumber'}
+                                label={'شماره تماس'}
+                            />
+                        </div>
+                        <div className="input-group-register col-md-4 col-12">
+                            <SimpleTextInput
+                                value={this.context.constantInformationFamily.thirdPersonFatherName}
+                                fieldNameString={'constantInformationFamily'}
+                                valueOfInputString={'thirdPersonFatherName'}
+                                label={'نام  پدر'}
+                            />
+                        </div>
+                        <div className="input-group-register col-md-4 col-12">
+                            <select className='input'
+                                    value={this.context.constantInformationFamily.thirdPersonRelationshipWithResident}
+                                    onChange={(e) =>  this.context.handleFields(e.target.value, 'constantInformationFamily', 'thirdPersonRelationshipWithResident')}
+                            >
+                                <option value='father'>پدر</option>
+                                <option value='mother'>مادر</option>
+                                <option value='sister'>خواهر</option>
+                                <option value='brother'>برادر</option>
+                                <option value='other'>غیره</option>
+                            </select>
+                            <label className="placeholder">نسبت با اقامتگر</label>
+                        </div>
+                    </div>
                 </div>
             </>
         );

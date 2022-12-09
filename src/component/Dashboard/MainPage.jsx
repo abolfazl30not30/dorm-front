@@ -217,6 +217,11 @@ class MainPage extends Component {
                 secondPersonPhoneNumber: '',
                 secondPersonFatherName: '',
                 secondPersonRelationshipWithResident: 'father', // default value (first option)
+
+                thirdPersonFullName: '',
+                thirdPersonPhoneNumber: '',
+                thirdPersonFatherName: '',
+                thirdPersonRelationshipWithResident: 'father', // default value (first option)
             },
             // ----------------------- <FGIInformationFamilyPage /> information
             familyGuestInformationFamily: {
@@ -400,6 +405,8 @@ class MainPage extends Component {
                 secondPersonFullName_requiredReg: '',
                 secondPersonPhoneNumber_requiredReg: '',
                 secondPersonPhoneNumber_telephoneReg: '',
+
+                thirdPersonPhoneNumber_telephoneReg: '',
             },
             // ----------------------- <FGIInformationFamilyPage /> information validations
             familyGuestInformationFamilyValidation: {

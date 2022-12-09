@@ -325,6 +325,7 @@ class MainRegister extends Component {
     cInformationFamilyPageValidation = () => {
         let requiredReg = /^\s*$/;
         let telephoneReg = /^09\d{9}$/;
+        let telephoneOrEmptyReg = /^(09\d{9}|\s*)$/;
 
         let firstPersonFullName_requiredReg = !requiredReg.test(this.context.constantInformationFamily.firstPersonFullName);
         let firstPersonPhoneNumber_requiredReg = !requiredReg.test(this.context.constantInformationFamily.firstPersonPhoneNumber);
@@ -334,11 +335,13 @@ class MainRegister extends Component {
         let firstPersonPhoneNumber_telephoneReg = telephoneReg.test(this.context.constantInformationFamily.firstPersonPhoneNumber);
         let secondPersonPhoneNumber_telephoneReg = telephoneReg.test(this.context.constantInformationFamily.secondPersonPhoneNumber);
 
+        let thirdPersonPhoneNumber_telephoneReg = telephoneOrEmptyReg.test(this.context.constantInformationFamily.thirdPersonPhoneNumber);
+
         this.context.handleSpecificValidations([firstPersonFullName_requiredReg, firstPersonPhoneNumber_requiredReg,
             secondPersonFullName_requiredReg, secondPersonPhoneNumber_requiredReg, firstPersonPhoneNumber_telephoneReg,
-            secondPersonPhoneNumber_telephoneReg], ['firstPersonFullName_requiredReg', 'firstPersonPhoneNumber_requiredReg',
+            secondPersonPhoneNumber_telephoneReg, thirdPersonPhoneNumber_telephoneReg], ['firstPersonFullName_requiredReg', 'firstPersonPhoneNumber_requiredReg',
             'secondPersonFullName_requiredReg', 'secondPersonPhoneNumber_requiredReg', 'firstPersonPhoneNumber_telephoneReg',
-            'secondPersonPhoneNumber_telephoneReg'], 'constantInformationFamilyValidation');
+            'secondPersonPhoneNumber_telephoneReg', 'thirdPersonPhoneNumber_telephoneReg'], 'constantInformationFamilyValidation');
 
         return firstPersonFullName_requiredReg && firstPersonPhoneNumber_requiredReg &&
             secondPersonFullName_requiredReg && secondPersonPhoneNumber_requiredReg && firstPersonPhoneNumber_telephoneReg &&
@@ -721,6 +724,8 @@ class MainRegister extends Component {
             }
         }
         this.setState({showDoneModal:true})
+
+        this.context.handleReset();
     }
 }
 
