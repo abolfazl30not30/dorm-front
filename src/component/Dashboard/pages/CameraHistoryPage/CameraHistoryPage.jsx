@@ -65,7 +65,7 @@ class CameraHistoryPage extends Component {
 
                         <div className={'d-flex'} style={{justifyContent: 'center'}}>
                             <button className={'btn-done'} onClick={() => {
-                                this.handleOpenModal()
+                                this.handleOpenModal();
                             }}>
                                 <MdDone className='ms-1'/>ثبت درخواست
                             </button>
@@ -92,30 +92,8 @@ class CameraHistoryPage extends Component {
                                onChange={(e) => {
                                    this.handleSearchInput(e)
                                }}/>
-                        <div className="search-icon"><i className="bi bi-search"></i></div>
+                        <div className="search-icon"><i className="bi bi-search"/></div>
                     </div>
-
-
-                    {/*<div className="row align-items-center ">
-                        <div className="col-md-1 col-sm-2 px-0"><label>براساس:</label></div>
-                        <div className="col-md-3 col-sm-6 px-0" style={{paddingLeft: "0"}}>
-                            <Form.Select aria-label="Default select example" style={{height: "50px", fontSize: "14px"}}
-                                         value={this.state.searchType} onChange={(e) => {
-                                this.setState({searchType: e.target.value})
-                            }}>
-                                <option value="fullName">نام درخواست کننده</option>
-                                <option value="title">عنوان</option>
-                            </Form.Select>
-                        </div>
-                        <div className="input-group-register col-md-7 col-sm-11 px-0 d-flex"
-                             style={{paddingRight: "0"}}>
-                            <input type="text" id="inputSearch" className="input" placeholder="جسـتوجـو"
-                                   style={{padding: "6px"}} onChange={(e) => {
-                                this.handleSearchInput(e)
-                            }}/>
-                            <div className="search-icon"><i className="bi bi-search"></i></div>
-                        </div>
-                    </div>*/}
 
                     <div className={'table-box'}>
 
@@ -146,6 +124,7 @@ class CameraHistoryPage extends Component {
                                     </tr>
                                 ))
                             }
+
                             </tbody>
                         </table>
 
@@ -161,6 +140,7 @@ class CameraHistoryPage extends Component {
                         <div className={'d-flex flex-wrap row'}>
                             <div className={'col-12 input-group-register'}>
                                 <input
+                                    value={this.state.tmpRequest.title}
                                     className={`input form-control mb-2 ${this.state.validation.title_requireReg === false ? "is-invalid" : ""}`}
                                     placeholder={' '}
                                     onChange={(e) =>
@@ -181,15 +161,13 @@ class CameraHistoryPage extends Component {
 
                             <div className={'col-12 input-group-register'}>
                                 <DatePicker
-                                    format="ِِِِِِYYYY/MM/DD"
+                                    format="YYYY/MM/DD"
                                     inputClass={`input form-control mb-2 ${this.state.validation.date_requiredReg === false ? "is-invalid" : ""}`}
                                     value={this.state.dateValue}
                                     onChange={(value) => {this.handleDateValue(value)}}
 
-                                    style={{
-                                        width: "188%",
-                                        // boxSizing: "border-box",
-                                        // height: "26px"
+                                    containerStyle={{
+                                        width: "100%"
                                     }}
 
                                     mapDays={({date}) => {
@@ -219,15 +197,18 @@ class CameraHistoryPage extends Component {
                                 >
                                     <button type="button" className={"btn btn-secondary mb-2"} onClick={() => {
                                         let updatedTmpRequest = {...this.state.tmpRequest};
-                                        updatedTmpRequest.dateValue = '';
                                         updatedTmpRequest.date = '';
-                                        this.setState({tmpRequest: updatedTmpRequest})
+                                        this.setState({tmpRequest: updatedTmpRequest, dateValue: ''})
                                     }}>
                                         ریست
                                     </button>
                                 </DatePicker>
                                 <label className={'placeholder'}
-                                       style={{right: this.state.validation.date_requiredReg === false ? '40px' : '20px'}}>
+                                       style={this.state.dateValue !== ""
+                                           ? ({display:"none"})
+                                           : ({right: this.state.validation.date_requiredReg === false ? '40px' : '20px'})
+                                       }
+                                       >
                                     تاریخ
                                     <span style={{color: 'red'}}>*</span>
                                 </label>
@@ -331,7 +312,21 @@ class CameraHistoryPage extends Component {
 
     handleOpenModal = () => {
         this.setState({showModal: true});
-
+        this.setState({tmpRequest: {
+                title: '',
+                description: '',
+                unit: '',
+                date: '',
+                supervisor: '1111111',
+                assignee: '',
+            }})
+        this.setState({validation: {
+                title_requireReg: '',
+                date_requiredReg: '',
+                unit_requireReg: '',
+                assignee_requireReg: '',
+                unit_numberReg: '',
+            }})
     }
 
     handleCloseModal = () => {

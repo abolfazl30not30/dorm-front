@@ -34,13 +34,6 @@ class DateInput extends Component{
     render() {
         return (
             <>
-                {/*<DatePicker calendarStyles={this.state.calStyles}*/}
-                {/*            inputFormat="jYYYY/jM/jD"*/}
-                {/*            className={`input form-control ${this.props.condition1 === false ? "is-invalid" : ""}`}*/}
-                {/*            value={this.props.value}*/}
-                {/*            onChange={(value) =>  this.context.handleDates(value, this.props.fieldNameString, this.props.valueOfInputString)}*/}
-                {/*/>*/}
-
                 <DatePicker
                     // fixMainPosition={false}
                     calendarPosition={`top`}
@@ -65,21 +58,6 @@ class DateInput extends Component{
                         }
 
                     }}
-
-                    // className="rmdp-mobile"
-                    // mobileButtons={
-                    //     [
-                    //         {
-                    //             label: "ریست",
-                    //             type: "button",
-                    //             className: "rmdp-button rmdp-action-button",
-                    //             onClick: () => {
-                    //                 this.context.handleValueOfDate({}, this.props.valueFieldString, this.props.valueOfInputString);
-                    //                 this.context.handleDates('', this.props.fieldNameString, this.props.valueOfInputString)
-                    //             },
-                    //         },
-                    //     ]
-                    // }
 
                     mapDays={({ date }) => {
                         let props = {}
