@@ -159,9 +159,19 @@ class RequestPage extends Component {
                                                             request.checked !== null
                                                                 ? (request.checked === true
                                                                     ? <Button className={'request-accept'} disabled={true}>قبول شده</Button>
-                                                                    : <Button className={'request-reject'} onClick={() => {
+                                                                    : <OverlayTrigger
+                                                                        placement="bottom"
+                                                                        delay={{ show: 250, hide: 400 }}
+                                                                        overlay={<Tooltip id="button-tooltip">
+                                                                            نمایش جرئیات
+                                                                        </Tooltip>
+                                                                        }
+                                                                    >
+                                                                        <Button className={'request-reject'} onClick={() => {
                                                                         this.handleOpenFailureModal(request);
-                                                                    }}>رد شده</Button>)
+                                                                    }}>رد شده</Button>
+                                                                        </OverlayTrigger>
+                                                                        )
                                                                 : <Button className={'request-unknown'} disabled={true}>تعیین نشده</Button>
                                                         }
                                                     </div>

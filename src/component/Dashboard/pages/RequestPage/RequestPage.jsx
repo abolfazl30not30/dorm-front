@@ -170,9 +170,18 @@ class RequestPage extends Component {
                                                         request.checked !== null
                                                             ? (request.checked === true
                                                                 ? <Button className={'request-accept'}>قبول شده</Button>
-                                                                : <Button className={'request-reject'} onClick={() => {
-                                                                    this.handleOpenFailureModal(request);
-                                                                }}>رد شده</Button>)
+                                                                : <OverlayTrigger
+                                                                    placement="bottom"
+                                                                    delay={{ show: 250, hide: 400 }}
+                                                                    overlay={<Tooltip id="button-tooltip">
+                                                                                نمایش جرئیات
+                                                                            </Tooltip>
+                                                                }
+                                                                >
+                                                                    <Button className={'request-reject'} onClick={() => {
+                                                                        this.handleOpenFailureModal(request);
+                                                                    }}>رد شده</Button>
+                                                                </OverlayTrigger>)
                                                             : <Button className={'request-unknown'}>تعیین نشده</Button>
                                                     }
 
