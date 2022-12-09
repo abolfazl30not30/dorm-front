@@ -33,6 +33,7 @@ class TrelloPage extends Component {
         taskClicked: false,
         NewTaskClicked: false,
         clickedTask: {},
+        forceCloseDeleteModal: false,
         tasks: [],
         tempName: "",
         tempDescription: "",
@@ -43,21 +44,6 @@ class TrelloPage extends Component {
         tempPersonnelId: "",
         parentNotFound: false
 
-    }
-
-    handleTaskClicked = async (id) => {
-        this.setState({taskClicked: true})
-        const targetTask = {...this.state.tasks.find(task => task.id === id)}
-        this.setState({clickedTask: targetTask, tempDueDate: targetTask.dueDate})
-        const Hour = parseInt(targetTask.timeLog)
-        const Minute = Math.ceil((targetTask.timeLog - Hour)*60)
-        const getParent = await fetch(`https://api.saadatportal.com/api/v1/characteristic/search?parentId=${targetTask.personnelId}`)
-            .then((response) => response.json()).then((data) => {this.setState({taskPersonnel: data[0]})})
-
-        this.setState({
-            tempHourTimeLog: Hour,
-            tempMinuteTimeLog: Minute
-        })
     }
 
 // handler functions for new task button -------------------------------------------------------------------------------
@@ -102,6 +88,7 @@ class TrelloPage extends Component {
     onClose = () => {
         this.setState({NewTaskClicked: false})
         this.setState({taskClicked: false})
+        this.setState({showDeleteTask: false})
     };
 
     onDone = async () => {
@@ -111,7 +98,7 @@ class TrelloPage extends Component {
         let day = this.state.tempDueDate.day;
 
         const formattedDueDate = year + '/' + month + '/' + day;
-        const postNewTask = await fetch('https://api.saadatportal.com/api/v1/task', {
+        await fetch('https://api.saadatportal.com/api/v1/task', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -142,6 +129,21 @@ class TrelloPage extends Component {
     };
 //----------------------------------------------------------------------------------------------------------------------
 // handler functions for edit task -------------------------------------------------------------------------------------
+    handleTaskClicked = async (id) => {
+        this.setState({taskClicked: true})
+        const targetTask = {...this.state.tasks.find(task => task.id === id)}
+        this.setState({clickedTask: targetTask, tempDueDate: targetTask.dueDate})
+        const Hour = parseInt(targetTask.timeLog)
+        const Minute = Math.ceil((targetTask.timeLog - Hour)*60)
+        await fetch(`https://api.saadatportal.com/api/v1/characteristic/search?parentId=${targetTask.personnelId}`)
+            .then((response) => response.json()).then((data) => {this.setState({taskPersonnel: data[0]})})
+
+        this.setState({
+            tempHourTimeLog: Hour,
+            tempMinuteTimeLog: Minute
+        })
+    }
+
     handleChangeName = (input) => {
         const updatedTask = this.state.clickedTask;
         updatedTask.name = input.target.value;
@@ -163,12 +165,6 @@ class TrelloPage extends Component {
         this.setState({clickedTask: updatedTask})
     };
 
-    handleChangeDueDate = (input) => {
-        const updatedTask = this.state.clickedTask;
-        updatedTask.dueDate = input.target.value;
-        this.setState({clickedTask: updatedTask})
-    };
-
     handleChangePriority = (input) => {
         const updatedTask = this.state.clickedTask;
         updatedTask.priority = input.target.value;
@@ -180,7 +176,7 @@ class TrelloPage extends Component {
         updatedTask.timeLog = this.state.tempHourTimeLog + (this.state.tempMinuteTimeLog / 60)
 
         updatedTask.dueDate = this.state.tempDueDate
-        const patchTask = await fetch(`https://api.saadatportal.com/api/v1/task/${this.state.clickedTask.id}`, {
+        await fetch(`https://api.saadatportal.com/api/v1/task/${this.state.clickedTask.id}`, {
             method: 'PATCH',
             headers: {
                 'Accept': 'application/json',
@@ -200,14 +196,13 @@ class TrelloPage extends Component {
         if (result.destination.droppableId === result.source.droppableId) {
             return;
         }
-
         const targetTask = this.state.tasks.find(task => task.id === result.draggableId)
         const updatedTasks = [...this.state.tasks]
         const index = updatedTasks.indexOf(targetTask);
         targetTask.status = result.destination.droppableId;
         updatedTasks[index] = targetTask;
         this.setState({tasks: updatedTasks})
-        const patchTask = await fetch(`https://api.saadatportal.com/api/v1/task/${targetTask.id}`, {
+        await fetch(`https://api.saadatportal.com/api/v1/task/${targetTask.id}`, {
             method: 'PATCH',
             headers: {
                 'Accept': 'application/json',
@@ -218,17 +213,24 @@ class TrelloPage extends Component {
         await this.componentDidMount()
     }
     handleDelete = async (id) => {
-        let updatedTasks = [...this.state.tasks]
-        updatedTasks = updatedTasks.filter((task) => {return task.id !== id});
-        this.setState({tasks: updatedTasks})
-        const deleteTask = await fetch(`https://api.saadatportal.com/api/v1/task/${id}`, {
+
+        await fetch(`https://api.saadatportal.com/api/v1/task/${id}`, {
             method: 'DELETE',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             }
+        }).then(() => {
+            this.setState({forceCloseDeleteModal: true})
+            let updatedTasks = [...this.state.tasks]
+            updatedTasks = updatedTasks.filter((task) => {return task.id !== id});
+            this.setState({tasks: updatedTasks})
+            this.setState({forceCloseDeleteModal: true})
+        }).catch((e) => {
+            console.log(e)
         })
-        await this.componentDidMount()
+
+        // await this.componentDidMount()
     }
 
     handleParentNotFound = () => {
@@ -241,7 +243,7 @@ class TrelloPage extends Component {
     }
 
     handleSearch = async () => {
-        const getParents = await fetch(`https://api.saadatportal.com/api/v1/characteristic/search?${this.state.searchBase}=${this.state.searchContent}&parentType=Personnel`)
+        await fetch(`https://api.saadatportal.com/api/v1/characteristic/search?${this.state.searchBase}=${this.state.searchContent}&parentType=Personnel`)
             .then((response) => response.json())
             .then((data) => this.setState({parentsFound : data}, () => {this.handleParentNotFound()}))
     }
@@ -249,7 +251,7 @@ class TrelloPage extends Component {
 //----------------------------------------------------------------------------------------------------------------------
 
     componentDidMount = async () => {
-        const getTasks = await fetch('https://api.saadatportal.com/api/v1/task').then((response) => response.json())
+        await fetch('https://api.saadatportal.com/api/v1/task').then((response) => response.json())
             .then((data) => this.setState({tasks : data}))
     }
 
@@ -269,7 +271,8 @@ class TrelloPage extends Component {
                             handleTaskClicked: this.handleTaskClicked,
                             onClose: this.onClose,
                             onNewTask: this.onNewTask,
-                            handleDelete: this.handleDelete
+                            handleDelete: this.handleDelete,
+                            forceCloseDeleteModal: this.state.forceCloseDeleteModal
                         }}>
 
                         {/* New Task button*/}
@@ -529,8 +532,6 @@ class TrelloPage extends Component {
                                     </FormControl>
                             </div>
 
-                            {/* Date picker field */}
-
                             {/* Edit Time Log field */}
                             <div className={"text-center d-flex justify-content-center"} style={{flexDirection: "column"}}>
                                 <div className={"my-1"}>زمان صرف شده</div>
@@ -668,10 +669,7 @@ class TrelloPage extends Component {
                                 <h3 hidden={!this.state.parentNotFound} className={"mt-5 text-center text-danger"}>پرسنلی یافت نشد!</h3>
                             </div>
                         </Modal.Body>
-
                     </Modal>
-
-
                 </div>
             </DragDropContext>
         );

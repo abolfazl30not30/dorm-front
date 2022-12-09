@@ -1,11 +1,21 @@
-import {Component} from "react";
+import React, {Component} from "react";
 import "./../../../../style/task.css"
 import {Draggable} from "react-beautiful-dnd";
 import TaskContext from "./../../../../contexts/tasks";
 import {GrClose} from "react-icons/gr"
+import Modal from "react-bootstrap/Modal";
 
 class Task extends Component {
+
     static contextType = TaskContext;
+
+    state = {
+        showDeleteModal: false
+    }
+    onDelete = () => {
+        this.setState({showDeleteModal: true})
+    }
+
     render() {
         return (
             <>
@@ -13,11 +23,8 @@ class Task extends Component {
                     {(provided) => (
                         <div className={"m-3"} ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps} draggable={true}>
                             <div className={'delete-btn d-flex'} style={{backgroundColor: '#EBEBEB', width: '100%', cursor: "default"}}>
-                                {/*<Thumbnail />*/}
                                 <div className={'d-flex justify-content-start w-50'}>
-                                    <GrClose size={15} style={{cursor: "pointer"}} className={"m-3"} onClick={() => {
-                                        this.context.handleDelete(this.props.id)
-                                    }}/>
+                                    <GrClose size={15} style={{cursor: "pointer"}} className={"m-3"} onClick={this.onDelete}/>
                                 </div>
                                 <div className={"m-2 d-flex justify-content-end w-50"}>
                                     <img src={"https://cdn-icons-png.flaticon.com/512/149/149071.png"} style={{width: "30px", height: "30px"}}/>
@@ -62,6 +69,29 @@ class Task extends Component {
                         </div>
                     )}
                 </Draggable>
+                <Modal
+                    style={{left: "50%", translate: "-50%"}}
+                    className={"w-25"}
+                    centered={true}
+                    show={this.state.showDeleteModal}
+                    size={'xl'}
+                    onHide={() => this.setState({showDeleteModal : false})}
+                >
+                    <Modal.Header closeButton={true}>
+                        <Modal.Title>حذف وظیفه</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>آیا از حذف وظیفه {this.props.name} مطمئن هستید؟</Modal.Body>
+                    <Modal.Footer>
+                        {/* Cancel button for delete task modal */}
+                        <button className="btn btn-light" onClick={() => {this.setState({showDeleteModal: false})}}>لغو</button>
+
+                        {/* Accept button for deleting task */}
+                        <button className="btn btn-danger" onClick={() => {
+                            this.context.handleDelete(this.props.id);
+                            this.setState({showDeleteModal: !this.context.forceCloseDeleteModal});
+                        }}>حذف</button>
+                    </Modal.Footer>
+                </Modal>
             </>
         );
     }
