@@ -62,8 +62,6 @@ class MainPage extends Component {
 
             personnel: {
                 birthDate: '',
-                bankAccountExpirationDate: '',
-
             }
         },
 
@@ -101,8 +99,6 @@ class MainPage extends Component {
                 bankAccountNumber: '',
                 bankAccountOwnerName: '',
                 bankAccountShabaNumber: '',
-                bankAccountExpirationDate: '',
-                cvv2: '', //
                 fullName: '',//
                 parentType: 'Personnel',
                 gender: 'male',
@@ -290,7 +286,6 @@ class MainPage extends Component {
                 bankAccountNumber_requiredReg: '',
                 bankAccountOwnerName_requiredReg: '',
                 bankAccountShabaNumber_requiredReg: '',
-                bankAccountExpirationDate_requiredReg: '',
                 fullName_requiredReg: '',
                 parentType_requiredReg: '',
                 parentId_requiredReg: '',
@@ -301,7 +296,6 @@ class MainPage extends Component {
                 cardNumber_numberReg: '',
                 bankAccountNumber_numberReg: '',
                 bankAccountShabaNumber_numberReg: '',
-                cvv2_numberReg: '',
             },
 
             //MAIN REGISTER

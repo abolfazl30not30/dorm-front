@@ -96,7 +96,6 @@ class PersonnelRegister extends Component {
         let bankAccountNumber_requiredReg = !requiredReg.test(this.context.personnelFields.bankAccountNumber);
         let bankAccountOwnerName_requiredReg = !requiredReg.test(this.context.personnelFields.bankAccountOwnerName);
         let bankAccountShabaNumber_requiredReg = !requiredReg.test(this.context.personnelFields.bankAccountShabaNumber);
-        let bankAccountExpirationDate_requiredReg = !requiredReg.test(this.context.personnelFields.bankAccountExpirationDate);
         // let fullName_requiredReg = !requiredReg.test(this.context.personnelFields.fullName);
         let parentType_requiredReg = !requiredReg.test(this.context.personnelFields.parentType);
         let parentId_requiredReg = !requiredReg.test(this.context.personnelFields.parentId);
@@ -107,26 +106,25 @@ class PersonnelRegister extends Component {
         let cardNumber_numberReg = numberReg.test(this.context.personnelFields.cardNumber)
         let bankAccountNumber_numberReg = numberReg.test(this.context.personnelFields.bankAccountNumber)
         let bankAccountShabaNumber_numberReg = numberReg.test(this.context.personnelFields.bankAccountShabaNumber)
-        let cvv2_numberReg = numberReg.test(this.context.personnelFields.cvv2)
 
         this.context.handleSpecificValidations([major_requiredReg, spouseFullName_requiredReg,
                 bankName_requiredReg, cardNumber_requiredReg, bankAccountNumber_requiredReg, bankAccountOwnerName_requiredReg,
-                bankAccountShabaNumber_requiredReg, bankAccountExpirationDate_requiredReg,
+                bankAccountShabaNumber_requiredReg,
                 parentType_requiredReg, parentId_requiredReg, gender_requiredReg, cardNumber_numberReg,
-                bankAccountNumber_numberReg, bankAccountShabaNumber_numberReg, cvv2_numberReg],
+                bankAccountNumber_numberReg, bankAccountShabaNumber_numberReg],
             ['major_requiredReg', 'spouseFullName_requiredReg',
                 'bankName_requiredReg', 'cardNumber_requiredReg', 'bankAccountNumber_requiredReg', 'bankAccountOwnerName_requiredReg',
-                'bankAccountShabaNumber_requiredReg', 'bankAccountExpirationDate_requiredReg',
+                'bankAccountShabaNumber_requiredReg',
                 'parentType_requiredReg', 'parentId_requiredReg', 'gender_requiredReg', 'cardNumber_numberReg',
-                'bankAccountNumber_numberReg', 'bankAccountShabaNumber_numberReg', 'cvv2_numberReg'], 'personnelFieldsValidation')
+                'bankAccountNumber_numberReg', 'bankAccountShabaNumber_numberReg'], 'personnelFieldsValidation')
 
         // console.log (this.context.valueOfDates.personnel.bankAccountExpirationDate)
 
         return major_requiredReg && spouseFullName_requiredReg &&
             bankName_requiredReg && cardNumber_requiredReg && bankAccountNumber_requiredReg && bankAccountOwnerName_requiredReg &&
-            bankAccountShabaNumber_requiredReg && bankAccountExpirationDate_requiredReg &&
+            bankAccountShabaNumber_requiredReg &&
             parentType_requiredReg && parentId_requiredReg && gender_requiredReg && cardNumber_numberReg &&
-            bankAccountNumber_numberReg && bankAccountShabaNumber_numberReg && cvv2_numberReg;
+            bankAccountNumber_numberReg && bankAccountShabaNumber_numberReg;
 
     }
 

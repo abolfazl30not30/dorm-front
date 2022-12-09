@@ -61,6 +61,16 @@ class AdditionalInformation extends Component{
                         </div>
                         <div className="input-group-register col-md-4 col-12">
                             <SimpleTextInput
+                                condition1={this.context.personnelFieldsValidation.bankAccountOwnerName_requiredReg}
+                                value={this.context.personnelFields.bankAccountOwnerName}
+                                fieldNameString={'personnelFields'}
+                                valueOfInputString={'bankAccountOwnerName'}
+                                label={'نام مالک حساب'}
+                                required={true}
+                            />
+                        </div>
+                        <div className="input-group-register col-md-4 col-12">
+                            <SimpleTextInput
                                 condition1={this.context.personnelFieldsValidation.cardNumber_requiredReg}
                                 condition4={this.context.personnelFieldsValidation.cardNumber_numberReg}
                                 value={this.context.personnelFields.cardNumber}
@@ -84,16 +94,6 @@ class AdditionalInformation extends Component{
                         </div>
                         <div className="input-group-register col-md-4 col-12">
                             <SimpleTextInput
-                                condition1={this.context.personnelFieldsValidation.bankAccountOwnerName_requiredReg}
-                                value={this.context.personnelFields.bankAccountOwnerName}
-                                fieldNameString={'personnelFields'}
-                                valueOfInputString={'bankAccountOwnerName'}
-                                label={'نام مالک حساب'}
-                                required={true}
-                            />
-                        </div>
-                        <div className="input-group-register col-md-4 col-12">
-                            <SimpleTextInput
                                 condition1={this.context.personnelFieldsValidation.bankAccountShabaNumber_requiredReg}
                                 condition4={this.context.personnelFieldsValidation.bankAccountShabaNumber_numberReg}
                                 value={this.context.personnelFields.bankAccountShabaNumber}
@@ -101,28 +101,6 @@ class AdditionalInformation extends Component{
                                 valueOfInputString={'bankAccountShabaNumber'}
                                 label={'شماره شبا'}
                                 required={true}
-                            />
-                        </div>
-                        <div className="input-group-register col-md-4 col-12">
-                            <DateInput
-                                condition1={this.context.personnelFieldsValidation.bankAccountExpirationDate_requiredReg}
-                                value={this.context.valueOfDates.personnel.bankAccountExpirationDate}
-                                valueFieldString={'personnel'}
-                                fieldNameString={'personnelFields'}
-                                valueOfInputString={'bankAccountExpirationDate'}
-                                required={true}
-                                label={'تاریخ انقضا کارت'}
-                                timeInclude={false}
-                            />
-                        </div>
-                        <div className="input-group-register col-md-4 col-12">
-                            <SimpleTextInput
-                                condition4={this.context.personnelFieldsValidation.cvv2_numberReg}
-                                value={this.context.personnelFields.cvv2}
-                                fieldNameString={'personnelFields'}
-                                valueOfInputString={'cvv2'}
-                                label={'ccv2'}
-                                maxLength={4}
                             />
                         </div>
                         <div className="input-group-register col-md-4 col-12">

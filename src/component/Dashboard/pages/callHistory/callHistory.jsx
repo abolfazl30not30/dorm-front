@@ -5,8 +5,12 @@ import {AiOutlineClose, AiOutlinePlus} from "react-icons/ai";
 import {Modal} from 'react-bootstrap'
 import Form from "react-bootstrap/Form";
 import {BiSearch} from "react-icons/bi";
-import {DatePicker} from "react-persian-datepicker";
+// import {DatePicker} from "react-persian-datepicker";
+import DatePicker from "react-multi-date-picker";
 import './../../../../style/requestPage.css'
+import persian from "react-date-object/calendars/persian";
+import persian_fa from "react-date-object/locales/persian_fa";
+import {Button} from "@mui/material";
 
 class callHistory extends Component {
     state = {
@@ -27,6 +31,7 @@ class callHistory extends Component {
         title: "",
         callerName: "",
         phoneNumber: "",
+        dateValue: "",
         date: "",
         description: "",
         validations: {
@@ -70,7 +75,7 @@ class callHistory extends Component {
                                onChange={(e) => {
                                    this.handleSearchInput(e)
                                }}/>
-                        <div className="search-icon"><i className="bi bi-search"></i></div>
+                        <div className="search-icon"><i className="bi bi-search"/></div>
                     </div>
                     <div className="table-box">
                         <table className='table'>
@@ -108,6 +113,7 @@ class callHistory extends Component {
                     <Modal.Body>
                         <div className='input-group-register mb-3'>
                             <input type='text'
+                                   value={this.state.title}
                                    className={`input form-control ${this.state.validations.title_requiredReg === false ? "is-invalid" : ""}`}
                                    onChange={(e) => {
                                        this.getValueInputTitle(e.target.value)
@@ -119,6 +125,7 @@ class callHistory extends Component {
                         </div>
                         <div className='input-group-register mb-3'>
                             <input type='text'
+                                   value={this.state.callerName}
                                    className={`input form-control ${this.state.validations.callerName_requiredReg === false ? "is-invalid" : ""}`}
                                    onChange={(e) => {
                                        this.getValueInputCallerName(e.target.value)
@@ -130,6 +137,7 @@ class callHistory extends Component {
                         </div>
                         <div className='input-group-register mb-3'>
                             <input type='text'
+                                   value={this.state.phoneNumber}
                                    className={`input form-control ${this.state.validations.phoneNumber_requiredReg === false ? "is-invalid" : ""}`}
                                    onChange={(e) => {
                                        this.getValueInputPhoneNumber(e.target.value)
@@ -140,66 +148,79 @@ class callHistory extends Component {
                             </label>
                         </div>
                         <div className='input-group-register mb-3'>
-                            <DatePicker calendarStyles={this.state.calStyles}
-                                        inputFormat="jYYYY/jM/jD"
-                                        className={`input form-control date-picker ${this.state.validations.date_requiredReg === false ? "is-invalid" : ""}`}
-                                        onChange={(e) => {
-                                            this.getValueInputDate(e)
-                                        }}
-                            />
+
+                            {/*<DatePicker calendarStyles={this.state.calStyles}*/}
+                            {/*            inputFormat="jYYYY/jM/jD"*/}
+                            {/*            className={`input form-control date-picker ${this.state.validations.date_requiredReg === false ? "is-invalid" : ""}`}*/}
+                            {/*            onChange={(e) => {*/}
+                            {/*                this.getValueInputDate(e)*/}
+                            {/*            }}*/}
+                            {/*/>*/}
+
+                            <DatePicker
+                                // fixMainPosition={false}
+                                calendarPosition={`top`}
+                                digits={['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']}
+                                format={`YYYY/MM/DD`}
+
+
+                                containerStyle={{
+                                    width: "100%"
+                                }}
+
+                                inputClass={`input form-control ${this.state.validations.date_requiredReg === false ? "is-invalid" : ""}`}
+                                value={this.state.dateValue}
+                                onChange={(value) => {
+                                    this.getValueInputDate(value)
+                                    this.setState({dateValue: value})
+                                }}
+
+                                mapDays={({ date }) => {
+                                    let props = {}
+                                    let isWeekend = [6].includes(date.weekDay.index)
+
+                                    if (isWeekend)
+                                        props.className = "highlight highlight-red";
+
+                                    return props
+                                }}
+
+                                // placeholder={' '}
+
+                                weekDays={
+                                    [
+                                        ["شنبه", "Sat"],
+                                        ["یکشنبه", "Sun"],
+                                        ["دوشنبه", "Mon"],
+                                        ["سه شنبه", "Tue"],
+                                        ["چهارشنبه", "Wed"],
+                                        ["پنجشنبه", "Thu"],
+                                        ["جمعه", "Fri"],
+                                    ]
+                                }
+
+                                calendar={persian}
+                                locale={persian_fa}
+
+                            >
+                                <Button
+                                    onClick={() => this.setState({dateValue: '', date: ''})}
+                                >
+                                    ریست
+                                </Button>
+                            </DatePicker>
+
                             <label className='placeholder' style={{right: this.state.validations.date_requiredReg === false ? '35px' : '12px'}}>
                                 تاریخ
                                 <span style={{color: 'red'}}>*</span>
                             </label>
                         </div>
                         <div className='input-group-register mb-3'>
-                            <textarea className='input form-control' onChange={(e) => {
+                            <textarea value={this.state.description} className='input form-control' onChange={(e) => {
                                 this.getValueInputDescription(e.target.value)
                             }}/>
                             <label className="placeholder" style={{right: '12px'}}>توضیحات</label>
                         </div>
-
-                        {/*{
-                            this.state.inputTelephone.map((telephone, index) => (
-                                <div className='input-group-register mb-3'>
-                                    <AiOutlineClose className='btn-delete-input' onClick={() => {this.deleteInputTelephone(index)}}/>
-                                    <input type='text' className='input form-control' onChange={(e) => {
-                                        this.getValueInputTelephone(e.target.value, index+1)
-                                    }}/>
-                                    <label className="placeholder" style={{right: '12px'}}>تلفن ثابت</label>
-                                </div>
-                            ))
-                        }
-                        <div className="add-input-contact mb-3" onClick={() => {
-                            this.addInputTelephoneNumbers()
-                        }}>
-                            <AiOutlinePlus className='ms-2'/>
-                        </div>
-
-
-
-                        <div className='input-group-register mb-3'>
-                            <input type='text' className='input form-control' onChange={(e) => {
-                                this.getValueInputMobile(e.target.value,0)
-                            }}/>
-                            <label className="placeholder" style={{right: '12px'}}>تلفن همراه</label>
-                        </div>
-                        {
-                            this.state.inputMobile.map((mobile, index) => (
-                                <div className='input-group-register mb-3'>
-                                    <AiOutlineClose className='btn-delete-input' onClick={() => {this.deleteInputMobile(index)}}/>
-                                    <input type='text' className='input form-control' onChange={(e) => {
-                                        this.getValueInputMobile(e.target.value, index+1)
-                                    }}/>
-                                    <label className="placeholder" style={{right: '12px'}}>تلفن همراه</label>
-                                </div>
-                            ))
-                        }
-                        <div className="add-input-contact mb-3" onClick={() => {
-                            this.addInputMobileNumbers()
-                        }}>
-                            <AiOutlinePlus className='ms-2'/>
-                        </div>*/}
 
                         <button className='btn-done w-100' onClick={() => {
                             if (this.handleValidations()) {
@@ -222,6 +243,21 @@ class callHistory extends Component {
     };
     handleShow = () => {
         this.setState({show: true})
+
+        this.setState({
+            title: "",
+            callerName: "",
+            phoneNumber: "",
+            dateValue: "",
+            date: "",
+            description: "",
+        })
+        this.setState({validations: {
+                title_requiredReg: '',
+                callerName_requiredReg: '',
+                date_requiredReg: '',
+                phoneNumber_requiredReg: '',
+            }})
     };
 
     getValueInputTitle = (e) => {
@@ -234,9 +270,13 @@ class callHistory extends Component {
         this.setState({phoneNumber: e})
     }
     getValueInputDate = (e) => {
-        let date = new Date(e._d);
-        let convertDate = date.getFullYear() + "/" + date.getMonth() + "/" + date.getDate()+" 00:00:00";
-        this.setState({date: convertDate})
+        let day = e.day < 10 ? ('0' + e.day) : e.day;
+        let month = e.month < 10 ? ('0' + e.month) : e.month;
+
+        let date = e.year + '/' + month + '/' + day;
+        // let date = new Date(e._d);
+        // let convertDate = date.getFullYear() + "/" + date.getMonth() + "/" + date.getDate()+" 00:00:00";
+        this.setState({date: date})
     }
     getValueInputDescription = (e) => {
         this.setState({description: e})
@@ -247,7 +287,7 @@ class callHistory extends Component {
 
         let title_requiredReg = !requiredReg.test(this.state.title);
         let callerName_requiredReg = !requiredReg.test(this.state.callerName);
-        let date_requiredReg = !requiredReg.test(this.state.date);
+        let date_requiredReg = !requiredReg.test(this.state.dateValue);
         let phoneNumber_requiredReg = !requiredReg.test(this.state.phoneNumber);
 
         let updatedValidations = {...this.state.validations};
