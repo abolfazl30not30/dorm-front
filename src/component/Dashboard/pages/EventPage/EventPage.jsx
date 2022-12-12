@@ -1,4 +1,4 @@
-import {Component} from "react";
+import React, {Component} from "react";
 // import { DatePicker } from "jalali-react-datepicker";
 import {Calendar} from "react-multi-date-picker";
 import DatePickerHeader from "react-multi-date-picker/plugins/date_picker_header";
@@ -9,10 +9,13 @@ import {Modal} from "react-bootstrap";
 import {toast, ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import {Link} from "react-router-dom";
+import {Box, Button, CircularProgress} from "@mui/material";
+import {green} from "@mui/material/colors";
 
 class EventPage extends Component {
 
     state = {
+        loading: false,
         year: 'default', // number format
         month: 'default', // number format
         day: 'default', // number format
@@ -113,7 +116,7 @@ class EventPage extends Component {
                                         onChange={(value) => this.handleCalendarVar(value)}
 
                                         mapDays={({date}) => {
-                                            this.handleHolidaysFromAPI(date.year, date.month.number, date.day, date);
+                                            // this.handleHolidaysFromAPI(date.year, date.month.number, date.day, date);
                                             let props = {}
 
                                             let isWeekend = [6].includes(date.weekDay.index);
@@ -355,10 +358,40 @@ class EventPage extends Component {
                         </div>
                     </Modal.Body>
                     <Modal.Footer className="justify-content-center">
-                        <button className="btn btn-success" onClick={(event) => {
-                            this.handleSubmitType(event)
-                        }}>ثبت
-                        </button>
+                        <Box sx={{ m: 1, position: 'relative' }}>
+                            <Button
+                                className={"btn btn-success"}
+                                variant="contained"
+                                // sx={{
+                                //     backgroundColor: "#20d489",
+                                //     color: "black",
+                                //     ":hover": {backgroundColor: "#198754", color: "white"}
+                                // }}
+                                disabled={this.state.loading}
+                                onClick={(event) => {
+                                    this.handleSubmitType(event)
+                                }}>
+                            >
+                                ثبت
+                            </Button>
+                            {this.state.loading && (
+                                <CircularProgress
+                                    size={24}
+                                    sx={{
+                                        color: green[500],
+                                        position: 'absolute',
+                                        top: '50%',
+                                        left: '50%',
+                                        marginTop: '-12px',
+                                        marginLeft: '-12px',
+                                    }}
+                                />
+                            )}
+                        </Box>
+                        {/*<button className="btn btn-success" onClick={(event) => {*/}
+                        {/*    this.handleSubmitType(event)*/}
+                        {/*}}>ثبت*/}
+                        {/*</button>*/}
                         <button className="btn btn-light" onClick={() => {
                             this.handleCloseType()
                         }}>بستن
@@ -403,7 +436,7 @@ class EventPage extends Component {
             updatedCustomEvents.push({newCustomEvent});
 
             this.setState({customEvents: updatedCustomEvents});
-
+            this.setState({loading: true})
             const postEvent = await fetch('https://api.saadatportal.com/api/v1/notification', {
                 method: 'POST',
                 headers: {
@@ -411,7 +444,7 @@ class EventPage extends Component {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(newCustomEvent)
-            });
+            }).then(() => {this.setState({loading: false})});
 
             // console.log(updatedCustomEvents)
         }

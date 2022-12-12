@@ -12,7 +12,6 @@
     display: flex;
 }
 
-
 .search-container > div > button {
     float: left;
     animation: fadeIn 0.5s;
@@ -77,4 +76,16 @@
 .people-item {
     margin-left: .5rem;
     color: #000000a6;
+}
+
+.buttonDone {
+    background-color: #20d489 !important;
+    color: black ;
+}
+.buttonDone:hover {
+    background-color: #19b674 !important;
+    color: white !important;
+}
+.buttonDone:disabled {
+    background-color: #e9ecef !important;
 }

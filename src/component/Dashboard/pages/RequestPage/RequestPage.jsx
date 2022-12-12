@@ -1,24 +1,20 @@
-import {Component, createRef} from "react";
+import React, {Component, createRef} from "react";
 import {Link} from "react-router-dom";
 import {Modal} from "react-bootstrap";
 import Accordion from "react-bootstrap/Accordion";
 import ToggleButton from "@mui/material/ToggleButton";
 import Button from 'react-bootstrap/Button';
-import Overlay from 'react-bootstrap/Overlay';
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import {IoIosAddCircleOutline} from "react-icons/io";
-import {IoIosSearch} from "react-icons/io";
-import {TiTimes} from "react-icons/ti";
-import {TiTick} from "react-icons/ti";
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
 import '../../../../style/registerPage.css';
 import '../../../../style/paymentPage.css';
 import '../../../../style/searchAccount.css';
-import Form from "react-bootstrap/Form";
-import {BiSearch} from "react-icons/bi";
+
 import {MdDone} from "react-icons/md";
-import axios from "axios";
+import {Box, CircularProgress} from "@mui/material";
+import {green} from "@mui/material/colors";
 
 class RequestPage extends Component {
 
@@ -29,6 +25,7 @@ class RequestPage extends Component {
     }
 
     state = {
+        loading: false,
         showModalForAddingType: false,
 
         searchBase: 'name',
@@ -83,6 +80,13 @@ class RequestPage extends Component {
         // console.log(response1)
         const response = await fetch('https://api.saadatportal.com/api/v1/request').then((response) => response.json())
             .then((data) => this.setState({requests: data}));
+
+    }
+
+    doneButtonStyle = {
+        backgroundColor: "#20d489",
+        color: "black",
+        ":hover": {backgroundColor: "#198754", color: "white"}
 
     }
 
@@ -201,7 +205,7 @@ class RequestPage extends Component {
                     </div>
                 </div>
                 <Modal centered show={this.state.showType} onHide={() => {
-                    this.handleCloseType()
+                    if (!this.state.loading) {this.handleCloseType()}
                 }}>
                     <Modal.Header closeButton>
                         <Modal.Title>افزودن درخواست جدید</Modal.Title>
@@ -235,7 +239,7 @@ class RequestPage extends Component {
                             <div>
                                 <Accordion defaultActiveKey="0"
                                            style={{backgroundColor: this.state.Validations.selectedTypeBoolean ? '' : 'rgba(255, 0, 0, 0.4)'}}
-                                           className={'p-2'}
+                                           className={'p-1'}
                                 >
                                     <Accordion.Item eventKey="0">
                                         <Accordion.Header>
@@ -349,13 +353,43 @@ class RequestPage extends Component {
                         </div>
                     </Modal.Body>
                     <Modal.Footer>
-                        <button className="btn-done" onClick={(event) => {
-                            if (this.handleIsValid()) {
-                                this.handleSubmit()
-                            }
-                        }}>ثبت
-                        </button>
-                        <button className="btn btn-light" onClick={() => {
+                        <Box sx={{m: 1, position: 'relative' }}>
+                            <Button
+                                className={"buttonDone"}
+                                variant="contained"
+                                disabled={this.state.loading}
+                                onClick={() => {
+                                    if (this.handleIsValid()){
+                                        this.handleSubmit()
+                                    }
+                                }}
+                            >
+                                ثبت
+                            </Button>
+
+                            {this.state.loading && (
+                                <CircularProgress
+                                    size={24}
+                                    sx={{
+                                        color: green[500],
+                                        position: 'absolute',
+                                        top: '50%',
+                                        left: '50%',
+                                        marginTop: '-12px',
+                                        marginLeft: '-12px',
+                                    }}
+                                />
+                            )}
+                        </Box>
+
+
+                        {/*<button className="btn-done" onClick={(event) => {*/}
+                        {/*    if (this.handleIsValid()) {*/}
+                        {/*        this.handleSubmit()*/}
+                        {/*    }*/}
+                        {/*}}>ثبت*/}
+                        {/*</button>*/}
+                        <button className="btn btn-light" disabled={this.state.loading} onClick={() => {
                             this.handleCloseType()
                         }}>بستن
                         </button>
@@ -427,7 +461,9 @@ class RequestPage extends Component {
                         <button className="btn btn-light" onClick={this.handleCloseAddingType}>بستن
                         </button>
                     </Modal.Footer>
-                </Modal>
+                </Modal>                        {/*<button className="btn-done" onClick={this.handleSubmitNewType}>ثبت*/}
+                        {/*</button>*/}
+
             </>
         );
     }
@@ -487,6 +523,9 @@ class RequestPage extends Component {
         resetValidations['selectedTypeBoolean'] = true;
         resetValidations['topic_requireReg'] = '';
         resetValidations['name_requireReg'] = '';
+        resetValidations['description_requireReg'] = '';
+        resetValidations['reason_requireReg'] = '';
+        resetValidations['addInputContentInModal_requiredReg'] = '';
 
         this.setState({tempFields: resetTypeOfTempFields})
         this.setState({Validations: resetValidations})
@@ -516,7 +555,7 @@ class RequestPage extends Component {
         this.setState({tempFields: updatedTempFields});
     }
 
-    handleIsValid = (e) => {
+    handleIsValid = () => {
         // e.preventDefault();
         let regCheck = /^\s*$/;
 
@@ -541,6 +580,7 @@ class RequestPage extends Component {
         let date2 = year + "/" + month + "/" + day + " " + "00:" + "00:" + "00";
 
         console.log(date2, this.state.tempFields.topic, this.state.tempFields.type, this.state.tempFields.reason, this.state.tempFields.name)
+        this.setState({loading: true})
         const rawResponse = await fetch('https://api.saadatportal.com/api/v1/request', {
             method: 'POST',
             headers: {
@@ -558,16 +598,17 @@ class RequestPage extends Component {
                 description: this.state.tempFields.description,
                 assignee: this.state.tempFields.name
             })
-        });
+        }).then(() => this.setState({loading: false}));
 
         // const response2 = await fetch('https://api.saadatportal.com/api/v1/request').then((response) => response.json())
         //     .then((data) => this.setState({requests: data}));
 
-        await this.componentDidMount();
+        console.log(123)
+        this.setState({showType: false})
 
-        const content = await rawResponse.json();
+        // this.handleCloseType();
 
-        this.handleCloseType();
+        // await this.componentDidMount();
     }
 
     handleValidations = (valueOfField, nameOfField) => {

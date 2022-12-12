@@ -1,7 +1,5 @@
-import {Component} from "react";
+import React, {Component} from "react";
 import {Link} from "react-router-dom";
-import Form from "react-bootstrap/Form";
-import {BiSearch} from "react-icons/bi";
 import {Modal} from "react-bootstrap";
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
@@ -12,10 +10,13 @@ import "../../../../style/cameraHistory.css"
 
 import '../../../../style/registerPage.css';
 import '../../../../style/paymentHistory.css';
+import {Box, Button, CircularProgress} from "@mui/material";
+import {green} from "@mui/material/colors";
 
 class CameraHistoryPage extends Component {
 
     state = {
+        loading: false,
         validation: {
             title_requireReg: '',
             date_requiredReg: '',
@@ -291,13 +292,33 @@ class CameraHistoryPage extends Component {
                     </Modal.Body>
 
                     <Modal.Footer className="d-flex justify-content-start">
-                        <button className="btn-done" onClick={() => {
-                            if (this.handleIsValid()) {
-                                this.handleSubmit();
-                                this.handleCloseModal();
-                            }
-                        }}>ثبت
-                        </button>
+                        <Box sx={{ m: 1, position: 'relative' }}>
+                            <Button
+                                variant="contained"
+                                className={"buttonDone"}
+                                disabled={this.state.loading}
+                                onClick={() => {
+                                    if (this.handleIsValid()) {
+                                        this.handleSubmit();
+                                    }
+                                }}
+                            >
+                                ثبت
+                            </Button>
+                            {this.state.loading && (
+                                <CircularProgress
+                                    size={24}
+                                    sx={{
+                                        color: green[500],
+                                        position: 'absolute',
+                                        top: '50%',
+                                        left: '50%',
+                                        marginTop: '-12px',
+                                        marginLeft: '-12px',
+                                    }}
+                                />
+                            )}
+                        </Box>
 
                         <button className="btn btn-light" onClick={() => {
                             this.handleCloseModal();
@@ -335,6 +356,7 @@ class CameraHistoryPage extends Component {
 
     handleSubmit = async () => {
 
+        this.setState({loading: true})
         const rawResponse = await fetch('https://api.saadatportal.com/api/v1/cameraHistory', {
             method: 'POST',
             headers: {
@@ -343,8 +365,8 @@ class CameraHistoryPage extends Component {
             },
 
             body: JSON.stringify(this.state.tmpRequest)
-        });
-
+        }).then(() => {this.setState({loading: false})});
+        this.handleCloseModal()
         const response = await fetch('https://api.saadatportal.com/api/v1/cameraHistory').then((response) => response.json())
             .then((data) => this.setState({data: data}));
 
@@ -410,8 +432,8 @@ class CameraHistoryPage extends Component {
         let updateTmpRequest = {...this.state.tmpRequest};
         updateTmpRequest.date = convertDate;
         this.setState({tmpRequest: updateTmpRequest});
-
     }
+
     handleInitializingTmpRequestFields = (e, nameOfField) => {
         let updatedTmpRequest = {...this.state.tmpRequest};
         updatedTmpRequest[nameOfField] = e.target.value;

@@ -163,3 +163,14 @@
 .modal-footer {
     justify-content: center !important;
 }
+.buttonDone {
+    background-color: #20d489 !important;
+    color: black !important;
+}
+.buttonDone:hover {
+    background-color: #19b674 !important;
+    color: white !important;
+}
+.buttonDone:disabled {
+    background-color: #e9ecef !important;
+}

@@ -1,34 +1,20 @@
 import React, {Component, createRef} from 'react'
 import '../../../../style/profilePage.css'
-import default_photo from '../../../../img/default_photo.png'
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
-import pdf_icon from '../../../../img/pdf_icon.png'
-import png_icon from '../../../../img/png_icon.png'
-import {FiUser} from "react-icons/fi";
-import {AiOutlineLeft} from "react-icons/ai";
-import {HiOutlineMailOpen} from 'react-icons/hi';
-import {BsTelephone, BsFile} from 'react-icons/bs';
-import {AiOutlineBarcode} from 'react-icons/ai'
-import {AiOutlineUser} from 'react-icons/ai'
-import {Modal} from 'react-bootstrap'
-import {AiOutlineClose} from 'react-icons/ai'
-import {AiFillCloseCircle} from 'react-icons/ai'
+import {AiFillCloseCircle, AiOutlineClose} from "react-icons/ai";
+import {Accordion, Modal, Table} from 'react-bootstrap'
 import {RiDownloadCloud2Fill} from 'react-icons/ri'
-import {Accordion} from 'react-bootstrap';
-import {Table} from 'react-bootstrap';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
 import BuildingContext from "../../../../contexts/Building";
 import DatePicker from "react-multi-date-picker";
 import TimePicker from "react-multi-date-picker/plugins/time_picker";
-import axios from "axios"
-import data from "bootstrap/js/src/dom/data";
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
 import {Button} from "@mui/material";
 
-class ProfilePage extends Component {
+class PersonnelProfilePage extends Component {
 
     static contextType = BuildingContext;
 
@@ -46,10 +32,10 @@ class ProfilePage extends Component {
             depositReturnDate: '',
             cancelContractDate: '',
         },
-        person: {},
+        personnel: {},
         show: false,
         reportType: 'cleaning',
-        personObject: {},
+        personnelObject: {},
         report: [],
         showDeleteModalReport: false,
         reportTemp: {},
@@ -91,16 +77,16 @@ class ProfilePage extends Component {
     async componentDidMount() {
         let parentId = ""
         let profileId = ""
-        const personId = window.location.href.slice(-32)
-        const response = await fetch(`https://api.saadatportal.com/api/v1/characteristic/${personId}`).then((response) => response.json())
-            .then((data) => {this.setState({person: data})
+        const personnelId = window.location.href.slice(-32)
+        const response = await fetch(`https://api.saadatportal.com/api/v1/characteristic/${personnelId}`).then((response) => response.json())
+            .then((data) => {this.setState({personnel: data})
                 parentId = data.parentId;
                 profileId = data.profileId
             })
-        const response2 = await fetch(`https://api.saadatportal.com/api/v1/person/${parentId}`).then((response) => response.json())
-            .then((data) => this.setState({personObject: data}));
+        const response2 = await fetch(`https://api.saadatportal.com/api/v1/personnel/${parentId}`).then((response) => response.json())
+            .then((data) => this.setState({personneelObject: data}));
 
-        if (this.state.person.profileId !== null) {
+        if (this.state.personnel.profileId !== null) {
             const response3 = await fetch(`https://api.saadatportal.com/api/v1/file/${profileId}`).then((response) => response.blob())
                 .then((data) => {
                     const objectUrl = URL.createObjectURL(data);
@@ -108,12 +94,12 @@ class ProfilePage extends Component {
                 });
         }
 
-        const fileRespond = await fetch(`https://api.saadatportal.com/api/v1/responseFile/search?parentType=Person&parentId=${parentId}`).then((response) => response.json())
+        const fileRespond = await fetch(`https://api.saadatportal.com/api/v1/responseFile/search?parentType=Personnel&parentId=${parentId}`).then((response) => response.json())
             .then((data) => this.setState({fileDetails: data}, () => {
-                this.setState({docFile: this.state.personObject.files});
-                this.setState({report: this.state.personObject.record}, () => {
+                this.setState({docFile: this.state.personnelObject.files});
+                this.setState({report: this.state.personnelObject.record}, () => {
                 });
-                this.existDocFile(this.state.personObject.files);
+                this.existDocFile(this.state.personnelObject.files);
             }));
 
     }
@@ -130,19 +116,19 @@ class ProfilePage extends Component {
                                     alt="profile"/>
                                 <div className={'me-3 d-flex flex-column justify-content-center'}>
                                     <div
-                                        className="people-name mb-3">{this.state.person.firstName} {this.state.person.lastName}</div>
+                                        className="people-name mb-3">{this.state.personnel.firstName} {this.state.personnel.lastName}</div>
                                     <div className="d-flex flex-md-row flex-column flex-wrap">
                                         <div className="people-item"><i className="bi bi-upc-scan ms-2"></i>کد
-                                            ملی: {this.state.person.nationalCode}</div>
+                                            ملی: {this.state.personnel.nationalCode}</div>
                                         <div className="people-item"><i className="bi bi-telephone ms-2"></i>شماره
-                                            تماس: {this.state.person.phoneNumber}</div>
-                                        <div className="people-item"><i className="bi bi-person ms-2"></i>نام
-                                            پدر: {this.state.person.fatherName}</div>
+                                            تماس: {this.state.personnel.phoneNumber}</div>
+                                        <div className="people-item"><i className="bi bi-personnel ms-2"></i>نام
+                                            پدر: {this.state.personnel.fatherName}</div>
                                         <div className="people-item">
-                                            <i className="bi bi-person ms-2"></i>
+                                            <i className="bi bi-personnel ms-2"></i>
                                             نوع اقامتگر:
                                             {(() => {
-                                                switch (this.state.person.personType) {
+                                                switch (this.state.personnel.personType) {
                                                     case 'constant':
                                                         return 'اقامتگر ثابت';
                                                     case 'familyGuest':
@@ -166,7 +152,7 @@ class ProfilePage extends Component {
                                      style={{backgroundColor: "transparent"}}>
                                     <div className="tabs-content">
                                         {(() => {
-                                            switch (this.state.person.personType) {
+                                            switch (this.state.personnel.personType) {
                                                 case 'constant':
                                                     return <>
                                                         <div className="information d-flex flex-row flex-wrap">
@@ -174,56 +160,56 @@ class ProfilePage extends Component {
                                                                 <div className="more-info-item">
                                                                     <i className="bi bi-caret-left ms-1"></i>
                                                                     <label> نام :</label>
-                                                                    {this.state.person.firstName}
+                                                                    {this.state.personnel.firstName}
                                                                 </div>
                                                             </div>
                                                             <div className='col-12 col-md-4'>
                                                                 <div className="more-info-item">
                                                                     <i className="bi bi-caret-left ms-1"></i>
                                                                     <label> نام خانوادگی :</label>
-                                                                    {this.state.person.lastName}
+                                                                    {this.state.personnel.lastName}
                                                                 </div>
                                                             </div>
                                                             <div className='col-12 col-md-4'>
                                                                 <div className="more-info-item">
                                                                     <i className="bi bi-caret-left ms-1"></i>
                                                                     <label> کد ملی :</label>
-                                                                    {this.state.person.nationalCode}
+                                                                    {this.state.personnel.nationalCode}
                                                                 </div>
                                                             </div>
                                                             <div className='col-12 col-md-4'>
                                                                 <div className="more-info-item">
                                                                     <i className="bi bi-caret-left ms-1"></i>
                                                                     <label> شماره شناسنامه :</label>
-                                                                    {this.state.person.certificateNumber}
+                                                                    {this.state.personnel.certificateNumber}
                                                                 </div>
                                                             </div>
                                                             <div className='col-12 col-md-4'>
                                                                 <div className="more-info-item">
                                                                     <i className="bi bi-caret-left ms-1"></i>
                                                                     <label> محل صدور :</label>
-                                                                    {this.state.person.placeOfIssue}
+                                                                    {this.state.personnel.placeOfIssue}
                                                                 </div>
                                                             </div>
                                                             <div className='col-12 col-md-4'>
                                                                 <div className="more-info-item">
                                                                     <i className="bi bi-caret-left ms-1"></i>
                                                                     <label> تاریخ تولد :</label>
-                                                                    {this.state.person.birthDate.split(" ")[0]}
+                                                                    {this.state.personnel.birthDate.split(" ")[0]}
                                                                 </div>
                                                             </div>
                                                             <div className='col-12 col-md-4'>
                                                                 <div className="more-info-item">
                                                                     <i className="bi bi-caret-left ms-1"></i>
                                                                     <label> ملیت :</label>
-                                                                    {this.state.person.nationality}
+                                                                    {this.state.personnel.nationality}
                                                                 </div>
                                                             </div>
                                                             <div className='col-12 col-md-4'>
                                                                 <div className="more-info-item">
                                                                     <i className="bi bi-caret-left ms-1"></i>
                                                                     <label> نام پدر :</label>
-                                                                    {this.state.person.fatherName}
+                                                                    {this.state.personnel.fatherName}
                                                                 </div>
                                                             </div>
                                                             <div className='col-12 col-md-4'>
@@ -231,7 +217,7 @@ class ProfilePage extends Component {
                                                                     <i className="bi bi-caret-left ms-1"></i>
                                                                     <label> دین :</label>
                                                                     {(() => {
-                                                                        switch (this.state.person.religion) {
+                                                                        switch (this.state.personnel.religion) {
                                                                             case 'islam':
                                                                                 return 'اسلام';
                                                                             case 'christianity':
@@ -250,28 +236,28 @@ class ProfilePage extends Component {
                                                                 <div className="more-info-item">
                                                                     <i className="bi bi-caret-left ms-1"></i>
                                                                     <label> مذهب :</label>
-                                                                    {this.state.person.subReligion != "" ? this.state.person.subReligion : 'ثبت نشده'}
+                                                                    {this.state.personnel.subReligion != "" ? this.state.personnel.subReligion : 'ثبت نشده'}
                                                                 </div>
                                                             </div>
                                                             <div className='col-12 col-md-4'>
                                                                 <div className="more-info-item">
                                                                     <i className="bi bi-caret-left ms-1"></i>
                                                                     <label> دانشگاه محل تحصیل :</label>
-                                                                    {this.state.person.university != "" ? this.state.person.university : 'ثبت نشده'}
+                                                                    {this.state.personnel.university != "" ? this.state.personnel.university : 'ثبت نشده'}
                                                                 </div>
                                                             </div>
                                                             <div className='col-12 col-md-4'>
                                                                 <div className="more-info-item">
                                                                     <i className="bi bi-caret-left ms-1"></i>
                                                                     <label> شماره دانشجویی :</label>
-                                                                    {this.state.person.studentNumber != "" ? this.state.person.studentNumber : 'ثبت نشده'}
+                                                                    {this.state.personnel.studentNumber != "" ? this.state.personnel.studentNumber : 'ثبت نشده'}
                                                                 </div>
                                                             </div>
                                                             <div className='col-12 col-md-4'>
                                                                 <div className="more-info-item">
                                                                     <i className="bi bi-caret-left ms-1"></i>
                                                                     <label> شغل پدر :</label>
-                                                                    {this.state.person.fatherJob != "" ? this.state.person.fatherJob : 'ثبت نشده'}
+                                                                    {this.state.personnel.fatherJob != "" ? this.state.personnel.fatherJob : 'ثبت نشده'}
                                                                 </div>
                                                             </div>
                                                             <div className='col-12 col-md-4'>
@@ -279,7 +265,7 @@ class ProfilePage extends Component {
                                                                     <i className="bi bi-caret-left ms-1"></i>
                                                                     <label> وضعیت تاهل :</label>
                                                                     {(() => {
-                                                                        switch (this.state.person.maritalStatus) {
+                                                                        switch (this.state.personnel.maritalStatus) {
                                                                             case 'single':
                                                                                 return 'مجرد';
                                                                             case 'married':
@@ -291,25 +277,26 @@ class ProfilePage extends Component {
                                                                 </div>
                                                             </div>
                                                             {(() => {
-                                                                switch (this.state.person.maritalStatus) {
+                                                                switch (this.state.personnel.maritalStatus) {
                                                                     case 'married':
-                                                                        return <>
+                                                                        return (
+                                                                        <>
                                                                             <div className='col-12 col-md-4'>
                                                                                 <div className="more-info-item">
                                                                                     <i className="bi bi-caret-left ms-1"></i>
                                                                                     <label> نام و نام خانوادگی همسر
                                                                                         :</label>
-                                                                                    {this.state.person.spouseFullName != "" ? this.state.person.spouseFullName : 'ثبت نشده'}
+                                                                                    {this.state.personnel.spouseFullName != "" ? this.state.personnel.spouseFullName : 'ثبت نشده'}
                                                                                 </div>
                                                                             </div>
                                                                             <div className='col-12 col-md-4'>
                                                                                 <div className="more-info-item">
                                                                                     <i className="bi bi-caret-left ms-1"></i>
                                                                                     <label> شغل همسر :</label>
-                                                                                    {this.state.person.spouseJob != "" ? this.state.person.spouseJob : 'ثبت نشده'}
+                                                                                    {this.state.personnel.spouseJob != "" ? this.state.personnel.spouseJob : 'ثبت نشده'}
                                                                                 </div>
                                                                             </div>
-                                                                        </>;
+                                                                        </>);
                                                                 }
                                                             })()}
                                                             <div className='col-12 col-md-4'>
@@ -317,7 +304,7 @@ class ProfilePage extends Component {
                                                                     <i className="bi bi-caret-left ms-1"></i>
                                                                     <label> بیماری خاص :</label>
                                                                     {(() => {
-                                                                        switch (this.state.person.health) {
+                                                                        switch (this.state.personnel.health) {
                                                                             case true:
                                                                                 return 'بله';
                                                                             case false:
@@ -327,14 +314,14 @@ class ProfilePage extends Component {
                                                                 </div>
                                                             </div>
                                                             {(() => {
-                                                                switch (this.state.person.health) {
+                                                                switch (this.state.personnel.health) {
                                                                     case true:
                                                                         return <>
                                                                             <div className='col-12 col-md-4'>
                                                                                 <div className="more-info-item">
                                                                                     <i className="bi bi-caret-left ms-1"></i>
                                                                                     <label> توضیحات بیماری :</label>
-                                                                                    {this.state.person.healthyStatus != "" ? this.state.person.healthyStatus : 'ثبت نشده'}
+                                                                                    {this.state.personnel.healthyStatus != "" ? this.state.personnel.healthyStatus : 'ثبت نشده'}
                                                                                 </div>
                                                                             </div>
                                                                         </>;
@@ -344,35 +331,35 @@ class ProfilePage extends Component {
                                                                 <div className="more-info-item">
                                                                     <i className="bi bi-caret-left ms-1"></i>
                                                                     <label> شماره همراه اقامتگر :</label>
-                                                                    {this.state.person.phoneNumber}
+                                                                    {this.state.personnel.phoneNumber}
                                                                 </div>
                                                             </div>
                                                             <div className='col-12 col-md-4'>
                                                                 <div className="more-info-item">
                                                                     <i className="bi bi-caret-left ms-1"></i>
                                                                     <label> شماره تلفن منزل :</label>
-                                                                    {this.state.person.telephoneNumber}
+                                                                    {this.state.personnel.telephoneNumber}
                                                                 </div>
                                                             </div>
                                                             <div className='col-12 col-md-4'>
                                                                 <div className="more-info-item">
                                                                     <i className="bi bi-caret-left ms-1"></i>
                                                                     <label> تاریخ شروع پذیرش :</label>
-                                                                    {this.state.person.timePeriod.startDate}
+                                                                    {this.state.personnel.timePeriod.startDate}
                                                                 </div>
                                                             </div>
                                                             <div className='col-12 col-md-4'>
                                                                 <div className="more-info-item">
                                                                     <i className="bi bi-caret-left ms-1"></i>
                                                                     <label> تاریخ اتمام پذیرش :</label>
-                                                                    {this.state.person.timePeriod.endDate.split(" ")[0]}
+                                                                    {this.state.personnel.timePeriod.endDate.split(" ")[0]}
                                                                 </div>
                                                             </div>
                                                             <div className='col-12 col-md-4'>
                                                                 <div className="more-info-item">
                                                                     <i className="bi bi-caret-left ms-1"></i>
                                                                     <label> آدرس محل سکونت :</label>
-                                                                    {this.state.person.address}
+                                                                    {this.state.personnel.address}
                                                                 </div>
                                                             </div>
                                                             <div className="col-12 my-2 me-3"
@@ -383,21 +370,21 @@ class ProfilePage extends Component {
                                                                 <div className="more-info-item">
                                                                     <i className="bi bi-caret-left ms-1"></i>
                                                                     <label> نام و نام خانوادگی :</label>
-                                                                    {this.state.person.firstPersonFullName}
+                                                                    {this.state.personnel.firstPersonFullName}
                                                                 </div>
                                                             </div>
                                                             <div className='col-12 col-md-4'>
                                                                 <div className="more-info-item">
                                                                     <i className="bi bi-caret-left ms-1"></i>
                                                                     <label> شماره تماس :</label>
-                                                                    {this.state.person.firstPersonPhoneNumber}
+                                                                    {this.state.personnel.firstPersonPhoneNumber}
                                                                 </div>
                                                             </div>
                                                             <div className='col-12 col-md-4'>
                                                                 <div className="more-info-item">
                                                                     <i className="bi bi-caret-left ms-1"></i>
                                                                     <label> نام پدر :</label>
-                                                                    {this.state.person.firstPersonFatherName != "" ? this.state.person.firstPersonFatherName : 'ثبت نشده'}
+                                                                    {this.state.personnel.firstPersonFatherName != "" ? this.state.personnel.firstPersonFatherName : 'ثبت نشده'}
                                                                 </div>
                                                             </div>
                                                             <div className='col-12 col-md-4'>
@@ -405,7 +392,7 @@ class ProfilePage extends Component {
                                                                     <i className="bi bi-caret-left ms-1"></i>
                                                                     <label> نسبت با اقامتگر :</label>
                                                                     {(() => {
-                                                                        switch (this.state.person.firstPersonRelationshipWithResident) {
+                                                                        switch (this.state.personnel.firstPersonRelationshipWithResident) {
                                                                             case 'father':
                                                                                 return 'پدر';
                                                                             case 'mother':
@@ -428,21 +415,21 @@ class ProfilePage extends Component {
                                                                 <div className="more-info-item">
                                                                     <i className="bi bi-caret-left ms-1"></i>
                                                                     <label> نام و نام خانوادگی :</label>
-                                                                    {this.state.person.secondPersonFullName}
+                                                                    {this.state.personnel.secondPersonFullName}
                                                                 </div>
                                                             </div>
                                                             <div className='col-12 col-md-4'>
                                                                 <div className="more-info-item">
                                                                     <i className="bi bi-caret-left ms-1"></i>
                                                                     <label> شماره تماس :</label>
-                                                                    {this.state.person.secondPersonPhoneNumber}
+                                                                    {this.state.personnel.secondPersonPhoneNumber}
                                                                 </div>
                                                             </div>
                                                             <div className='col-12 col-md-4'>
                                                                 <div className="more-info-item">
                                                                     <i className="bi bi-caret-left ms-1"></i>
                                                                     <label> نام پدر :</label>
-                                                                    {this.state.person.secondPersonFatherName != "" ? this.state.person.secondPersonFatherName : 'ثبت نشده'}
+                                                                    {this.state.personnel.secondPersonFatherName != "" ? this.state.personnel.secondPersonFatherName : 'ثبت نشده'}
                                                                 </div>
                                                             </div>
                                                             <div className='col-12 col-md-4'>
@@ -450,7 +437,7 @@ class ProfilePage extends Component {
                                                                     <i className="bi bi-caret-left ms-1"></i>
                                                                     <label> نسبت با اقامتگر :</label>
                                                                     {(() => {
-                                                                        switch (this.state.person.secondPersonRelationshipWithResident) {
+                                                                        switch (this.state.personnel.secondPersonRelationshipWithResident) {
                                                                             case 'father':
                                                                                 return 'پدر';
                                                                             case 'mother':
@@ -474,14 +461,14 @@ class ProfilePage extends Component {
                                                                 <div className="more-info-item">
                                                                     <i className="bi bi-caret-left ms-1"></i>
                                                                     <label> نام :</label>
-                                                                    {this.state.person.firstName}
+                                                                    {this.state.personnel.firstName}
                                                                 </div>
                                                             </div>
                                                             <div className='col-12 col-md-4'>
                                                                 <div className="more-info-item">
                                                                     <i className="bi bi-caret-left ms-1"></i>
                                                                     <label> نام خانوادگی :</label>
-                                                                    {this.state.person.lastName}
+                                                                    {this.state.personnel.lastName}
                                                                 </div>
                                                             </div>
                                                             <div className='col-12 col-md-4'>
@@ -489,7 +476,7 @@ class ProfilePage extends Component {
                                                                     <i className="bi bi-caret-left ms-1"></i>
                                                                     <label> نسبت با اقامتگر :</label>
                                                                     {(() => {
-                                                                        switch (this.state.person.relationshipWithResident) {
+                                                                        switch (this.state.personnel.relationshipWithResident) {
                                                                             case 'father':
                                                                                 return 'پدر';
                                                                             case 'mother':
@@ -508,91 +495,91 @@ class ProfilePage extends Component {
                                                                 <div className="more-info-item">
                                                                     <i className="bi bi-caret-left ms-1"></i>
                                                                     <label> کد ملی :</label>
-                                                                    {this.state.person.nationalCode}
+                                                                    {this.state.personnel.nationalCode}
                                                                 </div>
                                                             </div>
                                                             <div className='col-12 col-md-4'>
                                                                 <div className="more-info-item">
                                                                     <i className="bi bi-caret-left ms-1"></i>
                                                                     <label> شماره شناسنامه :</label>
-                                                                    {this.state.person.certificateNumber}
+                                                                    {this.state.personnel.certificateNumber}
                                                                 </div>
                                                             </div>
                                                             <div className='col-12 col-md-4'>
                                                                 <div className="more-info-item">
                                                                     <i className="bi bi-caret-left ms-1"></i>
                                                                     <label> محل صدور :</label>
-                                                                    {this.state.person.placeOfIssue != "" ? this.state.person.placeOfIssue : 'ثبت نشده'}
+                                                                    {this.state.personnel.placeOfIssue != "" ? this.state.personnel.placeOfIssue : 'ثبت نشده'}
                                                                 </div>
                                                             </div>
                                                             <div className='col-12 col-md-4'>
                                                                 <div className="more-info-item">
                                                                     <i className="bi bi-caret-left ms-1"></i>
                                                                     <label> تاریخ تولد :</label>
-                                                                    {this.state.person.birthDate != "" ? this.state.person.birthDate.split(" ")[0] : 'ثبت نشده'}
+                                                                    {this.state.personnel.birthDate != "" ? this.state.personnel.birthDate.split(" ")[0] : 'ثبت نشده'}
                                                                 </div>
                                                             </div>
                                                             <div className='col-12 col-md-4'>
                                                                 <div className="more-info-item">
                                                                     <i className="bi bi-caret-left ms-1"></i>
                                                                     <label> تاریخ شروع پذیرش :</label>
-                                                                    {this.state.person.timePeriod.startDate.split(" ")[0]}
+                                                                    {this.state.personnel.timePeriod.startDate.split(" ")[0]}
                                                                 </div>
                                                             </div>
                                                             <div className='col-12 col-md-4'>
                                                                 <div className="more-info-item">
                                                                     <i className="bi bi-caret-left ms-1"></i>
                                                                     <label> تاریخ اتمام پذیرش :</label>
-                                                                    {this.state.person.timePeriod.endDate.split(" ")[0]}
+                                                                    {this.state.personnel.timePeriod.endDate.split(" ")[0]}
                                                                 </div>
                                                             </div>
                                                             <div className='col-12 col-md-4'>
                                                                 <div className="more-info-item">
                                                                     <i className="bi bi-caret-left ms-1"></i>
                                                                     <label> تاریخ پرداخت :</label>
-                                                                    {this.state.person.paymentDate}
+                                                                    {this.state.personnel.paymentDate}
                                                                 </div>
                                                             </div>
                                                             <div className='col-12 col-md-4'>
                                                                 <div className="more-info-item">
                                                                     <i className="bi bi-caret-left ms-1"></i>
                                                                     <label> مبلغ پرداخت اجاره :</label>
-                                                                    {this.state.person.depositPaymentAmount != "" ? this.state.person.depositPaymentAmount : 'ثبت نشده'}
+                                                                    {this.state.personnel.depositPaymentAmount != "" ? this.state.personnel.depositPaymentAmount : 'ثبت نشده'}
                                                                 </div>
                                                             </div>
                                                             <div className='col-12 col-md-4'>
                                                                 <div className="more-info-item">
                                                                     <i className="bi bi-caret-left ms-1"></i>
                                                                     <label> مبلغ پرداخت ودیعه :</label>
-                                                                    {this.state.person.rentPaymentAmount != "" ? this.state.person.rentPaymentAmount : 'ثبت نشده'}
+                                                                    {this.state.personnel.rentPaymentAmount != "" ? this.state.personnel.rentPaymentAmount : 'ثبت نشده'}
                                                                 </div>
                                                             </div>
                                                             <div className='col-12 col-md-4'>
                                                                 <div className="more-info-item">
                                                                     <i className="bi bi-caret-left ms-1"></i>
                                                                     <label> مبلغ پرداخت اجاره :</label>
-                                                                    {this.state.person.discountPaymentAmount != "" ? this.state.person.discountPaymentAmount : 'ثبت نشده'}
+                                                                    {this.state.personnel.discountPaymentAmount != "" ? this.state.personnel.discountPaymentAmount : 'ثبت نشده'}
                                                                 </div>
                                                             </div>
                                                             <div className='col-12 col-md-4'>
                                                                 <div className="more-info-item">
                                                                     <i className="bi bi-caret-left ms-1"></i>
                                                                     <label> آدرس محل سکونت :</label>
-                                                                    {this.state.person.address}
+                                                                    {this.state.personnel.address}
                                                                 </div>
                                                             </div>
                                                             <div className='col-12 col-md-4'>
                                                                 <div className="more-info-item">
                                                                     <i className="bi bi-caret-left ms-1"></i>
                                                                     <label> شماره همراه اقامتگر :</label>
-                                                                    {this.state.person.phoneNumber}
+                                                                    {this.state.personnel.phoneNumber}
                                                                 </div>
                                                             </div>
                                                             <div className='col-12 col-md-4'>
                                                                 <div className="more-info-item">
                                                                     <i className="bi bi-caret-left ms-1"></i>
                                                                     <label> شماره تلفن منزل :</label>
-                                                                    {this.state.person.telephoneNumber}
+                                                                    {this.state.personnel.telephoneNumber}
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -2340,4 +2327,4 @@ class ProfilePage extends Component {
     }
 }
 
-export default ProfilePage
+export default PersonnelProfilePage

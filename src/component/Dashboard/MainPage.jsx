@@ -10,6 +10,8 @@ import EditRoomAndBed from './pages/edit building/EditRoomAndBed';
 import MainRegister from './pages/Register/MainRegister';
 import ProfilePage from './pages/People/ProfilePage';
 import SearchAccount from './pages/People/SearchAccount';
+import PersonnelProfilePage from './pages/personnel/PersonnelProfilePage';
+import SearchPersonnel from './pages/personnel/SearchPersonnel';
 import PaymentPage from './pages/paymentPage/PaymentPage';
 import EventPage from './pages/EventPage/EventPage'
 import RequestPage from './pages/RequestPage/RequestPage'
@@ -490,7 +492,9 @@ class MainPage extends Component {
                             <Route path="/RoomAndBed" element={(<RoomAndBed/>)}/>
                             <Route path='/RoomAndBed/edit-room-and-bed' element={(<EditRoomAndBed/>)}/>
                             <Route path="/people" element={(<SearchAccount/>)}/>
-                            <Route path="/people/profile" element={(<ProfilePage/>)}/>
+                            <Route path="/people/*" element={(<ProfilePage/>)}/>
+                            <Route path="/personnel" element={(<SearchPersonnel/>)}/>
+                            <Route path="/personnel/*" element={(<PersonnelProfilePage/>)}/>
                             <Route path='/payment' element={(<PaymentPage/>)}/>
                             <Route path='/contacts' element={(<Contacts/>)}/>
                             <Route path='/CallHistory' element={(<CallHistory/>)}/>

@@ -1,4 +1,4 @@
-import {Component} from "react";
+import React, {Component} from "react";
 import {Link} from "react-router-dom";
 import Accordion from "react-bootstrap/Accordion";
 import Form from 'react-bootstrap/Form';
@@ -20,12 +20,14 @@ import Alert from 'react-bootstrap/Alert';
 import moment from 'moment-jalali';
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
-import {Button} from "@mui/material";
+import {Box, Button, CircularProgress} from "@mui/material";
+import {green} from "@mui/material/colors";
 
 /*import React from "@types/react";*/
 
 class PaymentPage extends Component {
     state = {
+        loading: false,
         choices: [],
         tempChoices: [],
         inputType: "",
@@ -126,7 +128,7 @@ class PaymentPage extends Component {
                         <div className="input-group-register col-md-6 col-12">
                             <div>
                                 <Accordion
-                                    className='p-0'
+                                    className='p-1'
                                     style={{backgroundColor: this.state.Validations.selectedTypeBoolean ? '' : 'rgba(255, 0, 0, 0.4)'}}
                                 >
                                     <Accordion.Item eventKey="0">
@@ -328,13 +330,29 @@ class PaymentPage extends Component {
 
                     </div>
                     <div className='fourth-section mt-5 mb-3 d-flex justify-content-center'>
-                        <button type="button"
-                                className="btn-done"
-                                style={{width: '5rem'}}
+                        <Box sx={{ m: 1, position: 'relative' }}>
+                            <Button
+                                className={"buttonDone"}
+                                variant="contained"
+                                disabled={this.state.loading}
                                 onClick={this.handleSubmitPayment}
-                        >
-                            ثبت
-                        </button>
+                            >
+                                ثبت
+                            </Button>
+                            {this.state.loading && (
+                                <CircularProgress
+                                    size={24}
+                                    sx={{
+                                        color: green[500],
+                                        position: 'absolute',
+                                        top: '50%',
+                                        left: '50%',
+                                        marginTop: '-12px',
+                                        marginLeft: '-12px',
+                                    }}
+                                />
+                            )}
+                        </Box>
                     </div>
                 </div>
 
@@ -530,6 +548,7 @@ class PaymentPage extends Component {
             payment = Object.assign(payment, file)
         }
         if (result) {
+            this.setState({loading: true})
             const rawResponse = await fetch('https://api.saadatportal.com/api/v1/paymentHistory', {
                 method: 'POST',
                 headers: {
@@ -537,7 +556,7 @@ class PaymentPage extends Component {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(payment)
-            });
+            }).then(() => this.setState({loading: false}));
             var content = await rawResponse.json();
             console.log(content);
             this.setState({

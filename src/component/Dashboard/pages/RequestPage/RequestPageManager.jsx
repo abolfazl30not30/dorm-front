@@ -1,28 +1,21 @@
-import {Component, createRef} from "react";
+import React, {Component, createRef} from "react";
 import {Link} from "react-router-dom";
 import {Modal} from "react-bootstrap";
-import Accordion from "react-bootstrap/Accordion";
-import ToggleButton from "@mui/material/ToggleButton";
 import Button from 'react-bootstrap/Button';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
-import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
-import {IoIosAddCircleOutline} from "react-icons/io";
-import {TiTimes} from "react-icons/ti";
-import {TiTick} from "react-icons/ti";
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
-import Form from "react-bootstrap/Form";
-import {BiSearch} from "react-icons/bi";
 
 import '../../../../style/profilePage.css'
 import '../../../../style/registerPage.css';
 import '../../../../style/paymentPage.css';
 import '../../../../style/searchAccount.css';
 import "../../../../style/registerPage.css";
-import {MdDone} from "react-icons/md";
+import {Box, CircularProgress} from "@mui/material";
+import {green} from "@mui/material/colors";
 // import React from "@types/react";
 
 class RequestPage extends Component {
@@ -34,6 +27,7 @@ class RequestPage extends Component {
     }
 
     state = {
+        loading: false,
         failureModalShow: false,
 
         tmpRadioValue: '',
@@ -266,13 +260,39 @@ class RequestPage extends Component {
                                                             </div>
                                                         </Modal.Body>
                                                         <Modal.Footer>
-                                                            <button className="btn-done" onClick={(event) => {
-                                                                if (this.handleIsValidStatus()) {
-                                                                    this.handleSubmitStatus();
-                                                                    this.setState({showStatusModal: false});
-                                                                }
-                                                            }}>ثبت
-                                                            </button>
+                                                            <Box sx={{ m: 1, position: 'relative' }}>
+                                                                <Button
+                                                                    className={"buttonDone"}
+                                                                    variant="contained"
+                                                                    disabled={this.state.loading}
+                                                                    onClick={(event) => {
+                                                                        if (this.handleIsValidStatus()) {
+                                                                            this.handleSubmitStatus();
+                                                                        }
+                                                                    }}>
+                                                                    ثبت
+                                                                </Button>
+                                                                {this.state.loading && (
+                                                                    <CircularProgress
+                                                                        size={24}
+                                                                        sx={{
+                                                                            color: green[500],
+                                                                            position: 'absolute',
+                                                                            top: '50%',
+                                                                            left: '50%',
+                                                                            marginTop: '-12px',
+                                                                            marginLeft: '-12px',
+                                                                        }}
+                                                                    />
+                                                                )}
+                                                            </Box>
+                                                            {/*<button className="btn-done" onClick={(event) => {*/}
+                                                            {/*    if (this.handleIsValidStatus()) {*/}
+                                                            {/*        this.handleSubmitStatus();*/}
+                                                            {/*        this.setState({showStatusModal: false});*/}
+                                                            {/*    }*/}
+                                                            {/*}}>ثبت*/}
+                                                            {/*</button>*/}
                                                             <button className="btn btn-light" onClick={() => {
                                                                 this.handleCloseType()
                                                             }}>بستن
@@ -412,7 +432,7 @@ class RequestPage extends Component {
             if (updatedRequestsKey === this.state.tmpRequest) {
                 if (this.state.tmpRequestForSubmit.checked === false) {
                     let failureReasonId= '';
-
+                    this.setState({loading: true})
                     const getFailureReasonId = await fetch('https://api.saadatportal.com/api/v1/failureReason', {
                         method: 'POST',
                         headers: {
@@ -424,7 +444,7 @@ class RequestPage extends Component {
                             type: this.state.failure.type,
                             reason: this.state.failure.reason
                         })
-                    });
+                    })
 
                     var content = await getFailureReasonId.json();
 
@@ -438,8 +458,12 @@ class RequestPage extends Component {
                             checked: false,
                             failureReasonId: content.id
                         })
+                    }).then(() => {
+                        this.setState({loading: false});
+                        this.setState({showStatusModal: false});
                     });
                 } else if (this.state.tmpRequestForSubmit.checked === true) {
+                    this.setState({loading: true})
                     const patchAcceptedRequest = await fetch(`https://api.saadatportal.com/api/v1/request/${updatedRequestsKey.id}`, {
                         method: 'PATCH',
                         headers: {
@@ -449,12 +473,14 @@ class RequestPage extends Component {
                         body: JSON.stringify({
                             checked: this.state.tmpRequestForSubmit.checked
                         })
+                    }).then(() => {
+                        this.setState({loading: false});
+                        this.setState({showStatusModal: false});
                     });
                 }
                 break;
             }
         }
-
         await this.componentDidMount();
     }
 

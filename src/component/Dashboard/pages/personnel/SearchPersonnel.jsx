@@ -1,18 +1,11 @@
 import React, {Component} from 'react'
 import '../../../../style/searchAccount.css'
-import {Accordion} from "react-bootstrap";
-import png_icon from "../../../../img/png_icon.png";
-import pdf_icon from "../../../../img/pdf_icon.png";
-import {IoIosSearch} from "react-icons/io";
-import {FiUser} from "react-icons/fi";
 import {AiOutlineBarcode, AiOutlineUser,AiOutlineArrowLeft} from "react-icons/ai";
 import {BsTelephone} from "react-icons/bs";
 import {Link} from "react-router-dom"
-import Form from "react-bootstrap/Form";
-import {BiSearch} from "react-icons/bi";
 import BuildingContext from "../../../../contexts/Building";
 
-class SearchAccount extends Component {
+class SearchPersonnel extends Component {
     static contextType = BuildingContext;
 
     state = {
@@ -23,7 +16,7 @@ class SearchAccount extends Component {
     }
 
     async componentDidMount() {
-        const response = await fetch('https://api.saadatportal.com/api/v1/characteristic/search?parentType=Person').then((response) => response.json())
+        const response = await fetch('https://api.saadatportal.com/api/v1/characteristic/search?parentType=Personnel').then((response) => response.json())
             .then((data) => this.setState({accountFound: data}));
     }
 
@@ -33,7 +26,7 @@ class SearchAccount extends Component {
                 <div className="d-flex flex-row justify-content-between align-items-center w-100 my-3">
                     <div>
                         <h4>
-                            اشخاص
+                            پرسنل
                         </h4>
                     </div>
                     <div className="back-btn p-0">
@@ -45,7 +38,7 @@ class SearchAccount extends Component {
                 </div>
                 <div className="search-box justify-content-center">
                     <div className="form-floating">
-                        <select className="form-select" id="floatingSelect"
+                        <select className="form-select" id="floatingSelect"اشخاص
                                 aria-label="Floating label select example"
                                 value={this.state.searchType}
                                 onChange={(value) => this.setState({searchType: value.target.value})}>
@@ -96,22 +89,6 @@ class SearchAccount extends Component {
                                         </div>
                                         {accountFound.nationalCode}
                                     </div>
-                                    <div className="d-flex flex-row align-items-center my-2">
-                                        <div className="people-item">
-                                            <AiOutlineArrowLeft className='ms-2'/>
-                                            نوع اقامتگر:
-                                        </div>
-                                        {(() => {
-                                            switch (accountFound.personType) {
-                                                case 'constant':
-                                                    return 'اقامتگر ثابت';
-                                                case 'familyGuest':
-                                                    return 'بستگان درجه یک';
-                                                case 'otherGuest':
-                                                    return 'متفرقه';
-                                            }
-                                        })()}
-                                    </div>
                                 </div>
                             </Link>
                         </>
@@ -125,11 +102,11 @@ class SearchAccount extends Component {
     handleSearchInput = async (e) => {
         const value = e.target.value;
         this.setState({searchInput: value});
-        const response = await fetch(`https://api.saadatportal.com/api/v1/characteristic/search?parentType=Person&${this.state.searchType}=${e.target.value}`).then((response) => response.json())
+        const response = await fetch(`https://api.saadatportal.com/api/v1/characteristic/search?parentType=Personnel&${this.state.searchType}=${e.target.value}`).then((response) => response.json())
             .then((data) => this.setState({accountFound: data}));
         console.log(window.location.href)
     }
 
 }
 
-export default SearchAccount;
+export default SearchPersonnel;

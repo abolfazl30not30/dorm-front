@@ -1,13 +1,15 @@
-import {Component, createRef} from "react";
+import React, {Component, createRef} from "react";
 import "../../../../style/paymentHistory.css"
 import DatePicker from "react-multi-date-picker";
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
-import {Button} from "@mui/material";
+import {Box, Button, CircularProgress} from "@mui/material";
 import {RiDownloadCloud2Fill} from "react-icons/ri";
+import {green} from "@mui/material/colors";
 
 class PaymentHistory extends Component {
     state = {
+        loading: false,
         payment: [],
         paymentFilter: [],
         typeTransaction: 'all',
@@ -197,8 +199,31 @@ class PaymentHistory extends Component {
                             <input type="text" className='input' ref={this.count}/>
                             <label className='placeholder'>تعداد تراکنش</label>
                         </div>
-                        <button className='btn btn-see col-12 col-md my-2 px-2' onClick={this.handleSubmit}>مشاهده
-                        </button>
+                        <Box sx={{ m: 1, position: 'relative' }}>
+                            <Button
+                                className={"btn btn-see col-12 col-md my-2 px-2"}
+                                variant="contained"
+                                disabled={this.state.loading}
+                                onClick={this.handleSubmit}
+                            >
+                                مشاهده
+                            </Button>
+                            {this.state.loading && (
+                                <CircularProgress
+                                    size={24}
+                                    sx={{
+                                        color: green[500],
+                                        position: 'absolute',
+                                        top: '50%',
+                                        left: '50%',
+                                        marginTop: '-12px',
+                                        marginLeft: '-12px',
+                                    }}
+                                />
+                            )}
+                        </Box>
+                        {/*<button className='' onClick={this.handleSubmit}>مشاهده*/}
+                        {/*</button>*/}
                     </div>
                     <div className='mx-3' style={{borderBottom: '1px solid #ddd'}}></div>
                     <div className="table-box">
@@ -303,6 +328,7 @@ class PaymentHistory extends Component {
             startDate: startDate,
             endDate: endDate
         }
+        this.setState({loading: true})
         const rawResponse = await fetch('https://api.saadatportal.com/api/v1/paymentHistory/filter', {
             method: 'POST',
             headers: {
@@ -310,7 +336,7 @@ class PaymentHistory extends Component {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(result)
-        });
+        }).then(() => {this.setState({loading: false})});
         var content = await rawResponse.json();
         console.log(content);
         this.setState({payment: content});

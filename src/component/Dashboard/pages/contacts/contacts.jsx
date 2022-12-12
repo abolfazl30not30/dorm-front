@@ -1,13 +1,13 @@
 import React, {Component} from "react";
 import '../../../../style/contacts.css'
-import {BsSearch} from "react-icons/bs";
 import {AiOutlineClose, AiOutlinePlus} from "react-icons/ai";
 import {Modal} from 'react-bootstrap'
-import Form from "react-bootstrap/Form";
-import {BiSearch} from "react-icons/bi";
+import {Box, Button, CircularProgress} from "@mui/material";
+import {green} from "@mui/material/colors";
 
 class contacts extends Component {
     state = {
+        loading :false,
         contacts: [],
         show: false,
         inputTelephone: [],
@@ -141,12 +141,33 @@ class contacts extends Component {
                             <AiOutlinePlus className='ms-2'/>
                         </div>
 
-
-
-                        <button className='btn-done w-100' onClick={() => {
-                            this.handleRecordContact()
-                        }}>ثبت
-                        </button>
+                        <Box sx={{ m: 1, position: 'relative' }}>
+                            <Button
+                                className={"buttonDone w-100"}
+                                variant="contained"
+                                disabled={this.state.loading}
+                                onClick={this.handleRecordContact}
+                            >
+                                ثبت
+                            </Button>
+                            {this.state.loading && (
+                                <CircularProgress
+                                    size={24}
+                                    sx={{
+                                        color: green[500],
+                                        position: 'absolute',
+                                        top: '50%',
+                                        left: '50%',
+                                        marginTop: '-12px',
+                                        marginLeft: '-12px',
+                                    }}
+                                />
+                            )}
+                        </Box>
+                        {/*<button className='btn-done w-100' onClick={() => {*/}
+                        {/*    this.handleRecordContact()*/}
+                        {/*}}>ثبت*/}
+                        {/*</button>*/}
 
 
 
@@ -218,7 +239,7 @@ class contacts extends Component {
             telephoneNumbers : this.state.telephoneNumbers,
             mobileNumbers: this.state.mobileNumbers
         }
-
+        this.setState({loading: true})
         const rawResponse = await fetch('https://api.saadatportal.com/api/v1/phoneBook', {
             method: 'POST',
             headers: {
@@ -226,7 +247,7 @@ class contacts extends Component {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(newContact)
-        });
+        }).then(() => {this.setState({loading: false})}).catch(() => this.setState({loading: false}));
 
         const response = await fetch('https://api.saadatportal.com/api/v1/phoneBook').then((response) => response.json())
             .then((data) => this.setState({contacts : data}));

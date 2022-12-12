@@ -1,19 +1,17 @@
 import React, {Component} from "react";
 import '../../../../style/contacts.css'
-import {BsSearch} from "react-icons/bs";
-import {AiOutlineClose, AiOutlinePlus} from "react-icons/ai";
+import {AiOutlinePlus} from "react-icons/ai";
 import {Modal} from 'react-bootstrap'
-import Form from "react-bootstrap/Form";
-import {BiSearch} from "react-icons/bi";
-// import {DatePicker} from "react-persian-datepicker";
 import DatePicker from "react-multi-date-picker";
 import './../../../../style/requestPage.css'
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
-import {Button} from "@mui/material";
+import {Box, Button, CircularProgress} from "@mui/material";
+import {green} from "@mui/material/colors";
 
 class callHistory extends Component {
     state = {
+        loading: false,
         calStyles : {
             calendarContainer: "calendarContainer",
             dayPickerContainer: "dayPickerContainer",
@@ -221,14 +219,40 @@ class callHistory extends Component {
                             }}/>
                             <label className="placeholder" style={{right: '12px'}}>توضیحات</label>
                         </div>
-
-                        <button className='btn-done w-100' onClick={() => {
-                            if (this.handleValidations()) {
-                                this.handleRecordContact();
-                                this.handleClose();
-                            }
-                        }}>ثبت
-                        </button>
+                        <Box sx={{ m: 1, position: 'relative' }}>
+                            <Button
+                                className={"buttonDone w-100"}
+                                variant="contained"
+                                disabled={this.state.loading}
+                                onClick={() => {
+                                    if (this.handleValidations()) {
+                                        this.handleRecordContact();
+                                    }
+                                }}
+                            >
+                                ثبت
+                            </Button>
+                            {this.state.loading && (
+                                <CircularProgress
+                                    size={24}
+                                    sx={{
+                                        color: green[500],
+                                        position: 'absolute',
+                                        top: '50%',
+                                        left: '50%',
+                                        marginTop: '-12px',
+                                        marginLeft: '-12px',
+                                    }}
+                                />
+                            )}
+                        </Box>
+                        {/*<button className='btn-done w-100' onClick={() => {*/}
+                        {/*    if (this.handleValidations()) {*/}
+                        {/*        this.handleRecordContact();*/}
+                        {/*        this.handleClose();*/}
+                        {/*    }*/}
+                        {/*}}>ثبت*/}
+                        {/*</button>*/}
 
 
 
@@ -310,6 +334,7 @@ class callHistory extends Component {
             description: this.state.description
         }
 
+        this.setState({loading: true})
         const rawResponse = await fetch('https://api.saadatportal.com/api/v1/telephoneHistory', {
             method: 'POST',
             headers: {
@@ -317,13 +342,14 @@ class callHistory extends Component {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(newCall)
-        });
+        }).then(() => {this.setState({loading: false})}).catch(() => {this.setState({loading: false})});
 
         const response = await fetch('https://api.saadatportal.com/api/v1/telephoneHistory').then((response) => response.json())
             .then((data) => this.setState({callHistory : data}));
 
         // this.setState({show: false})
-        this.setState({title:"",callerName:"",phoneNumber:"",date:"",description:""})
+        this.setState({title:"", callerName:"", phoneNumber:"", date:"", description:""})
+        this.handleClose();
     }
 
     handleSearchInput = async (e) =>{

@@ -4,6 +4,8 @@ import {Draggable} from "react-beautiful-dnd";
 import TaskContext from "./../../../../contexts/tasks";
 import {GrClose} from "react-icons/gr"
 import Modal from "react-bootstrap/Modal";
+import {Box, Button, CircularProgress} from "@mui/material";
+import {green, red} from "@mui/material/colors";
 
 class Task extends Component {
 
@@ -85,11 +87,42 @@ class Task extends Component {
                         {/* Cancel button for delete task modal */}
                         <button className="btn btn-light" onClick={() => {this.setState({showDeleteModal: false})}}>لغو</button>
 
-                        {/* Accept button for deleting task */}
-                        <button className="btn btn-danger" onClick={() => {
-                            this.context.handleDelete(this.props.id);
-                            this.setState({showDeleteModal: !this.context.forceCloseDeleteModal});
-                        }}>حذف</button>
+                        {/* Confirm button for deleting task */}
+                        <Box sx={{ m: 1, position: 'relative' }}>
+                            <Button
+                                variant="contained"
+                                sx={{
+                                    backgroundColor: "#dc3545",
+                                    color: "black",
+                                    ":hover": {backgroundColor: "#a52834", color: "white"}
+                                }}
+                                disabled={this.state.loading}
+                                onClick={() => {
+                                    this.context.handleDelete(this.props.id);
+                                    this.setState({showDeleteModal: !this.context.forceCloseDeleteModal});
+                                }}
+                            >
+                                حذف
+                            </Button>
+                            {this.context.loading && (
+                                <CircularProgress
+                                    size={24}
+                                    sx={{
+                                        color: red[500],
+                                        position: 'absolute',
+                                        top: '50%',
+                                        left: '50%',
+                                        marginTop: '-12px',
+                                        marginLeft: '-12px',
+                                    }}
+                                />
+                            )}
+                        </Box>
+
+                        {/*<button className="btn btn-danger" onClick={() => {*/}
+                        {/*    this.context.handleDelete(this.props.id);*/}
+                        {/*    this.setState({showDeleteModal: !this.context.forceCloseDeleteModal});*/}
+                        {/*}}>حذف</button>*/}
                     </Modal.Footer>
                 </Modal>
             </>

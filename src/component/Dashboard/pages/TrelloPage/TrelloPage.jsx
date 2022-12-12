@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import Section from "./section";
 import TaskContext from "../../../../contexts/tasks";
 import Modal from "react-bootstrap/Modal";
-import {Button, FormControl, InputLabel, MenuItem, Paper, Select} from "@mui/material";
+import {Box, Button, CircularProgress, FormControl, InputLabel, MenuItem, Paper, Select} from "@mui/material";
 import {DragDropContext} from "react-beautiful-dnd";
 import Form from "react-bootstrap/Form";
 import {BiSearch} from "react-icons/bi";
@@ -21,9 +21,14 @@ import {MdDone} from "react-icons/md";
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
 import DatePicker from "react-multi-date-picker";
+import {green} from "@mui/material/colors";
+import Skeleton from "react-loading-skeleton";
 
 class TrelloPage extends Component {
     state = {
+        searchLoadong: false,
+        loading: false,
+        buttonClicked: false,
         taskPersonnel: {},
         selectedParent: {},
         parentsFound: [],
@@ -49,6 +54,7 @@ class TrelloPage extends Component {
 // handler functions for new task button -------------------------------------------------------------------------------
     onNewTask = () => {
         this.setState({
+            loading: false,
             selectedParent: {},
             NewTaskClicked: true,
             tempName: "",
@@ -92,6 +98,7 @@ class TrelloPage extends Component {
     };
 
     onDone = async () => {
+        this.setState({loading: true})
         const parsedTimeLog = this.state.tempHourTimeLog + (this.state.tempMinuteTimeLog / 60)
         let year = this.state.tempDueDate.year;
         let month = this.state.tempDueDate.month;
@@ -113,7 +120,7 @@ class TrelloPage extends Component {
                 status: "todo",
                 personnelId: this.state.selectedParent.parentId
             })
-        })
+        }).then((res) => this.setState({loading: false})).catch(() => this.setState({loading: false}));
         this.setState({
             tempName: "",
             tempDescription: "",
@@ -122,15 +129,14 @@ class TrelloPage extends Component {
             tempMinuteTimeLog: 0,
             tempPriority: "",
             tempPersonnelId: "",})
-        this.onClose()
-
+        // this.onClose()
 
         await this.componentDidMount();
     };
 //----------------------------------------------------------------------------------------------------------------------
 // handler functions for edit task -------------------------------------------------------------------------------------
     handleTaskClicked = async (id) => {
-        this.setState({taskClicked: true})
+        this.setState({taskClicked: true, loading: false})
         const targetTask = {...this.state.tasks.find(task => task.id === id)}
         this.setState({clickedTask: targetTask, tempDueDate: targetTask.dueDate})
         const Hour = parseInt(targetTask.timeLog)
@@ -172,6 +178,7 @@ class TrelloPage extends Component {
     };
 
     onSubmitChanges = async () => {
+        this.setState({loading: true})
         const updatedTask = {...this.state.clickedTask};
         updatedTask.timeLog = this.state.tempHourTimeLog + (this.state.tempMinuteTimeLog / 60)
 
@@ -183,8 +190,9 @@ class TrelloPage extends Component {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(updatedTask)
-        })
-        await this.componentDidMount()
+        }).then(() => this.setState({loading: true})).catch(() => this.setState({loading: false}));
+
+        // await this.componentDidMount()
         this.onClose()
     };
 //----------------------------------------------------------------------------------------------------------------------
@@ -213,7 +221,7 @@ class TrelloPage extends Component {
         await this.componentDidMount()
     }
     handleDelete = async (id) => {
-
+        this.setState({loading: true})
         await fetch(`https://api.saadatportal.com/api/v1/task/${id}`, {
             method: 'DELETE',
             headers: {
@@ -221,14 +229,15 @@ class TrelloPage extends Component {
                 'Content-Type': 'application/json'
             }
         }).then(() => {
+            this.setState({loading: false})
             this.setState({forceCloseDeleteModal: true})
             let updatedTasks = [...this.state.tasks]
             updatedTasks = updatedTasks.filter((task) => {return task.id !== id});
             this.setState({tasks: updatedTasks})
             this.setState({forceCloseDeleteModal: true})
         }).catch((e) => {
-            console.log(e)
-        })
+            this.setState({loading: false})
+        }).catch(() => this.setState({loading: false}));
 
         // await this.componentDidMount()
     }
@@ -242,17 +251,44 @@ class TrelloPage extends Component {
         }
     }
 
-    handleSearch = async () => {
-        await fetch(`https://api.saadatportal.com/api/v1/characteristic/search?${this.state.searchBase}=${this.state.searchContent}&parentType=Personnel`)
-            .then((response) => response.json())
-            .then((data) => this.setState({parentsFound : data}, () => {this.handleParentNotFound()}))
+    handleSearch = async (e) => {
+        // this.setState({parentsFound: []});
+        if (!this.state.parentNotFound) {this.setState({searchLoading: true})}
+        if (e !== "") {
+            const value = e.target.value;
+            this.setState({searchContent: value});
+            await fetch(`https://api.saadatportal.com/api/v1/characteristic/search?${this.state.searchBase}=${e.target.value}&parentType=Personnel`).then((response) => response.json())
+                .then((data) => {
+                    this.setState({searchLoading: false})
+                    this.setState({parentsFound: data}, () => {
+                        this.handleParentNotFound()
+                    })
+                }).catch(() => this.setState({loading: false}));
+        } else {
+            await fetch(`https://api.saadatportal.com/api/v1/characteristic/search?${this.state.searchBase}=&parentType=Personnel`).then((response) => response.json())
+                .then((data) => {
+                    this.setState({searchLoading: false})
+                    this.setState({parentsFound: data}, () => {
+                        this.handleParentNotFound()
+                    })
+                }).catch(() => this.setState({loading: false}));
+        }
     }
 
 //----------------------------------------------------------------------------------------------------------------------
 
     componentDidMount = async () => {
         await fetch('https://api.saadatportal.com/api/v1/task').then((response) => response.json())
+
             .then((data) => this.setState({tasks : data}))
+        // const controller = new AbortController()
+        //
+        // const timeoutId = setTimeout(() => {
+        //     controller.abort()
+        // }, 20000)
+        // await fetch('https://api.saadatportal.com/api/v1/task', {signal: controller.signal}).then((response) => response.json())
+        //     .then((data) => this.setState({tasks : data}))
+        // clearTimeout(timeoutId)
     }
 
     render() {
@@ -263,6 +299,7 @@ class TrelloPage extends Component {
                 <div style={{overflowX: "hidden"}}>
                     <TaskContext.Provider
                         value={{
+                            loading: this.state.loading,
                             name: this.state.name,
                             email: this.state.email,
                             tasks: this.state.tasks,
@@ -282,15 +319,15 @@ class TrelloPage extends Component {
 
                         {/* 3 main categories (To Do, In Progress, Done) */}
                         <div className="justify-content-center d-flex row">
-                            <div className="col-xl-3 col-lg-3 ml-3 col-md-3 col-sm-10 col-10 mt-5">
+                            <div className="mx-4 col-xl-3 col-lg-3 ml-3 col-md-3 col-sm-10 col-10 mt-5">
                                 <h3 className="text-center" style={{userSelect: "none", marginRight: "20px"}}>برای انجام</h3>
                                 <Section index={0} status={"todo"}/>
                             </div>
-                            <div className="col-xl-3 col-lg-3 ml-3 col-md-3 col-sm-10 col-10 mt-5">
+                            <div className="mx-4 col-xl-3 col-lg-3 ml-3 col-md-3 col-sm-10 col-10 mt-5">
                                 <h3 className="text-center" style={{userSelect: "none", marginRight: "20px"}}>در حال انجام</h3>
                                 <Section index={1} status={"inProgress"}/>
                             </div>
-                            <div className="col-xl-3 col-lg-3 ml-3 col-md-3 col-sm-10 col-10 mt-5" style={{flexDirection: "column"}}>
+                            <div className="mx-4 col-xl-3 col-lg-3 ml-3 col-md-3 col-sm-10 col-10 mt-5" style={{flexDirection: "column"}}>
                                 <h3 className="text-center" style={{userSelect: "none", marginRight: "20px"}}>انجام شده</h3>
                                 <Section index={3} status={"done"}/>
                             </div>
@@ -395,7 +432,6 @@ class TrelloPage extends Component {
 
                                         calendar={persian}
                                         locale={persian_fa}
-
                                     >
                                         <Button
                                             onClick={() => {
@@ -405,19 +441,21 @@ class TrelloPage extends Component {
                                             ریست
                                         </Button>
                                     </DatePicker>
-
                                 </div>
 
                                 {/* Personnel section */}
                                 <div className={"m-2"}>
                                     <div className={"d-flex justify-content-start"}>
-                                        <button className={'btn-done'} onClick={() => this.setState({
-                                            showChangeParentModal : true,
+                                        <button className={'btn-done'} onClick={() => {this.setState({
+                                            searchLoading: false,
+                                            showChangeParentModal: true,
                                             parentNotFound: false,
                                             parentsFound: [],
                                             searchContent: "",
                                             searchBase: "fullName"
-                                        })}>
+                                        });
+                                            this.handleSearch("")
+                                        }}>
                                             <MdDone className='ms-1'/>
                                             انتخاب پرسنل
                                         </button>
@@ -470,10 +508,36 @@ class TrelloPage extends Component {
                         </Modal.Body>
                         <Modal.Footer>
 
-                            {/* Close button for new task modal */}
-                            <button className="btn-done" onClick={this.onDone}>ثبت</button>
-
                             {/* Done button for submitting new task */}
+                            <Box sx={{ m: 1, position: 'relative' }}>
+                                <Button
+                                    variant="contained"
+                                    sx={{
+                                        backgroundColor: "#20d489",
+                                        color: "black",
+                                        ":hover": {backgroundColor: "#198754", color: "white"}
+                                    }}
+                                    disabled={this.state.loading}
+                                    onClick={this.onDone}
+                                >
+                                    ثبت
+                                </Button>
+                                {this.state.loading && (
+                                    <CircularProgress
+                                        size={24}
+                                        sx={{
+                                            color: green[500],
+                                            position: 'absolute',
+                                            top: '50%',
+                                            left: '50%',
+                                            marginTop: '-12px',
+                                            marginLeft: '-12px',
+                                        }}
+                                    />
+                                )}
+                            </Box>
+
+                            {/* Close button for new task modal */}
                             <button className="btn btn-light" onClick={this.onClose}>بستن</button>
 
                         </Modal.Footer>
@@ -578,10 +642,36 @@ class TrelloPage extends Component {
                             </div>
                         </Modal.Body>
                         <Modal.Footer>
-                            {/* Close button for new task modal */}
-                            <button className="btn-done" onClick={this.onSubmitChanges}>ثبت</button>
+                            {/* Submit button for edit task modal */}
+                            <Box sx={{ m: 1, position: 'relative' }}>
+                                <Button
+                                    variant="contained"
+                                    sx={{
+                                        backgroundColor: "#20d489",
+                                        color: "black",
+                                        ":hover": {backgroundColor: "#198754", color: "white"}
+                                    }}
+                                    disabled={this.state.loading}
+                                    onClick={this.onSubmitChanges}
+                                >
+                                    ثبت
+                                </Button>
+                                {this.state.loading && (
+                                    <CircularProgress
+                                        size={24}
+                                        sx={{
+                                            color: green[500],
+                                            position: 'absolute',
+                                            top: '50%',
+                                            left: '50%',
+                                            marginTop: '-12px',
+                                            marginLeft: '-12px',
+                                        }}
+                                    />
+                                )}
+                            </Box>
 
-                            {/* Done button for submitting new task */}
+                            {/* Close button for submitting edit task */}
                             <button className="btn btn-light" onClick={this.onClose}>بستن</button>
                         </Modal.Footer>
 
@@ -614,8 +704,8 @@ class TrelloPage extends Component {
                                            placeholder="جسـتوجـو"
                                            style={{padding:"6px"}}
 
-                                           onChange={(value) => this.setState({searchContent : value.target.value})}/>
-                                    <button className="btn outline-secondary" onClick={this.handleSearch}><BiSearch fontSize="25px"/></button>
+                                           onChange={(input) => {this.handleSearch(input)}}/>
+                                    <button className="btn outline-secondary"><BiSearch fontSize="25px"/></button>
                                 </div>
                             </div>
 
@@ -641,6 +731,22 @@ class TrelloPage extends Component {
                                             </TableHead>
                                             <TableBody>
                                                     {
+                                                        this.state.searchLoading ?
+                                                            <TableRow>
+                                                                <TableCell>
+                                                                    <Skeleton animation="wave" height={20} width="100%" />
+                                                                </TableCell>
+                                                                <TableCell>
+                                                                    <Skeleton animation="wave" height={20} width="100%" />
+                                                                </TableCell>
+                                                                <TableCell>
+                                                                    <Skeleton animation="wave" height={20} width="100%" />
+                                                                </TableCell>
+                                                                <TableCell>
+                                                                    <Skeleton animation="wave" height={20} width="100%" />
+                                                                </TableCell>
+                                                            </TableRow>
+                                                            :
                                                         this.state.parentsFound.map((parent, index) => {
                                                             return (
                                                                 <TableRow hover onClick={() => {
