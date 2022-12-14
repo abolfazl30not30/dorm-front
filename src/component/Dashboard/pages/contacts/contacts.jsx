@@ -4,9 +4,11 @@ import {AiOutlineClose, AiOutlinePlus} from "react-icons/ai";
 import {Modal} from 'react-bootstrap'
 import {Box, Button, CircularProgress} from "@mui/material";
 import {green} from "@mui/material/colors";
+import Skeleton from "react-loading-skeleton";
 
 class contacts extends Component {
     state = {
+        searchLoading: true,
         loading :false,
         contacts: [],
         show: false,
@@ -20,7 +22,7 @@ class contacts extends Component {
 
     async componentDidMount() {
         const response = await fetch('https://api.saadatportal.com/api/v1/phoneBook').then((response) => response.json())
-            .then((data) => this.setState({contacts : data}));
+            .then((data) => this.setState({contacts : data, searchLoading: false}));
     }
     render() {
         return (
@@ -31,7 +33,7 @@ class contacts extends Component {
                         <button className='btn-done my-4' onClick={() => {
                             this.handleShow()
                         }}><AiOutlinePlus className='ms-2'/>افزودن مخاطب
-                        </button>
+                        </button>handleShow
                     </div>
                     <div className="search-box">
                         <div className="form-floating">
@@ -64,6 +66,15 @@ class contacts extends Component {
                             </thead>
                             <tbody>
                             {
+                                this.state.searchLoading ?
+                                [...Array(5)].map((x, i) =>
+                                    <tr>
+                                        <td><Skeleton animation="wave" height={23} width="100%" /></td>
+                                        <td><Skeleton animation="wave" height={23} width="100%" /></td>
+                                        <td><Skeleton animation="wave" height={23} width="100%" /></td>
+                                    </tr>
+                                )
+                                :
                                 this.state.contacts.map((i) => (
                                     <tr>
                                         <td>{i.name}</td>
@@ -179,8 +190,9 @@ class contacts extends Component {
 
     handleSearchInput = async (e) => {
         const value = e.target.value;
+        this.setState({searchLoading: true})
         const response = await fetch(`https://api.saadatportal.com/api/v1/phoneBook/search?${this.state.searchType}=${e.target.value}`).then((response) => response.json())
-            .then((data) => this.setState({contacts: data}));
+            .then((data) => this.setState({contacts: data, searchLoading: false}));
     }
 
     handleClose = () => {

@@ -50,6 +50,7 @@ class log extends Component {
             },
         ],
         styles: {
+            searchLoading: true,
             calendarContainer: "calendarContainer",
             dayPickerContainer: "dayPickerContainer",
             monthsList: "monthsList",
@@ -65,8 +66,9 @@ class log extends Component {
     }
 
     async componentDidMount() {
+        this.setState({searchLoading: true})
         const response = await fetch('https://api.saadatportal.com/api/v1/logHistory').then((response) => response.json())
-            .then((data) => this.setState({logs: data}));
+            .then((data) => this.setState({logs: data, searchLoading: false}));
         console.log(this.state.logs)
     }
 
@@ -113,7 +115,7 @@ class log extends Component {
                             </thead>
                             <tbody>
                             {
-                                this.state.logsTest.map((log) => (
+                                this.state.logs.map((log) => (
                                     <tr>
                                         <td>{log.url}</td>
                                         <td>{log.doer}</td>
@@ -150,10 +152,6 @@ class log extends Component {
         let convertDate = date.getFullYear() + "/" + date.getMonth() + "/" + date.getDate() + " " + "00:" + "00:" + "00";
         this.setState({date: convertDate})
     }
-    covertDate = () => {
-        console.log('date')
-    }
-
 }
 
 export default log;

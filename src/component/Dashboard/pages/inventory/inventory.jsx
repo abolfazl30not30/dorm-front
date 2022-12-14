@@ -1,20 +1,36 @@
-import React, {Component} from "react";
+    import React, {Component} from "react";
 import '../../../../style/inventory.css'
-import {BsSearch} from "react-icons/bs";
 import {AiFillCloseCircle, AiOutlineClose, AiOutlinePlus} from "react-icons/ai";
 import {Modal} from 'react-bootstrap'
-import Form from "react-bootstrap/Form";
-import {BiSearch} from "react-icons/bi";
 import Accordion from "react-bootstrap/Accordion";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import ToggleButton from "@mui/material/ToggleButton";
 import {IoIosAddCircleOutline} from "react-icons/io";
 import './../../../../style/requestPage.css'
+    import Skeleton from "react-loading-skeleton";
+    import {Box, Button, CircularProgress} from "@mui/material";
+    import {green} from "@mui/material/colors";
+    import log from "../log/log";
 
 class inventory extends Component {
     state = {
+        searchLoading: true,
+        loading: false,
         show: false,
         inventory: [],
+        //     [{
+        //     id: null,
+        //     accessories:[
+        //         {
+        //             id: null,
+        //             name: "",
+        //             count: "",
+        //             description: null
+        //         }
+        //         ],
+        //     accessoryType: null,
+        //     category: "لوازم بهداشتی"
+        // }],
         typeSearch:"",
         type: "needs",
         category: [],
@@ -28,15 +44,21 @@ class inventory extends Component {
         inputCategory: [],
         searchType:"name",
         searchInput:"",
-
     }
+
     async componentDidMount() {
+        this.setState({searchLoading: true})
         const response = await fetch('https://api.saadatportal.com/api/v1/inventory').then((response) => response.json())
-            .then((data) => this.setState({inventory: data}));
-
+            .then((data) => {
+                this.setState({inventory: data}, () => {
+                    console.log("callback inventory", this.state.inventory)
+                })
+                console.log("data", data)
+            });
+        console.log("inventory", this.state.inventory)
         const response2 = await fetch('https://api.saadatportal.com/api/v1/category/search?type=Inventory').then((response) => response.json())
-            .then((data) => this.setState({choices: data}));
-
+            .then((data) => this.setState({choices: data, searchLoading: false}));
+        console.log("inventory after second get", this.state.inventory)
     }
 
     render() {
@@ -91,12 +113,22 @@ class inventory extends Component {
                             </thead>
                             <tbody>
                             {
-                                this.state.inventory.map((i) => (
+                                this.state.searchLoading ?
+                                [...Array(5)].map((x, i) =>
                                     <tr>
-                                        <td>{this.convertTypeToPersian(i.accessoryType)}</td>
-                                        <td>{i.category}</td>
-                                        <td>{i.accessories[0].name}</td>
-                                        <td>{i.accessories[0].count}</td>
+                                        <td><Skeleton animation="wave" height={20} width="100%" /></td>
+                                        <td><Skeleton animation="wave" height={20} width="100%" /></td>
+                                        <td><Skeleton animation="wave" height={20} width="100%" /></td>
+                                        <td><Skeleton animation="wave" height={20} width="100%" /></td>
+                                    </tr>
+                                )
+                                :
+                                this.state.inventory.map((x, i)  => (
+                                    <tr key={i}>
+                                        <td>{this.convertTypeToPersian(x.accessoryType)}</td>
+                                        <td>{x.category}</td>
+                                        <td>{x.accessories[0].name}</td>
+                                        <td>{x.accessories[0].count}</td>
                                     </tr>
                                 ))
                             }
@@ -208,10 +240,31 @@ class inventory extends Component {
                             </div>
 
                         </div>
-                        <button className='btn-done w-100' onClick={() => {
-                            this.handleRecordInventory()
-                        }}>ثبت
-                        </button>
+                        <Box sx={{ m: 1, position: 'relative' }}>
+                            <Button
+                                className={"buttonDone w-100"}
+                                variant="contained"
+                                disabled={this.state.loading}
+                                onClick={() => {
+                                    this.handleRecordInventory().then(r => {})
+                                }}
+                            >
+                                ثبت
+                            </Button>
+                            {this.state.loading && (
+                                <CircularProgress
+                                    size={24}
+                                    sx={{
+                                        color: green[500],
+                                        position: 'absolute',
+                                        top: '50%',
+                                        left: '50%',
+                                        marginTop: '-12px',
+                                        marginLeft: '-12px',
+                                    }}
+                                />
+                            )}
+                        </Box>
                     </Modal.Body>
                 </Modal>
 
@@ -343,8 +396,7 @@ class inventory extends Component {
             ]
 
         }
-        console.log(newInventory)
-
+        this.setState({loading: true})
         const rawResponse = await fetch('https://api.saadatportal.com/api/v1/inventory', {
             method: 'POST',
             headers: {
@@ -352,7 +404,7 @@ class inventory extends Component {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(newInventory)
-        });
+        }).then(() => {this.setState({loading: false})});
 
         this.setState({show: false})
 
@@ -365,9 +417,9 @@ class inventory extends Component {
 
     handleSearchInput = async (e) => {
         const value = e.target.value;
-        this.setState({searchInput:value});
+        this.setState({searchInput: value, searchLoading: true});
         const response = await fetch(`https://api.saadatportal.com/api/v1/inventory/search?${this.state.searchType}=${e.target.value}`).then((response) => response.json())
-            .then((data) => this.setState({inventory: data}));
+            .then((data) => this.setState({inventory: data, searchLoading: false}));
     }
 
     handleSearchBtn = async () => {

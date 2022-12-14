@@ -16,6 +16,7 @@ import '../../../../style/searchAccount.css';
 import "../../../../style/registerPage.css";
 import {Box, CircularProgress} from "@mui/material";
 import {green} from "@mui/material/colors";
+import Skeleton from "react-loading-skeleton";
 // import React from "@types/react";
 
 class RequestPage extends Component {
@@ -27,6 +28,7 @@ class RequestPage extends Component {
     }
 
     state = {
+        cardsLoading: true,
         loading: false,
         failureModalShow: false,
 
@@ -121,6 +123,20 @@ class RequestPage extends Component {
                         </div>
                         <div className="d-flex flex-row flex-wrap">
                             {
+                                this.state.cardsLoading ?
+                                    [...Array(9)].map((x, i) => (
+                                        <div className="col-12 col-md-4 p-2">
+                                            <div className={'request-item d-flex flex-column text-center'}>
+                                                <Skeleton className={"mt-2"} animation="wave" width={300} height={30}/>
+                                                <Skeleton className={"mt-2"} animation="wave" width={300} height={30}/>
+                                                <Skeleton className={"mt-2"} animation="wave" width={300} height={30}/>
+                                                <Skeleton className={"mt-2"} animation="wave" width={300} height={30}/>
+                                                <Skeleton className={"mt-2"} animation="wave" width={300} height={30}/>
+                                                <Skeleton className={"mt-2"} animation="wave" width={300} height={30}/>
+                                            </div>
+                                        </div>
+                                    ))
+                                    :
                                 this.state.requests.map((request, index, curr) => (
                                     <>
                                         <div className="col-12 col-md-4 p-2">
@@ -358,7 +374,12 @@ class RequestPage extends Component {
 
     componentDidMount = async () => {
         const response = await fetch(`https://api.saadatportal.com/api/v1/request`).then((response) => response.json())
-            .then((data) => this.setState({requests: data}));
+            .then((data) => {
+                this.setState({
+                    requests: data,
+                    cardsLoading: false
+                })
+            });
     }
 
     handleEditRadioGroup = (value) => {
@@ -499,8 +520,14 @@ class RequestPage extends Component {
 
     handleSearchInput = async (e) =>{
         const value = e.target.value;
+        this.setState({cardsLoading: true})
         const response = await fetch(`https://api.saadatportal.com/api/v1/request/search?${this.state.searchBase}=${value}`).then((response) => response.json())
-            .then((data) => this.setState({requests : data}));
+            .then((data) => {
+                this.setState({
+                    requests: data,
+                    cardsLoading: true
+                })
+            });
     }
 }
 

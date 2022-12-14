@@ -15,6 +15,7 @@ import '../../../../style/searchAccount.css';
 import {MdDone} from "react-icons/md";
 import {Box, CircularProgress} from "@mui/material";
 import {green} from "@mui/material/colors";
+import Skeleton from "react-loading-skeleton";
 
 class RequestPage extends Component {
 
@@ -25,6 +26,7 @@ class RequestPage extends Component {
     }
 
     state = {
+        cardsLoading: true,
         loading: false,
         showModalForAddingType: false,
 
@@ -78,8 +80,12 @@ class RequestPage extends Component {
         //     .then((data) => this.setState({ choices: data }));
         // const response1 = await axios.get("https://api.saadatportal.com/api/v1/request");
         // console.log(response1)
+        this.setState({cardsLoading: true})
         const response = await fetch('https://api.saadatportal.com/api/v1/request').then((response) => response.json())
-            .then((data) => this.setState({requests: data}));
+            .then((data) => {
+                this.setState({requests: data});
+                this.setState({cardsLoading: false});
+            });
 
     }
 
@@ -141,6 +147,20 @@ class RequestPage extends Component {
 
                         <div className="d-flex flex-row flex-wrap">
                             {
+                                this.state.cardsLoading ?
+                                    [...Array(9)].map((x, i) => (
+                                            <div className="col-12 col-md-4 p-2">
+                                                <div className={'request-item d-flex flex-column text-center'}>
+                                                    <Skeleton className={"mt-2"} animation="wave" width={300} height={30}/>
+                                                    <Skeleton className={"mt-2"} animation="wave" width={300} height={30}/>
+                                                    <Skeleton className={"mt-2"} animation="wave" width={300} height={30}/>
+                                                    <Skeleton className={"mt-2"} animation="wave" width={300} height={30}/>
+                                                    <Skeleton className={"mt-2"} animation="wave" width={300} height={30}/>
+                                                    <Skeleton className={"mt-2"} animation="wave" width={300} height={30}/>
+                                                </div>
+                                            </div>
+                                        ))
+                                    :
                                 this.state.requests.map(request => (
                                     <>
                                         <div className="col-12 col-md-4 p-2">
@@ -625,7 +645,10 @@ class RequestPage extends Component {
     handleSearchInput = async (e) =>{
         const value = e.target.value;
         const response = await fetch(`https://api.saadatportal.com/api/v1/request/search?${this.state.searchBase}=${value}`).then((response) => response.json())
-            .then((data) => this.setState({searchBase: data}));
+            .then((data) => {
+                this.setState({searchBase: data});
+                this.setState({cardsLoading: false})
+            });
     }
 
     handleCloseFailureModal = () => {

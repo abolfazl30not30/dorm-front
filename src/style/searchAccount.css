@@ -54,6 +54,11 @@
     max-width: 200px;
 }
 
+.peoples-found-loading {
+    background-color: #fff;
+    box-shadow: 0 0 20px 0 #4c577d05;
+    margin-bottom: 1rem;
+}
 
 .peoples-found {
     background-color: #fff;

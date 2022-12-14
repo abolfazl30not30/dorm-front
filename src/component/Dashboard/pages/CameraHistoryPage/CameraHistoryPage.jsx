@@ -12,10 +12,12 @@ import '../../../../style/registerPage.css';
 import '../../../../style/paymentHistory.css';
 import {Box, Button, CircularProgress} from "@mui/material";
 import {green} from "@mui/material/colors";
+import Skeleton from "react-loading-skeleton";
 
 class CameraHistoryPage extends Component {
 
     state = {
+        searchLoading: true,
         loading: false,
         validation: {
             title_requireReg: '',
@@ -43,7 +45,10 @@ class CameraHistoryPage extends Component {
 
     async componentDidMount() {
         const response = await fetch('https://api.saadatportal.com/api/v1/cameraHistory').then((response) => response.json())
-            .then((data) => this.setState({data: data}));
+            .then((data) => this.setState({
+                data: data,
+                searchLoading: false
+            }));
     }
 
     render() {
@@ -114,7 +119,20 @@ class CameraHistoryPage extends Component {
                             <tbody>
 
                             {
-                                this.state.data.map((data, index) => (
+                                this.state.searchLoading ?
+                                    [...Array(5)].map((x, i) =>
+                                        <tr>
+                                            <td><Skeleton animation="wave" height={20} width="100%" /></td>
+                                            <td><Skeleton animation="wave" height={20} width="100%" /></td>
+                                            <td><Skeleton animation="wave" height={20} width="100%" /></td>
+                                            <td><Skeleton animation="wave" height={20} width="100%" /></td>
+                                            <td><Skeleton animation="wave" height={20} width="100%" /></td>
+                                            <td><Skeleton animation="wave" height={20} width="100%" /></td>
+                                        </tr>
+                                    )
+
+                                        :
+                                    this.state.data.map((data, index) => (
                                     <tr>
                                         <td>{index + 1}</td>
                                         <td>{data.title}</td>
@@ -441,9 +459,10 @@ class CameraHistoryPage extends Component {
     }
 
     handleSearchInput = async (e) =>{
+        this.setState({searchLoading: true})
         const value = e.target.value;
         const response = await fetch(`https://api.saadatportal.com/api/v1/cameraHistory/search?${this.state.searchType}=${e.target.value}`).then((response) => response.json())
-            .then((data) => this.setState({data: data}));
+            .then((data) => this.setState({data: data, searchLoading: false}));
     }
 }
 

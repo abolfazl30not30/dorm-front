@@ -557,8 +557,7 @@ class PaymentPage extends Component {
                 },
                 body: JSON.stringify(payment)
             }).then(() => this.setState({loading: false}));
-            var content = await rawResponse.json();
-            console.log(content);
+
             this.setState({
                 date: "",
                 price: "",

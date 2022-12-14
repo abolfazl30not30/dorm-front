@@ -4,11 +4,13 @@ import {AiOutlineBarcode, AiOutlineUser,AiOutlineArrowLeft} from "react-icons/ai
 import {BsTelephone} from "react-icons/bs";
 import {Link} from "react-router-dom"
 import BuildingContext from "../../../../contexts/Building";
+import Skeleton from "react-loading-skeleton";
 
 class SearchPersonnel extends Component {
     static contextType = BuildingContext;
 
     state = {
+        searchLoadong: true,
         placeholder: '',
         accountFound: [],
         searchInput: "",
@@ -16,8 +18,9 @@ class SearchPersonnel extends Component {
     }
 
     async componentDidMount() {
+        this.setState({searchLoading: true})
         const response = await fetch('https://api.saadatportal.com/api/v1/characteristic/search?parentType=Personnel').then((response) => response.json())
-            .then((data) => this.setState({accountFound: data}));
+            .then((data) => this.setState({accountFound: data, searchLoading: false}));
     }
 
     render() {
@@ -57,42 +60,61 @@ class SearchPersonnel extends Component {
                     <div className="search-icon"><i className="bi bi-search"></i></div>
                 </div>
                 <div className='result'>
-                    {this.state.accountFound.map(accountFound => (
-                        <>
-                            <Link to={accountFound.id} className='account-found-link' onClick={() => {
-                                this.context.handlePersonId(accountFound.parentId, accountFound.id)
-                            }}>
-                                <div className="peoples-found d-flex flex-md-row flex-column justify-content-between align-items-center">
-                                    <div className="people-image my-2">
-                                        <img
-                                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBnUckFxDVe5FOT5vuVfWCvWWY1pUrOPBOFPu9CNZYpABJSYPCigxy9rEc32E6mBamw3c&usqp=CAU"
-                                        />
-                                    </div>
-                                    <div className="d-flex flex-row align-items-center my-2">
-                                        <div className="people-item">
-                                            <AiOutlineUser className='ms-2'/>
-                                            نام و نام خانوادگی:
+                    {
+                        this.state.searchLoading ?
+                            [...Array(5)].map((x, i) =>
+                                (
+                                    <div  className="peoples-found-loading d-flex align-items-center justify-content-between">
+                                        <div className="my-2 mx-3">
+                                            <Skeleton style={{borderRadius: "50%"}} animation="wave" variant="circular" width={80} height={80} />
                                         </div>
-                                        {accountFound.fullName}
-                                    </div>
-                                    <div className="d-flex flex-row align-items-center my-2">
-                                        <div className="people-item">
-                                            <BsTelephone className='ms-2'/>
-                                            شماره تلفن:
+                                        <div className="my-2">
+                                            <Skeleton animation="wave" height={30} width={200}/>
                                         </div>
-                                        {accountFound.phoneNumber}
-                                    </div>
-                                    <div className="d-flex flex-row align-items-center my-2">
-                                        <div className="people-item">
-                                            <AiOutlineBarcode className='ms-2'/>
-                                            کد ملی:
+                                        <div className="my-2">
+                                            <Skeleton animation="wave" height={30} width={200}/>
                                         </div>
-                                        {accountFound.nationalCode}
+                                        <div className="my-2">
+                                            <Skeleton animation="wave" height={30} width={200}/>
+                                        </div>
                                     </div>
+                                ))
+                            :
+                            this.state.accountFound.map(accountFound => (
+                        <Link to={accountFound.id} className='account-found-link' onClick={() => {
+                            this.context.handlePersonId(accountFound.parentId, accountFound.id)
+                        }}>
+                            <div className="peoples-found d-flex flex-md-row flex-column justify-content-between align-items-center">
+
+                                <div className="people-image my-2">
+                                    <img
+                                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBnUckFxDVe5FOT5vuVfWCvWWY1pUrOPBOFPu9CNZYpABJSYPCigxy9rEc32E6mBamw3c&usqp=CAU"
+                                    />
                                 </div>
-                            </Link>
-                        </>
-                    ))}
+                                <div className="d-flex flex-row align-items-center my-2">
+                                    <div className="people-item">
+                                        <AiOutlineUser className='ms-2'/>
+                                        نام و نام خانوادگی:
+                                    </div>
+                                    {accountFound.fullName}
+                                </div>
+                                <div className="d-flex flex-row align-items-center my-2">
+                                    <div className="people-item">
+                                        <BsTelephone className='ms-2'/>
+                                        شماره تلفن:
+                                    </div>
+                                    {accountFound.phoneNumber}
+                                </div>
+                                <div className="d-flex flex-row align-items-center my-2">
+                                    <div className="people-item">
+                                        <AiOutlineBarcode className='ms-2'/>
+                                        کد ملی:
+                                    </div>
+                                    {accountFound.nationalCode}
+                                </div>
+                            </div>
+                        </Link>
+                        ))}
                     &nbsp;
                 </div>
             </>
@@ -101,10 +123,9 @@ class SearchPersonnel extends Component {
     //search
     handleSearchInput = async (e) => {
         const value = e.target.value;
-        this.setState({searchInput: value});
+        this.setState({searchInput: value, searchLoading: true});
         const response = await fetch(`https://api.saadatportal.com/api/v1/characteristic/search?parentType=Personnel&${this.state.searchType}=${e.target.value}`).then((response) => response.json())
-            .then((data) => this.setState({accountFound: data}));
-        console.log(window.location.href)
+            .then((data) => this.setState({accountFound: data, searchLoading: false}));
     }
 
 }

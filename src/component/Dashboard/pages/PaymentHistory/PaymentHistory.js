@@ -6,9 +6,11 @@ import persian_fa from "react-date-object/locales/persian_fa";
 import {Box, Button, CircularProgress} from "@mui/material";
 import {RiDownloadCloud2Fill} from "react-icons/ri";
 import {green} from "@mui/material/colors";
+import Skeleton from "react-loading-skeleton";
 
 class PaymentHistory extends Component {
     state = {
+        searchLoading: true,
         loading: false,
         payment: [],
         paymentFilter: [],
@@ -22,11 +24,11 @@ class PaymentHistory extends Component {
     }
 
     async componentDidMount() {
+        this.setState({searchLoading: true})
         const response = await fetch('https://api.saadatportal.com/api/v1/account').then((response) => response.json())
             .then((data) => this.setState({totalPayment : data.totalPayment ,totalReceive : data.totalReceived}));
-
         const response2 = await fetch('https://api.saadatportal.com/api/v1/paymentHistory').then((response) => response.json())
-            .then((data) => this.setState({payment : data}));
+            .then((data) => this.setState({payment : data, searchLoading: false}));
 
     }
 
@@ -201,7 +203,7 @@ class PaymentHistory extends Component {
                         </div>
                         <Box sx={{ m: 1, position: 'relative' }}>
                             <Button
-                                className={"btn btn-see col-12 col-md my-2 px-2"}
+                                className={"buttonDone col-12 col-md my-2 px-2"}
                                 variant="contained"
                                 disabled={this.state.loading}
                                 onClick={this.handleSubmit}
@@ -242,7 +244,21 @@ class PaymentHistory extends Component {
                             </thead>
                             <tbody>
                             {
-                                this.state.payment.map((peyment, index) => (
+                                this.state.searchLoading ?
+                                    [...Array(5)].map((x, i) =>
+                                        <tr key={i}>
+                                            <td><Skeleton animation="wave" height={20} width="100%" /></td>
+                                            <td><Skeleton animation="wave" height={20} width="100%" /></td>
+                                            <td><Skeleton animation="wave" height={20} width="100%" /></td>
+                                            <td><Skeleton animation="wave" height={20} width="100%" /></td>
+                                            <td><Skeleton animation="wave" height={20} width="100%" /></td>
+                                            <td><Skeleton animation="wave" height={20} width="100%" /></td>
+                                            <td><Skeleton animation="wave" height={20} width="100%" /></td>
+                                            <td><Skeleton animation="wave" height={20} width="100%" /></td>
+                                        </tr>
+                                    )
+                                    :
+                                    this.state.payment.map((peyment, index) => (
                                     <tr>
                                         <td>{index + 1}</td>
                                         <td>{peyment.paymentType === "expend" ? ("پرداخت"):("دریافت")}</td>
@@ -328,7 +344,7 @@ class PaymentHistory extends Component {
             startDate: startDate,
             endDate: endDate
         }
-        this.setState({loading: true})
+        this.setState({loading: true, searchLoading: true})
         const rawResponse = await fetch('https://api.saadatportal.com/api/v1/paymentHistory/filter', {
             method: 'POST',
             headers: {
@@ -336,7 +352,7 @@ class PaymentHistory extends Component {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(result)
-        }).then(() => {this.setState({loading: false})});
+        }).then(() => {this.setState({loading: false, searchLoading: false})});
         var content = await rawResponse.json();
         console.log(content);
         this.setState({payment: content});

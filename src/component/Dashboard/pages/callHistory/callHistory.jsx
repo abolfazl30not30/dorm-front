@@ -8,9 +8,11 @@ import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
 import {Box, Button, CircularProgress} from "@mui/material";
 import {green} from "@mui/material/colors";
+import Skeleton from "react-loading-skeleton";
 
 class callHistory extends Component {
     state = {
+        searchLoading: true,
         loading: false,
         calStyles : {
             calendarContainer: "calendarContainer",
@@ -43,7 +45,7 @@ class callHistory extends Component {
 
     async componentDidMount() {
         const response = await fetch('https://api.saadatportal.com/api/v1/telephoneHistory').then((response) => response.json())
-            .then((data) => this.setState({callHistory : data}));
+            .then((data) => this.setState({callHistory : data, searchLoading: false}));
     }
 
     render() {
@@ -88,7 +90,18 @@ class callHistory extends Component {
                             </thead>
                             <tbody>
                             {
-                                this.state.callHistory.map((i) => (
+                                this.state.searchLoading ?
+                                    [...Array(5)].map((x, i) =>
+                                        <tr>
+                                            <td><Skeleton animation="wave" height={23} width="100%" /></td>
+                                            <td><Skeleton animation="wave" height={23} width="100%" /></td>
+                                            <td><Skeleton animation="wave" height={23} width="100%" /></td>
+                                            <td><Skeleton animation="wave" height={23} width="100%" /></td>
+                                            <td><Skeleton animation="wave" height={23} width="100%" /></td>
+                                         </tr>
+                                        )
+                                    :
+                                    this.state.callHistory.map((i) => (
                                     <tr>
                                         <td>{i.title}</td>
                                         <td>{i.callerName}</td>
@@ -354,9 +367,9 @@ class callHistory extends Component {
 
     handleSearchInput = async (e) =>{
         const value = e.target.value;
-        this.setState({searchInput:value});
+        this.setState({searchInput: value, searchLoading: true});
         const response = await fetch(`https://api.saadatportal.com/api/v1/telephoneHistory/search?${this.state.searchType}=${e.target.value}`).then((response) => response.json())
-            .then((data) => this.setState({callHistory: data}));
+            .then((data) => this.setState({callHistory: data, searchLoading: false}));
     }
 }
 

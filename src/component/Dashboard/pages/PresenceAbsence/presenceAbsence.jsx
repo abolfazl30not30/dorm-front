@@ -39,7 +39,7 @@ class PresenceAbsence extends Component {
                     <div className="presence-absence">
                         <div className="title-page">نوبت نظافت شبانه</div>
                         {this.state.isLoading ? (
-                            <div className='row' style={{marginTop: "60px"}}>
+                            <div className='row'>
                                 <FloorAndBedLoading/>
                             </div>
                         ) : (
