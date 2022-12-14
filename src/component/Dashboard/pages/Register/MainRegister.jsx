@@ -21,11 +21,7 @@ import OGUploadPage from "./OtherGuest/OGUploadPage";
 import BuildingContext from '../../../../contexts/Building'
 import {Modal} from "react-bootstrap";
 import {Link} from "react-router-dom";
-import Accordion from "react-bootstrap/Accordion";
-import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
-import ToggleButton from "@mui/material/ToggleButton";
-import {TiTick, TiTimes} from "react-icons/ti";
-import {IoIosAddCircleOutline} from "react-icons/io";
+
 
 class MainRegister extends Component {
 

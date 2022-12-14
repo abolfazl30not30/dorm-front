@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import "../../../../style/uploadPage.css"
 import {BsFileEarmarkImage, BsFileEarmarkPdfFill} from "react-icons/bs"
-import upload_icon from '../../../../img/Group 1.png'
+import side_img from '../../../../img/sadat logo-png.png'
 import Accordion from 'react-bootstrap/Accordion';
 // import progressBar from "./progressBar";
 import {ProgressBar} from 'react-bootstrap';
@@ -634,7 +634,7 @@ class CUploadPage extends Component {
                         </Accordion>
                     </div>
                     <div className='upload-logo-container col-md-5'>
-                        <img src={upload_icon} className='upload-icon' alt='upload_icon'/>
+                        <img src={side_img} className='upload-icon' alt='upload_icon'/>
                     </div>
                 </div>
             </>
