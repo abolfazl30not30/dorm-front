@@ -1,4 +1,4 @@
-import { Component } from "react";
+import React, { Component } from "react";
 import './../../../../style/editBuilding.css';
 import { BsDoorClosed } from 'react-icons/bs'
 import { AiOutlinePlus, AiFillCloseCircle } from 'react-icons/ai'
@@ -11,15 +11,18 @@ import { FaPencilAlt } from "react-icons/fa";
 import { MdAddCircle } from "react-icons/md"
 import {MdDone} from 'react-icons/md'
 import 'react-edit-text/dist/index.css';
+import {Box, CircularProgress} from "@mui/material";
+import {green, red} from "@mui/material/colors";
 
 
 class EditFloorAndUnit extends Component {
     state = {
+        loading: false,
         floor: [],
         indexOfFloor: null,
         showDeleteModalUnit: false,
         showDeleteModalFloor: false,
-        showَFloorAccessory: false,
+        showFloorAccessory: false,
         unitTemp: {},
         floorTemp: {
             accessories:[]
@@ -69,7 +72,7 @@ class EditFloorAndUnit extends Component {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="d-flex flex-wrap">
+                                    <div className="d-flex flex-wrap align-items-center">
                                         {f.units.map((u) => (
                                             <div className="col-4">
                                                 <div className="unit-box">
@@ -79,14 +82,14 @@ class EditFloorAndUnit extends Component {
                                                 </div>
                                             </div>
                                         ))}
-                                        <button onClick={() => { this.addUnit(f) }} className="unit-add-btn"><AiOutlinePlus /></button>
+                                        <button onClick={() => { this.addUnit(f) }} className="col-4 unit-add-btn"><div className={"d-flex align-items-center"} style={{color: "#296d9a"}}>افزودن واحد<AiOutlinePlus size={25} className={"mx-2 mb-1"}/></div></button>
                                     </div>
                                 </div>
                             </div>
                         ))}
                         <div className="col-4 p-3">
                             <div className="floor-box add">
-                                <button onClick={this.addFloor} className="btn"><AiOutlinePlus /></button>
+                                <button onClick={this.addFloor} className="btn"><div className={"d-flex align-items-center"} style={{color: "#296d9a", fontSize: "1.5rem"}}>افزودن طبقه<AiOutlinePlus size={25} className={"mx-2 mb-1"}/></div></button>
                             </div>
                         </div>
                     </div>
@@ -95,7 +98,7 @@ class EditFloorAndUnit extends Component {
                     </div>
                 </div>
 
-                <Modal centered show={this.state.showDeleteModalFloor} onClick={() => { this.handleDeleteCloseFloor(false) }}>
+                <Modal centered show={this.state.showDeleteModalFloor} onHide={() => this.setState({showDeleteModalFloor: false})}>
                     <Modal.Header closeButton>
                         <Modal.Title>حذف طبقه</Modal.Title>
                     </Modal.Header>
@@ -103,12 +106,34 @@ class EditFloorAndUnit extends Component {
                         <h6>آيا از حذف اين طبقه مطمئن هستيد؟</h6>
                     </Modal.Body>
                     <Modal.Footer className="justify-content-start">
-                        <button className="btn btn-danger" onClick={() => this.handleDeleteCloseFloor(true)}>حذف</button>
-                        <button className="btn btn-light" onClick={() => this.handleDeleteCloseFloor(false)}>بستن</button>
+                        <Box sx={{ m: 1, position: 'relative' }}>
+                            <Button
+                                className={"buttonDelete"}
+                                variant="contained"
+                                disabled={this.state.loading}
+                                onClick={() => this.handleDeleteFloor()}
+                            >
+                                حذف
+                            </Button>
+                            {this.state.loading && (
+                                <CircularProgress
+                                    size={24}
+                                    sx={{
+                                        color: red[500],
+                                        position: 'absolute',
+                                        top: '50%',
+                                        left: '50%',
+                                        marginTop: '-12px',
+                                        marginLeft: '-12px',
+                                    }}
+                                />
+                            )}
+                        </Box>
+                        <button className="btn btn-light" onClick={() => this.setState({showDeleteModalFloor: false})}>بستن</button>
                     </Modal.Footer>
                 </Modal>
 
-                <Modal centered show={this.state.showDeleteModalUnit} onClick={() => { this.handleDeleteCloseUnit(false) }}>
+                <Modal centered show={this.state.showDeleteModalUnit} onHide={() => this.setState({showDeleteModalUnit: false})}>
                     <Modal.Header closeButton>
                         <Modal.Title>حذف واحد</Modal.Title>
                     </Modal.Header>
@@ -116,8 +141,30 @@ class EditFloorAndUnit extends Component {
                         <h6>آيا از حذف اين واحد مطمئن هستيد؟</h6>
                     </Modal.Body>
                     <Modal.Footer className="justify-content-start">
-                        <button className="btn btn-danger" onClick={() => this.handleDeleteCloseUnit(true)}>حذف</button>
-                        <button className="btn btn-light" onClick={() => this.handleDeleteCloseUnit(false)}>بستن</button>
+                        <Box sx={{ m: 1, position: 'relative' }}>
+                            <Button
+                                className={"buttonDelete"}
+                                variant="contained"
+                                disabled={this.state.loading}
+                                onClick={() => this.handleDeleteUnit()}
+                            >
+                                حذف
+                            </Button>
+                            {this.state.loading && (
+                                <CircularProgress
+                                    size={24}
+                                    sx={{
+                                        color: red[500],
+                                        position: 'absolute',
+                                        top: '50%',
+                                        left: '50%',
+                                        marginTop: '-12px',
+                                        marginLeft: '-12px',
+                                    }}
+                                />
+                            )}
+                        </Box>
+                        <button className="btn btn-light" onClick={() => this.setState({showDeleteModalUnit: false})}>بستن</button>
                     </Modal.Footer>
                 </Modal>
 
@@ -167,7 +214,7 @@ class EditFloorAndUnit extends Component {
             {
                 empty: true,
                 id: content.id,
-                name: "طبقه...",
+                name: "طبقه",
                 units: []
             }
         )
@@ -249,25 +296,29 @@ class EditFloorAndUnit extends Component {
     }
 
     deleteFloor = async (floor) => {
-        this.setState({ showDeleteModal: true });
+        this.setState({ showDeleteModal: true, loading: true});
 
         await fetch(`https://api.saadatportal.com/api/v1/floor/${floor.id}`, {
             method: 'DELETE',
         })
-            .then(res => res.text())
-            .then(res => console.log(res))
+            .then(res => {
+                res.text()
+                this.setState({loading: false, showDeleteModalFloor: false})
+            })
 
         const updateUsers = this.state.floor.filter(f => f !== floor);
         this.setState({ floor: updateUsers });
     }
 
     deleteUnit = async (unit, index) => {
-
+        this.setState({loading: true})
         await fetch(`https://api.saadatportal.com/api/v1/unit/${unit.id}`, {
             method: 'DELETE',
         })
-            .then(res => res.text())
-            .then(res => console.log(res))
+            .then(res => {
+                res.text()
+                this.setState({loading: false, showDeleteModalUnit: false});
+            })
 
         let updatedState = [...this.state.floor];
         let updatedUnit = this.state.floor[index].units;
@@ -339,17 +390,12 @@ class EditFloorAndUnit extends Component {
         this.setState({ floorTemp: floor });
     }
 
-    handleDeleteCloseUnit = (bool) => {
-        this.setState({ showDeleteModalUnit: false });
-        if (bool) {
-            this.deleteUnit(this.state.unitTemp, this.state.floorIndex);
-        }
+    handleDeleteUnit = () => {
+        this.deleteUnit(this.state.unitTemp, this.state.floorIndex);
+
     }
-    handleDeleteCloseFloor = (bool) => {
-        this.setState({ showDeleteModalFloor: false });
-        if (bool) {
-            this.deleteFloor(this.state.floorTemp);
-        }
+    handleDeleteFloor = () => {
+        this.deleteFloor(this.state.floorTemp);
     }
 
     hanldeFloorAccShow = (floor) => {

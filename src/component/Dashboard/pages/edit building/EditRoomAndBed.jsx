@@ -11,6 +11,8 @@ import {Padding} from '@syncfusion/ej2-react-charts';
 import {TbBuilding} from "react-icons/tb"
 import BuildingContext from '../../../../contexts/Building';
 import {MdAddCircle} from "react-icons/md";
+import {Box, CircularProgress} from "@mui/material";
+import {red} from "@mui/material/colors";
 
 class EditRoomAndBed extends Component {
 
@@ -50,7 +52,8 @@ class EditRoomAndBed extends Component {
 
         //         ]
         //     },
-        // ],
+        // ]
+        loading: false,
         rooms: [],
         unit: {
             accessories:[]
@@ -172,19 +175,24 @@ class EditRoomAndBed extends Component {
                                                 ))
                                             }
                                             <div className='col-4'>
-                                                <button onClick={() => {
+                                                <button className='bed-add-btn' onClick={() => {
                                                     this.addBed(room)
-                                                }} className="bed-add-btn"><AiOutlinePlus/></button>
+                                                }}><div className={"d-flex align-items-center"} style={{color: "#296d9a", fontSize: "1rem"}}>افزودن تخت<AiOutlinePlus size={20} className={"mx-2"}/></div></button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         ))}
-                        <div className="col-6">
-                            <div className='room-add-btn' onClick={() => {
-                                this.addRoom()
-                            }}><AiOutlinePlus/></div>
+                        <div className="col-6 col-md-6 col-sm-6 col-xs-12">
+                            <div className={"room-box"}>
+                                <button className='room-add-btn' onClick={() => {
+                                    this.addRoom()
+                                }}><div className={"d-flex align-items-center"} style={{color: "#296d9a", fontSize: "1.5rem"}}>
+                                        افزودن اتاق<AiOutlinePlus size={25} className={"mx-2"}/>
+                                    </div>
+                                </button>
+                            </div>
                         </div>
                     </div>
                     <div className="register">
@@ -192,8 +200,8 @@ class EditRoomAndBed extends Component {
                     </div>
                 </div>
 
-                <Modal centered show={this.state.showDeleteModalRoom} onClick={() => {
-                    this.handleDeleteCloseRoom(false)
+                <Modal centered show={this.state.showDeleteModalRoom} onHide={() => {
+                    this.setState({showDeleteModalRoom: false})
                 }}>
                     <Modal.Header closeButton>
                         <Modal.Title>حذف اتاق</Modal.Title>
@@ -202,14 +210,36 @@ class EditRoomAndBed extends Component {
                         <h6>آيا از حذف اين اتاق مطمئن هستيد؟</h6>
                     </Modal.Body>
                     <Modal.Footer className="justify-content-start">
-                        <button className="btn btn-danger" onClick={() => this.handleDeleteCloseRoom(true)}>حذف</button>
-                        <button className="btn btn-light" onClick={() => this.handleDeleteCloseRoom(false)}>بستن
+                        <Box sx={{ m: 1, position: 'relative' }}>
+                            <Button
+                                className={"buttonDelete"}
+                                variant="contained"
+                                disabled={this.state.loading}
+                                onClick={this.handleDeleteRoom}
+                            >
+                                حذف
+                            </Button>
+                            {this.state.loading && (
+                                <CircularProgress
+                                    size={24}
+                                    sx={{
+                                        color: red[500],
+                                        position: 'absolute',
+                                        top: '50%',
+                                        left: '50%',
+                                        marginTop: '-12px',
+                                        marginLeft: '-12px',
+                                    }}
+                                />
+                            )}
+                        </Box>
+                        <button className="btn btn-light" onClick={() => this.setState({showDeleteModalRoom: false})}>بستن
                         </button>
                     </Modal.Footer>
                 </Modal>
 
-                <Modal centered show={this.state.showDeleteModalBed} onClick={() => {
-                    this.handleDeleteCloseBed(false)
+                <Modal centered show={this.state.showDeleteModalBed} onHide={() => {
+                    this.setState({showDeleteModalBed: false})
                 }}>
                     <Modal.Header closeButton>
                         <Modal.Title>حذف تخت</Modal.Title>
@@ -218,8 +248,30 @@ class EditRoomAndBed extends Component {
                         <h6>آيا از حذف اين تخت مطمئن هستيد؟</h6>
                     </Modal.Body>
                     <Modal.Footer className="justify-content-start">
-                        <button className="btn btn-danger" onClick={() => this.handleDeleteCloseBed(true)}>حذف</button>
-                        <button className="btn btn-light" onClick={() => this.handleDeleteCloseBed(false)}>بستن</button>
+                        <Box sx={{ m: 1, position: 'relative' }}>
+                            <Button
+                                className={"buttonDelete"}
+                                variant="contained"
+                                disabled={this.state.loading}
+                                onClick={this.handleDeleteBed}
+                            >
+                                حذف
+                            </Button>
+                            {this.state.loading && (
+                                <CircularProgress
+                                    size={24}
+                                    sx={{
+                                        color: red[500],
+                                        position: 'absolute',
+                                        top: '50%',
+                                        left: '50%',
+                                        marginTop: '-12px',
+                                        marginLeft: '-12px',
+                                    }}
+                                />
+                            )}
+                        </Box>
+                        <button className="btn btn-light" onClick={() => this.setState({showDeleteModalBed: false})}>بستن</button>
                     </Modal.Footer>
                 </Modal>
 
@@ -242,7 +294,7 @@ class EditRoomAndBed extends Component {
                                     <EditText style={{backgroundColor: "#f9f9f9"}} className="editable" showEditButton
                                               defaultValue={accessory.name}
                                               editButtonContent={<FaPencilAlt color="#f39c12" fontSize="15px"/>}
-                                              onSave={this.handleRoomAccTitle} onSave={this.handleRoomAccTitle} onEditMode={()=>{this.setState({roomAccIndex:i})}}/>
+                                              onSave={this.handleRoomAccTitle} onEditMode={()=>{this.setState({roomAccIndex:i})}}/>
                                 </div>
                                 <div className="accessory-count col-5">
                                     <CounterInput min={0} max={10} count={accessory.count} onCountChange={count => {
@@ -332,18 +384,12 @@ class EditRoomAndBed extends Component {
         this.setState({roomIndex: index});
     }
 
-    handleDeleteCloseRoom = (bool) => {
-        this.setState({showDeleteModalRoom: false});
-        if (bool) {
-            this.deleteRoom(this.state.roomTemp);
-        }
+    handleDeleteRoom = () => {
+        this.deleteRoom(this.state.roomTemp);
     }
 
-    handleDeleteCloseBed = (bool) => {
-        this.setState({showDeleteModalBed: false});
-        if (bool) {
-            this.deleteBed(this.state.bedTemp, this.state.roomIndex);
-        }
+    handleDeleteBed = () => {
+        this.deleteBed(this.state.bedTemp, this.state.roomIndex);
     }
 
 
@@ -399,16 +445,17 @@ class EditRoomAndBed extends Component {
     }
 
     deleteRoom = async (room) => {
-        console.log(room.id)
+        this.setState({loading: true})
         await fetch(`https://api.saadatportal.com/api/v1/room/${room.id}`, {
             method: 'DELETE',
         })
-            .then(res => res.text())
-            .then(res => console.log(res))
+            .then(res => {
+                res.text();
+                this.setState({loading: false, showDeleteModalRoom : false})
+            })
 
         const updateState = this.state.rooms.filter(r => r !== room);
         this.setState({rooms: updateState});
-        console.log(this.state.rooms)
     }
 
 
@@ -421,13 +468,13 @@ class EditRoomAndBed extends Component {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({name:"تخت...", empty: "true", roomId: r.id})
+            body: JSON.stringify({name:"تخت", empty: "true", roomId: r.id})
 
         });
         const content = await rawResponse.json()
         const index = this.state.rooms.indexOf(r);
         const newBed = this.state.rooms[index].beds.concat(
-            {id:content.id, name: "تخت...", empty: "true"}
+            {id:content.id, name: "تخت", empty: "true"}
         )
         const updateRooms = [...this.state.rooms]
         updateRooms[index].beds = newBed
@@ -464,10 +511,14 @@ class EditRoomAndBed extends Component {
     }
 
     deleteBed = async (bed, index) => {
+        this.setState({loading: true})
         await fetch(`https://api.saadatportal.com/api/v1/bed/${bed.id}`, {
             method: 'DELETE',
         })
-            .then(res => res.text())
+            .then(res => {
+                res.text();
+                this.setState({loading: false, showDeleteModalBed: false})
+            })
 
         let updatedState = [...this.state.rooms];
         let updatedBed = this.state.rooms[index].beds;

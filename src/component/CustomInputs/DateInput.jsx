@@ -23,7 +23,7 @@ class DateInput extends Component{
         digits : ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
 
         plugin1: [ // this.props.timeInclude === true
-            <TimePicker position="bottom"/>,
+            <TimePicker hideSeconds position="bottom"/>,
             // <DatePickerHeader position="left" />
         ],
 
@@ -38,7 +38,7 @@ class DateInput extends Component{
                     // fixMainPosition={false}
                     calendarPosition={`top`}
                     digits={this.state.digits}
-                    format={`${this.props.timeInclude ? 'HH:mm:ss YYYY/MM/DD' : 'YYYY/MM/DD'}`}
+                    format={`${this.props.timeInclude ? 'HH:mm YYYY/MM/DD' : 'YYYY/MM/DD'}`}
 
 
                     containerStyle={{
@@ -48,6 +48,7 @@ class DateInput extends Component{
                     inputClass={`input form-control ${this.props.condition1 === false ? "is-invalid" : ""}`}
                     value={this.props.value}
                     onChange={(value) => {
+                        console.log(value.format("YYYY/MM/DD HH:mm:ss"))
                         if (this.props.timeInclude) {
                             this.context.handleDates(value.format("YYYY/MM/DD HH:mm:ss"), this.props.fieldNameString, this.props.valueOfInputString);
                             this.context.handleValueOfDate(value, this.props.valueFieldString, this.props.valueOfInputString);
