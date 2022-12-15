@@ -124,20 +124,6 @@ class PersonnelProfilePage extends Component {
                                             تماس: {this.state.personnel.phoneNumber}</div>
                                         <div className="people-item"><i className="bi bi-personnel ms-2"></i>نام
                                             پدر: {this.state.personnel.fatherName}</div>
-                                        <div className="people-item">
-                                            <i className="bi bi-personnel ms-2"></i>
-                                            نوع اقامتگر:
-                                            {(() => {
-                                                switch (this.state.personnel.personType) {
-                                                    case 'constant':
-                                                        return 'اقامتگر ثابت';
-                                                    case 'familyGuest':
-                                                        return 'بستگان درجه یک';
-                                                    case 'otherGuest':
-                                                        return 'متفرقه';
-                                                }
-                                            })()}
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -151,798 +137,200 @@ class PersonnelProfilePage extends Component {
                                 <Tab eventKey="more-information" title="اطلاعات بیشتر"
                                      style={{backgroundColor: "transparent"}}>
                                     <div className="tabs-content">
-                                        {(() => {
-                                            switch (this.state.personnel.personType) {
-                                                case 'constant':
-                                                    return <>
-                                                        <div className="information d-flex flex-row flex-wrap">
-                                                            <div className='col-12 col-md-4'>
-                                                                <div className="more-info-item">
-                                                                    <i className="bi bi-caret-left ms-1"></i>
-                                                                    <label> نام :</label>
-                                                                    {this.state.personnel.firstName}
-                                                                </div>
-                                                            </div>
-                                                            <div className='col-12 col-md-4'>
-                                                                <div className="more-info-item">
-                                                                    <i className="bi bi-caret-left ms-1"></i>
-                                                                    <label> نام خانوادگی :</label>
-                                                                    {this.state.personnel.lastName}
-                                                                </div>
-                                                            </div>
-                                                            <div className='col-12 col-md-4'>
-                                                                <div className="more-info-item">
-                                                                    <i className="bi bi-caret-left ms-1"></i>
-                                                                    <label> کد ملی :</label>
-                                                                    {this.state.personnel.nationalCode}
-                                                                </div>
-                                                            </div>
-                                                            <div className='col-12 col-md-4'>
-                                                                <div className="more-info-item">
-                                                                    <i className="bi bi-caret-left ms-1"></i>
-                                                                    <label> شماره شناسنامه :</label>
-                                                                    {this.state.personnel.certificateNumber}
-                                                                </div>
-                                                            </div>
-                                                            <div className='col-12 col-md-4'>
-                                                                <div className="more-info-item">
-                                                                    <i className="bi bi-caret-left ms-1"></i>
-                                                                    <label> محل صدور :</label>
-                                                                    {this.state.personnel.placeOfIssue}
-                                                                </div>
-                                                            </div>
-                                                            <div className='col-12 col-md-4'>
-                                                                <div className="more-info-item">
-                                                                    <i className="bi bi-caret-left ms-1"></i>
-                                                                    <label> تاریخ تولد :</label>
-                                                                    {this.state.personnel.birthDate.split(" ")[0]}
-                                                                </div>
-                                                            </div>
-                                                            <div className='col-12 col-md-4'>
-                                                                <div className="more-info-item">
-                                                                    <i className="bi bi-caret-left ms-1"></i>
-                                                                    <label> ملیت :</label>
-                                                                    {this.state.personnel.nationality}
-                                                                </div>
-                                                            </div>
-                                                            <div className='col-12 col-md-4'>
-                                                                <div className="more-info-item">
-                                                                    <i className="bi bi-caret-left ms-1"></i>
-                                                                    <label> نام پدر :</label>
-                                                                    {this.state.personnel.fatherName}
-                                                                </div>
-                                                            </div>
-                                                            <div className='col-12 col-md-4'>
-                                                                <div className="more-info-item">
-                                                                    <i className="bi bi-caret-left ms-1"></i>
-                                                                    <label> دین :</label>
-                                                                    {(() => {
-                                                                        switch (this.state.personnel.religion) {
-                                                                            case 'islam':
-                                                                                return 'اسلام';
-                                                                            case 'christianity':
-                                                                                return 'مسیحیت';
-                                                                            case 'hinduism':
-                                                                                return 'هندوئیسم';
-                                                                            case 'buddhism':
-                                                                                return 'آیین بودایی';
-                                                                            case 'other':
-                                                                                return 'سایر';
-                                                                        }
-                                                                    })()}
-                                                                </div>
-                                                            </div>
-                                                            <div className='col-12 col-md-4'>
-                                                                <div className="more-info-item">
-                                                                    <i className="bi bi-caret-left ms-1"></i>
-                                                                    <label> مذهب :</label>
-                                                                    {this.state.personnel.subReligion != "" ? this.state.personnel.subReligion : 'ثبت نشده'}
-                                                                </div>
-                                                            </div>
-                                                            <div className='col-12 col-md-4'>
-                                                                <div className="more-info-item">
-                                                                    <i className="bi bi-caret-left ms-1"></i>
-                                                                    <label> دانشگاه محل تحصیل :</label>
-                                                                    {this.state.personnel.university != "" ? this.state.personnel.university : 'ثبت نشده'}
-                                                                </div>
-                                                            </div>
-                                                            <div className='col-12 col-md-4'>
-                                                                <div className="more-info-item">
-                                                                    <i className="bi bi-caret-left ms-1"></i>
-                                                                    <label> شماره دانشجویی :</label>
-                                                                    {this.state.personnel.studentNumber != "" ? this.state.personnel.studentNumber : 'ثبت نشده'}
-                                                                </div>
-                                                            </div>
-                                                            <div className='col-12 col-md-4'>
-                                                                <div className="more-info-item">
-                                                                    <i className="bi bi-caret-left ms-1"></i>
-                                                                    <label> شغل پدر :</label>
-                                                                    {this.state.personnel.fatherJob != "" ? this.state.personnel.fatherJob : 'ثبت نشده'}
-                                                                </div>
-                                                            </div>
-                                                            <div className='col-12 col-md-4'>
-                                                                <div className="more-info-item">
-                                                                    <i className="bi bi-caret-left ms-1"></i>
-                                                                    <label> وضعیت تاهل :</label>
-                                                                    {(() => {
-                                                                        switch (this.state.personnel.maritalStatus) {
-                                                                            case 'single':
-                                                                                return 'مجرد';
-                                                                            case 'married':
-                                                                                return 'متاهل';
-                                                                            case 'divorced':
-                                                                                return 'متارکه';
-                                                                        }
-                                                                    })()}
-                                                                </div>
-                                                            </div>
-                                                            {(() => {
-                                                                switch (this.state.personnel.maritalStatus) {
-                                                                    case 'married':
-                                                                        return (
-                                                                        <>
-                                                                            <div className='col-12 col-md-4'>
-                                                                                <div className="more-info-item">
-                                                                                    <i className="bi bi-caret-left ms-1"></i>
-                                                                                    <label> نام و نام خانوادگی همسر
-                                                                                        :</label>
-                                                                                    {this.state.personnel.spouseFullName != "" ? this.state.personnel.spouseFullName : 'ثبت نشده'}
-                                                                                </div>
-                                                                            </div>
-                                                                            <div className='col-12 col-md-4'>
-                                                                                <div className="more-info-item">
-                                                                                    <i className="bi bi-caret-left ms-1"></i>
-                                                                                    <label> شغل همسر :</label>
-                                                                                    {this.state.personnel.spouseJob != "" ? this.state.personnel.spouseJob : 'ثبت نشده'}
-                                                                                </div>
-                                                                            </div>
-                                                                        </>);
-                                                                }
-                                                            })()}
-                                                            <div className='col-12 col-md-4'>
-                                                                <div className="more-info-item">
-                                                                    <i className="bi bi-caret-left ms-1"></i>
-                                                                    <label> بیماری خاص :</label>
-                                                                    {(() => {
-                                                                        switch (this.state.personnel.health) {
-                                                                            case true:
-                                                                                return 'بله';
-                                                                            case false:
-                                                                                return 'خیر';
-                                                                        }
-                                                                    })()}
-                                                                </div>
-                                                            </div>
-                                                            {(() => {
-                                                                switch (this.state.personnel.health) {
-                                                                    case true:
-                                                                        return <>
-                                                                            <div className='col-12 col-md-4'>
-                                                                                <div className="more-info-item">
-                                                                                    <i className="bi bi-caret-left ms-1"></i>
-                                                                                    <label> توضیحات بیماری :</label>
-                                                                                    {this.state.personnel.healthyStatus != "" ? this.state.personnel.healthyStatus : 'ثبت نشده'}
-                                                                                </div>
-                                                                            </div>
-                                                                        </>;
-                                                                }
-                                                            })()}
-                                                            <div className='col-12 col-md-4'>
-                                                                <div className="more-info-item">
-                                                                    <i className="bi bi-caret-left ms-1"></i>
-                                                                    <label> شماره همراه اقامتگر :</label>
-                                                                    {this.state.personnel.phoneNumber}
-                                                                </div>
-                                                            </div>
-                                                            <div className='col-12 col-md-4'>
-                                                                <div className="more-info-item">
-                                                                    <i className="bi bi-caret-left ms-1"></i>
-                                                                    <label> شماره تلفن منزل :</label>
-                                                                    {this.state.personnel.telephoneNumber}
-                                                                </div>
-                                                            </div>
-                                                            <div className='col-12 col-md-4'>
-                                                                <div className="more-info-item">
-                                                                    <i className="bi bi-caret-left ms-1"></i>
-                                                                    <label> تاریخ شروع پذیرش :</label>
-                                                                    {this.state.personnel.timePeriod.startDate}
-                                                                </div>
-                                                            </div>
-                                                            <div className='col-12 col-md-4'>
-                                                                <div className="more-info-item">
-                                                                    <i className="bi bi-caret-left ms-1"></i>
-                                                                    <label> تاریخ اتمام پذیرش :</label>
-                                                                    {this.state.personnel.timePeriod.endDate.split(" ")[0]}
-                                                                </div>
-                                                            </div>
-                                                            <div className='col-12 col-md-4'>
-                                                                <div className="more-info-item">
-                                                                    <i className="bi bi-caret-left ms-1"></i>
-                                                                    <label> آدرس محل سکونت :</label>
-                                                                    {this.state.personnel.address}
-                                                                </div>
-                                                            </div>
-                                                            <div className="col-12 my-2 me-3"
-                                                                 style={{fontSize: '.9rem', fontWeight: '600'}}>مشخصات
-                                                                بستگان(شخص اول)
-                                                            </div>
-                                                            <div className='col-12 col-md-4'>
-                                                                <div className="more-info-item">
-                                                                    <i className="bi bi-caret-left ms-1"></i>
-                                                                    <label> نام و نام خانوادگی :</label>
-                                                                    {this.state.personnel.firstPersonFullName}
-                                                                </div>
-                                                            </div>
-                                                            <div className='col-12 col-md-4'>
-                                                                <div className="more-info-item">
-                                                                    <i className="bi bi-caret-left ms-1"></i>
-                                                                    <label> شماره تماس :</label>
-                                                                    {this.state.personnel.firstPersonPhoneNumber}
-                                                                </div>
-                                                            </div>
-                                                            <div className='col-12 col-md-4'>
-                                                                <div className="more-info-item">
-                                                                    <i className="bi bi-caret-left ms-1"></i>
-                                                                    <label> نام پدر :</label>
-                                                                    {this.state.personnel.firstPersonFatherName != "" ? this.state.personnel.firstPersonFatherName : 'ثبت نشده'}
-                                                                </div>
-                                                            </div>
-                                                            <div className='col-12 col-md-4'>
-                                                                <div className="more-info-item">
-                                                                    <i className="bi bi-caret-left ms-1"></i>
-                                                                    <label> نسبت با اقامتگر :</label>
-                                                                    {(() => {
-                                                                        switch (this.state.personnel.firstPersonRelationshipWithResident) {
-                                                                            case 'father':
-                                                                                return 'پدر';
-                                                                            case 'mother':
-                                                                                return 'مادر';
-                                                                            case 'sister':
-                                                                                return 'خواهر';
-                                                                            case 'brother':
-                                                                                return 'برادر';
-                                                                            case 'other':
-                                                                                return 'غیره';
-                                                                        }
-                                                                    })()}
-                                                                </div>
-                                                            </div>
-                                                            <div className="col-12 my-2 me-3"
-                                                                 style={{fontSize: '.9rem', fontWeight: '600'}}>مشخصات
-                                                                بستگان(شخص دوم)
-                                                            </div>
-                                                            <div className='col-12 col-md-4'>
-                                                                <div className="more-info-item">
-                                                                    <i className="bi bi-caret-left ms-1"></i>
-                                                                    <label> نام و نام خانوادگی :</label>
-                                                                    {this.state.personnel.secondPersonFullName}
-                                                                </div>
-                                                            </div>
-                                                            <div className='col-12 col-md-4'>
-                                                                <div className="more-info-item">
-                                                                    <i className="bi bi-caret-left ms-1"></i>
-                                                                    <label> شماره تماس :</label>
-                                                                    {this.state.personnel.secondPersonPhoneNumber}
-                                                                </div>
-                                                            </div>
-                                                            <div className='col-12 col-md-4'>
-                                                                <div className="more-info-item">
-                                                                    <i className="bi bi-caret-left ms-1"></i>
-                                                                    <label> نام پدر :</label>
-                                                                    {this.state.personnel.secondPersonFatherName != "" ? this.state.personnel.secondPersonFatherName : 'ثبت نشده'}
-                                                                </div>
-                                                            </div>
-                                                            <div className='col-12 col-md-4'>
-                                                                <div className="more-info-item">
-                                                                    <i className="bi bi-caret-left ms-1"></i>
-                                                                    <label> نسبت با اقامتگر :</label>
-                                                                    {(() => {
-                                                                        switch (this.state.personnel.secondPersonRelationshipWithResident) {
-                                                                            case 'father':
-                                                                                return 'پدر';
-                                                                            case 'mother':
-                                                                                return 'مادر';
-                                                                            case 'sister':
-                                                                                return 'خواهر';
-                                                                            case 'brother':
-                                                                                return 'برادر';
-                                                                            case 'other':
-                                                                                return 'غیره';
-                                                                        }
-                                                                    })()}
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </>;
-                                                case 'familyGuest':
-                                                    return <>
-                                                        <div className="information d-flex flex-row flex-wrap">
-                                                            <div className='col-12 col-md-4'>
-                                                                <div className="more-info-item">
-                                                                    <i className="bi bi-caret-left ms-1"></i>
-                                                                    <label> نام :</label>
-                                                                    {this.state.personnel.firstName}
-                                                                </div>
-                                                            </div>
-                                                            <div className='col-12 col-md-4'>
-                                                                <div className="more-info-item">
-                                                                    <i className="bi bi-caret-left ms-1"></i>
-                                                                    <label> نام خانوادگی :</label>
-                                                                    {this.state.personnel.lastName}
-                                                                </div>
-                                                            </div>
-                                                            <div className='col-12 col-md-4'>
-                                                                <div className="more-info-item">
-                                                                    <i className="bi bi-caret-left ms-1"></i>
-                                                                    <label> نسبت با اقامتگر :</label>
-                                                                    {(() => {
-                                                                        switch (this.state.personnel.relationshipWithResident) {
-                                                                            case 'father':
-                                                                                return 'پدر';
-                                                                            case 'mother':
-                                                                                return 'مادر';
-                                                                            case 'sister':
-                                                                                return 'خواهر';
-                                                                            case 'brother':
-                                                                                return 'برادر';
-                                                                            case 'other':
-                                                                                return 'غیره';
-                                                                        }
-                                                                    })()}
-                                                                </div>
-                                                            </div>
-                                                            <div className='col-12 col-md-4'>
-                                                                <div className="more-info-item">
-                                                                    <i className="bi bi-caret-left ms-1"></i>
-                                                                    <label> کد ملی :</label>
-                                                                    {this.state.personnel.nationalCode}
-                                                                </div>
-                                                            </div>
-                                                            <div className='col-12 col-md-4'>
-                                                                <div className="more-info-item">
-                                                                    <i className="bi bi-caret-left ms-1"></i>
-                                                                    <label> شماره شناسنامه :</label>
-                                                                    {this.state.personnel.certificateNumber}
-                                                                </div>
-                                                            </div>
-                                                            <div className='col-12 col-md-4'>
-                                                                <div className="more-info-item">
-                                                                    <i className="bi bi-caret-left ms-1"></i>
-                                                                    <label> محل صدور :</label>
-                                                                    {this.state.personnel.placeOfIssue != "" ? this.state.personnel.placeOfIssue : 'ثبت نشده'}
-                                                                </div>
-                                                            </div>
-                                                            <div className='col-12 col-md-4'>
-                                                                <div className="more-info-item">
-                                                                    <i className="bi bi-caret-left ms-1"></i>
-                                                                    <label> تاریخ تولد :</label>
-                                                                    {this.state.personnel.birthDate != "" ? this.state.personnel.birthDate.split(" ")[0] : 'ثبت نشده'}
-                                                                </div>
-                                                            </div>
-                                                            <div className='col-12 col-md-4'>
-                                                                <div className="more-info-item">
-                                                                    <i className="bi bi-caret-left ms-1"></i>
-                                                                    <label> تاریخ شروع پذیرش :</label>
-                                                                    {this.state.personnel.timePeriod.startDate.split(" ")[0]}
-                                                                </div>
-                                                            </div>
-                                                            <div className='col-12 col-md-4'>
-                                                                <div className="more-info-item">
-                                                                    <i className="bi bi-caret-left ms-1"></i>
-                                                                    <label> تاریخ اتمام پذیرش :</label>
-                                                                    {this.state.personnel.timePeriod.endDate.split(" ")[0]}
-                                                                </div>
-                                                            </div>
-                                                            <div className='col-12 col-md-4'>
-                                                                <div className="more-info-item">
-                                                                    <i className="bi bi-caret-left ms-1"></i>
-                                                                    <label> تاریخ پرداخت :</label>
-                                                                    {this.state.personnel.paymentDate}
-                                                                </div>
-                                                            </div>
-                                                            <div className='col-12 col-md-4'>
-                                                                <div className="more-info-item">
-                                                                    <i className="bi bi-caret-left ms-1"></i>
-                                                                    <label> مبلغ پرداخت اجاره :</label>
-                                                                    {this.state.personnel.depositPaymentAmount != "" ? this.state.personnel.depositPaymentAmount : 'ثبت نشده'}
-                                                                </div>
-                                                            </div>
-                                                            <div className='col-12 col-md-4'>
-                                                                <div className="more-info-item">
-                                                                    <i className="bi bi-caret-left ms-1"></i>
-                                                                    <label> مبلغ پرداخت ودیعه :</label>
-                                                                    {this.state.personnel.rentPaymentAmount != "" ? this.state.personnel.rentPaymentAmount : 'ثبت نشده'}
-                                                                </div>
-                                                            </div>
-                                                            <div className='col-12 col-md-4'>
-                                                                <div className="more-info-item">
-                                                                    <i className="bi bi-caret-left ms-1"></i>
-                                                                    <label> مبلغ پرداخت اجاره :</label>
-                                                                    {this.state.personnel.discountPaymentAmount != "" ? this.state.personnel.discountPaymentAmount : 'ثبت نشده'}
-                                                                </div>
-                                                            </div>
-                                                            <div className='col-12 col-md-4'>
-                                                                <div className="more-info-item">
-                                                                    <i className="bi bi-caret-left ms-1"></i>
-                                                                    <label> آدرس محل سکونت :</label>
-                                                                    {this.state.personnel.address}
-                                                                </div>
-                                                            </div>
-                                                            <div className='col-12 col-md-4'>
-                                                                <div className="more-info-item">
-                                                                    <i className="bi bi-caret-left ms-1"></i>
-                                                                    <label> شماره همراه اقامتگر :</label>
-                                                                    {this.state.personnel.phoneNumber}
-                                                                </div>
-                                                            </div>
-                                                            <div className='col-12 col-md-4'>
-                                                                <div className="more-info-item">
-                                                                    <i className="bi bi-caret-left ms-1"></i>
-                                                                    <label> شماره تلفن منزل :</label>
-                                                                    {this.state.personnel.telephoneNumber}
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </>;
-                                                case 'otherGuest':
-                                                    return <>
-                                                        <div>otherGuest</div>
-                                                    </>;
-                                            }
-                                        })()}
-                                    </div>
-                                </Tab>
-                                <Tab eventKey="records" title="سوابق" style={{backgroundColor: "transparent"}}>
-                                    <div className="tabs-content">
-                                        <button className='btn-done' onClick={() => {
-                                            this.handleShow()
-                                            this.handleResetFields();
-                                        }}>ثبت گزارش
-                                        </button>
-                                        <Accordion defaultActiveKey="0">
-                                            <Accordion.Item eventKey="0">
-                                                <Accordion.Header>نوبت نظافت شبانه</Accordion.Header>
-                                                <Accordion.Body>
-                                                    <Table>
-                                                        <thead>
-                                                        <tr>
-                                                            {/*<th>شماره</th>*/}
-                                                            <th>تاریخ</th>
-                                                            <th>توضیحات</th>
-                                                            <th>عملیات</th>
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        {
-                                                            this.state.report.map((c, i) => (
-                                                                c.title === 'cleaning' ? (
-                                                                    <tr>
-                                                                        {/*<td>{a+1}</td>*/}
-                                                                        <td>{c.date}</td>
-                                                                        <td>{c.description}</td>
-                                                                        <td>
-                                                                            <OverlayTrigger
-                                                                                placement="bottom"
-                                                                                overlay={
-                                                                                    <Tooltip className="deleteTooltip">
-                                                                                        حذف
-                                                                                    </Tooltip>
-                                                                                }
-                                                                            >
-                                                                                <button className='btn floor-close-btn'
-                                                                                        onClick={() => this.handleOpenModalReport(c)}>
-                                                                                    <AiFillCloseCircle color="#F1416C"/>
-                                                                                </button>
-                                                                            </OverlayTrigger>
-                                                                        </td>
-                                                                    </tr>
-                                                                ) : (
-                                                                    console.log()
-                                                                )
-                                                            ))
+                                        <div className="information d-flex flex-row flex-wrap">
+                                            <div className='col-12 col-md-4'>
+                                                <div className="more-info-item">
+                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                    <label> نام :</label>
+                                                    {this.state.personnel.firstName}
+                                                </div>
+                                            </div>
+                                            <div className='col-12 col-md-4'>
+                                                <div className="more-info-item">
+                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                    <label> نام خانوادگی :</label>
+                                                    {this.state.personnel.lastName}
+                                                </div>
+                                            </div>
+                                            <div className='col-12 col-md-4'>
+                                                <div className="more-info-item">
+                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                    <label> کد ملی :</label>
+                                                    {this.state.personnel.nationalCode}
+                                                </div>
+                                            </div>
+                                            <div className='col-12 col-md-4'>
+                                                <div className="more-info-item">
+                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                    <label> شماره شناسنامه :</label>
+                                                    {this.state.personnel.certificateNumber}
+                                                </div>
+                                            </div>
+                                            <div className='col-12 col-md-4'>
+                                                <div className="more-info-item">
+                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                    <label> محل صدور :</label>
+                                                    {this.state.personnel.placeOfIssue}
+                                                </div>
+                                            </div>
+                                            <div className='col-12 col-md-4'>
+                                                <div className="more-info-item">
+                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                    <label> تاریخ تولد :</label>
+                                                    {this.state.personnel.birthDate.split(" ")[0]}
+                                                </div>
+                                            </div>
+                                            <div className='col-12 col-md-4'>
+                                                <div className="more-info-item">
+                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                    <label> محل تولد :</label>
+                                                    {this.state.personnel.birthPlace.split(" ")[0]}
+                                                </div>
+                                            </div>
+                                            <div className='col-12 col-md-4'>
+                                                <div className="more-info-item">
+                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                    <label> ملیت :</label>
+                                                    {this.state.personnel.nationality}
+                                                </div>
+                                            </div>
+                                            <div className='col-12 col-md-4'>
+                                                <div className="more-info-item">
+                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                    <label> دین :</label>
+                                                    {(() => {
+                                                        switch (this.state.personnel.religion) {
+                                                            case 'islam':
+                                                                return 'اسلام';
+                                                            case 'christianity':
+                                                                return 'مسیحیت';
+                                                            case 'hinduism':
+                                                                return 'هندوئیسم';
+                                                            case 'buddhism':
+                                                                return 'آیین بودایی';
+                                                            case 'other':
+                                                                return 'سایر';
                                                         }
-                                                        </tbody>
-                                                    </Table>
-                                                </Accordion.Body>
-                                            </Accordion.Item>
-                                            <Accordion.Item eventKey="1">
-                                                <Accordion.Header>تأخیر در ورود</Accordion.Header>
-                                                <Accordion.Body>
-                                                    <Table>
-                                                        <thead>
-                                                        <tr>
-                                                            {/*<th>شماره</th>*/}
-                                                            <th>تاریخ</th>
-                                                            <th>ساعت</th>
-                                                            <th>عملیات</th>
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        {
-                                                            this.state.report.map((d, i) => (
-
-                                                                d.title === 'delayInArrival' ? (
-                                                                    <tr>
-                                                                        {/*<td>{i+1}</td>*/}
-                                                                        <td>{d.date}</td>
-                                                                        <td>{d.hour}</td>
-                                                                        <td>
-                                                                            <OverlayTrigger
-                                                                                placement="bottom"
-                                                                                overlay={
-                                                                                    <Tooltip className="deleteTooltip">
-                                                                                        حذف
-                                                                                    </Tooltip>
-                                                                                }
-                                                                            >
-                                                                                <button className='btn floor-close-btn'
-                                                                                        onClick={() => this.handleOpenModalReport(d)}>
-                                                                                    <AiFillCloseCircle color="#F1416C"/>
-                                                                                </button>
-                                                                            </OverlayTrigger>
-                                                                        </td>
-                                                                    </tr>
-                                                                ) : (
-                                                                    console.log()
-                                                                )
-                                                            ))
+                                                    })()}
+                                                </div>
+                                            </div>
+                                            <div className='col-12 col-md-4'>
+                                                <div className="more-info-item">
+                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                    <label> مذهب :</label>
+                                                    {this.state.personnel.subReligion != "" ? this.state.personnel.subReligion : 'ثبت نشده'}
+                                                </div>
+                                            </div>
+                                            <div className='col-12 col-md-4'>
+                                                <div className="more-info-item">
+                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                    <label> تحصیلات :</label>
+                                                    {this.state.personnel.education != "" ? this.state.personnel.university : 'ثبت نشده'}
+                                                </div>
+                                            </div>
+                                            <div className='col-12 col-md-4'>
+                                                <div className="more-info-item">
+                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                    <label> وضعیت تاهل :</label>
+                                                    {(() => {
+                                                        switch (this.state.personnel.maritalStatus) {
+                                                            case 'single':
+                                                                return 'مجرد';
+                                                            case 'married':
+                                                                return 'متاهل';
+                                                            case 'divorced':
+                                                                return 'متارکه';
                                                         }
-                                                        </tbody>
-                                                    </Table>
-                                                </Accordion.Body>
-                                            </Accordion.Item>
-                                            <Accordion.Item eventKey="2">
-                                                <Accordion.Header>خروج</Accordion.Header>
-                                                <Accordion.Body>
-                                                    <Table>
-                                                        <thead>
-                                                        <tr>
-                                                            {/*<th>شماره</th>*/}
-                                                            <th>از تاريخ</th>
-                                                            <th>تا تاريخ</th>
-                                                            <th>آدرس مقصد</th>
-                                                            <th>شماره تماس مقصد</th>
-                                                            <th>نسبت</th>
-                                                            <th>عملیات</th>
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        {
-                                                            this.state.report.map((e, i) => (
-
-                                                                e.title === 'exit' ? (
-                                                                    <tr>
-                                                                        {/*<td>{i+1}</td>*/}
-                                                                        <td>{e.startDate}</td>
-                                                                        <td>{e.endDate}</td>
-                                                                        <td>{e.destinationAddress}</td>
-                                                                        <td>{e.destinationPhoneNumber}</td>
-                                                                        <td>{e.relation}</td>
-                                                                        <td>
-                                                                            <OverlayTrigger
-                                                                                placement="bottom"
-                                                                                overlay={
-                                                                                    <Tooltip className="deleteTooltip">
-                                                                                        حذف
-                                                                                    </Tooltip>
-                                                                                }
-                                                                            >
-                                                                                <button className='btn floor-close-btn'
-                                                                                        onClick={() => this.handleOpenModalReport(e)}>
-                                                                                    <AiFillCloseCircle color="#F1416C"/>
-                                                                                </button>
-                                                                            </OverlayTrigger>
-                                                                        </td>
-                                                                    </tr>
-                                                                ) : (
-                                                                    console.log()
-                                                                )
-                                                            ))
+                                                    })()}
+                                                </div>
+                                            </div>
+                                            {(() => {
+                                                switch (this.state.personnel.maritalStatus) {
+                                                    case 'married':
+                                                        return (
+                                                        <>
+                                                            <div className='col-12 col-md-4'>
+                                                                <div className="more-info-item">
+                                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                                    <label> نام و نام خانوادگی همسر
+                                                                        :</label>
+                                                                    {this.state.personnel.spouseFullName != "" ? this.state.personnel.spouseFullName : 'ثبت نشده'}
+                                                                </div>
+                                                            </div>
+                                                            <div className='col-12 col-md-4'>
+                                                                <div className="more-info-item">
+                                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                                    <label> شغل همسر :</label>
+                                                                    {this.state.personnel.spouseJob != "" ? this.state.personnel.spouseJob : 'ثبت نشده'}
+                                                                </div>
+                                                            </div>
+                                                        </>);
+                                                }
+                                            })()}
+                                            <div className='col-12 col-md-4'>
+                                                <div className="more-info-item">
+                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                    <label> بیماری خاص :</label>
+                                                    {(() => {
+                                                        switch (this.state.personnel.health) {
+                                                            case true:
+                                                                return 'بله';
+                                                            case false:
+                                                                return 'خیر';
                                                         }
-                                                        </tbody>
-                                                    </Table>
-                                                </Accordion.Body>
-                                            </Accordion.Item>
-                                            <Accordion.Item eventKey="3">
-                                                <Accordion.Header>ثبت تخلف</Accordion.Header>
-                                                <Accordion.Body>
-                                                    <Table>
-                                                        <thead>
-                                                        <tr>
-                                                            {/*<th>شماره</th>*/}
-                                                            <th>گزارش تخلف</th>
-                                                            <th>تاریخ</th>
-                                                            <th>ساعت</th>
-                                                            <th>عملیات</th>
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        {
-                                                            this.state.report.map((v, i) => (
-
-                                                                v.title === 'violation' ? (
-                                                                    <tr>
-                                                                        {/*<td>{i+1}</td>*/}
-                                                                        <td>{v.description}</td>
-                                                                        <td>{v.date}</td>
-                                                                        <td>{v.hour}</td>
-                                                                        <td>
-                                                                            <OverlayTrigger
-                                                                                placement="bottom"
-                                                                                overlay={
-                                                                                    <Tooltip className="deleteTooltip">
-                                                                                        حذف
-                                                                                    </Tooltip>
-                                                                                }
-                                                                            >
-                                                                                <button className='btn floor-close-btn'
-                                                                                        onClick={() => this.handleOpenModalReport(v)}>
-                                                                                    <AiFillCloseCircle color="#F1416C"/>
-                                                                                </button>
-                                                                            </OverlayTrigger>
-                                                                        </td>
-                                                                    </tr>
-                                                                ) : (
-                                                                    console.log()
-                                                                )
-                                                            ))
-                                                        }
-                                                        </tbody>
-                                                    </Table>
-                                                </Accordion.Body>
-                                            </Accordion.Item>
-                                            <Accordion.Item eventKey="4">
-                                                <Accordion.Header>ثبت جریمه</Accordion.Header>
-                                                <Accordion.Body>
-                                                    <Table>
-                                                        <thead>
-                                                        <tr>
-                                                            {/*<th>شماره</th>*/}
-                                                            <th>نوع جریمه</th>
-                                                            <th>مقدار جریمه</th>
-                                                            <th>دلیل جریمه</th>
-                                                            <th>عملیات</th>
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        {
-                                                            this.state.report.map((p, i) => (
-
-                                                                p.title === 'penalty' ? (
-                                                                    <tr>
-                                                                        <td>{p.penaltyType === "financial" ? ("نقدی") : ("تنبیهی")}</td>
-                                                                        <td>{p.penaltyAmount}</td>
-                                                                        <td>{p.description}</td>
-                                                                        <td>
-                                                                            <OverlayTrigger
-                                                                                placement="bottom"
-                                                                                overlay={
-                                                                                    <Tooltip className="deleteTooltip">
-                                                                                        حذف
-                                                                                    </Tooltip>
-                                                                                }
-                                                                            >
-                                                                                <button className='btn floor-close-btn'
-                                                                                        onClick={() => this.handleOpenModalReport(p)}>
-                                                                                    <AiFillCloseCircle color="#F1416C"/>
-                                                                                </button>
-                                                                            </OverlayTrigger>
-                                                                        </td>
-                                                                    </tr>
-                                                                ) : (
-                                                                    console.log()
-                                                                )
-                                                            ))
-                                                        }
-                                                        </tbody>
-                                                    </Table>
-                                                </Accordion.Body>
-                                            </Accordion.Item>
-                                            <Accordion.Item eventKey="5">
-                                                <Accordion.Header>اعلام تخلیه</Accordion.Header>
-                                                <Accordion.Body>
-                                                    <Table>
-                                                        <thead>
-                                                        <tr>
-                                                            {/*<th>شماره</th>*/}
-                                                            <th>تاریخ اعلام تخلیه</th>
-                                                            <th>تاریخ تخلیه</th>
-                                                            <th>تاریخ عودت ودیعه</th>
-                                                            <th>کسر ضرر و زیان</th>
-                                                            <th>علت کسر ضر و زیان</th>
-                                                            <th>مبلغ قابل عودت</th>
-                                                            <th>عملیات</th>
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        {
-                                                            this.state.report.map((d, i) => (
-
-                                                                d.title === 'discharge' ? (
-                                                                    <tr>
-                                                                        {/*<td>{i+1}</td>*/}
-                                                                        <td>{d.startDate}</td>
-                                                                        <td>{d.endDate}</td>
-                                                                        <td>{d.date}</td>
-                                                                        <td>{d.penaltyAmount}</td>
-                                                                        <td>{d.description}</td>
-                                                                        <td>{d.returnedAmount}</td>
-                                                                        <td>
-                                                                            <OverlayTrigger
-                                                                                placement="bottom"
-                                                                                overlay={
-                                                                                    <Tooltip className="deleteTooltip">
-                                                                                        حذف
-                                                                                    </Tooltip>
-                                                                                }
-                                                                            >
-                                                                                <button className='btn floor-close-btn'
-                                                                                        onClick={() => this.handleOpenModalReport(d)}>
-                                                                                    <AiFillCloseCircle color="#F1416C"/>
-                                                                                </button>
-                                                                            </OverlayTrigger>
-                                                                        </td>
-                                                                    </tr>
-                                                                ) : (
-                                                                    console.log()
-                                                                )
-                                                            ))
-                                                        }
-                                                        </tbody>
-                                                    </Table>
-                                                </Accordion.Body>
-                                            </Accordion.Item>
-                                            <Accordion.Item eventKey="6">
-                                                <Accordion.Header>لغو قرارداد</Accordion.Header>
-                                                <Accordion.Body>
-                                                    <Table>
-                                                        <thead>
-                                                        <tr>
-                                                            {/*<th>شماره</th>*/}
-                                                            <th>تاریخ</th>
-                                                            <th>علت</th>
-                                                            <th>کسر ضرر و زیان</th>
-                                                            <th>مبلغ قابل عودت</th>
-                                                            <th>عملیات</th>
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        {
-                                                            this.state.report.map((cc, i) => (
-
-                                                                cc.title === 'cancelContract' ? (
-                                                                    <tr>
-                                                                        {/*<td>{i+1}</td>*/}
-                                                                        <td>{cc.date}</td>
-                                                                        <td>{cc.description}</td>
-                                                                        <td>{cc.penaltyAmount}</td>
-                                                                        <td>{cc.returnedAmount}</td>
-                                                                        <td>
-                                                                            <OverlayTrigger
-                                                                                placement="bottom"
-                                                                                overlay={
-                                                                                    <Tooltip className="deleteTooltip">
-                                                                                        حذف
-                                                                                    </Tooltip>
-                                                                                }
-                                                                            >
-                                                                                <button className='btn floor-close-btn'
-                                                                                        onClick={() => this.handleOpenModalReport(cc)}>
-                                                                                    <AiFillCloseCircle color="#F1416C"/>
-                                                                                </button>
-                                                                            </OverlayTrigger>
-                                                                        </td>
-                                                                    </tr>
-                                                                ) : (
-                                                                    console.log()
-                                                                )
-                                                            ))
-                                                        }
-                                                        </tbody>
-                                                    </Table>
-                                                </Accordion.Body>
-                                            </Accordion.Item>
-                                        </Accordion>
+                                                    })()}
+                                                </div>
+                                            </div>
+                                            {(() => {
+                                                switch (this.state.personnel.health) {
+                                                    case true:
+                                                        return <>
+                                                            <div className='col-12 col-md-4'>
+                                                                <div className="more-info-item">
+                                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                                    <label> توضیحات بیماری :</label>
+                                                                    {this.state.personnel.healthyStatus != "" ? this.state.personnel.healthyStatus : 'ثبت نشده'}
+                                                                </div>
+                                                            </div>
+                                                        </>;
+                                                }
+                                            })()}
+                                            <div className='col-12 col-md-4'>
+                                                <div className="more-info-item">
+                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                    <label> شماره همراه :</label>
+                                                    {this.state.personnel.phoneNumber}
+                                                </div>
+                                            </div>
+                                            <div className='col-12 col-md-4'>
+                                                <div className="more-info-item">
+                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                    <label> شماره تلفن منزل :</label>
+                                                    {this.state.personnel.telephoneNumber}
+                                                </div>
+                                            </div>
+                                            <div className='col-12 col-md-4'>
+                                                <div className="more-info-item">
+                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                    <label> تاریخ شروع کار :</label>
+                                                    {this.state.personnel.timePeriod.startDate}
+                                                </div>
+                                            </div>
+                                            <div className='col-12 col-md-4'>
+                                                <div className="more-info-item">
+                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                    <label> تاریخ اتمام کار :</label>
+                                                    {this.state.personnel.timePeriod.endDate.split(" ")[0]}
+                                                </div>
+                                            </div>
+                                            <div className='col-12 col-md-4'>
+                                                <div className="more-info-item">
+                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                    <label> آدرس محل سکونت :</label>
+                                                    {this.state.personnel.address}
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </Tab>
                                 <Tab eventKey="documents" title="مدارک" className='records'
@@ -1184,771 +572,6 @@ class PersonnelProfilePage extends Component {
                         </div>
                     </div>
                 </div>
-                <Modal className='report-modal' centered show={this.state.show}>
-                    <Modal.Header>
-                        <Modal.Title><span>ثبت گزارش</span></Modal.Title>
-                        <button className='btn' onClick={() => {
-                            this.handleClose()
-                        }}><AiOutlineClose/></button>
-                    </Modal.Header>
-                    <Modal.Body>
-                        <form className="my-3 mx-2" onSubmit={this.handleSubmit}>
-                            <div className='input-report-box'>
-                                <select className='input' onChange={(e) => {
-                                    this.reportType(e);
-                                    this.handleResetFields();
-                                }}>
-                                    <option value='cleaning'>نوبت نظافت شبانه</option>
-                                    <option value='delayInArrival'>تأخیر در ورود</option>
-                                    <option value='exit'>خروج</option>
-                                    <option value='violation'>ثبت تخلف</option>
-                                    <option value='penalty'>ثبت جریمه</option>
-                                    <option value='discharge'>اعلام تخلیه</option>
-                                    <option value='cancelContract'>لغو قرارداد</option>
-                                </select>
-                                <label className="placeholder">نوع گزارش</label>
-                            </div>
-                            {(() => {
-                                switch (this.state.reportType) {
-                                    case 'cleaning':
-                                        return <>
-                                            <div className='input-report-box'>
-                                                <DatePicker
-                                                    // fixMainPosition={false}
-                                                    inputClass={"input form-control date-picker"}
-                                                    ref={this.date}
-                                                    calendarPosition={`top`}
-                                                    digits={['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']}
-                                                    format={`YYYY/MM/DD`}
-
-
-                                                    containerStyle={{
-                                                        width: "100%"
-                                                    }}
-
-                                                    value={this.state.dateValues.cleaningDate}
-                                                    onChange={(value) => {
-                                                        let updatedDateValues = {...this.state};
-                                                        updatedDateValues.dateValues.cleaningDate = value;
-                                                        this.setState({updatedDateValues})
-                                                    }}
-                                                    mapDays={({date}) => {
-                                                        let props = {}
-                                                        let isWeekend = [6].includes(date.weekDay.index)
-
-                                                        if (isWeekend)
-                                                            props.className = "highlight highlight-red";
-
-                                                        return props
-                                                    }}
-
-                                                    weekDays={
-                                                        [
-                                                            ["شنبه", "Sat"],
-                                                            ["یکشنبه", "Sun"],
-                                                            ["دوشنبه", "Mon"],
-                                                            ["سه شنبه", "Tue"],
-                                                            ["چهارشنبه", "Wed"],
-                                                            ["پنجشنبه", "Thu"],
-                                                            ["جمعه", "Fri"],
-                                                        ]
-                                                    }
-
-                                                    calendar={persian}
-                                                    locale={persian_fa}
-
-                                                >
-                                                    <Button
-                                                        onClick={() => {
-                                                            let updatedDateValues = {...this.state};
-                                                            updatedDateValues.dateValues.cleaningDate = {};
-                                                            this.setState({updatedDateValues})
-                                                        }
-                                                        }
-                                                    >
-                                                        ریست
-                                                    </Button>
-                                                </DatePicker>
-                                                {/*<input type="text" ref={this.date} className="input" placeholder=" "/>*/}
-                                                <label className="placeholder">تاریخ</label>
-                                            </div>
-                                            <div className='input-report-box'>
-                                                <input type="text" ref={this.description} className="input"
-                                                       placeholder=" "/>
-                                                <label className="placeholder">توضیحات</label>
-                                            </div>
-                                        </>;
-                                    case 'delayInArrival':
-                                        return <>
-                                            <div className='input-report-box'>
-                                                {/*<input type="text" ref={this.date} className="input" placeholder=" "/>*/}
-                                                <DatePicker
-                                                    // fixMainPosition={false}
-                                                    ref={this.date}
-                                                    calendarPosition={`top`}
-                                                    digits={['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']}
-                                                    format={`YYYY/MM/DD`}
-                                                    inputClass={`input form-control date-picker`}
-
-
-                                                    containerStyle={{
-                                                        width: "100%"
-                                                    }}
-
-                                                    value={this.state.dateValues.delayInArrivalDate}
-                                                    onChange={(value) => {
-                                                        let updatedDateValues = {...this.state};
-                                                        updatedDateValues.dateValues.delayInArrivalDate = value;
-                                                        this.setState({updatedDateValues})
-                                                    }}
-
-                                                    mapDays={({date}) => {
-                                                        let props = {}
-                                                        let isWeekend = [6].includes(date.weekDay.index)
-
-                                                        if (isWeekend)
-                                                            props.className = "highlight highlight-red";
-
-                                                        return props
-                                                    }}
-
-                                                    weekDays={
-                                                        [
-                                                            ["شنبه", "Sat"],
-                                                            ["یکشنبه", "Sun"],
-                                                            ["دوشنبه", "Mon"],
-                                                            ["سه شنبه", "Tue"],
-                                                            ["چهارشنبه", "Wed"],
-                                                            ["پنجشنبه", "Thu"],
-                                                            ["جمعه", "Fri"],
-                                                        ]
-                                                    }
-
-                                                    calendar={persian}
-                                                    locale={persian_fa}
-
-                                                >
-                                                    <Button
-                                                        onClick={() => {
-                                                            let updatedDateValues = {...this.state};
-                                                            updatedDateValues.dateValues.delayInArrivalDate = {};
-                                                            this.setState({updatedDateValues})
-                                                        }
-                                                        }
-                                                    >
-                                                        ریست
-                                                    </Button>
-                                                </DatePicker>
-                                                <label className="placeholder">تاریخ</label>
-                                            </div>
-                                            <div className='input-report-box'>
-                                                {/*<input type="text" ref={this.time} className="input" placeholder=" "/>*/}
-                                                <DatePicker
-                                                    ref={this.time}
-                                                    disableDayPicker
-                                                    format="HH:mm:ss"
-                                                    inputClass={`input form-control date-picker`}
-                                                    containerStyle={{
-                                                        width: "100%"
-                                                    }}
-                                                    value={this.state.dateValues.delayInArriveTime}
-                                                    onChange={(value) => {
-                                                        let updatedDateValues = {...this.state};
-                                                        updatedDateValues.dateValues.delayInArriveTime = value;
-                                                        this.setState({updatedDateValues})
-                                                    }}
-                                                    plugins={[
-                                                        <TimePicker/>
-                                                    ]}
-                                                >
-                                                    <Button
-                                                        onClick={() => {
-                                                            let updatedDateValues = {...this.state};
-                                                            updatedDateValues.dateValues.delayInArriveTime = {};
-                                                            this.setState({updatedDateValues})
-                                                        }
-                                                        }
-                                                    >
-                                                        ریست
-                                                    </Button>
-                                                </DatePicker>
-                                                <label className="placeholder">ساعت</label>
-                                            </div>
-                                        </>;
-                                    case 'exit':
-                                        return <>
-                                            <div className='input-report-box'>
-                                                {/*<input type="text" ref={this.startDate} className="input"*/}
-                                                {/*       placeholder=" "/>*/}
-                                                <DatePicker
-                                                    // fixMainPosition={false}
-                                                    ref={this.startDate}
-                                                    calendarPosition={`top`}
-                                                    digits={['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']}
-                                                    format={`YYYY/MM/DD`}
-                                                    inputClass={`input form-control date-picker`}
-
-
-                                                    containerStyle={{
-                                                        width: "100%"
-                                                    }}
-
-                                                    value={this.state.dateValues.exitStartDate}
-                                                    onChange={(value) => {
-                                                        let updatedDateValues = {...this.state};
-                                                        updatedDateValues.dateValues.exitStartDate = value;
-                                                        this.setState({updatedDateValues})
-                                                    }}
-
-                                                    mapDays={({date}) => {
-                                                        let props = {}
-                                                        let isWeekend = [6].includes(date.weekDay.index)
-
-                                                        if (isWeekend)
-                                                            props.className = "highlight highlight-red";
-
-                                                        return props
-                                                    }}
-
-                                                    weekDays={
-                                                        [
-                                                            ["شنبه", "Sat"],
-                                                            ["یکشنبه", "Sun"],
-                                                            ["دوشنبه", "Mon"],
-                                                            ["سه شنبه", "Tue"],
-                                                            ["چهارشنبه", "Wed"],
-                                                            ["پنجشنبه", "Thu"],
-                                                            ["جمعه", "Fri"],
-                                                        ]
-                                                    }
-
-                                                    calendar={persian}
-                                                    locale={persian_fa}
-
-                                                >
-                                                    <Button
-                                                        onClick={() => {
-                                                            let updatedDateValues = {...this.state};
-                                                            updatedDateValues.dateValues.exitStartDate = {};
-                                                            this.setState({updatedDateValues})
-                                                        }
-                                                        }
-                                                    >
-                                                        ریست
-                                                    </Button>
-                                                </DatePicker>
-                                                <label className="placeholder">از تاريخ</label>
-                                            </div>
-                                            <div className='input-report-box'>
-                                                {/*<input type="text" ref={this.endDate} className="input"*/}
-                                                {/*       placeholder=" "/>*/}
-                                                <DatePicker
-                                                    // fixMainPosition={false}
-                                                    ref={this.endDate}
-                                                    calendarPosition={`top`}
-                                                    digits={['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']}
-                                                    format={`YYYY/MM/DD`}
-                                                    inputClass={`input form-control date-picker`}
-
-
-                                                    containerStyle={{
-                                                        width: "100%"
-                                                    }}
-
-                                                    value={this.state.dateValues.exitEndDate}
-                                                    onChange={(value) => {
-                                                        let updatedDateValues = {...this.state};
-                                                        updatedDateValues.dateValues.exitEndDate = value;
-                                                        this.setState({updatedDateValues})
-                                                    }}
-
-                                                    mapDays={({date}) => {
-                                                        let props = {}
-                                                        let isWeekend = [6].includes(date.weekDay.index)
-
-                                                        if (isWeekend)
-                                                            props.className = "highlight highlight-red";
-
-                                                        return props
-                                                    }}
-
-                                                    weekDays={
-                                                        [
-                                                            ["شنبه", "Sat"],
-                                                            ["یکشنبه", "Sun"],
-                                                            ["دوشنبه", "Mon"],
-                                                            ["سه شنبه", "Tue"],
-                                                            ["چهارشنبه", "Wed"],
-                                                            ["پنجشنبه", "Thu"],
-                                                            ["جمعه", "Fri"],
-                                                        ]
-                                                    }
-
-                                                    calendar={persian}
-                                                    locale={persian_fa}
-
-                                                >
-                                                    <Button
-                                                        onClick={() => {
-                                                            let updatedDateValues = {...this.state};
-                                                            updatedDateValues.dateValues.exitEndDate = {};
-                                                            this.setState({updatedDateValues})
-                                                        }
-                                                        }
-                                                    >
-                                                        ریست
-                                                    </Button>
-                                                </DatePicker>
-                                                <label className="placeholder">تا تاريخ</label>
-                                            </div>
-                                            <div className='input-report-box'>
-                                                <input type="text" ref={this.destinationAddress} className="input"
-                                                       placeholder=" "/>
-                                                <label className="placeholder">آدرس مقصد</label>
-                                            </div>
-                                            <div className='input-report-box'>
-                                                <input type="text" ref={this.destinationPhoneNumber} className="input"
-                                                       placeholder=" "/>
-                                                <label className="placeholder">شماره تماس مقصد</label>
-                                            </div>
-                                            <div className='input-report-box'>
-                                                <input type="text" ref={this.relation} className="input"
-                                                       placeholder=" "/>
-                                                <label className="placeholder">نسبت</label>
-                                            </div>
-                                        </>;
-                                    case 'violation':
-                                        return <>
-                                            <div className='input-report-box'>
-                                                <input type="text" ref={this.description} className="input"
-                                                       placeholder=" "/>
-                                                <label className="placeholder">گزارش تخلف</label>
-                                            </div>
-                                            <div className='input-report-box'>
-                                                {/*<input type="text" ref={this.date} className="input" placeholder=" "/>*/}
-                                                <DatePicker
-                                                    // fixMainPosition={false}
-                                                    ref={this.date}
-                                                    calendarPosition={`top`}
-                                                    digits={['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']}
-                                                    format={`YYYY/MM/DD`}
-                                                    inputClass={`input form-control date-picker`}
-
-
-                                                    containerStyle={{
-                                                        width: "100%"
-                                                    }}
-
-                                                    value={this.state.dateValues.violationDate}
-                                                    onChange={(value) => {
-                                                        let updatedDateValues = {...this.state};
-                                                        updatedDateValues.dateValues.violationDate = value;
-                                                        this.setState({updatedDateValues})
-                                                    }}
-
-                                                    mapDays={({date}) => {
-                                                        let props = {}
-                                                        let isWeekend = [6].includes(date.weekDay.index)
-
-                                                        if (isWeekend)
-                                                            props.className = "highlight highlight-red";
-
-                                                        return props
-                                                    }}
-
-                                                    weekDays={
-                                                        [
-                                                            ["شنبه", "Sat"],
-                                                            ["یکشنبه", "Sun"],
-                                                            ["دوشنبه", "Mon"],
-                                                            ["سه شنبه", "Tue"],
-                                                            ["چهارشنبه", "Wed"],
-                                                            ["پنجشنبه", "Thu"],
-                                                            ["جمعه", "Fri"],
-                                                        ]
-                                                    }
-
-                                                    calendar={persian}
-                                                    locale={persian_fa}
-
-                                                >
-                                                    <Button
-                                                        onClick={() => {
-                                                            let updatedDateValues = {...this.state};
-                                                            updatedDateValues.dateValues.violationDate = {};
-                                                            this.setState({updatedDateValues})
-                                                        }
-                                                        }
-                                                    >
-                                                        ریست
-                                                    </Button>
-                                                </DatePicker>
-                                                <label className="placeholder">تاریخ</label>
-                                            </div>
-                                            <div className='input-report-box'>
-                                                {/*<input type="text" ref={this.time} className="input" placeholder=" "/>*/}
-                                                <DatePicker
-                                                    ref={this.time}
-                                                    disableDayPicker
-                                                    format="HH:mm:ss"
-                                                    inputClass={`input form-control date-picker`}
-                                                    containerStyle={{
-                                                        width: "100%"
-                                                    }}
-                                                    value={this.state.dateValues.violationTime}
-                                                    onChange={(value) => {
-                                                        let updatedDateValues = {...this.state};
-                                                        updatedDateValues.dateValues.violationTime = value;
-                                                        this.setState({updatedDateValues})
-                                                    }}
-                                                    plugins={[
-                                                        <TimePicker/>
-                                                    ]}
-                                                >
-                                                    <Button
-                                                        onClick={() => {
-                                                            let updatedDateValues = {...this.state};
-                                                            updatedDateValues.dateValues.violationTime = {};
-                                                            this.setState({updatedDateValues})
-                                                        }
-                                                        }
-                                                    >
-                                                        ریست
-                                                    </Button>
-                                                </DatePicker>
-                                                <label className="placeholder">ساعت</label>
-                                            </div>
-                                        </>;
-                                    case 'penalty':
-                                        return (<>
-                                            <div className='input-report-box'>
-                                                <select ref={this.typePenalty} className='input'>
-                                                    <option value='financial'>نقدی</option>
-                                                    <option value='nonFinancial'>تنبیهی</option>
-                                                </select>
-                                                <label className="placeholder">نوع جریمه</label>
-                                            </div>
-                                            <div className='input-report-box'>
-                                                <input type="text" ref={this.penaltyAmount} className="input"
-                                                       placeholder=" "/>
-                                                <label className="placeholder">مقدار جریمه</label>
-                                            </div>
-                                            <div className='input-report-box'>
-                                                <input type="text" ref={this.description} className="input"
-                                                       placeholder=" "/>
-                                                <label className="placeholder">دلیل جریمه</label>
-                                            </div>
-
-                                        </>);
-                                    case 'discharge':
-                                        return <>
-                                            <div className='input-report-box'>
-                                                {/*<input type="text" ref={this.dischargeDateAnnounce} className="input"*/}
-                                                {/*       placeholder=" "/>*/}
-                                                <DatePicker
-                                                    // fixMainPosition={false}
-                                                    ref={this.dischargeDateAnnounce}
-                                                    calendarPosition={`top`}
-                                                    digits={['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']}
-                                                    format={`YYYY/MM/DD`}
-                                                    inputClass={`input form-control date-picker`}
-
-
-                                                    containerStyle={{
-                                                        width: "100%"
-                                                    }}
-
-                                                    value={this.state.dateValues.dischargeDateAnnounce}
-                                                    onChange={(value) => {
-                                                        let updatedDateValues = {...this.state};
-                                                        updatedDateValues.dateValues.dischargeDateAnnounce = value;
-                                                        this.setState({updatedDateValues})
-                                                    }}
-
-                                                    mapDays={({date}) => {
-                                                        let props = {}
-                                                        let isWeekend = [6].includes(date.weekDay.index)
-
-                                                        if (isWeekend)
-                                                            props.className = "highlight highlight-red";
-
-                                                        return props
-                                                    }}
-
-                                                    weekDays={
-                                                        [
-                                                            ["شنبه", "Sat"],
-                                                            ["یکشنبه", "Sun"],
-                                                            ["دوشنبه", "Mon"],
-                                                            ["سه شنبه", "Tue"],
-                                                            ["چهارشنبه", "Wed"],
-                                                            ["پنجشنبه", "Thu"],
-                                                            ["جمعه", "Fri"],
-                                                        ]
-                                                    }
-
-                                                    calendar={persian}
-                                                    locale={persian_fa}
-
-                                                >
-                                                    <Button
-                                                        onClick={() => {
-                                                            let updatedDateValues = {...this.state};
-                                                            updatedDateValues.dateValues.dischargeDateAnnounce = {};
-                                                            this.setState({updatedDateValues})
-                                                        }
-                                                        }
-                                                    >
-                                                        ریست
-                                                    </Button>
-                                                </DatePicker>
-                                                <label className="placeholder">تاریخ اعلام تخلیه</label>
-                                            </div>
-                                            <div className='input-report-box'>
-                                                {/*<input type="text" ref={this.dischargeDate} className="input"*/}
-                                                {/*       placeholder=" "/>*/}
-                                                <DatePicker
-                                                    // fixMainPosition={false}
-                                                    ref={this.dischargeDate}
-                                                    calendarPosition={`top`}
-                                                    digits={['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']}
-                                                    format={`YYYY/MM/DD`}
-                                                    inputClass={`input form-control date-picker`}
-
-
-                                                    containerStyle={{
-                                                        width: "100%"
-                                                    }}
-
-                                                    value={this.state.dateValues.dischargeDate}
-                                                    onChange={(value) => {
-                                                        let updatedDateValues = {...this.state};
-                                                        updatedDateValues.dateValues.dischargeDate = value;
-                                                        this.setState({updatedDateValues})
-                                                    }}
-
-                                                    mapDays={({date}) => {
-                                                        let props = {}
-                                                        let isWeekend = [6].includes(date.weekDay.index)
-
-                                                        if (isWeekend)
-                                                            props.className = "highlight highlight-red";
-
-                                                        return props
-                                                    }}
-
-                                                    weekDays={
-                                                        [
-                                                            ["شنبه", "Sat"],
-                                                            ["یکشنبه", "Sun"],
-                                                            ["دوشنبه", "Mon"],
-                                                            ["سه شنبه", "Tue"],
-                                                            ["چهارشنبه", "Wed"],
-                                                            ["پنجشنبه", "Thu"],
-                                                            ["جمعه", "Fri"],
-                                                        ]
-                                                    }
-
-                                                    calendar={persian}
-                                                    locale={persian_fa}
-
-                                                >
-                                                    <Button
-                                                        onClick={() => {
-                                                            let updatedDateValues = {...this.state};
-                                                            updatedDateValues.dateValues.dischargeDate = {};
-                                                            this.setState({updatedDateValues})
-                                                        }
-                                                        }
-                                                    >
-                                                        ریست
-                                                    </Button>
-                                                </DatePicker>
-                                                <label className="placeholder">تاریخ تخلیه</label>
-                                            </div>
-                                            <div className='input-report-box'>
-                                                {/*<input type="text" ref={this.depositReturnDate} className="input"*/}
-                                                {/*       placeholder=" "/>*/}
-                                                <DatePicker
-                                                    // fixMainPosition={false}
-                                                    ref={this.depositReturnDate}
-                                                    calendarPosition={`top`}
-                                                    digits={['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']}
-                                                    format={`YYYY/MM/DD`}
-                                                    inputClass={`input form-control date-picker`}
-
-
-                                                    containerStyle={{
-                                                        width: "100%"
-                                                    }}
-
-                                                    value={this.state.dateValues.depositReturnDate}
-                                                    onChange={(value) => {
-                                                        let updatedDateValues = {...this.state};
-                                                        updatedDateValues.dateValues.depositReturnDate = value;
-                                                        this.setState({updatedDateValues})
-                                                    }}
-
-                                                    mapDays={({date}) => {
-                                                        let props = {}
-                                                        let isWeekend = [6].includes(date.weekDay.index)
-
-                                                        if (isWeekend)
-                                                            props.className = "highlight highlight-red";
-
-                                                        return props
-                                                    }}
-
-                                                    weekDays={
-                                                        [
-                                                            ["شنبه", "Sat"],
-                                                            ["یکشنبه", "Sun"],
-                                                            ["دوشنبه", "Mon"],
-                                                            ["سه شنبه", "Tue"],
-                                                            ["چهارشنبه", "Wed"],
-                                                            ["پنجشنبه", "Thu"],
-                                                            ["جمعه", "Fri"],
-                                                        ]
-                                                    }
-
-                                                    calendar={persian}
-                                                    locale={persian_fa}
-
-                                                >
-                                                    <Button
-                                                        onClick={() => {
-                                                            let updatedDateValues = {...this.state};
-                                                            updatedDateValues.dateValues.depositReturnDate = {};
-                                                            this.setState({updatedDateValues})
-                                                        }
-                                                        }
-                                                    >
-                                                        ریست
-                                                    </Button>
-                                                </DatePicker>
-                                                <label className="placeholder">تاریخ عودت ودیعه</label>
-                                            </div>
-                                            <div className='input-report-box'>
-                                                <input type="text" ref={this.deductionOfLosses} className="input"
-                                                       placeholder=" "/>
-                                                <label className="placeholder">کسر ضرر و زیان</label>
-                                            </div>
-                                            <div className='input-report-box'>
-                                                <input type="text" ref={this.deductionOfLossesReason} className="input"
-                                                       placeholder=" "/>
-                                                <label className="placeholder">علت کسر ضر و زیان</label>
-                                            </div>
-                                            <div className='input-report-box'>
-                                                <input type="text" ref={this.refundableAmount} className="input"
-                                                       placeholder=" "/>
-                                                <label className="placeholder">مبلغ قابل عودت</label>
-                                            </div>
-                                        </>;
-                                    case 'cancelContract':
-                                        return <>
-                                            {/*<div className='input-report-box'>
-                                                <input type="text" className="input" placeholder=" "/>
-                                                <label className="placeholder">روز</label>
-                                            </div>*/}
-                                            <div className='input-report-box'>
-                                                {/*<input type="text" ref={this.date} className="input" placeholder=" "/>*/}
-                                                <DatePicker
-                                                    // fixMainPosition={false}
-                                                    ref={this.date}
-                                                    calendarPosition={`top`}
-                                                    digits={['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']}
-                                                    format={`YYYY/MM/DD`}
-                                                    inputClass={`input form-control date-picker`}
-
-
-                                                    containerStyle={{
-                                                        width: "100%"
-                                                    }}
-
-                                                    value={this.state.dateValues.cancelContractDate}
-                                                    onChange={(value) => {
-                                                        let updatedDateValues = {...this.state};
-                                                        updatedDateValues.dateValues.cancelContractDate = value;
-                                                        this.setState({updatedDateValues})
-                                                    }}
-
-                                                    mapDays={({date}) => {
-                                                        let props = {}
-                                                        let isWeekend = [6].includes(date.weekDay.index)
-
-                                                        if (isWeekend)
-                                                            props.className = "highlight highlight-red";
-
-                                                        return props
-                                                    }}
-
-                                                    weekDays={
-                                                        [
-                                                            ["شنبه", "Sat"],
-                                                            ["یکشنبه", "Sun"],
-                                                            ["دوشنبه", "Mon"],
-                                                            ["سه شنبه", "Tue"],
-                                                            ["چهارشنبه", "Wed"],
-                                                            ["پنجشنبه", "Thu"],
-                                                            ["جمعه", "Fri"],
-                                                        ]
-                                                    }
-
-                                                    calendar={persian}
-                                                    locale={persian_fa}
-
-                                                >
-                                                    <Button
-                                                        onClick={() => {
-                                                            let updatedDateValues = {...this.state};
-                                                            updatedDateValues.dateValues.cancelContractDate = {};
-                                                            this.setState({updatedDateValues})
-                                                        }
-                                                        }
-                                                    >
-                                                        ریست
-                                                    </Button>
-                                                </DatePicker>
-                                                <label className="placeholder">تاریخ</label>
-                                            </div>
-                                            <div className='input-report-box'>
-                                                <input type="text" ref={this.reason} className="input" placeholder=" "/>
-                                                <label className="placeholder">علت</label>
-                                            </div>
-                                            <div className='input-report-box'>
-                                                <input type="text" ref={this.deductionOfLosses} className="input"
-                                                       placeholder=" "/>
-                                                <label className="placeholder">کسر ضرر و زیان</label>
-                                            </div>
-                                            <div className='input-report-box'>
-                                                <input type="text" ref={this.refundableAmount} className="input"
-                                                       placeholder=" "/>
-                                                <label className="placeholder">مبلغ قابل عودت</label>
-                                            </div>
-                                        </>
-                                }
-                            })()}
-                            <div className="input-report-box">
-                                <button className='btn-done w-100' disabled={this.state.registerLoading}>ثبت</button>
-                            </div>
-                        </form>
-                    </Modal.Body>
-                </Modal>
-                <Modal centered show={this.state.showDeleteModalReport}>
-                    <Modal.Header>
-                        <Modal.Title>حذف گزارش</Modal.Title>
-                        <button className='btn' onClick={() => {
-                            this.handleCloseModalReport()
-                        }}><AiOutlineClose/></button>
-                    </Modal.Header>
-                    <Modal.Body>
-                        <h6>آيا از حذف اين گزارش مطمئن هستيد؟</h6>
-                    </Modal.Body>
-                    <Modal.Footer className="justify-content-start">
-                        <button className="btn btn-danger" onClick={() => this.handleDeleteReport()}>حذف</button>
-                        <button className="btn btn-light" onClick={() => this.handleCloseModalReport()}>بستن</button>
-                    </Modal.Footer>
-                </Modal>
             </>
         );
     }

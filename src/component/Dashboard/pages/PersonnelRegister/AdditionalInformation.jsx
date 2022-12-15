@@ -23,7 +23,6 @@ class AdditionalInformation extends Component{
                         </div>
                         <div className="input-group-register col-md-4 col-12">
                             <SimpleTextInput
-                                condition1={this.context.personnelFieldsValidation.major_requiredReg}
                                 value={this.context.personnelFields.major}
                                 fieldNameString={'personnelFields'}
                                 valueOfInputString={'major'}

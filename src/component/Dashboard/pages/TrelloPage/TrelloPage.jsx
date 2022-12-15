@@ -129,7 +129,7 @@ class TrelloPage extends Component {
             tempMinuteTimeLog: 0,
             tempPriority: "",
             tempPersonnelId: "",})
-        // this.onClose()
+        this.onClose()
 
         await this.componentDidMount();
     };
@@ -395,6 +395,7 @@ class TrelloPage extends Component {
                                     </label>
                                     {/* Date picker component */}
                                     <DatePicker
+                                        editable={false}
                                         placeholder=" "
                                         calendarPosition={`top`}
                                         digits={['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']}
