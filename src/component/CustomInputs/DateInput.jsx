@@ -1,18 +1,12 @@
 import {Component} from "react";
-// import {DatePicker} from "react-persian-datepicker";
 import Error from "./Error";
 import BuildingContext from "../../contexts/Building";
 import "../../style/registerPage.css"
 import DatePicker from "react-multi-date-picker";
 import TimePicker from "react-multi-date-picker/plugins/time_picker";
-import transition from "react-element-popper/animations/transition";
 import "react-multi-date-picker/styles/layouts/mobile.css";
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
-import persian_en from "react-date-object/locales/persian_en";
-
-import DatePickerHeader from "react-multi-date-picker/plugins/date_picker_header";
-import login from "../Login";
 import {Button} from "@mui/material";
 
 class DateInput extends Component{
@@ -35,11 +29,11 @@ class DateInput extends Component{
         return (
             <>
                 <DatePicker
+                    editable={false}
                     // fixMainPosition={false}
                     calendarPosition={`top`}
                     digits={this.state.digits}
                     format={`${this.props.timeInclude ? 'HH:mm YYYY/MM/DD' : 'YYYY/MM/DD'}`}
-
 
                     containerStyle={{
                         width: "100%"
@@ -48,7 +42,6 @@ class DateInput extends Component{
                     inputClass={`input form-control ${this.props.condition1 === false ? "is-invalid" : ""}`}
                     value={this.props.value}
                     onChange={(value) => {
-                        console.log(value.format("YYYY/MM/DD HH:mm:ss"))
                         if (this.props.timeInclude) {
                             this.context.handleDates(value.format("YYYY/MM/DD HH:mm:ss"), this.props.fieldNameString, this.props.valueOfInputString);
                             this.context.handleValueOfDate(value, this.props.valueFieldString, this.props.valueOfInputString);

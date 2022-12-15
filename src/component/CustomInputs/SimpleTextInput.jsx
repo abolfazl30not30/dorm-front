@@ -5,9 +5,13 @@ import Error from "./Error";
 
 class SimpleTextInput extends Component {
     static contextType = BuildingContext;
-
-    render() {
-        return (
+    p2e = (input) => {
+        return input.replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d))
+    }
+    a2e = (input) => {
+        return input.replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d))
+    }
+    render() { return (
             <>
                 <input type="text"
                        maxLength={this.props.maxLength}
@@ -15,7 +19,7 @@ class SimpleTextInput extends Component {
                        this.props.condition3 === false || this.props.condition4 === false || this.props.condition6 === false ||
                        this.props.condition7 === false || this.props.condition5 ? "is-invalid" : ""}`}
                        value={this.props.value}
-                       onChange={(e) =>  this.context.handleFields(e.target.value, this.props.fieldNameString, this.props.valueOfInputString)}
+                       onChange={(e) => this.context.handleFields(this.p2e(this.a2e(e.target.value)), this.props.fieldNameString, this.props.valueOfInputString)}
                        placeholder=" "
                 />
                 <label className="placeholder"  style={{right: this.props.condition1 === false || this.props.condition2 === false ||

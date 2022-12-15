@@ -54,7 +54,7 @@ class PaymentHistory extends Component {
                                 <option value='expend'>پرداخت</option>
                                 <option value='receive'>دریافت</option>
                             </select>
-                            <label className='placeholder'>نوع تراکنش</label>
+                            <label className='placeholder' style={{padding: '0 .7rem',}}>نوع تراکنش</label>
                         </div>
                         <div className='input-group-filter col-6 col-md my-2 px-2'>
                             {/*<DatePicker calendarStyles={this.state.calStyles}*/}
@@ -123,7 +123,7 @@ class PaymentHistory extends Component {
                                 top: '-8px',
                                 backgroundColor: '#fff',
                                 color: '#2a2e32b3',
-                                padding: '0 0.4rem',
+                                padding: '0 .7rem',
                                 opacity: '1',
                             }}>از تاریخ</label>
                         </div>
@@ -193,13 +193,13 @@ class PaymentHistory extends Component {
                                 top: '-8px',
                                 backgroundColor: '#fff',
                                 color: '#2a2e32b3',
-                                padding: '0 0.4rem',
+                                padding: '0 .7rem',
                                 opacity: '1',
                             }}>تا تاریخ</label>
                         </div>
                         <div className='input-group-filter col-6 col-md my-2 px-2'>
                             <input type="text" className='input' ref={this.count}/>
-                            <label className='placeholder'>تعداد تراکنش</label>
+                            <label className='placeholder' style={{padding: '0 .7rem'}}>تعداد تراکنش</label>
                         </div>
                         <Box sx={{ m: 1, position: 'relative' }}>
                             <Button

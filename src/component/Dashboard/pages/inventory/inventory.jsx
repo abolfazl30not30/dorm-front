@@ -49,16 +49,9 @@ class inventory extends Component {
     async componentDidMount() {
         this.setState({searchLoading: true})
         const response = await fetch('https://api.saadatportal.com/api/v1/inventory').then((response) => response.json())
-            .then((data) => {
-                this.setState({inventory: data}, () => {
-                    console.log("callback inventory", this.state.inventory)
-                })
-                console.log("data", data)
-            });
-        console.log("inventory", this.state.inventory)
+            .then((data) => this.setState({inventory: data}))
         const response2 = await fetch('https://api.saadatportal.com/api/v1/category/search?type=Inventory').then((response) => response.json())
             .then((data) => this.setState({choices: data, searchLoading: false}));
-        console.log("inventory after second get", this.state.inventory)
     }
 
     render() {
@@ -127,8 +120,15 @@ class inventory extends Component {
                                     <tr key={i}>
                                         <td>{this.convertTypeToPersian(x.accessoryType)}</td>
                                         <td>{x.category}</td>
-                                        <td>{x.accessories[0].name}</td>
-                                        <td>{x.accessories[0].count}</td>
+                                        {
+                                            x.accessories.length !== 0
+                                            ?
+                                                <>
+                                                    <td>{x.accessories[0].name}</td>
+                                                    <td>{x.accessories[0].count}</td>
+                                                </>
+                                            : null
+                                        }
                                     </tr>
                                 ))
                             }
