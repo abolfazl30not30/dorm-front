@@ -96,9 +96,15 @@ class CInformationPage extends Component {
                                        fieldNameString={'constantInformationPage'}
                                        valueOfInputString={'birthDate'}
                                        required={true}
-                                       label={'تاریخ تولد'}
                                        timeInclude={false}
                             />
+                            <label className="placeholder" style={{
+                                top: '-8px',
+                                backgroundColor: '#fff',
+                                color: '#959799',
+                                padding: '0 .5rem',
+                                opacity: '1',
+                            }}>تاریخ تولد</label>
 
                         </div>
                         <div className="input-group-register col-md-4 col-12">

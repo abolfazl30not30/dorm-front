@@ -538,7 +538,7 @@ class CUploadPage extends Component {
                                 </Accordion.Body>
                             </Accordion.Item>
                             <Accordion.Item eventKey="3">
-                                <Accordion.Header>آپلود فرم ثبت نام</Accordion.Header>
+                                <Accordion.Header>آپلود فرم قرارداد</Accordion.Header>
                                 <Accordion.Body>
                                     <div className="my-3">
                                         <div className="upload-title d-flex justify-content-start my-2">
@@ -574,53 +574,6 @@ class CUploadPage extends Component {
                                             {
                                                 this.state.isUploadRegister && (
                                                     (this.state.hasErrorRegister) && (
-                                                        <Alert variant='danger' className="mt-3">
-                                                            فایل آپلود نشد
-                                                        </Alert>
-                                                    )
-                                                )
-                                            }
-                                        </div>
-                                    </div>
-                                </Accordion.Body>
-                            </Accordion.Item>
-                            <Accordion.Item eventKey="4">
-                                <Accordion.Header>آپلود پرینت ثبت نام دانشگاه</Accordion.Header>
-                                <Accordion.Body>
-                                    <div className="my-3">
-                                        <div className="upload-title d-flex justify-content-start my-2">
-                                            <BsFileEarmarkPdfFill style={{fontSize: "25px"}} color="#FA9627"/>
-                                            <span className='mx-2'>پرینت ثبت نام دانشگاه :</span>
-                                        </div>
-                                        <input className='form-control form-control-sm  p-2 ' type="file"
-                                               ref={this.inputRegisterUni}
-                                               disabled={this.state.isUploadRegisterUni && !this.state.hasErrorRegisterUni}
-                                               id="formFileLg" name="filename" onChange={(e) => {
-                                            this.handleFileRegisterUni(e)
-                                        }}/>
-                                        <div>
-                                            {this.state.isUploadRegisterUni && !this.state.hasErrorRegisterUni ? (
-                                                <div className="file-container">
-                                                    <div className="d-flex align-items-center">
-                                                        <RiFileUploadFill/>
-                                                        <h6 className="mx-1">{this.state.nameRegisterUni}</h6>
-                                                    </div>
-                                                    <button className="deleteBtn"
-                                                            onClick={this.handleDeleteRegisterUni}><MdDelete
-                                                        fontSize="20px"/></button>
-                                                </div>
-                                            ) : (this.state.isLoadingRegisterUni && (
-                                                    <div
-                                                        className="d-flex align-item-center justify-content-center">
-                                                        <ReactLoading type="cylon" color="#bdc3c7"
-                                                                      className="loading" height={1}
-                                                                      width={45}/>
-                                                    </div>
-                                                )
-                                            )}
-                                            {
-                                                this.state.isUploadRegisterUni && (
-                                                    (this.state.hasErrorRegisterUni) && (
                                                         <Alert variant='danger' className="mt-3">
                                                             فایل آپلود نشد
                                                         </Alert>
@@ -1045,53 +998,6 @@ class CUploadPage extends Component {
         this.setState({isUploadRegister: false});
         this.inputRegister.current.value = "";
     }
-
-
-    handleFileRegisterUni = async (e) => {
-        if (e.target.files[0] !== undefined) {
-            this.setState({isLoadingRegisterUni: true});
-            let formData = new FormData();
-            formData.append('file', e.target.files[0]);
-            this.setState({nameRegisterUni: e.target.files[0].name});
-
-            await fetch('https://api.saadatportal.com/api/v1/file', {
-                method: 'POST',
-                body: formData
-            }).then((response) => response.json())
-                .then((result) => {
-
-                    console.log('Success:', result);
-                    this.setState({fileIdRegisterUni: result.message.id});
-                    this.context.handleUploadedFile("personnelUploadPage", "registerUni", result.message.id);
-                    this.setState({isLoadingRegisterUni: false});
-                    this.setState({isUploadRegisterUni: true});
-                    this.setState({hasErrorRegisterUni: false});
-
-                })
-
-                .catch((error) => {
-                    console.error('Error:', error);
-                    this.setState({isLoadingRegisterUni: false});
-                    this.setState({isUploadRegisterUni: true})
-                    this.setState({hasErrorRegisterUni: true});
-                });
-        }
-
-    }
-
-    handleDeleteRegisterUni = async () => {
-        await fetch(`https://api.saadatportal.com/api/v1/file/${this.state.fileIdRegisterUni}`, {
-            method: 'DELETE',
-        })
-            .then(res => res.text())
-            .then(res => console.log(res));
-        this.context.handleDeleteUploadedFile("personnelUploadPage",this.state.fileIdRegisterUni)
-        this.setState({fileIdRegisterUni: ""});
-        this.setState({isUploadRegisterUni: false});
-        this.inputRegisterUni.current.value = "";
-    }
-
-
 }
 
 export default CUploadPage;

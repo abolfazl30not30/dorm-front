@@ -43,9 +43,15 @@ class CInformationFurtherPage extends Component {
                                        fieldNameString={'constantInformationFurther'}
                                        valueOfInputString={'startDate'}
                                        required={true}
-                                       label={'تاریخ شروع پذیرش'}
                                        timeInclude={true}
                             />
+                            <label className="placeholder" style={{
+                                top: '-8px',
+                                backgroundColor: '#fff',
+                                color: '#959799',
+                                padding: '0 .5rem',
+                                opacity: '1',
+                            }}>تاریخ شروع پذیرش</label>
                         </div>
                         <div className="input-group-register col-md-4 col-12">
                             <DateInput condition1={this.context.constantInformationFurtherValidation.endDate_requiredReg}
@@ -57,7 +63,13 @@ class CInformationFurtherPage extends Component {
                                        label={'تاریخ اتمام پذیرش'}
                                        timeInclude={true}
                             />
-
+                            <label className="placeholder" style={{
+                                top: '-8px',
+                                backgroundColor: '#fff',
+                                color: '#959799',
+                                padding: '0 .5rem',
+                                opacity: '1',
+                            }}>تاریخ اتمام پذیرش</label>
                         </div>
                         <div className="input-group-register col-12">
                             <SimpleTextInput

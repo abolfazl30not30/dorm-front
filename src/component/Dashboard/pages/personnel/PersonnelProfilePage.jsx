@@ -2,43 +2,18 @@ import React, {Component, createRef} from 'react'
 import '../../../../style/profilePage.css'
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
-import {AiFillCloseCircle, AiOutlineClose} from "react-icons/ai";
-import {Accordion, Modal, Table} from 'react-bootstrap'
-import {RiDownloadCloud2Fill} from 'react-icons/ri'
-import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
-import Tooltip from 'react-bootstrap/Tooltip';
 import BuildingContext from "../../../../contexts/Building";
-import DatePicker from "react-multi-date-picker";
-import TimePicker from "react-multi-date-picker/plugins/time_picker";
-import persian from "react-date-object/calendars/persian";
-import persian_fa from "react-date-object/locales/persian_fa";
-import {Button} from "@mui/material";
 
 class PersonnelProfilePage extends Component {
 
     static contextType = BuildingContext;
 
     state = {
-        dateValues: {
-            cleaningDate: '',
-            delayInArrivalDate: '',
-            delayInArriveTime: '',
-            exitStartDate: '',
-            exitEndDate: '',
-            violationDate: '',
-            violationTime: '',
-            dischargeDateAnnounce: '',
-            dischargeDate: '',
-            depositReturnDate: '',
-            cancelContractDate: '',
-        },
         personnel: {},
         show: false,
         reportType: 'cleaning',
         personnelObject: {},
-        report: [],
         showDeleteModalReport: false,
-        reportTemp: {},
         docFile: {},
         fileDetails: [],
         profileImgUrl: null,
@@ -51,10 +26,8 @@ class PersonnelProfilePage extends Component {
         hasCartPage2: false,
         hasCartAllPage: false,
         hasPersonnelImg: false,
-        hasRegister: false,
-        hasRegisterUni: false,
+        hasContract: false,
         registerLoading: false,
-
     }
     date = createRef();
     description = createRef();
@@ -65,9 +38,7 @@ class PersonnelProfilePage extends Component {
     destinationPhoneNumber = createRef();
     relation = createRef();
     typePenalty = createRef();
-    dischargeDateAnnounce = createRef();
-    dischargeDate = createRef();
-    depositReturnDate = createRef();
+
     deductionOfLosses = createRef();
     deductionOfLossesReason = createRef();
     refundableAmount = createRef();
@@ -93,15 +64,15 @@ class PersonnelProfilePage extends Component {
                     this.setState({profileImgUrl: objectUrl})
                 });
         }
-
-        const fileRespond = await fetch(`https://api.saadatportal.com/api/v1/responseFile/search?parentType=Personnel&parentId=${parentId}`).then((response) => response.json())
-            .then((data) => this.setState({fileDetails: data}, () => {
-                this.setState({docFile: this.state.personnelObject.files});
-                this.setState({report: this.state.personnelObject.record}, () => {
-                });
-                this.existDocFile(this.state.personnelObject.files);
-            }));
-
+    //
+    //     const fileRespond = await fetch(`https://api.saadatportal.com/api/v1/responseFile/search?parentType=Personnel&parentId=${parentId}`).then((response) => response.json())
+    //         .then((data) => this.setState({fileDetails: data}, () => {
+    //             this.setState({docFile: this.state.personnelObject.files});
+    //             this.setState({report: this.state.personnelObject.record}, () => {
+    //             });
+    //             this.existDocFile(this.state.personnelObject.files);
+    //         }));
+    //
     }
 
     render() {
@@ -177,14 +148,14 @@ class PersonnelProfilePage extends Component {
                                                 <div className="more-info-item">
                                                     <i className="bi bi-caret-left ms-1"></i>
                                                     <label> تاریخ تولد :</label>
-                                                    {this.state.personnel.birthDate.split(" ")[0]}
+                                                    {this.state.personnel.birthDate}
                                                 </div>
                                             </div>
                                             <div className='col-12 col-md-4'>
                                                 <div className="more-info-item">
                                                     <i className="bi bi-caret-left ms-1"></i>
                                                     <label> محل تولد :</label>
-                                                    {this.state.personnel.birthPlace.split(" ")[0]}
+                                                    {this.state.personnel.birthPlace}
                                                 </div>
                                             </div>
                                             <div className='col-12 col-md-4'>
@@ -218,14 +189,7 @@ class PersonnelProfilePage extends Component {
                                                 <div className="more-info-item">
                                                     <i className="bi bi-caret-left ms-1"></i>
                                                     <label> مذهب :</label>
-                                                    {this.state.personnel.subReligion != "" ? this.state.personnel.subReligion : 'ثبت نشده'}
-                                                </div>
-                                            </div>
-                                            <div className='col-12 col-md-4'>
-                                                <div className="more-info-item">
-                                                    <i className="bi bi-caret-left ms-1"></i>
-                                                    <label> تحصیلات :</label>
-                                                    {this.state.personnel.education != "" ? this.state.personnel.university : 'ثبت نشده'}
+                                                    {this.state.personnel.subReligion !== "" ? this.state.personnel.subReligion : 'ثبت نشده'}
                                                 </div>
                                             </div>
                                             <div className='col-12 col-md-4'>
@@ -254,14 +218,14 @@ class PersonnelProfilePage extends Component {
                                                                     <i className="bi bi-caret-left ms-1"></i>
                                                                     <label> نام و نام خانوادگی همسر
                                                                         :</label>
-                                                                    {this.state.personnel.spouseFullName != "" ? this.state.personnel.spouseFullName : 'ثبت نشده'}
+                                                                    {this.state.personnel.spouseFullName !== "" ? this.state.personnel.spouseFullName : 'ثبت نشده'}
                                                                 </div>
                                                             </div>
                                                             <div className='col-12 col-md-4'>
                                                                 <div className="more-info-item">
                                                                     <i className="bi bi-caret-left ms-1"></i>
                                                                     <label> شغل همسر :</label>
-                                                                    {this.state.personnel.spouseJob != "" ? this.state.personnel.spouseJob : 'ثبت نشده'}
+                                                                    {this.state.personnel.spouseJob !== "" ? this.state.personnel.spouseJob : 'ثبت نشده'}
                                                                 </div>
                                                             </div>
                                                         </>);
@@ -289,7 +253,7 @@ class PersonnelProfilePage extends Component {
                                                                 <div className="more-info-item">
                                                                     <i className="bi bi-caret-left ms-1"></i>
                                                                     <label> توضیحات بیماری :</label>
-                                                                    {this.state.personnel.healthyStatus != "" ? this.state.personnel.healthyStatus : 'ثبت نشده'}
+                                                                    {this.state.personnel.healthyStatus !== "" ? this.state.personnel.healthyStatus : 'ثبت نشده'}
                                                                 </div>
                                                             </div>
                                                         </>;
@@ -298,29 +262,29 @@ class PersonnelProfilePage extends Component {
                                             <div className='col-12 col-md-4'>
                                                 <div className="more-info-item">
                                                     <i className="bi bi-caret-left ms-1"></i>
-                                                    <label> شماره همراه :</label>
-                                                    {this.state.personnel.phoneNumber}
-                                                </div>
-                                            </div>
-                                            <div className='col-12 col-md-4'>
-                                                <div className="more-info-item">
-                                                    <i className="bi bi-caret-left ms-1"></i>
-                                                    <label> شماره تلفن منزل :</label>
+                                                    <label> تلفن ثابت :</label>
                                                     {this.state.personnel.telephoneNumber}
                                                 </div>
                                             </div>
                                             <div className='col-12 col-md-4'>
                                                 <div className="more-info-item">
                                                     <i className="bi bi-caret-left ms-1"></i>
-                                                    <label> تاریخ شروع کار :</label>
-                                                    {this.state.personnel.timePeriod.startDate}
+                                                    <label> تلفن اضطراری :</label>
+                                                    {this.state.personnel.emergencyNumber}
                                                 </div>
                                             </div>
                                             <div className='col-12 col-md-4'>
                                                 <div className="more-info-item">
                                                     <i className="bi bi-caret-left ms-1"></i>
-                                                    <label> تاریخ اتمام کار :</label>
-                                                    {this.state.personnel.timePeriod.endDate.split(" ")[0]}
+                                                    <label> تاریخ عقد قرارداد :</label>
+                                                    {this.state.personnel.timePeriod?.startDate}
+                                                </div>
+                                            </div>
+                                            <div className='col-12 col-md-4'>
+                                                <div className="more-info-item">
+                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                    <label> تاریخ اتمام قرارداد :</label>
+                                                    {this.state.personnel.timePeriod?.endDate}
                                                 </div>
                                             </div>
                                             <div className='col-12 col-md-4'>
@@ -330,244 +294,273 @@ class PersonnelProfilePage extends Component {
                                                     {this.state.personnel.address}
                                                 </div>
                                             </div>
+                                            <div className='col-12 col-md-4'>
+                                                <div className="more-info-item">
+                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                    <label> تحصیلات :</label>
+                                                    {this.state.personnel.education !== "" ? this.state.personnel.education : 'ثبت نشده'}
+                                                </div>
+                                            </div>
+                                            <div className='col-12 col-md-4'>
+                                                <div className="more-info-item">
+                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                    <label> دانشگاه :</label>
+                                                    {this.state.personnel.university !== "" ? this.state.personnel.university : 'ثبت نشده'}
+                                                </div>
+                                            </div>
+                                            <div className='col-12 col-md-4'>
+                                                <div className="more-info-item">
+                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                    <label> رشته :</label>
+                                                    {this.state.personnel.major !== "" ? this.state.personnel.major : 'ثبت نشده'}
+                                                </div>
+                                            </div>
+                                            <div className='col-12 col-md-4'>
+                                                <div className="more-info-item">
+                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                    <label> نوع :</label>
+                                                    {this.state.personnel.type}
+                                                </div>
+                                            </div>
+
                                         </div>
                                     </div>
                                 </Tab>
-                                <Tab eventKey="documents" title="مدارک" className='records'
-                                     style={{backgroundColor: "transparent"}}>
-                                    <div className="tabs-content">
-                                        <Accordion defaultActiveKey="0">
-                                            <Accordion.Item eventKey="0">
-                                                <Accordion.Header>شناسنامه</Accordion.Header>
-                                                <Accordion.Body>
-                                                    <div className="d-flex flex-column">
-                                                        {
-                                                            this.state.hasBirthPage1 && (
-                                                                <OverlayTrigger
-                                                                    placement="bottom"
-                                                                    overlay={
-                                                                        <Tooltip className="deleteTooltip">
-                                                                            دانلود
-                                                                        </Tooltip>
-                                                                    }
-                                                                >
-                                                                    <div className="record-item"
-                                                                         onClick={() => this.downloadFile(this.state.docFile.birthPage1)}>
-                                                                        <div className='ms-2'>صفحه اول</div>
-                                                                        <RiDownloadCloud2Fill/>
-                                                                    </div>
-                                                                </OverlayTrigger>
-                                                            )
-                                                        }
+                                {/*<Tab eventKey="documents" title="مدارک" className='records'*/}
+                                {/*     style={{backgroundColor: "transparent"}}>*/}
+                                {/*    <div className="tabs-content">*/}
+                                {/*        <Accordion defaultActiveKey="0">*/}
+                                {/*            <Accordion.Item eventKey="0">*/}
+                                {/*                <Accordion.Header>شناسنامه</Accordion.Header>*/}
+                                {/*                <Accordion.Body>*/}
+                                {/*                    <div className="d-flex flex-column">*/}
+                                {/*                        {*/}
+                                {/*                            this.state.hasBirthPage1 && (*/}
+                                {/*                                <OverlayTrigger*/}
+                                {/*                                    placement="bottom"*/}
+                                {/*                                    overlay={*/}
+                                {/*                                        <Tooltip className="deleteTooltip">*/}
+                                {/*                                            دانلود*/}
+                                {/*                                        </Tooltip>*/}
+                                {/*                                    }*/}
+                                {/*                                >*/}
+                                {/*                                    <div className="record-item"*/}
+                                {/*                                         onClick={() => this.downloadFile(this.state.docFile.birthPage1)}>*/}
+                                {/*                                        <div className='ms-2'>صفحه اول</div>*/}
+                                {/*                                        <RiDownloadCloud2Fill/>*/}
+                                {/*                                    </div>*/}
+                                {/*                                </OverlayTrigger>*/}
+                                {/*                            )*/}
+                                {/*                        }*/}
 
-                                                        {
-                                                            this.state.hasBirthPage2 && (
-                                                                <OverlayTrigger
-                                                                    placement="bottom"
-                                                                    overlay={
-                                                                        <Tooltip className="deleteTooltip">
-                                                                            دانلود
-                                                                        </Tooltip>
-                                                                    }
-                                                                >
-                                                                    <div className="record-item"
-                                                                         onClick={() => this.downloadFile(this.state.docFile.birthPage2)}>
-                                                                        <div className='ms-2'>صفحه دوم</div>
-                                                                        <RiDownloadCloud2Fill/>
-                                                                    </div>
-                                                                </OverlayTrigger>
-                                                            )
-                                                        }
-                                                        {
-                                                            this.state.hasBirthPage3 && (
-                                                                <OverlayTrigger
-                                                                    placement="bottom"
-                                                                    overlay={
-                                                                        <Tooltip className="deleteTooltip">
-                                                                            دانلود
-                                                                        </Tooltip>
-                                                                    }
-                                                                >
-                                                                    <div className="record-item"
-                                                                         onClick={() => this.downloadFile(this.state.docFile.birthPage3)}>
-                                                                        <div className='ms-2'>صفحه سوم</div>
-                                                                        <RiDownloadCloud2Fill/>
-                                                                    </div>
-                                                                </OverlayTrigger>
-                                                            )
-                                                        }
-                                                        {
-                                                            this.state.hasBirthPage4 && (
-                                                                <OverlayTrigger
-                                                                    placement="bottom"
-                                                                    overlay={
-                                                                        <Tooltip className="deleteTooltip">
-                                                                            دانلود
-                                                                        </Tooltip>
-                                                                    }
-                                                                >
-                                                                    <div className="record-item"
-                                                                         onClick={() => this.downloadFile(this.state.docFile.birthPage4)}>
-                                                                        <div className='ms-2'>صفحه چهارم</div>
-                                                                        <RiDownloadCloud2Fill/>
-                                                                    </div>
-                                                                </OverlayTrigger>
-                                                            )
-                                                        }
-                                                        {
-                                                            this.state.hasBirthAllPage && (
-                                                                <OverlayTrigger
-                                                                    placement="bottom"
-                                                                    overlay={
-                                                                        <Tooltip className="deleteTooltip">
-                                                                            دانلود
-                                                                        </Tooltip>
-                                                                    }
-                                                                >
-                                                                    <div className="record-item"
-                                                                         onClick={() => this.downloadFile(this.state.docFile.birthAllPage)}>
-                                                                        <div className='ms-2'>کل صفحات</div>
-                                                                        <RiDownloadCloud2Fill/>
-                                                                    </div>
-                                                                </OverlayTrigger>
-                                                            )
-                                                        }
-                                                    </div>
-                                                </Accordion.Body>
-                                            </Accordion.Item>
+                                {/*                        {*/}
+                                {/*                            this.state.hasBirthPage2 && (*/}
+                                {/*                                <OverlayTrigger*/}
+                                {/*                                    placement="bottom"*/}
+                                {/*                                    overlay={*/}
+                                {/*                                        <Tooltip className="deleteTooltip">*/}
+                                {/*                                            دانلود*/}
+                                {/*                                        </Tooltip>*/}
+                                {/*                                    }*/}
+                                {/*                                >*/}
+                                {/*                                    <div className="record-item"*/}
+                                {/*                                         onClick={() => this.downloadFile(this.state.docFile.birthPage2)}>*/}
+                                {/*                                        <div className='ms-2'>صفحه دوم</div>*/}
+                                {/*                                        <RiDownloadCloud2Fill/>*/}
+                                {/*                                    </div>*/}
+                                {/*                                </OverlayTrigger>*/}
+                                {/*                            )*/}
+                                {/*                        }*/}
+                                {/*                        {*/}
+                                {/*                            this.state.hasBirthPage3 && (*/}
+                                {/*                                <OverlayTrigger*/}
+                                {/*                                    placement="bottom"*/}
+                                {/*                                    overlay={*/}
+                                {/*                                        <Tooltip className="deleteTooltip">*/}
+                                {/*                                            دانلود*/}
+                                {/*                                        </Tooltip>*/}
+                                {/*                                    }*/}
+                                {/*                                >*/}
+                                {/*                                    <div className="record-item"*/}
+                                {/*                                         onClick={() => this.downloadFile(this.state.docFile.birthPage3)}>*/}
+                                {/*                                        <div className='ms-2'>صفحه سوم</div>*/}
+                                {/*                                        <RiDownloadCloud2Fill/>*/}
+                                {/*                                    </div>*/}
+                                {/*                                </OverlayTrigger>*/}
+                                {/*                            )*/}
+                                {/*                        }*/}
+                                {/*                        {*/}
+                                {/*                            this.state.hasBirthPage4 && (*/}
+                                {/*                                <OverlayTrigger*/}
+                                {/*                                    placement="bottom"*/}
+                                {/*                                    overlay={*/}
+                                {/*                                        <Tooltip className="deleteTooltip">*/}
+                                {/*                                            دانلود*/}
+                                {/*                                        </Tooltip>*/}
+                                {/*                                    }*/}
+                                {/*                                >*/}
+                                {/*                                    <div className="record-item"*/}
+                                {/*                                         onClick={() => this.downloadFile(this.state.docFile.birthPage4)}>*/}
+                                {/*                                        <div className='ms-2'>صفحه چهارم</div>*/}
+                                {/*                                        <RiDownloadCloud2Fill/>*/}
+                                {/*                                    </div>*/}
+                                {/*                                </OverlayTrigger>*/}
+                                {/*                            )*/}
+                                {/*                        }*/}
+                                {/*                        {*/}
+                                {/*                            this.state.hasBirthAllPage && (*/}
+                                {/*                                <OverlayTrigger*/}
+                                {/*                                    placement="bottom"*/}
+                                {/*                                    overlay={*/}
+                                {/*                                        <Tooltip className="deleteTooltip">*/}
+                                {/*                                            دانلود*/}
+                                {/*                                        </Tooltip>*/}
+                                {/*                                    }*/}
+                                {/*                                >*/}
+                                {/*                                    <div className="record-item"*/}
+                                {/*                                         onClick={() => this.downloadFile(this.state.docFile.birthAllPage)}>*/}
+                                {/*                                        <div className='ms-2'>کل صفحات</div>*/}
+                                {/*                                        <RiDownloadCloud2Fill/>*/}
+                                {/*                                    </div>*/}
+                                {/*                                </OverlayTrigger>*/}
+                                {/*                            )*/}
+                                {/*                        }*/}
+                                {/*                    </div>*/}
+                                {/*                </Accordion.Body>*/}
+                                {/*            </Accordion.Item>*/}
 
-                                            <Accordion.Item eventKey="1">
-                                                <Accordion.Header>کارت ملی</Accordion.Header>
-                                                <Accordion.Body>
-                                                    {
-                                                        this.state.hasCartPage1 && (
-                                                            <OverlayTrigger
-                                                                placement="bottom"
-                                                                overlay={
-                                                                    <Tooltip className="deleteTooltip">
-                                                                        دانلود
-                                                                    </Tooltip>
-                                                                }
-                                                            >
-                                                                <div className="record-item"
-                                                                     onClick={() => this.downloadFile(this.state.docFile.cardPage1)}>
-                                                                    <div className='ms-2'>صفحه اول</div>
-                                                                    <RiDownloadCloud2Fill/>
-                                                                </div>
-                                                            </OverlayTrigger>
-                                                        )
-                                                    }
-                                                    {
-                                                        this.state.hasCartPage2 && (
-                                                            <OverlayTrigger
-                                                                placement="bottom"
-                                                                overlay={
-                                                                    <Tooltip className="deleteTooltip">
-                                                                        دانلود
-                                                                    </Tooltip>
-                                                                }
-                                                            >
-                                                                <div className="record-item"
-                                                                     onClick={() => this.downloadFile(this.state.docFile.cardPage2)}>
-                                                                    <div className='ms-2'>صفحه دوم</div>
-                                                                    <RiDownloadCloud2Fill/>
-                                                                </div>
-                                                            </OverlayTrigger>
-                                                        )
-                                                    }
-                                                    {
-                                                        this.state.hasCartAllPage && (
-                                                            <OverlayTrigger
-                                                                placement="bottom"
-                                                                overlay={
-                                                                    <Tooltip className="deleteTooltip">
-                                                                        دانلود
-                                                                    </Tooltip>
-                                                                }
-                                                            >
-                                                                <div className="record-item"
-                                                                     onClick={() => this.downloadFile(this.state.docFile.cardAllPage)}>
-                                                                    <div className='ms-2'>کل صفحات</div>
-                                                                    <RiDownloadCloud2Fill/>
-                                                                </div>
-                                                            </OverlayTrigger>
-                                                        )
-                                                    }
-                                                </Accordion.Body>
-                                            </Accordion.Item>
+                                {/*            <Accordion.Item eventKey="1">*/}
+                                {/*                <Accordion.Header>کارت ملی</Accordion.Header>*/}
+                                {/*                <Accordion.Body>*/}
+                                {/*                    {*/}
+                                {/*                        this.state.hasCartPage1 && (*/}
+                                {/*                            <OverlayTrigger*/}
+                                {/*                                placement="bottom"*/}
+                                {/*                                overlay={*/}
+                                {/*                                    <Tooltip className="deleteTooltip">*/}
+                                {/*                                        دانلود*/}
+                                {/*                                    </Tooltip>*/}
+                                {/*                                }*/}
+                                {/*                            >*/}
+                                {/*                                <div className="record-item"*/}
+                                {/*                                     onClick={() => this.downloadFile(this.state.docFile.cardPage1)}>*/}
+                                {/*                                    <div className='ms-2'>صفحه اول</div>*/}
+                                {/*                                    <RiDownloadCloud2Fill/>*/}
+                                {/*                                </div>*/}
+                                {/*                            </OverlayTrigger>*/}
+                                {/*                        )*/}
+                                {/*                    }*/}
+                                {/*                    {*/}
+                                {/*                        this.state.hasCartPage2 && (*/}
+                                {/*                            <OverlayTrigger*/}
+                                {/*                                placement="bottom"*/}
+                                {/*                                overlay={*/}
+                                {/*                                    <Tooltip className="deleteTooltip">*/}
+                                {/*                                        دانلود*/}
+                                {/*                                    </Tooltip>*/}
+                                {/*                                }*/}
+                                {/*                            >*/}
+                                {/*                                <div className="record-item"*/}
+                                {/*                                     onClick={() => this.downloadFile(this.state.docFile.cardPage2)}>*/}
+                                {/*                                    <div className='ms-2'>صفحه دوم</div>*/}
+                                {/*                                    <RiDownloadCloud2Fill/>*/}
+                                {/*                                </div>*/}
+                                {/*                            </OverlayTrigger>*/}
+                                {/*                        )*/}
+                                {/*                    }*/}
+                                {/*                    {*/}
+                                {/*                        this.state.hasCartAllPage && (*/}
+                                {/*                            <OverlayTrigger*/}
+                                {/*                                placement="bottom"*/}
+                                {/*                                overlay={*/}
+                                {/*                                    <Tooltip className="deleteTooltip">*/}
+                                {/*                                        دانلود*/}
+                                {/*                                    </Tooltip>*/}
+                                {/*                                }*/}
+                                {/*                            >*/}
+                                {/*                                <div className="record-item"*/}
+                                {/*                                     onClick={() => this.downloadFile(this.state.docFile.cardAllPage)}>*/}
+                                {/*                                    <div className='ms-2'>کل صفحات</div>*/}
+                                {/*                                    <RiDownloadCloud2Fill/>*/}
+                                {/*                                </div>*/}
+                                {/*                            </OverlayTrigger>*/}
+                                {/*                        )*/}
+                                {/*                    }*/}
+                                {/*                </Accordion.Body>*/}
+                                {/*            </Accordion.Item>*/}
 
-                                            <Accordion.Item eventKey="2">
-                                                <Accordion.Header>عکس پرسنلی</Accordion.Header>
-                                                <Accordion.Body>
-                                                    {
-                                                        this.state.hasPersonnelImg && (
-                                                            <OverlayTrigger
-                                                                placement="bottom"
-                                                                overlay={
-                                                                    <Tooltip className="deleteTooltip">
-                                                                        دانلود
-                                                                    </Tooltip>
-                                                                }
-                                                            >
-                                                                <div className="record-item"
-                                                                     onClick={() => this.downloadFile(this.state.docFile.personnelImg)}>
-                                                                    <div className='ms-2'>عکس پرسنلی</div>
-                                                                    <RiDownloadCloud2Fill/>
-                                                                </div>
-                                                            </OverlayTrigger>
-                                                        )
-                                                    }
-                                                </Accordion.Body>
-                                            </Accordion.Item>
-                                            <Accordion.Item eventKey="3">
-                                                <Accordion.Header>پرینت ثبت نام </Accordion.Header>
-                                                <Accordion.Body>
-                                                    {
-                                                        this.state.hasRegister && (
-                                                            <OverlayTrigger
-                                                                placement="bottom"
-                                                                overlay={
-                                                                    <Tooltip className="deleteTooltip">
-                                                                        دانلود
-                                                                    </Tooltip>
-                                                                }
-                                                            >
-                                                                <div className="record-item"
-                                                                     onClick={() => this.downloadFile(this.state.docFile.register)}>
-                                                                    <div className='ms-2'>پرینت ثبت نام</div>
-                                                                    <RiDownloadCloud2Fill/>
-                                                                </div>
-                                                            </OverlayTrigger>
-                                                        )
-                                                    }
-                                                </Accordion.Body>
-                                            </Accordion.Item>
-                                            <Accordion.Item eventKey="4">
-                                                <Accordion.Header>پرینت ثبت نام دانشگاه</Accordion.Header>
-                                                <Accordion.Body>
-                                                    {
-                                                        this.state.hasRegisterUni && (
-                                                            <OverlayTrigger
-                                                                placement="bottom"
-                                                                overlay={
-                                                                    <Tooltip className="deleteTooltip">
-                                                                        دانلود
-                                                                    </Tooltip>
-                                                                }
-                                                            >
-                                                                <div className="record-item"
-                                                                     onClick={() => this.downloadFile(this.state.docFile.registerUni)}>
-                                                                    <div className='ms-2'> ثبت نام دانشگاه</div>
-                                                                    <RiDownloadCloud2Fill color="#000"/>
-                                                                </div>
-                                                            </OverlayTrigger>
-                                                        )
-                                                    }
-                                                </Accordion.Body>
-                                            </Accordion.Item>
-                                        </Accordion>
-                                    </div>
-                                </Tab>
+                                {/*            <Accordion.Item eventKey="2">*/}
+                                {/*                <Accordion.Header>عکس پرسنلی</Accordion.Header>*/}
+                                {/*                <Accordion.Body>*/}
+                                {/*                    {*/}
+                                {/*                        this.state.hasPersonnelImg && (*/}
+                                {/*                            <OverlayTrigger*/}
+                                {/*                                placement="bottom"*/}
+                                {/*                                overlay={*/}
+                                {/*                                    <Tooltip className="deleteTooltip">*/}
+                                {/*                                        دانلود*/}
+                                {/*                                    </Tooltip>*/}
+                                {/*                                }*/}
+                                {/*                            >*/}
+                                {/*                                <div className="record-item"*/}
+                                {/*                                     onClick={() => this.downloadFile(this.state.docFile.personnelImg)}>*/}
+                                {/*                                    <div className='ms-2'>عکس پرسنلی</div>*/}
+                                {/*                                    <RiDownloadCloud2Fill/>*/}
+                                {/*                                </div>*/}
+                                {/*                            </OverlayTrigger>*/}
+                                {/*                        )*/}
+                                {/*                    }*/}
+                                {/*                </Accordion.Body>*/}
+                                {/*            </Accordion.Item>*/}
+                                {/*            <Accordion.Item eventKey="3">*/}
+                                {/*                <Accordion.Header>پرینت ثبت نام </Accordion.Header>*/}
+                                {/*                <Accordion.Body>*/}
+                                {/*                    {*/}
+                                {/*                        this.state.hasRegister && (*/}
+                                {/*                            <OverlayTrigger*/}
+                                {/*                                placement="bottom"*/}
+                                {/*                                overlay={*/}
+                                {/*                                    <Tooltip className="deleteTooltip">*/}
+                                {/*                                        دانلود*/}
+                                {/*                                    </Tooltip>*/}
+                                {/*                                }*/}
+                                {/*                            >*/}
+                                {/*                                <div className="record-item"*/}
+                                {/*                                     onClick={() => this.downloadFile(this.state.docFile.register)}>*/}
+                                {/*                                    <div className='ms-2'>پرینت ثبت نام</div>*/}
+                                {/*                                    <RiDownloadCloud2Fill/>*/}
+                                {/*                                </div>*/}
+                                {/*                            </OverlayTrigger>*/}
+                                {/*                        )*/}
+                                {/*                    }*/}
+                                {/*                </Accordion.Body>*/}
+                                {/*            </Accordion.Item>*/}
+                                {/*            <Accordion.Item eventKey="4">*/}
+                                {/*                <Accordion.Header>پرینت ثبت نام دانشگاه</Accordion.Header>*/}
+                                {/*                <Accordion.Body>*/}
+                                {/*                    {*/}
+                                {/*                        this.state.hasRegisterUni && (*/}
+                                {/*                            <OverlayTrigger*/}
+                                {/*                                placement="bottom"*/}
+                                {/*                                overlay={*/}
+                                {/*                                    <Tooltip className="deleteTooltip">*/}
+                                {/*                                        دانلود*/}
+                                {/*                                    </Tooltip>*/}
+                                {/*                                }*/}
+                                {/*                            >*/}
+                                {/*                                <div className="record-item"*/}
+                                {/*                                     onClick={() => this.downloadFile(this.state.docFile.registerUni)}>*/}
+                                {/*                                    <div className='ms-2'> ثبت نام دانشگاه</div>*/}
+                                {/*                                    <RiDownloadCloud2Fill color="#000"/>*/}
+                                {/*                                </div>*/}
+                                {/*                            </OverlayTrigger>*/}
+                                {/*                        )*/}
+                                {/*                    }*/}
+                                {/*                </Accordion.Body>*/}
+                                {/*            </Accordion.Item>*/}
+                                {/*        </Accordion>*/}
+                                {/*    </div>*/}
+                                {/*</Tab>*/}
                             </Tabs>
                         </div>
                     </div>
@@ -603,316 +596,51 @@ class PersonnelProfilePage extends Component {
         const type = e.target.value
         this.setState({reportType: type})
     }
-    handleSubmit = (e) => {
-        e.preventDefault();
-        // console.log(this.state.dateValues.cleaningDate)
-        const type = this.state.reportType;
-
-        this.setState({reports: type});
-        switch (type) {
-            case 'cleaning':
-                return (async () => {
-                    this.setState({registerLoading: true});
-                    const date = this.state.dateValues.cleaningDate;
-                    const formattedDate = date.year + '/' + date.month + '/' + date.day
-                    const description = this.description.current.value;
-                    const result = {
-                        'title': "cleaning",
-                        'date': formattedDate,
-                        'checkCleaning': true,
-                        'description': description,
-                        'personId': this.state.personObject.id
-                    }
-
-                    const rawResponse = await fetch('https://api.saadatportal.com/api/v1/record', {
-                        method: 'POST',
-                        headers: {
-                            'Accept': 'application/json',
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(result)
-                    }).then((response) => response.json())
-                        .then((result) => {
-                            this.setState({registerLoading: false});
-                            const newReports = this.state.report.concat(result);
-                            this.setState({report: newReports});
-                            this.setState({show: false});
-                        })
-                        .catch((error) => {
-                            this.setState({registerLoading: false})
-                        });
-                })();
-            case 'delayInArrival':
-                return (async () => {
-                    this.setState({registerLoading: true});
-                    const date = this.state.dateValues.delayInArrivalDate;
-                    const formattedDate = date.year + '/' + date.month + '/' + date.day
-                    const time = this.state.dateValues.delayInArriveTime;
-                    const formattedTime = time.hour + ':' + time.minute;
-
-                    const result = {
-                        'title': "delayInArrival",
-                        'date': formattedDate,
-                        'hour': formattedTime,
-                        'personId': this.state.personObject.id
-                    }
-
-                    const rawResponse = await fetch('https://api.saadatportal.com/api/v1/record', {
-                        method: 'POST',
-                        headers: {
-                            'Accept': 'application/json',
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(result)
-                    }).then((response) => response.json())
-                        .then((result) => {
-                            this.setState({registerLoading: false});
-                            const newReports = this.state.report.concat(result)
-                            this.setState({report: newReports})
-                            this.setState({show: false})
-                        })
-                        .catch((error) => {
-                            this.setState({registerLoading: false})
-                        });
-                })();
-
-            case 'exit':
-                return (async () => {
-                    this.setState({registerLoading: true});
-                    const startDate = this.state.dateValues.exitStartDate;
-                    const endDate = this.state.dateValues.exitEndDate;
-                    const formattedStartDate = startDate.year + '/' + startDate.month + '/' + startDate.day;
-                    const formattedEndDate = endDate.year + '/' + endDate.month + '/' + endDate.day;
-                    const destinationAddress = this.destinationAddress.current.value;
-                    const destinationPhoneNumber = this.destinationPhoneNumber.current.value;
-                    const relation = this.relation.current.value;
-                    const result = {
-                        'title': "exit",
-                        "startDate": formattedStartDate,
-                        "endDate": formattedEndDate,
-                        'destinationAddress': destinationAddress,
-                        'destinationPhoneNumber': destinationPhoneNumber,
-                        'relation': relation,
-                        'personId': this.state.personObject.id
-                    }
-
-                    const rawResponse = await fetch('https://api.saadatportal.com/api/v1/record', {
-                        method: 'POST',
-                        headers: {
-                            'Accept': 'application/json',
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(result)
-                    }).then((response) => response.json())
-                        .then((result) => {
-                            this.setState({registerLoading: false})
-                            const newReports = this.state.report.concat(result)
-                            this.setState({report: newReports})
-                            this.setState({show: false})
-                        })
-                        .catch((error) => {
-                            this.setState({registerLoading: false})
-                        });
-
-                })();
-
-            case 'violation':
-                return (async () => {
-
-                    this.setState({registerLoading: true});
-
-                    const date = this.state.dateValues.violationDate;
-                    const formattedDate = date.year + '/' + date.month + '/' + date.day
-                    const time = this.state.dateValues.violationTime;
-                    const formattedTime = time.hour + ':' + time.minute
-                    const description = this.description.current.value;
-                    const result = {
-                        'title': "violation",
-                        'date': formattedDate,
-                        'hour': formattedTime,
-                        'description': description,
-                        'personId': this.state.personObject.id
-                    }
-
-                    const rawResponse = await fetch('https://api.saadatportal.com/api/v1/record', {
-                        method: 'POST',
-                        headers: {
-                            'Accept': 'application/json',
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(result)
-                    }).then((response) => response.json())
-                        .then((result) => {
-                            this.setState({registerLoading: false})
-                            const newReports = this.state.report.concat(result)
-                            this.setState({report: newReports})
-                            this.setState({show: false})
-                        })
-                        .catch((error) => {
-                            this.setState({registerLoading: false})
-                        });
-
-                })();
-            case 'penalty':
-                return (async () => {
-                    this.setState({registerLoading: true});
-                    const description = this.description.current.value;
-                    const typePenalty = this.typePenalty.current.value;
-                    const penaltyAmount = this.penaltyAmount.current.value;
-                    const result = {
-                        'title': "penalty",
-                        'penaltyType': typePenalty,
-                        'description': description,
-                        'penaltyAmount': penaltyAmount,
-                        'personId': this.state.personObject.id
-                    }
-
-                    const rawResponse = await fetch('https://api.saadatportal.com/api/v1/record', {
-                        method: 'POST',
-                        headers: {
-                            'Accept': 'application/json',
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(result)
-                    }).then((response) => response.json())
-                        .then((res) => {
-                            this.setState({registerLoading: false})
-                            const newReports = this.state.report.concat(result)
-                            this.setState({report: newReports})
-                            this.setState({show: false})
-                        })
-                        .catch((error) => {
-                            this.setState({registerLoading: false})
-                        });
-
-                })();
-            case 'discharge':
-                return (async () => {
-                    this.setState({registerLoading: true});
-                    const dischargeDateAnnounce = this.state.dateValues.dischargeDateAnnounce;
-                    const dischargeDate = this.state.dateValues.dischargeDate;
-                    const depositReturnDate = this.state.dateValues.depositReturnDate;
-
-                    let formattedDischargeDateAnnounce = dischargeDateAnnounce.year + '/' + dischargeDateAnnounce.month + '/' + dischargeDateAnnounce.day;
-                    let formattedDischargeDate = dischargeDate.year + '/' + dischargeDate.month + '/' + dischargeDate.day;
-                    let formattedDepositReturnDate = depositReturnDate.year + '/' + depositReturnDate.month + '/' + depositReturnDate.day;
-
-                    const deductionOfLosses = this.deductionOfLosses.current.value;
-                    const deductionOfLossesReason = this.deductionOfLossesReason.current.value;
-                    const refundableAmount = this.refundableAmount.current.value;
-                    const result = {
-                        'title': "discharge",
-                        'startDate': formattedDischargeDateAnnounce,
-                        'endDate': formattedDischargeDate,
-                        'date': formattedDepositReturnDate,
-                        'penaltyAmount': deductionOfLosses,
-                        'description': deductionOfLossesReason,
-                        'returnedAmount': refundableAmount,
-                        'personId': this.state.personObject.id
-                    }
-
-                    const rawResponse = await fetch('https://api.saadatportal.com/api/v1/record', {
-                        method: 'POST',
-                        headers: {
-                            'Accept': 'application/json',
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(result)
-                    }).then((response) => response.json())
-                        .then((res) => {
-                            this.setState({registerLoading: false});
-                            const newReports = this.state.report.concat(result)
-                            this.setState({report: newReports})
-                            this.setState({show: false})
-
-                        })
-                        .catch((error) => {
-                            this.setState({registerLoading: false})
-                        });
-                })();
-
-            case 'cancelContract':
-                return (async () => {
-                    this.setState({registerLoading: true});
-                    const date = this.state.dateValues.cancelContractDate;
-                    const formattedDate = date.year + '/' + date.month + '/' + date.day;
-                    const reason = this.reason.current.value;
-                    const deductionOfLosses = this.deductionOfLosses.current.value;
-                    const refundableAmount = this.refundableAmount.current.value;
-                    const result = {
-                        'title': "cancelContract",
-                        'date': formattedDate,
-                        'description': reason,
-                        'penaltyAmount': deductionOfLosses,
-                        'returnedAmount': refundableAmount,
-                        'personId': this.state.personObject.id
-                    }
-
-                    const rawResponse = await fetch('https://api.saadatportal.com/api/v1/record', {
-                        method: 'POST',
-                        headers: {
-                            'Accept': 'application/json',
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(result)
-                    }).then((response) => response.json())
-                        .then((res) => {
-                            this.setState({registerLoading: false})
-                            const newReports = this.state.report.concat(result)
-                            this.setState({report: newReports})
-                            this.setState({show: false})
-                        })
-                        .catch((error) => {
-                            this.setState({registerLoading: false})
-                        });
-                })();
-        }
-    }
-    handleOpenModalReport = (c) => {
-        this.setState({showDeleteModalReport: true});
-        this.setState({reportTemp: c});
-
-    }
-    handleCloseModalReport = () => {
-        this.setState({showDeleteModalReport: false});
-    }
-
-    handleDeleteReport = async () => {
-        await fetch(`https://api.saadatportal.com/api/v1/record/${this.state.reportTemp.id}`, {
-            method: 'DELETE',
-        }).then(res => res.text())
-            .then((res) => {
-                let index = this.state.report.indexOf(this.state.reportTemp)
-                let updatedReport = [...this.state.report];
-                updatedReport.splice(index, 1);
-                this.setState({report: updatedReport});
-                this.setState({showDeleteModalReport: false})
-            }).catch((error) => {
-                console.log(error);
-                this.setState({showDeleteModalReport: false})
-            })
-    }
-
-    downloadFile = async (fileId) => {
-        const file = this.state.fileDetails.find(({fileId}) => fileId === fileId);
-        var filename = file.originalName;
-
-        const response = await fetch(`https://api.saadatportal.com/api/v1/file/${fileId}`).then((result) => {
-            return result.blob();
-        })
-            .then((blob) => {
-                if (blob != null) {
-                    var url = window.URL.createObjectURL(blob);
-                    var a = document.createElement('a');
-                    a.href = url;
-                    a.download = filename;
-                    document.body.appendChild(a);
-                    a.click();
-                    a.remove();
-                }
-            });
-    }
-
+    // handleOpenModalReport = (c) => {
+    //     this.setState({showDeleteModalReport: true});
+    //     this.setState({reportTemp: c});
+    //
+    // }
+    // handleCloseModalReport = () => {
+    //     this.setState({showDeleteModalReport: false});
+    // }
+    //
+    // handleDeleteReport = async () => {
+    //     await fetch(`https://api.saadatportal.com/api/v1/record/${this.state.reportTemp.id}`, {
+    //         method: 'DELETE',
+    //     }).then(res => res.text())
+    //         .then((res) => {
+    //             let index = this.state.report.indexOf(this.state.reportTemp)
+    //             let updatedReport = [...this.state.report];
+    //             updatedReport.splice(index, 1);
+    //             this.setState({report: updatedReport});
+    //             this.setState({showDeleteModalReport: false})
+    //         }).catch((error) => {
+    //             console.log(error);
+    //             this.setState({showDeleteModalReport: false})
+    //         })
+    // }
+    //
+    // downloadFile = async (fileId) => {
+    //     const file = this.state.fileDetails.find(({fileId}) => fileId === fileId);
+    //     var filename = file.originalName;
+    //
+    //     const response = await fetch(`https://api.saadatportal.com/api/v1/file/${fileId}`).then((result) => {
+    //         return result.blob();
+    //     })
+    //         .then((blob) => {
+    //             if (blob != null) {
+    //                 var url = window.URL.createObjectURL(blob);
+    //                 var a = document.createElement('a');
+    //                 a.href = url;
+    //                 a.download = filename;
+    //                 document.body.appendChild(a);
+    //                 a.click();
+    //                 a.remove();
+    //             }
+    //         });
+    // }
+    //
     existDocFile = (docFile) => {
         if (docFile.hasOwnProperty('birthPage1')) {
             this.setState({hasBirthPage1: true});

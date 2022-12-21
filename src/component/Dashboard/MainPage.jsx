@@ -64,6 +64,9 @@ class MainPage extends Component {
 
             personnel: {
                 birthDate: '',
+                startDate: '',
+                endDate: '',
+
             }
         },
 
@@ -72,6 +75,7 @@ class MainPage extends Component {
                 id: '',
                 firstName: '',
                 lastName: '',
+                fatherName: '',
                 nationalCode: '',
                 placeOfIssue: '',
                 certificateNumber: '',
@@ -95,10 +99,6 @@ class MainPage extends Component {
                 major: '',
                 spouseFullName: '',
                 spouseJob: '', //
-                homeNumber: '', // ????????
-                bankName: '',
-                cardNumber: '',
-                bankAccountNumber: '',
                 bankAccountOwnerName: '',
                 bankAccountShabaNumber: '',
                 fullName: '',//
@@ -255,6 +255,7 @@ class MainPage extends Component {
                 //first page
                 firstName_requiredReg: '',
                 lastName_requiredReg: '',
+                fatherName_requiredReg: '',
                 nationalCode_requiredReg: '',
                 placeOfIssue_requiredReg: '',
                 certificateNumber_requiredReg: '',
@@ -283,20 +284,12 @@ class MainPage extends Component {
                 //second page
                 major_requiredReg: '',
                 spouseFullName_requiredReg: '',
-                bankName_requiredReg: '',
-                cardNumber_requiredReg: '',
-                bankAccountNumber_requiredReg: '',
                 bankAccountOwnerName_requiredReg: '',
                 bankAccountShabaNumber_requiredReg: '',
                 fullName_requiredReg: '',
                 parentType_requiredReg: '',
                 parentId_requiredReg: '',
                 gender_requiredReg: '',
-
-                homeNumber_homeTelephoneReg: '',
-
-                cardNumber_numberReg: '',
-                bankAccountNumber_numberReg: '',
                 bankAccountShabaNumber_numberReg: '',
             },
 

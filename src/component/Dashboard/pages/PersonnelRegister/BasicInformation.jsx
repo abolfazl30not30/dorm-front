@@ -1,4 +1,4 @@
-import {Component} from "react";
+import React, {Component} from "react";
 import SimpleTextInput from "../../../CustomInputs/SimpleTextInput";
 import BuildingContext from "../../../../contexts/Building";
 import DateInput from "../../../CustomInputs/DateInput";
@@ -41,6 +41,17 @@ class BasicInformation extends Component{
                                 required={true}
                             />
                         </div>
+                        <div className="input-group-register col-md-4 col-12">
+                            <SimpleTextInput
+                                condition1={this.context.personnelFieldsValidation.fatherName_requiredReg}
+                                value={this.context.constantInformationPage.fatherName}
+                                fieldNameString={'constantInformationPage'}
+                                valueOfInputString={'fatherName'}
+                                required={true}
+                                label={'نام پدر'}
+                            />
+                        </div>
+
                         <div className="input-group-register col-md-4 col-12">
                             <SimpleTextInput
                                 condition1={this.context.personnelFieldsValidation.nationalCode_requiredReg}
@@ -134,9 +145,53 @@ class BasicInformation extends Component{
                                 fieldNameString={'personnelFields'}
                                 valueOfInputString={'birthDate'}
                                 required={true}
-                                label={'تاریخ تولد'}
                                 timeInclude={false}
                             />
+                            <label className="placeholder" style={{
+                                top: '-8px',
+                                backgroundColor: '#fff',
+                                color: '#959799',
+                                padding: '0 .5rem',
+                                opacity: '1',
+                            }}>تاریخ تولد</label>
+                        </div>
+                        <div className="input-group-register col-md-4 col-12">
+                            <DateInput
+                                condition1={this.context.personnelFieldsValidation.birthDate_requiredReg}
+                                value={this.context.valueOfDates.personnel.startDate}
+                                valueFieldString={'personnel'}
+                                fieldNameString={'personnelFields'}
+                                valueOfInputString={'startDate'}
+                                required={true}
+                                // label={'تاریخ عقد قرارداد'}
+                                timeInclude={false}
+                            />
+                            <label className="placeholder" style={{
+                            top: '-8px',
+                            backgroundColor: '#fff',
+                            color: '#959799',
+                            padding: '0 .5rem',
+                            opacity: '1',
+                        }}>تاریخ عقد قرارداد</label>
+                        </div>
+                        <div className="input-group-register col-md-4 col-12">
+                            <DateInput
+                                condition1={this.context.personnelFieldsValidation.birthDate_requiredReg}
+                                value={this.context.valueOfDates.personnel.endDate}
+                                valueFieldString={'personnel'}
+                                fieldNameString={'personnelFields'}
+                                valueOfInputString={'endDate'}
+                                required={true}
+                                timeInclude={false}
+                            />
+                            <label className="placeholder" style={{
+                                top: '-8px',
+                                backgroundColor: '#fff',
+                                color: '#959799',
+                                padding: '0 .5rem',
+                                opacity: '1',
+                            }}>تاریخ اتمام قرارداد</label>
+
                         </div>
                         <div className="input-group-register col-md-4 col-12">
                             <select
@@ -148,16 +203,6 @@ class BasicInformation extends Component{
                                 <option value={'female'}>زن</option>
                             </select>
                             <label className="placeholder">جنسیت</label>
-                        </div>
-                        <div className="input-group-register col-md-4 col-12">
-                            <SimpleTextInput
-                                condition1={this.context.personnelFieldsValidation.education_requiredReg}
-                                value={this.context.personnelFields.education}
-                                fieldNameString={'personnelFields'}
-                                valueOfInputString={'education'}
-                                label={'تحصیلات'}
-                                required={true}
-                            />
                         </div>
                         <div className="input-group-register col-md-4 col-12">
                             <SimpleTextInput
