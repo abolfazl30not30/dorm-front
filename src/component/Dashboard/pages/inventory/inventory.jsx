@@ -8,9 +8,10 @@ import ToggleButton from "@mui/material/ToggleButton";
 import {IoIosAddCircleOutline} from "react-icons/io";
 import './../../../../style/requestPage.css'
     import Skeleton from "react-loading-skeleton";
-    import {Box, Button, CircularProgress} from "@mui/material";
+    import {Box, Button, CircularProgress, MenuItem, Select} from "@mui/material";
     import {green} from "@mui/material/colors";
     import log from "../log/log";
+    import FormControl from "@mui/material/FormControl";
 
 class inventory extends Component {
     state = {
@@ -31,7 +32,7 @@ class inventory extends Component {
         //     accessoryType: null,
         //     category: "لوازم بهداشتی"
         // }],
-        typeSearch:"",
+        typeSearch: "",
         type: "needs",
         category: [],
         name: "",
@@ -42,8 +43,8 @@ class inventory extends Component {
         tempChoices: [],
         showCategory: false,
         inputCategory: [],
-        searchType:"name",
-        searchInput:"",
+        searchType: "name",
+        searchInput: "",
     }
 
     async componentDidMount() {
@@ -65,26 +66,48 @@ class inventory extends Component {
                     </button>
                     <div className="search-box">
                         <div className="form-floating">
-                            <select className="form-select" id="floatingSelect"
-                                    aria-label="Floating label select example"
+                            <FormControl className={"w-100"} style={{border: "none"}}>
+                                <Select
+                                    sx={{ height: 50, borderRadius: "0.5rem", minWidth: '8rem', backgroundColor: "#f9f9f9"}}
+                                    id="select-field"
                                     value={this.state.typeSearch}
                                     onChange={(e) => {this.handleFilterType(e)}}>
-                                <option value="">همه</option>
-                                <option value="needs">نیازمندی</option>
-                                <option value="deficiency">کاستی</option>
-                                <option value="onHand">دارایی</option>
-                            </select>
-                            <label htmlFor="floatingSelect">نوع</label>
+                                    <MenuItem value={"all"}>همه</MenuItem>
+                                    <MenuItem value={"needs"}>نیازمندی</MenuItem>
+                                    <MenuItem value={"deficiency"}>کاستی</MenuItem>
+                                    <MenuItem value={"onHand"}>دارایی</MenuItem>
+                                </Select>
+                                <label className="placeholder" style={{
+                                    top: '-10px',
+                                    fontSize: "0.9rem",
+                                    backgroundColor: '#fff',
+                                    color: '#2a2e32b3',
+                                    margin: '-0.2rem 0',
+                                    padding: '0 .4rem -0.4rem',
+                                    opacity: '1',
+                                }}>نوع</label>
+                            </FormControl>
                         </div>
                         <div className="form-floating">
-                            <select className="form-select" id="floatingSelect1"
-                                    aria-label="Floating label select example"
+                            <FormControl className={"w-100"} style={{border: "none"}}>
+                                <Select
+                                    sx={{ height: 50, borderRadius: "0.5rem", minWidth: '8rem', backgroundColor: "#f9f9f9"}}
+                                    id="select-field"
                                     value={this.state.searchType}
                                     onChange={(value) => this.setState({searchType: value.target.value})}>
-                                <option value="name">نام</option>
-                                <option value="category">دسته بندی</option>
-                            </select>
-                            <label htmlFor="floatingSelect1">براساس</label>
+                                    <MenuItem value={"name"}>نام</MenuItem>
+                                    <MenuItem value={"category"}>دسته بندی</MenuItem>
+                                </Select>
+                                <label className="placeholder" style={{
+                                    top: '-10px',
+                                    fontSize: "0.9rem",
+                                    backgroundColor: '#fff',
+                                    color: '#2a2e32b3',
+                                    margin: '-0.2rem 0',
+                                    padding: '0 .4rem -0.4rem',
+                                    opacity: '1',
+                                }}>براساس</label>
+                            </FormControl>
                         </div>
                         <input type="text"
                                id="inputSearch"
@@ -145,14 +168,25 @@ class inventory extends Component {
                     </Modal.Header>
                     <Modal.Body>
                         <div className="input-group-register mb-3">
-                            <select className="input" onChange={(e) => {
-                                this.getValueInputType(e.target.value)
-                            }}>
-                                <option value="needs">نیازمندی</option>
-                                <option value="deficiency">کاستی</option>
-                                <option value="onHand">دارایی</option>
-                            </select>
-                            <label className="placeholder">نوع</label>
+                            <FormControl className={"w-100"} style={{border: "none"}}>
+                                <Select
+                                    sx={{ height: 50, borderRadius: "0.5rem", minWidth: '8rem', backgroundColor: "#fff"}}
+                                    id="select-field"
+                                    onChange={(e) => {this.getValueInputType(e.target.value)}}>
+                                    <MenuItem value={"needs"}>نیازمندی</MenuItem>
+                                    <MenuItem value={"deficiency"}>کاستی</MenuItem>
+                                    <MenuItem value={"onHand"}>دارایی</MenuItem>
+                                </Select>
+                                <label className="placeholder" style={{
+                                    top: '-10px',
+                                    fontSize: "0.9rem",
+                                    backgroundColor: '#fff',
+                                    color: '#2a2e32b3',
+                                    margin: '-0.2rem 0',
+                                    padding: '0 .4rem -0.4rem',
+                                    opacity: '1',
+                                }}>نوع</label>
+                            </FormControl>
                         </div>
                         <div>
                             <label style={{marginRight: "33px"}}>دسته بندی: </label>
@@ -318,12 +352,9 @@ class inventory extends Component {
         return value;
     }
     getValueInputType = (e) => {
-        console.log(e);
         this.setState({type: e})
     }
-    getValueInputCategory = (e) => {
-        this.setState({category: e})
-    }
+
     getValueInputName = (e) => {
         this.setState({name: e})
     }
@@ -422,18 +453,12 @@ class inventory extends Component {
             .then((data) => this.setState({inventory: data, searchLoading: false}));
     }
 
-    handleSearchBtn = async () => {
-        console.log(this.state.searchInput)
-        const response = await fetch(`https://api.saadatportal.com/api/v1/inventory/search?${this.state.searchType}=${this.state.searchInput}`).then((response) => response.json())
-            .then((data) => this.setState({inventory: data}));
-    }
-
     handleFilterType = async (e) =>{
-        this.setState({typeSearch:e.target.value})
-        const response = await fetch(`https://api.saadatportal.com/api/v1/inventory/search?accessoryType=${e.target.value}`).then((response) => response.json())
+        const value = e.target.value !== "all" ? e.target.value : ""
+        this.setState({typeSearch: value})
+        const response = await fetch(`https://api.saadatportal.com/api/v1/inventory/search?accessoryType=${value}`).then((response) => response.json())
             .then((data) => this.setState({inventory: data}));
     }
-
 }
 
 export default inventory;

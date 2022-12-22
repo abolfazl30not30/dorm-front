@@ -390,9 +390,6 @@ class TrelloPage extends Component {
                                 </div>
 
                                 <div className={'input-group-register input-group-filter my-4 px-2'}>
-                                    <label className={''}>
-                                        تاریخ اتمام
-                                    </label>
                                     {/* Date picker component */}
                                     <DatePicker
                                         editable={false}
@@ -442,6 +439,14 @@ class TrelloPage extends Component {
                                             ریست
                                         </Button>
                                     </DatePicker>
+                                    <label className="placeholder" style={{
+                                        top: '-8px',
+                                        backgroundColor: '#fff',
+                                        color: '#2a2e32b3',
+                                        margin: '0.3rem 0.7rem',
+                                        padding: '0 .4rem',
+                                        opacity: '1',
+                                    }}>تاریخ اتمام</label>
                                 </div>
 
                                 {/* Personnel section */}
@@ -473,14 +478,10 @@ class TrelloPage extends Component {
                                 {/* Priority selector field */}
                                 <div className={"d-flex justify-content-start m-2"}>
                                     <FormControl className="w-50 mt-4">
-                                        <div className={"d-flex justify-content-center"}>
-                                            <InputLabel className={"priority-input text-center"} id="priority-field">اولویت</InputLabel>
-                                        </div>
                                         <Select
                                             value={this.state.tempPriority}
                                             sx={{ height: 50, borderRadius: 2}}
-                                            labelId="priority-field"
-                                            label="اولویت"
+                                            id="priority-field"
                                             onChange={this.handlePriority}
                                         >
                                             <MenuItem value={"low"}><div className={"d-flex align-items-center"}><div className={"bg-primary m-3"} style={{borderRadius: "50%", width: "15px", height: "15px",}}></div>کم</div></MenuItem>
@@ -488,6 +489,14 @@ class TrelloPage extends Component {
                                             <MenuItem value={"high"}><div className={"d-flex align-items-center"}><div className={"m-3"} style={{backgroundColor: "#F35C2E", borderRadius: "50%", width: "15px", height: "15px"}}></div>زیاد</div></MenuItem>
                                             <MenuItem value={"urgent"}><div className={"d-flex align-items-center"}><div className={"m-3"} style={{backgroundColor: "#88000d", borderRadius: "50%", width: "15px", height: "15px"}}></div>ضروری</div></MenuItem>
                                         </Select>
+                                        <label className="placeholder" style={{
+                                            top: '-8px',
+                                            backgroundColor: '#fff',
+                                            color: '#2a2e32b3',
+                                            margin: '-0.2rem 0.7rem',
+                                            padding: '0 .4rem',
+                                            opacity: '1',
+                                        }}>اولویت</label>
                                     </FormControl>
                                 </div>
 

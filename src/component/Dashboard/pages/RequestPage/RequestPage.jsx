@@ -13,7 +13,7 @@ import '../../../../style/paymentPage.css';
 import '../../../../style/searchAccount.css';
 
 import {MdDone} from "react-icons/md";
-import {Box, CircularProgress} from "@mui/material";
+import {Box, CircularProgress, FormControl, MenuItem, Select} from "@mui/material";
 import {green} from "@mui/material/colors";
 import Skeleton from "react-loading-skeleton";
 
@@ -125,15 +125,26 @@ class RequestPage extends Component {
                         <div className="d-flex justify-content-center">
                             <div className="search-box">
                                 <div className="form-floating">
-                                    <select className="form-select" id="floatingSelect"
-                                            aria-label="Floating label select example"
+                                    <FormControl className={"w-100"}>
+                                        <Select
+                                            sx={{ height: 50, borderRadius: "0.5rem", minWidth: '10rem', backgroundColor: "#fff"}}
+                                            // aria-label={"Floating label select example"}
+                                            id="select-field"
                                             value={this.state.searchBase}
                                             onChange={(value) => this.setState({searchBase: value.target.value})}>
-                                        <option value="name">عنوان</option>
-                                        <option value="assignee">نام درخواست کننده</option>
-                                        <option value="type">نوع</option>
-                                    </select>
-                                    <label htmlFor="floatingSelect">براساس</label>
+                                            <MenuItem value={"name"}>عنوان</MenuItem>
+                                            <MenuItem value={"assignee"}>نام درخواست کننده</MenuItem>
+                                            <MenuItem value={"type"}>نوع</MenuItem>
+                                        </Select>
+                                        <label className="placeholder" style={{
+                                            top: '-10px',
+                                            backgroundColor: '#f9f9f9',
+                                            color: '#2a2e32b3',
+                                            margin: '-0.2rem 0',
+                                            padding: '0 .4rem -0.4rem',
+                                            opacity: '1',
+                                        }}>بر اساس</label>
+                                    </FormControl>
                                 </div>
                                 <input type="text"
                                        id="inputSearch"

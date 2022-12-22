@@ -427,7 +427,6 @@ class PersonnelProfilePage extends Component {
                                                     </div>
                                                 </Accordion.Body>
                                             </Accordion.Item>
-
                                             <Accordion.Item eventKey="1">
                                                 <Accordion.Header>کارت ملی</Accordion.Header>
                                                 <Accordion.Body>
@@ -545,58 +544,6 @@ class PersonnelProfilePage extends Component {
         );
     }
 
-    handleResetFields = () => {
-        let resetFields = {...this.state.dateValues};
-        resetFields = {
-            cleaningDate: '',
-            delayInArrivalDate: '',
-            exitStartDate: '',
-            exitEndDate: '',
-            violationDate: '',
-            dischargeDateAnnounce: '',
-            dischargeDate: '',
-            depositReturnDate: '',
-            cancelContractDate: '',
-        }
-        this.setState({dateValues: resetFields})
-
-        console.log(this.state.dateValues)
-    }
-    handleClose = () => {
-        this.setState({show: false})
-    };
-    handleShow = () => {
-        this.setState({show: true})
-    };
-    reportType = (e) => {
-        const type = e.target.value
-        this.setState({reportType: type})
-    }
-    // handleOpenModalReport = (c) => {
-    //     this.setState({showDeleteModalReport: true});
-    //     this.setState({reportTemp: c});
-    //
-    // }
-    // handleCloseModalReport = () => {
-    //     this.setState({showDeleteModalReport: false});
-    // }
-    //
-    // handleDeleteReport = async () => {
-    //     await fetch(`https://api.saadatportal.com/api/v1/record/${this.state.reportTemp.id}`, {
-    //         method: 'DELETE',
-    //     }).then(res => res.text())
-    //         .then((res) => {
-    //             let index = this.state.report.indexOf(this.state.reportTemp)
-    //             let updatedReport = [...this.state.report];
-    //             updatedReport.splice(index, 1);
-    //             this.setState({report: updatedReport});
-    //             this.setState({showDeleteModalReport: false})
-    //         }).catch((error) => {
-    //             console.log(error);
-    //             this.setState({showDeleteModalReport: false})
-    //         })
-    // }
-    //
     downloadFile = async (fileId) => {
         const file = this.state.fileDetails.find(({fileId}) => fileId === fileId);
         var filename = file.originalName;

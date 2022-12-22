@@ -12,6 +12,8 @@ import Form from "react-bootstrap/Form";
 import {BiSearch} from "react-icons/bi";
 import BuildingContext from "../../../../contexts/Building";
 import Skeleton from "react-loading-skeleton";
+import FormControl from "@mui/material/FormControl";
+import {MenuItem, Select} from "@mui/material";
 
 class SearchAccount extends Component {
     static contextType = BuildingContext;
@@ -48,15 +50,26 @@ class SearchAccount extends Component {
                 </div>
                 <div className="search-box justify-content-center">
                     <div className="form-floating">
-                        <select className="form-select" id="floatingSelect"
-                                aria-label="Floating label select example"
+                        <FormControl className={"w-100"}>
+                            <Select
+                                sx={{ height: 50, borderRadius: "0.5rem", minWidth: '8rem', backgroundColor: "#fff"}}
+                                id="select-field"
                                 value={this.state.searchType}
                                 onChange={(value) => this.setState({searchType: value.target.value})}>
-                            <option value="fullName">نام و نام خانوادگی</option>
-                            <option value="nationalCode">کد ملی</option>
-                            <option value="phoneNumber">شماره تلفن</option>
-                        </select>
-                        <label htmlFor="floatingSelect">براساس</label>
+                                <MenuItem value={"fullName"}>نام و نام خانوادگی</MenuItem>
+                                <MenuItem value={"nationalCode"}>کد ملی</MenuItem>
+                                <MenuItem value={"phoneNumber"}>شماره تلفن</MenuItem>
+                            </Select>
+                            <label className="placeholder" style={{
+                                top: '-10px',
+                                fontSize: "0.9rem",
+                                backgroundColor: '#f9f9f9',
+                                color: '#2a2e32b3',
+                                margin: '-0.2rem 0',
+                                padding: '0 .4rem -0.4rem',
+                                opacity: '1',
+                            }}>براساس</label>
+                        </FormControl>
                     </div>
                     <input type="text"
                            id="inputSearch"

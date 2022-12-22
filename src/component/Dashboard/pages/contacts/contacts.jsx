@@ -2,9 +2,10 @@ import React, {Component} from "react";
 import '../../../../style/contacts.css'
 import {AiOutlineClose, AiOutlinePlus} from "react-icons/ai";
 import {Modal} from 'react-bootstrap'
-import {Box, Button, CircularProgress} from "@mui/material";
+import {Box, Button, CircularProgress, MenuItem, Select} from "@mui/material";
 import {green} from "@mui/material/colors";
 import Skeleton from "react-loading-skeleton";
+import FormControl from "@mui/material/FormControl";
 
 class contacts extends Component {
     state = {
@@ -33,19 +34,30 @@ class contacts extends Component {
                         <button className='btn-done my-4' onClick={() => {
                             this.handleShow()
                         }}><AiOutlinePlus className='ms-2'/>افزودن مخاطب
-                        </button>handleShow
+                        </button>
                     </div>
                     <div className="search-box">
                         <div className="form-floating">
-                            <select className="form-select" id="floatingSelect"
-                                    aria-label="Floating label select example"
+                            <FormControl className={"w-100"} style={{border: "none"}}>
+                                <Select
+                                    sx={{ height: 50, borderRadius: "0.5rem", minWidth: '10rem', backgroundColor: "#f9f9f9"}}
+                                    id="select-field"
                                     value={this.state.searchType}
                                     onChange={(value) => this.setState({searchType: value.target.value})}>
-                                <option value="name">نام و نام خانوادگی</option>
-                                <option value="mobileNumbers">شماره همراه</option>
-                                <option value="telephoneNumbers"> تلفن ثابت</option>
-                            </select>
-                            <label htmlFor="floatingSelect">براساس</label>
+                                    <MenuItem value={"name"}>نام و نام خانوادگی</MenuItem>
+                                    <MenuItem value={"mobileNumbers"}>شماره همراه</MenuItem>
+                                    <MenuItem value={"telephoneNumbers"}>تلفن ثابت</MenuItem>
+                                </Select>
+                                <label className="placeholder" style={{
+                                    top: '-10px',
+                                    fontSize: "0.9rem",
+                                    backgroundColor: '#fff',
+                                    color: '#2a2e32b3',
+                                    margin: '-0.2rem 0',
+                                    padding: '0 .4rem -0.4rem',
+                                    opacity: '1',
+                                }}>براساس</label>
+                            </FormControl>
                         </div>
                         <input type="text"
                                id="inputSearch"
@@ -88,7 +100,7 @@ class contacts extends Component {
                     </div>
                 </div>
 
-                <Modal className='report-modal' centered show={this.state.show}>
+                <Modal className='report-modal' centered show={this.state.show} onHide={this.handleClose}>
                     <Modal.Header>
                         <Modal.Title><span>ثبت مخاطب</span></Modal.Title>
                         <button className='btn' onClick={() => {

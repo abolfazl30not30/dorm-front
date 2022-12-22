@@ -6,9 +6,10 @@ import DatePicker from "react-multi-date-picker";
 import './../../../../style/requestPage.css'
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
-import {Box, Button, CircularProgress} from "@mui/material";
+import {Box, Button, CircularProgress, MenuItem, Select} from "@mui/material";
 import {green} from "@mui/material/colors";
 import Skeleton from "react-loading-skeleton";
+import FormControl from "@mui/material/FormControl";
 
 class callHistory extends Component {
     state = {
@@ -59,15 +60,26 @@ class callHistory extends Component {
                     </button>
                     <div className="search-box">
                         <div className="form-floating">
-                            <select className="form-select" id="floatingSelect"
-                                    aria-label="Floating label select example"
+                            <FormControl className={"w-100"} style={{border: "none"}}>
+                                <Select
+                                    sx={{ height: 50, borderRadius: "0.5rem", minWidth: '10rem', backgroundColor: "#f9f9f9"}}
+                                    id="select-field"
                                     value={this.state.searchType}
                                     onChange={(value) => this.setState({searchType: value.target.value})}>
-                                <option value="title">عنوان</option>
-                                <option value="callerName">نام تماس گیرنده </option>
-                                <option value="phoneNumber"> شماره تماس</option>
-                            </select>
-                            <label htmlFor="floatingSelect">براساس</label>
+                                    <MenuItem value={"title"}> عنوان</MenuItem>
+                                    <MenuItem value={"callerName"}>نام تماس گیرنده</MenuItem>
+                                    <MenuItem value={"phoneNumber"}>شماره تماس</MenuItem>
+                                </Select>
+                                <label className="placeholder" style={{
+                                    top: '-10px',
+                                    fontSize: "0.9rem",
+                                    backgroundColor: '#fff',
+                                    color: '#2a2e32b3',
+                                    margin: '-0.2rem 0',
+                                    padding: '0 .4rem -0.4rem',
+                                    opacity: '1',
+                                }}>براساس</label>
+                            </FormControl>
                         </div>
                         <input type="text"
                                id="inputSearch"
@@ -129,7 +141,15 @@ class callHistory extends Component {
                                    onChange={(e) => {
                                        this.getValueInputTitle(e.target.value)
                                    }}/>
-                            <label className="placeholder" style={{right: '12px'}}>
+                            <label className="placeholder" style={{
+                                top: '-5px',
+                                fontSize: "0.9rem",
+                                backgroundColor: '#fff',
+                                color: '#2a2e32b3',
+                                padding: '0 .4rem',
+                                opacity: '1',
+
+                            }}>
                                 عنوان
                                 <span style={{color: 'red'}}>*</span>
                             </label>
@@ -141,7 +161,15 @@ class callHistory extends Component {
                                    onChange={(e) => {
                                        this.getValueInputCallerName(e.target.value)
                                    }}/>
-                            <label className="placeholder" style={{right: '12px'}}>
+                            <label className="placeholder" style={{
+                                top: '-5px',
+                                fontSize: "0.9rem",
+                                backgroundColor: '#fff',
+                                color: '#2a2e32b3',
+                                padding: '0 .4rem',
+                                opacity: '1',
+
+                            }}>
                                 نام تماس گیرنده
                                 <span style={{color: 'red'}}>*</span>
                             </label>
@@ -153,7 +181,15 @@ class callHistory extends Component {
                                    onChange={(e) => {
                                        this.getValueInputPhoneNumber(e.target.value)
                                    }}/>
-                            <label className="placeholder" style={{right: '12px'}}>
+                            <label className="placeholder" style={{
+                                top: '-5px',
+                                fontSize: "0.9rem",
+                                backgroundColor: '#fff',
+                                color: '#2a2e32b3',
+                                padding: '0 .4rem',
+                                opacity: '1',
+
+                            }}>
                                 شماره تماس
                                 <span style={{color: 'red'}}>*</span>
                             </label>
@@ -220,17 +256,28 @@ class callHistory extends Component {
                                     ریست
                                 </Button>
                             </DatePicker>
-
-                            <label className='placeholder' style={{right: this.state.validations.date_requiredReg === false ? '35px' : '12px'}}>
-                                تاریخ
-                                <span style={{color: 'red'}}>*</span>
-                            </label>
+                            <label className="placeholder" style={{
+                                top: '-5px',
+                                fontSize: "0.9rem",
+                                backgroundColor: '#fff',
+                                color: '#2a2e32b3',
+                                padding: '0 .4rem',
+                                opacity: '1',
+                            }}>تاریخ <span style={{color: 'red'}}>*</span></label>
                         </div>
                         <div className='input-group-register mb-3'>
                             <textarea value={this.state.description} className='input form-control' onChange={(e) => {
                                 this.getValueInputDescription(e.target.value)
                             }}/>
-                            <label className="placeholder" style={{right: '12px'}}>توضیحات</label>
+                            <label className="placeholder" style={{
+                                top: '-5px',
+                                fontSize: "0.9rem",
+                                backgroundColor: '#fff',
+                                color: '#2a2e32b3',
+                                padding: '0 .4rem',
+                                opacity: '1',
+
+                            }}>توضیحات</label>
                         </div>
                         <Box sx={{ m: 1, position: 'relative' }}>
                             <Button

@@ -10,9 +10,10 @@ import "../../../../style/cameraHistory.css"
 
 import '../../../../style/registerPage.css';
 import '../../../../style/paymentHistory.css';
-import {Box, Button, CircularProgress} from "@mui/material";
+import {Box, Button, CircularProgress, MenuItem, Select} from "@mui/material";
 import {green} from "@mui/material/colors";
 import Skeleton from "react-loading-skeleton";
+import FormControl from "@mui/material/FormControl";
 
 class CameraHistoryPage extends Component {
 
@@ -77,20 +78,27 @@ class CameraHistoryPage extends Component {
                             </button>
                         </div>
                     </div>
-
-
                     <div className="search-box">
                         <div className="form-floating">
-                            <select className="form-select" id="floatingSelect"
-                                    aria-label="Floating label select example"
+                            <FormControl className={"w-100"} style={{border: "none"}}>
+                                <Select
+                                    sx={{ height: 50, borderRadius: "0.5rem", minWidth: '10rem', backgroundColor: "#f9f9f9"}}
+                                    id="select-field"
                                     value={this.state.searchType}
-                                    onChange={(e) => {
-                                        this.setState({searchType: e.target.value})
-                                    }}>
-                                <option value="title">عنوان</option>
-                                <option value="assignee">نام درخواست کننده</option>
-                            </select>
-                            <label htmlFor="floatingSelect">براساس</label>
+                                    onChange={(value) => this.setState({searchType: value.target.value})}>
+                                    <MenuItem value={"name"}>عنوان</MenuItem>
+                                    <MenuItem value={"assignee"}>نام درخواست کننده</MenuItem>
+                                </Select>
+                                <label className="placeholder" style={{
+                                    top: '-10px',
+                                    fontSize: "0.9rem",
+                                    backgroundColor: '#fff',
+                                    color: '#2a2e32b3',
+                                    margin: '-0.2rem 0',
+                                    padding: '0 .4rem -0.4rem',
+                                    opacity: '1',
+                                }}>بر اساس</label>
+                            </FormControl>
                         </div>
                         <input type="text"
                                id="inputSearch"
@@ -180,6 +188,7 @@ class CameraHistoryPage extends Component {
 
                             <div className={'col-12 input-group-register'}>
                                 <DatePicker
+                                    editable={false}
                                     format="YYYY/MM/DD"
                                     inputClass={`input form-control mb-2 ${this.state.validation.date_requiredReg === false ? "is-invalid" : ""}`}
                                     value={this.state.dateValue}
@@ -222,15 +231,24 @@ class CameraHistoryPage extends Component {
                                         ریست
                                     </button>
                                 </DatePicker>
-                                <label className={'placeholder'}
-                                       style={this.state.dateValue !== ""
-                                           ? ({display:"none"})
-                                           : ({right: this.state.validation.date_requiredReg === false ? '40px' : '20px'})
-                                       }
-                                       >
-                                    تاریخ
-                                    <span style={{color: 'red'}}>*</span>
-                                </label>
+                                <label className="placeholder" style={{
+                                    top: '-5px',
+                                    fontSize: "0.9rem",
+                                    backgroundColor: '#fff',
+                                    color: 'rgba(42,46,50,0.49)',
+                                    margin: '0 0.4rem',
+                                    padding: '0 .4rem',
+                                    opacity: '1',
+                                }}>تاریخ<span style={{color: 'red'}}>*</span></label>
+                                {/*<label className={'placeholder'}*/}
+                                {/*       style={this.state.dateValue !== ""*/}
+                                {/*           ? ({display:"none"})*/}
+                                {/*           : ({right: this.state.validation.date_requiredReg === false ? '40px' : '20px'})*/}
+                                {/*       }*/}
+                                {/*       >*/}
+                                {/*    تاریخ*/}
+                                {/*    <span style={{color: 'red'}}>*</span>*/}
+                                {/*</label>*/}
 
                                 {
                                     this.state.validation.date_requiredReg === false
@@ -351,7 +369,9 @@ class CameraHistoryPage extends Component {
 
     handleOpenModal = () => {
         this.setState({showModal: true});
-        this.setState({tmpRequest: {
+        this.setState({
+            dateValue: '',
+            tmpRequest: {
                 title: '',
                 description: '',
                 unit: '',
@@ -403,7 +423,7 @@ class CameraHistoryPage extends Component {
         resetValidations.unit_requireReg = '';
         resetValidations.title_requireReg = '';
 
-        this.setState({validation: resetValidations,tmpRequest:tmpRequest});
+        this.setState({validation: resetValidations,tmpRequest:tmpRequest, dateValue: ''});
     }
 
     handleIsValid = () => {

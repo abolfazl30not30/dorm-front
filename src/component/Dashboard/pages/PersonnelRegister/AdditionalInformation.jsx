@@ -1,7 +1,6 @@
 import React, {Component} from "react";
 import BuildingContext from "../../../../contexts/Building";
 import SimpleTextInput from "../../../CustomInputs/SimpleTextInput";
-import DateInput from "../../../CustomInputs/DateInput";
 
 class AdditionalInformation extends Component{
     static contextType = BuildingContext;

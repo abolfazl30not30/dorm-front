@@ -6,7 +6,6 @@ import UploadPage from "./UploadPage";
 import BuildingContext from "../../../../contexts/Building";
 import {Modal} from "react-bootstrap";
 import {Link} from "react-router-dom";
-/*import React from "@types/react";*/
 
 class PersonnelRegister extends Component {
     static contextType = BuildingContext;
@@ -96,7 +95,6 @@ class PersonnelRegister extends Component {
 
         let bankAccountOwnerName_requiredReg = !requiredReg.test(this.context.personnelFields.bankAccountOwnerName);
         let bankAccountShabaNumber_requiredReg = !requiredReg.test(this.context.personnelFields.bankAccountShabaNumber);
-        // let fullName_requiredReg = !requiredReg.test(this.context.personnelFields.fullName);
         let parentType_requiredReg = !requiredReg.test(this.context.personnelFields.parentType);
         let parentId_requiredReg = !requiredReg.test(this.context.personnelFields.parentId);
         let gender_requiredReg = !requiredReg.test(this.context.personnelFields.gender);
@@ -112,8 +110,6 @@ class PersonnelRegister extends Component {
                 'bankAccountShabaNumber_requiredReg',
                 'parentType_requiredReg', 'parentId_requiredReg', 'gender_requiredReg',
                 'bankAccountShabaNumber_numberReg'], 'personnelFieldsValidation')
-
-        // console.log (this.context.valueOfDates.personnel.bankAccountExpirationDate)
 
         return bankAccountOwnerName_requiredReg && bankAccountShabaNumber_requiredReg &&
             parentType_requiredReg && parentId_requiredReg && gender_requiredReg &&  bankAccountShabaNumber_numberReg;

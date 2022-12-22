@@ -20,7 +20,7 @@ import Alert from 'react-bootstrap/Alert';
 import moment from 'moment-jalali';
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
-import {Box, Button, CircularProgress} from "@mui/material";
+import {Box, Button, CircularProgress, FormControl, MenuItem, Select} from "@mui/material";
 import {green} from "@mui/material/colors";
 
 /*import React from "@types/react";*/
@@ -90,15 +90,35 @@ class PaymentPage extends Component {
                     </div>
                     <div className="d-flex flex-wrap flex-md-row flex-column">
                         <div className="input-group-register col-md-2 col-12">
-                            <select className='form-select input'
+                            <FormControl className={"w-100"}>
+                                <Select
+                                    sx={{ height: 50, borderRadius: 2}}
+                                    id="select-field"
                                     value={this.state.priceType}
                                     onChange={(e) => {
                                         this.handlePriceType(e)
                                     }}>
-                                <option value="IRR">ریال</option>
-                                <option value="USD">دلار</option>
-                            </select>
-                            <label className="placeholder">واحد</label>
+                                    <MenuItem value={"IRR"}>ریال</MenuItem>
+                                    <MenuItem value={"USD"}>دلار</MenuItem>
+                                </Select>
+                                <label className="placeholder" style={{
+                                    top: '-8px',
+                                    backgroundColor: '#fff',
+                                    color: '#2a2e32b3',
+                                    margin: '-0.2rem 0.2rem',
+                                    padding: '0 .4rem',
+                                    opacity: '1',
+                                }}>واحد</label>
+                            </FormControl>
+                            {/*<select className='form-select input'*/}
+                            {/*        value={this.state.priceType}*/}
+                            {/*        onChange={(e) => {*/}
+                            {/*            this.handlePriceType(e)*/}
+                            {/*        }}>*/}
+                            {/*    <option value="IRR">ریال</option>*/}
+                            {/*    <option value="USD">دلار</option>*/}
+                            {/*</select>*/}
+                            {/*<label className="placeholder">واحد</label>*/}
                         </div>
                         <div className="input-group-register col-md-4 col-12">
                             <input id="price"
@@ -108,7 +128,14 @@ class PaymentPage extends Component {
                                    onChange={(e) => {
                                        this.handlePriceInput(e)
                                    }}/>
-                            <label className="placeholder">مبلغ</label>
+                            <label className="placeholder" style={{
+                                backgroundColor: '#fff',
+                                color: '#2a2e32b3',
+                                margin: '0 0.4rem',
+                                padding: '0 .4rem',
+                                opacity: '1'
+                            }}
+                            >مبلغ</label>
 
                             {
                                 this.state.Validations.price_requiredReg === false
@@ -193,7 +220,15 @@ class PaymentPage extends Component {
                                     </Accordion.Item>
                                 </Accordion>
                             </div>
-                            <label className="placeholder placeholder-typePayment">نوع</label>
+                            <label className="placeholder placeholder-typePayment" style={{
+                                top: '-8px',
+                                backgroundColor: '#fff',
+                                color: '#2a2e32b3',
+                                margin: '0.3rem 0.4rem',
+                                padding: '0 .4rem',
+                                opacity: '1'
+                            }}
+                            >نوع</label>
                         </div>
                         <div className="input-group-register col-md-2 col-12 date-container">
                             <DatePicker
@@ -252,6 +287,7 @@ class PaymentPage extends Component {
                                 top: '-8px',
                                 backgroundColor: '#fff',
                                 color: '#2a2e32b3',
+                                margin: '0.3rem 0.4rem',
                                 padding: '0 0.4rem',
                                 opacity: '1',
                             }}>تاریخ</label>
@@ -261,18 +297,35 @@ class PaymentPage extends Component {
                                           onChange={(e) => {
                                               this.handleDescriptionInput(e)
                                           }}></textarea>
-                            <label className="placeholder">توضیحات</label>
+                            <label className="placeholder" style={{
+                                backgroundColor: '#fff',
+                                color: '#2a2e32b3',
+                                margin: '0 0.4rem',
+                                padding: '0 0.4rem',
+                                opacity: '1',
+                            }}>توضیحات</label>
                         </div>
                         <div className="input-group-register col-md-2 col-12">
-                            <select className='form-select input'
+                            <FormControl className={"w-100"}>
+                                <Select
+                                    sx={{ height: 50, borderRadius: 2}}
+                                    id="select-field"
                                     value={this.state.paymentType}
                                     onChange={(e) => {
                                         this.setState({paymentType:e.target.value})
                                     }}>
-                                <option value="receive">دریافت</option>
-                                <option value="expend">پرداخت</option>
-                            </select>
-                            <label className="placeholder">واحد</label>
+                                    <MenuItem value={"receive"}>دریافت</MenuItem>
+                                    <MenuItem value={"expend"}>پرداخت</MenuItem>
+                                </Select>
+                                <label className="placeholder" style={{
+                                    top: '-8px',
+                                    backgroundColor: '#fff',
+                                    color: '#2a2e32b3',
+                                    margin: '-0.2rem 0.2rem',
+                                    padding: '0 .4rem',
+                                    opacity: '1',
+                                }}>واحد</label>
+                            </FormControl>
                         </div>
                     </div>
                     <div className='third-section'>

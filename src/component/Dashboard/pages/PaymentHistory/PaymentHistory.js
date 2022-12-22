@@ -3,10 +3,11 @@ import "../../../../style/paymentHistory.css"
 import DatePicker from "react-multi-date-picker";
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
-import {Box, Button, CircularProgress} from "@mui/material";
+import {Box, Button, CircularProgress, MenuItem, Select} from "@mui/material";
 import {RiDownloadCloud2Fill} from "react-icons/ri";
 import {green} from "@mui/material/colors";
 import Skeleton from "react-loading-skeleton";
+import FormControl from "@mui/material/FormControl";
 
 class PaymentHistory extends Component {
     state = {
@@ -49,12 +50,27 @@ class PaymentHistory extends Component {
                     </div>
                     <div className="d-flex flex-row flex-wrap my-2 align-items-center">
                         <div className='input-group-filter col-6 col-md my-2 px-2'>
-                            <select className='input' ref={this.type}>
-                                <option value='all'>همه تراکنش ها</option>
-                                <option value='expend'>پرداخت</option>
-                                <option value='receive'>دریافت</option>
-                            </select>
-                            <label className='placeholder' style={{padding: '0 .7rem',}}>نوع تراکنش</label>
+                            <FormControl className={"w-100"} style={{border: "none"}}>
+                                <Select
+                                    ref={this.type}
+                                    sx={{ height: 50, borderRadius: ".5rem", minWidth: '10rem'}}
+                                    id="select-field"
+                                    value={this.state.searchType}
+                                    onChange={(value) => this.setState({searchType: value.target.value})}>
+                                    <MenuItem value={"all"}> همه تراکنش ها</MenuItem>
+                                    <MenuItem value={"expend"}>پرداخت</MenuItem>
+                                    <MenuItem value={"receive"}>دریافت</MenuItem>
+                                </Select>
+                                <label className="placeholder" style={{
+                                    top: '-10px',
+                                    fontSize: "0.9rem",
+                                    backgroundColor: '#fff',
+                                    color: '#2a2e32b3',
+                                    margin: '-0.2rem 0',
+                                    padding: '0 .4rem -0.4rem',
+                                    opacity: '1',
+                                }}>نوع تراکنش</label>
+                            </FormControl>
                         </div>
                         <div className='input-group-filter col-6 col-md my-2 px-2'>
                             {/*<DatePicker calendarStyles={this.state.calStyles}*/}
@@ -120,10 +136,11 @@ class PaymentHistory extends Component {
                                 </Button>
                             </DatePicker>
                             <label className="placeholder" style={{
-                                top: '-8px',
+                                fontSize: "0.8rem",
                                 backgroundColor: '#fff',
                                 color: '#2a2e32b3',
-                                padding: '0 .7rem',
+                                margin: "0 0.6rem",
+                                padding: '0 .4rem',
                                 opacity: '1',
                             }}>از تاریخ</label>
                         </div>
@@ -190,16 +207,24 @@ class PaymentHistory extends Component {
                                 </Button>
                             </DatePicker>
                             <label className="placeholder" style={{
-                                top: '-8px',
+                                fontSize: "0.8rem",
                                 backgroundColor: '#fff',
                                 color: '#2a2e32b3',
-                                padding: '0 .7rem',
+                                margin: "0 0.6rem",
+                                padding: '0 .4rem',
                                 opacity: '1',
                             }}>تا تاریخ</label>
                         </div>
                         <div className='input-group-filter col-6 col-md my-2 px-2'>
                             <input type="text" className='input' ref={this.count}/>
-                            <label className='placeholder' style={{padding: '0 .7rem'}}>تعداد تراکنش</label>
+                            <label className="placeholder" style={{
+                                fontSize: "0.8rem",
+                                backgroundColor: '#fff',
+                                color: '#2a2e32b3',
+                                margin: '0.3rem 0.7rem',
+                                padding: '0 0.4rem',
+                                opacity: '1',
+                            }}>تعداد تراکنش</label>
                         </div>
                         <Box sx={{ m: 1, position: 'relative' }}>
                             <Button
@@ -352,55 +377,7 @@ class PaymentHistory extends Component {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(result)
-        }).then(() => {this.setState({loading: false, searchLoading: false})});
-        var content = await rawResponse.json();
-        console.log(content);
-        this.setState({payment: content});
-        // filter type
-        /*( () => {
-            switch (type) {
-                case 'all':
-                    return (() => {
-                        console.log(this.state.payment)
-                    })();
-                case 'withdraw':
-                    return (() => {
-                        const list = this.state.payment;
-                        const filterType = list.filter((payment) => payment.paymentType === 'expend')
-                        this.setState({paymentFilter : filterType})
-                        console.log(this.state.paymentFilter)
-                    })();
-                case 'deposit':
-                    return (() => {
-                        const list = this.state.payment;
-                        const filterType = list.filter((payment) => payment.paymentType === 'deposit')
-                        this.setState({paymentFilter : filterType})
-                        console.log(this.state.paymentFilter)
-                    })();
-            }
-        })();*/
-        // filter count
-        /*( () => {
-            switch (count) {
-                case '10':
-                    return (() => {
-                        console.log('10')
-                    })();
-                case '25':
-                    return (() => {
-                        console.log('25')
-                    })();
-                case '50':
-                    return (() => {
-                        console.log('50')
-                    })();
-                case '100':
-                    return (() => {
-                        console.log('100')
-                    })();
-            }
-        })();*/
-        /*console.log(startTime)*/
+        }).then(response => response.json()).then((data) => {this.setState({payment: data, loading: false, searchLoading: false})});
     }
 
     downloadFile = async (file) => {
