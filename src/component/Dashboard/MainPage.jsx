@@ -682,7 +682,6 @@ class MainPage extends Component {
 
     handleTypeofResident = (type) => {
         this.setState({typeofResident: type});
-        // console.log(this.state.typeofResident)
     }
 
     handleUnitNumber = (unitNumber, unitId) => {

@@ -412,14 +412,6 @@ class RequestPage extends Component {
                                 />
                             )}
                         </Box>
-
-
-                        {/*<button className="btn-done" onClick={(event) => {*/}
-                        {/*    if (this.handleIsValid()) {*/}
-                        {/*        this.handleSubmit()*/}
-                        {/*    }*/}
-                        {/*}}>ثبت*/}
-                        {/*</button>*/}
                         <button className="btn btn-light" disabled={this.state.loading} onClick={() => {
                             this.handleCloseType()
                         }}>بستن
@@ -481,7 +473,7 @@ class RequestPage extends Component {
                             />
                             <label className={'placeholder'}
                                    style={{right: this.state.Validations.addInputContentInModal_requiredReg === false ? '35px' : '12px'}}>
-                                &nbsp;درخواست جدید
+                                &nbsp;نوع جدید
                                 <span style={{color: 'red'}}>*</span>
                             </label>
                         </div>
@@ -517,8 +509,10 @@ class RequestPage extends Component {
         if (!required.test(this.state.addInputContentInModal)) {
 
             let updatedChoices = [...this.state.choices];
-            updatedChoices.push(this.state.addInputContentInModal);
-            this.setState({choices: updatedChoices});
+            if (!updatedChoices.includes(this.state.addInputContentInModal)) {
+                updatedChoices.push(this.state.addInputContentInModal);
+                this.setState({choices: updatedChoices});
+            }
 
             this.setState({showModalForAddingType: false})
 
@@ -612,7 +606,7 @@ class RequestPage extends Component {
 
         console.log(date2, this.state.tempFields.topic, this.state.tempFields.type, this.state.tempFields.reason, this.state.tempFields.name)
         this.setState({loading: true})
-        const rawResponse = await fetch('https://api.saadatportal.com/api/v1/request', {
+        await fetch('https://api.saadatportal.com/api/v1/request', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -631,10 +625,6 @@ class RequestPage extends Component {
             })
         }).then(() => this.setState({loading: false}));
 
-        // const response2 = await fetch('https://api.saadatportal.com/api/v1/request').then((response) => response.json())
-        //     .then((data) => this.setState({requests: data}));
-
-        console.log(123)
         this.setState({showType: false})
 
         // this.handleCloseType();
@@ -655,7 +645,7 @@ class RequestPage extends Component {
 
     handleSearchInput = async (e) =>{
         const value = e.target.value;
-        const response = await fetch(`https://api.saadatportal.com/api/v1/request/search?${this.state.searchBase}=${value}`).then((response) => response.json())
+        await fetch(`https://api.saadatportal.com/api/v1/request/search?${this.state.searchBase}=${value}`).then((response) => response.json())
             .then((data) => {
                 this.setState({searchBase: data});
                 this.setState({cardsLoading: false})

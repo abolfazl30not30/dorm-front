@@ -1,7 +1,6 @@
 import React, {Component} from "react";
 import {Link} from "react-router-dom";
 import Accordion from "react-bootstrap/Accordion";
-import Form from 'react-bootstrap/Form';
 import DatePicker from "react-multi-date-picker";
 import 'react-persian-datepicker/lib/styles/basic.css'
 import 'react-calendar/dist/Calendar.css';
@@ -17,17 +16,17 @@ import {MdCloudUpload, MdDelete} from "react-icons/md";
 import {RiFileUploadFill} from "react-icons/ri";
 import ReactLoading from 'react-loading';
 import Alert from 'react-bootstrap/Alert';
-import moment from 'moment-jalali';
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
 import {Box, Button, CircularProgress, FormControl, MenuItem, Select} from "@mui/material";
 import {green} from "@mui/material/colors";
 
-/*import React from "@types/react";*/
 
 class PaymentPage extends Component {
     state = {
-        loading: false,
+        deleteLoading: false,
+        submitLoading: false,
+        uploadLoading: false,
         choices: [],
         tempChoices: [],
         inputType: "",
@@ -47,7 +46,6 @@ class PaymentPage extends Component {
         },
         isUpload: false,
         hasError: false,
-        isLoading: false,
         uploadFile: [],
 
         dataPicker: null,
@@ -70,8 +68,7 @@ class PaymentPage extends Component {
     }
 
     async componentDidMount() {
-
-        const response2 = await fetch('https://api.saadatportal.com/api/v1/category/search?type=Payment').then((response) => response.json())
+        await fetch('https://api.saadatportal.com/api/v1/category/search?type=Payment').then((response) => response.json())
             .then((data) => this.setState({choices: data}));
     }
 
@@ -110,15 +107,6 @@ class PaymentPage extends Component {
                                     opacity: '1',
                                 }}>واحد</label>
                             </FormControl>
-                            {/*<select className='form-select input'*/}
-                            {/*        value={this.state.priceType}*/}
-                            {/*        onChange={(e) => {*/}
-                            {/*            this.handlePriceType(e)*/}
-                            {/*        }}>*/}
-                            {/*    <option value="IRR">ریال</option>*/}
-                            {/*    <option value="USD">دلار</option>*/}
-                            {/*</select>*/}
-                            {/*<label className="placeholder">واحد</label>*/}
                         </div>
                         <div className="input-group-register col-md-4 col-12">
                             <input id="price"
@@ -232,22 +220,17 @@ class PaymentPage extends Component {
                         </div>
                         <div className="input-group-register col-md-2 col-12 date-container">
                             <DatePicker
-                                // fixMainPosition={false}
                                 calendarPosition={`top`}
                                 digits={['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']}
                                 format={`YYYY/MM/DD`}
-
-
                                 containerStyle={{
                                     width: "100%"
                                 }}
-
                                 inputClass={`input form-control`}
                                 value={this.state.dataPicker}
                                 onChange={(value) => {
                                     this.handleDateInput(value)
                                 }}
-
                                 mapDays={({ date }) => {
                                     let props = {}
                                     let isWeekend = [6].includes(date.weekDay.index)
@@ -339,29 +322,28 @@ class PaymentPage extends Component {
                             </div>
                             <div className="col-6">
                                 {this.state.isUpload && !this.state.hasError ? (
-                                    <div className="file-container">
-                                        <button className="deleteBtn" onClick={this.handleDeleteFile}><MdDelete
+                                    <div className="file-container" style={{marginTop: '-2px'}}>
+                                        <button disabled={this.state.deleteLoading} className="deleteBtn" onClick={this.handleDeleteFile}><MdDelete
                                             fontSize="25px"/></button>
                                         <div className="d-flex align-items-center">
                                             <h6 className="mx-1">{this.state.fileName}</h6>
                                             <RiFileUploadFill/>
                                         </div>
                                     </div>
-                                ) : (this.state.isLoading ? (
+                                ) : (this.state.uploadLoading ? (
                                         <div className="d-flex align-item-start">
                                             <button className="uploadBtn" onClick={this.handleUpload}
-                                                    disabled={this.state.isLoading}><MdCloudUpload fontSize="35px"/>
+                                                    disabled={this.state.uploadLoading}><MdCloudUpload fontSize="35px"/>
                                             </button>
-                                            <ReactLoading type="cylon" color="#bdc3c7" className="loading" height={1}
+                                            <ReactLoading type="cylon" color="#bdc3c7" className="submitLoading" height={1}
                                                           width={45}/>
                                         </div>
                                     ) : (
                                         <button className="uploadBtn" onClick={this.handleUpload}
-                                                disabled={this.state.isLoading}><MdCloudUpload fontSize="35px"/>
+                                                disabled={this.state.uploadLoading}><MdCloudUpload fontSize="35px"/>
                                         </button>
                                     )
                                 )}
-
                             </div>
                         </div>
                         <div>
@@ -387,12 +369,12 @@ class PaymentPage extends Component {
                             <Button
                                 className={"buttonDone"}
                                 variant="contained"
-                                disabled={this.state.loading}
+                                disabled={this.state.submitLoading || this.state.uploadLoading}
                                 onClick={this.handleSubmitPayment}
                             >
                                 ثبت
                             </Button>
-                            {this.state.loading && (
+                            {this.state.submitLoading && (
                                 <CircularProgress
                                     size={24}
                                     sx={{
@@ -458,34 +440,33 @@ class PaymentPage extends Component {
         );
     }
 
-    handleClick(e) {
-        e.preventDefault();
-    }
-
     handleOpenType = () => {
         this.setState({showType: true});
     }
 
     handleCloseType = () => {
-        this.setState({showType: false});
+        this.setState({inputType: "", showType: false});
     }
 
     handleAlignment = (event, newAlignment) => {
         this.setState({selectedType: newAlignment});
 
-    };
+    }
+
     handleInputChange = (e) => {
         this.setState({inputType: e.target.value});
     }
 
     handleDeleteFile = async () => {
+        this.setState({deleteLoading: true})
         await fetch(`https://api.saadatportal.com/api/v1/file/${this.state.fileId}`, {
             method: 'DELETE',
         })
             .then(res => res.text())
-            .then(res => console.log(res));
         this.setState({fileId: ""});
         this.setState({isUpload: false});
+        this.setState({deleteLoading: false});
+
     }
 
     handleSubmitType = (e) => {
@@ -493,8 +474,10 @@ class PaymentPage extends Component {
         let regCheck = /^\s*$/;
         if (!regCheck.test(this.state.inputType)) {
             let updateChoice = [...this.state.tempChoices];
-            updateChoice.push(this.state.inputType);
-            this.setState({tempChoices: updateChoice});
+            if (!updateChoice.includes(this.state.inputType)) {
+                updateChoice.push(this.state.inputType);
+                this.setState({tempChoices: updateChoice});
+            }
         }
         this.setState({showType: false})
     }
@@ -506,26 +489,23 @@ class PaymentPage extends Component {
     }
 
     handleUpload = async () => {
-        this.setState({isLoading: true});
+        this.setState({uploadLoading: true});
         let formData = new FormData();
-        console.log(this.state.uploadFile[0]);
         formData.append('file', this.state.uploadFile[0]);
         await fetch('https://api.saadatportal.com/api/v1/file', {
             method: 'POST',
             body: formData
         }).then((response) => response.json())
             .then((result) => {
-                console.log('Success:', result);
                 this.setState({fileId: result.message.id})
                 this.setState({isUpload: true})
                 this.setState({hasError: false})
-                this.setState({isLoading: false});
+                this.setState({uploadLoading: false});
             })
             .catch((error) => {
-                console.error('Error:', error);
                 this.setState({isUpload: true})
                 this.setState({hasError: true})
-                this.setState({isLoading: false});
+                this.setState({uploadLoading: false});
             });
     }
 
@@ -537,9 +517,6 @@ class PaymentPage extends Component {
         let price_numberReg = numberReg.test(this.state.price);
         let selectedTypeBoolean = this.state.selectedType !== null;
         let date_requiredReg = !requiredReg.test(this.state.date);
-
-        console.log("1")
-        console.log(price_requiredReg, price_numberReg, selectedTypeBoolean, date_requiredReg)
 
         let newValidations = {...this.state.Validations};
         newValidations.price_requiredReg = price_requiredReg;
@@ -570,8 +547,6 @@ class PaymentPage extends Component {
         let month = value.month < 10 ? ('0' + value.month) : value.month;
         let day = value.day < 10 ? ('0' + value.day) : value.day;
         let convertDate = value.year  + '/' + month + '/' + day;
-        // let date = new Date(value._d);
-        // let convertDate = date.getFullYear() + "/" + date.getMonth() + "/" + date.getDate() + " " + "00:" + "00:" + "00";
         this.setState({date: convertDate})
     }
 
@@ -601,15 +576,15 @@ class PaymentPage extends Component {
             payment = Object.assign(payment, file)
         }
         if (result) {
-            this.setState({loading: true})
-            const rawResponse = await fetch('https://api.saadatportal.com/api/v1/paymentHistory', {
+            this.setState({submitLoading: true})
+            await fetch('https://api.saadatportal.com/api/v1/paymentHistory', {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(payment)
-            }).then(() => this.setState({loading: false}));
+            }).then(() => this.setState({submitLoading: false}));
 
             this.setState({
                 date: "",
@@ -621,8 +596,6 @@ class PaymentPage extends Component {
                 isUpload: false,
             });
             this.setState({showDoneModal: true})
-        } else {
-            console.log("ERROR")
         }
     }
 }

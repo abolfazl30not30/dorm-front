@@ -1,5 +1,4 @@
 import React, {Component} from "react";
-// import { DatePicker } from "jalali-react-datepicker";
 import {Calendar} from "react-multi-date-picker";
 import DatePickerHeader from "react-multi-date-picker/plugins/date_picker_header";
 import persian from "react-date-object/calendars/persian";
@@ -30,50 +29,8 @@ class EventPage extends Component {
         isHoliday: '',
         holidaysOfMonth: [],
 
-        eventsFromAPI: [
-            // {
-            //     year: 1401,
-            //     dayOfYear: 196,
-            //     description: 'test1',
-            // },
-            // {
-            //     year: '',
-            //     dayOfYear: '',
-            //     description: 'test2',
-            // },
-            // {
-            //     year: '',
-            //     dayOfYear: 'asd',
-            //     description: '',
-            // },
-            // {
-            //     year: '',
-            //     dayOfYear: 'asd',
-            //     description: '',
-            // },
-        ],
-        customEvents: [
-            // {
-            //     date: '1401/9/9 00:00:00',
-            //     eventName: 'test',
-            //     eventDescription: 'test'
-            // }
-            // {
-            //     year: '',
-            //     dayOfYear: '',
-            //     description: 'test2',
-            // },
-            // {
-            //     year: '',
-            //     dayOfYear: 'asd',
-            //     description: '',
-            // },
-            // {
-            //     year: '',
-            //     dayOfYear: 'asd',
-            //     description: '',
-            // },
-        ]
+        eventsFromAPI: [],
+        customEvents: []
     }
 
     render() {
@@ -109,14 +66,15 @@ class EventPage extends Component {
 
 
                         <div className="d-flex flex-md-row flex-column">
-                            <div className="col-md-6 col-12 p-2">
+                            <div className="col-md-6 col-12 p-2 text-center">
                                 <div className='d-flex justify-content-center'>
                                     <Calendar
                                         value={this.state.value}
                                         onChange={(value) => this.handleCalendarVar(value)}
 
                                         mapDays={({date}) => {
-                                            // this.handleHolidaysFromAPI(date.year, date.month.number, date.day, date);
+                                            // console.log(1)
+                                            this.handleHolidaysFromAPI(date.year, date.month.number, date.day, date);
                                             let props = {}
 
                                             let isWeekend = [6].includes(date.weekDay.index);
@@ -327,7 +285,9 @@ class EventPage extends Component {
 
 
                 <Modal centered show={this.state.showType} onHide={() => {
-                    this.handleCloseType()
+                    if (!this.state.loading) {
+                        this.handleCloseType()
+                    }
                 }}>
                     <Modal.Header closeButton>
                         <Modal.Title>افزودن رویداد جدید</Modal.Title>
@@ -360,7 +320,7 @@ class EventPage extends Component {
                     <Modal.Footer className="justify-content-center">
                         <Box sx={{ m: 1, position: 'relative' }}>
                             <Button
-                                className={"btn btn-success"}
+                                className={"buttonDone"}
                                 variant="contained"
                                 // sx={{
                                 //     backgroundColor: "#20d489",
@@ -371,7 +331,6 @@ class EventPage extends Component {
                                 onClick={(event) => {
                                     this.handleSubmitType(event)
                                 }}>
-                            >
                                 ثبت
                             </Button>
                             {this.state.loading && (
@@ -388,11 +347,7 @@ class EventPage extends Component {
                                 />
                             )}
                         </Box>
-                        {/*<button className="btn btn-success" onClick={(event) => {*/}
-                        {/*    this.handleSubmitType(event)*/}
-                        {/*}}>ثبت*/}
-                        {/*</button>*/}
-                        <button className="btn btn-light" onClick={() => {
+                        <button className="btn btn-light" disabled={this.state.loading} onClick={() => {
                             this.handleCloseType()
                         }}>بستن
                         </button>
@@ -419,7 +374,6 @@ class EventPage extends Component {
     }
 
     handleSubmitType = async (e) => {
-
         e.preventDefault();
         let regCheck = /^\s*$/;
         if (!regCheck.test(this.state.tempEventName) && !regCheck.test(this.state.tempEventDescription)) {
@@ -437,7 +391,7 @@ class EventPage extends Component {
 
             this.setState({customEvents: updatedCustomEvents});
             this.setState({loading: true})
-            const postEvent = await fetch('https://api.saadatportal.com/api/v1/notification', {
+            await fetch('https://api.saadatportal.com/api/v1/notification', {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
@@ -464,20 +418,13 @@ class EventPage extends Component {
 
         this.handleAPI(value.year, value.month.number, value.day, value);
 
-        // console.log(this.state)
-
-        // console.log(res)
-
-        // console.log(value.dayOfYear);
-        // console.log(value.year , '-------');
-        // console.log(value.year, value.month.number,value.day)
     }
 
-    handleAPI = async (year, month, day, value) => {
+    handleAPI = async (year, month, day) => {
 
         console.log(year, month, day)
 
-        const response = await fetch(`https://persiancalapi.ir/jalali/${year}/${month}/${day}`).then((response) => response.json())
+        await fetch(`https://persiancalapi.ir/jalali/${year}/${month}/${day}`).then((response) => response.json())
             .then((data) => {
                 this.setState({eventsFromAPI: data.events});
                 this.setState({isHoliday: data.is_holiday});
@@ -515,40 +462,14 @@ class EventPage extends Component {
     }
 
     componentDidMount = async () => {
-        const response = await fetch('https://api.saadatportal.com/api/v1/notification').then((response) => response.json())
+        await fetch('https://api.saadatportal.com/api/v1/notification').then((response) => response.json())
             .then((data) => this.setState({customEvents: data}, () => this.handleNotif()));
-
-        // let today = new Date()
-        // let day = parseInt(this.state.day) < 10 ? ('0' + parseInt(this.state.day)) : parseInt(this.state.day);
-        // let month = (parseInt(this.state.month) < 10 ? ('0' + parseInt(this.state.month)) : parseInt(this.state.month));
-
-        // let today = new Date().toLocaleDateString('fa-IR-u-nu-latn', {year:'numeric',month:'2-digit',day:'2-digit'}) + ' 00:00:00';
-        // console.log(today)
-        //
-        // for (let i = 0; i < this.state.customEvents.length; i++) {
-        //     console.log(2)
-        //     if (this.state.customEvents[i].date === today) {
-        //         toast(<div>
-        //                 <h4>{this.state.customEvents[i].eventName}</h4>
-        //                 <p>{this.state.customEvents[i].eventDescription}</p>
-        //             </div>, {
-        //                 position: "top-right",
-        //                 autoClose: 5000,
-        //                 hideProgressBar: false,
-        //                 closeOnClick: true,
-        //                 pauseOnHover: true,
-        //                 draggable: true,
-        //                 progress: undefined,
-        //                 theme: "light",
-        //             }
-        //         )
-        //     }
-        // }
     }
 
     handleHolidaysFromAPI = async (year, month, day) => {
-        const setHolidaysOfMonth = await fetch(`https://persiancalapi.ir/jalali/${year}/${month}/${day}`).then((response) => response.json())
+        await fetch(`https://persiancalapi.ir/jalali/${year}/${month}/${day}`).then((response) => response.json())
             .then((data) => {
+                // console.log(1)
                 if (data.is_holiday) {
                     let updatedHolidaysOfMonth = [...this.state.holidaysOfMonth];
                     let t = {
