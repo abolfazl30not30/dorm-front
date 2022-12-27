@@ -11,7 +11,6 @@ import Tooltip from 'react-bootstrap/Tooltip';
 import '../../../../style/registerPage.css';
 import '../../../../style/paymentPage.css';
 import '../../../../style/searchAccount.css';
-
 import {MdDone} from "react-icons/md";
 import {Box, CircularProgress, FormControl, MenuItem, Select} from "@mui/material";
 import {green} from "@mui/material/colors";
@@ -31,7 +30,6 @@ class RequestPage extends Component {
         showModalForAddingType: false,
 
         searchBase: 'name',
-        searchContent: '',
 
         failureModalShow: false,
 
@@ -76,23 +74,11 @@ class RequestPage extends Component {
     }
 
     componentDidMount = async () => {
-        // const response1 = await fetch('https://api.saadatportal.com/api/v1/category/search?type=Request').then((response) => response.json())
-        //     .then((data) => this.setState({ choices: data }));
-        // const response1 = await axios.get("https://api.saadatportal.com/api/v1/request");
-        // console.log(response1)
-        this.setState({cardsLoading: true})
-        const response = await fetch('https://api.saadatportal.com/api/v1/request').then((response) => response.json())
+        await fetch('https://api.saadatportal.com/api/v1/request').then((response) => response.json())
             .then((data) => {
                 this.setState({requests: data});
                 this.setState({cardsLoading: false});
             });
-
-    }
-
-    doneButtonStyle = {
-        backgroundColor: "#20d489",
-        color: "black",
-        ":hover": {backgroundColor: "#198754", color: "white"}
 
     }
 
@@ -161,13 +147,13 @@ class RequestPage extends Component {
                                 this.state.cardsLoading ?
                                     [...Array(9)].map((x, i) => (
                                             <div className="col-12 col-md-4 p-2">
-                                                <div className={'request-item d-flex flex-column text-center'}>
-                                                    <Skeleton className={"mt-2"} animation="wave" width={300} height={30}/>
-                                                    <Skeleton className={"mt-2"} animation="wave" width={300} height={30}/>
-                                                    <Skeleton className={"mt-2"} animation="wave" width={300} height={30}/>
-                                                    <Skeleton className={"mt-2"} animation="wave" width={300} height={30}/>
-                                                    <Skeleton className={"mt-2"} animation="wave" width={300} height={30}/>
-                                                    <Skeleton className={"mt-2"} animation="wave" width={300} height={30}/>
+                                                <div className={'request-item d-flex flex-column'}>
+                                                    <Skeleton className={"mt-2"} animation="wave" width={"50%"} height={30}/>
+                                                    <Skeleton className={"mt-2"} animation="wave" width={"60%"} height={30}/>
+                                                    <Skeleton className={"mt-2"} animation="wave" width={"80%"} height={30}/>
+                                                    <Skeleton className={"mt-2"} animation="wave" width={"70%"} height={30}/>
+                                                    <Skeleton className={"mt-2"} animation="wave" width={"40%"} height={30}/>
+                                                    <Skeleton className={"mt-2"} animation="wave" width={"80%"} height={30}/>
                                                 </div>
                                             </div>
                                         ))
@@ -379,7 +365,6 @@ class RequestPage extends Component {
                                             className="text-danger">این فیلد الزامی است!</small>
                                         : <div/>
                                 }
-
                             </div>
                         </div>
                     </Modal.Body>
@@ -526,14 +511,8 @@ class RequestPage extends Component {
 
     handleOpenFailureModal = async (request) => {
         this.setState({failureModalShow: true});
-        // console.log(request)
-
-        // if(request.checked === 'false'){
-        const response = await fetch(`https://api.saadatportal.com/api/v1/failureReason/${request.failureReason}`).then((response) => response.json())
+        await fetch(`https://api.saadatportal.com/api/v1/failureReason/${request.failureReason}`).then((response) => response.json())
             .then((data) => this.setState({failure: data}));
-
-        // }
-
     }
 
     handleResetFields = () => {
@@ -554,10 +533,6 @@ class RequestPage extends Component {
 
         this.setState({tempFields: resetTypeOfTempFields})
         this.setState({Validations: resetValidations})
-    }
-
-    handleSearchBtn = () => {
-
     }
 
     handleOpenType = () => {
@@ -604,7 +579,6 @@ class RequestPage extends Component {
         let year = date.getFullYear();
         let date2 = year + "/" + month + "/" + day + " " + "00:" + "00:" + "00";
 
-        console.log(date2, this.state.tempFields.topic, this.state.tempFields.type, this.state.tempFields.reason, this.state.tempFields.name)
         this.setState({loading: true})
         await fetch('https://api.saadatportal.com/api/v1/request', {
             method: 'POST',
@@ -623,13 +597,16 @@ class RequestPage extends Component {
                 description: this.state.tempFields.description,
                 assignee: this.state.tempFields.name
             })
-        }).then(() => this.setState({loading: false}));
+        }).then(async (response) => {
+            this.setState({loading: false})
+            const newRequest = await response.json()
+            const updatedRequests = [...this.state.requests]
+            updatedRequests.push(newRequest)
+            this.setState({requests: updatedRequests})
+        });
 
         this.setState({showType: false})
-
-        // this.handleCloseType();
-
-        // await this.componentDidMount();
+        await this.componentDidMount()
     }
 
     handleValidations = (valueOfField, nameOfField) => {
@@ -645,9 +622,10 @@ class RequestPage extends Component {
 
     handleSearchInput = async (e) =>{
         const value = e.target.value;
+        this.setState({cardsLoading: true})
         await fetch(`https://api.saadatportal.com/api/v1/request/search?${this.state.searchBase}=${value}`).then((response) => response.json())
             .then((data) => {
-                this.setState({searchBase: data});
+                this.setState({requests: data});
                 this.setState({cardsLoading: false})
             });
     }

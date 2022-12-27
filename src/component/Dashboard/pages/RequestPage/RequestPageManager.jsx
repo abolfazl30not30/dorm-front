@@ -137,13 +137,13 @@ class RequestPage extends Component {
                                 this.state.cardsLoading ?
                                     [...Array(9)].map((x, i) => (
                                         <div className="col-12 col-md-4 p-2">
-                                            <div className={'request-item d-flex flex-column text-center'}>
-                                                <Skeleton className={"mt-2"} animation="wave" width={300} height={30}/>
-                                                <Skeleton className={"mt-2"} animation="wave" width={300} height={30}/>
-                                                <Skeleton className={"mt-2"} animation="wave" width={300} height={30}/>
-                                                <Skeleton className={"mt-2"} animation="wave" width={300} height={30}/>
-                                                <Skeleton className={"mt-2"} animation="wave" width={300} height={30}/>
-                                                <Skeleton className={"mt-2"} animation="wave" width={300} height={30}/>
+                                            <div className={'request-item d-flex flex-column'}>
+                                                <Skeleton className={"mt-2"} animation="wave" width={"50%"} height={30}/>
+                                                <Skeleton className={"mt-2"} animation="wave" width={"60%"} height={30}/>
+                                                <Skeleton className={"mt-2"} animation="wave" width={"80%"} height={30}/>
+                                                <Skeleton className={"mt-2"} animation="wave" width={"70%"} height={30}/>
+                                                <Skeleton className={"mt-2"} animation="wave" width={"40%"} height={30}/>
+                                                <Skeleton className={"mt-2"} animation="wave" width={"80%"} height={30}/>
                                             </div>
                                         </div>
                                     ))
@@ -214,118 +214,6 @@ class RequestPage extends Component {
                                                             ویرایش
                                                         </Button>
                                                     </div>
-
-                                                    <Modal centered show={this.state.showStatusModal} onHide={() => {
-                                                        this.handleCloseType();
-                                                    }}>
-                                                        <Modal.Header closeButton>
-                                                            <Modal.Title>تغییر وضعیت</Modal.Title>
-                                                        </Modal.Header>
-                                                        <Modal.Body className="justify-content-center">
-                                                            <FormControl>
-                                                                <RadioGroup
-                                                                    row
-                                                                    aria-labelledby="demo-row-radio-buttons-group-label"
-                                                                    name="row-radio-buttons-group"
-                                                                    value={this.state.tmpRequestForSubmit.checked}
-                                                                    // onClick={() => console.log(request.checked)}
-                                                                    onChange={(value) => {
-                                                                        this.handleEditRadioGroup(value);
-                                                                    }}
-                                                                >
-                                                                    <FormControlLabel labelPlacement="top" value="null" control={<Radio />} label="تعیین نشده" />
-                                                                    <FormControlLabel labelPlacement="top" value="true" control={<Radio />} label="تایید شده" />
-                                                                    <FormControlLabel labelPlacement="top" value="false" control={<Radio />} label="تایید نشده" />
-                                                                </RadioGroup>
-                                                            </FormControl>
-                                                            <div style={{display: this.state.tmpRequestForSubmit.checked !== false ? 'none' : 'block'}}>
-                                                                <div className={'input-group-register'}>
-                                                                    <input
-                                                                        className={'input form-control'}
-                                                                        placeholder={' '}
-                                                                        value={this.state.failure.name}
-                                                                        onChange={(value) => {
-                                                                            let updatedFailure = {...this.state.failure};
-                                                                            updatedFailure.name = value.target.value;
-                                                                            this.setState({failure : updatedFailure});
-                                                                        }}
-                                                                    />
-                                                                    <label className={'placeholder'}>
-                                                                        عنوان
-                                                                    </label>
-                                                                </div>
-                                                                <div className={'input-group-register'}>
-                                                                    <input
-                                                                        className={'input form-control'}
-                                                                        placeholder={' '}
-                                                                        value={this.state.failure.reason}
-                                                                        onChange={(value) => {
-                                                                            let updatedFailure = {...this.state.failure};
-                                                                            updatedFailure.reason = value.target.value;
-                                                                            this.setState({failure : updatedFailure});
-                                                                        }}
-                                                                    />
-                                                                    <label className={'placeholder'}>
-                                                                        دلیل
-                                                                    </label>
-                                                                </div>
-                                                                <div className={'input-group-register'}>
-                                                                    <input
-                                                                        className={'input form-control'}
-                                                                        placeholder={' '}
-                                                                        value={this.state.failure.type}
-                                                                        onChange={(value) => {
-                                                                            let updatedFailure = {...this.state.failure};
-                                                                            updatedFailure.type = value.target.value;
-                                                                            this.setState({failure : updatedFailure});
-                                                                        }}
-                                                                    />
-                                                                    <label className={'placeholder'}>
-                                                                        نوع
-                                                                    </label>
-                                                                </div>
-                                                            </div>
-                                                        </Modal.Body>
-                                                        <Modal.Footer>
-                                                            <Box sx={{ m: 1, position: 'relative' }}>
-                                                                <Button
-                                                                    className={"buttonDone"}
-                                                                    variant="contained"
-                                                                    disabled={this.state.loading}
-                                                                    onClick={(event) => {
-                                                                        if (this.handleIsValidStatus()) {
-                                                                            this.handleSubmitStatus();
-                                                                        }
-                                                                    }}>
-                                                                    ثبت
-                                                                </Button>
-                                                                {this.state.loading && (
-                                                                    <CircularProgress
-                                                                        size={24}
-                                                                        sx={{
-                                                                            color: green[500],
-                                                                            position: 'absolute',
-                                                                            top: '50%',
-                                                                            left: '50%',
-                                                                            marginTop: '-12px',
-                                                                            marginLeft: '-12px',
-                                                                        }}
-                                                                    />
-                                                                )}
-                                                            </Box>
-                                                            {/*<button className="btn-done" onClick={(event) => {*/}
-                                                            {/*    if (this.handleIsValidStatus()) {*/}
-                                                            {/*        this.handleSubmitStatus();*/}
-                                                            {/*        this.setState({showStatusModal: false});*/}
-                                                            {/*    }*/}
-                                                            {/*}}>ثبت*/}
-                                                            {/*</button>*/}
-                                                            <button className="btn btn-light" onClick={() => {
-                                                                this.handleCloseType()
-                                                            }}>بستن
-                                                            </button>
-                                                        </Modal.Footer>
-                                                    </Modal>
                                                 </div>
                                                 <div className='d-flex flex-row mb-2'>
                                                     <i className="bi bi-chevron-left ms-1"/>
@@ -354,29 +242,151 @@ class RequestPage extends Component {
                     <Modal.Body>
                         <div className="information">
                             <p>
-                                <label style={{marginLeft: '5%'}}>
-                                    عنوان:
-                                </label>
-                                {this.state.failure.type}
+                                {this.state.loading
+                                    ?
+                                    <Skeleton animation="wave" height={20} width={"50%"}/>
+                                    :
+                                    <>
+                                        <label style={{marginLeft: '5%'}}>
+                                            عنوان:
+                                        </label>
+                                        {this.state.failure.type}
+                                    </>}
                             </p>
                         </div>
                         <div className="information">
                             <p>
-                                <label style={{marginLeft: '5%'}}>
-                                    اسم:
-                                </label>
-                                {this.state.failure.name}
+                                {this.state.loading
+                                    ?
+                                    <Skeleton animation="wave" height={20} width={"50%"}/>
+                                    :
+                                    <>
+                                        <label style={{marginLeft: '5%'}}>
+                                            اسم:
+                                        </label>
+                                        {this.state.failure.name}
+                                    </>}
                             </p>
                         </div>
                         <div className="information">
                             <p>
-                                <label style={{marginLeft: '5%'}}>
-                                    دلیل:
-                                </label>
-                                {this.state.failure.reason}
+                                {this.state.loading
+                                    ?
+                                    <Skeleton animation="wave" height={20} width={"50%"}/>
+                                    :
+                                    <>
+                                        <label style={{marginLeft: '5%'}}>
+                                            دلیل:
+                                        </label>
+                                        {this.state.failure.reason}
+                                    </>}
                             </p>
                         </div>
                     </Modal.Body>
+                </Modal>
+                <Modal centered show={this.state.showStatusModal} onHide={() => {
+                    if (!this.state.loading) {this.handleCloseType()}
+                }}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>تغییر وضعیت</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body className="justify-content-center">
+                        <FormControl>
+                            <RadioGroup
+                                row
+                                aria-labelledby="demo-row-radio-buttons-group-label"
+                                name="row-radio-buttons-group"
+                                value={this.state.tmpRequestForSubmit.checked}
+                                // onClick={() => console.log(request.checked)}
+                                onChange={(value) => {
+                                    this.handleEditRadioGroup(value);
+                                }}
+                            >
+                                <FormControlLabel disabled={this.state.loading} labelPlacement="top" value="null" control={<Radio />} label="تعیین نشده" />
+                                <FormControlLabel disabled={this.state.loading} labelPlacement="top" value="true" control={<Radio />} label="تایید شده" />
+                                <FormControlLabel disabled={this.state.loading} labelPlacement="top" value="false" control={<Radio />} label="تایید نشده" />
+                            </RadioGroup>
+                        </FormControl>
+                        <div style={{display: this.state.tmpRequestForSubmit.checked !== false ? 'none' : 'block'}}>
+                            <div className={'input-group-register'}>
+                                <input
+                                    className={'input form-control'}
+                                    placeholder={' '}
+                                    value={this.state.failure.name}
+                                    onChange={(value) => {
+                                        let updatedFailure = {...this.state.failure};
+                                        updatedFailure.name = value.target.value;
+                                        this.setState({failure : updatedFailure});
+                                    }}
+                                />
+                                <label className={'placeholder'}>
+                                    عنوان
+                                </label>
+                            </div>
+                            <div className={'input-group-register'}>
+                                <input
+                                    className={'input form-control'}
+                                    placeholder={' '}
+                                    value={this.state.failure.reason}
+                                    onChange={(value) => {
+                                        let updatedFailure = {...this.state.failure};
+                                        updatedFailure.reason = value.target.value;
+                                        this.setState({failure : updatedFailure});
+                                    }}
+                                />
+                                <label className={'placeholder'}>
+                                    دلیل
+                                </label>
+                            </div>
+                            <div className={'input-group-register'}>
+                                <input
+                                    className={'input form-control'}
+                                    placeholder={' '}
+                                    value={this.state.failure.type}
+                                    onChange={(value) => {
+                                        let updatedFailure = {...this.state.failure};
+                                        updatedFailure.type = value.target.value;
+                                        this.setState({failure : updatedFailure});
+                                    }}
+                                />
+                                <label className={'placeholder'}>
+                                    نوع
+                                </label>
+                            </div>
+                        </div>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Box sx={{ m: 1, position: 'relative' }}>
+                            <Button
+                                className={"buttonDone"}
+                                variant="contained"
+                                disabled={this.state.loading}
+                                onClick={(event) => {
+                                    if (this.handleIsValidStatus()) {
+                                        this.handleSubmitStatus();
+                                    }
+                                }}>
+                                ثبت
+                            </Button>
+                            {this.state.loading && (
+                                <CircularProgress
+                                    size={24}
+                                    sx={{
+                                        color: green[500],
+                                        position: 'absolute',
+                                        top: '50%',
+                                        left: '50%',
+                                        marginTop: '-12px',
+                                        marginLeft: '-12px',
+                                    }}
+                                />
+                            )}
+                        </Box>
+                        <button className="btn btn-light" disabled={this.state.loading} onClick={() => {
+                            this.handleCloseType()
+                        }}>بستن
+                        </button>
+                    </Modal.Footer>
                 </Modal>
 
             </>
@@ -384,21 +394,13 @@ class RequestPage extends Component {
     }
 
     componentDidMount = async () => {
-        const response = await fetch(`https://api.saadatportal.com/api/v1/request`).then((response) => response.json())
+        await fetch(`https://api.saadatportal.com/api/v1/request`).then((response) => response.json())
             .then((data) => {
                 this.setState({
                     requests: data,
                     cardsLoading: false
                 })
             });
-    }
-
-    handleEditRadioGroup = (value) => {
-        let formattedValue = value.target.value === "null" ? null : (value.target.value === "true")
-        this.setState({tmpRadioValue : formattedValue})
-        let updatedTmpRequestForSubmit = {...this.state.tmpRequestForSubmit};
-        updatedTmpRequestForSubmit.checked = formattedValue;
-        this.setState({tmpRequestForSubmit : updatedTmpRequestForSubmit});
     }
 
     handleEditButton = async (request) => {
@@ -412,34 +414,21 @@ class RequestPage extends Component {
         this.setState({failureModalShow: false});
     }
 
-
-    handleGetFailureReasonId = () => {
-
-    }
-
     handleOpenFailureModal = async (request) => {
-        this.setState({failureModalShow: true});
-        const response = await fetch(`https://api.saadatportal.com/api/v1/failureReason/${request.failureReason}`).then((response) => response.json())
-            .then((data) => this.setState({failure : data}));
-    }
-
-    handleSearchBtn = () => {
-
-    }
-
-    handleOpenType = () => {
-        this.setState({showType: true});
+        this.setState({
+            failure : {
+                name: '',
+                reason: '',
+                type: '',
+            }})
+        this.setState({failureModalShow: true, loading: true});
+        await fetch(`https://api.saadatportal.com/api/v1/failureReason/${request.failureReason}`).then((response) => response.json())
+            .then((data) => this.setState({failure: data, loading: false}));
     }
 
     handleCloseType = () => {
         this.setState({showType: false});
         this.setState({showStatusModal: false});
-    }
-
-    handleAlignment = (event, newAlignment) => {
-        let updatedTempFields = {...this.state.tempFields};
-        updatedTempFields['type'] = newAlignment;
-        this.setState({tempFields: updatedTempFields});
     }
 
     handleIsValidStatus = () => {
@@ -458,60 +447,64 @@ class RequestPage extends Component {
 
     handleSubmitStatus = async () => {
 
-        let updatedRequests = [...this.state.requests];
+        const updatedRequests = [...this.state.requests];
+        const index = updatedRequests.indexOf(this.state.tmpRequest)
+        if (this.state.tmpRequestForSubmit.checked === false) {
+            this.setState({loading: true})
+            const getFailureReasonId = await fetch('https://api.saadatportal.com/api/v1/failureReason', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    name: this.state.failure.name,
+                    type: this.state.failure.type,
+                    reason: this.state.failure.reason
+                })
+            })
 
-        for (const updatedRequestsKey of updatedRequests) {
-            if (updatedRequestsKey === this.state.tmpRequest) {
-                if (this.state.tmpRequestForSubmit.checked === false) {
-                    let failureReasonId= '';
-                    this.setState({loading: true})
-                    const getFailureReasonId = await fetch('https://api.saadatportal.com/api/v1/failureReason', {
-                        method: 'POST',
-                        headers: {
-                            'Accept': 'application/json',
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            name: this.state.failure.name,
-                            type: this.state.failure.type,
-                            reason: this.state.failure.reason
-                        })
-                    })
+            var content = await getFailureReasonId.json();
 
-                    var content = await getFailureReasonId.json();
-
-                    const patchFailRequest = await fetch(`https://api.saadatportal.com/api/v1/request/${updatedRequestsKey.id}`, {
-                        method: 'PATCH',
-                        headers: {
-                            'Accept': 'application/json',
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            checked: false,
-                            failureReasonId: content.id
-                        })
-                    }).then(() => {
-                        this.setState({loading: false});
-                        this.setState({showStatusModal: false});
-                    });
-                } else if (this.state.tmpRequestForSubmit.checked === true) {
-                    this.setState({loading: true})
-                    const patchAcceptedRequest = await fetch(`https://api.saadatportal.com/api/v1/request/${updatedRequestsKey.id}`, {
-                        method: 'PATCH',
-                        headers: {
-                            'Accept': 'application/json',
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            checked: this.state.tmpRequestForSubmit.checked
-                        })
-                    }).then(() => {
-                        this.setState({loading: false});
-                        this.setState({showStatusModal: false});
-                    });
-                }
-                break;
-            }
+            await fetch(`https://api.saadatportal.com/api/v1/request/${updatedRequests[index].id}`, {
+                method: 'PATCH',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    checked: false,
+                    failureReasonId: content.id
+                })
+            }).then(() => {
+                updatedRequests[index].checked = false
+                this.setState({
+                    loading: false,
+                    showStatusModal: false,
+                    requests: updatedRequests
+                })});
+        } else if (this.state.tmpRequestForSubmit.checked === true) {
+            this.setState({loading: true})
+            await fetch(`https://api.saadatportal.com/api/v1/request/${updatedRequests[index].id}`, {
+                method: 'PATCH',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    checked: this.state.tmpRequestForSubmit.checked
+                })
+            }).then(() => {
+                updatedRequests[index].checked = true
+                this.setState({
+                    loading: false,
+                    showStatusModal: false,
+                    requests: updatedRequests
+                })});
+        } else if (this.state.tmpRequestForSubmit.checked === null) {
+            this.setState({
+                showStatusModal: false
+            })
         }
         await this.componentDidMount();
     }
@@ -522,21 +515,23 @@ class RequestPage extends Component {
         for (let i = 0; i < valueOfField.length; i++) {
             updatedValidations[nameOfField[i]] = valueOfField[i];
         }
-        // updatedValidations[nameOfField] = valueOfField;
         this.setState({Validations : updatedValidations});
-
-        // console.log(this.state.Validations.selectedTypeBoolean)
-
     }
-
+    handleEditRadioGroup = (value) => {
+        let formattedValue = value.target.value === "null" ? null : (value.target.value === "true")
+        this.setState({tmpRadioValue : formattedValue})
+        let updatedTmpRequestForSubmit = {...this.state.tmpRequestForSubmit};
+        updatedTmpRequestForSubmit.checked = formattedValue;
+        this.setState({tmpRequestForSubmit : updatedTmpRequestForSubmit});
+    }
     handleSearchInput = async (e) =>{
         const value = e.target.value;
         this.setState({cardsLoading: true})
-        const response = await fetch(`https://api.saadatportal.com/api/v1/request/search?${this.state.searchBase}=${value}`).then((response) => response.json())
+        await fetch(`https://api.saadatportal.com/api/v1/request/search?${this.state.searchBase}=${value}`).then((response) => response.json())
             .then((data) => {
                 this.setState({
                     requests: data,
-                    cardsLoading: true
+                    cardsLoading: false
                 })
             });
     }

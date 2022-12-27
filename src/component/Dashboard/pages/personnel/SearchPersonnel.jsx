@@ -77,7 +77,7 @@ class SearchPersonnel extends Component {
                         this.state.searchLoading ?
                             [...Array(5)].map((x, i) =>
                                 (
-                                    <div  className="peoples-found-loading d-flex align-items-center justify-content-between">
+                                    <div  className="peoples-found-loading d-flex flex-md-row flex-column align-items-center justify-content-between">
                                         <div className="my-2 mx-3">
                                             <Skeleton style={{borderRadius: "50%"}} animation="wave" variant="circular" width={80} height={80} />
                                         </div>
