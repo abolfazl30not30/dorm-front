@@ -22,7 +22,7 @@ class contacts extends Component {
     }
 
     async componentDidMount() {
-        const response = await fetch('https://api.saadatportal.com/api/v1/phoneBook').then((response) => response.json())
+        await fetch('https://api.saadatportal.com/api/v1/phoneBook').then((response) => response.json())
             .then((data) => this.setState({contacts : data, searchLoading: false}));
     }
     render() {
@@ -62,9 +62,7 @@ class contacts extends Component {
                         <input type="text"
                                id="inputSearch"
                                placeholder="جسـتجـو..."
-                               onChange={(e) => {
-                                   this.handleSearchInput(e)
-                               }}/>
+                               onChange={this.handleSearchInput}/>
                         <div className="search-icon"><i className="bi bi-search"></i></div>
                     </div>
                     <div className="table-box">
@@ -79,7 +77,7 @@ class contacts extends Component {
                             <tbody>
                             {
                                 this.state.searchLoading ?
-                                [...Array(5)].map((x, i) =>
+                                [...Array(5)].map(() =>
                                     <tr>
                                         <td><Skeleton animation="wave" height={23} width="100%" /></td>
                                         <td><Skeleton animation="wave" height={23} width="100%" /></td>
@@ -138,9 +136,6 @@ class contacts extends Component {
                         }}>
                             <AiOutlinePlus className='ms-2'/>
                         </div>
-
-
-
                         <div className='input-group-register mb-3'>
                             <input type='text' className='input form-control' onChange={(e) => {
                                 this.getValueInputMobile(e.target.value,0)
@@ -187,13 +182,6 @@ class contacts extends Component {
                                 />
                             )}
                         </Box>
-                        {/*<button className='btn-done w-100' onClick={() => {*/}
-                        {/*    this.handleRecordContact()*/}
-                        {/*}}>ثبت*/}
-                        {/*</button>*/}
-
-
-
                     </Modal.Body>
                 </Modal>
             </>
@@ -201,9 +189,8 @@ class contacts extends Component {
     }
 
     handleSearchInput = async (e) => {
-        const value = e.target.value;
         this.setState({searchLoading: true})
-        const response = await fetch(`https://api.saadatportal.com/api/v1/phoneBook/search?${this.state.searchType}=${e.target.value}`).then((response) => response.json())
+        await fetch(`https://api.saadatportal.com/api/v1/phoneBook/search?${this.state.searchType}=${e.target.value}`).then((response) => response.json())
             .then((data) => this.setState({contacts: data, searchLoading: false}));
     }
 
@@ -230,8 +217,7 @@ class contacts extends Component {
     }
 
     getValueInputName = (e) => {
-        const name = e;
-        this.setState({name: name})
+        this.setState({name: e})
     }
     getValueInputTelephone = (e, index) => {
         const updateTelephone = [...this.state.telephoneNumbers];
@@ -264,7 +250,7 @@ class contacts extends Component {
             mobileNumbers: this.state.mobileNumbers
         }
         this.setState({loading: true})
-        const rawResponse = await fetch('https://api.saadatportal.com/api/v1/phoneBook', {
+        await fetch('https://api.saadatportal.com/api/v1/phoneBook', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -273,7 +259,7 @@ class contacts extends Component {
             body: JSON.stringify(newContact)
         }).then(() => {this.setState({loading: false})}).catch(() => this.setState({loading: false}));
 
-        const response = await fetch('https://api.saadatportal.com/api/v1/phoneBook').then((response) => response.json())
+        await fetch('https://api.saadatportal.com/api/v1/phoneBook').then((response) => response.json())
             .then((data) => this.setState({contacts : data}));
 
         this.setState({show: false});

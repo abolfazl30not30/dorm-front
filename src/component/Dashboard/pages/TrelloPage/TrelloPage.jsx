@@ -23,10 +23,11 @@ import persian_fa from "react-date-object/locales/persian_fa";
 import DatePicker from "react-multi-date-picker";
 import {green} from "@mui/material/colors";
 import Skeleton from "react-loading-skeleton";
+import {Link} from "react-router-dom";
 
 class TrelloPage extends Component {
     state = {
-        searchLoadong: false,
+        searchLoading: false,
         loading: false,
         buttonClicked: false,
         taskPersonnel: {},
@@ -281,14 +282,6 @@ class TrelloPage extends Component {
         await fetch('https://api.saadatportal.com/api/v1/task').then((response) => response.json())
 
             .then((data) => this.setState({tasks : data}))
-        // const controller = new AbortController()
-        //
-        // const timeoutId = setTimeout(() => {
-        //     controller.abort()
-        // }, 20000)
-        // await fetch('https://api.saadatportal.com/api/v1/task', {signal: controller.signal}).then((response) => response.json())
-        //     .then((data) => this.setState({tasks : data}))
-        // clearTimeout(timeoutId)
     }
 
     render() {
@@ -311,10 +304,125 @@ class TrelloPage extends Component {
                             handleDelete: this.handleDelete,
                             forceCloseDeleteModal: this.state.forceCloseDeleteModal
                         }}>
+                        <div className="back-btn">
+                            <Link to="/">
+                                بازگشت
+                                <i className="bi bi-caret-left-fill"/>
+                            </Link>
+                        </div>
 
                         {/* New Task button*/}
-                        <div className={"d-flex justify-content-center"}>
-                            <button className="btn btn-lg btn-success w-50" onClick={this.onNewTask}>افزودن وظیفه</button>
+                        <div className={"d-flex justify-content-end"}>
+                            <button className="btn buttonDone mt-3" onClick={this.onNewTask}>افزودن وظیفه</button>
+                        </div>
+
+                        <div className="search-box justify-content-center align-items-center mt-4">
+                            <div className="form-floating">
+                                <FormControl className={"w-100"} style={{border: "none"}}>
+                                    <Select
+                                        sx={{ height: 50, borderRadius: "0.5rem", minWidth: '10rem', backgroundColor: "#fff"}}
+                                        id="select-field"
+                                        value={this.state.searchBase}
+                                        onChange={(value) => this.setState({searchBase: value.target.value})}>
+                                        <MenuItem value={"name"}>عنوان</MenuItem>
+                                        <MenuItem value={"fullName"}>شخص</MenuItem>
+                                        <MenuItem value={"priority"}>اولویت</MenuItem>
+                                        <MenuItem value={"dueDate"}>تاریخ اتمام</MenuItem>
+                                    </Select>
+                                    <label className="placeholder" style={{
+                                        top: '-10px',
+                                        backgroundColor: '#f9f9f9',
+                                        color: '#2a2e32b3',
+                                        margin: '-0.2rem 0',
+                                        padding: '0 .4rem -0.4rem',
+                                        opacity: '1',
+                                    }}>بر اساس</label>
+                                </FormControl>
+                            </div>
+                            <div hidden={this.state.searchBase !== "priority"} className="form-floating">
+                                <FormControl className={"w-100"} style={{border: "none"}}>
+                                    <Select
+                                        value={this.state.clickedTask.priority}
+                                        sx={{ height: 50, borderRadius: "0.5rem", minWidth: '6rem', backgroundColor: "#fff"}}
+                                        onChange={this.handleChangePriority}
+                                    >
+                                        <MenuItem value={"low"}>کم</MenuItem>
+                                        <MenuItem value={"medium"}>متوسط</MenuItem>
+                                        <MenuItem value={"high"}>زیاد</MenuItem>
+                                        <MenuItem value={"urgent"}>ضروری</MenuItem>
+                                    </Select>
+                                    <label className="placeholder" style={{
+                                        top: '-10px',
+                                        backgroundColor: '#f9f9f9',
+                                        color: '#2a2e32b3',
+                                        margin: '-0.2rem 0',
+                                        padding: '0 .4rem -0.4rem',
+                                        opacity: '1',
+                                    }}>اولویت</label>
+                                </FormControl>
+                            </div>
+                            <div className="form-floating date-container"  hidden={this.state.searchBase !== "dueDate"}>
+                                <DatePicker
+                                    calendarPosition={`top`}
+                                    digits={['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']}
+                                    format={`YYYY/MM/DD`}
+                                    containerStyle={{
+                                        width: "40%"
+                                    }}
+                                    inputClass={`input`}
+                                    value={this.state.dataPicker}
+                                    onChange={(value) => {
+                                        this.handleDateInput(value)
+                                    }}
+                                    mapDays={({ date }) => {
+                                        let props = {}
+                                        let isWeekend = [6].includes(date.weekDay.index)
+
+                                        if (isWeekend)
+                                            props.className = "highlight highlight-red";
+
+                                        return props
+                                    }}
+
+                                    weekDays={
+                                        [
+                                            ["شنبه", "Sat"],
+                                            ["یکشنبه", "Sun"],
+                                            ["دوشنبه", "Mon"],
+                                            ["سه شنبه", "Tue"],
+                                            ["چهارشنبه", "Wed"],
+                                            ["پنجشنبه", "Thu"],
+                                            ["جمعه", "Fri"],
+                                        ]
+                                    }
+
+                                    calendar={persian}
+                                    locale={persian_fa}
+                                >
+                                    <Button
+                                        onClick={() => {
+                                            this.setState({dataPicker: {}})
+                                        }
+                                        }
+                                    >
+                                        ریست
+                                    </Button>
+                                </DatePicker>
+                                <label className="placeholder" style={{
+                                    top: '-8px',
+                                    backgroundColor: '#fff',
+                                    color: '#2a2e32b3',
+                                    margin: '0.3rem 0.4rem',
+                                    padding: '0 0.4rem',
+                                    opacity: '1',
+                                }}>تاریخ اتمام</label>
+                            </div>
+                            <input type="text"
+                                   id="inputSearch"
+                                   placeholder="جسـتجـو..."
+                                   onChange={this.handleSearchInput}
+                            style={{height: 50}}/>
+                            <div style={{height: 50}} className="search-icon"><i className="bi bi-search"></i></div>
                         </div>
 
                         {/* 3 main categories (To Do, In Progress, Done) */}

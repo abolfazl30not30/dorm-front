@@ -74,7 +74,7 @@
 .btn-delete-input {
     position: absolute;
     left: 16px;
-    top: 14px;
+    top: 24px !important;
     color: red;
     font-size: 1rem;
     cursor: pointer;

@@ -1,4 +1,4 @@
-    import React, {Component} from "react";
+import React, {Component} from "react";
 import '../../../../style/inventory.css'
 import {AiFillCloseCircle, AiOutlineClose, AiOutlinePlus} from "react-icons/ai";
 import {Modal} from 'react-bootstrap'
@@ -7,11 +7,10 @@ import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import ToggleButton from "@mui/material/ToggleButton";
 import {IoIosAddCircleOutline} from "react-icons/io";
 import './../../../../style/requestPage.css'
-    import Skeleton from "react-loading-skeleton";
-    import {Box, Button, CircularProgress, MenuItem, Select} from "@mui/material";
-    import {green} from "@mui/material/colors";
-    import log from "../log/log";
-    import FormControl from "@mui/material/FormControl";
+import Skeleton from "react-loading-skeleton";
+import {Box, Button, CircularProgress, MenuItem, Select} from "@mui/material";
+import {green} from "@mui/material/colors";
+import FormControl from "@mui/material/FormControl";
 
 class inventory extends Component {
     state = {
@@ -32,7 +31,7 @@ class inventory extends Component {
         //     accessoryType: null,
         //     category: "لوازم بهداشتی"
         // }],
-        typeSearch: "",
+        typeSearch: "all",
         type: "needs",
         category: [],
         name: "",
@@ -49,9 +48,9 @@ class inventory extends Component {
 
     async componentDidMount() {
         this.setState({searchLoading: true})
-        const response = await fetch('https://api.saadatportal.com/api/v1/inventory').then((response) => response.json())
+        await fetch('https://api.saadatportal.com/api/v1/inventory').then((response) => response.json())
             .then((data) => this.setState({inventory: data}))
-        const response2 = await fetch('https://api.saadatportal.com/api/v1/category/search?type=Inventory').then((response) => response.json())
+        await fetch('https://api.saadatportal.com/api/v1/category/search?type=Inventory').then((response) => response.json())
             .then((data) => this.setState({choices: data, searchLoading: false}));
     }
 
@@ -71,7 +70,7 @@ class inventory extends Component {
                                     sx={{ height: 50, borderRadius: "0.5rem", minWidth: '8rem', backgroundColor: "#f9f9f9"}}
                                     id="select-field"
                                     value={this.state.typeSearch}
-                                    onChange={(e) => {this.handleFilterType(e)}}>
+                                    onChange={this.handleFilterType}>
                                     <MenuItem value={"all"}>همه</MenuItem>
                                     <MenuItem value={"needs"}>نیازمندی</MenuItem>
                                     <MenuItem value={"deficiency"}>کاستی</MenuItem>
@@ -333,7 +332,7 @@ class inventory extends Component {
     };
     handleShow = async () => {
         this.setState({show: true})
-        const response2 = await fetch('https://api.saadatportal.com/api/v1/category/search?type=Inventory').then((response) => response.json())
+        await fetch('https://api.saadatportal.com/api/v1/category/search?type=Inventory').then((response) => response.json())
             .then((data) => this.setState({choices: data}));
     };
     convertTypeToPersian = (type) => {
@@ -406,9 +405,11 @@ class inventory extends Component {
         let regCheck = /^\s*$/;
 
         if (!regCheck.test(this.state.inputType)) {
-            let updateChoice = [...this.state.tempChoices];
-            updateChoice.push(this.state.inputCategory);
-            this.setState({tempChoices: updateChoice});
+            let updatedChoices = [...this.state.tempChoices];
+            if (!updatedChoices.includes(this.state.inputCategory)) {
+                updatedChoices.push(this.state.inputCategory);
+                this.setState({tempChoices: updatedChoices});
+            }
         }
 
         this.setState({showCategory: false});
@@ -428,7 +429,7 @@ class inventory extends Component {
 
         }
         this.setState({loading: true})
-        const rawResponse = await fetch('https://api.saadatportal.com/api/v1/inventory', {
+        await fetch('https://api.saadatportal.com/api/v1/inventory', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -441,7 +442,7 @@ class inventory extends Component {
 
         this.setState({type:"needs",tempChoices:[],selectedCategory:null,selectedCategoryBoolean: true});
 
-        const response = await fetch('https://api.saadatportal.com/api/v1/inventory').then((response) => response.json())
+        await fetch('https://api.saadatportal.com/api/v1/inventory').then((response) => response.json())
             .then((data) => this.setState({inventory: data}));
 
     }
@@ -449,15 +450,15 @@ class inventory extends Component {
     handleSearchInput = async (e) => {
         const value = e.target.value;
         this.setState({searchInput: value, searchLoading: true});
-        const response = await fetch(`https://api.saadatportal.com/api/v1/inventory/search?${this.state.searchType}=${e.target.value}`).then((response) => response.json())
+        await fetch(`https://api.saadatportal.com/api/v1/inventory/search?${this.state.searchType}=${e.target.value}`).then((response) => response.json())
             .then((data) => this.setState({inventory: data, searchLoading: false}));
     }
 
     handleFilterType = async (e) =>{
+        this.setState({typeSearch: e.target.value, searchLoading: true})
         const value = e.target.value !== "all" ? e.target.value : ""
-        this.setState({typeSearch: value})
-        const response = await fetch(`https://api.saadatportal.com/api/v1/inventory/search?accessoryType=${value}`).then((response) => response.json())
-            .then((data) => this.setState({inventory: data}));
+        await fetch(`https://api.saadatportal.com/api/v1/inventory/search?accessoryType=${value}`).then((response) => response.json())
+            .then((data) => this.setState({inventory: data, searchLoading: false}));
     }
 }
 

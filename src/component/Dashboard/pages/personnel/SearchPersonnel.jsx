@@ -21,7 +21,7 @@ class SearchPersonnel extends Component {
 
     async componentDidMount() {
         this.setState({searchLoading: true})
-        const response = await fetch('https://api.saadatportal.com/api/v1/characteristic/search?parentType=Personnel').then((response) => response.json())
+        await fetch('https://api.saadatportal.com/api/v1/characteristic/search?parentType=Personnel').then((response) => response.json())
             .then((data) => this.setState({accountFound: data, searchLoading: false}));
     }
 
@@ -67,9 +67,7 @@ class SearchPersonnel extends Component {
                     <input type="text"
                            id="inputSearch"
                            placeholder="جسـتجـو..."
-                           onChange={(e) => {
-                               this.handleSearchInput(e)
-                           }}/>
+                           onChange={this.handleSearchInput}/>
                     <div className="search-icon"><i className="bi bi-search"></i></div>
                 </div>
                 <div className='result'>

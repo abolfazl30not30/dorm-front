@@ -7,3 +7,44 @@
     border-radius: 10px;
     background-color: whitesmoke;
 }
+.buttonDone {
+    background-color: #20d489 !important;
+    color: black !important;
+}
+.buttonDone:hover {
+    background-color: #19b674 !important;
+    color: white !important;
+}
+.search-box {
+    display: flex;
+    flex-direction: row;
+    background-color: #f9f9f9;
+    box-shadow: 0px 0px 20px 0px rgb(76 87 125 / 2%);
+    font-size: .9rem;
+    margin-bottom: 1rem;
+}
+
+.search-box input {
+    border: none;
+    outline: 0;
+    text-indent: .6rem;
+    width: 300px;
+}
+.search-box .search-icon {
+    background-color: #fff;
+    padding: 0 0.5rem;
+    display: flex;
+    align-items: center;
+    border-radius: 0.5rem 0 0 0.5rem;
+}
+@media (max-width: 350px) {
+    .search-box input {
+        width: fit-content;
+    }
+}
+.search-box .form-floating > .form-select {
+    border: none;
+    border-left: 1px solid #ced4da;
+    border-radius: 0 0.5rem 0.5rem 0;
+    font-size: .9rem;
+}

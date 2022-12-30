@@ -469,9 +469,7 @@ class RequestPage extends Component {
                         <button className="btn btn-light" onClick={this.handleCloseAddingType}>بستن
                         </button>
                     </Modal.Footer>
-                </Modal>                        {/*<button className="btn-done" onClick={this.handleSubmitNewType}>ثبت*/}
-                        {/*</button>*/}
-
+                </Modal>
             </>
         );
     }

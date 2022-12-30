@@ -7,13 +7,10 @@ import {AiOutlineNumber} from 'react-icons/ai'
 import {AiOutlineUser} from 'react-icons/ai'
 import {IoMdMore} from "react-icons/io";
 import {BsPersonCircle} from "react-icons/bs"
-import {Link, Route, Routes} from "react-router-dom";
-import FullViewOfBed from './FullViewOfBed';
+import {Link} from "react-router-dom";
 import BuildingContext from '../../../../contexts/Building';
 import FloorAndBedLoading from '../../../loading/FloorAndBedLoading';
 import {Button, Modal} from 'react-bootstrap'
-import Form from 'react-bootstrap/Form';
-import {BiChevronLeft, BiSearch} from 'react-icons/bi'
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import ToggleButton from "@mui/material/ToggleButton";
 
@@ -66,16 +63,16 @@ class RoomAndBed extends Component {
     async componentDidMount() {
 
         console.log(this.context.unitId)
-        const response = await fetch(`https://api.saadatportal.com/api/v1/unit/room/${this.context.unitId}`).then((response) => response.json())
+        await fetch(`https://api.saadatportal.com/api/v1/unit/room/${this.context.unitId}`).then((response) => response.json())
             .then((data) => this.setState({rooms: data, isLoading: false},()=>{
-                if (data.length == 0) {
+                if (data.length === 0) {
                     this.setState({isFull: false})
                 } else {
                     this.setState({isFull: true})
                 }
             }));
 
-        const responseUnit = await fetch(`https://api.saadatportal.com/api/v1/unit/${this.context.unitId}`).then((response) => response.json())
+        await fetch(`https://api.saadatportal.com/api/v1/unit/${this.context.unitId}`).then((response) => response.json())
             .then((data) => this.setState({unit: data, isLoading: false}));
 
     }
@@ -85,7 +82,7 @@ class RoomAndBed extends Component {
     };
 
     handleSubmit = async () =>{
-        const rawResponse = await fetch(`https://api.saadatportal.com/api/v1/bed/${this.state.bedOpen.id}`, {
+        await fetch(`https://api.saadatportal.com/api/v1/bed/${this.state.bedOpen.id}`, {
             method: 'PATCH',
             headers: {
                 'Accept': 'application/json',
@@ -113,10 +110,10 @@ class RoomAndBed extends Component {
         this.setState({bedOpen: bed})
         if(bed.empty === false){
             let person = {}
-            const response = await fetch(`https://api.saadatportal.com/api/v1/person/${bed.person}`).then((response) => response.json())
+            await fetch(`https://api.saadatportal.com/api/v1/person/${bed.person}`).then((response) => response.json())
                 .then((data) => (person = data));
 
-            const response2 = await fetch(`https://api.saadatportal.com/api/v1/characteristic/${person.characteristicId}`).then((response) => response.json())
+            await fetch(`https://api.saadatportal.com/api/v1/characteristic/${person.characteristicId}`).then((response) => response.json())
                 .then((data) => this.setState({tempPerson : data}));
         }
         this.setState({show: true})
@@ -145,7 +142,7 @@ class RoomAndBed extends Component {
     handleSearchInput = async (e) =>{
         const value = e.target.value;
         this.setState({searchInput:value});
-        const response = await fetch(`https://api.saadatportal.com/api/v1/characteristic/search?parentType=Person&${this.state.searchType}=${e.target.value}`).then((response) => response.json())
+        await fetch(`https://api.saadatportal.com/api/v1/characteristic/search?parentType=Person&${this.state.searchType}=${e.target.value}`).then((response) => response.json())
             .then((data) => this.setState({peopleFound: data}));
     }
 

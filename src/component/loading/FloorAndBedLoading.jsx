@@ -4,7 +4,6 @@ import "../../style/loading.css"
 import React from "react";
 
 const FloorAndBedLoading = () => {
-    // return Array(6).fill({}).map(() => {
         return (
             [...Array(5)].map((x, i) =>
             (
@@ -27,30 +26,6 @@ const FloorAndBedLoading = () => {
                     </div>
                 </div>
             )));
-
-        {/*            <Skeleton className='mb-4' width={120} height={35} />*/}
-        {/*            <div className="row">*/}
-        {/*                <div className="col-4">*/}
-        {/*                    <Skeleton className='mb-2' height={82} width={82} />*/}
-        {/*                </div>*/}
-        {/*                <div className="col-4">*/}
-        {/*                    <Skeleton className='mb-2' height={82} width={82} />*/}
-        {/*                </div>*/}
-        {/*                <div className="col-4">*/}
-        {/*                    <Skeleton className='mb-2' height={82} width={82} />*/}
-        {/*                </div>*/}
-        {/*                <div className="col-4">*/}
-        {/*                    <Skeleton className='mb-2' height={82} width={82} />*/}
-        {/*                </div>*/}
-        {/*                <div className="col-4">*/}
-        {/*                    <Skeleton className='mb-2' height={82} width={82} />*/}
-        {/*                </div>*/}
-        {/*                <div className="col-4">*/}
-        {/*                    <Skeleton className='mb-2' height={82} width={82} />*/}
-        {/*                </div>*/}
-
-        {/*            </div>*/}
-
 }
 
 export default FloorAndBedLoading;

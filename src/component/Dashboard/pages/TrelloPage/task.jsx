@@ -118,11 +118,6 @@ class Task extends Component {
                                 />
                             )}
                         </Box>
-
-                        {/*<button className="btn btn-danger" onClick={() => {*/}
-                        {/*    this.context.handleDelete(this.props.id);*/}
-                        {/*    this.setState({showDeleteModal: !this.context.forceCloseDeleteModal});*/}
-                        {/*}}>حذف</button>*/}
                     </Modal.Footer>
                 </Modal>
             </>

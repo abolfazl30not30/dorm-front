@@ -105,7 +105,6 @@ class RequestPage extends Component {
                                     <FormControl className={"w-100"} style={{border: "none"}}>
                                         <Select
                                             sx={{ height: 50, borderRadius: "0.5rem", minWidth: '10rem', backgroundColor: "#fff"}}
-                                            // aria-label={"Floating label select example"}
                                             id="select-field"
                                             value={this.state.searchBase}
                                             onChange={(value) => this.setState({searchBase: value.target.value})}>
