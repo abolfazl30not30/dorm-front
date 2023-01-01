@@ -1,12 +1,10 @@
 import React, { Component } from 'react'
 import "../../../../../style/registerPage.css"
 import BuildingContext from "../../../../../contexts/Building";
-import SimpleTextInput from "../../../../CustomInputs/SimpleTextInput";
-import Form from "react-bootstrap/Form";
-import {BiSearch} from "react-icons/bi";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import ToggleButton from "@mui/material/ToggleButton";
 import {BsPersonCircle} from "react-icons/bs";
+import {FormControl, MenuItem, Select} from "@mui/material";
 
 class FGInformationFamilyPage extends Component {
     static contextType = BuildingContext;
@@ -23,15 +21,26 @@ class FGInformationFamilyPage extends Component {
             <>
                 <div className="register-step-box">
                     <h2>انتخاب ميزبان</h2>
-                    <div className="search-box">
+                    <div className="search-box d-flex justify-content-center">
                         <div className="form-floating">
-                            <select className="form-select" id="floatingSelect"
-                                    aria-label="Floating label select example"
-                                    value={this.state.searchType} onChange={(e)=>{this.setState({searchType:e.target.value})}}>
-                                <option value="fullName">نام و نام خانوادگی</option>
-                                <option value="nationalCode">کد ملی</option>
-                            </select>
-                            <label htmlFor="floatingSelect">براساس</label>
+                            <FormControl className={"w-100"}>
+                                <Select
+                                    sx={{ height: 50, borderRadius: 2, minWidth: "10rem"}}
+                                    id="select-field"
+                                    value={this.state.searchType}
+                                    onChange={(e)=>{this.setState({searchType:e.target.value})}}>
+                                    <MenuItem value={"fullName"}>نام و نام خانوادگی</MenuItem>
+                                    <MenuItem value={"nationalCode"}>کد ملی</MenuItem>
+                                </Select>
+                                <label className="placeholder" style={{
+                                    top: '-8px',
+                                    backgroundColor: '#fff',
+                                    color: '#2a2e32b3',
+                                    margin: '-0.2rem 0.2rem',
+                                    padding: '0 .4rem',
+                                    opacity: '1',
+                                }}>براساس</label>
+                            </FormControl>
                         </div>
                         <input type="text"
                                id="inputSearch"

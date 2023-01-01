@@ -216,7 +216,7 @@ class PaymentPage extends Component {
                                 padding: '0 .4rem',
                                 opacity: '1'
                             }}
-                            >نوع</label>
+                            >دسته بندی</label>
                         </div>
                         <div className="input-group-register col-md-2 col-12 date-container">
                             <DatePicker
@@ -307,11 +307,11 @@ class PaymentPage extends Component {
                                     margin: '-0.2rem 0.2rem',
                                     padding: '0 .4rem',
                                     opacity: '1',
-                                }}>واحد</label>
+                                }}>نوع</label>
                             </FormControl>
                         </div>
                     </div>
-                    <div className='third-section'>
+                    <div className='third-section mx-2 mt-3'>
                         <label htmlFor="formFileLg" className="form-label">آپلود فاکتور :</label>
                         <div className="row">
                             <div className="col-6">

@@ -1,16 +1,7 @@
 import React, {Component, createRef} from 'react'
 import '../../../../style/profilePage.css'
-import default_photo from '../../../../img/default_photo.png'
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
-import pdf_icon from '../../../../img/pdf_icon.png'
-import png_icon from '../../../../img/png_icon.png'
-import {FiUser} from "react-icons/fi";
-import {AiOutlineLeft} from "react-icons/ai";
-import {HiOutlineMailOpen} from 'react-icons/hi';
-import {BsTelephone, BsFile} from 'react-icons/bs';
-import {AiOutlineBarcode} from 'react-icons/ai'
-import {AiOutlineUser} from 'react-icons/ai'
 import {Modal} from 'react-bootstrap'
 import {AiOutlineClose} from 'react-icons/ai'
 import {AiFillCloseCircle} from 'react-icons/ai'
@@ -22,11 +13,10 @@ import Tooltip from 'react-bootstrap/Tooltip';
 import BuildingContext from "../../../../contexts/Building";
 import DatePicker from "react-multi-date-picker";
 import TimePicker from "react-multi-date-picker/plugins/time_picker";
-import axios from "axios"
-import data from "bootstrap/js/src/dom/data";
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
-import {Button} from "@mui/material";
+import {Box, Button, CircularProgress} from "@mui/material";
+import {green} from "@mui/material/colors";
 
 class ProfilePage extends Component {
 
@@ -68,7 +58,7 @@ class ProfilePage extends Component {
         hasRegister: false,
         hasRegisterUni: false,
         registerLoading: false,
-
+        printLoading: false
     }
     date = createRef();
     description = createRef();
@@ -92,23 +82,23 @@ class ProfilePage extends Component {
         let parentId = ""
         let profileId = ""
         const personId = window.location.href.slice(-32)
-        const response = await fetch(`https://api.saadatportal.com/api/v1/characteristic/${personId}`).then((response) => response.json())
+        await fetch(`https://api.saadatportal.com/api/v1/characteristic/${personId}`).then((response) => response.json())
             .then((data) => {this.setState({person: data})
                 parentId = data.parentId;
                 profileId = data.profileId
             })
-        const response2 = await fetch(`https://api.saadatportal.com/api/v1/person/${parentId}`).then((response) => response.json())
+        await fetch(`https://api.saadatportal.com/api/v1/person/${parentId}`).then((response) => response.json())
             .then((data) => this.setState({personObject: data}));
 
         if (this.state.person.profileId !== null) {
-            const response3 = await fetch(`https://api.saadatportal.com/api/v1/file/${profileId}`).then((response) => response.blob())
+            await fetch(`https://api.saadatportal.com/api/v1/file/${profileId}`).then((response) => response.blob())
                 .then((data) => {
                     const objectUrl = URL.createObjectURL(data);
                     this.setState({profileImgUrl: objectUrl})
                 });
         }
 
-        const fileRespond = await fetch(`https://api.saadatportal.com/api/v1/responseFile/search?parentType=Person&parentId=${parentId}`).then((response) => response.json())
+        await fetch(`https://api.saadatportal.com/api/v1/responseFile/search?parentType=Person&parentId=${parentId}`).then((response) => response.json())
             .then((data) => this.setState({fileDetails: data}, () => {
                 this.setState({docFile: this.state.personObject.files});
                 this.setState({report: this.state.personObject.record}, () => {
@@ -165,6 +155,35 @@ class ProfilePage extends Component {
                                 <Tab eventKey="more-information" title="اطلاعات بیشتر"
                                      style={{backgroundColor: "transparent"}}>
                                     <div className="tabs-content">
+                                        <div className={"d-flex justify-content-end"}>
+                                            <Box sx={{ m: 1, position: 'relative' }}>
+                                                <Button
+                                                    variant="contained"
+                                                    sx={{
+                                                        backgroundColor: "#DB9B31",
+                                                        color: "white",
+                                                        ":hover": {backgroundColor: "#DB9B31", color: "black"}
+                                                    }}
+                                                    disabled={this.state.printLoading}
+                                                    onClick={this.printInformation}
+                                                >
+                                                    پرینت اطلاعات
+                                                </Button>
+                                                {this.state.printLoading && (
+                                                    <CircularProgress
+                                                        size={24}
+                                                        sx={{
+                                                            color: green[500],
+                                                            position: 'absolute',
+                                                            top: '50%',
+                                                            left: '50%',
+                                                            marginTop: '-12px',
+                                                            marginLeft: '-12px',
+                                                        }}
+                                                    />
+                                                )}
+                                            </Box>
+                                        </div>
                                         {(() => {
                                             switch (this.state.person.personType) {
                                                 case 'constant':
@@ -250,28 +269,28 @@ class ProfilePage extends Component {
                                                                 <div className="more-info-item">
                                                                     <i className="bi bi-caret-left ms-1"></i>
                                                                     <label> مذهب :</label>
-                                                                    {this.state.person.subReligion != "" ? this.state.person.subReligion : 'ثبت نشده'}
+                                                                    {this.state.person.subReligion !== "" ? this.state.person.subReligion : 'ثبت نشده'}
                                                                 </div>
                                                             </div>
                                                             <div className='col-12 col-md-4'>
                                                                 <div className="more-info-item">
                                                                     <i className="bi bi-caret-left ms-1"></i>
                                                                     <label> دانشگاه محل تحصیل :</label>
-                                                                    {this.state.person.university != "" ? this.state.person.university : 'ثبت نشده'}
+                                                                    {this.state.person.university !== "" ? this.state.person.university : 'ثبت نشده'}
                                                                 </div>
                                                             </div>
                                                             <div className='col-12 col-md-4'>
                                                                 <div className="more-info-item">
                                                                     <i className="bi bi-caret-left ms-1"></i>
                                                                     <label> شماره دانشجویی :</label>
-                                                                    {this.state.person.studentNumber != "" ? this.state.person.studentNumber : 'ثبت نشده'}
+                                                                    {this.state.person.studentNumber !== "" ? this.state.person.studentNumber : 'ثبت نشده'}
                                                                 </div>
                                                             </div>
                                                             <div className='col-12 col-md-4'>
                                                                 <div className="more-info-item">
                                                                     <i className="bi bi-caret-left ms-1"></i>
                                                                     <label> شغل پدر :</label>
-                                                                    {this.state.person.fatherJob != "" ? this.state.person.fatherJob : 'ثبت نشده'}
+                                                                    {this.state.person.fatherJob !== "" ? this.state.person.fatherJob : 'ثبت نشده'}
                                                                 </div>
                                                             </div>
                                                             <div className='col-12 col-md-4'>
@@ -299,14 +318,14 @@ class ProfilePage extends Component {
                                                                                     <i className="bi bi-caret-left ms-1"></i>
                                                                                     <label> نام و نام خانوادگی همسر
                                                                                         :</label>
-                                                                                    {this.state.person.spouseFullName != "" ? this.state.person.spouseFullName : 'ثبت نشده'}
+                                                                                    {this.state.person.spouseFullName !== "" ? this.state.person.spouseFullName : 'ثبت نشده'}
                                                                                 </div>
                                                                             </div>
                                                                             <div className='col-12 col-md-4'>
                                                                                 <div className="more-info-item">
                                                                                     <i className="bi bi-caret-left ms-1"></i>
                                                                                     <label> شغل همسر :</label>
-                                                                                    {this.state.person.spouseJob != "" ? this.state.person.spouseJob : 'ثبت نشده'}
+                                                                                    {this.state.person.spouseJob !== "" ? this.state.person.spouseJob : 'ثبت نشده'}
                                                                                 </div>
                                                                             </div>
                                                                         </>;
@@ -334,7 +353,7 @@ class ProfilePage extends Component {
                                                                                 <div className="more-info-item">
                                                                                     <i className="bi bi-caret-left ms-1"></i>
                                                                                     <label> توضیحات بیماری :</label>
-                                                                                    {this.state.person.healthyStatus != "" ? this.state.person.healthyStatus : 'ثبت نشده'}
+                                                                                    {this.state.person.healthyStatus !== "" ? this.state.person.healthyStatus : 'ثبت نشده'}
                                                                                 </div>
                                                                             </div>
                                                                         </>;
@@ -397,7 +416,7 @@ class ProfilePage extends Component {
                                                                 <div className="more-info-item">
                                                                     <i className="bi bi-caret-left ms-1"></i>
                                                                     <label> نام پدر :</label>
-                                                                    {this.state.person.firstPersonFatherName != "" ? this.state.person.firstPersonFatherName : 'ثبت نشده'}
+                                                                    {this.state.person.firstPersonFatherName !== "" ? this.state.person.firstPersonFatherName : 'ثبت نشده'}
                                                                 </div>
                                                             </div>
                                                             <div className='col-12 col-md-4'>
@@ -442,7 +461,7 @@ class ProfilePage extends Component {
                                                                 <div className="more-info-item">
                                                                     <i className="bi bi-caret-left ms-1"></i>
                                                                     <label> نام پدر :</label>
-                                                                    {this.state.person.secondPersonFatherName != "" ? this.state.person.secondPersonFatherName : 'ثبت نشده'}
+                                                                    {this.state.person.secondPersonFatherName !== "" ? this.state.person.secondPersonFatherName : 'ثبت نشده'}
                                                                 </div>
                                                             </div>
                                                             <div className='col-12 col-md-4'>
@@ -522,14 +541,14 @@ class ProfilePage extends Component {
                                                                 <div className="more-info-item">
                                                                     <i className="bi bi-caret-left ms-1"></i>
                                                                     <label> محل صدور :</label>
-                                                                    {this.state.person.placeOfIssue != "" ? this.state.person.placeOfIssue : 'ثبت نشده'}
+                                                                    {this.state.person.placeOfIssue !== "" ? this.state.person.placeOfIssue : 'ثبت نشده'}
                                                                 </div>
                                                             </div>
                                                             <div className='col-12 col-md-4'>
                                                                 <div className="more-info-item">
                                                                     <i className="bi bi-caret-left ms-1"></i>
                                                                     <label> تاریخ تولد :</label>
-                                                                    {this.state.person.birthDate != "" ? this.state.person.birthDate.split(" ")[0] : 'ثبت نشده'}
+                                                                    {this.state.person.birthDate !== "" ? this.state.person.birthDate.split(" ")[0] : 'ثبت نشده'}
                                                                 </div>
                                                             </div>
                                                             <div className='col-12 col-md-4'>
@@ -557,21 +576,21 @@ class ProfilePage extends Component {
                                                                 <div className="more-info-item">
                                                                     <i className="bi bi-caret-left ms-1"></i>
                                                                     <label> مبلغ پرداخت اجاره :</label>
-                                                                    {this.state.person.depositPaymentAmount != "" ? this.state.person.depositPaymentAmount : 'ثبت نشده'}
+                                                                    {this.state.person.depositPaymentAmount !== "" ? this.state.person.depositPaymentAmount : 'ثبت نشده'}
                                                                 </div>
                                                             </div>
                                                             <div className='col-12 col-md-4'>
                                                                 <div className="more-info-item">
                                                                     <i className="bi bi-caret-left ms-1"></i>
                                                                     <label> مبلغ پرداخت ودیعه :</label>
-                                                                    {this.state.person.rentPaymentAmount != "" ? this.state.person.rentPaymentAmount : 'ثبت نشده'}
+                                                                    {this.state.person.rentPaymentAmount !== "" ? this.state.person.rentPaymentAmount : 'ثبت نشده'}
                                                                 </div>
                                                             </div>
                                                             <div className='col-12 col-md-4'>
                                                                 <div className="more-info-item">
                                                                     <i className="bi bi-caret-left ms-1"></i>
                                                                     <label> مبلغ پرداخت اجاره :</label>
-                                                                    {this.state.person.discountPaymentAmount != "" ? this.state.person.discountPaymentAmount : 'ثبت نشده'}
+                                                                    {this.state.person.discountPaymentAmount !== "" ? this.state.person.discountPaymentAmount : 'ثبت نشده'}
                                                                 </div>
                                                             </div>
                                                             <div className='col-12 col-md-4'>
@@ -607,12 +626,12 @@ class ProfilePage extends Component {
                                 </Tab>
                                 <Tab eventKey="records" title="سوابق" style={{backgroundColor: "transparent"}}>
                                     <div className="tabs-content">
-                                        <button className='btn-done' onClick={() => {
+                                        <button className='btn-done mx-3' onClick={() => {
                                             this.handleShow()
                                             this.handleResetFields();
                                         }}>ثبت گزارش
                                         </button>
-                                        <Accordion defaultActiveKey="0">
+                                        <Accordion>
                                             <Accordion.Item eventKey="0">
                                                 <Accordion.Header>نوبت نظافت شبانه</Accordion.Header>
                                                 <Accordion.Body>
@@ -649,9 +668,7 @@ class ProfilePage extends Component {
                                                                             </OverlayTrigger>
                                                                         </td>
                                                                     </tr>
-                                                                ) : (
-                                                                    console.log()
-                                                                )
+                                                                ) : null
                                                             ))
                                                         }
                                                         </tbody>
@@ -961,7 +978,7 @@ class ProfilePage extends Component {
                                 <Tab eventKey="documents" title="مدارک" className='records'
                                      style={{backgroundColor: "transparent"}}>
                                     <div className="tabs-content">
-                                        <Accordion defaultActiveKey="0">
+                                        <Accordion>
                                             <Accordion.Item eventKey="0">
                                                 <Accordion.Header>شناسنامه</Accordion.Header>
                                                 <Accordion.Body>
@@ -2014,7 +2031,7 @@ class ProfilePage extends Component {
                         'personId': this.state.personObject.id
                     }
 
-                    const rawResponse = await fetch('https://api.saadatportal.com/api/v1/record', {
+                    await fetch('https://api.saadatportal.com/api/v1/record', {
                         method: 'POST',
                         headers: {
                             'Accept': 'application/json',
@@ -2047,7 +2064,7 @@ class ProfilePage extends Component {
                         'personId': this.state.personObject.id
                     }
 
-                    const rawResponse = await fetch('https://api.saadatportal.com/api/v1/record', {
+                    await fetch('https://api.saadatportal.com/api/v1/record', {
                         method: 'POST',
                         headers: {
                             'Accept': 'application/json',
@@ -2086,7 +2103,7 @@ class ProfilePage extends Component {
                         'personId': this.state.personObject.id
                     }
 
-                    const rawResponse = await fetch('https://api.saadatportal.com/api/v1/record', {
+                    await fetch('https://api.saadatportal.com/api/v1/record', {
                         method: 'POST',
                         headers: {
                             'Accept': 'application/json',
@@ -2124,7 +2141,7 @@ class ProfilePage extends Component {
                         'personId': this.state.personObject.id
                     }
 
-                    const rawResponse = await fetch('https://api.saadatportal.com/api/v1/record', {
+                    await fetch('https://api.saadatportal.com/api/v1/record', {
                         method: 'POST',
                         headers: {
                             'Accept': 'application/json',
@@ -2157,7 +2174,7 @@ class ProfilePage extends Component {
                         'personId': this.state.personObject.id
                     }
 
-                    const rawResponse = await fetch('https://api.saadatportal.com/api/v1/record', {
+                    await fetch('https://api.saadatportal.com/api/v1/record', {
                         method: 'POST',
                         headers: {
                             'Accept': 'application/json',
@@ -2201,7 +2218,7 @@ class ProfilePage extends Component {
                         'personId': this.state.personObject.id
                     }
 
-                    const rawResponse = await fetch('https://api.saadatportal.com/api/v1/record', {
+                    await fetch('https://api.saadatportal.com/api/v1/record', {
                         method: 'POST',
                         headers: {
                             'Accept': 'application/json',
@@ -2216,7 +2233,7 @@ class ProfilePage extends Component {
                             this.setState({show: false})
 
                         })
-                        .catch((error) => {
+                        .catch(() => {
                             this.setState({registerLoading: false})
                         });
                 })();
@@ -2238,7 +2255,7 @@ class ProfilePage extends Component {
                         'personId': this.state.personObject.id
                     }
 
-                    const rawResponse = await fetch('https://api.saadatportal.com/api/v1/record', {
+                    await fetch('https://api.saadatportal.com/api/v1/record', {
                         method: 'POST',
                         headers: {
                             'Accept': 'application/json',
@@ -2284,16 +2301,16 @@ class ProfilePage extends Component {
     }
 
     downloadFile = async (fileId) => {
-        const file = this.state.fileDetails.find(({fileId}) => fileId === fileId);
-        var filename = file.originalName;
+        const file = this.state.fileDetails.find(({id}) => id === fileId);
+        const filename = file.originalName;
 
-        const response = await fetch(`https://api.saadatportal.com/api/v1/file/${fileId}`).then((result) => {
+        await fetch(`https://api.saadatportal.com/api/v1/file/${fileId}`).then((result) => {
             return result.blob();
         })
             .then((blob) => {
-                if (blob != null) {
-                    var url = window.URL.createObjectURL(blob);
-                    var a = document.createElement('a');
+                if (blob !== null) {
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
                     a.href = url;
                     a.download = filename;
                     document.body.appendChild(a);
@@ -2301,6 +2318,10 @@ class ProfilePage extends Component {
                     a.remove();
                 }
             });
+    }
+
+    printInformation = async () => {
+
     }
 
     existDocFile = (docFile) => {

@@ -69,6 +69,7 @@
 }
 
 body {
+    padding-right: 0 !important;
     background-color: #f9f9f9;
 }
 

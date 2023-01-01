@@ -40,7 +40,7 @@ class CameraHistoryPage extends Component {
         },
         dateValue: '',
         data: [],
-        searchType : "title",
+        searchType : "name",
 
     }
 
@@ -78,7 +78,7 @@ class CameraHistoryPage extends Component {
                             </button>
                         </div>
                     </div>
-                    <div className="search-box">
+                    <div className="search-box d-flex justify-content-center">
                         <div className="form-floating">
                             <FormControl className={"w-100"} style={{border: "none"}}>
                                 <Select
@@ -327,7 +327,7 @@ class CameraHistoryPage extends Component {
 
                     </Modal.Body>
 
-                    <Modal.Footer className="d-flex justify-content-start">
+                    <Modal.Footer className="d-flex justify-content-center">
                         <Box sx={{ m: 1, position: 'relative' }}>
                             <Button
                                 variant="contained"

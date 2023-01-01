@@ -36,7 +36,7 @@ class contacts extends Component {
                         }}><AiOutlinePlus className='ms-2'/>افزودن مخاطب
                         </button>
                     </div>
-                    <div className="search-box">
+                    <div className="search-box d-flex justify-content-center">
                         <div className="form-floating">
                             <FormControl className={"w-100"} style={{border: "none"}}>
                                 <Select

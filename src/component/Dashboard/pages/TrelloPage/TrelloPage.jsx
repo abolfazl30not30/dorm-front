@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React, {Component, startTransition} from "react";
 import Section from "./section";
 import TaskContext from "../../../../contexts/tasks";
 import Modal from "react-bootstrap/Modal";
@@ -27,6 +27,7 @@ import {Link} from "react-router-dom";
 
 class TrelloPage extends Component {
     state = {
+        searchTaskBase: "all",
         searchLoading: false,
         loading: false,
         buttonClicked: false,
@@ -119,7 +120,8 @@ class TrelloPage extends Component {
                 description: this.state.tempDescription,
                 priority: this.state.tempPriority,
                 status: "todo",
-                personnelId: this.state.selectedParent.parentId
+                personnelId: this.state.selectedParent.parentId,
+                fullName: this.state.selectedParent.fullName
             })
         }).then((res) => this.setState({loading: false})).catch(() => this.setState({loading: false}));
         this.setState({
@@ -131,7 +133,6 @@ class TrelloPage extends Component {
             tempPriority: "",
             tempPersonnelId: "",})
         this.onClose()
-
         await this.componentDidMount();
     };
 //----------------------------------------------------------------------------------------------------------------------
@@ -143,7 +144,7 @@ class TrelloPage extends Component {
         const Hour = parseInt(targetTask.timeLog)
         const Minute = Math.ceil((targetTask.timeLog - Hour)*60)
         await fetch(`https://api.saadatportal.com/api/v1/characteristic/search?parentId=${targetTask.personnelId}`)
-            .then((response) => response.json()).then((data) => {this.setState({taskPersonnel: data[0]})})
+            .then((response) => response.json())
 
         this.setState({
             tempHourTimeLog: Hour,
@@ -252,8 +253,7 @@ class TrelloPage extends Component {
         }
     }
 
-    handleSearch = async (e) => {
-        // this.setState({parentsFound: []});
+    handleSearchPersonnel = async (e) => {
         if (!this.state.parentNotFound) {this.setState({searchLoading: true})}
         if (e !== "") {
             const value = e.target.value;
@@ -276,6 +276,27 @@ class TrelloPage extends Component {
         }
     }
 
+    handleSearchTask = async (e) => {
+        await fetch(`https://api.saadatportal.com/api/v1/task/search?${this.state.searchTaskBase}=${e}`).then((response) => response.json())
+            .then((data) => {
+                this.setState({tasks: data})})
+    }
+u
+
+    handleDateInput = (value) => {
+        let month = value.month < 10 ? ('0' + value.month) : value.month;
+        let day = value.day < 10 ? ('0' + value.day) : value.day;
+        let convertDate = value.year  + '/' + month + '/' + day;
+        this.handleSearchTask(convertDate)
+    }
+
+    handleChangeSearchPriority = (e) => {
+        this.handleSearchTask(e.target.value)
+    }
+
+    handleSearchTaskInput = (e) => {
+        this.handleSearchTask(e.target.value)
+    }
 //----------------------------------------------------------------------------------------------------------------------
 
     componentDidMount = async () => {
@@ -322,8 +343,14 @@ class TrelloPage extends Component {
                                     <Select
                                         sx={{ height: 50, borderRadius: "0.5rem", minWidth: '10rem', backgroundColor: "#fff"}}
                                         id="select-field"
-                                        value={this.state.searchBase}
-                                        onChange={(value) => this.setState({searchBase: value.target.value})}>
+                                        value={this.state.searchTaskBase}
+                                        onChange={(value) => {
+                                            this.setState({searchTaskBase: value.target.value})
+                                            if (value.target.value === "all") {
+                                                this.componentDidMount()
+                                            }
+                                        }}>
+                                        <MenuItem value={"all"}>همه</MenuItem>
                                         <MenuItem value={"name"}>عنوان</MenuItem>
                                         <MenuItem value={"fullName"}>شخص</MenuItem>
                                         <MenuItem value={"priority"}>اولویت</MenuItem>
@@ -339,17 +366,19 @@ class TrelloPage extends Component {
                                     }}>بر اساس</label>
                                 </FormControl>
                             </div>
-                            <div hidden={this.state.searchBase !== "priority"} className="form-floating">
+                            <div hidden={this.state.searchTaskBase !== "priority"} className="form-floating">
                                 <FormControl className={"w-100"} style={{border: "none"}}>
                                     <Select
                                         value={this.state.clickedTask.priority}
-                                        sx={{ height: 50, borderRadius: "0.5rem", minWidth: '6rem', backgroundColor: "#fff"}}
-                                        onChange={this.handleChangePriority}
+                                        sx={{ height: 50, borderRadius: "0.5rem", minWidth: '10rem', backgroundColor: "#fff"}}
+                                        onChange={(e) => {
+                                            this.handleChangeSearchPriority(e)
+                                        }}
                                     >
-                                        <MenuItem value={"low"}>کم</MenuItem>
-                                        <MenuItem value={"medium"}>متوسط</MenuItem>
-                                        <MenuItem value={"high"}>زیاد</MenuItem>
-                                        <MenuItem value={"urgent"}>ضروری</MenuItem>
+                                        <MenuItem value={"low"}><div className={"d-flex align-items-center"}><div className={"bg-primary m-3"} style={{borderRadius: "50%", width: "15px", height: "15px",}}></div>کم</div></MenuItem>
+                                        <MenuItem value={"medium"}><div className={"d-flex align-items-center"}><div className={"bg-warning m-3"} style={{borderRadius: "50%", width: "15px", height: "15px"}}></div>متوسط</div></MenuItem>
+                                        <MenuItem value={"high"}><div className={"d-flex align-items-center"}><div className={"m-3"} style={{backgroundColor: "#F35C2E", borderRadius: "50%", width: "15px", height: "15px"}}></div>زیاد</div></MenuItem>
+                                        <MenuItem value={"urgent"}><div className={"d-flex align-items-center"}><div className={"m-3"} style={{backgroundColor: "#88000d", borderRadius: "50%", width: "15px", height: "15px"}}></div>ضروری</div></MenuItem>
                                     </Select>
                                     <label className="placeholder" style={{
                                         top: '-10px',
@@ -361,19 +390,15 @@ class TrelloPage extends Component {
                                     }}>اولویت</label>
                                 </FormControl>
                             </div>
-                            <div className="form-floating date-container"  hidden={this.state.searchBase !== "dueDate"}>
+                            <div hidden={this.state.searchTaskBase !== "dueDate"} className="input-group-register date-container" style={{marginLeft: "-.4rem", marginRight: "-.4rem"}}>
                                 <DatePicker
+                                    containerClassName={"trello-date-container"}
                                     calendarPosition={`top`}
                                     digits={['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']}
                                     format={`YYYY/MM/DD`}
-                                    containerStyle={{
-                                        width: "40%"
-                                    }}
                                     inputClass={`input`}
                                     value={this.state.dataPicker}
-                                    onChange={(value) => {
-                                        this.handleDateInput(value)
-                                    }}
+                                    onChange={this.handleDateInput}
                                     mapDays={({ date }) => {
                                         let props = {}
                                         let isWeekend = [6].includes(date.weekDay.index)
@@ -398,6 +423,7 @@ class TrelloPage extends Component {
 
                                     calendar={persian}
                                     locale={persian_fa}
+
                                 >
                                     <Button
                                         onClick={() => {
@@ -410,34 +436,33 @@ class TrelloPage extends Component {
                                 </DatePicker>
                                 <label className="placeholder" style={{
                                     top: '-8px',
-                                    backgroundColor: '#fff',
+                                    backgroundColor: '#f9f9f9',
                                     color: '#2a2e32b3',
                                     margin: '0.3rem 0.4rem',
                                     padding: '0 0.4rem',
                                     opacity: '1',
-                                }}>تاریخ اتمام</label>
+                                }}>تاریخ</label>
                             </div>
                             <input type="text"
+                                   disabled={this.state.searchTaskBase === "all"}
+                                   hidden={this.state.searchTaskBase === "dueDate" || this.state.searchTaskBase === "priority"}
                                    id="inputSearch"
                                    placeholder="جسـتجـو..."
-                                   onChange={this.handleSearchInput}
+                                   onChange={this.handleSearchTaskInput}
                             style={{height: 50}}/>
-                            <div style={{height: 50}} className="search-icon"><i className="bi bi-search"></i></div>
+                            <div style={this.state.searchTaskBase === "all" ? {height: 50, backgroundColor: "#f6f6f6"} : {height: 50}} hidden={this.state.searchTaskBase === "dueDate" || this.state.searchTaskBase === "priority"} className="search-icon"><i className="bi bi-search"></i></div>
                         </div>
 
                         {/* 3 main categories (To Do, In Progress, Done) */}
-                        <div className="justify-content-center d-flex row">
-                            <div className="mx-4 col-xl-3 col-lg-3 ml-3 col-md-3 col-sm-10 col-10 mt-5">
-                                <h3 className="text-center" style={{userSelect: "none", marginRight: "20px"}}>برای انجام</h3>
-                                <Section index={0} status={"todo"}/>
+                        <div className="justify-content-center d-flex row pb-3" style={{minHeight: "300px"}}>
+                            <div className="mx-1 col-xl-3 col-lg-3 col-md-12 col-sm-10 col-10 mt-5">
+                                <Section title={"برای انجام"} index={0} status={"todo"}/>
                             </div>
-                            <div className="mx-4 col-xl-3 col-lg-3 ml-3 col-md-3 col-sm-10 col-10 mt-5">
-                                <h3 className="text-center" style={{userSelect: "none", marginRight: "20px"}}>در حال انجام</h3>
-                                <Section index={1} status={"inProgress"}/>
+                            <div className="mx-1 col-xl-3 col-lg-3 col-md-12 col-sm-10 col-10 mt-5">
+                                <Section title={"در حال انجام"} index={1} status={"inProgress"}/>
                             </div>
-                            <div className="mx-4 col-xl-3 col-lg-3 ml-3 col-md-3 col-sm-10 col-10 mt-5" style={{flexDirection: "column"}}>
-                                <h3 className="text-center" style={{userSelect: "none", marginRight: "20px"}}>انجام شده</h3>
-                                <Section index={3} status={"done"}/>
+                            <div className="mx-1 col-xl-3 col-lg-3 col-md-12 col-sm-10 col-10 mt-5">
+                                <Section title={"انجام شده"} index={3} status={"done"}/>
                             </div>
                         </div>
                     </TaskContext.Provider>
@@ -568,7 +593,7 @@ class TrelloPage extends Component {
                                             searchContent: "",
                                             searchBase: "fullName"
                                         });
-                                            this.handleSearch("")
+                                            this.handleSearchPersonnel("")
                                         }}>
                                             <MdDone className='ms-1'/>
                                             انتخاب پرسنل
@@ -674,7 +699,7 @@ class TrelloPage extends Component {
                             {/* Personnel data */}
                             <div className={"personnel-detail p-2 mt-4"}>
                                 <div style={{marginRight: "15px"}}>
-                                    نام پرسنل : {this.state.taskPersonnel.fullName}
+                                    نام پرسنل : {this.state.clickedTask.fullName}
                                 </div>
                             </div>
 
@@ -822,7 +847,7 @@ class TrelloPage extends Component {
                                            placeholder="جسـتوجـو"
                                            style={{padding:"6px"}}
 
-                                           onChange={(input) => {this.handleSearch(input)}}/>
+                                           onChange={(input) => {this.handleSearchPersonnel(input)}}/>
                                     <button className="btn outline-secondary"><BiSearch fontSize="25px"/></button>
                                 </div>
                             </div>

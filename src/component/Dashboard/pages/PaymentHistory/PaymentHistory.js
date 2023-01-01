@@ -30,7 +30,6 @@ class PaymentHistory extends Component {
             .then((data) => this.setState({totalPayment : data.totalPayment ,totalReceive : data.totalReceived}));
         const response2 = await fetch('https://api.saadatportal.com/api/v1/paymentHistory').then((response) => response.json())
             .then((data) => this.setState({payment : data, searchLoading: false}));
-
     }
 
     render() {
@@ -73,15 +72,6 @@ class PaymentHistory extends Component {
                             </FormControl>
                         </div>
                         <div className='input-group-filter col-6 col-md my-2 px-2'>
-                            {/*<DatePicker calendarStyles={this.state.calStyles}*/}
-                            {/*            inputFormat="jYYYY/jM/jD"*/}
-                            {/*            className='input form-control date-picker'*/}
-                            {/*            ref={this.startDate}*/}
-                            {/*            onChange={value => {*/}
-                            {/*                this.handleDateStartInput(value)*/}
-                            {/*            }}*/}
-                            {/*/>*/}
-                            {/*<label className='placeholder'>از تاریخ</label>*/}
 
                             <DatePicker
                                 // fixMainPosition={false}

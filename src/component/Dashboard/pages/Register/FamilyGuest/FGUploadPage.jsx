@@ -2,15 +2,11 @@ import React, {Component} from 'react'
 import "../../../../../style/uploadPage.css"
 import {BsFileEarmarkImage, BsFileEarmarkPdfFill} from "react-icons/bs"
 import upload_icon from '../../../../../img/Group 1.png'
-import pdf_icon from '../../../../../img/pdf_icon.png'
-import png_icon from '../../../../../img/png_icon.png'
 import Accordion from 'react-bootstrap/Accordion';
-// import progressBar from "./progressBar";
-import {ProgressBar} from 'react-bootstrap';
 import axios from "axios";
 import ReactLoading from "react-loading";
 import Alert from "react-bootstrap/Alert";
-import {MdCloudUpload, MdDelete} from "react-icons/md";
+import {MdDelete} from "react-icons/md";
 import {RiFileUploadFill} from "react-icons/ri";
 import BuildingContext from "../../../../../contexts/Building";
 
