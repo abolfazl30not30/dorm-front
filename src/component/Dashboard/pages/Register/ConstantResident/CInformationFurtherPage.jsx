@@ -42,16 +42,15 @@ class CInformationFurtherPage extends Component {
                                        valueFieldString={'constantResident'}
                                        fieldNameString={'constantInformationFurther'}
                                        valueOfInputString={'startDate'}
-                                       required={true}
                                        timeInclude={true}
                             />
                             <label className="placeholder" style={{
-                                top: '-8px',
+                                top: '-5px',
                                 backgroundColor: '#fff',
-                                color: '#959799',
-                                padding: '0 .5rem',
+                                color: '#84888a',
+                                margin: '0 .3rem',
                                 opacity: '1',
-                            }}>تاریخ شروع پذیرش</label>
+                            }}>تاریخ شروع پذیرش<span style={{color: '#ff4f4f'}}>*</span></label>
                         </div>
                         <div className="input-group-register col-md-4 col-12">
                             <DateInput condition1={this.context.constantInformationFurtherValidation.endDate_requiredReg}
@@ -59,17 +58,15 @@ class CInformationFurtherPage extends Component {
                                        valueFieldString={'constantResident'}
                                        fieldNameString={'constantInformationFurther'}
                                        valueOfInputString={'endDate'}
-                                       required={true}
-                                       label={'تاریخ اتمام پذیرش'}
                                        timeInclude={true}
                             />
                             <label className="placeholder" style={{
-                                top: '-8px',
+                                top: '-5px',
                                 backgroundColor: '#fff',
-                                color: '#959799',
-                                padding: '0 .5rem',
+                                color: '#84888a',
+                                margin: '0 .3rem',
                                 opacity: '1',
-                            }}>تاریخ اتمام پذیرش</label>
+                            }}>تاریخ اتمام پذیرش<span style={{color: '#ff4f4f'}}>*</span></label>
                         </div>
                         <div className="input-group-register col-12">
                             <SimpleTextInput

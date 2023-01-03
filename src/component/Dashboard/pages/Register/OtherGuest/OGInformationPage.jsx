@@ -57,15 +57,6 @@ class OGInformationPage extends Component {
                             />
                         </div>
                         <div className="input-group-register col-md-4 col-12">
-                            <DateInput value={this.context.valueOfDates.otherGuest.birthDate}
-                                       valueFieldString={'otherGuest'}
-                                       fieldNameString={'otherGuestInformation'}
-                                       valueOfInputString={'birthDate'}
-                                       label={'تاریخ تولد'}
-                                       timeInclude={false}
-                            />
-                        </div>
-                        <div className="input-group-register col-md-4 col-12">
                             <SimpleTextInput
                                 value={this.context.otherGuestInformation.placeOfIssue}
                                 fieldNameString={'otherGuestInformation'}
@@ -73,16 +64,36 @@ class OGInformationPage extends Component {
                                 label={'محل صدور'}
                             />
                         </div>
+                        <div className="input-group-register col-md-4 col-12 date-container">
+                            <DateInput value={this.context.valueOfDates.otherGuest.birthDate}
+                                       valueFieldString={'otherGuest'}
+                                       fieldNameString={'otherGuestInformation'}
+                                       valueOfInputString={'birthDate'}
+                                       timeInclude={false}
+                            />
+                            <label className="placeholder" style={{
+                                top: '-5px',
+                                backgroundColor: '#fff',
+                                color: '#84888a',
+                                margin: '0 .3rem',
+                                opacity: '1',
+                            }}>تاریخ تولد<span style={{color: '#ff4f4f'}}>*</span></label>
+                        </div>
                         <div className="input-group-register col-md-4 col-12">
                             <DateInput condition1={this.context.otherGuestInformationValidation.startDate_requiredReg}
                                        value={this.context.valueOfDates.otherGuest.startDate}
                                        valueFieldString={'otherGuest'}
                                        fieldNameString={'otherGuestInformation'}
                                        valueOfInputString={'startDate'}
-                                       required={true}
-                                       label={' تاریخ شروع پذیرش'}
                                        timeInclude={true}
                             />
+                            <label className="placeholder" style={{
+                                top: '-5px',
+                                backgroundColor: '#fff',
+                                color: '#84888a',
+                                margin: '0 .3rem',
+                                opacity: '1',
+                            }}>تاریخ شروع پذیرش<span style={{color: '#ff4f4f'}}>*</span></label>
                         </div>
                         <div className="input-group-register col-md-4 col-12">
                             <DateInput timeInclude={true}
@@ -91,18 +102,29 @@ class OGInformationPage extends Component {
                                        valueFieldString={'otherGuest'}
                                        fieldNameString={'otherGuestInformation'}
                                        valueOfInputString={'endDate'}
-                                       required={true}
-                                       label={'تاریخ اتمام پذیرش'}
                             />
+                            <label className="placeholder" style={{
+                                top: '-5px',
+                                backgroundColor: '#fff',
+                                color: '#84888a',
+                                margin: '0 .3rem',
+                                opacity: '1',
+                            }}>تاریخ اتمام پذیرش<span style={{color: '#ff4f4f'}}>*</span></label>
                         </div>
-                        <div className="input-group-register col-md-4 col-12">
+                        <div className="input-group-register col-md-4 col-12 date-container">
                             <DateInput value={this.context.valueOfDates.otherGuest.paymentDate}
                                        valueFieldString={'otherGuest'}
                                        fieldNameString={'otherGuestInformation'}
                                        valueOfInputString={'paymentDate'}
-                                       label={'تاریخ پرداخت'}
                                        timeInclude={false}
                             />
+                            <label className="placeholder" style={{
+                                top: '-5px',
+                                backgroundColor: '#fff',
+                                color: '#84888a',
+                                margin: '0 .3rem',
+                                opacity: '1',
+                            }}>تاریخ پرداخت<span style={{color: '#ff4f4f'}}>*</span></label>
                         </div>
                         <div className="input-group-register col-md-4 col-12">
                             <SimpleTextInput

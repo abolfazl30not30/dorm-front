@@ -167,7 +167,7 @@ class ProfilePage extends Component {
                                                     disabled={this.state.printLoading}
                                                     onClick={this.printInformation}
                                                 >
-                                                    پرینت اطلاعات
+                                                    چاپ اطلاعات
                                                 </Button>
                                                 {this.state.printLoading && (
                                                     <CircularProgress
@@ -2321,6 +2321,20 @@ class ProfilePage extends Component {
     }
 
     printInformation = async () => {
+        await fetch(`https://api.saadatportal.com/api/v1/characteristic/report/${window.location.href.slice(-32)}`).then((result) => {
+            return result.blob();
+        })
+            .then((blob) => {
+                if (blob !== null) {
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = this.state.person.fullName;
+                    document.body.appendChild(a);
+                    a.click();
+                    a.remove();
+                }
+            });
 
     }
 

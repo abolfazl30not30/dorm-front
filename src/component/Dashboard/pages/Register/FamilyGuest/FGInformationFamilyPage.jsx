@@ -96,6 +96,13 @@ class FGInformationFamilyPage extends Component {
             </>
         );
     }
+
+    async componentDidMount() {
+        await fetch(`https://api.saadatportal.com/api/v1/characteristic/search?parentType=Person`).then((response) => response.json())
+            .then((data) => this.setState({peopleFound: data}));
+    }
+
+
     //search
     handleSearchInput = async (e) =>{
         const value = e.target.value;

@@ -6,8 +6,6 @@ import persian_fa from "react-date-object/locales/persian_fa";
 import DatePicker from "react-multi-date-picker";
 import {MdDone} from "react-icons/md";
 import "../../../../style/cameraHistory.css"
-// import React from "@types/react";
-
 import '../../../../style/registerPage.css';
 import '../../../../style/paymentHistory.css';
 import {Box, Button, CircularProgress, MenuItem, Select} from "@mui/material";
@@ -240,15 +238,6 @@ class CameraHistoryPage extends Component {
                                     padding: '0 .4rem',
                                     opacity: '1',
                                 }}>تاریخ<span style={{color: 'red'}}>*</span></label>
-                                {/*<label className={'placeholder'}*/}
-                                {/*       style={this.state.dateValue !== ""*/}
-                                {/*           ? ({display:"none"})*/}
-                                {/*           : ({right: this.state.validation.date_requiredReg === false ? '40px' : '20px'})*/}
-                                {/*       }*/}
-                                {/*       >*/}
-                                {/*    تاریخ*/}
-                                {/*    <span style={{color: 'red'}}>*</span>*/}
-                                {/*</label>*/}
 
                                 {
                                     this.state.validation.date_requiredReg === false

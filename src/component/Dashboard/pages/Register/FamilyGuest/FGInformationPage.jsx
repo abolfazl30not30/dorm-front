@@ -4,6 +4,8 @@ import BuildingContext from "../../../../../contexts/Building";
 import {DatePicker} from "react-persian-datepicker";
 import SimpleTextInput from "../../../../CustomInputs/SimpleTextInput";
 import DateInput from "../../../../CustomInputs/DateInput";
+import FormControl from "@mui/material/FormControl";
+import {MenuItem, Select} from "@mui/material";
 
 
 class FGInformationPage extends Component {
@@ -68,14 +70,20 @@ class FGInformationPage extends Component {
                                 label={'محل صدور'}
                             />
                         </div>
-                        <div className="input-group-register col-md-4 col-12">
+                        <div className="input-group-register col-md-4 col-12 date-container">
                             <DateInput value={this.context.valueOfDates.familyGuest.birthDate}
                                        fieldNameString={'familyGuestInformation'}
                                        valueFieldString={'familyGuest'}
                                        valueOfInputString={'birthDate'}
-                                       label={'تاریخ تولد'}
                                        timeInclude={false}
                             />
+                            <label className="placeholder" style={{
+                                top: '-5px',
+                                backgroundColor: '#fff',
+                                color: '#84888a',
+                                margin: '0 .3rem',
+                                opacity: '1',
+                            }}>تاریخ تولد<span style={{color: '#ff4f4f'}}>*</span></label>
                         </div>
                         <div className="input-group-register col-md-4 col-12">
                             <DateInput condition1={this.context.familyGuestInformationValidation.startDate_requiredReg}
@@ -83,11 +91,15 @@ class FGInformationPage extends Component {
                                        valueFieldString={'familyGuest'}
                                        fieldNameString={'familyGuestInformation'}
                                        valueOfInputString={'startDate'}
-                                       required={true}
-                                       label={' تاریخ شروع پذیرش'}
                                        timeInclude={true}
                             />
-
+                            <label className="placeholder" style={{
+                                top: '-5px',
+                                backgroundColor: '#fff',
+                                color: '#84888a',
+                                margin: '0 .3rem',
+                                opacity: '1',
+                            }}>تاریخ شروع پذیرش<span style={{color: '#ff4f4f'}}>*</span></label>
                         </div>
                         <div className="input-group-register col-md-4 col-12">
                             <DateInput condition1={this.context.familyGuestInformationValidation.endDate_requiredReg}
@@ -95,22 +107,31 @@ class FGInformationPage extends Component {
                                        valueFieldString={'familyGuest'}
                                        fieldNameString={'familyGuestInformation'}
                                        valueOfInputString={'endDate'}
-                                       required={true}
-                                       label={'تاریخ اتمام پذیرش'}
                                        timeInclude={true}
                             />
-
+                            <label className="placeholder" style={{
+                                top: '-5px',
+                                backgroundColor: '#fff',
+                                color: '#84888a',
+                                margin: '0 .3rem',
+                                opacity: '1',
+                            }}>تاریخ اتمام پذیرش<span style={{color: '#ff4f4f'}}>*</span></label>
                         </div>
-                        <div className="input-group-register col-md-4 col-12">
+                        <div className="input-group-register col-md-4 col-12 date-container">
                             <DateInput condition1={this.context.familyGuestInformationValidation.paymentDate_requiredReg}
                                        value={this.context.valueOfDates.familyGuest.paymentDate}
                                        valueFieldString={'familyGuest'}
                                        fieldNameString={'familyGuestInformation'}
                                        valueOfInputString={'paymentDate'}
-                                       required={true}
-                                       label={'تاریخ پرداخت'}
                                        timeInclude={false}
                             />
+                            <label className="placeholder" style={{
+                                top: '-5px',
+                                backgroundColor: '#fff',
+                                color: '#84888a',
+                                margin: '0 .3rem',
+                                opacity: '1',
+                            }}>تاریخ پرداخت<span style={{color: '#ff4f4f'}}>*</span></label>
                         </div>
                         <div className="input-group-register col-md-4 col-12">
                             <SimpleTextInput
@@ -140,17 +161,29 @@ class FGInformationPage extends Component {
                             />
                         </div>
                         <div className="input-group-register col-md-4 col-12">
-                            <select className='input'
+                            <FormControl className={"w-100"} style={{border: "none"}}>
+                                <Select
+                                    sx={{ height: 50, borderRadius: "0.5rem", minWidth: '10rem', backgroundColor: "#fff"}}
+                                    id="select-field"
                                     value={this.context.familyGuestInformation.relationshipWithResident}
                                     onChange={(e) => this.context.handleFields(e.target.value, 'familyGuestInformation', 'relationshipWithResident')}
-                            >
-                                <option value='father'>پدر</option>
-                                <option value='mother'>مادر</option>
-                                <option value='sister'>خواهر</option>
-                                <option value='brother'>برادر</option>
-                                <option value='other'>غیره</option>
-                            </select>
-                            <label className="placeholder">نسبت با اقامتگر</label>
+                                >
+                                    <MenuItem value='father'>پدر</MenuItem>
+                                    <MenuItem value='mother'>مادر</MenuItem>
+                                    <MenuItem value='sister'>خواهر</MenuItem>
+                                    <MenuItem value='brother'>برادر</MenuItem>
+                                    <MenuItem value='other'>غیره</MenuItem>
+                                </Select>
+                                <label className="placeholder" style={{
+                                    top: '-10px',
+                                    fontSize: "0.9rem",
+                                    backgroundColor: '#fff',
+                                    color: '#2a2e32b3',
+                                    margin: '-0.2rem 0',
+                                    padding: '0 .4rem -0.4rem',
+                                    opacity: '1',
+                                }}>نسبت با اقامتگر</label>
+                            </FormControl>
                         </div>
                     </div>
                 </form>

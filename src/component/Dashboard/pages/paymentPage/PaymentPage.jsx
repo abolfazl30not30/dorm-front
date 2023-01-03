@@ -66,7 +66,6 @@ class PaymentPage extends Component {
         },
         showDoneModal: false
     }
-
     async componentDidMount() {
         await fetch('https://api.saadatportal.com/api/v1/category/search?type=Payment').then((response) => response.json())
             .then((data) => this.setState({choices: data}));

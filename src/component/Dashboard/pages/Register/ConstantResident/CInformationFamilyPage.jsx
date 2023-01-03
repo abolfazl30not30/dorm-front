@@ -4,6 +4,8 @@ import BuildingContext from "../../../../../contexts/Building";
 import { Calendar, DatePicker } from 'react-persian-datepicker';
 import SimpleTextInput from "../../../../CustomInputs/SimpleTextInput";
 import Error from "../../../../CustomInputs/Error";
+import FormControl from "@mui/material/FormControl";
+import {MenuItem, Select} from "@mui/material";
 
 class CInformationFamilyPage extends Component {
     static contextType = BuildingContext;
@@ -47,17 +49,29 @@ class CInformationFamilyPage extends Component {
                             />
                         </div>
                         <div className="input-group-register col-md-4 col-12">
-                            <select className='input'
+                            <FormControl className={"w-100"} style={{border: "none"}}>
+                                <Select
+                                    sx={{ height: 50, borderRadius: "0.5rem", minWidth: '10rem', backgroundColor: "#fff"}}
+                                    id="select-field"
                                     value={this.context.constantInformationFamily.firstPersonRelationshipWithResident}
                                     onChange={(e) =>  this.context.handleFields(e.target.value, 'constantInformationFamily', 'firstPersonRelationshipWithResident')}
-                            >
-                                <option value='father'>پدر</option>
-                                <option value='mother'>مادر</option>
-                                <option value='sister'>خواهر</option>
-                                <option value='brother'>برادر</option>
-                                <option value='other'>غیره</option>
-                            </select>
-                            <label className="placeholder">نسبت با اقامتگر</label>
+                                >
+                                    <MenuItem value='father'>پدر</MenuItem>
+                                    <MenuItem value='mother'>مادر</MenuItem>
+                                    <MenuItem value='sister'>خواهر</MenuItem>
+                                    <MenuItem value='brother'>برادر</MenuItem>
+                                    <MenuItem value='other'>غیره</MenuItem>
+                                </Select>
+                                <label className="placeholder" style={{
+                                    top: '-10px',
+                                    fontSize: "0.9rem",
+                                    backgroundColor: '#fff',
+                                    color: '#2a2e32b3',
+                                    margin: '-0.2rem 0',
+                                    padding: '0 .4rem -0.4rem',
+                                    opacity: '1',
+                                }}>نسبت با اقامتگر</label>
+                            </FormControl>
                         </div>
                     </div>
                     <div className='d-flex flex-wrap justify-content-start mt-4'>
@@ -92,17 +106,29 @@ class CInformationFamilyPage extends Component {
                             />
                         </div>
                         <div className="input-group-register col-md-4 col-12">
-                            <select className='input'
+                            <FormControl className={"w-100"} style={{border: "none"}}>
+                                <Select
+                                    sx={{ height: 50, borderRadius: "0.5rem", minWidth: '10rem', backgroundColor: "#fff"}}
+                                    id="select-field"
                                     value={this.context.constantInformationFamily.secondPersonRelationshipWithResident}
                                     onChange={(e) =>  this.context.handleFields(e.target.value, 'constantInformationFamily', 'secondPersonRelationshipWithResident')}
-                            >
-                                <option value='father'>پدر</option>
-                                <option value='mother'>مادر</option>
-                                <option value='sister'>خواهر</option>
-                                <option value='brother'>برادر</option>
-                                <option value='other'>غیره</option>
-                            </select>
-                            <label className="placeholder">نسبت با اقامتگر</label>
+                                >
+                                    <MenuItem value='father'>پدر</MenuItem>
+                                    <MenuItem value='mother'>مادر</MenuItem>
+                                    <MenuItem value='sister'>خواهر</MenuItem>
+                                    <MenuItem value='brother'>برادر</MenuItem>
+                                    <MenuItem value='other'>غیره</MenuItem>
+                                </Select>
+                                <label className="placeholder" style={{
+                                    top: '-10px',
+                                    fontSize: "0.9rem",
+                                    backgroundColor: '#fff',
+                                    color: '#2a2e32b3',
+                                    margin: '-0.2rem 0',
+                                    padding: '0 .4rem -0.4rem',
+                                    opacity: '1',
+                                }}>نسبت با اقامتگر</label>
+                            </FormControl>
                         </div>
                     </div>
                     <div className='d-flex flex-wrap justify-content-start mt-4'>
@@ -133,17 +159,29 @@ class CInformationFamilyPage extends Component {
                             />
                         </div>
                         <div className="input-group-register col-md-4 col-12">
-                            <select className='input'
+                            <FormControl className={"w-100"} style={{border: "none"}}>
+                                <Select
+                                    sx={{ height: 50, borderRadius: "0.5rem", minWidth: '10rem', backgroundColor: "#fff"}}
+                                    id="select-field"
                                     value={this.context.constantInformationFamily.thirdPersonRelationshipWithResident}
                                     onChange={(e) =>  this.context.handleFields(e.target.value, 'constantInformationFamily', 'thirdPersonRelationshipWithResident')}
-                            >
-                                <option value='father'>پدر</option>
-                                <option value='mother'>مادر</option>
-                                <option value='sister'>خواهر</option>
-                                <option value='brother'>برادر</option>
-                                <option value='other'>غیره</option>
-                            </select>
-                            <label className="placeholder">نسبت با اقامتگر</label>
+                                >
+                                    <MenuItem value='father'>پدر</MenuItem>
+                                    <MenuItem value='mother'>مادر</MenuItem>
+                                    <MenuItem value='sister'>خواهر</MenuItem>
+                                    <MenuItem value='brother'>برادر</MenuItem>
+                                    <MenuItem value='other'>غیره</MenuItem>
+                                </Select>
+                                <label className="placeholder" style={{
+                                    top: '-10px',
+                                    fontSize: "0.9rem",
+                                    backgroundColor: '#fff',
+                                    color: '#2a2e32b3',
+                                    margin: '-0.2rem 0',
+                                    padding: '0 .4rem -0.4rem',
+                                    opacity: '1',
+                                }}>نسبت با اقامتگر</label>
+                            </FormControl>
                         </div>
                     </div>
                 </div>

@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import "../../../../../style/registerPage.css"
 import BuildingContext from "../../../../../contexts/Building";
-import {DatePicker} from "react-persian-datepicker";
 import SimpleTextInput from "../../../../CustomInputs/SimpleTextInput";
 import DateInput from "../../../../CustomInputs/DateInput";
+import FormControl from "@mui/material/FormControl";
+import {MenuItem, Select} from "@mui/material";
 
 class CInformationPage extends Component {
     static contextType = BuildingContext;
@@ -95,17 +96,15 @@ class CInformationPage extends Component {
                                        valueFieldString={'constantResident'}
                                        fieldNameString={'constantInformationPage'}
                                        valueOfInputString={'birthDate'}
-                                       required={true}
                                        timeInclude={false}
                             />
                             <label className="placeholder" style={{
-                                top: '-8px',
+                                top: '-5px',
                                 backgroundColor: '#fff',
-                                color: '#959799',
-                                padding: '0 .5rem',
+                                color: '#84888a',
+                                margin: '0 .3rem',
                                 opacity: '1',
-                            }}>تاریخ تولد</label>
-
+                            }}>تاریخ تولد<span style={{color: '#ff4f4f'}}>*</span></label>
                         </div>
                         <div className="input-group-register col-md-4 col-12">
                             <SimpleTextInput
@@ -128,17 +127,28 @@ class CInformationPage extends Component {
                             />
                         </div>
                         <div className="input-group-register col-md-4 col-12">
-                            <select className='input'
+                            <FormControl className={"w-100"} style={{border: "none"}}>
+                                <Select
+                                    sx={{ height: 50, borderRadius: "0.5rem", minWidth: '10rem', backgroundColor: "#fff"}}
+                                    id="select-field"
                                     value={this.context.constantInformationPage.religion}
-                                    onChange={(e) =>  this.context.handleFields(e.target.value, 'constantInformationPage', 'religion')}
-                            >
-                                <option value='islam'>اسلام</option>
-                                <option value='christianity'>مسیحیت</option>
-                                <option value='hinduism'>هندوئیسم</option>
-                                <option value='buddhism'>آیین بودایی</option>
-                                <option value='other'>سایر</option>
-                            </select>
-                            <label className="placeholder">دین</label>
+                                    onChange={(e) =>  this.context.handleFields(e.target.value, 'constantInformationPage', 'religion')}>
+                                    <MenuItem value='islam'>اسلام</MenuItem>
+                                    <MenuItem value='christianity'>مسیحیت</MenuItem>
+                                    <MenuItem value='hinduism'>هندوئیسم</MenuItem>
+                                    <MenuItem value='buddhism'>آیین بودایی</MenuItem>
+                                    <MenuItem value='other'>سایر</MenuItem>
+                                </Select>
+                                <label className="placeholder" style={{
+                                    top: '-10px',
+                                    fontSize: "0.9rem",
+                                    backgroundColor: '#fff',
+                                    color: '#2a2e32b3',
+                                    margin: '-0.2rem 0',
+                                    padding: '0 .4rem -0.4rem',
+                                    opacity: '1',
+                                }}>دین</label>
+                            </FormControl>
                         </div>
                         <div className="input-group-register col-md-4 col-12">
                             <SimpleTextInput
@@ -174,16 +184,27 @@ class CInformationPage extends Component {
                             />
                         </div>
                         <div className="input-group-register col-md-4 col-12">
-                            <select className='input'
-                                    name='maritalStatus'
+                            <FormControl className={"w-100"} style={{border: "none"}}>
+                                <Select
+                                    sx={{ height: 50, borderRadius: "0.5rem", minWidth: '10rem', backgroundColor: "#fff"}}
+                                    id="select-field"
                                     value={this.context.constantInformationPage.maritalStatus}
                                     onChange={(e) =>  this.context.handleFields(e.target.value, 'constantInformationPage', 'maritalStatus')}
-                            >
-                                <option value='single' >مجرد</option>
-                                <option value='married'>متاهل</option>
-                                <option value='divorced'>متارکه</option>
-                            </select>
-                            <label className="placeholder">وضعیت تاهل</label>
+                                >
+                                    <MenuItem value='single' >مجرد</MenuItem>
+                                    <MenuItem value='married'>متاهل</MenuItem>
+                                    <MenuItem value='divorced'>متارکه</MenuItem>
+                                </Select>
+                                <label className="placeholder" style={{
+                                    top: '-10px',
+                                    fontSize: "0.9rem",
+                                    backgroundColor: '#fff',
+                                    color: '#2a2e32b3',
+                                    margin: '-0.2rem 0',
+                                    padding: '0 .4rem -0.4rem',
+                                    opacity: '1',
+                                }}>وضعیت تاهل</label>
+                            </FormControl>
                         </div>
                         {
                             this.context.constantInformationPage.maritalStatus === 'married' ? (
@@ -213,14 +234,26 @@ class CInformationPage extends Component {
                             )
                         }
                         <div className="input-group-register col-4">
-                            <select className='input'
+                            <FormControl className={"w-100"} style={{border: "none"}}>
+                                <Select
+                                    sx={{ height: 50, borderRadius: "0.5rem", minWidth: '10rem', backgroundColor: "#fff"}}
+                                    id="select-field"
                                     value={this.context.constantInformationPage.health}
                                     onChange={(e) =>  this.context.handleFields(e.target.value, 'constantInformationPage', 'health')}
-                            >
-                                <option value='false'>خیر</option>
-                                <option value='true'>بله</option>
-                            </select>
-                            <label className="placeholder">آیا بیماری خاصی دارید؟</label>
+                                >
+                                    <MenuItem value='false'>خیر</MenuItem>
+                                    <MenuItem value='true'>بله</MenuItem>
+                                </Select>
+                                <label className="placeholder" style={{
+                                    top: '-10px',
+                                    fontSize: "0.9rem",
+                                    backgroundColor: '#fff',
+                                    color: '#2a2e32b3',
+                                    margin: '-0.2rem 0',
+                                    padding: '0 .4rem -0.4rem',
+                                    opacity: '1',
+                                }}>آیا بیماری خاصی دارید؟</label>
+                            </FormControl>
                         </div>
                         {
                             this.context.constantInformationPage.health === 'true' ? (
