@@ -12,6 +12,7 @@ import {Box, Button, CircularProgress, MenuItem, Select} from "@mui/material";
 import {green} from "@mui/material/colors";
 import Skeleton from "react-loading-skeleton";
 import FormControl from "@mui/material/FormControl";
+import axios from "axios";
 
 class CameraHistoryPage extends Component {
 
@@ -39,15 +40,43 @@ class CameraHistoryPage extends Component {
         dateValue: '',
         data: [],
         searchType : "name",
-
     }
 
     async componentDidMount() {
-        const response = await fetch('https://api.saadatportal.com/api/v1/cameraHistory').then((response) => response.json())
+        axios.get('https://api.saadatportal.com/api/v1/supervisor/cameraHistory', {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
             .then((data) => this.setState({
                 data: data,
                 searchLoading: false
-            }));
+            })).catch(() => {
+            if (localStorage.getItem('role') === 'MANAGER') {
+                axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                    .then((response) => {
+                        if (response.headers["accesstoken"]) {
+                            localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                            axios.get('https://api.saadatportal.com/api/v1/supervisor/cameraHistory', {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                .then((data) => this.setState({
+                                    data: data,
+                                    searchLoading: false
+                                }))
+                        } else {
+                            window.location = '/'
+                        }
+                    })
+            } else if (localStorage.getItem('role') === 'SUPERVISOR') {
+                axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                    .then((response) => {
+                        if (response.headers["accesstoken"]) {
+                            localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                            axios.get('https://api.saadatportal.com/api/v1/supervisor/cameraHistory', {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                .then((data) => this.setState({
+                                    data: data,
+                                    searchLoading: false
+                                }))
+                        } else {
+                            window.location = '/'
+                        }
+                    })
+            }})
     }
 
     render() {
@@ -384,19 +413,39 @@ class CameraHistoryPage extends Component {
     handleSubmit = async () => {
 
         this.setState({loading: true})
-        const rawResponse = await fetch('https://api.saadatportal.com/api/v1/cameraHistory', {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
+        axios.post('https://api.saadatportal.com/api/v1/supervisor/cameraHistory', JSON.stringify(this.state.tmpRequest), {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+            .then((data) => this.setState({
+                loading: false
+            })).catch(() => {
+            if (localStorage.getItem('role') === 'MANAGER') {
+                axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                    .then((response) => {
+                        if (response.headers["accesstoken"]) {
+                            localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                            axios.post('https://api.saadatportal.com/api/v1/supervisor/cameraHistory', JSON.stringify(this.state.tmpRequest), {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                .then((data) => this.setState({
+                                    loading: false
+                                }))
+                        } else {
+                            window.location = '/'
+                        }
+                    })
+            } else if (localStorage.getItem('role') === 'SUPERVISOR') {
+                axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                    .then((response) => {
+                        if (response.headers["accesstoken"]) {
+                            localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                            axios.post('https://api.saadatportal.com/api/v1/supervisor/cameraHistory', JSON.stringify(this.state.tmpRequest), {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                .then((data) => this.setState({
+                                    loading: false
+                                }))
+                        } else {
+                            window.location = '/'
+                        }
+                    })
+            }})
 
-            body: JSON.stringify(this.state.tmpRequest)
-        }).then(() => {this.setState({loading: false})});
         this.handleCloseModal()
-        const response = await fetch('https://api.saadatportal.com/api/v1/cameraHistory').then((response) => response.json())
-            .then((data) => this.setState({data: data}));
-
         let tmpRequest = {
             title: '',
             description: '',
@@ -407,12 +456,14 @@ class CameraHistoryPage extends Component {
         }
 
         let resetValidations = {...this.state.validation};
+
         resetValidations.assignee_requireReg = '';
         resetValidations.date_requiredReg = '';
         resetValidations.unit_requireReg = '';
         resetValidations.title_requireReg = '';
-
         this.setState({validation: resetValidations,tmpRequest:tmpRequest, dateValue: ''});
+
+        this.componentDidMount()
     }
 
     handleIsValid = () => {
@@ -469,9 +520,40 @@ class CameraHistoryPage extends Component {
 
     handleSearchInput = async (e) =>{
         this.setState({searchLoading: true})
-        const value = e.target.value;
-        const response = await fetch(`https://api.saadatportal.com/api/v1/cameraHistory/search?${this.state.searchType}=${e.target.value}`).then((response) => response.json())
-            .then((data) => this.setState({data: data, searchLoading: false}));
+        axios.get(`https://api.saadatportal.com/api/v1/supervisor/cameraHistory/search?${this.state.searchType}=${e.target.value}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+            .then((data) => this.setState({
+                data: data,
+                searchLoading: false
+            })).catch(() => {
+            if (localStorage.getItem('role') === 'MANAGER') {
+                axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                    .then((response) => {
+                        if (response.headers["accesstoken"]) {
+                            localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                            axios.get(`https://api.saadatportal.com/api/v1/supervisor/cameraHistory/search?${this.state.searchType}=${e.target.value}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                .then((data) => this.setState({
+                                    data: data,
+                                    searchLoading: false
+                                }))
+                        } else {
+                            window.location = '/'
+                        }
+                    })
+            } else if (localStorage.getItem('role') === 'SUPERVISOR') {
+                axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                    .then((response) => {
+                        if (response.headers["accesstoken"]) {
+                            localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                            axios.get(`https://api.saadatportal.com/api/v1/supervisor/cameraHistory/search?${this.state.searchType}=${e.target.value}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                .then((data) => this.setState({
+                                    data: data,
+                                    searchLoading: false
+                                }))
+                        } else {
+                            window.location = '/'
+                        }
+                    })
+            }})
     }
 }
 
