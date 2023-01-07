@@ -413,7 +413,7 @@ class CameraHistoryPage extends Component {
     handleSubmit = async () => {
 
         this.setState({loading: true})
-        axios.post('https://api.saadatportal.com/api/v1/supervisor/cameraHistory', JSON.stringify(this.state.tmpRequest), {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+        axios.post('https://api.saadatportal.com/api/v1/supervisor/cameraHistory', this.state.tmpRequest, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
             .then((data) => this.setState({
                 loading: false
             })).catch(() => {
@@ -422,7 +422,7 @@ class CameraHistoryPage extends Component {
                     .then((response) => {
                         if (response.headers["accesstoken"]) {
                             localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                            axios.post('https://api.saadatportal.com/api/v1/supervisor/cameraHistory', JSON.stringify(this.state.tmpRequest), {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                            axios.post('https://api.saadatportal.com/api/v1/supervisor/cameraHistory', this.state.tmpRequest, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                 .then((data) => this.setState({
                                     loading: false
                                 }))
@@ -435,7 +435,7 @@ class CameraHistoryPage extends Component {
                     .then((response) => {
                         if (response.headers["accesstoken"]) {
                             localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                            axios.post('https://api.saadatportal.com/api/v1/supervisor/cameraHistory', JSON.stringify(this.state.tmpRequest), {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                            axios.post('https://api.saadatportal.com/api/v1/supervisor/cameraHistory', this.state.tmpRequest, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                 .then((data) => this.setState({
                                     loading: false
                                 }))

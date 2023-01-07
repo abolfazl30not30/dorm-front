@@ -53,13 +53,24 @@ class HamburgerMenu extends Component {
                             درخواست
                         </NavLink>
                     </li>
-                    <li className='sidenav-item'>
-                        <NavLink activeClassName='active-sidebar' to="/dashboard/Request-manager" className='sidenav-link'
-                                 onClick={window.innerWidth <= 768 && this.context.handleSidebar}>
-                            <i className="bi bi-envelope"></i>
-                            درخواست (مدیریت)
-                        </NavLink>
-                    </li>
+                    {
+                        localStorage.getItem('role') === 'MANAGER'
+                        ? <li className='sidenav-item'>
+                                <NavLink activeClassName='active-sidebar' to="/dashboard/Request-manager" className='sidenav-link'
+                                         onClick={window.innerWidth <= 768 && this.context.handleSidebar}>
+                                    <i className="bi bi-envelope"></i>
+                                    درخواست (مدیریت)
+                                </NavLink>
+                            </li>
+                            : null
+                    }
+                    {/*<li className='sidenav-item'>*/}
+                    {/*    <NavLink activeClassName='active-sidebar' to="/dashboard/Request-manager" className='sidenav-link'*/}
+                    {/*             onClick={window.innerWidth <= 768 && this.context.handleSidebar}>*/}
+                    {/*        <i className="bi bi-envelope"></i>*/}
+                    {/*        درخواست (مدیریت)*/}
+                    {/*    </NavLink>*/}
+                    {/*</li>*/}
                     <li className='sidenav-item'>
                         <NavLink activeClassName='active-sidebar' to="/dashboard/camera-history" className='sidenav-link'
                                  onClick={window.innerWidth <= 768 && this.context.handleSidebar}>

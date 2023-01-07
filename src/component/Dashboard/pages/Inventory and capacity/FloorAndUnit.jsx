@@ -15,6 +15,7 @@ import {BiChevronLeft} from 'react-icons/bi'
 import { FiEdit2 } from 'react-icons/fi'
 import "../../../../style/paymentHistory.css"
 import {Button} from "@mui/material";
+import axios from "axios";
 
 
 class FloorAndUnit extends Component {
@@ -40,16 +41,56 @@ class FloorAndUnit extends Component {
     }
 
     async componentDidMount() {
-        let data;
-        const response = await fetch('https://api.saadatportal.com/api/v1/floor/search?sort=name').then((response) => response.json())
-
-            .then((data) => this.setState({floor: data, isLoading: false},()=>{
-                if (data.length == 0) {
-                    this.setState({isFullUnit: false})
-                } else {
-                    this.setState({isFullUnit: true})
-                }
-            }));
+        axios.get('https://api.saadatportal.com/api/v1/supervisor/floor/search?sort=name', {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+            .then((data) => {
+                console.log(data)
+                this.setState({floor: data, isLoading: false},()=>{
+                    if (data.length === 0) {
+                        this.setState({isFullUnit: false})
+                    } else {
+                        this.setState({isFullUnit: true})
+                    }
+                })
+            }).catch(() => {
+            if (localStorage.getItem('role') === 'MANAGER') {
+                axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                    .then((response) => {
+                        if (response.headers["accesstoken"]) {
+                            localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                            axios.get('https://api.saadatportal.com/api/v1/supervisor/floor/search?sort=name', {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                .then((data) => {
+                                    this.setState({floor: data, isLoading: false},()=>{
+                                        if (data.length === 0) {
+                                            this.setState({isFullUnit: false})
+                                        } else {
+                                            this.setState({isFullUnit: true})
+                                        }
+                                    })
+                                })
+                        } else {
+                            window.location = '/'
+                        }
+                    })
+            } else if (localStorage.getItem('role') === 'SUPERVISOR') {
+                axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                    .then((response) => {
+                        if (response.headers["accesstoken"]) {
+                            localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                            axios.get('https://api.saadatportal.com/api/v1/supervisor/floor/search?sort=name', {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                .then((data) => {
+                                    this.setState({floor: data, isLoading: false},()=>{
+                                        if (data.length === 0) {
+                                            this.setState({isFullUnit: false})
+                                        } else {
+                                            this.setState({isFullUnit: true})
+                                        }
+                                    })
+                                })
+                        } else {
+                            window.location = '/'
+                        }
+                    })
+            }})
     }
 
 
