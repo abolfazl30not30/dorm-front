@@ -10,6 +10,7 @@ import {Box, Button, CircularProgress, MenuItem, Select} from "@mui/material";
 import {green} from "@mui/material/colors";
 import Skeleton from "react-loading-skeleton";
 import FormControl from "@mui/material/FormControl";
+import axios from "axios";
 
 class callHistory extends Component {
     state = {
@@ -45,8 +46,40 @@ class callHistory extends Component {
     }
 
     async componentDidMount() {
-        const response = await fetch('https://api.saadatportal.com/api/v1/telephoneHistory').then((response) => response.json())
-            .then((data) => this.setState({callHistory : data, searchLoading: false}));
+        axios.get('https://api.saadatportal.com/api/v1/supervisor/telephoneHistory', {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+            .then((data) => this.setState({
+                callHistory: data,
+                searchLoading: false
+            })).catch(() => {
+            if (localStorage.getItem('role') === 'MANAGER') {
+                axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                    .then((response) => {
+                        if (response.headers["accesstoken"]) {
+                            localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                            axios.get('https://api.saadatportal.com/api/v1/supervisor/telephoneHistory', {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                .then((data) => this.setState({
+                                    callHistory: data,
+                                    searchLoading: false
+                                }))
+                        } else {
+                            window.location = '/'
+                        }
+                    })
+            } else if (localStorage.getItem('role') === 'SUPERVISOR') {
+                axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                    .then((response) => {
+                        if (response.headers["accesstoken"]) {
+                            localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                            axios.get('https://api.saadatportal.com/api/v1/supervisor/telephoneHistory', {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                .then((data) => this.setState({
+                                    callHistory: data,
+                                    searchLoading: false
+                                }))
+                        } else {
+                            window.location = '/'
+                        }
+                    })
+            }})
     }
 
     render() {
@@ -306,16 +339,6 @@ class callHistory extends Component {
                                 />
                             )}
                         </Box>
-                        {/*<button className='btn-done w-100' onClick={() => {*/}
-                        {/*    if (this.handleValidations()) {*/}
-                        {/*        this.handleRecordContact();*/}
-                        {/*        this.handleClose();*/}
-                        {/*    }*/}
-                        {/*}}>ثبت*/}
-                        {/*</button>*/}
-
-
-
                     </Modal.Body>
                 </Modal>
             </>
@@ -395,28 +418,80 @@ class callHistory extends Component {
         }
 
         this.setState({loading: true})
-        const rawResponse = await fetch('https://api.saadatportal.com/api/v1/telephoneHistory', {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(newCall)
-        }).then(() => {this.setState({loading: false})}).catch(() => {this.setState({loading: false})});
+        axios.post('https://api.saadatportal.com/api/v1/supervisor/telephoneHistory', newCall, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+            .then((data) => this.setState({
+                loading: false
+            })).catch(() => {
+            if (localStorage.getItem('role') === 'MANAGER') {
+                axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                    .then((response) => {
+                        if (response.headers["accesstoken"]) {
+                            localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                            axios.post('https://api.saadatportal.com/api/v1/supervisor/telephoneHistory', newCall, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                .then((data) => this.setState({
+                                    loading: false
+                                }))
+                        } else {
+                            window.location = '/'
+                        }
+                    })
+            } else if (localStorage.getItem('role') === 'SUPERVISOR') {
+                axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                    .then((response) => {
+                        if (response.headers["accesstoken"]) {
+                            localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                            axios.post('https://api.saadatportal.com/api/v1/supervisor/telephoneHistory', newCall, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                .then((data) => this.setState({
+                                    loading: false
+                                }))
+                        } else {
+                            window.location = '/'
+                        }
+                    })
+            }})
 
-        const response = await fetch('https://api.saadatportal.com/api/v1/telephoneHistory').then((response) => response.json())
-            .then((data) => this.setState({callHistory : data}));
-
-        // this.setState({show: false})
         this.setState({title:"", callerName:"", phoneNumber:"", date:"", description:""})
         this.handleClose();
+        this.componentDidMount()
     }
 
     handleSearchInput = async (e) =>{
         const value = e.target.value;
         this.setState({searchInput: value, searchLoading: true});
-        const response = await fetch(`https://api.saadatportal.com/api/v1/telephoneHistory/search?${this.state.searchType}=${e.target.value}`).then((response) => response.json())
-            .then((data) => this.setState({callHistory: data, searchLoading: false}));
+        axios.get(`https://api.saadatportal.com/api/v1/supervisor/telephoneHistory/search?${this.state.searchType}=${e.target.value}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+            .then((data) => this.setState({
+                callHistory: data,
+                searchLoading: false
+            })).catch(() => {
+            if (localStorage.getItem('role') === 'MANAGER') {
+                axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                    .then((response) => {
+                        if (response.headers["accesstoken"]) {
+                            localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                            axios.get(`https://api.saadatportal.com/api/v1/supervisor/telephoneHistory/search?${this.state.searchType}=${e.target.value}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                .then((data) => this.setState({
+                                    callHistory: data,
+                                    searchLoading: false
+                                }))
+                        } else {
+                            window.location = '/'
+                        }
+                    })
+            } else if (localStorage.getItem('role') === 'SUPERVISOR') {
+                axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                    .then((response) => {
+                        if (response.headers["accesstoken"]) {
+                            localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                            axios.get(`https://api.saadatportal.com/api/v1/supervisor/telephoneHistory/search?${this.state.searchType}=${e.target.value}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                .then((data) => this.setState({
+                                    callHistory: data,
+                                    searchLoading: false
+                                }))
+                        } else {
+                            window.location = '/'
+                        }
+                    })
+            }})
     }
 }
 

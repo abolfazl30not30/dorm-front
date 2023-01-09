@@ -5,31 +5,50 @@ import {Link} from "react-router-dom";
 import {HiOutlineBuildingOffice} from "react-icons/hi";
 import BuildingContext from "../../../../contexts/Building";
 import FloorAndBedLoading from "../../../loading/FloorAndBedLoading";
+import axios from "axios";
 
 class PresenceAbsence extends Component {
     static contextType = BuildingContext;
     state = {
         floor: [],
         isLoading: true,
-        floorFake: [
-            {
-                id: 1, name: "طبقه اول",
-                units: [
-                    {id: 111, number: 111, empty: false},
-                    // {id: 112, number: "112", empty: true},
-                    // {id: 113, number: "113", empty: false},
-                    // {id: 114, number: "114", empty: false},
-                    // {id: 115, number: "115", empty: true},
-                    // {id: 116, number: "116", empty: false}
-                ]
-            },
-        ]
     }
 
     async componentDidMount() {
-        let data;
-        const response = await fetch('https://api.saadatportal.com/api/v1/floor').then((response) => response.json())
-            .then((data) => this.setState({floor: data, isLoading: false}));
+        axios.get('https://api.saadatportal.com/api/v1/supervisor/floor', {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+            .then((data) => this.setState({
+                floor: data,
+                isLoading: false
+            })).catch(() => {
+            if (localStorage.getItem('role') === 'MANAGER') {
+                axios.get('https://api.saadatportal.com/api/v1/supervisor/floor', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                    .then((response) => {
+                        if (response.headers["accesstoken"]) {
+                            localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                            axios.get('https://api.saadatportal.com/api/v1/supervisor/cameraHistory', {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                .then((data) => this.setState({
+                                    floor: data,
+                                    isLoading: false
+                                }))
+                        } else {
+                            window.location = '/'
+                        }
+                    })
+            } else if (localStorage.getItem('role') === 'SUPERVISOR') {
+                axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                    .then((response) => {
+                        if (response.headers["accesstoken"]) {
+                            localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                            axios.get('https://api.saadatportal.com/api/v1/supervisor/floor', {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                .then((data) => this.setState({
+                                    floor: data,
+                                    isLoading: false
+                                }))
+                        } else {
+                            window.location = '/'
+                        }
+                    })
+            }})
     }
 
     render() {

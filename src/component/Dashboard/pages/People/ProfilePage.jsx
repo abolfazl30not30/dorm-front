@@ -182,7 +182,7 @@ class ProfilePage extends Component {
             //         this.setState({profileImgUrl: objectUrl})
             //     });
 
-            axios.get(`https://api.saadatportal.com/api/v1/supervisor/file/${profileId}`, { responseType: 'blob' }, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+            axios.get(`https://api.saadatportal.com/api/v1/supervisor/file/${profileId}`, { responseType: 'blob', headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                 .then((data) => {
                         const objectUrl = URL.createObjectURL(data);
                         this.setState({profileImgUrl: objectUrl})
@@ -193,7 +193,7 @@ class ProfilePage extends Component {
                         .then((response) => {
                             if (response.headers["accesstoken"]) {
                                 localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                axios.get(`https://api.saadatportal.com/api/v1/supervisor/file/${profileId}`, { responseType: 'blob' }, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                axios.get(`https://api.saadatportal.com/api/v1/supervisor/file/${profileId}`, { responseType: 'blob', headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                     .then((data) => {
                                         const objectUrl = URL.createObjectURL(data);
                                         this.setState({profileImgUrl: objectUrl})
@@ -207,7 +207,7 @@ class ProfilePage extends Component {
                         .then((response) => {
                             if (response.headers["accesstoken"]) {
                                 localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                axios.get(`https://api.saadatportal.com/api/v1/supervisor/file/${profileId}`, { responseType: 'blob' }, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                axios.get(`https://api.saadatportal.com/api/v1/supervisor/file/${profileId}`, { responseType: 'blob', headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                     .then((data) => {
                                         const objectUrl = URL.createObjectURL(data);
                                         this.setState({profileImgUrl: objectUrl})
@@ -2866,8 +2866,8 @@ class ProfilePage extends Component {
                     axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                         .then((response) => {
                             if (response.headers["accesstoken"]) {
-                                localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                axios.delete(`https://api.saadatportal.com/api/v1/record/${this.state.reportTemp.id}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                localStorage.setItem("accessToken", response.headers["accesstoken"])
+                                axios.delete(`https://api.saadatportal.com/api/v1/supervisor/record/${this.state.reportTemp.id}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                     .then((data) => {
                                         let index = this.state.report.indexOf(this.state.reportTemp)
                                         let updatedReport = [...this.state.report];
@@ -2889,23 +2889,7 @@ class ProfilePage extends Component {
     downloadFile = async (fileId) => {
         const file = this.state.fileDetails.find(({id}) => id === fileId);
         const filename = file.originalName;
-
-        // await fetch(`https://api.saadatportal.com/api/v1/file/${fileId}`).then((result) => {
-        //     return result.blob();
-        // })
-        //     .then((blob) => {
-        //         if (blob !== null) {
-        //             const url = window.URL.createObjectURL(blob);
-        //             const a = document.createElement('a');
-        //             a.href = url;
-        //             a.download = filename;
-        //             document.body.appendChild(a);
-        //             a.click();
-        //             a.remove();
-        //         }
-        //     });
-
-        axios.get(`https://api.saadatportal.com/api/v1/file/${fileId}`, { responseType: 'blob' }, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+        axios.get(`https://api.saadatportal.com/api/v1/supervisor/file/${fileId}`, { responseType: 'blob' , headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
             .then((blob) => {
                 if (blob !== null) {
                     const url = window.URL.createObjectURL(blob);
@@ -2922,7 +2906,7 @@ class ProfilePage extends Component {
                     .then((response) => {
                         if (response.headers["accesstoken"]) {
                             localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                            axios.get(`https://api.saadatportal.com/api/v1/file/${fileId}`, { responseType: 'blob' }, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                            axios.get(`https://api.saadatportal.com/api/v1/supervisor/file/${fileId}`, { responseType: 'blob', headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                 .then((blob) => {
                                     if (blob !== null) {
                                         const url = window.URL.createObjectURL(blob);
@@ -2943,7 +2927,7 @@ class ProfilePage extends Component {
                     .then((response) => {
                         if (response.headers["accesstoken"]) {
                             localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                            axios.get(`https://api.saadatportal.com/api/v1/file/${fileId}`, { responseType: 'blob' }, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                            axios.get(`https://api.saadatportal.com/api/v1/supervisor/file/${fileId}`, { responseType: 'blob', headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                 .then((blob) => {
                                     if (blob !== null) {
                                         const url = window.URL.createObjectURL(blob);
@@ -2963,22 +2947,7 @@ class ProfilePage extends Component {
     }
 
     printInformation = async () => {
-        // await fetch(`https://api.saadatportal.com/api/v1/characteristic/report/${window.location.href.slice(-32)}`).then((result) => {
-        //     return result.blob();
-        // })
-        //     .then((blob) => {
-        //         if (blob !== null) {
-        //             const url = window.URL.createObjectURL(blob);
-        //             const a = document.createElement('a');
-        //             a.href = url;
-        //             a.download = this.state.person.fullName;
-        //             document.body.appendChild(a);
-        //             a.click();
-        //             a.remove();
-        //         }
-        //     });
-
-        axios.get(`https://api.saadatportal.com/api/v1/supervisor/characteristic/report/${window.location.href.slice(-32)}`, { responseType: 'blob' }, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+        axios.get(`https://api.saadatportal.com/api/v1/supervisor/characteristic/report/${window.location.href.slice(-32)}`, { responseType: 'blob', headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
             .then((blob) => {
                 if (blob !== null) {
                     const url = window.URL.createObjectURL(blob);
@@ -2995,7 +2964,7 @@ class ProfilePage extends Component {
                     .then((response) => {
                         if (response.headers["accesstoken"]) {
                             localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                            axios.get(`https://api.saadatportal.com/api/v1/characteristic/report/${window.location.href.slice(-32)}`, { responseType: 'blob' }, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                            axios.get(`https://api.saadatportal.com/api/v1/characteristic/report/${window.location.href.slice(-32)}`, { responseType: 'blob', headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                 .then((blob) => {
                                     if (blob !== null) {
                                         const url = window.URL.createObjectURL(blob);
@@ -3016,7 +2985,7 @@ class ProfilePage extends Component {
                     .then((response) => {
                         if (response.headers["accesstoken"]) {
                             localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                            axios.get(`https://api.saadatportal.com/api/v1/characteristic/report/${window.location.href.slice(-32)}`, { responseType: 'blob' }, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                            axios.get(`https://api.saadatportal.com/api/v1/characteristic/report/${window.location.href.slice(-32)}`, { responseType: 'blob', headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                 .then((blob) => {
                                     if (blob !== null) {
                                         const url = window.URL.createObjectURL(blob);

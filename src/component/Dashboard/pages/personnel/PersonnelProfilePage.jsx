@@ -7,6 +7,7 @@ import Accordion from 'react-bootstrap/Accordion';
 import {RiDownloadCloud2Fill} from "react-icons/ri";
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
+import axios from "axios";
 
 class PersonnelProfilePage extends Component {
 
@@ -49,29 +50,166 @@ class PersonnelProfilePage extends Component {
         let parentId = ""
         let profileId = ""
         const personnelId = window.location.href.slice(-32)
-        const response = await fetch(`https://api.saadatportal.com/api/v1/characteristic/${personnelId}`).then((response) => response.json())
-            .then((data) => {this.setState({personnel: data})
+        axios.get(`https://api.saadatportal.com/api/v1/supervisor/characteristic/${personnelId}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+            .then((data) => {
+                this.setState({
+                    personnel: data,
+                })
                 parentId = data.parentId;
                 profileId = data.profileId
-            })
-
-        const response2 = await fetch(`https://api.saadatportal.com/api/v1/personnel/${parentId}`).then((response) => response.json())
-            .then((data) => this.setState({personnelObject: data}));
+            }).catch(() => {
+            if (localStorage.getItem('role') === 'MANAGER') {
+                axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                    .then((response) => {
+                        if (response.headers["accesstoken"]) {
+                            localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                            axios.get(`https://api.saadatportal.com/api/v1/supervisor/characteristic/${personnelId}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                .then((data) => {
+                                    this.setState({
+                                        personnel: data,
+                                    })
+                                    parentId = data.parentId;
+                                    profileId = data.profileId
+                                })
+                        } else {
+                            window.location = '/'
+                        }
+                    })
+            } else if (localStorage.getItem('role') === 'SUPERVISOR') {
+                axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                    .then((response) => {
+                        if (response.headers["accesstoken"]) {
+                            localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                            axios.get(`https://api.saadatportal.com/api/v1/supervisor/characteristic/${personnelId}`,
+                                {headers: {
+                                        'Authorization': localStorage.getItem('accessToken'),
+                                        'Access-Control-Allow-Origin': '*'
+                                    }}).then(response => response.data)
+                                .then((data) => {
+                                    this.setState({
+                                        personnel: data,
+                                    })
+                                    parentId = data.parentId;
+                                    profileId = data.profileId
+                                })
+                        } else {
+                            window.location = '/'
+                        }
+                    })
+            }})
+        axios.get(`https://api.saadatportal.com/api/v1/supervisor/personnel/${parentId}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+            .then((data) => this.setState({
+                personnelObject: data,
+            })).catch(() => {
+            if (localStorage.getItem('role') === 'MANAGER') {
+                axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                    .then((response) => {
+                        if (response.headers["accesstoken"]) {
+                            localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                            axios.get(`https://api.saadatportal.com/api/v1/supervisor/personnel/${parentId}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                .then((data) => this.setState({
+                                    personnelObject: data,
+                                }))
+                        } else {
+                            window.location = '/'
+                        }
+                    })
+            } else if (localStorage.getItem('role') === 'SUPERVISOR') {
+                axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                    .then((response) => {
+                        if (response.headers["accesstoken"]) {
+                            localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                            axios.get(`https://api.saadatportal.com/api/v1/supervisor/personnel/${parentId}`,
+                                {headers: {
+                                        'Authorization': localStorage.getItem('accessToken'),
+                                        'Access-Control-Allow-Origin': '*'
+                                    }}).then(response => response.data)
+                                .then((data) => this.setState({
+                                    personnelObject: data,
+                                }))
+                        } else {
+                            window.location = '/'
+                        }
+                    })
+            }})
 
         if (this.state.personnel.profileId !== null) {
-            const response3 = await fetch(`https://api.saadatportal.com/api/v1/file/${profileId}`).then((response) => response.blob())
+            axios.get(`https://api.saadatportal.com/api/v1/supervisor/file/${profileId}`, {responseType: 'blob', headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                 .then((data) => {
-                    const objectUrl = URL.createObjectURL(data);
-                    this.setState({profileImgUrl: objectUrl})
-                });
+                const objectUrl = URL.createObjectURL(data);
+                this.setState({profileImgUrl: objectUrl})
+            }).catch(() => {
+                if (localStorage.getItem('role') === 'MANAGER') {
+                    axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        .then((response) => {
+                            if (response.headers["accesstoken"]) {
+                                localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                                axios.get(`https://api.saadatportal.com/api/v1/supervisor/file/${profileId}`, {responseType: 'blob', headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                    .then((data) => {
+                                        const objectUrl = URL.createObjectURL(data);
+                                        this.setState({profileImgUrl: objectUrl})
+                                    })
+                            } else {
+                                window.location = '/'
+                            }
+                        })
+                } else if (localStorage.getItem('role') === 'SUPERVISOR') {
+                    axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        .then((response) => {
+                            if (response.headers["accesstoken"]) {
+                                localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                                axios.get(`https://api.saadatportal.com/api/v1/supervisor/file/${profileId}`, {responseType: 'blob', headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                    .then((data) => {
+                                        const objectUrl = URL.createObjectURL(data);
+                                        this.setState({profileImgUrl: objectUrl})
+                                    })
+                            } else {
+                                window.location = '/'
+                            }
+                        })
+                }})
         }
-        const fileRespond = await fetch(`https://api.saadatportal.com/api/v1/responseFile/search?parentType=Personnel&parentId=${parentId}`).then((response) => response.json())
+        axios.get(`https://api.saadatportal.com/api/v1/supervisor/responseFile/search?parentType=Personnel&parentId=${parentId}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
             .then((data) => this.setState({fileDetails: data}, () => {
-                this.setState({docFile: this.state.personnelObject.files});
-                this.setState({report: this.state.personnelObject.record}, () => {
+                this.setState({docFile: this.state.personnelObject.files, report: this.state.personnelObject.record}, () => {
+                    console.log(123, this.state.personnelObject, this.state.personnel)
+                    this.existDocFile(this.state.personnelObject.files);
                 });
-                this.existDocFile(this.state.personnelObject.files);
-            }));
+            }))
+            .catch(() => {
+            if (localStorage.getItem('role') === 'MANAGER') {
+                axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                    .then((response) => {
+                        if (response.headers["accesstoken"]) {
+                            localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                            axios.get(`https://api.saadatportal.com/api/v1/supervisor/responseFile/search?parentType=Personnel&parentId=${parentId}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                .then((data) => this.setState({fileDetails: data}, () => {
+                                    this.setState({docFile: this.state.personnelObject.files, report: this.state.personnelObject.record}, () => {
+                                        console.log(123, this.state.personnelObject, this.state.personnel)
+                                        this.existDocFile(this.state.personnelObject.files);
+                                    });
+                                }))
+                        } else {
+                            window.location = '/'
+                        }
+                    })
+            } else if (localStorage.getItem('role') === 'SUPERVISOR') {
+                axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                    .then((response) => {
+                        if (response.headers["accesstoken"]) {
+                            localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                            axios.get(`https://api.saadatportal.com/api/v1/supervisor/responseFile/search?parentType=Personnel&parentId=${parentId}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                .then((data) => this.setState({fileDetails: data}, () => {
+                                    this.setState({docFile: this.state.personnelObject.files, report: this.state.personnelObject.record}, () => {
+                                        console.log(123, this.state.personnelObject, this.state.personnel)
+                                        this.existDocFile(this.state.personnelObject.files);
+                                    });
+                                }))
+                        } else {
+                            window.location = '/'
+                        }
+                    })
+            }})
     }
 
     render() {
@@ -548,11 +686,9 @@ class PersonnelProfilePage extends Component {
         const file = this.state.fileDetails.find(({fileId}) => fileId === fileId);
         var filename = file.originalName;
 
-        const response = await fetch(`https://api.saadatportal.com/api/v1/file/${fileId}`).then((result) => {
-            return result.blob();
-        })
+        axios.get(`https://api.saadatportal.com/api/v1/supervisor/file/${fileId}`, {responseType: 'blob', headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
             .then((blob) => {
-                if (blob != null) {
+                if (blob !== null) {
                     var url = window.URL.createObjectURL(blob);
                     var a = document.createElement('a');
                     a.href = url;
@@ -561,7 +697,51 @@ class PersonnelProfilePage extends Component {
                     a.click();
                     a.remove();
                 }
-            });
+            }).catch(() => {
+            if (localStorage.getItem('role') === 'MANAGER') {
+                axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                    .then((response) => {
+                        if (response.headers["accesstoken"]) {
+                            localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                            axios.get(`https://api.saadatportal.com/api/v1/supervisor/file/${fileId}`, {responseType: 'blob', headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                .then((blob) => {
+                                    if (blob !== null) {
+                                        var url = window.URL.createObjectURL(blob);
+                                        var a = document.createElement('a');
+                                        a.href = url;
+                                        a.download = filename;
+                                        document.body.appendChild(a);
+                                        a.click();
+                                        a.remove();
+                                    }
+                                });
+                        } else {
+                            window.location = '/'
+                        }
+                    })
+            } else if (localStorage.getItem('role') === 'SUPERVISOR') {
+                axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                    .then((response) => {
+                        if (response.headers["accesstoken"]) {
+                            localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                            axios.get(`https://api.saadatportal.com/api/v1/supervisor/file/${fileId}`, {responseType: 'blob', headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                .then((blob) => {
+                                    if (blob !== null) {
+                                        var url = window.URL.createObjectURL(blob);
+                                        var a = document.createElement('a');
+                                        a.href = url;
+                                        a.download = filename;
+                                        document.body.appendChild(a);
+                                        a.click();
+                                        a.remove();
+                                    }
+                                });
+                        } else {
+                            window.location = '/'
+                        }
+                    })
+            }
+        })
     }
 
     existDocFile = (docFile) => {

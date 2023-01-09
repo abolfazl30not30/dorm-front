@@ -608,8 +608,6 @@ class MainRegister extends Component {
                 const createPerson = axios.post('https://api.saadatportal.com/api/v1/supervisor/person', person, {headers: {'Authorization': localStorage.getItem('accessToken')}})
                     .then(response => response.data)
                     .then((data) => {
-                        console.log('success1')
-
                         return data
                     })
                     .catch(() => {
@@ -644,17 +642,6 @@ class MainRegister extends Component {
                         }})
 
                 let respondPerson = await createPerson;
-
-                console.log(respondPerson)
-
-                // const editPersonRespond = await fetch(`https://api.saadatportal.com/api/v1/supervisor/characteristic/${respondChar.id}`, {
-                //     method: 'PATCH',
-                //     headers: {
-                //         'Accept': 'application/json',
-                //         'Content-Type': 'application/json'
-                //     },
-                //     body: JSON.stringify({parentId:respondPerson.id})
-                // });
 
                 axios.patch(`https://api.saadatportal.com/api/v1/supervisor/characteristic/${respondChar.id}`, {parentId:respondPerson.id}, {headers: {'Authorization': localStorage.getItem('accessToken')}})
                     .then(response => {

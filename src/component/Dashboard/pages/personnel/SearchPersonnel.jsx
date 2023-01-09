@@ -7,12 +7,13 @@ import BuildingContext from "../../../../contexts/Building";
 import Skeleton from "react-loading-skeleton";
 import FormControl from "@mui/material/FormControl";
 import {MenuItem, Select} from "@mui/material";
+import axios from "axios";
 
 class SearchPersonnel extends Component {
     static contextType = BuildingContext;
 
     state = {
-        searchLoadong: true,
+        searchLoading: true,
         placeholder: '',
         accountFound: [],
         searchInput: "",
@@ -21,8 +22,40 @@ class SearchPersonnel extends Component {
 
     async componentDidMount() {
         this.setState({searchLoading: true})
-        await fetch('https://api.saadatportal.com/api/v1/characteristic/search?parentType=Personnel').then((response) => response.json())
-            .then((data) => this.setState({accountFound: data, searchLoading: false}));
+        axios.get('https://api.saadatportal.com/api/v1/supervisor/characteristic/search?parentType=Personnel', {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+            .then((data) => this.setState({
+                accountFound: data,
+                searchLoading: false
+            })).catch(() => {
+            if (localStorage.getItem('role') === 'MANAGER') {
+                axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                    .then((response) => {
+                        if (response.headers["accesstoken"]) {
+                            localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                            axios.get('https://api.saadatportal.com/api/v1/supervisor/characteristic/search?parentType=Personnel', {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                .then((data) => this.setState({
+                                    accountFound: data,
+                                    searchLoading: false
+                                }))
+                        } else {
+                            window.location = '/'
+                        }
+                    })
+            } else if (localStorage.getItem('role') === 'SUPERVISOR') {
+                axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                    .then((response) => {
+                        if (response.headers["accesstoken"]) {
+                            localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                            axios.get('https://api.saadatportal.com/api/v1/supervisor/characteristic/search?parentType=Personnel', {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                .then((data) => this.setState({
+                                    accountFound: data,
+                                    searchLoading: false
+                                }))
+                        } else {
+                            window.location = '/'
+                        }
+                    })
+            }})
     }
 
     render() {
@@ -135,10 +168,53 @@ class SearchPersonnel extends Component {
     handleSearchInput = async (e) => {
         const value = e.target.value;
         this.setState({searchInput: value, searchLoading: true});
-        const response = await fetch(`https://api.saadatportal.com/api/v1/characteristic/search?parentType=Personnel&${this.state.searchType}=${e.target.value}`).then((response) => response.json())
-            .then((data) => this.setState({accountFound: data, searchLoading: false}));
+        axios.get(`https://api.saadatportal.com/api/v1/supervisor/characteristic/search?parentType=Personnel&${this.state.searchType}=${e.target.value}`,
+            {headers: {
+                    'Authorization': localStorage.getItem('accessToken'),
+                    'Access-Control-Allow-Origin': '*'
+                }}).then(response => response.data)
+            .then((data) => this.setState({
+                accountFound: data,
+                searchLoading: false
+            })).catch(() => {
+            if (localStorage.getItem('role') === 'MANAGER') {
+                axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                    .then((response) => {
+                        if (response.headers["accesstoken"]) {
+                            localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                            axios.get(`https://api.saadatportal.com/api/v1/supervisor/characteristic/search?parentType=Personnel&${this.state.searchType}=${e.target.value}`,
+                                {headers: {
+                                        'Authorization': localStorage.getItem('accessToken'),
+                                        'Access-Control-Allow-Origin': '*'
+                                    }}).then(response => response.data)
+                                .then((data) => this.setState({
+                                    accountFound: data,
+                                    searchLoading: false
+                                }))
+                        } else {
+                            window.location = '/'
+                        }
+                    })
+            } else if (localStorage.getItem('role') === 'SUPERVISOR') {
+                axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                    .then((response) => {
+                        if (response.headers["accesstoken"]) {
+                            localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                            axios.get(`https://api.saadatportal.com/api/v1/supervisor/characteristic/search?parentType=Personnel&${this.state.searchType}=${e.target.value}`,
+                                {headers: {
+                                        'Authorization': localStorage.getItem('accessToken'),
+                                        'Access-Control-Allow-Origin': '*'
+                                    }}).then(response => response.data)
+                                .then((data) => this.setState({
+                                    accountFound: data,
+                                    searchLoading: false
+                                }))
+                        } else {
+                            window.location = '/'
+                        }
+                    })
+            }})
     }
-
 }
 
 export default SearchPersonnel;

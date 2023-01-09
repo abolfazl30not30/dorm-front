@@ -8,6 +8,7 @@ import {RiDownloadCloud2Fill} from "react-icons/ri";
 import {green} from "@mui/material/colors";
 import Skeleton from "react-loading-skeleton";
 import FormControl from "@mui/material/FormControl";
+import axios from "axios";
 
 class PaymentHistory extends Component {
     state = {
@@ -26,10 +27,73 @@ class PaymentHistory extends Component {
 
     async componentDidMount() {
         this.setState({searchLoading: true})
-        const response = await fetch('https://api.saadatportal.com/api/v1/account').then((response) => response.json())
-            .then((data) => this.setState({totalPayment : data.totalPayment ,totalReceive : data.totalReceived}));
-        const response2 = await fetch('https://api.saadatportal.com/api/v1/paymentHistory').then((response) => response.json())
-            .then((data) => this.setState({payment : data, searchLoading: false}));
+        axios.get('https://api.saadatportal.com/api/v1/supervisor/account', {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+            .then((data) => {
+                this.setState({
+                    totalPayment: data.totalPayment,
+                    totalReceive: data.totalReceived})
+            }).catch(() => {
+            if (localStorage.getItem('role') === 'MANAGER') {
+                axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                    .then((response) => {
+                        if (response.headers["accesstoken"]) {
+                            localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                            axios.get('https://api.saadatportal.com/api/v1/supervisor/account', {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                .then((data) => {
+                                    this.setState({
+                                        totalPayment: data.totalPayment,
+                                        totalReceive: data.totalReceived})
+                                })
+                        } else {
+                            window.location = '/'
+                        }
+                    })
+            } else if (localStorage.getItem('role') === 'SUPERVISOR') {
+                axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                    .then((response) => {
+                        if (response.headers["accesstoken"]) {
+                            localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                            axios.get('https://api.saadatportal.com/api/v1/supervisor/account', {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                .then((data) => {
+                                    this.setState({
+                                        totalPayment: data.totalPayment,
+                                        totalReceive: data.totalReceived})
+                                })
+                        } else {
+                            window.location = '/'
+                        }
+                    })
+            }})
+        axios.get('https://api.saadatportal.com/api/v1/supervisor/paymentHistory', {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+            .then((data) => {
+                this.setState({payment : data, searchLoading: false})
+            }).catch(() => {
+            if (localStorage.getItem('role') === 'MANAGER') {
+                axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                    .then((response) => {
+                        if (response.headers["accesstoken"]) {
+                            localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                            axios.get('https://api.saadatportal.com/api/v1/supervisor/paymentHistory', {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                .then((data) => {
+                                    this.setState({payment : data, searchLoading: false})})
+                        } else {
+                            window.location = '/'
+                        }
+                    })
+            } else if (localStorage.getItem('role') === 'SUPERVISOR') {
+                axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                    .then((response) => {
+                        if (response.headers["accesstoken"]) {
+                            localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                            axios.get('https://api.saadatportal.com/api/v1/supervisor/paymentHistory', {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                .then((data) => {
+                                    this.setState({payment : data, searchLoading: false})})
+                        } else {
+                            window.location = '/'
+                        }
+                    })
+            }})
+
     }
 
     render() {
@@ -51,11 +115,10 @@ class PaymentHistory extends Component {
                         <div className='input-group-filter col-6 col-md my-2 px-2'>
                             <FormControl className={"w-100"} style={{border: "none"}}>
                                 <Select
-                                    ref={this.type}
                                     sx={{ height: 50, borderRadius: ".5rem", minWidth: '10rem'}}
                                     id="select-field"
-                                    value={this.state.searchType}
-                                    onChange={(value) => this.setState({searchType: value.target.value})}>
+                                    value={this.state.typeTransaction}
+                                    onChange={(value) => this.setState({typeTransaction: value.target.value})}>
                                     <MenuItem value={"all"}> همه تراکنش ها</MenuItem>
                                     <MenuItem value={"expend"}>پرداخت</MenuItem>
                                     <MenuItem value={"receive"}>دریافت</MenuItem>
@@ -327,7 +390,7 @@ class PaymentHistory extends Component {
     }
     handleSubmit = async () => {
         let type;
-        switch (this.type.current.value) {
+        switch (this.state.typeTransaction) {
             case 'all': {
                 type = ["receive", "expend"];
                 break;
@@ -360,25 +423,40 @@ class PaymentHistory extends Component {
             endDate: endDate
         }
         this.setState({loading: true, searchLoading: true})
-        const rawResponse = await fetch('https://api.saadatportal.com/api/v1/paymentHistory/filter', {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(result)
-        }).then(response => response.json()).then((data) => {this.setState({payment: data, loading: false, searchLoading: false})});
+        axios.post('https://api.saadatportal.com/api/v1/supervisor/paymentHistory/filter', result, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+            .then((data) => this.setState({payment: data, loading: false, searchLoading: false})).catch(() => {
+            if (localStorage.getItem('role') === 'MANAGER') {
+                axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                    .then((response) => {
+                        if (response.headers["accesstoken"]) {
+                            localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                            axios.post('https://api.saadatportal.com/api/v1/supervisor/paymentHistory/filter', result, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                .then((data) => this.setState({payment: data, loading: false, searchLoading: false}))
+                        } else {
+                            window.location = '/'
+                        }
+                    })
+            } else if (localStorage.getItem('role') === 'SUPERVISOR') {
+                axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                    .then((response) => {
+                        if (response.headers["accesstoken"]) {
+                            localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                            axios.post('https://api.saadatportal.com/api/v1/supervisor/paymentHistory/filter', result, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                .then((data) => this.setState({payment: data, loading: false, searchLoading: false}))
+                        } else {
+                            window.location = '/'
+                        }
+                    })
+            }})
     }
 
     downloadFile = async (file) => {
 
         var filename = Object.keys(file)[0];
 
-        const response = await fetch(`https://api.saadatportal.com/api/v1/file/${Object.values(file)[0]}`).then((result) => {
-            return result.blob();
-        })
+        axios.get(`https://api.saadatportal.com/api/v1/supervisor/file/${Object.values(file)[0]}`, {responseType: 'blob', headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
             .then((blob) => {
-                if (blob != null) {
+                if (blob !== null) {
                     var url = window.URL.createObjectURL(blob);
                     var a = document.createElement('a');
                     a.href = url;
@@ -387,7 +465,53 @@ class PaymentHistory extends Component {
                     a.click();
                     a.remove();
                 }
-            });
+            }).catch(() => {
+            if (localStorage.getItem('role') === 'MANAGER') {
+                axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                    .then((response) => {
+                        if (response.headers["accesstoken"]) {
+                            localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                            axios.get(`https://api.saadatportal.com/api/v1/supervisor/file/${Object.values(file)[0]}`, {responseType: 'blob', headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                .then((blob) => {
+                                    if (blob !== null) {
+                                        var url = window.URL.createObjectURL(blob);
+                                        var a = document.createElement('a');
+                                        a.href = url;
+                                        a.download = filename;
+                                        document.body.appendChild(a);
+                                        a.click();
+                                        a.remove();
+                                    }
+
+                                })
+                        } else {
+                            window.location = '/'
+                        }
+                    })
+            } else if (localStorage.getItem('role') === 'SUPERVISOR') {
+                axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                    .then((response) => {
+                        if (response.headers["accesstoken"]) {
+                            localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                            axios.get(`https://api.saadatportal.com/api/v1/supervisor/file/${Object.values(file)[0]}`, {responseType: 'blob', headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                .then((blob) => {
+                                    if (blob !== null) {
+                                        var url = window.URL.createObjectURL(blob);
+                                        var a = document.createElement('a');
+                                        a.href = url;
+                                        a.download = filename;
+                                        document.body.appendChild(a);
+                                        a.click();
+                                        a.remove();
+                                    }
+
+                                })
+                        } else {
+                            window.location = '/'
+                        }
+                    })
+            }
+        })
     }
 }
 

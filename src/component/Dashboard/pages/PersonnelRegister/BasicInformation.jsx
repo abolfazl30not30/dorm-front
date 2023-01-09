@@ -5,6 +5,8 @@ import DateInput from "../../../CustomInputs/DateInput";
 import {IconButton} from "@mui/material";
 import { IoAddOutline } from "react-icons/io5";
 import {Modal} from "react-bootstrap";
+import axios from "axios";
+import log from "../log/log";
 
 class BasicInformation extends Component{
     static contextType = BuildingContext;
@@ -44,8 +46,8 @@ class BasicInformation extends Component{
                         <div className="input-group-register col-md-4 col-12">
                             <SimpleTextInput
                                 condition1={this.context.personnelFieldsValidation.fatherName_requiredReg}
-                                value={this.context.constantInformationPage.fatherName}
-                                fieldNameString={'constantInformationPage'}
+                                value={this.context.personnelFields.fatherName}
+                                fieldNameString={'personnelFields'}
                                 valueOfInputString={'fatherName'}
                                 required={true}
                                 label={'نام پدر'}
@@ -344,6 +346,11 @@ class BasicInformation extends Component{
                             >
                                 <option selected="selected" value={''}/>
                                 {
+                                    this.state.types.map((t, index) => (
+                                        <option value={t.name}>{t.name}</option>
+                                    ))
+                                }
+                                {
                                     this.state.names.map((t, index) => (
                                         <option value={t}>{t}</option>
                                     ))
@@ -424,16 +431,43 @@ class BasicInformation extends Component{
         for (let i = 0; i < this.state.types.length; i++) {
             let updatedNames = [...this.state.names];
             updatedNames.push(this.state.types[i].name);
-
             this.setState({names : updatedNames});
         }
     }
 
     componentDidMount = async () => {
-        const response = await fetch(`https://api.saadatportal.com/api/v1/category/search?type=Personnel`).then((response) => response.json())
-            .then((data) => {
-                this.setState({types : data}, () => this.handleAddNames())
-            });
+        axios.get(`https://api.saadatportal.com/api/v1/supervisor/category/search?type=Personnel`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+            .then((data) => this.setState({
+                types: data
+            }, ()=>{
+                console.log(this.state.types)})).catch(() => {
+            if (localStorage.getItem('role') === 'MANAGER') {
+                axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                    .then((response) => {
+                        if (response.headers["accesstoken"]) {
+                            localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                            axios.get(`https://api.saadatportal.com/api/v1/supervisor/category/search?type=Personnel`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                .then((data) => this.setState({
+                                    types: data,
+                                }))
+                        } else {
+                            window.location = '/'
+                        }
+                    })
+            } else if (localStorage.getItem('role') === 'SUPERVISOR') {
+                axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                    .then((response) => {
+                        if (response.headers["accesstoken"]) {
+                            localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                            axios.get(`https://api.saadatportal.com/api/v1/supervisor/category/search?type=Personnel`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                .then((data) => this.setState({
+                                    types: data,
+                                }))
+                        } else {
+                            window.location = '/'
+                        }
+                    })
+            }})
     }
 
     handleAddType = () => {
