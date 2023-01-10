@@ -31,7 +31,6 @@ class PersonnelRegister extends Component {
         let emergencyNumber_requiredReg = !requiredReg.test(this.context.personnelFields.emergencyNumber);
         let birthPlace_requiredReg = !requiredReg.test(this.context.personnelFields.birthPlace);
         let birthDate_requiredReg = !requiredReg.test(this.context.personnelFields.birthDate);
-        let education_requiredReg = !requiredReg.test(this.context.personnelFields.education);
         let postalCode_requiredReg = !requiredReg.test(this.context.personnelFields.postalCode);
         let email_requiredReg = !requiredReg.test(this.context.personnelFields.email);
         let nationality_requiredReg = !requiredReg.test(this.context.personnelFields.nationality);
@@ -62,7 +61,7 @@ class PersonnelRegister extends Component {
         this.context.handleSpecificValidations([firstName_requiredReg, lastName_requiredReg, fatherName_requiredReg,
                 nationalCode_requiredReg, placeOfIssue_requiredReg, certificateNumber_requiredReg, phoneNumber_requiredReg,
                 address_requiredReg, telephoneNumber_requiredReg, emergencyNumber_requiredReg,
-                birthPlace_requiredReg, birthDate_requiredReg, education_requiredReg,
+                birthPlace_requiredReg, birthDate_requiredReg,
                 postalCode_requiredReg, email_requiredReg, nationality_requiredReg,
                 maritalStatus_requiredReg, nationalCode_numberReg,
                 certificateNumber_numberReg, postalCode_numberReg, phoneNumber_phoneNumberReg,
@@ -71,7 +70,7 @@ class PersonnelRegister extends Component {
             ['firstName_requiredReg', 'lastName_requiredReg', 'fatherName_requiredReg',
                 'nationalCode_requiredReg', 'placeOfIssue_requiredReg', 'certificateNumber_requiredReg', 'phoneNumber_requiredReg',
                 'address_requiredReg', 'telephoneNumber_requiredReg', 'emergencyNumber_requiredReg',
-                'birthPlace_requiredReg', 'birthDate_requiredReg', 'education_requiredReg',
+                'birthPlace_requiredReg', 'birthDate_requiredReg',
                 'postalCode_requiredReg', 'email_requiredReg', 'nationality_requiredReg',
                 'maritalStatus_requiredReg', 'nationalCode_numberReg',
                 'certificateNumber_numberReg', 'postalCode_numberReg', 'phoneNumber_phoneNumberReg',
@@ -79,9 +78,9 @@ class PersonnelRegister extends Component {
                 'healthyStatus_requiredReg', 'type_requiredReg', 'spouseFullName_requiredReg'], 'personnelFieldsValidation')
 
         return firstName_requiredReg && lastName_requiredReg && fatherName_requiredReg &&
-            nationalCode_requiredReg && certificateNumber_requiredReg && phoneNumber_requiredReg &&
+            nationalCode_requiredReg && placeOfIssue_requiredReg && certificateNumber_requiredReg && phoneNumber_requiredReg &&
             address_requiredReg && telephoneNumber_requiredReg && emergencyNumber_requiredReg &&
-            birthPlace_requiredReg && birthDate_requiredReg && education_requiredReg &&
+            birthPlace_requiredReg && birthDate_requiredReg &&
             postalCode_requiredReg && email_requiredReg && nationality_requiredReg &&
             maritalStatus_requiredReg && nationalCode_numberReg &&
             certificateNumber_numberReg && postalCode_numberReg && phoneNumber_phoneNumberReg &&
@@ -94,6 +93,7 @@ class PersonnelRegister extends Component {
         let numberReg = /^\s*[0-9]*\s*$/;
         let homeTelephoneReg = /^(\d{3}-\d{8}|\s*)$/; // 012-34567890
 
+        let education_requiredReg = !requiredReg.test(this.context.personnelFields.education);
         let bankAccountOwnerName_requiredReg = !requiredReg.test(this.context.personnelFields.bankAccountOwnerName);
         let bankAccountShabaNumber_requiredReg = !requiredReg.test(this.context.personnelFields.bankAccountShabaNumber);
         let parentType_requiredReg = !requiredReg.test(this.context.personnelFields.parentType);
@@ -104,15 +104,15 @@ class PersonnelRegister extends Component {
 
         let bankAccountShabaNumber_numberReg = numberReg.test(this.context.personnelFields.bankAccountShabaNumber)
 
-        this.context.handleSpecificValidations([bankAccountOwnerName_requiredReg,
+        this.context.handleSpecificValidations([education_requiredReg, bankAccountOwnerName_requiredReg,
                 bankAccountShabaNumber_requiredReg,
                 parentType_requiredReg, parentId_requiredReg, gender_requiredReg, bankAccountShabaNumber_numberReg],
-            ['bankAccountOwnerName_requiredReg',
+            ['education_requiredReg', 'bankAccountOwnerName_requiredReg',
                 'bankAccountShabaNumber_requiredReg',
                 'parentType_requiredReg', 'parentId_requiredReg', 'gender_requiredReg',
                 'bankAccountShabaNumber_numberReg'], 'personnelFieldsValidation')
 
-        return bankAccountOwnerName_requiredReg && bankAccountShabaNumber_requiredReg &&
+        return education_requiredReg && bankAccountOwnerName_requiredReg && bankAccountShabaNumber_requiredReg &&
             parentType_requiredReg && parentId_requiredReg && gender_requiredReg &&  bankAccountShabaNumber_numberReg;
 
     }
@@ -124,7 +124,7 @@ class PersonnelRegister extends Component {
                 label: 'مشخصات اولیه',
                 name: 'step 1',
                 content: <BasicInformation />,
-                validator: true
+                validator: this.personnelBasicInformation
             },
             {
                 label: 'مشخصات تکمیلی',
@@ -230,6 +230,8 @@ class PersonnelRegister extends Component {
             files: this.context.personnelUploadPage,
         }
 
+        console.log(respondChar)
+
         const newPersonnel = axios.post('https://api.saadatportal.com/api/v1/supervisor/personnel', personnel, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
 .catch(() => {
                 if (localStorage.getItem('role') === 'MANAGER') {
@@ -258,14 +260,14 @@ class PersonnelRegister extends Component {
 
         var respondPersonnel = await newPersonnel
 
-        const editCharRespond = axios.patch(`https://api.saadatportal.com/api/v1/supervisor/characteristic/${respondChar.id}`, {parentId : respondPersonnel.id}, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+        await axios.put(`https://api.saadatportal.com/api/v1/supervisor/characteristic/${respondChar.id}`, {parentId : respondPersonnel.id}, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
             .catch(() => {
                 if (localStorage.getItem('role') === 'MANAGER') {
                     axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                         .then((response) => {
                             if (response.headers["accesstoken"]) {
                                 localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                axios.patch(`https://api.saadatportal.com/api/v1/supervisor/characteristic/${respondChar.id}`, {parentId : respondPersonnel.id}, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                axios.put(`https://api.saadatportal.com/api/v1/supervisor/characteristic/${respondChar.id}`, {parentId : respondPersonnel.id}, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
 
                             } else {
                                 window.location = '/'
@@ -276,7 +278,7 @@ class PersonnelRegister extends Component {
                         .then((response) => {
                             if (response.headers["accesstoken"]) {
                                 localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                axios.patch(`https://api.saadatportal.com/api/v1/supervisor/characteristic/${respondChar.id}`, {parentId : respondPersonnel.id}, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                axios.put(`https://api.saadatportal.com/api/v1/supervisor/characteristic/${respondChar.id}`, {parentId : respondPersonnel.id}, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
 
                             } else {
                                 window.location = '/'

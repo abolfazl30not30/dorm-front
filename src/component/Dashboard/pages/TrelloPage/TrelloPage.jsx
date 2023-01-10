@@ -118,7 +118,7 @@ class TrelloPage extends Component {
             personnelId: this.state.selectedParent.parentId,
             fullName: this.state.selectedParent.fullName
         }
-        axios.post('https://api.saadatportal.com/api/v1/supervisor/task', newTask, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+        await axios.post('https://api.saadatportal.com/api/v1/supervisor/task', newTask, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
             .then((data) => this.setState({
                 loading: false
             })).catch(() => {
@@ -158,7 +158,7 @@ class TrelloPage extends Component {
             tempPriority: "",
             tempPersonnelId: "",})
         this.onClose()
-        await this.componentDidMount();
+        this.componentDidMount();
     };
 //----------------------------------------------------------------------------------------------------------------------
 // handler functions for edit task -------------------------------------------------------------------------------------
@@ -229,7 +229,11 @@ class TrelloPage extends Component {
         updatedTask.timeLog = this.state.tempHourTimeLog + (this.state.tempMinuteTimeLog / 60)
 
         updatedTask.dueDate = this.state.tempDueDate
-        axios.patch(`https://api.saadatportal.com/api/v1/supervisor/task/${this.state.clickedTask.id}`, updatedTask, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+        await axios.put(`https://api.saadatportal.com/api/v1/supervisor/task/${this.state.clickedTask.id}`, updatedTask, {
+            headers: {
+                'Authorization': localStorage.getItem('accessToken'),
+            }
+        }).then(response => response.data)
             .then((data) => this.setState({
                 loading: false
             })).catch(() => {
@@ -238,7 +242,7 @@ class TrelloPage extends Component {
                     .then((response) => {
                         if (response.headers["accesstoken"]) {
                             localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                            axios.patch(`https://api.saadatportal.com/api/v1/supervisor/task/${this.state.clickedTask.id}`, updatedTask, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                            axios.put(`https://api.saadatportal.com/api/v1/supervisor/task/${this.state.clickedTask.id}`, updatedTask, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                 .then((data) => this.setState({
                                     loading: false
                                 }))
@@ -251,7 +255,7 @@ class TrelloPage extends Component {
                     .then((response) => {
                         if (response.headers["accesstoken"]) {
                             localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                            axios.patch(`https://api.saadatportal.com/api/v1/supervisor/task/${this.state.clickedTask.id}`, updatedTask, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                            axios.put(`https://api.saadatportal.com/api/v1/supervisor/task/${this.state.clickedTask.id}`, updatedTask, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                 .then((data) => this.setState({
                                     loading: false
                                 }))
@@ -260,7 +264,7 @@ class TrelloPage extends Component {
                         }
                     })
             }})
-        // await this.componentDidMount()
+        this.componentDidMount()
         this.onClose()
     };
 //----------------------------------------------------------------------------------------------------------------------
@@ -278,7 +282,7 @@ class TrelloPage extends Component {
         targetTask.status = result.destination.droppableId;
         updatedTasks[index] = targetTask;
         this.setState({tasks: updatedTasks})
-        axios.patch(`https://api.saadatportal.com/api/v1/supervisor/task/${targetTask.id}`, targetTask, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+        await axios.put(`https://api.saadatportal.com/api/v1/supervisor/task/${targetTask.id}`, targetTask, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
             .then((data) => this.setState({
                 loading: false
             })).catch(() => {
@@ -287,7 +291,7 @@ class TrelloPage extends Component {
                     .then((response) => {
                         if (response.headers["accesstoken"]) {
                             localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                            axios.patch(`https://api.saadatportal.com/api/v1/supervisor/task/${targetTask.id}`, targetTask, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                            axios.put(`https://api.saadatportal.com/api/v1/supervisor/task/${targetTask.id}`, targetTask, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                         } else {
                             window.location = '/'
                         }
@@ -297,17 +301,17 @@ class TrelloPage extends Component {
                     .then((response) => {
                         if (response.headers["accesstoken"]) {
                             localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                            axios.patch(`https://api.saadatportal.com/api/v1/supervisor/task/${targetTask.id}`, targetTask, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                            axios.put(`https://api.saadatportal.com/api/v1/supervisor/task/${targetTask.id}`, targetTask, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                         } else {
                             window.location = '/'
                         }
                     })
             }})
-        await this.componentDidMount()
+        this.componentDidMount()
     }
     handleDelete = async (id) => {
         this.setState({loading: true})
-        axios.delete(`https://api.saadatportal.com/api/v1/supervisor/task/${id}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+        await axios.delete(`https://api.saadatportal.com/api/v1/supervisor/task/${id}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
             .then(() => {
                 this.setState({loading: false})
                 this.setState({forceCloseDeleteModal: true})

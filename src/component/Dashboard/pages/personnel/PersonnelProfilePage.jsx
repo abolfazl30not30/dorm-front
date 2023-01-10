@@ -50,7 +50,7 @@ class PersonnelProfilePage extends Component {
         let parentId = ""
         let profileId = ""
         const personnelId = window.location.href.slice(-32)
-        axios.get(`https://api.saadatportal.com/api/v1/supervisor/characteristic/${personnelId}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+        await axios.get(`https://api.saadatportal.com/api/v1/supervisor/characteristic/${personnelId}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
             .then((data) => {
                 this.setState({
                     personnel: data,
@@ -97,7 +97,8 @@ class PersonnelProfilePage extends Component {
                         }
                     })
             }})
-        axios.get(`https://api.saadatportal.com/api/v1/supervisor/personnel/${parentId}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+
+        await axios.get(`https://api.saadatportal.com/api/v1/supervisor/personnel/${parentId}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
             .then((data) => this.setState({
                 personnelObject: data,
             })).catch(() => {
@@ -134,7 +135,7 @@ class PersonnelProfilePage extends Component {
             }})
 
         if (this.state.personnel.profileId !== null) {
-            axios.get(`https://api.saadatportal.com/api/v1/supervisor/file/${profileId}`, {responseType: 'blob', headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+            await axios.get(`https://api.saadatportal.com/api/v1/supervisor/file/${profileId}`, {responseType: 'blob', headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                 .then((data) => {
                 const objectUrl = URL.createObjectURL(data);
                 this.setState({profileImgUrl: objectUrl})
@@ -169,7 +170,9 @@ class PersonnelProfilePage extends Component {
                         })
                 }})
         }
-        axios.get(`https://api.saadatportal.com/api/v1/supervisor/responseFile/search?parentType=Personnel&parentId=${parentId}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+
+
+        await axios.get(`https://api.saadatportal.com/api/v1/supervisor/responseFile/search?parentType=Personnel&parentId=${parentId}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
             .then((data) => this.setState({fileDetails: data}, () => {
                 this.setState({docFile: this.state.personnelObject.files, report: this.state.personnelObject.record}, () => {
                     console.log(123, this.state.personnelObject, this.state.personnel)
@@ -683,11 +686,16 @@ class PersonnelProfilePage extends Component {
     }
 
     downloadFile = async (fileId) => {
+        console.log(fileId)
         const file = this.state.fileDetails.find(({fileId}) => fileId === fileId);
         var filename = file.originalName;
 
         axios.get(`https://api.saadatportal.com/api/v1/supervisor/file/${fileId}`, {responseType: 'blob', headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
             .then((blob) => {
+
+                console.log('blob')
+                console.log(blob)
+
                 if (blob !== null) {
                     var url = window.URL.createObjectURL(blob);
                     var a = document.createElement('a');

@@ -643,7 +643,7 @@ class MainRegister extends Component {
 
                 let respondPerson = await createPerson;
 
-                axios.patch(`https://api.saadatportal.com/api/v1/supervisor/characteristic/${respondChar.id}`, {parentId:respondPerson.id}, {headers: {'Authorization': localStorage.getItem('accessToken')}})
+                axios.put(`https://api.saadatportal.com/api/v1/supervisor/characteristic/${respondChar.id}`, {parentId:respondPerson.id}, {headers: {'Authorization': localStorage.getItem('accessToken')}})
                     .then(response => {
                         console.log('success3')
                     })
@@ -994,7 +994,7 @@ class MainRegister extends Component {
                 // });
                 //
 
-                axios.patch(`https://api.saadatportal.com/api/v1/supervisor/characteristic/${respondChar.id}`, {parentId:respondPerson.id}, {headers: {'Authorization': localStorage.getItem('accessToken')}})
+                axios.put(`https://api.saadatportal.com/api/v1/supervisor/characteristic/${respondChar.id}`, {parentId:respondPerson.id}, {headers: {'Authorization': localStorage.getItem('accessToken')}})
                     .then(response => {
                         console.log('success3')
                     })

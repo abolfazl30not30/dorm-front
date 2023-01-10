@@ -315,7 +315,7 @@ class contacts extends Component {
             mobileNumbers: this.state.mobileNumbers
         }
         this.setState({loading: true})
-        axios.post('https://api.saadatportal.com/api/v1/supervisor/phoneBook', newContact, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+        await axios.post('https://api.saadatportal.com/api/v1/supervisor/phoneBook', newContact, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
             .then((data) => this.setState({
                 loading: false
             })).catch(() => {

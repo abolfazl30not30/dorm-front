@@ -174,7 +174,7 @@ class RoomAndBed extends Component {
         //         console.log(error)
         //     })
 
-        axios.patch(`https://api.saadatportal.com/api/v1/supervisor/bed/${this.state.bedOpen.id}`, {personId : this.state.selectedPeople , empty :  false}, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+        axios.put(`https://api.saadatportal.com/api/v1/supervisor/bed/${this.state.bedOpen.id}`, {personId : this.state.selectedPeople , empty :  false}, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
             .then((data)=>{
                 let updateState = [...this.state.rooms];
                 let roomIndex = this.state.rooms.indexOf(this.state.roomAccessory);
@@ -192,7 +192,7 @@ class RoomAndBed extends Component {
                         .then((response) => {
                             if (response.headers["accesstoken"]) {
                                 localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                axios.patch(`https://api.saadatportal.com/api/v1/supervisor/bed/${this.state.bedOpen.id}`, {personId : this.state.selectedPeople , empty :  false}, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                axios.put(`https://api.saadatportal.com/api/v1/supervisor/bed/${this.state.bedOpen.id}`, {personId : this.state.selectedPeople , empty :  false}, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                     .then((result)=>{
                                         let updateState = [...this.state.rooms];
                                         let roomIndex = this.state.rooms.indexOf(this.state.roomAccessory);
@@ -213,7 +213,7 @@ class RoomAndBed extends Component {
                         .then((response) => {
                             if (response.headers["accesstoken"]) {
                                 localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                axios.patch(`https://api.saadatportal.com/api/v1/supervisor/bed/${this.state.bedOpen.id}`, {personId : this.state.selectedPeople , empty :  false}, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                axios.put(`https://api.saadatportal.com/api/v1/supervisor/bed/${this.state.bedOpen.id}`, {personId : this.state.selectedPeople , empty :  false}, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                     .then((result)=>{
                                         let updateState = [...this.state.rooms];
                                         let roomIndex = this.state.rooms.indexOf(this.state.roomAccessory);
@@ -241,9 +241,15 @@ class RoomAndBed extends Component {
             let person = {}
             // await fetch(`https://api.saadatportal.com/api/v1/person/${bed.person}`).then((response) => response.json())
             //     .then((data) => (person = data));
+            console.log("bed")
+            console.log(bed)
 
-            axios.get(`https://api.saadatportal.com/api/v1/supervisor/person/${bed.person}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
-                .then((data) => (person = data))
+            await axios.get(`https://api.saadatportal.com/api/v1/supervisor/person/${bed.person}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                .then((data) => {
+                    person = data
+                    console.log("person1")
+                    console.log(person)
+                })
                 .catch(() => {
                     if (localStorage.getItem('role') === 'MANAGER') {
                         axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
@@ -251,7 +257,11 @@ class RoomAndBed extends Component {
                                 if (response.headers["accesstoken"]) {
                                     localStorage.setItem("accessToken", response.headers["accesstoken"]);
                                     axios.get(`https://api.saadatportal.com/api/v1/supervisor/person/${bed.person}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
-                                        .then((data) => (person = data))
+                                        .then((data) => {
+                                            person = data
+                                            console.log("person1")
+                                            console.log(person)
+                                        })
                                 } else {
                                     window.location = '/'
                                 }
@@ -262,17 +272,24 @@ class RoomAndBed extends Component {
                                 if (response.headers["accesstoken"]) {
                                     localStorage.setItem("accessToken", response.headers["accesstoken"]);
                                     axios.get(`https://api.saadatportal.com/api/v1/supervisor/person/${bed.person}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
-                                        .then((data) => (person = data))
+                                        .then((data) => {
+                                            person = data
+                                            console.log("person1")
+                                            console.log(person)
+                                        })
                                 } else {
                                     window.location = '/'
                                 }
                             })
                     }})
 
+            console.log("person")
+            console.log(person)
+
             // await fetch(`https://api.saadatportal.com/api/v1/supervisor/characteristic/${person.characteristicId}`).then((response) => response.json())
             //     .then((data) => this.setState({tempPerson : data}));
 
-            axios.get(`https://api.saadatportal.com/api/v1/supervisor/characteristic/${person.characteristicId}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+            await axios.get(`https://api.saadatportal.com/api/v1/supervisor/characteristic/${person.characteristicId}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                 .then((data) => this.setState({tempPerson : data}))
                 .catch(() => {
                     if (localStorage.getItem('role') === 'MANAGER') {

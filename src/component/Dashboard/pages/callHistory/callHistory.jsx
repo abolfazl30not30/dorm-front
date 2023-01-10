@@ -418,7 +418,7 @@ class callHistory extends Component {
         }
 
         this.setState({loading: true})
-        axios.post('https://api.saadatportal.com/api/v1/supervisor/telephoneHistory', newCall, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+        await axios.post('https://api.saadatportal.com/api/v1/supervisor/telephoneHistory', newCall, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
             .then((data) => this.setState({
                 loading: false
             })).catch(() => {

@@ -17,6 +17,7 @@ import "../../../../style/registerPage.css";
 import {Box, CircularProgress, MenuItem, Select} from "@mui/material";
 import {green} from "@mui/material/colors";
 import Skeleton from "react-loading-skeleton";
+import axios from "axios";
 // import React from "@types/react";
 
 class RequestPage extends Component {
@@ -393,13 +394,40 @@ class RequestPage extends Component {
     }
 
     componentDidMount = async () => {
-        await fetch(`https://api.saadatportal.com/api/v1/request`).then((response) => response.json())
-            .then((data) => {
-                this.setState({
-                    requests: data,
-                    cardsLoading: false
-                })
-            });
+        axios.get('https://api.saadatportal.com/api/v1/supervisor/request', {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+            .then((data) => this.setState({
+                requests: data,
+                cardsLoading: false
+            })).catch(() => {
+            if (localStorage.getItem('role') === 'MANAGER') {
+                axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                    .then((response) => {
+                        if (response.headers["accesstoken"]) {
+                            localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                            axios.get('https://api.saadatportal.com/api/v1/supervisor/request', {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                .then((data) => this.setState({
+                                    requests: data,
+                                    cardsLoading: false
+                                }))
+                        } else {
+                            window.location = '/'
+                        }
+                    })
+            } else if (localStorage.getItem('role') === 'SUPERVISOR') {
+                axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                    .then((response) => {
+                        if (response.headers["accesstoken"]) {
+                            localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                            axios.get('https://api.saadatportal.com/api/v1/supervisor/request', {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                .then((data) => this.setState({
+                                    requests: data,
+                                    cardsLoading: false
+                                }))
+                        } else {
+                            window.location = '/'
+                        }
+                    })
+            }})
     }
 
     handleEditButton = async (request) => {
@@ -421,8 +449,38 @@ class RequestPage extends Component {
                 type: '',
             }})
         this.setState({failureModalShow: true, loading: true});
-        await fetch(`https://api.saadatportal.com/api/v1/failureReason/${request.failureReason}`).then((response) => response.json())
-            .then((data) => this.setState({failure: data, loading: false}));
+
+        axios.get(`https://api.saadatportal.com/api/v1/supervisor/failureReason/${request.failureReason}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+            .then((data) => this.setState({
+                failure: data, loading: false
+            })).catch(() => {
+            if (localStorage.getItem('role') === 'MANAGER') {
+                axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                    .then((response) => {
+                        if (response.headers["accesstoken"]) {
+                            localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                            axios.get(`https://api.saadatportal.com/api/v1/supervisor/failureReason/${request.failureReason}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                .then((data) => this.setState({
+                                    failure: data, loading: false
+                                }))
+                        } else {
+                            window.location = '/'
+                        }
+                    })
+            } else if (localStorage.getItem('role') === 'SUPERVISOR') {
+                axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                    .then((response) => {
+                        if (response.headers["accesstoken"]) {
+                            localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                            axios.get(`https://api.saadatportal.com/api/v1/supervisor/failureReason/${request.failureReason}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                .then((data) => this.setState({
+                                    failure: data, loading: false
+                                }))
+                        } else {
+                            window.location = '/'
+                        }
+                    })
+            }})
     }
 
     handleCloseType = () => {
@@ -450,56 +508,196 @@ class RequestPage extends Component {
         const index = updatedRequests.indexOf(this.state.tmpRequest)
         if (this.state.tmpRequestForSubmit.checked === false) {
             this.setState({loading: true})
-            const getFailureReasonId = await fetch('https://api.saadatportal.com/api/v1/failureReason', {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    name: this.state.failure.name,
-                    type: this.state.failure.type,
-                    reason: this.state.failure.reason
-                })
-            })
 
-            var content = await getFailureReasonId.json();
 
-            await fetch(`https://api.saadatportal.com/api/v1/request/${updatedRequests[index].id}`, {
-                method: 'PATCH',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    checked: false,
-                    failureReasonId: content.id
-                })
-            }).then(() => {
-                updatedRequests[index].checked = false
-                this.setState({
-                    loading: false,
-                    showStatusModal: false,
-                    requests: updatedRequests
-                })});
+            // const getFailureReasonId = await fetch('https://api.saadatportal.com/api/v1/failureReason', {
+            //     method: 'POST',
+            //     headers: {
+            //         'Accept': 'application/json',
+            //         'Content-Type': 'application/json'
+            //     },
+            //     body: JSON.stringify({
+            //         name: this.state.failure.name,
+            //         type: this.state.failure.type,
+            //         reason: this.state.failure.reason
+            //     })
+            // })
+
+            const getFailureReasonId = await axios.post('https://api.saadatportal.com/api/v1/supervisor/failureReason', {
+                name: this.state.failure.name,
+                type: this.state.failure.type,
+                reason: this.state.failure.reason
+            }, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                .then((data) => {
+                    return data
+                }).catch(() => {
+                    if (localStorage.getItem('role') === 'MANAGER') {
+                        axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                            .then((response) => {
+                                if (response.headers["accesstoken"]) {
+                                    localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                                    axios.post('https://api.saadatportal.com/api/v1/supervisor/failureReason', {
+                                        name: this.state.failure.name,
+                                        type: this.state.failure.type,
+                                        reason: this.state.failure.reason
+                                    }, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                        .then((data) => {
+                                            return data
+                                        })
+                                } else {
+                                    window.location = '/'
+                                }
+                            })
+                    } else if (localStorage.getItem('role') === 'SUPERVISOR') {
+                        axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                            .then((response) => {
+                                if (response.headers["accesstoken"]) {
+                                    localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                                    axios.post('https://api.saadatportal.com/api/v1/supervisor/failureReason', {
+                                        name: this.state.failure.name,
+                                        type: this.state.failure.type,
+                                        reason: this.state.failure.reason
+                                    }, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                        .then((data) => {
+                                            return data
+                                        })
+                                } else {
+                                    window.location = '/'
+                                }
+                            })
+                    }})
+
+            var content = await getFailureReasonId;
+
+            // await fetch(`https://api.saadatportal.com/api/v1/request/${updatedRequests[index].id}`, {
+            //     method: 'PATCH',
+            //     headers: {
+            //         'Accept': 'application/json',
+            //         'Content-Type': 'application/json'
+            //     },
+            //     body: JSON.stringify({
+            //         checked: false,
+            //         failureReasonId: content.id
+            //     })
+            // }).then(() => {
+            //     updatedRequests[index].checked = false
+            //     this.setState({
+            //         loading: false,
+            //         showStatusModal: false,
+            //         requests: updatedRequests
+            //     })});
+
+            await axios.patch(`https://api.saadatportal.com/api/v1/supervisor/request/${updatedRequests[index].id}`, {checked: false,
+                failureReasonId: content.id}, {headers: {'Authorization': localStorage.getItem('accessToken')}})
+                .then(response => response.data).then((data) => {
+                    updatedRequests[index].checked = false
+                    this.setState({
+                        loading: false,
+                        showStatusModal: false,
+                        requests: updatedRequests
+                    })})
+                .catch(() => {
+                    if (localStorage.getItem('role') === 'MANAGER') {
+                        axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                            .then((response) => {
+                                if (response.headers["accesstoken"]) {
+                                    localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                                    axios.patch(`https://api.saadatportal.com/api/v1/supervisor/request/${updatedRequests[index].id}`, {checked: false,
+                                        failureReasonId: content.id}, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                        .then((data) => {
+                                            updatedRequests[index].checked = false
+                                            this.setState({
+                                                loading: false,
+                                                showStatusModal: false,
+                                                requests: updatedRequests
+                                            })})
+                                } else {
+                                    window.location = '/'
+                                }
+                            })
+                    } else if (localStorage.getItem('role') === 'SUPERVISOR') {
+                        axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                            .then((response) => {
+                                if (response.headers["accesstoken"]) {
+                                    localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                                    axios.patch(`https://api.saadatportal.com/api/v1/supervisor/request/${updatedRequests[index].id}`, {checked: false,
+                                        failureReasonId: content.id}, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                        .then((data) => {
+                                            updatedRequests[index].checked = false
+                                            this.setState({
+                                                loading: false,
+                                                showStatusModal: false,
+                                                requests: updatedRequests
+                                            })})
+                                } else {
+                                    window.location = '/'
+                                }
+                            })
+                    }})
         } else if (this.state.tmpRequestForSubmit.checked === true) {
             this.setState({loading: true})
-            await fetch(`https://api.saadatportal.com/api/v1/request/${updatedRequests[index].id}`, {
-                method: 'PATCH',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    checked: this.state.tmpRequestForSubmit.checked
-                })
-            }).then(() => {
-                updatedRequests[index].checked = true
-                this.setState({
-                    loading: false,
-                    showStatusModal: false,
-                    requests: updatedRequests
-                })});
+
+            // await fetch(`https://api.saadatportal.com/api/v1/request/${updatedRequests[index].id}`, {
+            //     method: 'PATCH',
+            //     headers: {
+            //         'Accept': 'application/json',
+            //         'Content-Type': 'application/json'
+            //     },
+            //     body: JSON.stringify({
+            //         checked: this.state.tmpRequestForSubmit.checked
+            //     })
+            // }).then(() => {
+            //     updatedRequests[index].checked = true
+            //     this.setState({
+            //         loading: false,
+            //         showStatusModal: false,
+            //         requests: updatedRequests
+            //     })});
+
+            await axios.patch(`https://api.saadatportal.com/api/v1/supervisor/request/${updatedRequests[index].id}`, {checked: this.state.tmpRequestForSubmit.checked}, {headers: {'Authorization': localStorage.getItem('accessToken')}})
+                .then(response => response.data).then((data) => {
+                    updatedRequests[index].checked = true
+                    this.setState({
+                        loading: false,
+                        showStatusModal: false,
+                        requests: updatedRequests
+                    })})
+                .catch(() => {
+                    if (localStorage.getItem('role') === 'MANAGER') {
+                        axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                            .then((response) => {
+                                if (response.headers["accesstoken"]) {
+                                    localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                                    axios.patch(`https://api.saadatportal.com/api/v1/supervisor/request/${updatedRequests[index].id}`, {checked: this.state.tmpRequestForSubmit.checked}, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                        .then((data) => {
+                                            updatedRequests[index].checked = true
+                                            this.setState({
+                                                loading: false,
+                                                showStatusModal: false,
+                                                requests: updatedRequests
+                                            })})
+                                } else {
+                                    window.location = '/'
+                                }
+                            })
+                    } else if (localStorage.getItem('role') === 'SUPERVISOR') {
+                        axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                            .then((response) => {
+                                if (response.headers["accesstoken"]) {
+                                    localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                                    axios.patch(`https://api.saadatportal.com/api/v1/supervisor/request/${updatedRequests[index].id}`, {checked: this.state.tmpRequestForSubmit.checked}, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                        .then((data) => {
+                                            updatedRequests[index].checked = true
+                                            this.setState({
+                                                loading: false,
+                                                showStatusModal: false,
+                                                requests: updatedRequests
+                                            })})
+                                } else {
+                                    window.location = '/'
+                                }
+                            })
+                    }})
         } else if (this.state.tmpRequestForSubmit.checked === null) {
             this.setState({
                 showStatusModal: false
@@ -526,13 +724,48 @@ class RequestPage extends Component {
     handleSearchInput = async (e) =>{
         const value = e.target.value;
         this.setState({cardsLoading: true})
-        await fetch(`https://api.saadatportal.com/api/v1/request/search?${this.state.searchBase}=${value}`).then((response) => response.json())
-            .then((data) => {
-                this.setState({
-                    requests: data,
-                    cardsLoading: false
-                })
-            });
+        // await fetch(`https://api.saadatportal.com/api/v1/supervisor/request/search?${this.state.searchBase}=${value}`).then((response) => response.json())
+        //     .then((data) => {
+        //         this.setState({
+        //             requests: data,
+        //             cardsLoading: false
+        //         })
+        //     });
+
+        axios.get(`https://api.saadatportal.com/api/v1/supervisor/request/search?${this.state.searchBase}=${value}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+            .then((data) => this.setState({
+                requests: data,
+                cardsLoading: false
+            })).catch(() => {
+            if (localStorage.getItem('role') === 'MANAGER') {
+                axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                    .then((response) => {
+                        if (response.headers["accesstoken"]) {
+                            localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                            axios.get(`https://api.saadatportal.com/api/v1/supervisor/request/search?${this.state.searchBase}=${value}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                .then((data) => this.setState({
+                                    requests: data,
+                                    cardsLoading: false
+                                }))
+                        } else {
+                            window.location = '/'
+                        }
+                    })
+            } else if (localStorage.getItem('role') === 'SUPERVISOR') {
+                axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                    .then((response) => {
+                        if (response.headers["accesstoken"]) {
+                            localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                            axios.get(`https://api.saadatportal.com/api/v1/supervisor/request/search?${this.state.searchBase}=${value}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                .then((data) => this.setState({
+                                    requests: data,
+                                    cardsLoading: false
+                                }))
+                        } else {
+                            window.location = '/'
+                        }
+                    })
+            }})
     }
 }
 

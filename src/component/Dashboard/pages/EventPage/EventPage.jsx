@@ -75,7 +75,7 @@ class EventPage extends Component {
 
                                         mapDays={({date}) => {
                                             // console.log(1)
-                                            this.handleHolidaysFromAPI(date.year, date.month.number, date.day, date);
+                                            // this.handleHolidaysFromAPI(date.year, date.month.number, date.day, date);
                                             let props = {}
 
                                             let isWeekend = [6].includes(date.weekDay.index);
@@ -151,14 +151,6 @@ class EventPage extends Component {
                                         >
                                             برو به امروز
                                         </button>
-                                        {/*<button*/}
-                                        {/*    className={' btn btn-lg'}*/}
-                                        {/*    onClick={() => {*/}
-                                        {/*        console.log(this.state.value)*/}
-                                        {/*    }}*/}
-                                        {/*>*/}
-                                        {/*    print*/}
-                                        {/*</button>*/}
 
                                     </Calendar>
                                 </div>
@@ -192,13 +184,6 @@ class EventPage extends Component {
                                             onClick={() => {
                                                 this.handleOpenType();
                                                 this.setState({tempInputForModal: ''})
-
-                                                // let day = parseInt(today.getDay()) < 10 ? ('0' + parseInt(today.getDay())) : parseInt(today.getDay());
-                                                // let month = (parseInt(today.getMonth()) < 10 ? ('0' + parseInt(today.getMonth())) : parseInt(today.getMonth()));
-
-                                                // console.log(today.getYear() + '/' + month + '/' + day + ' 00:00:00')
-
-                                                // console.log(parseInt("09"))
                                             }}>
                                         اضافه کردن رویداد
                                     </button>
@@ -238,49 +223,6 @@ class EventPage extends Component {
                             </div>
                         </div>
 
-
-                        {/*<div className={'col-md-6 col-12 my-3'} style={{
-                        backgroundColor: "#fff",
-                        textAlign: 'center',
-                        boxShadow: '0 0 5px #8798ad',
-                        borderRadius: "10px"
-                    }}>
-                        <button className={'btn btn-success m-4'}
-                                onClick={() => {
-                                    this.handleOpenType();
-                                    this.setState({tempInputForModal: ''})
-
-                                    // let day = parseInt(today.getDay()) < 10 ? ('0' + parseInt(today.getDay())) : parseInt(today.getDay());
-                                    // let month = (parseInt(today.getMonth()) < 10 ? ('0' + parseInt(today.getMonth())) : parseInt(today.getMonth()));
-
-                                    // console.log(today.getYear() + '/' + month + '/' + day + ' 00:00:00')
-
-                                    // console.log(parseInt("09"))
-                                }}>
-                            اضافه کردن رویداد
-                        </button>
-                        <h5 className={'mb-3'}>
-                            رویداد های من
-                        </h5>
-                        <ul className="list-group">
-                            {
-                                this.state.customEvents.map((event, key) => {
-                                    let day = parseInt(this.state.day) < 10 ? ('0' + parseInt(this.state.day)) : parseInt(this.state.day);
-                                    let month = (parseInt(this.state.month) < 10 ? ('0' + parseInt(this.state.month)) : parseInt(this.state.month));
-
-                                    let tmpFormatDate = this.state.year + '/' + month + '/' + day;
-
-                                    return <li className={'p-3 list-group-item'} key={key}>{event.eventName}</li>
-
-                                    return (event.date === tmpFormatDate) ?
-                                        <li className={'p-3 list-group-item'} key={key}>{event.eventName}</li> :
-                                        null
-                                })
-
-                            }
-                        </ul>
-                    </div>*/}
-
                     </div>
                 </div>
 
@@ -301,13 +243,6 @@ class EventPage extends Component {
                                    placeholder=" "/>
                             <label className="placeholder">نام رویداد</label>
                         </div>
-                        {/*<div className="input-group-register col-12">
-                            <textarea type='text'
-                                      className='form-control mt-3 mb-3 input'
-                                      onChange={(e) => this.handleEventDescription(e)}
-                                      placeholder=" "/>
-                            <label className="placeholder">توضیحات</label>
-                        </div>*/}
                         <div className="input-group-register col-12">
                                 <textarea
                                     className="input form-control"
@@ -380,9 +315,6 @@ class EventPage extends Component {
         if (!regCheck.test(this.state.tempEventName) && !regCheck.test(this.state.tempEventDescription)) {
             let updatedCustomEvents = [...this.state.customEvents];
 
-            // let day = parseInt(this.state.day) < 10 ? ('0' + parseInt(this.state.day)) : parseInt(this.state.day);
-            // let month = (parseInt(this.state.month) < 10 ? ('0' + parseInt(this.state.month)) : parseInt(this.state.month));
-
             let newCustomEvent = {
                 date: parseInt(this.state.year) + '/' + parseInt(this.state.month) + '/' + parseInt(this.state.day),
                 eventName: this.state.tempEventName,
@@ -392,14 +324,6 @@ class EventPage extends Component {
 
             this.setState({customEvents: updatedCustomEvents});
             this.setState({loading: true})
-            // await fetch('https://api.saadatportal.com/api/v1/supervisor/notification', {
-            //     method: 'POST',
-            //     headers: {
-            //         'Accept': 'application/json',
-            //         'Content-Type': 'application/json'
-            //     },
-            //     body: JSON.stringify(newCustomEvent)
-            // }).then(() => {this.setState({loading: false})});
 
             axios.post('https://api.saadatportal.com/api/v1/supervisor/notification', newCustomEvent, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                 .then((data) => this.setState({
@@ -432,8 +356,6 @@ class EventPage extends Component {
                             }
                         })
                 }})
-
-            // console.log(updatedCustomEvents)
         }
 
         await this.componentDidMount();
@@ -495,8 +417,6 @@ class EventPage extends Component {
     }
 
     componentDidMount = async () => {
-        // await fetch('https://api.saadatportal.com/api/v1/supervisor/notification').then((response) => response.json())
-        //     .then((data) => this.setState({customEvents: data}, () => this.handleNotif()));
 
         axios.get('https://api.saadatportal.com/api/v1/supervisor/notification', {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
             .then((data) => this.setState({customEvents: data}, () => this.handleNotif())).catch(() => {
@@ -550,7 +470,6 @@ class EventPage extends Component {
                         this.setState({holidaysOfMonth: updatedHolidaysOfMonth})
                     }
                 }
-                // console.log(this.state.holidaysOfMonth)
             });
 
     }

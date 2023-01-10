@@ -6,6 +6,7 @@ import ForgotPassword from "./component/ForgotPassword";
 import ProtectedRoute from "./component/protectedRoute";
 
 class App extends Component {
+
     render() {
         return (
             <>

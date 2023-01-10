@@ -83,13 +83,8 @@ class ProfilePage extends Component {
         let parentId = ""
         let profileId = ""
         const personId = window.location.href.slice(-32)
-        // await fetch(`https://api.saadatportal.com/api/v1/characteristic/${personId}`).then((response) => response.json())
-        //     .then((data) => {this.setState({person: data})
-        //         parentId = data.parentId;
-        //         profileId = data.profileId
-        //     })
 
-        axios.get(`https://api.saadatportal.com/api/v1/supervisor/characteristic/${personId}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+        await axios.get(`https://api.saadatportal.com/api/v1/supervisor/characteristic/${personId}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
             .then((data) => {
                     this.setState({
                         person: data
@@ -136,7 +131,7 @@ class ProfilePage extends Component {
         // await fetch(`https://api.saadatportal.com/api/v1/person/${parentId}`).then((response) => response.json())
         //     .then((data) => this.setState({personObject: data}));
 
-        axios.get(`https://api.saadatportal.com/api/v1/supervisor/person/${parentId}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+        await axios.get(`https://api.saadatportal.com/api/v1/supervisor/person/${parentId}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
             .then((data) => {
                     this.setState({
                         personObject: data
@@ -182,7 +177,7 @@ class ProfilePage extends Component {
             //         this.setState({profileImgUrl: objectUrl})
             //     });
 
-            axios.get(`https://api.saadatportal.com/api/v1/supervisor/file/${profileId}`, { responseType: 'blob', headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+            await axios.get(`https://api.saadatportal.com/api/v1/supervisor/file/${profileId}`, { responseType: 'blob', headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                 .then((data) => {
                         const objectUrl = URL.createObjectURL(data);
                         this.setState({profileImgUrl: objectUrl})
@@ -227,7 +222,7 @@ class ProfilePage extends Component {
         //         this.existDocFile(this.state.personObject.files);
         //     }));
 
-        axios.get(`https://api.saadatportal.com/api/v1/supervisor/responseFile/search?parentType=Person&parentId=${parentId}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+        await axios.get(`https://api.saadatportal.com/api/v1/supervisor/responseFile/search?parentType=Person&parentId=${parentId}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
             .then((data) => {
                     this.setState({
                         fileDetails: data
@@ -2203,25 +2198,7 @@ class ProfilePage extends Component {
                         'personId': this.state.personObject.id
                     }
 
-                    // await fetch('https://api.saadatportal.com/api/v1/record', {
-                    //     method: 'POST',
-                    //     headers: {
-                    //         'Accept': 'application/json',
-                    //         'Content-Type': 'application/json'
-                    //     },
-                    //     body: JSON.stringify(result)
-                    // }).then((response) => response.json())
-                    //     .then((result) => {
-                    //         this.setState({registerLoading: false});
-                    //         const newReports = this.state.report.concat(result);
-                    //         this.setState({report: newReports});
-                    //         this.setState({show: false});
-                    //     })
-                    //     .catch((error) => {
-                    //         this.setState({registerLoading: false})
-                    //     });
-
-                    axios.post('https://api.saadatportal.com/api/v1/supervisor/record', result, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                    await axios.post('https://api.saadatportal.com/api/v1/supervisor/record', result, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                         .then((data) => {
                             this.setState({registerLoading: false});
                             const newReports = this.state.report.concat(result);
@@ -2287,25 +2264,7 @@ class ProfilePage extends Component {
                         'personId': this.state.personObject.id
                     }
 
-                    // await fetch('https://api.saadatportal.com/api/v1/record', {
-                    //     method: 'POST',
-                    //     headers: {
-                    //         'Accept': 'application/json',
-                    //         'Content-Type': 'application/json'
-                    //     },
-                    //     body: JSON.stringify(result)
-                    // }).then((response) => response.json())
-                    //     .then((result) => {
-                    //         this.setState({registerLoading: false});
-                    //         const newReports = this.state.report.concat(result)
-                    //         this.setState({report: newReports})
-                    //         this.setState({show: false})
-                    //     })
-                    //     .catch((error) => {
-                    //         this.setState({registerLoading: false})
-                    //     });
-
-                    axios.post('https://api.saadatportal.com/api/v1/supervisor/record', result, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                    await axios.post('https://api.saadatportal.com/api/v1/supervisor/record', result, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                         .then((data) => {
                             this.setState({registerLoading: false});
                             const newReports = this.state.report.concat(result);
@@ -2377,25 +2336,7 @@ class ProfilePage extends Component {
                         'personId': this.state.personObject.id
                     }
 
-                    // await fetch('https://api.saadatportal.com/api/v1/record', {
-                    //     method: 'POST',
-                    //     headers: {
-                    //         'Accept': 'application/json',
-                    //         'Content-Type': 'application/json'
-                    //     },
-                    //     body: JSON.stringify(result)
-                    // }).then((response) => response.json())
-                    //     .then((result) => {
-                    //         this.setState({registerLoading: false})
-                    //         const newReports = this.state.report.concat(result)
-                    //         this.setState({report: newReports})
-                    //         this.setState({show: false})
-                    //     })
-                    //     .catch((error) => {
-                    //         this.setState({registerLoading: false})
-                    //     });
-
-                    axios.post('https://api.saadatportal.com/api/v1/supervisor/record', result, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                    await axios.post('https://api.saadatportal.com/api/v1/supervisor/record', result, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                         .then((data) => {
                             this.setState({registerLoading: false});
                             const newReports = this.state.report.concat(result);
@@ -2466,25 +2407,7 @@ class ProfilePage extends Component {
                         'personId': this.state.personObject.id
                     }
 
-                    // await fetch('https://api.saadatportal.com/api/v1/record', {
-                    //     method: 'POST',
-                    //     headers: {
-                    //         'Accept': 'application/json',
-                    //         'Content-Type': 'application/json'
-                    //     },
-                    //     body: JSON.stringify(result)
-                    // }).then((response) => response.json())
-                    //     .then((result) => {
-                    //         this.setState({registerLoading: false})
-                    //         const newReports = this.state.report.concat(result)
-                    //         this.setState({report: newReports})
-                    //         this.setState({show: false})
-                    //     })
-                    //     .catch((error) => {
-                    //         this.setState({registerLoading: false})
-                    //     });
-
-                    axios.post('https://api.saadatportal.com/api/v1/supervisor/record', result, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                    await axios.post('https://api.saadatportal.com/api/v1/supervisor/record', result, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                         .then((data) => {
                             this.setState({registerLoading: false});
                             const newReports = this.state.report.concat(result);
@@ -2550,25 +2473,7 @@ class ProfilePage extends Component {
                         'personId': this.state.personObject.id
                     }
 
-                    // await fetch('https://api.saadatportal.com/api/v1/record', {
-                    //     method: 'POST',
-                    //     headers: {
-                    //         'Accept': 'application/json',
-                    //         'Content-Type': 'application/json'
-                    //     },
-                    //     body: JSON.stringify(result)
-                    // }).then((response) => response.json())
-                    //     .then((res) => {
-                    //         this.setState({registerLoading: false})
-                    //         const newReports = this.state.report.concat(result)
-                    //         this.setState({report: newReports})
-                    //         this.setState({show: false})
-                    //     })
-                    //     .catch((error) => {
-                    //         this.setState({registerLoading: false})
-                    //     });
-
-                    axios.post('https://api.saadatportal.com/api/v1/supervisor/record', result, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                    await axios.post('https://api.saadatportal.com/api/v1/supervisor/record', result, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                         .then((data) => {
                             this.setState({registerLoading: false});
                             const newReports = this.state.report.concat(result);
@@ -2645,26 +2550,7 @@ class ProfilePage extends Component {
                         'personId': this.state.personObject.id
                     }
 
-                    // await fetch('https://api.saadatportal.com/api/v1/record', {
-                    //     method: 'POST',
-                    //     headers: {
-                    //         'Accept': 'application/json',
-                    //         'Content-Type': 'application/json'
-                    //     },
-                    //     body: JSON.stringify(result)
-                    // }).then((response) => response.json())
-                    //     .then((res) => {
-                    //         this.setState({registerLoading: false});
-                    //         const newReports = this.state.report.concat(result)
-                    //         this.setState({report: newReports})
-                    //         this.setState({show: false})
-                    //
-                    //     })
-                    //     .catch(() => {
-                    //         this.setState({registerLoading: false})
-                    //     });
-
-                    axios.post('https://api.saadatportal.com/api/v1/supervisor/record', result, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                   await axios.post('https://api.saadatportal.com/api/v1/supervisor/record', result, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                         .then((data) => {
                             this.setState({registerLoading: false});
                             const newReports = this.state.report.concat(result);
@@ -2733,25 +2619,7 @@ class ProfilePage extends Component {
                         'personId': this.state.personObject.id
                     }
 
-                    // await fetch('https://api.saadatportal.com/api/v1/record', {
-                    //     method: 'POST',
-                    //     headers: {
-                    //         'Accept': 'application/json',
-                    //         'Content-Type': 'application/json'
-                    //     },
-                    //     body: JSON.stringify(result)
-                    // }).then((response) => response.json())
-                    //     .then((res) => {
-                    //         this.setState({registerLoading: false})
-                    //         const newReports = this.state.report.concat(result)
-                    //         this.setState({report: newReports})
-                    //         this.setState({show: false})
-                    //     })
-                    //     .catch((error) => {
-                    //         this.setState({registerLoading: false})
-                    //     });
-
-                    axios.post('https://api.saadatportal.com/api/v1/supervisor/record', result, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                    await axios.post('https://api.saadatportal.com/api/v1/supervisor/record', result, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                         .then((data) => {
                             this.setState({registerLoading: false});
                             const newReports = this.state.report.concat(result);
@@ -2814,21 +2682,7 @@ class ProfilePage extends Component {
     }
 
     handleDeleteReport = async () => {
-        // await fetch(`https://api.saadatportal.com/api/v1/record/${this.state.reportTemp.id}`, {
-        //     method: 'DELETE',
-        // }).then(res => res.text())
-        //     .then((res) => {
-        //         let index = this.state.report.indexOf(this.state.reportTemp)
-        //         let updatedReport = [...this.state.report];
-        //         updatedReport.splice(index, 1);
-        //         this.setState({report: updatedReport});
-        //         this.setState({showDeleteModalReport: false})
-        //     }).catch((error) => {
-        //         console.log(error);
-        //         this.setState({showDeleteModalReport: false})
-        //     })
-
-        axios.delete(`https://api.saadatportal.com/api/v1/record/${this.state.reportTemp.id}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+        await axios.delete(`https://api.saadatportal.com/api/v1/supervisor/record/${this.state.reportTemp.id}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
             .then((data) => {
                 let index = this.state.report.indexOf(this.state.reportTemp)
                 let updatedReport = [...this.state.report];
@@ -2846,7 +2700,7 @@ class ProfilePage extends Component {
                         .then((response) => {
                             if (response.headers["accesstoken"]) {
                                 localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                axios.delete(`https://api.saadatportal.com/api/v1/record/${this.state.reportTemp.id}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                axios.delete(`https://api.saadatportal.com/api/v1/supervisor/record/${this.state.reportTemp.id}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                     .then((data) => {
                                         let index = this.state.report.indexOf(this.state.reportTemp)
                                         let updatedReport = [...this.state.report];
@@ -2889,7 +2743,7 @@ class ProfilePage extends Component {
     downloadFile = async (fileId) => {
         const file = this.state.fileDetails.find(({id}) => id === fileId);
         const filename = file.originalName;
-        axios.get(`https://api.saadatportal.com/api/v1/supervisor/file/${fileId}`, { responseType: 'blob' , headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+        await axios.get(`https://api.saadatportal.com/api/v1/supervisor/file/${fileId}`, { responseType: 'blob' , headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
             .then((blob) => {
                 if (blob !== null) {
                     const url = window.URL.createObjectURL(blob);
@@ -2947,7 +2801,7 @@ class ProfilePage extends Component {
     }
 
     printInformation = async () => {
-        axios.get(`https://api.saadatportal.com/api/v1/supervisor/characteristic/report/${window.location.href.slice(-32)}`, { responseType: 'blob', headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+        await axios.get(`https://api.saadatportal.com/api/v1/supervisor/characteristic/report/${window.location.href.slice(-32)}`, { responseType: 'blob', headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
             .then((blob) => {
                 if (blob !== null) {
                     const url = window.URL.createObjectURL(blob);
@@ -2964,7 +2818,7 @@ class ProfilePage extends Component {
                     .then((response) => {
                         if (response.headers["accesstoken"]) {
                             localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                            axios.get(`https://api.saadatportal.com/api/v1/characteristic/report/${window.location.href.slice(-32)}`, { responseType: 'blob', headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                            axios.get(`https://api.saadatportal.com/api/v1/supervisor/characteristic/report/${window.location.href.slice(-32)}`, { responseType: 'blob', headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                 .then((blob) => {
                                     if (blob !== null) {
                                         const url = window.URL.createObjectURL(blob);
@@ -2985,7 +2839,7 @@ class ProfilePage extends Component {
                     .then((response) => {
                         if (response.headers["accesstoken"]) {
                             localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                            axios.get(`https://api.saadatportal.com/api/v1/characteristic/report/${window.location.href.slice(-32)}`, { responseType: 'blob', headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                            axios.get(`https://api.saadatportal.com/api/v1/supervisor/characteristic/report/${window.location.href.slice(-32)}`, { responseType: 'blob', headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                 .then((blob) => {
                                     if (blob !== null) {
                                         const url = window.URL.createObjectURL(blob);
