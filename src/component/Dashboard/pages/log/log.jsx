@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import '../../../../style/log.css';
 import {Link} from "react-router-dom";
 import {DatePicker} from 'react-persian-datepicker';
+import axios from "axios";
 
 
 class log extends Component {
@@ -67,9 +68,24 @@ class log extends Component {
 
     async componentDidMount() {
         this.setState({searchLoading: true})
-        const response = await fetch('https://api.saadatportal.com/api/v1/logHistory').then((response) => response.json())
-            .then((data) => this.setState({logs: data, searchLoading: false}));
-        console.log(this.state.logs)
+        axios.get('https://api.saadatportal.com/api/v1/logHistory', {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+            .then((data) => this.setState({
+                logs: data,
+                searchLoading: false
+            })).catch(() => {
+                axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                    .then((response) => {
+                        if (response.headers["accesstoken"]) {
+                            localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                            axios.get('https://api.saadatportal.com/api/v1/logHistory', {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                .then((data) => this.setState({
+                                    logs: data,
+                                    searchLoading: false
+                                }))
+                        } else {
+                            window.location = '/'
+                        }
+                    })})
     }
 
     render() {

@@ -497,7 +497,13 @@ class MainPage extends Component {
                             <Route path="/Calender" element={(<EventPage/>)}/>
                             <Route path="/Request" element={(<RequestPage/>)}/>
                             <Route path="/PersonnelRegister" element={(<PersonnelRegister/>)}/>
-                            <Route path="/Request-manager" element={(<RequestPageManager/>)}/>
+                            {
+                                localStorage.getItem('role') === 'MANAGER'
+                                    ?
+                                    <Route path="/Request-manager" element={(<RequestPageManager/>)}/>
+                                    :
+                                    window.location = '/'
+                            }
                             <Route path="/Request" element={(<RequestPage/>)}/>
                             <Route path="/camera-history" element={(<CameraHistoryPage/>)}/>
                             <Route path="/PaymentHistory" element={(<PaymentHistory/>)}/>
@@ -506,7 +512,13 @@ class MainPage extends Component {
                             <Route path="/PresenceAbsencePage2" element={(<PresenceAbsenceRoomPerson/>)}/>
                             <Route path="/setting" element={(<Setting/>)}/>
                             <Route path="booking/room_log" element={(<RoomLog/>)}/>
-                            <Route path="/log" element={(<Log/>)}/>
+                            {
+                                localStorage.getItem('role') === 'MANAGER'
+                                ?
+                                    <Route path="/log" element={(<Log/>)}/>
+                                :
+                                    window.location = '/'
+                            }
                         </Routes>
                     </BuildingContext.Provider>
                 </div>

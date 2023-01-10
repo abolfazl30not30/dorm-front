@@ -135,13 +135,17 @@ class HamburgerMenu extends Component {
                             نوبت نظافت شبانه
                         </NavLink>
                     </li>
-                    {/*<li className="sidenav-item">*/}
-                    {/*    <NavLink activeClassName='active-sidebar' to="/dashboard/log" className='sidenav-link'*/}
-                    {/*             onClick={window.innerWidth <= 768 && this.context.handleSidebar}>*/}
-                    {/*        <i className="bi bi-clock-history"></i>*/}
-                    {/*        تاریخپه کارها*/}
-                    {/*    </NavLink>*/}
-                    {/*</li>*/}
+                    {localStorage.getItem('role') === 'MANAGER'
+                        ?
+                        <li className="sidenav-item">
+                            <NavLink activeClassName='active-sidebar' to="/dashboard/log" className='sidenav-link'
+                                     onClick={window.innerWidth <= 768 && this.context.handleSidebar}>
+                                <i className="bi bi-clock-history"></i>
+                                تاریخپه کارها
+                            </NavLink>
+                        </li>
+                        :
+                        null}
                 </ul>
             </div>
         );

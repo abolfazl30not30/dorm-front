@@ -124,7 +124,7 @@ class PersonnelRegister extends Component {
                 label: 'مشخصات اولیه',
                 name: 'step 1',
                 content: <BasicInformation />,
-                validator: this.personnelBasicInformation
+                validator: true
             },
             {
                 label: 'مشخصات تکمیلی',
