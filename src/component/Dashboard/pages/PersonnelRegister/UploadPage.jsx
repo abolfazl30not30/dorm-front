@@ -601,10 +601,29 @@ class CUploadPage extends Component {
             let formData = new FormData();
             formData.append('file', e.target.files[0]);
             this.setState({nameBirthPage1: e.target.files[0].name})
-            await fetch('https://api.saadatportal.com/api/v1/file', {
-                method: 'POST',
-                body: formData
-            }).then((response) => response.json())
+
+            // await fetch('https://api.saadatportal.com/api/v1/file', {
+            //     method: 'POST',
+            //     body: formData
+            // }).then((response) => response.json())
+            //     .then((result) => {
+            //         console.log('Success:', result);
+            //         this.setState({fileIdBirthPage1: result.message.id});
+            //         this.context.handleUploadedFile("personnelUploadPage", "birth-page1", result.message.id)
+            //         this.setState({isLoadingBirthPage1: false});
+            //         this.setState({isUploadBirthPage1: true})
+            //         this.setState({hasErrorBirthPage1: false});
+            //     })
+            //     .catch((error) => {
+            //         console.error('Error:', error);
+            //         this.setState({isLoadingBirthPage1: false});
+            //         this.setState({isUploadBirthPage1: true})
+            //         this.setState({hasErrorBirthPage1: true});
+            //     });
+
+            console.log(formData)
+
+            await axios.post('https://api.saadatportal.com/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                 .then((result) => {
                     console.log('Success:', result);
                     this.setState({fileIdBirthPage1: result.message.id});
@@ -618,16 +637,89 @@ class CUploadPage extends Component {
                     this.setState({isLoadingBirthPage1: false});
                     this.setState({isUploadBirthPage1: true})
                     this.setState({hasErrorBirthPage1: true});
-                });
+                }).catch(() => {
+                    if (localStorage.getItem('role') === 'MANAGER') {
+                        axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                            .then((response) => {
+                                if (response.headers["accesstoken"]) {
+                                    localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                                    axios.post('https://api.saadatportal.com/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                        .then((result) => {
+                                            console.log('Success:', result);
+                                            this.setState({fileIdBirthPage1: result.message.id});
+                                            this.context.handleUploadedFile("personnelUploadPage", "birth-page1", result.message.id)
+                                            this.setState({isLoadingBirthPage1: false});
+                                            this.setState({isUploadBirthPage1: true})
+                                            this.setState({hasErrorBirthPage1: false});
+                                        })
+                                        .catch((error) => {
+                                            console.error('Error:', error);
+                                            this.setState({isLoadingBirthPage1: false});
+                                            this.setState({isUploadBirthPage1: true})
+                                            this.setState({hasErrorBirthPage1: true});
+                                        })
+                                } else {
+                                    window.location = '/'
+                                }
+                            })
+                    } else if (localStorage.getItem('role') === 'SUPERVISOR') {
+                        axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                            .then((response) => {
+                                if (response.headers["accesstoken"]) {
+                                    localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                                    axios.post('https://api.saadatportal.com/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                        .then((result) => {
+                                            console.log('Success:', result);
+                                            this.setState({fileIdBirthPage1: result.message.id});
+                                            this.context.handleUploadedFile("personnelUploadPage", "birth-page1", result.message.id)
+                                            this.setState({isLoadingBirthPage1: false});
+                                            this.setState({isUploadBirthPage1: true})
+                                            this.setState({hasErrorBirthPage1: false});
+                                        })
+                                        .catch((error) => {
+                                            console.error('Error:', error);
+                                            this.setState({isLoadingBirthPage1: false});
+                                            this.setState({isUploadBirthPage1: true})
+                                            this.setState({hasErrorBirthPage1: true});
+                                        })
+                                } else {
+                                    window.location = '/'
+                                }
+                            })
+                    }})
         }
     }
 
     handleDeleteBirthPage1 = async () => {
-        await fetch(`https://api.saadatportal.com/api/v1/file/${this.state.fileIdBirthPage1}`, {
-            method: 'DELETE',
-        })
-            .then(res => res.text())
-            .then(res => console.log(res));
+        // await fetch(`https://api.saadatportal.com/api/v1/file/${this.state.fileIdBirthPage1}`, {
+        //     method: 'DELETE',
+        // })
+        //     .then(res => res.text())
+        //     .then(res => console.log(res));
+
+        await axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdBirthPage1}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+            .catch(() => {
+                if (localStorage.getItem('role') === 'MANAGER') {
+                    axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        .then((response) => {
+                            if (response.headers["accesstoken"]) {
+                                localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                                axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdBirthPage1}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                            } else {
+                                window.location = '/'
+                            }
+                        })
+                } else if (localStorage.getItem('role') === 'SUPERVISOR') {
+                    axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        .then((response) => {
+                            if (response.headers["accesstoken"]) {
+                                localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                                axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdBirthPage1}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                            } else {
+                                window.location = '/'
+                            }
+                        })
+                }})
         this.context.handleDeleteUploadedFile("personnelUploadPage",this.state.fileIdBirthPage1);
         this.setState({fileIdBirthPage1: ""});
         this.setState({isUploadBirthPage1: false});
@@ -643,10 +735,26 @@ class CUploadPage extends Component {
             formData.append('file', e.target.files[0]);
             this.setState({nameBirthPage2: e.target.files[0].name})
 
-            await fetch('https://api.saadatportal.com/api/v1/file', {
-                method: 'POST',
-                body: formData
-            }).then((response) => response.json())
+            // await fetch('https://api.saadatportal.com/api/v1/file', {
+            //     method: 'POST',
+            //     body: formData
+            // }).then((response) => response.json())
+            //     .then((result) => {
+            //         console.log('Success:', result);
+            //         this.setState({fileIdBirthPage2: result.message.id});
+            //         this.context.handleUploadedFile("personnelUploadPage", "birth-page2", result.message.id);
+            //         this.setState({isLoadingBirthPage2: false});
+            //         this.setState({isUploadBirthPage2: true})
+            //         this.setState({hasErrorBirthPage2: false});
+            //     })
+            //     .catch((error) => {
+            //         console.error('Error:', error);
+            //         this.setState({isLoadingBirthPage2: false});
+            //         this.setState({isUploadBirthPage2: true})
+            //         this.setState({hasErrorBirthPage2: true});
+            //     });
+
+            await axios.post('https://api.saadatportal.com/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                 .then((result) => {
                     console.log('Success:', result);
                     this.setState({fileIdBirthPage2: result.message.id});
@@ -660,16 +768,89 @@ class CUploadPage extends Component {
                     this.setState({isLoadingBirthPage2: false});
                     this.setState({isUploadBirthPage2: true})
                     this.setState({hasErrorBirthPage2: true});
-                });
+                }).catch(() => {
+                    if (localStorage.getItem('role') === 'MANAGER') {
+                        axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                            .then((response) => {
+                                if (response.headers["accesstoken"]) {
+                                    localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                                    axios.post('https://api.saadatportal.com/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                        .then((result) => {
+                                            console.log('Success:', result);
+                                            this.setState({fileIdBirthPage2: result.message.id});
+                                            this.context.handleUploadedFile("personnelUploadPage", "birth-page2", result.message.id);
+                                            this.setState({isLoadingBirthPage2: false});
+                                            this.setState({isUploadBirthPage2: true})
+                                            this.setState({hasErrorBirthPage2: false});
+                                        })
+                                        .catch((error) => {
+                                            console.error('Error:', error);
+                                            this.setState({isLoadingBirthPage2: false});
+                                            this.setState({isUploadBirthPage2: true})
+                                            this.setState({hasErrorBirthPage2: true});
+                                        })
+                                } else {
+                                    window.location = '/'
+                                }
+                            })
+                    } else if (localStorage.getItem('role') === 'SUPERVISOR') {
+                        axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                            .then((response) => {
+                                if (response.headers["accesstoken"]) {
+                                    localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                                    axios.post('https://api.saadatportal.com/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                        .then((result) => {
+                                            console.log('Success:', result);
+                                            this.setState({fileIdBirthPage2: result.message.id});
+                                            this.context.handleUploadedFile("personnelUploadPage", "birth-page2", result.message.id);
+                                            this.setState({isLoadingBirthPage2: false});
+                                            this.setState({isUploadBirthPage2: true})
+                                            this.setState({hasErrorBirthPage2: false});
+                                        })
+                                        .catch((error) => {
+                                            console.error('Error:', error);
+                                            this.setState({isLoadingBirthPage2: false});
+                                            this.setState({isUploadBirthPage2: true})
+                                            this.setState({hasErrorBirthPage2: true});
+                                        })
+                                } else {
+                                    window.location = '/'
+                                }
+                            })
+                    }})
         }
     }
 
     handleDeleteBirthPage2 = async () => {
-        await fetch(`https://api.saadatportal.com/api/v1/file/${this.state.fileIdBirthPage2}`, {
-            method: 'DELETE',
-        })
-            .then(res => res.text())
-            .then(res => console.log(res));
+        // await fetch(`https://api.saadatportal.com/api/v1/file/${this.state.fileIdBirthPage2}`, {
+        //     method: 'DELETE',
+        // })
+        //     .then(res => res.text())
+        //     .then(res => console.log(res));
+
+        await axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdBirthPage2}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+            .catch(() => {
+                if (localStorage.getItem('role') === 'MANAGER') {
+                    axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        .then((response) => {
+                            if (response.headers["accesstoken"]) {
+                                localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                                axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdBirthPage2}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                            } else {
+                                window.location = '/'
+                            }
+                        })
+                } else if (localStorage.getItem('role') === 'SUPERVISOR') {
+                    axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        .then((response) => {
+                            if (response.headers["accesstoken"]) {
+                                localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                                axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdBirthPage2}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                            } else {
+                                window.location = '/'
+                            }
+                        })
+                }})
         this.context.handleDeleteUploadedFile("personnelUploadPage",this.state.fileIdBirthPage2);
         this.setState({fileIdBirthPage2: ""});
         this.setState({isUploadBirthPage2: false});
@@ -683,10 +864,26 @@ class CUploadPage extends Component {
             formData.append('file', e.target.files[0]);
             this.setState({nameBirthPage3: e.target.files[0].name})
 
-            await fetch('https://api.saadatportal.com/api/v1/file', {
-                method: 'POST',
-                body: formData
-            }).then((response) => response.json())
+            // await fetch('https://api.saadatportal.com/api/v1/file', {
+            //     method: 'POST',
+            //     body: formData
+            // }).then((response) => response.json())
+            //     .then((result) => {
+            //         console.log('Success:', result);
+            //         this.setState({fileIdBirthPage3: result.message.id});
+            //         this.context.handleUploadedFile("personnelUploadPage", "birth-page3", result.message.id);
+            //         this.setState({isLoadingBirthPage3: false});
+            //         this.setState({isUploadBirthPage3: true})
+            //         this.setState({hasErrorBirthPage3: false});
+            //     })
+            //     .catch((error) => {
+            //         console.error('Error:', error);
+            //         this.setState({isLoadingBirthPage3: false});
+            //         this.setState({isUploadBirthPage3: true})
+            //         this.setState({hasErrorBirthPage3: true});
+            //     });
+
+            await axios.post('https://api.saadatportal.com/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                 .then((result) => {
                     console.log('Success:', result);
                     this.setState({fileIdBirthPage3: result.message.id});
@@ -700,16 +897,89 @@ class CUploadPage extends Component {
                     this.setState({isLoadingBirthPage3: false});
                     this.setState({isUploadBirthPage3: true})
                     this.setState({hasErrorBirthPage3: true});
-                });
+                }).catch(() => {
+                    if (localStorage.getItem('role') === 'MANAGER') {
+                        axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                            .then((response) => {
+                                if (response.headers["accesstoken"]) {
+                                    localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                                    axios.post('https://api.saadatportal.com/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                        .then((result) => {
+                                            console.log('Success:', result);
+                                            this.setState({fileIdBirthPage3: result.message.id});
+                                            this.context.handleUploadedFile("personnelUploadPage", "birth-page3", result.message.id);
+                                            this.setState({isLoadingBirthPage3: false});
+                                            this.setState({isUploadBirthPage3: true})
+                                            this.setState({hasErrorBirthPage3: false});
+                                        })
+                                        .catch((error) => {
+                                            console.error('Error:', error);
+                                            this.setState({isLoadingBirthPage3: false});
+                                            this.setState({isUploadBirthPage3: true})
+                                            this.setState({hasErrorBirthPage3: true});
+                                        })
+                                } else {
+                                    window.location = '/'
+                                }
+                            })
+                    } else if (localStorage.getItem('role') === 'SUPERVISOR') {
+                        axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                            .then((response) => {
+                                if (response.headers["accesstoken"]) {
+                                    localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                                    axios.post('https://api.saadatportal.com/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                        .then((result) => {
+                                            console.log('Success:', result);
+                                            this.setState({fileIdBirthPage3: result.message.id});
+                                            this.context.handleUploadedFile("personnelUploadPage", "birth-page3", result.message.id);
+                                            this.setState({isLoadingBirthPage3: false});
+                                            this.setState({isUploadBirthPage3: true})
+                                            this.setState({hasErrorBirthPage3: false});
+                                        })
+                                        .catch((error) => {
+                                            console.error('Error:', error);
+                                            this.setState({isLoadingBirthPage3: false});
+                                            this.setState({isUploadBirthPage3: true})
+                                            this.setState({hasErrorBirthPage3: true});
+                                        })
+                                } else {
+                                    window.location = '/'
+                                }
+                            })
+                    }})
         }
     }
 
     handleDeleteBirthPage3 = async () => {
-        await fetch(`https://api.saadatportal.com/api/v1/file/${this.state.fileIdBirthPage3}`, {
-            method: 'DELETE',
-        })
-            .then(res => res.text())
-            .then(res => console.log(res));
+        // await fetch(`https://api.saadatportal.com/api/v1/file/${this.state.fileIdBirthPage3}`, {
+        //     method: 'DELETE',
+        // })
+        //     .then(res => res.text())
+        //     .then(res => console.log(res));
+
+        await axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdBirthPage3}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+            .catch(() => {
+                if (localStorage.getItem('role') === 'MANAGER') {
+                    axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        .then((response) => {
+                            if (response.headers["accesstoken"]) {
+                                localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                                axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdBirthPage3}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                            } else {
+                                window.location = '/'
+                            }
+                        })
+                } else if (localStorage.getItem('role') === 'SUPERVISOR') {
+                    axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        .then((response) => {
+                            if (response.headers["accesstoken"]) {
+                                localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                                axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdBirthPage3}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                            } else {
+                                window.location = '/'
+                            }
+                        })
+                }})
         this.context.handleDeleteUploadedFile("personnelUploadPage",this.state.fileIdBirthPage3);
         this.setState({fileIdBirthPage3: ""});
         this.setState({isUploadBirthPage3: false});
@@ -723,10 +993,26 @@ class CUploadPage extends Component {
             formData.append('file', e.target.files[0]);
             this.setState({nameBirthPage4: e.target.files[0].name})
 
-            await fetch('https://api.saadatportal.com/api/v1/file', {
-                method: 'POST',
-                body: formData
-            }).then((response) => response.json())
+            // await fetch('https://api.saadatportal.com/api/v1/file', {
+            //     method: 'POST',
+            //     body: formData
+            // }).then((response) => response.json())
+            //     .then((result) => {
+            //         console.log('Success:', result);
+            //         this.setState({fileIdBirthPage4: result.message.id});
+            //         this.context.handleUploadedFile("personnelUploadPage", "birth-page4", result.message.id);
+            //         this.setState({isLoadingBirthPage4: false});
+            //         this.setState({isUploadBirthPage4: true})
+            //         this.setState({hasErrorBirthPage4: false});
+            //     })
+            //     .catch((error) => {
+            //         console.error('Error:', error);
+            //         this.setState({isLoadingBirthPage4: false});
+            //         this.setState({isUploadBirthPage4: true})
+            //         this.setState({hasErrorBirthPage4: true});
+            //     });
+
+            await axios.post('https://api.saadatportal.com/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                 .then((result) => {
                     console.log('Success:', result);
                     this.setState({fileIdBirthPage4: result.message.id});
@@ -740,16 +1026,89 @@ class CUploadPage extends Component {
                     this.setState({isLoadingBirthPage4: false});
                     this.setState({isUploadBirthPage4: true})
                     this.setState({hasErrorBirthPage4: true});
-                });
+                }).catch(() => {
+                    if (localStorage.getItem('role') === 'MANAGER') {
+                        axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                            .then((response) => {
+                                if (response.headers["accesstoken"]) {
+                                    localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                                    axios.post('https://api.saadatportal.com/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                        .then((result) => {
+                                            console.log('Success:', result);
+                                            this.setState({fileIdBirthPage4: result.message.id});
+                                            this.context.handleUploadedFile("personnelUploadPage", "birth-page4", result.message.id);
+                                            this.setState({isLoadingBirthPage4: false});
+                                            this.setState({isUploadBirthPage4: true})
+                                            this.setState({hasErrorBirthPage4: false});
+                                        })
+                                        .catch((error) => {
+                                            console.error('Error:', error);
+                                            this.setState({isLoadingBirthPage4: false});
+                                            this.setState({isUploadBirthPage4: true})
+                                            this.setState({hasErrorBirthPage4: true});
+                                        })
+                                } else {
+                                    window.location = '/'
+                                }
+                            })
+                    } else if (localStorage.getItem('role') === 'SUPERVISOR') {
+                        axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                            .then((response) => {
+                                if (response.headers["accesstoken"]) {
+                                    localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                                    axios.post('https://api.saadatportal.com/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                        .then((result) => {
+                                            console.log('Success:', result);
+                                            this.setState({fileIdBirthPage4: result.message.id});
+                                            this.context.handleUploadedFile("personnelUploadPage", "birth-page4", result.message.id);
+                                            this.setState({isLoadingBirthPage4: false});
+                                            this.setState({isUploadBirthPage4: true})
+                                            this.setState({hasErrorBirthPage4: false});
+                                        })
+                                        .catch((error) => {
+                                            console.error('Error:', error);
+                                            this.setState({isLoadingBirthPage4: false});
+                                            this.setState({isUploadBirthPage4: true})
+                                            this.setState({hasErrorBirthPage4: true});
+                                        })
+                                } else {
+                                    window.location = '/'
+                                }
+                            })
+                    }})
         }
     }
 
     handleDeleteBirthPage4 = async () => {
-        await fetch(`https://api.saadatportal.com/api/v1/file/${this.state.fileIdBirthPage4}`, {
-            method: 'DELETE',
-        })
-            .then(res => res.text())
-            .then(res => console.log(res));
+        // await fetch(`https://api.saadatportal.com/api/v1/file/${this.state.fileIdBirthPage4}`, {
+        //     method: 'DELETE',
+        // })
+        //     .then(res => res.text())
+        //     .then(res => console.log(res));
+
+        await axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdBirthPage4}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+            .catch(() => {
+                if (localStorage.getItem('role') === 'MANAGER') {
+                    axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        .then((response) => {
+                            if (response.headers["accesstoken"]) {
+                                localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                                axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdBirthPage4}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                            } else {
+                                window.location = '/'
+                            }
+                        })
+                } else if (localStorage.getItem('role') === 'SUPERVISOR') {
+                    axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        .then((response) => {
+                            if (response.headers["accesstoken"]) {
+                                localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                                axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdBirthPage4}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                            } else {
+                                window.location = '/'
+                            }
+                        })
+                }})
         this.context.handleDeleteUploadedFile("personnelUploadPage",this.state.fileIdBirthPage4);
         this.setState({fileIdBirthPage4: ""});
         this.setState({isUploadBirthPage4: false});
@@ -763,10 +1122,26 @@ class CUploadPage extends Component {
             formData.append('file', e.target.files[0]);
             this.setState({nameBirthAllPage: e.target.files[0].name})
 
-            await fetch('https://api.saadatportal.com/api/v1/file', {
-                method: 'POST',
-                body: formData
-            }).then((response) => response.json())
+            // await fetch('https://api.saadatportal.com/api/v1/file', {
+            //     method: 'POST',
+            //     body: formData
+            // }).then((response) => response.json())
+            //     .then((result) => {
+            //         console.log('Success:', result);
+            //         this.setState({fileIdBirthAllPage: result.message.id});
+            //         this.context.handleUploadedFile("personnelUploadPage", "birth-AllPage", result.message.id);
+            //         this.setState({isLoadingBirthAllPage: false});
+            //         this.setState({isUploadBirthAllPage: true})
+            //         this.setState({hasErrorBirthAllPage: false});
+            //     })
+            //     .catch((error) => {
+            //         console.error('Error:', error);
+            //         this.setState({isLoadingBirthAllPage: false});
+            //         this.setState({isUploadBirthAllPage: true})
+            //         this.setState({hasErrorBirthAllPage: true});
+            //     });
+
+            await axios.post('https://api.saadatportal.com/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                 .then((result) => {
                     console.log('Success:', result);
                     this.setState({fileIdBirthAllPage: result.message.id});
@@ -780,16 +1155,89 @@ class CUploadPage extends Component {
                     this.setState({isLoadingBirthAllPage: false});
                     this.setState({isUploadBirthAllPage: true})
                     this.setState({hasErrorBirthAllPage: true});
-                });
+                }).catch(() => {
+                    if (localStorage.getItem('role') === 'MANAGER') {
+                        axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                            .then((response) => {
+                                if (response.headers["accesstoken"]) {
+                                    localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                                    axios.post('https://api.saadatportal.com/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                        .then((result) => {
+                                            console.log('Success:', result);
+                                            this.setState({fileIdBirthAllPage: result.message.id});
+                                            this.context.handleUploadedFile("personnelUploadPage", "birth-AllPage", result.message.id);
+                                            this.setState({isLoadingBirthAllPage: false});
+                                            this.setState({isUploadBirthAllPage: true})
+                                            this.setState({hasErrorBirthAllPage: false});
+                                        })
+                                        .catch((error) => {
+                                            console.error('Error:', error);
+                                            this.setState({isLoadingBirthAllPage: false});
+                                            this.setState({isUploadBirthAllPage: true})
+                                            this.setState({hasErrorBirthAllPage: true});
+                                        })
+                                } else {
+                                    window.location = '/'
+                                }
+                            })
+                    } else if (localStorage.getItem('role') === 'SUPERVISOR') {
+                        axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                            .then((response) => {
+                                if (response.headers["accesstoken"]) {
+                                    localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                                    axios.post('https://api.saadatportal.com/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                        .then((result) => {
+                                            console.log('Success:', result);
+                                            this.setState({fileIdBirthAllPage: result.message.id});
+                                            this.context.handleUploadedFile("personnelUploadPage", "birth-AllPage", result.message.id);
+                                            this.setState({isLoadingBirthAllPage: false});
+                                            this.setState({isUploadBirthAllPage: true})
+                                            this.setState({hasErrorBirthAllPage: false});
+                                        })
+                                        .catch((error) => {
+                                            console.error('Error:', error);
+                                            this.setState({isLoadingBirthAllPage: false});
+                                            this.setState({isUploadBirthAllPage: true})
+                                            this.setState({hasErrorBirthAllPage: true});
+                                        })
+                                } else {
+                                    window.location = '/'
+                                }
+                            })
+                    }})
         }
     }
 
     handleDeleteBirthAllPage = async () => {
-        await fetch(`https://api.saadatportal.com/api/v1/file/${this.state.fileIdBirthAllPage}`, {
-            method: 'DELETE',
-        })
-            .then(res => res.text())
-            .then(res => console.log(res));
+        // await fetch(`https://api.saadatportal.com/api/v1/file/${this.state.fileIdBirthAllPage}`, {
+        //     method: 'DELETE',
+        // })
+        //     .then(res => res.text())
+        //     .then(res => console.log(res));
+
+        await axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdBirthAllPage}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+            .catch(() => {
+                if (localStorage.getItem('role') === 'MANAGER') {
+                    axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        .then((response) => {
+                            if (response.headers["accesstoken"]) {
+                                localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                                axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdBirthAllPage}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                            } else {
+                                window.location = '/'
+                            }
+                        })
+                } else if (localStorage.getItem('role') === 'SUPERVISOR') {
+                    axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        .then((response) => {
+                            if (response.headers["accesstoken"]) {
+                                localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                                axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdBirthAllPage}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                            } else {
+                                window.location = '/'
+                            }
+                        })
+                }})
         this.context.handleDeleteUploadedFile("personnelUploadPage",this.state.fileIdBirthAllPage);
         this.setState({fileIdBirthAllPage: ""});
         this.setState({isUploadBirthAllPage: false});
@@ -803,10 +1251,26 @@ class CUploadPage extends Component {
             formData.append('file', e.target.files[0]);
             this.setState({nameCartPage1: e.target.files[0].name});
 
-            await fetch('https://api.saadatportal.com/api/v1/file', {
-                method: 'POST',
-                body: formData
-            }).then((response) => response.json())
+            // await fetch('https://api.saadatportal.com/api/v1/file', {
+            //     method: 'POST',
+            //     body: formData
+            // }).then((response) => response.json())
+            //     .then((result) => {
+            //         console.log('Success:', result);
+            //         this.setState({fileIdCartPage1: result.message.id});
+            //         this.context.handleUploadedFile("personnelUploadPage", "card-page1", result.message.id);
+            //         this.setState({isLoadingCartPage1: false});
+            //         this.setState({isUploadCartPage1: true})
+            //         this.setState({hasErrorCartPage1: false});
+            //     })
+            //     .catch((error) => {
+            //         console.error('Error:', error);
+            //         this.setState({isLoadingCartPage1: false});
+            //         this.setState({isUploadCartPage1: true})
+            //         this.setState({hasErrorCartPage1: true});
+            //     });
+
+            await axios.post('https://api.saadatportal.com/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                 .then((result) => {
                     console.log('Success:', result);
                     this.setState({fileIdCartPage1: result.message.id});
@@ -820,16 +1284,89 @@ class CUploadPage extends Component {
                     this.setState({isLoadingCartPage1: false});
                     this.setState({isUploadCartPage1: true})
                     this.setState({hasErrorCartPage1: true});
-                });
+                }).catch(() => {
+                    if (localStorage.getItem('role') === 'MANAGER') {
+                        axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                            .then((response) => {
+                                if (response.headers["accesstoken"]) {
+                                    localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                                    axios.post('https://api.saadatportal.com/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                        .then((result) => {
+                                            console.log('Success:', result);
+                                            this.setState({fileIdCartPage1: result.message.id});
+                                            this.context.handleUploadedFile("personnelUploadPage", "card-page1", result.message.id);
+                                            this.setState({isLoadingCartPage1: false});
+                                            this.setState({isUploadCartPage1: true})
+                                            this.setState({hasErrorCartPage1: false});
+                                        })
+                                        .catch((error) => {
+                                            console.error('Error:', error);
+                                            this.setState({isLoadingCartPage1: false});
+                                            this.setState({isUploadCartPage1: true})
+                                            this.setState({hasErrorCartPage1: true});
+                                        })
+                                } else {
+                                    window.location = '/'
+                                }
+                            })
+                    } else if (localStorage.getItem('role') === 'SUPERVISOR') {
+                        axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                            .then((response) => {
+                                if (response.headers["accesstoken"]) {
+                                    localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                                    axios.post('https://api.saadatportal.com/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                        .then((result) => {
+                                            console.log('Success:', result);
+                                            this.setState({fileIdCartPage1: result.message.id});
+                                            this.context.handleUploadedFile("personnelUploadPage", "card-page1", result.message.id);
+                                            this.setState({isLoadingCartPage1: false});
+                                            this.setState({isUploadCartPage1: true})
+                                            this.setState({hasErrorCartPage1: false});
+                                        })
+                                        .catch((error) => {
+                                            console.error('Error:', error);
+                                            this.setState({isLoadingCartPage1: false});
+                                            this.setState({isUploadCartPage1: true})
+                                            this.setState({hasErrorCartPage1: true});
+                                        })
+                                } else {
+                                    window.location = '/'
+                                }
+                            })
+                    }})
         }
     }
 
     handleDeleteCartPage1 = async () => {
-        await fetch(`https://api.saadatportal.com/api/v1/file/${this.state.fileIdCartPage1}`, {
-            method: 'DELETE',
-        })
-            .then(res => res.text())
-            .then(res => console.log(res));
+        // await fetch(`https://api.saadatportal.com/api/v1/file/${this.state.fileIdCartPage1}`, {
+        //     method: 'DELETE',
+        // })
+        //     .then(res => res.text())
+        //     .then(res => console.log(res));
+
+        await axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdCartPage1}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+            .catch(() => {
+                if (localStorage.getItem('role') === 'MANAGER') {
+                    axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        .then((response) => {
+                            if (response.headers["accesstoken"]) {
+                                localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                                axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdCartPage1}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                            } else {
+                                window.location = '/'
+                            }
+                        })
+                } else if (localStorage.getItem('role') === 'SUPERVISOR') {
+                    axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        .then((response) => {
+                            if (response.headers["accesstoken"]) {
+                                localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                                axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdCartPage1}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                            } else {
+                                window.location = '/'
+                            }
+                        })
+                }})
         this.context.handleDeleteUploadedFile("personnelUploadPage",this.state.fileIdCartPage1);
         this.setState({fileIdCartPage1: ""});
         this.setState({isUploadCartPage1: false});
@@ -843,10 +1380,26 @@ class CUploadPage extends Component {
             formData.append('file', e.target.files[0]);
             this.setState({nameCartPage2: e.target.files[0].name});
 
-            await fetch('https://api.saadatportal.com/api/v1/file', {
-                method: 'POST',
-                body: formData
-            }).then((response) => response.json())
+            // await fetch('https://api.saadatportal.com/api/v1/file', {
+            //     method: 'POST',
+            //     body: formData
+            // }).then((response) => response.json())
+            //     .then((result) => {
+            //         console.log('Success:', result);
+            //         this.setState({fileIdCartPage2: result.message.id});
+            //         this.context.handleUploadedFile("personnelUploadPage", "card-page2", result.message.id);
+            //         this.setState({isLoadingCartPage2: false});
+            //         this.setState({isUploadCartPage2: true})
+            //         this.setState({hasErrorCartPage2: false});
+            //     })
+            //     .catch((error) => {
+            //         console.error('Error:', error);
+            //         this.setState({isLoadingCartPage2: false});
+            //         this.setState({isUploadCartPage2: true})
+            //         this.setState({hasErrorCartPage2: true});
+            //     });
+
+            await axios.post('https://api.saadatportal.com/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                 .then((result) => {
                     console.log('Success:', result);
                     this.setState({fileIdCartPage2: result.message.id});
@@ -860,16 +1413,89 @@ class CUploadPage extends Component {
                     this.setState({isLoadingCartPage2: false});
                     this.setState({isUploadCartPage2: true})
                     this.setState({hasErrorCartPage2: true});
-                });
+                }).catch(() => {
+                    if (localStorage.getItem('role') === 'MANAGER') {
+                        axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                            .then((response) => {
+                                if (response.headers["accesstoken"]) {
+                                    localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                                    axios.post('https://api.saadatportal.com/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                        .then((result) => {
+                                            console.log('Success:', result);
+                                            this.setState({fileIdCartPage2: result.message.id});
+                                            this.context.handleUploadedFile("personnelUploadPage", "card-page2", result.message.id);
+                                            this.setState({isLoadingCartPage2: false});
+                                            this.setState({isUploadCartPage2: true})
+                                            this.setState({hasErrorCartPage2: false});
+                                        })
+                                        .catch((error) => {
+                                            console.error('Error:', error);
+                                            this.setState({isLoadingCartPage2: false});
+                                            this.setState({isUploadCartPage2: true})
+                                            this.setState({hasErrorCartPage2: true});
+                                        })
+                                } else {
+                                    window.location = '/'
+                                }
+                            })
+                    } else if (localStorage.getItem('role') === 'SUPERVISOR') {
+                        axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                            .then((response) => {
+                                if (response.headers["accesstoken"]) {
+                                    localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                                    axios.post('https://api.saadatportal.com/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                        .then((result) => {
+                                            console.log('Success:', result);
+                                            this.setState({fileIdCartPage2: result.message.id});
+                                            this.context.handleUploadedFile("personnelUploadPage", "card-page2", result.message.id);
+                                            this.setState({isLoadingCartPage2: false});
+                                            this.setState({isUploadCartPage2: true})
+                                            this.setState({hasErrorCartPage2: false});
+                                        })
+                                        .catch((error) => {
+                                            console.error('Error:', error);
+                                            this.setState({isLoadingCartPage2: false});
+                                            this.setState({isUploadCartPage2: true})
+                                            this.setState({hasErrorCartPage2: true});
+                                        })
+                                } else {
+                                    window.location = '/'
+                                }
+                            })
+                    }})
         }
     }
 
     handleDeleteCartPage2 = async () => {
-        await fetch(`https://api.saadatportal.com/api/v1/file/${this.state.fileIdCartPage2}`, {
-            method: 'DELETE',
-        })
-            .then(res => res.text())
-            .then(res => console.log(res));
+        // await fetch(`https://api.saadatportal.com/api/v1/file/${this.state.fileIdCartPage2}`, {
+        //     method: 'DELETE',
+        // })
+        //     .then(res => res.text())
+        //     .then(res => console.log(res));
+
+        await axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdCartPage2}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+            .catch(() => {
+                if (localStorage.getItem('role') === 'MANAGER') {
+                    axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        .then((response) => {
+                            if (response.headers["accesstoken"]) {
+                                localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                                axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdCartPage2}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                            } else {
+                                window.location = '/'
+                            }
+                        })
+                } else if (localStorage.getItem('role') === 'SUPERVISOR') {
+                    axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        .then((response) => {
+                            if (response.headers["accesstoken"]) {
+                                localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                                axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdCartPage2}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                            } else {
+                                window.location = '/'
+                            }
+                        })
+                }})
         this.context.handleDeleteUploadedFile("personnelUploadPage",this.state.fileIdCartPage2);
         this.setState({fileIdCartPage2: ""});
         this.setState({isUploadCartPage2: false});
@@ -883,10 +1509,26 @@ class CUploadPage extends Component {
             formData.append('file', e.target.files[0]);
             this.setState({nameCartAllPage: e.target.files[0].name});
 
-            await fetch('https://api.saadatportal.com/api/v1/file', {
-                method: 'POST',
-                body: formData
-            }).then((response) => response.json())
+            // await fetch('https://api.saadatportal.com/api/v1/file', {
+            //     method: 'POST',
+            //     body: formData
+            // }).then((response) => response.json())
+            //     .then((result) => {
+            //         console.log('Success:', result);
+            //         this.setState({fileIdCartAllPage: result.message.id});
+            //         this.context.handleUploadedFile("personnelUploadPage", "card-AllPage", result.message.id);
+            //         this.setState({isLoadingCartAllPage: false});
+            //         this.setState({isUploadCartAllPage: true})
+            //         this.setState({hasErrorCartAllPage: false});
+            //     })
+            //     .catch((error) => {
+            //         console.error('Error:', error);
+            //         this.setState({isLoadingCartAllPage: false});
+            //         this.setState({isUploadCartAllPage: true})
+            //         this.setState({hasErrorCartAllPage: true});
+            //     });
+
+            await axios.post('https://api.saadatportal.com/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                 .then((result) => {
                     console.log('Success:', result);
                     this.setState({fileIdCartAllPage: result.message.id});
@@ -900,16 +1542,89 @@ class CUploadPage extends Component {
                     this.setState({isLoadingCartAllPage: false});
                     this.setState({isUploadCartAllPage: true})
                     this.setState({hasErrorCartAllPage: true});
-                });
+                }).catch(() => {
+                    if (localStorage.getItem('role') === 'MANAGER') {
+                        axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                            .then((response) => {
+                                if (response.headers["accesstoken"]) {
+                                    localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                                    axios.post('https://api.saadatportal.com/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                        .then((result) => {
+                                            console.log('Success:', result);
+                                            this.setState({fileIdCartAllPage: result.message.id});
+                                            this.context.handleUploadedFile("personnelUploadPage", "card-AllPage", result.message.id);
+                                            this.setState({isLoadingCartAllPage: false});
+                                            this.setState({isUploadCartAllPage: true})
+                                            this.setState({hasErrorCartAllPage: false});
+                                        })
+                                        .catch((error) => {
+                                            console.error('Error:', error);
+                                            this.setState({isLoadingCartAllPage: false});
+                                            this.setState({isUploadCartAllPage: true})
+                                            this.setState({hasErrorCartAllPage: true});
+                                        })
+                                } else {
+                                    window.location = '/'
+                                }
+                            })
+                    } else if (localStorage.getItem('role') === 'SUPERVISOR') {
+                        axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                            .then((response) => {
+                                if (response.headers["accesstoken"]) {
+                                    localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                                    axios.post('https://api.saadatportal.com/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                        .then((result) => {
+                                            console.log('Success:', result);
+                                            this.setState({fileIdCartAllPage: result.message.id});
+                                            this.context.handleUploadedFile("personnelUploadPage", "card-AllPage", result.message.id);
+                                            this.setState({isLoadingCartAllPage: false});
+                                            this.setState({isUploadCartAllPage: true})
+                                            this.setState({hasErrorCartAllPage: false});
+                                        })
+                                        .catch((error) => {
+                                            console.error('Error:', error);
+                                            this.setState({isLoadingCartAllPage: false});
+                                            this.setState({isUploadCartAllPage: true})
+                                            this.setState({hasErrorCartAllPage: true});
+                                        })
+                                } else {
+                                    window.location = '/'
+                                }
+                            })
+                    }})
         }
     }
 
     handleDeleteCartAllPage = async () => {
-        await fetch(`https://api.saadatportal.com/api/v1/file/${this.state.fileIdCartAllPage}`, {
-            method: 'DELETE',
-        })
-            .then(res => res.text())
-            .then(res => console.log(res));
+        // await fetch(`https://api.saadatportal.com/api/v1/file/${this.state.fileIdCartAllPage}`, {
+        //     method: 'DELETE',
+        // })
+        //     .then(res => res.text())
+        //     .then(res => console.log(res));
+
+        await axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdCartAllPage}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+            .catch(() => {
+                if (localStorage.getItem('role') === 'MANAGER') {
+                    axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        .then((response) => {
+                            if (response.headers["accesstoken"]) {
+                                localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                                axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdCartAllPage}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                            } else {
+                                window.location = '/'
+                            }
+                        })
+                } else if (localStorage.getItem('role') === 'SUPERVISOR') {
+                    axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        .then((response) => {
+                            if (response.headers["accesstoken"]) {
+                                localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                                axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdCartAllPage}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                            } else {
+                                window.location = '/'
+                            }
+                        })
+                }})
         this.context.handleDeleteUploadedFile("personnelUploadPage",this.state.fileIdCartAllPage);
         this.setState({fileIdCartAllPage: ""});
         this.setState({isUploadCartAllPage: false});
@@ -923,10 +1638,27 @@ class CUploadPage extends Component {
             formData.append('file', e.target.files[0]);
             this.setState({namePersonnelImg: e.target.files[0].name});
 
-            await fetch('https://api.saadatportal.com/api/v1/file', {
-                method: 'POST',
-                body: formData
-            }).then((response) => response.json())
+            // await fetch('https://api.saadatportal.com/api/v1/file', {
+            //     method: 'POST',
+            //     body: formData
+            // }).then((response) => response.json())
+            //     .then((result) => {
+            //         console.log('Success:', result);
+            //         this.setState({fileIdPersonnelImg: result.message.id});
+            //         this.context.handleFields(result.message.id, 'personnelFields', 'profileId')
+            //         this.context.handleUploadedFile("personnelUploadPage", "personnelImg", result.message.id);
+            //         this.setState({isLoadingPersonnelImg: false});
+            //         this.setState({isUploadPersonnelImg: true})
+            //         this.setState({hasErrorPersonnelImg: false});
+            //     })
+            //     .catch((error) => {
+            //         console.error('Error:', error);
+            //         this.setState({isLoadingPersonnelImg: false});
+            //         this.setState({isUploadPersonnelImg: true})
+            //         this.setState({hasErrorPersonnelImg: true});
+            //     });
+
+            await axios.post('https://api.saadatportal.com/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                 .then((result) => {
                     console.log('Success:', result);
                     this.setState({fileIdPersonnelImg: result.message.id});
@@ -941,17 +1673,92 @@ class CUploadPage extends Component {
                     this.setState({isLoadingPersonnelImg: false});
                     this.setState({isUploadPersonnelImg: true})
                     this.setState({hasErrorPersonnelImg: true});
-                });
+                }).catch(() => {
+                    if (localStorage.getItem('role') === 'MANAGER') {
+                        axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                            .then((response) => {
+                                if (response.headers["accesstoken"]) {
+                                    localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                                    axios.post('https://api.saadatportal.com/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                        .then((result) => {
+                                            console.log('Success:', result);
+                                            this.setState({fileIdPersonnelImg: result.message.id});
+                                            this.context.handleFields(result.message.id, 'personnelFields', 'profileId')
+                                            this.context.handleUploadedFile("personnelUploadPage", "personnelImg", result.message.id);
+                                            this.setState({isLoadingPersonnelImg: false});
+                                            this.setState({isUploadPersonnelImg: true})
+                                            this.setState({hasErrorPersonnelImg: false});
+                                        })
+                                        .catch((error) => {
+                                            console.error('Error:', error);
+                                            this.setState({isLoadingPersonnelImg: false});
+                                            this.setState({isUploadPersonnelImg: true})
+                                            this.setState({hasErrorPersonnelImg: true});
+                                        })
+                                } else {
+                                    window.location = '/'
+                                }
+                            })
+                    } else if (localStorage.getItem('role') === 'SUPERVISOR') {
+                        axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                            .then((response) => {
+                                if (response.headers["accesstoken"]) {
+                                    localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                                    axios.post('https://api.saadatportal.com/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                        .then((result) => {
+                                            console.log('Success:', result);
+                                            this.setState({fileIdPersonnelImg: result.message.id});
+                                            this.context.handleFields(result.message.id, 'personnelFields', 'profileId')
+                                            this.context.handleUploadedFile("personnelUploadPage", "personnelImg", result.message.id);
+                                            this.setState({isLoadingPersonnelImg: false});
+                                            this.setState({isUploadPersonnelImg: true})
+                                            this.setState({hasErrorPersonnelImg: false});
+                                        })
+                                        .catch((error) => {
+                                            console.error('Error:', error);
+                                            this.setState({isLoadingPersonnelImg: false});
+                                            this.setState({isUploadPersonnelImg: true})
+                                            this.setState({hasErrorPersonnelImg: true});
+                                        })
+                                } else {
+                                    window.location = '/'
+                                }
+                            })
+                    }})
         }
 
     }
 
     handleDeletePersonnelImg = async () => {
-        await fetch(`https://api.saadatportal.com/api/v1/file/${this.state.fileIdPersonnelImg}`, {
-            method: 'DELETE',
-        })
-            .then(res => res.text())
-            .then(res => console.log(res));
+        // await fetch(`https://api.saadatportal.com/api/v1/file/${this.state.fileIdPersonnelImg}`, {
+        //     method: 'DELETE',
+        // })
+        //     .then(res => res.text())
+        //     .then(res => console.log(res));
+
+        await axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdPersonnelImg}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+            .catch(() => {
+                if (localStorage.getItem('role') === 'MANAGER') {
+                    axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        .then((response) => {
+                            if (response.headers["accesstoken"]) {
+                                localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                                axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdPersonnelImg}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                            } else {
+                                window.location = '/'
+                            }
+                        })
+                } else if (localStorage.getItem('role') === 'SUPERVISOR') {
+                    axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        .then((response) => {
+                            if (response.headers["accesstoken"]) {
+                                localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                                axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdPersonnelImg}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                            } else {
+                                window.location = '/'
+                            }
+                        })
+                }})
         this.context.handleDeleteUploadedFile("personnelUploadPage",this.state.fileIdPersonnelImg);
         this.context.handleFields("", 'personnelFields', 'profileId')
         this.setState({fileIdPersonnelImg: ""});
@@ -966,10 +1773,26 @@ class CUploadPage extends Component {
             formData.append('file', e.target.files[0]);
             this.setState({nameRegister: e.target.files[0].name});
 
-            await fetch('https://api.saadatportal.com/api/v1/file', {
-                method: 'POST',
-                body: formData
-            }).then((response) => response.json())
+            // await fetch('https://api.saadatportal.com/api/v1/file', {
+            //     method: 'POST',
+            //     body: formData
+            // }).then((response) => response.json())
+            //     .then((result) => {
+            //         console.log('Success:', result);
+            //         this.setState({fileIdRegister: result.message.id});
+            //         this.context.handleUploadedFile("personnelUploadPage", "register", result.message.id);
+            //         this.setState({isLoadingRegister: false});
+            //         this.setState({isUploadRegister: true})
+            //         this.setState({hasErrorRegister: false});
+            //     })
+            //     .catch((error) => {
+            //         console.error('Error:', error);
+            //         this.setState({isLoadingRegister: false});
+            //         this.setState({isUploadRegister: true})
+            //         this.setState({hasErrorRegister: true});
+            //     });
+
+            await axios.post('https://api.saadatportal.com/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                 .then((result) => {
                     console.log('Success:', result);
                     this.setState({fileIdRegister: result.message.id});
@@ -983,16 +1806,89 @@ class CUploadPage extends Component {
                     this.setState({isLoadingRegister: false});
                     this.setState({isUploadRegister: true})
                     this.setState({hasErrorRegister: true});
-                });
+                }).catch(() => {
+                    if (localStorage.getItem('role') === 'MANAGER') {
+                        axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                            .then((response) => {
+                                if (response.headers["accesstoken"]) {
+                                    localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                                    axios.post('https://api.saadatportal.com/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                        .then((result) => {
+                                            console.log('Success:', result);
+                                            this.setState({fileIdRegister: result.message.id});
+                                            this.context.handleUploadedFile("personnelUploadPage", "register", result.message.id);
+                                            this.setState({isLoadingRegister: false});
+                                            this.setState({isUploadRegister: true})
+                                            this.setState({hasErrorRegister: false});
+                                        })
+                                        .catch((error) => {
+                                            console.error('Error:', error);
+                                            this.setState({isLoadingRegister: false});
+                                            this.setState({isUploadRegister: true})
+                                            this.setState({hasErrorRegister: true});
+                                        })
+                                } else {
+                                    window.location = '/'
+                                }
+                            })
+                    } else if (localStorage.getItem('role') === 'SUPERVISOR') {
+                        axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                            .then((response) => {
+                                if (response.headers["accesstoken"]) {
+                                    localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                                    axios.post('https://api.saadatportal.com/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                        .then((result) => {
+                                            console.log('Success:', result);
+                                            this.setState({fileIdRegister: result.message.id});
+                                            this.context.handleUploadedFile("personnelUploadPage", "register", result.message.id);
+                                            this.setState({isLoadingRegister: false});
+                                            this.setState({isUploadRegister: true})
+                                            this.setState({hasErrorRegister: false});
+                                        })
+                                        .catch((error) => {
+                                            console.error('Error:', error);
+                                            this.setState({isLoadingRegister: false});
+                                            this.setState({isUploadRegister: true})
+                                            this.setState({hasErrorRegister: true});
+                                        })
+                                } else {
+                                    window.location = '/'
+                                }
+                            })
+                    }})
         }
     }
 
     handleDeleteRegister = async () => {
-        await fetch(`https://api.saadatportal.com/api/v1/file/${this.state.fileIdRegister}`, {
-            method: 'DELETE',
-        })
-            .then(res => res.text())
-            .then(res => console.log(res));
+        // await fetch(`https://api.saadatportal.com/api/v1/file/${this.state.fileIdRegister}`, {
+        //     method: 'DELETE',
+        // })
+        //     .then(res => res.text())
+        //     .then(res => console.log(res));
+
+        await axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdRegister}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+            .catch(() => {
+                if (localStorage.getItem('role') === 'MANAGER') {
+                    axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        .then((response) => {
+                            if (response.headers["accesstoken"]) {
+                                localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                                axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdRegister}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                            } else {
+                                window.location = '/'
+                            }
+                        })
+                } else if (localStorage.getItem('role') === 'SUPERVISOR') {
+                    axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        .then((response) => {
+                            if (response.headers["accesstoken"]) {
+                                localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                                axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdRegister}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                            } else {
+                                window.location = '/'
+                            }
+                        })
+                }})
         this.context.handleDeleteUploadedFile("personnelUploadPage",this.state.fileIdRegister);
         this.setState({fileIdRegister: ""});
         this.setState({isUploadRegister: false});

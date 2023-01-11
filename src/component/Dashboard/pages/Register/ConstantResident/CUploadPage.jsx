@@ -751,7 +751,7 @@ class CUploadPage extends Component {
                         .then((response) => {
                             if (response.headers["accesstoken"]) {
                                 localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                axios.post(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdBirthPage1}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdBirthPage1}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                             } else {
                                 window.location = '/'
                             }
@@ -761,7 +761,7 @@ class CUploadPage extends Component {
                         .then((response) => {
                             if (response.headers["accesstoken"]) {
                                 localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                axios.post(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdBirthPage1}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdBirthPage1}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                             } else {
                                 window.location = '/'
                             }
@@ -884,7 +884,7 @@ class CUploadPage extends Component {
                         .then((response) => {
                             if (response.headers["accesstoken"]) {
                                 localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                axios.post(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdBirthPage2}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdBirthPage2}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                             } else {
                                 window.location = '/'
                             }
@@ -894,7 +894,7 @@ class CUploadPage extends Component {
                         .then((response) => {
                             if (response.headers["accesstoken"]) {
                                 localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                axios.post(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdBirthPage2}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdBirthPage2}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                             } else {
                                 window.location = '/'
                             }
@@ -1014,7 +1014,7 @@ class CUploadPage extends Component {
                         .then((response) => {
                             if (response.headers["accesstoken"]) {
                                 localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                axios.post(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdBirthPage3}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdBirthPage3}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                             } else {
                                 window.location = '/'
                             }
@@ -1024,7 +1024,7 @@ class CUploadPage extends Component {
                         .then((response) => {
                             if (response.headers["accesstoken"]) {
                                 localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                axios.post(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdBirthPage3}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdBirthPage3}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                             } else {
                                 window.location = '/'
                             }
@@ -1144,7 +1144,7 @@ class CUploadPage extends Component {
                         .then((response) => {
                             if (response.headers["accesstoken"]) {
                                 localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                axios.post(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdBirthPage4}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdBirthPage4}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                             } else {
                                 window.location = '/'
                             }
@@ -1154,7 +1154,7 @@ class CUploadPage extends Component {
                         .then((response) => {
                             if (response.headers["accesstoken"]) {
                                 localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                axios.post(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdBirthPage4}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdBirthPage4}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                             } else {
                                 window.location = '/'
                             }
@@ -1274,7 +1274,7 @@ class CUploadPage extends Component {
                         .then((response) => {
                             if (response.headers["accesstoken"]) {
                                 localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                axios.post(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdBirthAllPage}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdBirthAllPage}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                             } else {
                                 window.location = '/'
                             }
@@ -1284,7 +1284,7 @@ class CUploadPage extends Component {
                         .then((response) => {
                             if (response.headers["accesstoken"]) {
                                 localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                axios.post(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdBirthAllPage}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdBirthAllPage}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                             } else {
                                 window.location = '/'
                             }
@@ -1403,7 +1403,7 @@ class CUploadPage extends Component {
                         .then((response) => {
                             if (response.headers["accesstoken"]) {
                                 localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                axios.post(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdCartPage1}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdCartPage1}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                             } else {
                                 window.location = '/'
                             }
@@ -1413,7 +1413,7 @@ class CUploadPage extends Component {
                         .then((response) => {
                             if (response.headers["accesstoken"]) {
                                 localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                axios.post(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdCartPage1}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdCartPage1}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                             } else {
                                 window.location = '/'
                             }
@@ -1533,7 +1533,7 @@ class CUploadPage extends Component {
                         .then((response) => {
                             if (response.headers["accesstoken"]) {
                                 localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                axios.post(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdCartPage2}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdCartPage2}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                             } else {
                                 window.location = '/'
                             }
@@ -1543,7 +1543,7 @@ class CUploadPage extends Component {
                         .then((response) => {
                             if (response.headers["accesstoken"]) {
                                 localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                axios.post(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdCartPage2}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdCartPage2}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                             } else {
                                 window.location = '/'
                             }
@@ -1663,7 +1663,7 @@ class CUploadPage extends Component {
                         .then((response) => {
                             if (response.headers["accesstoken"]) {
                                 localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                axios.post(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdCartAllPage}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdCartAllPage}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                             } else {
                                 window.location = '/'
                             }
@@ -1673,7 +1673,7 @@ class CUploadPage extends Component {
                         .then((response) => {
                             if (response.headers["accesstoken"]) {
                                 localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                axios.post(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdCartAllPage}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdCartAllPage}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                             } else {
                                 window.location = '/'
                             }
@@ -1793,7 +1793,7 @@ class CUploadPage extends Component {
                         .then((response) => {
                             if (response.headers["accesstoken"]) {
                                 localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                axios.post(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdPersonnelImg}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdPersonnelImg}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                             } else {
                                 window.location = '/'
                             }
@@ -1803,7 +1803,7 @@ class CUploadPage extends Component {
                         .then((response) => {
                             if (response.headers["accesstoken"]) {
                                 localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                axios.post(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdPersonnelImg}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdPersonnelImg}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                             } else {
                                 window.location = '/'
                             }
@@ -1922,7 +1922,7 @@ class CUploadPage extends Component {
                         .then((response) => {
                             if (response.headers["accesstoken"]) {
                                 localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                axios.post(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdRegister}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdRegister}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                             } else {
                                 window.location = '/'
                             }
@@ -1932,7 +1932,7 @@ class CUploadPage extends Component {
                         .then((response) => {
                             if (response.headers["accesstoken"]) {
                                 localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                axios.post(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdRegister}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdRegister}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                             } else {
                                 window.location = '/'
                             }
@@ -1952,26 +1952,26 @@ class CUploadPage extends Component {
             formData.append('file', e.target.files[0]);
             this.setState({nameRegisterUni: e.target.files[0].name});
 
-            await fetch('https://api.saadatportal.com/api/v1/file', {
-                method: 'POST',
-                body: formData
-            }).then((response) => response.json())
-                .then((result) => {
-
-                    console.log('Success:', result);
-                    this.setState({fileIdRegisterUni: result.message.id});
-                    this.context.handleUploadedFile("constantUploadPage", "registerUni", result.message.id);
-                    this.setState({isLoadingRegisterUni: false});
-                    this.setState({isUploadRegisterUni: true});
-                    this.setState({hasErrorRegisterUni: false});
-
-                })
-                .catch((error) => {
-                    console.error('Error:', error);
-                    this.setState({isLoadingRegisterUni: false});
-                    this.setState({isUploadRegisterUni: true})
-                    this.setState({hasErrorRegisterUni: true});
-                });
+            // await fetch('https://api.saadatportal.com/api/v1/file', {
+            //     method: 'POST',
+            //     body: formData
+            // }).then((response) => response.json())
+            //     .then((result) => {
+            //
+            //         console.log('Success:', result);
+            //         this.setState({fileIdRegisterUni: result.message.id});
+            //         this.context.handleUploadedFile("constantUploadPage", "registerUni", result.message.id);
+            //         this.setState({isLoadingRegisterUni: false});
+            //         this.setState({isUploadRegisterUni: true});
+            //         this.setState({hasErrorRegisterUni: false});
+            //
+            //     })
+            //     .catch((error) => {
+            //         console.error('Error:', error);
+            //         this.setState({isLoadingRegisterUni: false});
+            //         this.setState({isUploadRegisterUni: true})
+            //         this.setState({hasErrorRegisterUni: true});
+            //     });
 
             await axios.post('https://api.saadatportal.com/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                 .then((result) => {
@@ -2061,7 +2061,7 @@ class CUploadPage extends Component {
                         .then((response) => {
                             if (response.headers["accesstoken"]) {
                                 localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                axios.post(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdRegisterUni}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdRegisterUni}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                             } else {
                                 window.location = '/'
                             }
@@ -2071,7 +2071,7 @@ class CUploadPage extends Component {
                         .then((response) => {
                             if (response.headers["accesstoken"]) {
                                 localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                axios.post(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdRegisterUni}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdRegisterUni}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                             } else {
                                 window.location = '/'
                             }
