@@ -491,31 +491,19 @@ class PaymentPage extends Component {
 
     handleDeleteFile = async () => {
         this.setState({deleteLoading: true})
-        await fetch(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileId}`, {
-            method: 'DELETE',
-        })
-            .then(res => res.text())
-        this.setState({fileId: ""});
-        this.setState({isUpload: false});
-        this.setState({deleteLoading: false});
+        // await fetch(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileId}`, {
+        //     method: 'DELETE',
+        // })
+        //     .then(res => res.text())
 
         axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileId}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
-            .then((data) => this.setState({
-                fileId: "",
-                isUpload: false,
-                deleteLoading: false,
-            })).catch(() => {
+          .catch(() => {
             if (localStorage.getItem('role') === 'MANAGER') {
                 axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                     .then((response) => {
                         if (response.headers["accesstoken"]) {
                             localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                            axios.get(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileId}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
-                                .then((data) => this.setState({
-                                    fileId: "",
-                                    isUpload: false,
-                                    deleteLoading: false,
-                                }))
+                            axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileId}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                         } else {
                             window.location = '/'
                         }
@@ -525,17 +513,16 @@ class PaymentPage extends Component {
                     .then((response) => {
                         if (response.headers["accesstoken"]) {
                             localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                            axios.get(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileId}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
-                                .then((data) => this.setState({
-                                    fileId: "",
-                                    isUpload: false,
-                                    deleteLoading: false,
-                                }))
+                            axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileId}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                         } else {
                             window.location = '/'
                         }
                     })
             }})
+
+        this.setState({fileId: ""});
+        this.setState({isUpload: false});
+        this.setState({deleteLoading: false});
 
     }
 
