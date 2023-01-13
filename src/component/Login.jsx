@@ -140,7 +140,7 @@ class Login extends Component {
           localStorage.setItem("accessToken", response.headers["accesstoken"]);
           localStorage.setItem("refreshToken", response.headers["refreshtoken"]);
           localStorage.setItem("role", response.headers["role"]);
-          localStorage.setItem("fullName", response.headers["fullname"]);
+          localStorage.setItem("username", getValue.user);
           localStorage.setItem("id", response.headers["id"])
           this.setState({loading: false})
           window.location = "/dashboard"

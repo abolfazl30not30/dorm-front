@@ -89,7 +89,10 @@ class Header extends Component {
                                             </div>
                                             <div className="d-flex flex-column justify-content-center mx-3">
                                                 <h6>
-                                                    {localStorage.getItem("fullName")}
+                                                    {localStorage.getItem("role") === "MANAGER" ?
+                                                    "مدیر" :
+                                                        localStorage.getItem('username')
+                                                    }
                                                 </h6>
                                                 {
                                                     localStorage.getItem('role') === "SUPERVISOR"
