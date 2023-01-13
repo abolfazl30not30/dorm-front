@@ -89,11 +89,19 @@ class Header extends Component {
                                             </div>
                                             <div className="d-flex flex-column justify-content-center mx-3">
                                                 <h6>
-                                                    علی محمدی
+                                                    {localStorage.getItem("fullName")}
                                                 </h6>
-                                                <p>
-                                                    مشاهده پروفایل
-                                                </p>
+                                                {
+                                                    localStorage.getItem('role') === "SUPERVISOR"
+                                                    ?
+                                                        <p onClick={() => {
+                                                            window.location = `/personnel/${localStorage.getItem('id')}`
+                                                        }}>
+                                                            مشاهده پروفایل
+                                                        </p>
+                                                    :
+                                                        null
+                                                }
                                             </div>
                                         </div>
                                     </Link>
@@ -111,7 +119,13 @@ class Header extends Component {
                                     </Link>
                                 </div>
                                 <div className="dropdown-items">
-                                    <Link to="/taskManagement">
+                                    <Link to="/" onClick={() => {
+                                        localStorage.removeItem('role')
+                                        localStorage.removeItem('id')
+                                        localStorage.removeItem('fullName')
+                                        localStorage.removeItem('accessToken')
+                                        localStorage.removeItem('refreshToken')
+                                    }}>
                                         <IoMdExit/>
                                         <span>خروج</span>
                                     </Link>

@@ -140,16 +140,13 @@ class Login extends Component {
           localStorage.setItem("accessToken", response.headers["accesstoken"]);
           localStorage.setItem("refreshToken", response.headers["refreshtoken"]);
           localStorage.setItem("role", response.headers["role"]);
+          localStorage.setItem("fullName", response.headers["fullname"]);
+          localStorage.setItem("id", response.headers["id"])
           this.setState({loading: false})
           window.location = "/dashboard"
-          axios.get('https://api.saadatportal.com/api/v1/task', {headers: {'Authorization': localStorage.getItem('accessToken')}}).then((response) => response.data)
-            .then((response) => {
-              console.log(response.headers)
-            }).catch((error) => {
-            console.log(error)
-          })}).catch(err => {
+          }).catch(err => {
       this.setState({loading: false})
-      this.setState({errors: ['ایمیل یا پسورد صحیح نمی باشد']})
+      this.setState({errors: ['نام کاربری یا پسورد صحیح نمی باشد']})
     })
   }
 }

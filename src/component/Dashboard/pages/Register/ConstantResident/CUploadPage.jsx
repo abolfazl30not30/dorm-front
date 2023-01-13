@@ -1909,12 +1909,6 @@ class CUploadPage extends Component {
     }
 
     handleDeleteRegister = async () => {
-        // await fetch(`https://api.saadatportal.com/api/v1/file/${this.state.fileIdRegister}`, {
-        //     method: 'DELETE',
-        // })
-        //     .then(res => res.text())
-        //     .then(res => console.log(res));
-
         await axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdRegister}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
             .catch(() => {
                 if (localStorage.getItem('role') === 'MANAGER') {
@@ -1975,21 +1969,14 @@ class CUploadPage extends Component {
 
             await axios.post('https://api.saadatportal.com/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                 .then((result) => {
-
                     console.log('Success:', result);
                     this.setState({fileIdRegisterUni: result.message.id});
                     this.context.handleUploadedFile("constantUploadPage", "registerUni", result.message.id);
                     this.setState({isLoadingRegisterUni: false});
                     this.setState({isUploadRegisterUni: true});
                     this.setState({hasErrorRegisterUni: false});
-
                 })
-                .catch((error) => {
-                    console.error('Error:', error);
-                    this.setState({isLoadingRegisterUni: false});
-                    this.setState({isUploadRegisterUni: true})
-                    this.setState({hasErrorRegisterUni: true});
-                }).catch(() => {
+                .catch(() => {
                     if (localStorage.getItem('role') === 'MANAGER') {
                         axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                             .then((response) => {
@@ -1997,14 +1984,12 @@ class CUploadPage extends Component {
                                     localStorage.setItem("accessToken", response.headers["accesstoken"]);
                                     axios.post('https://api.saadatportal.com/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                         .then((result) => {
-
                                             console.log('Success:', result);
                                             this.setState({fileIdRegisterUni: result.message.id});
                                             this.context.handleUploadedFile("constantUploadPage", "registerUni", result.message.id);
                                             this.setState({isLoadingRegisterUni: false});
                                             this.setState({isUploadRegisterUni: true});
                                             this.setState({hasErrorRegisterUni: false});
-
                                         })
                                         .catch((error) => {
                                             console.error('Error:', error);

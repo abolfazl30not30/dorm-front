@@ -75,11 +75,6 @@ class RequestPage extends Component {
     }
 
     componentDidMount = async () => {
-        // await fetch('https://api.saadatportal.com/api/v1/supervisor/request').then((response) => response.json())
-        //     .then((data) => {
-        //         this.setState({requests: data});
-        //         this.setState({cardsLoading: false});
-        //     });
 
         axios.get('https://api.saadatportal.com/api/v1/supervisor/request', {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
             .then((data) => {

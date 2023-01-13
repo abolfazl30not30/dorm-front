@@ -399,7 +399,8 @@ class MainRegister extends Component {
         otherGuestCheck: false,
         familyGuestCheck : false,
         typeofResident : "constant",
-        showDoneModal: false
+        showDoneModal: false,
+        personId: ''
     }
 
     checked = (e) => {
@@ -497,7 +498,7 @@ class MainRegister extends Component {
                                 </div>
                             </div>
                             <div className="d-flex flex-row justify-content-between my-3">
-                                <Link to="/dashboard/People/profile"  className='btn button-show' onClick={() =>{this.handleGoToShow()}}>نمایش</Link>
+                                <Link to={`/dashboard/people/${this.state.personId}`} className='btn button-show' onClick={() =>{this.handleGoToShow()}}>نمایش</Link>
                                 <Link to="/dashboard/booking" className='btn button-selectBed' onClick={() =>{this.handleGoToSelectBed()}}>انتخاب تخت</Link>
                                 <Link to="" className='btn button-close' onClick={() =>{this.handleCloseModal()}}>بستن</Link>
                             </div>
@@ -531,19 +532,6 @@ class MainRegister extends Component {
                     console.log(profileImg);
                     newCharacteristic.profileId = profileImg.fileId;
                 }
-
-                // console.log(newCharacteristic);
-
-                // const createChar = await fetch('https://api.saadatportal.com/api/v1/supervisor/characteristic', {
-                //     method: 'POST',
-                //     headers: {
-                //         'Accept': 'application/json',
-                //         'Content-Type': 'application/json'
-                //     },
-                //     body: JSON.stringify(newCharacteristic)
-                // });
-
-                // let respondChar = "";
 
                 const createChar = axios.post('https://api.saadatportal.com/api/v1/supervisor/characteristic', newCharacteristic, {headers: {'Authorization': localStorage.getItem('accessToken')}})
                     .then(response => response.data)
@@ -585,8 +573,7 @@ class MainRegister extends Component {
                     }})
 
                 let respondChar = await createChar;
-                console.log(respondChar)
-
+                this.setState({personId: respondChar.id})
                 let person = {
                     residenceType:"resident",
                     accommodationType:"permanent",
@@ -644,9 +631,6 @@ class MainRegister extends Component {
                 let respondPerson = await createPerson;
 
                 axios.put(`https://api.saadatportal.com/api/v1/supervisor/characteristic/${respondChar.id}`, {parentId:respondPerson.id}, {headers: {'Authorization': localStorage.getItem('accessToken')}})
-                    .then(response => {
-                        console.log('success3')
-                    })
                     .catch(() => {
                         if (localStorage.getItem('role') === 'MANAGER') {
                             axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
@@ -654,7 +638,6 @@ class MainRegister extends Component {
                                     if (response.headers["accesstoken"]) {
                                         localStorage.setItem("accessToken", response.headers["accesstoken"]);
                                         axios.post(`https://api.saadatportal.com/api/v1/supervisor/characteristic/${respondChar.id}`, {parentId:respondPerson.id}, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
-                                            .then((data) => console.log('success3'))
                                     } else {
                                         window.location = '/'
                                     }
@@ -665,7 +648,6 @@ class MainRegister extends Component {
                                     if (response.headers["accesstoken"]) {
                                         localStorage.setItem("accessToken", response.headers["accesstoken"]);
                                         axios.post(`https://api.saadatportal.com/api/v1/supervisor/characteristic/${respondChar.id}`, {parentId:respondPerson.id}, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
-                                            .then((data) => console.log('success3'))
                                     } else {
                                         window.location = '/'
                                     }

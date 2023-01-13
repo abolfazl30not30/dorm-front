@@ -4,6 +4,7 @@ import '../style/registerPage.css';
 import logo from "../img/sadat logo-png.png";
 import * as yup from 'yup';
 import {Link} from "react-router-dom";
+import axios from "axios";
 
 class Login extends Component {
 
@@ -112,47 +113,43 @@ class Login extends Component {
 
         let getValue = await result;
 
-        // let username = "fazel";
-        // let password = "12345678";
-
-        // if(username === getValue.user && password === getValue.email){
-        //     window.location = '/dashboard';
-
-
         let response = '';
-        const postEmail = await fetch('https://api.saadatportal.com/api/v1/email/forgot/password', {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
+        axios.post('https://api.saadatportal.com/api/v1/email/forgot/password', {
                 username: this.state.account.user,
                 email: this.state.account.email
+            }, {
+                params: {
+                    "username": getValue.user,
+                    "password": getValue.password
+                }
+            },
+            {
+                headers: {
+                    "content-type": "application/x-www-form-urlencoded",
+                    "Access-Control-Allow-Origin": "*",
+                }
             })
-        }).then((res) => response = res);
-
-        // let respondForgotPassword = await postEmail.json();
-
-        console.log(response)
+            .then(response => {
+                localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                localStorage.setItem("refreshToken", response.headers["refreshtoken"]);
+                localStorage.setItem("role", response.headers["role"]);
+                this.setState({loading: false})
+                window.location = "/dashboard"
+            }).catch(err => {
+            this.setState({loading: false})
+            this.setState({errors: ['نام کاربری یا پسورد صحیح نمی باشد']})
+        })
 
         if (response.status === 200) {
             window.location = '/';
-            console.log('success')
             this.setState({errors: []})
         } else if (response.status === 500){
             if (!this.state.errors.includes('لطفا نام کاربری را وارد کنید') && !this.state.errors.includes('ایمیل معتبر نیست')){
                 this.setState({errors: ['شما امکان دسترسی به سیستم ندارید']})
             }
-        } else if (response.status === 403){
+        } else if (response.status === 403) {
             this.setState({errors: ['ایمیل صحیح نمی باشد']})
         }
-
-        // if ()
-
-        // }else {
-        //     this.setState({errors: ['ایمیل یا پسورد صحیح نمی باشد']})
-        // }
     }
 }
 

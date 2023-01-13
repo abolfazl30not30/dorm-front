@@ -138,7 +138,8 @@ class PersonnelRegister extends Component {
                 content: <UploadPage />,
             }
         ],
-        showDoneModal: false
+        showDoneModal: false,
+        personnelId: ''
     }
 
     render() {
@@ -169,7 +170,7 @@ class PersonnelRegister extends Component {
                                 </div>
                             </div>
                             <div className="d-flex flex-row justify-content-between my-3">
-                                <Link to="/dashboard/People/profile"  className='btn button-show' onClick={() =>{this.handleGoToShow()}}>نمایش</Link>
+                                <Link to={`/dashboard/personnel/${this.state.personId}`}  className='btn button-show' onClick={() =>{this.handleGoToShow()}}>نمایش</Link>
                                 <Link to="" className='btn button-close' onClick={() =>{this.handleCloseModal()}}>بستن</Link>
                             </div>
                         </div>
@@ -222,6 +223,7 @@ class PersonnelRegister extends Component {
 
 
         var respondChar = await newChar
+        this.setState({personnelId: respondChar.id})
         let personnel = {
             gender: newCharacteristic.gender,
             type: newCharacteristic.type,
@@ -230,10 +232,8 @@ class PersonnelRegister extends Component {
             files: this.context.personnelUploadPage,
         }
 
-        console.log(respondChar)
-
         const newPersonnel = axios.post('https://api.saadatportal.com/api/v1/supervisor/personnel', personnel, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
-.catch(() => {
+            .catch(() => {
                 if (localStorage.getItem('role') === 'MANAGER') {
                     axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                         .then((response) => {

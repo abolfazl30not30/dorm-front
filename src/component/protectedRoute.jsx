@@ -9,37 +9,35 @@ class ProtectedRoute extends Component {
 
     componentWillMount() {
         const role = localStorage.getItem('role')
-        axios.get('https://api.saadatportal.com/api/v1/supervisor/task', {headers: {'Authorization': localStorage.getItem('accessToken')}})
-            .then((response) => {
-                this.setState({isAuth: true})
-                return this.state.isAuth
-            }).catch(() => {
-                if (role === 'MANAGER') {
-                    axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
-                        .then((response) => {
-                            if (response.headers["accesstoken"]) {
-                                localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                this.setState({isAuth: true})
-                                return this.state.isAuth
-                            } else {
-                                this.setState({isAuth: false})
-                                return this.state.isAuth
-                            }
-                        })
-                } else if (role === 'SUPERVISOR') {
-                    axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
-                        .then((response) => {
-                            if (response.headers["accesstoken"]) {
-                                localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                this.setState({isAuth: true})
-                                return this.state.isAuth
-                            } else {
-                                this.setState({isAuth: false})
-                                return this.state.isAuth
-                            }
-                        })
-                }
-        })
+        if (role === 'MANAGER') {
+            axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                .then((response) => {
+                    if (response.headers["accesstoken"]) {
+                        localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                        this.setState({isAuth: true})
+                        console.log(2)
+                        return this.state.isAuth
+                    } else {
+                        this.setState({isAuth: false})
+                        console.log(3)
+                        return this.state.isAuth
+                    }
+                })
+        } else if (role === 'SUPERVISOR') {
+            axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                .then((response) => {
+                    if (response.headers["accesstoken"]) {
+                        localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                        this.setState({isAuth: true})
+                        console.log(this.state.isAuth)
+                        return this.state.isAuth
+                    } else {
+                        this.setState({isAuth: false})
+                        console.log(5)
+                        return this.state.isAuth
+                    }
+                })
+        }
     }
 
     render() {

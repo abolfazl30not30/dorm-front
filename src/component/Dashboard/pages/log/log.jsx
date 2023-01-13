@@ -65,6 +65,11 @@ class log extends Component {
         },
         dataPicker: null,
     }
+    constructor(props) {
+        super(props);
+        console.log(1)
+        if (localStorage.getItem('role') !== 'MANAGER') {window.location = "/dashboard"}
+    }
 
     async componentDidMount() {
         this.setState({searchLoading: true})

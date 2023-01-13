@@ -24,6 +24,7 @@ class RequestPage extends Component {
 
     constructor(props) {
         super(props);
+        if (localStorage.getItem('role') !== 'MANAGER') {window.location = "/dashboard"}
         this.refForAdd = createRef();
         this.inputRef = createRef();
     }
