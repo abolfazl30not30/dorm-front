@@ -133,7 +133,7 @@ class Login extends Component {
         {
           headers: {
             "content-type": "application/x-www-form-urlencoded",
-            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Origin": "localhost:8089",
           }
         })
         .then(response => {

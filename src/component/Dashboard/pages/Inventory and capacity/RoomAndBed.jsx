@@ -148,10 +148,7 @@ class RoomAndBed extends Component {
                 updateState[roomIndex].beds[bedIndex].empty = false;
                 updateState[roomIndex].beds[bedIndex].person = this.state.selectedPeople;
                 this.setState({rooms:updateState});
-            }).catch((error)=>{
-            console.log(error)
-        })
-            .catch(() => {
+            }).catch(() => {
                 if (localStorage.getItem('role') === 'MANAGER') {
                     axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                         .then((response) => {
@@ -210,8 +207,6 @@ class RoomAndBed extends Component {
             await axios.get(`https://api.saadatportal.com/api/v1/supervisor/person/${bed.person}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                 .then((data) => {
                     person = data
-                    console.log("person1")
-                    console.log(person)
                 })
                 .catch(() => {
                     console.log(123)
@@ -224,8 +219,6 @@ class RoomAndBed extends Component {
                                     axios.get(`https://api.saadatportal.com/api/v1/supervisor/person/${bed.person}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                         .then((data) => {
                                             person = data
-                                            console.log("person1")
-                                            console.log(person)
                                         })
                                 } else {
                                     window.location = '/'
@@ -239,8 +232,6 @@ class RoomAndBed extends Component {
                                     axios.get(`https://api.saadatportal.com/api/v1/supervisor/person/${bed.person}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                         .then((data) => {
                                             person = data
-                                            console.log("person1")
-                                            console.log(person)
                                         })
                                 } else {
                                     window.location = '/'

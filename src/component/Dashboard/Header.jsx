@@ -31,7 +31,7 @@ class Header extends Component {
                         <ul className="d-flex navbar">
                             <li className='navbar-item'>
                                 <NavLink
-                                    activeClassName='active-header' to="/dashboard" className='sidenav-link' end>
+                                    activeClassName='active-header' to="/dashboard" replace={true} className='sidenav-link' end>
                                     <AiOutlineHome style={{paddingLeft: "7px"}} font-size="20px"/>
                                     خانه
                                 </NavLink>

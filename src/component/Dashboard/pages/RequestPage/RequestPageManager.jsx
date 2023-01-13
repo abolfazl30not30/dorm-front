@@ -588,7 +588,7 @@ class RequestPage extends Component {
             //         requests: updatedRequests
             //     })});
 
-            await axios.patch(`https://api.saadatportal.com/api/v1/supervisor/request/${updatedRequests[index].id}`, {checked: false,
+            await axios.put(`https://api.saadatportal.com/api/v1/supervisor/request/${updatedRequests[index].id}`, {checked: false,
                 failureReasonId: content.id}, {headers: {'Authorization': localStorage.getItem('accessToken')}})
                 .then(response => response.data).then((data) => {
                     updatedRequests[index].checked = false
@@ -603,7 +603,7 @@ class RequestPage extends Component {
                             .then((response) => {
                                 if (response.headers["accesstoken"]) {
                                     localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                    axios.patch(`https://api.saadatportal.com/api/v1/supervisor/request/${updatedRequests[index].id}`, {checked: false,
+                                    axios.put(`https://api.saadatportal.com/api/v1/supervisor/request/${updatedRequests[index].id}`, {checked: false,
                                         failureReasonId: content.id}, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                         .then((data) => {
                                             updatedRequests[index].checked = false
@@ -621,7 +621,7 @@ class RequestPage extends Component {
                             .then((response) => {
                                 if (response.headers["accesstoken"]) {
                                     localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                    axios.patch(`https://api.saadatportal.com/api/v1/supervisor/request/${updatedRequests[index].id}`, {checked: false,
+                                    axios.put(`https://api.saadatportal.com/api/v1/supervisor/request/${updatedRequests[index].id}`, {checked: false,
                                         failureReasonId: content.id}, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                         .then((data) => {
                                             updatedRequests[index].checked = false
@@ -655,7 +655,7 @@ class RequestPage extends Component {
             //         requests: updatedRequests
             //     })});
 
-            await axios.patch(`https://api.saadatportal.com/api/v1/supervisor/request/${updatedRequests[index].id}`, {checked: this.state.tmpRequestForSubmit.checked}, {headers: {'Authorization': localStorage.getItem('accessToken')}})
+            await axios.put(`https://api.saadatportal.com/api/v1/supervisor/request/${updatedRequests[index].id}`, {checked: this.state.tmpRequestForSubmit.checked}, {headers: {'Authorization': localStorage.getItem('accessToken')}})
                 .then(response => response.data).then((data) => {
                     updatedRequests[index].checked = true
                     this.setState({
@@ -669,7 +669,7 @@ class RequestPage extends Component {
                             .then((response) => {
                                 if (response.headers["accesstoken"]) {
                                     localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                    axios.patch(`https://api.saadatportal.com/api/v1/supervisor/request/${updatedRequests[index].id}`, {checked: this.state.tmpRequestForSubmit.checked}, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                    axios.put(`https://api.saadatportal.com/api/v1/supervisor/request/${updatedRequests[index].id}`, {checked: this.state.tmpRequestForSubmit.checked}, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                         .then((data) => {
                                             updatedRequests[index].checked = true
                                             this.setState({
@@ -686,7 +686,7 @@ class RequestPage extends Component {
                             .then((response) => {
                                 if (response.headers["accesstoken"]) {
                                     localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                    axios.patch(`https://api.saadatportal.com/api/v1/supervisor/request/${updatedRequests[index].id}`, {checked: this.state.tmpRequestForSubmit.checked}, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                    axios.put(`https://api.saadatportal.com/api/v1/supervisor/request/${updatedRequests[index].id}`, {checked: this.state.tmpRequestForSubmit.checked}, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                         .then((data) => {
                                             updatedRequests[index].checked = true
                                             this.setState({
