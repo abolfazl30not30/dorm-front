@@ -509,6 +509,7 @@ class MainRegister extends Component {
         );
     }
 
+
     handleCloseModal = () => {
         this.setState({showDoneModal:false})
         window.location.reload(false);
