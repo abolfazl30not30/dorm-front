@@ -39,20 +39,17 @@ class HamburgerMenu extends Component {
                             تقويم
                         </NavLink>
                     </li>
-
-                    {/*<li className='sidenav-item'>*/}
-                    {/*    <Link to="/Request" className='sidenav-link' onClick={window.innerWidth <= 768 && this.context.handleSidebar}>*/}
-                    {/*        <i className="bi bi-person-circle" />*/}
-                    {/*        درخواست*/}
-                    {/*    </Link>*/}
-                    {/*</li>*/}
-                    <li className='sidenav-item'>
-                        <NavLink activeClassName='active-sidebar' to="/dashboard/Request" className='sidenav-link'
-                                 onClick={window.innerWidth <= 768 && this.context.handleSidebar}>
-                            <i className="bi bi-person-circle"/>
-                            درخواست
-                        </NavLink>
-                    </li>
+                    {
+                        localStorage.getItem('role') === 'SUPERVISOR'
+                            ? <li className='sidenav-item'>
+                                <NavLink activeClassName='active-sidebar' to="/dashboard/Request" className='sidenav-link'
+                                         onClick={window.innerWidth <= 768 && this.context.handleSidebar}>
+                                    <i className="bi bi-person-circle"/>
+                                    درخواست
+                                </NavLink>
+                            </li>
+                            : null
+                    }
                     {
                         localStorage.getItem('role') === 'MANAGER'
                         ? <li className='sidenav-item'>
@@ -65,19 +62,12 @@ class HamburgerMenu extends Component {
                             : null
                     }
                     {/*<li className='sidenav-item'>*/}
-                    {/*    <NavLink activeClassName='active-sidebar' to="/dashboard/Request-manager" className='sidenav-link'*/}
+                    {/*    <NavLink activeClassName='active-sidebar' to="/dashboard/camera-history" className='sidenav-link'*/}
                     {/*             onClick={window.innerWidth <= 768 && this.context.handleSidebar}>*/}
-                    {/*        <i className="bi bi-envelope"></i>*/}
-                    {/*        درخواست (مدیریت)*/}
+                    {/*        <i className="bi bi-camera-video"></i>*/}
+                    {/*        دوربین*/}
                     {/*    </NavLink>*/}
                     {/*</li>*/}
-                    <li className='sidenav-item'>
-                        <NavLink activeClassName='active-sidebar' to="/dashboard/camera-history" className='sidenav-link'
-                                 onClick={window.innerWidth <= 768 && this.context.handleSidebar}>
-                            <i className="bi bi-camera-video"></i>
-                            دوربین
-                        </NavLink>
-                    </li>
                     <li className='sidenav-item'>
                         <NavLink activeClassName='active-sidebar' to="/dashboard/PaymentHistory" className='sidenav-link'
                                  onClick={window.innerWidth <= 768 && this.context.handleSidebar}>

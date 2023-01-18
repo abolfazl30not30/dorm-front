@@ -8,7 +8,6 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
-
 import '../../../../style/profilePage.css'
 import '../../../../style/registerPage.css';
 import '../../../../style/paymentPage.css';
@@ -18,7 +17,6 @@ import {Box, CircularProgress, MenuItem, Select} from "@mui/material";
 import {green} from "@mui/material/colors";
 import Skeleton from "react-loading-skeleton";
 import axios from "axios";
-// import React from "@types/react";
 
 class RequestPage extends Component {
 

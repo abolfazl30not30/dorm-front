@@ -499,7 +499,7 @@ class MainPage extends Component {
                             <Route path="/PersonnelRegister" element={(<PersonnelRegister/>)}/>
                             <Route path="/Request-manager" element={(<RequestPageManager/>)}/>
                             <Route path="/Request" element={(<RequestPage/>)}/>
-                            <Route path="/camera-history" element={(<CameraHistoryPage/>)}/>
+                            {/*<Route path="/camera-history" element={(<CameraHistoryPage/>)}/>*/}
                             <Route path="/PaymentHistory" element={(<PaymentHistory/>)}/>
                             <Route path="/taskManagement" element={(<TrelloPage/>)}/>
                             <Route path="/PresenceAbsence" element={(<PresenceAbsence/>)}/>

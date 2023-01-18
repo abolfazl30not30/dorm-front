@@ -572,11 +572,6 @@ class PaymentPage extends Component {
                 hasError: false,
                 uploadLoading: false
             }))
-            .catch((error) => {
-                this.setState({isUpload: true})
-                this.setState({hasError: true})
-                this.setState({uploadLoading: false});
-            })
             .catch(() => {
             if (localStorage.getItem('role') === 'MANAGER') {
                 axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
