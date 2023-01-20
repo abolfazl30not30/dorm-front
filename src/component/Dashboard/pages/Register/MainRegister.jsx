@@ -525,19 +525,17 @@ class MainRegister extends Component {
         switch (this.state.typeofResident){
             case "constant" : {
                 let newCharacteristic = {...this.context.constantInformationPage,...this.context.constantInformationFurther,...this.context.constantInformationFamily};
-                let birthDate1 = newCharacteristic.birthDate;
-                newCharacteristic.birthDate = birthDate1+" 00:00:00";
+                // let birthDate1 = newCharacteristic.birthDate;
+                // newCharacteristic.birthDate = birthDate1+" 00:00:00";
 
                 const profileImg = this.context.constantUploadPage.find(({name}) => name === "personnelImg");
                 if(profileImg !== undefined){
-                    console.log(profileImg);
                     newCharacteristic.profileId = profileImg.fileId;
                 }
 
                 const createChar = axios.post('https://api.saadatportal.com/api/v1/supervisor/characteristic', newCharacteristic, {headers: {'Authorization': localStorage.getItem('accessToken')}})
                     .then(response => response.data)
                     .then((data) => {
-                        console.log('success')
                         return data
                     })
                     .catch(() => {
@@ -549,7 +547,6 @@ class MainRegister extends Component {
                                     axios.post('https://api.saadatportal.com/api/v1/supervisor/characteristic', newCharacteristic, {headers: {'Authorization': localStorage.getItem('accessToken')}})
                                         .then(response => response.data)
                                         .then((data) => {
-                                            console.log('success')
                                             return data
                                         })
                                 } else {
@@ -564,7 +561,6 @@ class MainRegister extends Component {
                                     axios.post('https://api.saadatportal.com/api/v1/supervisor/characteristic', newCharacteristic, {headers: {'Authorization': localStorage.getItem('accessToken')}})
                                         .then(response => response.data)
                                         .then((data) => {
-                                            console.log('success')
                                             return data
                                         })
                                 } else {
@@ -572,27 +568,18 @@ class MainRegister extends Component {
                                 }
                             })
                     }})
-
+                console.log('characterestic pass 1')
                 let respondChar = await createChar;
+                console.log('characterestic pass 2')
                 this.setState({personId: respondChar.id})
+                console.log('characterestic pass 3')
                 let person = {
                     residenceType:"resident",
                     accommodationType:"permanent",
                     characteristicId: respondChar.id,
                     files: this.context.constantUploadPage
                 }
-
-                // const createPerson = await fetch('https://api.saadatportal.com/api/v1/person', {
-                //     method: 'POST',
-                //     headers: {
-                //         'Accept': 'application/json',
-                //         'Content-Type': 'application/json'
-                //     },
-                //     body: JSON.stringify(person)
-                // });
-
-                // let respondPerson = "";
-
+                console.log('characterestic pass 4')
                 const createPerson = axios.post('https://api.saadatportal.com/api/v1/supervisor/person', person, {headers: {'Authorization': localStorage.getItem('accessToken')}})
                     .then(response => response.data)
                     .then((data) => {
@@ -628,9 +615,9 @@ class MainRegister extends Component {
                                     }
                                 })
                         }})
-
+                console.log('person pass 1')
                 let respondPerson = await createPerson;
-
+                console.log('person pass 2')
                 axios.put(`https://api.saadatportal.com/api/v1/supervisor/characteristic/${respondChar.id}`, {parentId:respondPerson.id}, {headers: {'Authorization': localStorage.getItem('accessToken')}})
                     .catch(() => {
                         if (localStorage.getItem('role') === 'MANAGER') {
@@ -654,27 +641,18 @@ class MainRegister extends Component {
                                     }
                                 })
                         }})
-
+                console.log("put pass 1")
                 this.context.handlePersonId(respondPerson.id, respondChar.id);
-
+                console.log("put pass 1")
                 break;
             }
 
             case "familyGuest" : {
                 let newCharacteristic = {...this.context.familyGuestInformation,...this.context.familyGuestInformationFurther};
-                console.log(newCharacteristic);
-
-                let birthDate1 = newCharacteristic.birthDate
-                newCharacteristic.birthDate = birthDate1+" 00:00:00"
-
-
-                let paymentDate1 = newCharacteristic.paymentDate
-                newCharacteristic.paymentDate = paymentDate1+" 00:00:00";
 
                 const profileImg = this.context.familyGuestUploadPage.find(({name}) => name === "personnelImg");
 
                 if(profileImg !== undefined){
-                    console.log(profileImg);
                     newCharacteristic.profileId = profileImg.fileId;
                 }
 

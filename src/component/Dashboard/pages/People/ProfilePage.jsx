@@ -15,7 +15,7 @@ import DatePicker from "react-multi-date-picker";
 import TimePicker from "react-multi-date-picker/plugins/time_picker";
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
-import {Box, Button, CircularProgress} from "@mui/material";
+import {Box, Button, CircularProgress, FormControl, MenuItem, Select} from "@mui/material";
 import {green} from "@mui/material/colors";
 import axios from "axios";
 
@@ -1391,19 +1391,45 @@ class ProfilePage extends Component {
                     <Modal.Body>
                         <form className="my-3 mx-2" onSubmit={this.handleSubmit}>
                             <div className='input-report-box'>
-                                <select className='input' onChange={(e) => {
-                                    this.reportType(e);
-                                    this.handleResetFields();
-                                }}>
-                                    <option value='cleaning'>نوبت نظافت شبانه</option>
-                                    <option value='delayInArrival'>تأخیر در ورود</option>
-                                    <option value='exit'>خروج</option>
-                                    <option value='violation'>ثبت تخلف</option>
-                                    <option value='penalty'>ثبت جریمه</option>
-                                    <option value='discharge'>اعلام تخلیه</option>
-                                    <option value='cancelContract'>لغو قرارداد</option>
-                                </select>
-                                <label className="placeholder">نوع گزارش</label>
+                                <FormControl className={"w-100"} style={{border: "none"}}>
+                                    <Select
+                                        sx={{ height: 50, borderRadius: "0.5rem", minWidth: '10rem', backgroundColor: "#fff"}}
+                                        id="select-field"
+                                        value={this.state.searchTaskBase}
+                                        onChange={(e) => {
+                                            this.reportType(e);
+                                            this.handleResetFields();}}>
+                                        <MenuItem value={"cleaning"}>نوبت نظافت شبانه</MenuItem>
+                                        <MenuItem value={"delayInArrival"}>تأخیر در ورود</MenuItem>
+                                        <MenuItem value={"exit"}>خروج</MenuItem>
+                                        <MenuItem value={"violation"}>ثبت تخلف</MenuItem>
+                                        <MenuItem value={"penalty"}>ثبت جریمه</MenuItem>
+                                        <MenuItem value={"discharge"}>اعلام تخلیه</MenuItem>
+                                        <MenuItem value={"cancelContract"}>لغو قرارداد</MenuItem>
+                                    </Select>
+                                    <label className="placeholder" style={{
+                                        top: '-10px',
+                                        backgroundColor: '#fff',
+                                        color: '#2a2e32b3',
+                                        margin: '-0.2rem 0',
+                                        padding: '0 .4rem -0.4rem',
+                                        opacity: '1',
+                                    }}>نوع گزارش</label>
+                                </FormControl>
+
+                                {/*<select className='input' onChange={(e) => {*/}
+                                {/*    this.reportType(e);*/}
+                                {/*    this.handleResetFields();*/}
+                                {/*}}>*/}
+                                {/*    <option value='cleaning'>نوبت نظافت شبانه</option>*/}
+                                {/*    <option value='delayInArrival'>تأخیر در ورود</option>*/}
+                                {/*    <option value='exit'>خروج</option>*/}
+                                {/*    <option value='violation'>ثبت تخلف</option>*/}
+                                {/*    <option value='penalty'>ثبت جریمه</option>*/}
+                                {/*    <option value='discharge'>اعلام تخلیه</option>*/}
+                                {/*    <option value='cancelContract'>لغو قرارداد</option>*/}
+                                {/*</select>*/}
+                                {/*<label className="placeholder">نوع گزارش</label>*/}
                             </div>
                             {(() => {
                                 switch (this.state.reportType) {

@@ -24,7 +24,7 @@ class RoomAndBed extends Component {
         rooms: [],
         show: false,
         showAccessory: false,
-        showَRoomAccessory: false,
+        showRoomAccessory: false,
         selectedPeople: "",
         unit: {
             accessories: []
@@ -32,18 +32,18 @@ class RoomAndBed extends Component {
 
         bedOpen:
             {
-                id: 32, name: 'تخت 32', empty: false,
+                id: '', name: '', empty: false,
                 personId:"",
             },
 
         tempPerson:{
-            id: 1,
-            firstName: 'میلاد',
-            lastName: 'زارع',
-            nationalCode: 2500255252,
+            id: '',
+            firstName: '',
+            lastName: '',
+            nationalCode: '',
             timePeriod: {
-                startDate:"123",
-                endDate:"123"
+                startDate: "",
+                endDate: ""
             },
             image: 'https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png'
         },
