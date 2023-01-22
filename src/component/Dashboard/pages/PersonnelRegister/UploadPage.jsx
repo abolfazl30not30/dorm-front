@@ -120,7 +120,6 @@ class CUploadPage extends Component {
         }
 
         axios.post("https://www.mocky.io/v2/5cc8019d300000980a055e76", data, options).then(res => {
-            console.log(res)
             this.setState({avatar: res.data.url, uploadPercentage: 100}, () => {
                 setTimeout(() => {
                     this.setState({uploadPercentage: 0})
@@ -602,27 +601,6 @@ class CUploadPage extends Component {
             formData.append('file', e.target.files[0]);
             this.setState({nameBirthPage1: e.target.files[0].name})
 
-            // await fetch('https://api.saadatportal.com/api/v1/file', {
-            //     method: 'POST',
-            //     body: formData
-            // }).then((response) => response.json())
-            //     .then((result) => {
-            //         console.log('Success:', result);
-            //         this.setState({fileIdBirthPage1: result.message.id});
-            //         this.context.handleUploadedFile("personnelUploadPage", "birth-page1", result.message.id)
-            //         this.setState({isLoadingBirthPage1: false});
-            //         this.setState({isUploadBirthPage1: true})
-            //         this.setState({hasErrorBirthPage1: false});
-            //     })
-            //     .catch((error) => {
-            //         console.error('Error:', error);
-            //         this.setState({isLoadingBirthPage1: false});
-            //         this.setState({isUploadBirthPage1: true})
-            //         this.setState({hasErrorBirthPage1: true});
-            //     });
-
-            console.log(formData)
-
             await axios.post('https://api.saadatportal.com/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                 .then((result) => {
                     console.log('Success:', result);
@@ -632,12 +610,7 @@ class CUploadPage extends Component {
                     this.setState({isUploadBirthPage1: true})
                     this.setState({hasErrorBirthPage1: false});
                 })
-                .catch((error) => {
-                    console.error('Error:', error);
-                    this.setState({isLoadingBirthPage1: false});
-                    this.setState({isUploadBirthPage1: true})
-                    this.setState({hasErrorBirthPage1: true});
-                }).catch(() => {
+                .catch(() => {
                     if (localStorage.getItem('role') === 'MANAGER') {
                         axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                             .then((response) => {
@@ -763,12 +736,7 @@ class CUploadPage extends Component {
                     this.setState({isUploadBirthPage2: true})
                     this.setState({hasErrorBirthPage2: false});
                 })
-                .catch((error) => {
-                    console.error('Error:', error);
-                    this.setState({isLoadingBirthPage2: false});
-                    this.setState({isUploadBirthPage2: true})
-                    this.setState({hasErrorBirthPage2: true});
-                }).catch(() => {
+                .catch(() => {
                     if (localStorage.getItem('role') === 'MANAGER') {
                         axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                             .then((response) => {
@@ -892,12 +860,7 @@ class CUploadPage extends Component {
                     this.setState({isUploadBirthPage3: true})
                     this.setState({hasErrorBirthPage3: false});
                 })
-                .catch((error) => {
-                    console.error('Error:', error);
-                    this.setState({isLoadingBirthPage3: false});
-                    this.setState({isUploadBirthPage3: true})
-                    this.setState({hasErrorBirthPage3: true});
-                }).catch(() => {
+                .catch(() => {
                     if (localStorage.getItem('role') === 'MANAGER') {
                         axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                             .then((response) => {
@@ -1021,12 +984,7 @@ class CUploadPage extends Component {
                     this.setState({isUploadBirthPage4: true})
                     this.setState({hasErrorBirthPage4: false});
                 })
-                .catch((error) => {
-                    console.error('Error:', error);
-                    this.setState({isLoadingBirthPage4: false});
-                    this.setState({isUploadBirthPage4: true})
-                    this.setState({hasErrorBirthPage4: true});
-                }).catch(() => {
+                .catch(() => {
                     if (localStorage.getItem('role') === 'MANAGER') {
                         axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                             .then((response) => {
@@ -1150,12 +1108,7 @@ class CUploadPage extends Component {
                     this.setState({isUploadBirthAllPage: true})
                     this.setState({hasErrorBirthAllPage: false});
                 })
-                .catch((error) => {
-                    console.error('Error:', error);
-                    this.setState({isLoadingBirthAllPage: false});
-                    this.setState({isUploadBirthAllPage: true})
-                    this.setState({hasErrorBirthAllPage: true});
-                }).catch(() => {
+                .catch(() => {
                     if (localStorage.getItem('role') === 'MANAGER') {
                         axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                             .then((response) => {
@@ -1279,12 +1232,7 @@ class CUploadPage extends Component {
                     this.setState({isUploadCartPage1: true})
                     this.setState({hasErrorCartPage1: false});
                 })
-                .catch((error) => {
-                    console.error('Error:', error);
-                    this.setState({isLoadingCartPage1: false});
-                    this.setState({isUploadCartPage1: true})
-                    this.setState({hasErrorCartPage1: true});
-                }).catch(() => {
+                .catch(() => {
                     if (localStorage.getItem('role') === 'MANAGER') {
                         axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                             .then((response) => {
@@ -1408,12 +1356,7 @@ class CUploadPage extends Component {
                     this.setState({isUploadCartPage2: true})
                     this.setState({hasErrorCartPage2: false});
                 })
-                .catch((error) => {
-                    console.error('Error:', error);
-                    this.setState({isLoadingCartPage2: false});
-                    this.setState({isUploadCartPage2: true})
-                    this.setState({hasErrorCartPage2: true});
-                }).catch(() => {
+                .catch(() => {
                     if (localStorage.getItem('role') === 'MANAGER') {
                         axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                             .then((response) => {
@@ -1537,12 +1480,7 @@ class CUploadPage extends Component {
                     this.setState({isUploadCartAllPage: true})
                     this.setState({hasErrorCartAllPage: false});
                 })
-                .catch((error) => {
-                    console.error('Error:', error);
-                    this.setState({isLoadingCartAllPage: false});
-                    this.setState({isUploadCartAllPage: true})
-                    this.setState({hasErrorCartAllPage: true});
-                }).catch(() => {
+                .catch(() => {
                     if (localStorage.getItem('role') === 'MANAGER') {
                         axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                             .then((response) => {
@@ -1668,12 +1606,7 @@ class CUploadPage extends Component {
                     this.setState({isUploadPersonnelImg: true})
                     this.setState({hasErrorPersonnelImg: false});
                 })
-                .catch((error) => {
-                    console.error('Error:', error);
-                    this.setState({isLoadingPersonnelImg: false});
-                    this.setState({isUploadPersonnelImg: true})
-                    this.setState({hasErrorPersonnelImg: true});
-                }).catch(() => {
+                .catch(() => {
                     if (localStorage.getItem('role') === 'MANAGER') {
                         axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                             .then((response) => {
@@ -1801,12 +1734,7 @@ class CUploadPage extends Component {
                     this.setState({isUploadRegister: true})
                     this.setState({hasErrorRegister: false});
                 })
-                .catch((error) => {
-                    console.error('Error:', error);
-                    this.setState({isLoadingRegister: false});
-                    this.setState({isUploadRegister: true})
-                    this.setState({hasErrorRegister: true});
-                }).catch(() => {
+                .catch(() => {
                     if (localStorage.getItem('role') === 'MANAGER') {
                         axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                             .then((response) => {

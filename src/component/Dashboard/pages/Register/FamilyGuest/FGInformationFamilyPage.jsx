@@ -50,7 +50,7 @@ class FGInformationFamilyPage extends Component {
                         <div className="search-icon"><i className="bi bi-search"></i></div>
                     </div>
                     <div className="people-container mt-4">
-                        {this.state.peopleFound.map((poeple)=>(
+                        {this.state.peopleFound.map((people)=>(
                             <ToggleButtonGroup
                                 orientation="vertical"
                                 value={this.state.selectedPeople}
@@ -60,7 +60,7 @@ class FGInformationFamilyPage extends Component {
                                 aria-label="text alignment"
                                 style={{width: "100%"}}
                             >
-                                <ToggleButton value={poeple.id} style={{display: "block"}}>
+                                <ToggleButton value={people.id} style={{display: "block"}}>
                                     <div className="row">
                                         <div
                                             className="col-3 profile-img d-flex align-items-center justify-content-center">
@@ -70,21 +70,21 @@ class FGInformationFamilyPage extends Component {
                                             <div className="col-6">
                                                 <div className="d-flex">
                                                     <label>نام و نام خانوادگی: </label>
-                                                    <p>{poeple.firstName} {poeple.lastName}</p>
+                                                    <p>{people.firstName} {people.lastName}</p>
                                                 </div>
                                                 <div className="d-flex">
                                                     <label>نام پدر: </label>
-                                                    <p>{poeple.fatherName}</p>
+                                                    <p>{people.fatherName}</p>
                                                 </div>
                                             </div>
                                             <div className="col-6">
                                                 <div className="d-flex">
                                                     <label>کد ملی :</label>
-                                                    <p>{poeple.nationalCode}</p>
+                                                    <p>{people.nationalCode}</p>
                                                 </div>
                                                 <div className="d-flex">
                                                     <label>تاریخ پذیرش :</label>
-                                                    <p>{poeple.timePeriod.startDate}</p>
+                                                    <p>{people.timePeriod.startDate}</p>
                                                 </div>
                                             </div>
                                         </div>

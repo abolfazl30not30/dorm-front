@@ -2,11 +2,8 @@ import React, {Component} from 'react'
 import "../../../../../style/uploadPage.css"
 import {BsFileEarmarkImage, BsFileEarmarkPdfFill} from "react-icons/bs"
 import upload_icon from '../../../../../img/Group 1.png'
-import pdf_icon from '../../../../../img/pdf_icon.png'
-import png_icon from '../../../../../img/png_icon.png'
 import Accordion from 'react-bootstrap/Accordion';
-// import progressBar from "./progressBar";
-import {ProgressBar} from 'react-bootstrap';
+
 import axios from "axios";
 import ReactLoading from "react-loading";
 import Alert from "react-bootstrap/Alert";
@@ -679,12 +676,7 @@ class OGUploadPage extends Component {
                     this.setState({isUploadBirthPage1: true})
                     this.setState({hasErrorBirthPage1: false});
                 })
-                .catch((error) => {
-                    console.error('Error:', error);
-                    this.setState({isLoadingBirthPage1: false});
-                    this.setState({isUploadBirthPage1: true})
-                    this.setState({hasErrorBirthPage1: true});
-                }).catch(() => {
+                .catch(() => {
                     if (localStorage.getItem('role') === 'MANAGER') {
                         axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                             .then((response) => {
@@ -810,12 +802,7 @@ class OGUploadPage extends Component {
                     this.setState({isUploadBirthPage2: true})
                     this.setState({hasErrorBirthPage2: false});
                 })
-                .catch((error) => {
-                    console.error('Error:', error);
-                    this.setState({isLoadingBirthPage2: false});
-                    this.setState({isUploadBirthPage2: true})
-                    this.setState({hasErrorBirthPage2: true});
-                }).catch(() => {
+                .catch(() => {
                     if (localStorage.getItem('role') === 'MANAGER') {
                         axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                             .then((response) => {
@@ -939,12 +926,7 @@ class OGUploadPage extends Component {
                     this.setState({isUploadBirthPage3: true})
                     this.setState({hasErrorBirthPage3: false});
                 })
-                .catch((error) => {
-                    console.error('Error:', error);
-                    this.setState({isLoadingBirthPage3: false});
-                    this.setState({isUploadBirthPage3: true})
-                    this.setState({hasErrorBirthPage3: true});
-                }).catch(() => {
+                .catch(() => {
                     if (localStorage.getItem('role') === 'MANAGER') {
                         axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                             .then((response) => {
@@ -1068,12 +1050,7 @@ class OGUploadPage extends Component {
                     this.setState({isUploadBirthPage4: true})
                     this.setState({hasErrorBirthPage4: false});
                 })
-                .catch((error) => {
-                    console.error('Error:', error);
-                    this.setState({isLoadingBirthPage4: false});
-                    this.setState({isUploadBirthPage4: true})
-                    this.setState({hasErrorBirthPage4: true});
-                }).catch(() => {
+                .catch(() => {
                     if (localStorage.getItem('role') === 'MANAGER') {
                         axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                             .then((response) => {
@@ -1197,12 +1174,7 @@ class OGUploadPage extends Component {
                     this.setState({isUploadBirthAllPage: true})
                     this.setState({hasErrorBirthAllPage: false});
                 })
-                .catch((error) => {
-                    console.error('Error:', error);
-                    this.setState({isLoadingBirthAllPage: false});
-                    this.setState({isUploadBirthAllPage: true})
-                    this.setState({hasErrorBirthAllPage: true});
-                }).catch(() => {
+                .catch(() => {
                     if (localStorage.getItem('role') === 'MANAGER') {
                         axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                             .then((response) => {
@@ -1326,12 +1298,7 @@ class OGUploadPage extends Component {
                     this.setState({isUploadCartPage1: true})
                     this.setState({hasErrorCartPage1: false});
                 })
-                .catch((error) => {
-                    console.error('Error:', error);
-                    this.setState({isLoadingCartPage1: false});
-                    this.setState({isUploadCartPage1: true})
-                    this.setState({hasErrorCartPage1: true});
-                }).catch(() => {
+                .catch(() => {
                     if (localStorage.getItem('role') === 'MANAGER') {
                         axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                             .then((response) => {
@@ -1455,12 +1422,7 @@ class OGUploadPage extends Component {
                     this.setState({isUploadCartPage2: true})
                     this.setState({hasErrorCartPage2: false});
                 })
-                .catch((error) => {
-                    console.error('Error:', error);
-                    this.setState({isLoadingCartPage2: false});
-                    this.setState({isUploadCartPage2: true})
-                    this.setState({hasErrorCartPage2: true});
-                }).catch(() => {
+                .catch(() => {
                     if (localStorage.getItem('role') === 'MANAGER') {
                         axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                             .then((response) => {
@@ -1584,12 +1546,7 @@ class OGUploadPage extends Component {
                     this.setState({isUploadCartAllPage: true})
                     this.setState({hasErrorCartAllPage: false});
                 })
-                .catch((error) => {
-                    console.error('Error:', error);
-                    this.setState({isLoadingCartAllPage: false});
-                    this.setState({isUploadCartAllPage: true})
-                    this.setState({hasErrorCartAllPage: true});
-                }).catch(() => {
+                .catch(() => {
                     if (localStorage.getItem('role') === 'MANAGER') {
                         axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                             .then((response) => {
@@ -1713,12 +1670,7 @@ class OGUploadPage extends Component {
                     this.setState({isUploadPersonnelImg: true})
                     this.setState({hasErrorPersonnelImg: false});
                 })
-                .catch((error) => {
-                    console.error('Error:', error);
-                    this.setState({isLoadingPersonnelImg: false});
-                    this.setState({isUploadPersonnelImg: true})
-                    this.setState({hasErrorPersonnelImg: true});
-                }).catch(() => {
+                .catch(() => {
                     if (localStorage.getItem('role') === 'MANAGER') {
                         axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                             .then((response) => {
@@ -1843,12 +1795,7 @@ class OGUploadPage extends Component {
                     this.setState({isUploadRegister: true})
                     this.setState({hasErrorRegister: false});
                 })
-                .catch((error) => {
-                    console.error('Error:', error);
-                    this.setState({isLoadingRegister: false});
-                    this.setState({isUploadRegister: true})
-                    this.setState({hasErrorRegister: true});
-                }).catch(() => {
+                .catch(() => {
                     if (localStorage.getItem('role') === 'MANAGER') {
                         axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                             .then((response) => {
@@ -1973,12 +1920,7 @@ class OGUploadPage extends Component {
                     this.setState({isUploadRegisterUni: true});
                     this.setState({hasErrorRegisterUni: false});
                 })
-                .catch((error) => {
-                    console.error('Error:', error);
-                    this.setState({isLoadingRegisterUni: false});
-                    this.setState({isUploadRegisterUni: true})
-                    this.setState({hasErrorRegisterUni: true});
-                }).catch(() => {
+                .catch(() => {
                     if (localStorage.getItem('role') === 'MANAGER') {
                         axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                             .then((response) => {
