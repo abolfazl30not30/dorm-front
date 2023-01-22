@@ -197,7 +197,6 @@ class PersonnelRegister extends Component {
 
         let respondChar = ''
         await axios.post('https://api.saadatportal.com/api/v1/supervisor/characteristic', newCharacteristic, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
-            .then(response => response.data)
             .then((data) => {
                 respondChar = data
             })
@@ -208,7 +207,6 @@ class PersonnelRegister extends Component {
                             if (response.headers["accesstoken"]) {
                                 localStorage.setItem("accessToken", response.headers["accesstoken"]);
                                 await axios.post('https://api.saadatportal.com/api/v1/supervisor/characteristic', newCharacteristic, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
-                                    .then(response => response.data)
                                     .then((data) => {
                                         respondChar = data
                                     })
@@ -217,11 +215,14 @@ class PersonnelRegister extends Component {
                             }
                         })
                 } else if (localStorage.getItem('role') === 'SUPERVISOR') {
-                    axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
-                        .then((response) => {
+                    await axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        .then(async (response) => {
                             if (response.headers["accesstoken"]) {
                                 localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                axios.post('https://api.saadatportal.com/api/v1/supervisor/characteristic', newCharacteristic, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                await axios.post('https://api.saadatportal.com/api/v1/supervisor/characteristic', newCharacteristic, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                    .then((data) => {
+                                        respondChar = data
+                                    })
                             } else {
                                 window.location = '/'
                             }
@@ -240,7 +241,6 @@ class PersonnelRegister extends Component {
 
         let respondPersonnel = ''
         await axios.post('https://api.saadatportal.com/api/v1/supervisor/personnel', personnel, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
-            .then(response => response.data)
             .then((data) => {
                 respondPersonnel = data
             })
@@ -251,7 +251,6 @@ class PersonnelRegister extends Component {
                             if (response.headers["accesstoken"]) {
                                 localStorage.setItem("accessToken", response.headers["accesstoken"]);
                                 await axios.post('https://api.saadatportal.com/api/v1/supervisor/personnel', personnel, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
-                                    .then(response => response.data)
                                     .then((data) => {
                                         respondPersonnel = data
                                     })
@@ -265,7 +264,6 @@ class PersonnelRegister extends Component {
                             if (response.headers["accesstoken"]) {
                                 localStorage.setItem("accessToken", response.headers["accesstoken"]);
                                 await axios.post('https://api.saadatportal.com/api/v1/supervisor/personnel', personnel, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
-                                    .then(response => response.data)
                                     .then((data) => {
                                         respondPersonnel = data
                                     })

@@ -763,7 +763,7 @@ class MainRegister extends Component {
             }
 
             case  "otherGuest" : {
-                let newCharacteristic = {...this.context.otherGuestInformation,...this.context.constantInformationFurther};
+                let newCharacteristic = {...this.context.otherGuestInformation,...this.context.otherGuestInformationFurther};
                 console.log(newCharacteristic)
                 const profileImg = this.context.otherGuestUploadPage.find(({name}) => name === "personnelImg");
                 if(profileImg !== undefined){
