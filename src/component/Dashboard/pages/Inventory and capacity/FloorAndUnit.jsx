@@ -113,57 +113,63 @@ class FloorAndUnit extends Component {
                         </p>
                     </div>
 
-                    <div>
-                        <div className={`d-flex justify-content-between ${this.state.isFullUnit ? "edit-btn-container" : "register-btn-container"}`}>
-                            <div>
-                                <Link to="room_log">
-                                    <button className={'btn btn-success'}>
-                                        گزارش گیری
-                                    </button>
-                                    {/*<Button variant="contained">*/}
-                                    {/*    گزارش گیری*/}
-                                    {/*</Button>*/}
+                    {this.state.isLoading ? (
+                        <div className='row' style={{marginTop: "60px"}}>
+                            <FloorAndBedLoading/>
+                        </div>
+                    ) : (
+                        <div>
+                            <div className={`d-flex justify-content-between ${this.state.isFullUnit ? "edit-btn-container" : "register-btn-container"}`}>
+                                <div>
+                                    <Link to="room_log">
+                                        <button className={'btn btn-success'}>
+                                            گزارش گیری
+                                        </button>
+                                        {/*<Button variant="contained">*/}
+                                        {/*    گزارش گیری*/}
+                                        {/*</Button>*/}
+                                    </Link>
+                                </div>
+                                <Link to="edit-floor-and-unit"
+                                      className={this.state.isFullUnit ? "edit-btn" : "register-btn"}>
+                                    {this.state.isFullUnit ? (<h6><FiEdit2 className='ms-1' />ویرایش</h6>) : (<h6> ثبت طبقه و واحد</h6>)}
                                 </Link>
                             </div>
-                            <Link to="edit-floor-and-unit"
-                                  className={this.state.isFullUnit ? "edit-btn" : "register-btn"}>
-                                {this.state.isFullUnit ? (<h6><FiEdit2 className='ms-1' />ویرایش</h6>) : (<h6> ثبت طبقه و واحد</h6>)}
-                            </Link>
-                        </div>
-                        <div className="floor-container row">
-                            {this.state.floor.map((f) => (
-                                <div className="col-md-4 col-sm-6 col-xs-12 p-0">
-                                    <div className='floor'>
-                                        <div className="floor-title row ">
-                                            <div className="col-7"><h3 className='floor-name'>{f.name}</h3></div>
-                                            <div className="col-5 ">
-                                                <button className="btn show-acc-btn" onClick={() => {
-                                                    this.handleShowFloorAcc(f)
-                                                }}><IoMdMore/> امکانات طبقه
-                                                </button>
+                            <div className="floor-container row">
+                                {this.state.floor.map((f) => (
+                                    <div className="col-md-4 col-sm-6 col-xs-12 p-0">
+                                        <div className='floor'>
+                                            <div className="floor-title row ">
+                                                <div className="col-7"><h3 className='floor-name'>{f.name}</h3></div>
+                                                <div className="col-5 ">
+                                                    <button className="btn show-acc-btn" onClick={() => {
+                                                        this.handleShowFloorAcc(f)
+                                                    }}><IoMdMore/> امکانات طبقه
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div className="unit-container row justify-content-around">
+                                                {f.units.map((unit) => (
+                                                    <div className={`unit col-4`}>
+                                                        <Link className={`${unit.empty ? "empty-link" : "full-link"}`}
+                                                              to="/dashboard/RoomAndBed" onClick={() => {
+                                                            this.context.handleUnitNumber(unit.number, unit.id)
+                                                        }}>
+                                                            <TbBuilding fontSize="2rem"/>
+                                                            <h5 className='unit-name'>واحد {unit.number}</h5>
+                                                        </Link>
+                                                    </div>
+                                                ))}
                                             </div>
                                         </div>
-                                        <div className="unit-container row justify-content-around">
-                                            {f.units.map((unit) => (
-                                                <div className={`unit col-4`}>
-                                                    <Link className={`${unit.empty ? "empty-link" : "full-link"}`}
-                                                          to="/dashboard/RoomAndBed" onClick={() => {
-                                                        this.context.handleUnitNumber(unit.number, unit.id)
-                                                    }}>
-                                                        <TbBuilding fontSize="2rem"/>
-                                                        <h5 className='unit-name'>واحد {unit.number}</h5>
-                                                    </Link>
-                                                </div>
-                                            ))}
-                                        </div>
                                     </div>
-                                </div>
-                            ))}
+                                ))}
+                            </div>
                         </div>
-                    </div>
+                    )}
                 </div>
 
-                {/*<Modal centered show={this.state.showFloorAccessory} onClick={() => {
+                <Modal centered show={this.state.showFloorAccessory} onClick={() => {
                     this.handleCloseFloorAcc()
                 }}>
                     <Modal.Header closeButton>
@@ -191,7 +197,7 @@ class FloorAndUnit extends Component {
                             </table>
                         </div>
                     </Modal.Body>
-                </Modal>*/}
+                </Modal>
             </>
         );
     }
