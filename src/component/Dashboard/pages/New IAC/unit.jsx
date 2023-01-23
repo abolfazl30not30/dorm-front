@@ -1,24 +1,15 @@
 import React, {Component} from 'react';
 import {Link, Route, Routes} from "react-router-dom";
-import RoomAndBed from './RoomAndBed';
 import "../../../../style/floorAndUnit.css";
 import BuildingContext from "../../../../contexts/Building";
-import doorEmpty from "../../../../img/door-empty.png";
-import doorFull from "../../../../img/doot-full.png";
-import FloorAndBedLoading from '../../../loading/FloorAndBedLoading';
 import {TbBuilding} from 'react-icons/tb';
 import {IoMdMore} from "react-icons/io";
-import {EditText, EditTextarea} from 'react-edit-text';
 import 'react-edit-text/dist/index.css';
-import {Modal} from 'react-bootstrap'
-import {BiChevronLeft} from 'react-icons/bi'
 import { FiEdit2 } from 'react-icons/fi'
 import "../../../../style/paymentHistory.css"
-import {Button} from "@mui/material";
 import axios from "axios";
 
-
-class FloorAndUnit extends Component {
+class Unit extends Component {
 
     static contextType = BuildingContext;
 
@@ -105,7 +96,7 @@ class FloorAndUnit extends Component {
                         </Link>
                     </div>
                     <div className="text">
-                        <h4>انتخاب طبقه و واحد</h4>
+                        <h4>واحد</h4>
                         <p>
                             برای انتخاب تخت ابتدا می بایست طبقه و سپس واحد مورد نظر خود را انتخاب نمایید و در مراحل بعدی
                             می توانید
@@ -125,9 +116,9 @@ class FloorAndUnit extends Component {
                                     {/*</Button>*/}
                                 </Link>
                             </div>
-                            <Link to="edit-floor-and-unit"
+                            <Link to="edit-floor"
                                   className={this.state.isFullUnit ? "edit-btn" : "register-btn"}>
-                                {this.state.isFullUnit ? (<h6><FiEdit2 className='ms-1' />ویرایش</h6>) : (<h6> ثبت طبقه و واحد</h6>)}
+                                {this.state.isFullUnit ? (<h6><FiEdit2 className='ms-1' />ویرایش</h6>) : (<h6> ثبت واحد</h6>)}
                             </Link>
                         </div>
                         <div className="floor-container row">
@@ -207,4 +198,4 @@ class FloorAndUnit extends Component {
 
 }
 
-export default FloorAndUnit;
+export default Unit;
