@@ -28,13 +28,13 @@ import PresenceAbsenceRoomPerson from './pages/PresenceAbsence/PresenceAbsenceRo
 import RoomLog from "./pages/Inventory and capacity/RoomLog";
 import Setting from "./pages/Setting/Setting";
 import Log from "./pages/log/log"
-import Floor from "./pages/New IAC/floor"
+import Floor from "./pages/New IAC/Floor"
 import EditFloor from "./pages/Edit New IAC/editFloor"
-import Unit from "./pages/New IAC/unit"
+import Unit from "./pages/New IAC/Unit"
 import EditUnit from "./pages/Edit New IAC/editUnit"
-import Room from "./pages/New IAC/room"
+import Room from "./pages/New IAC/Room"
 import EditRoom from "./pages/Edit New IAC/editRoom"
-import Bed from "./pages/New IAC/bed"
+import Bed from "./pages/New IAC/Bed"
 import EditBed from "./pages/Edit New IAC/editBed"
 
 
@@ -517,12 +517,12 @@ class MainPage extends Component {
                             <Route path="/log" element={(<Log/>)}/>
 
                             <Route path="/booking/floor" element={(<Floor/>)}/>
+                            <Route path="/booking/floor/*" element={(<Unit/>)}/>
                             <Route path="/booking/edit-floor" element={(<EditFloor/>)}/>
-                            <Route path="/booking/unit" element={(<Unit/>)}/>
+                            <Route path="/booking/floor/unit/*" element={(<Room/>)}/>
                             <Route path="/booking/edit-unit" element={(<EditUnit/>)}/>
-                            <Route path="/booking/room" element={(<Room/>)}/>
+                            <Route path="/booking/floor/unit/room/*" element={(<Bed/>)}/>
                             <Route path="/booking/edit-room" element={(<EditRoom/>)}/>
-                            <Route path="/booking/bed" element={(<Bed/>)}/>
                             <Route path="/booking/edit-bed" element={(<EditBed/>)}/>
                         </Routes>
                     </BuildingContext.Provider>

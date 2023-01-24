@@ -14,7 +14,7 @@ import {Button, Modal} from 'react-bootstrap'
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import ToggleButton from "@mui/material/ToggleButton";
 import axios from "axios";
-
+import  {BsFillDoorOpenFill} from  "react-icons/bs"
 class Room extends Component {
     static contextType = BuildingContext;
     state = {
@@ -36,8 +36,8 @@ class Room extends Component {
     }
 
     async componentDidMount() {
-        axios.get(`https://api.saadatportal.com/api/v1/supervisor/unit/room/${this.context.unitId}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
-            .then((data) => this.setState({rooms: data, isLoading: false},()=>{
+        axios.get(`https://api.saadatportal.com/api/v1/supervisor/unit/room/db41434c138f4dfdb54b608791ce2a76`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+            .then((data) => this.setState({rooms: data, isLoading: false}, () => {
                 if (data.length === 0) {
                     this.setState({isFull: false})
                 } else {
@@ -49,8 +49,8 @@ class Room extends Component {
                     .then((response) => {
                         if (response.headers["accesstoken"]) {
                             localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                            axios.get(`https://api.saadatportal.com/api/v1/supervisor/unit/room/${this.context.unitId}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
-                                .then((data) => this.setState({rooms: data, isLoading: false},()=>{
+                            axios.get(`https://api.saadatportal.com/api/v1/supervisor/unit/room/db41434c138f4dfdb54b608791ce2a76`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                .then((data) => this.setState({rooms: data, isLoading: false}, () => {
                                     if (data.length === 0) {
                                         this.setState({isFull: false})
                                     } else {
@@ -67,7 +67,7 @@ class Room extends Component {
                         if (response.headers["accesstoken"]) {
                             localStorage.setItem("accessToken", response.headers["accesstoken"]);
                             axios.get(`https://api.saadatportal.com/api/v1/supervisor/unit/room/${this.context.unitId}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
-                                .then((data) => this.setState({rooms: data, isLoading: false},()=>{
+                                .then((data) => this.setState({rooms: data, isLoading: false}, () => {
                                     if (data.length === 0) {
                                         this.setState({isFull: false})
                                     } else {
@@ -78,7 +78,8 @@ class Room extends Component {
                             window.location = '/'
                         }
                     })
-            }})
+            }
+        })
 
         // axios.get(`https://api.saadatportal.com/api/v1/supervisor/unit/${this.context.unitId}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
         //     .then((data) => this.setState({unit: data, isLoading: false}))
@@ -123,6 +124,7 @@ class Room extends Component {
         this.setState({showRoomAccessory: true})
         this.setState({tempRoom: room})
     }
+
     render() {
         return (
             <>
@@ -160,17 +162,18 @@ class Room extends Component {
                                     {
                                         this.state.rooms.map(
                                             (room) => (
-                                                <div className="col-md-4 col-sm-6 col-xs-12">
-                                                    <div className="room-box ">
-                                                        <div className="row">
-                                                            <div className="col-7 title">اتاق {room.number}</div>
-                                                            <div className="col-5">
-                                                                <button className="btn show-acc-btn" onClick={() => {
-                                                                    this.handleShowRoomAcc(room)
-                                                                }}><IoMdMore/> امکانات
-                                                                    اتاق
-                                                                </button>
-                                                            </div>
+                                                <div className="col-md-3 col-sm-4 col-xs-12">
+                                                    <div className="room-box d-flex flex-column justify-content-center">
+                                                        <div className="icon mt-3 mb-3 d-flex justify-content-center">
+                                                            <BsFillDoorOpenFill fontSize="30px" color=""/>
+                                                        </div>
+                                                        <div className="title mt-1">اتاق {room.number}</div>
+                                                        <div className="mt-2 mb-3 d-flex justify-content-center">
+                                                            <button className="btn show-acc-btn" onClick={() => {
+                                                                this.handleShowRoomAcc(room)
+                                                            }}><IoMdMore/> امکانات
+                                                                اتاق
+                                                            </button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -212,7 +215,6 @@ class Room extends Component {
                         </div>
                     </Modal.Body>
                 </Modal>
-
             </>
         );
     }

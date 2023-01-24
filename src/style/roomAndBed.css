@@ -102,14 +102,25 @@
     font-weight: bold;
 }
 
+.room-box{
+    box-shadow: 0px 0px 3px 0px #00000021;
+    cursor: pointer;
+    color: #0e8c46;
+}
+.room-box:hover{
+    box-shadow: 0px 0px 3px 0px #00000069;
+
+}
 .room-box .show-acc-btn {
-    border: none;
+    border: solid 1px #3498db;
     font-size: .8rem;
     color: #3498db;
 }
 
 .room-box .show-acc-btn:hover {
     color: #2980b9 !important;
+    border: solid 1px #3498db !important;
+    box-shadow: 0 0px 2px 0px #00000069;
 }
 
 .bed-box {
