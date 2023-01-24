@@ -135,55 +135,36 @@ class Floor extends Component {
                     </div>
                 </div>
 
-                <Modal centered show={this.state.showFloorAccessory} onClick={() => {
-                    this.handleCloseFloorAcc()
-                }}>
-                    <Modal.Header closeButton>
-                        <Modal.Title>امکانات طبقه</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        <div className="table-box">
-                            <table className="table">
-                                <thead>
-                                <tr>
-                                    <th>نام</th>
-                                    <th>تعداد</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                {
-                                    this.state.tempFloor.accessories.map((acc) => (
-                                        <tr>
-                                            <td>{acc.name}</td>
-                                            <td>{acc.count}</td>
-                                        </tr>
-                                    ))
-                                }
-                                </tbody>
-                            </table>
-                        </div>
-                    </Modal.Body>
-                </Modal>
+                {/*<Modal centered show={this.state.showFloorAccessory} onClick={() => {*/}
+                {/*    this.handleCloseFloorAcc()*/}
+                {/*}}>*/}
+                {/*    <Modal.Header closeButton>*/}
+                {/*        <Modal.Title>امکانات طبقه</Modal.Title>*/}
+                {/*    </Modal.Header>*/}
+                {/*    <Modal.Body>*/}
+                {/*        <div className="table-box">*/}
+                {/*            <table className="table">*/}
+                {/*                <thead>*/}
+                {/*                <tr>*/}
+                {/*                    <th>نام</th>*/}
+                {/*                    <th>تعداد</th>*/}
+                {/*                </tr>*/}
+                {/*                </thead>*/}
+                {/*                <tbody>*/}
+                {/*                {*/}
+                {/*                    this.state.tempFloor.accessories.map((acc) => (*/}
+                {/*                        <tr>*/}
+                {/*                            <td>{acc.name}</td>*/}
+                {/*                            <td>{acc.count}</td>*/}
+                {/*                        </tr>*/}
+                {/*                    ))*/}
+                {/*                }*/}
+                {/*                </tbody>*/}
+                {/*            </table>*/}
+                {/*        </div>*/}
+                {/*    </Modal.Body>*/}
+                {/*</Modal>*/}
             </>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         );
     }
 
