@@ -21,14 +21,6 @@ class Floor extends Component {
         tempFloor: {
             accessories: []
         },
-        logData: [
-            {
-                floor: '2',
-                unit: '3',
-                room: '2',
-                bed: '5'
-            }
-        ],
     }
 
     async componentDidMount() {
@@ -123,38 +115,27 @@ class Floor extends Component {
                         </div>
                         <div className="floor-container row">
                             {this.state.floor.map((f) => (
-                                <div className="col-md-4 col-sm-6 col-xs-12 p-0">
-                                    <div className='floor'>
-                                        <div className="floor-title row ">
-                                            <div className="col-7"><h3 className='floor-name'>{f.name}</h3></div>
-                                            <div className="col-5 ">
-                                                <button className="btn show-acc-btn" onClick={() => {
-                                                    this.handleShowFloorAcc(f)
-                                                }}><IoMdMore/> امکانات طبقه
-                                                </button>
+                                <Link to={`/dashboard/floor/${f.id}`}>
+                                    <div className="col-md-4 col-sm-6 col-xs-12 p-0">
+                                        <div className='floor'>
+                                            <div className="floor-title row ">
+                                                <div className="col-7"><h3 className='floor-name'>{f.name}</h3></div>
+                                                <div className="col-5 ">
+                                                    <button className="btn show-acc-btn" onClick={() => {
+                                                        this.handleShowFloorAcc(f)
+                                                    }}><IoMdMore/> امکانات طبقه
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div className="unit-container row justify-content-around">
-                                            {f.units.map((unit) => (
-                                                <div className={`unit col-4`}>
-                                                    <Link className={`${unit.empty ? "empty-link" : "full-link"}`}
-                                                          to="/dashboard/RoomAndBed" onClick={() => {
-                                                        this.context.handleUnitNumber(unit.number, unit.id)
-                                                    }}>
-                                                        <TbBuilding fontSize="2rem"/>
-                                                        <h5 className='unit-name'>واحد {unit.number}</h5>
-                                                    </Link>
-                                                </div>
-                                            ))}
-                                        </div>
                                     </div>
-                                </div>
+                                </Link>
                             ))}
                         </div>
                     </div>
                 </div>
 
-                {/*<Modal centered show={this.state.showFloorAccessory} onClick={() => {
+                <Modal centered show={this.state.showFloorAccessory} onClick={() => {
                     this.handleCloseFloorAcc()
                 }}>
                     <Modal.Header closeButton>
@@ -182,8 +163,27 @@ class Floor extends Component {
                             </table>
                         </div>
                     </Modal.Body>
-                </Modal>*/}
+                </Modal>
             </>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         );
     }
 

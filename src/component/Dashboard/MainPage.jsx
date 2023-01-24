@@ -517,12 +517,12 @@ class MainPage extends Component {
                             <Route path="/log" element={(<Log/>)}/>
 
                             <Route path="/booking/floor" element={(<Floor/>)}/>
+                            <Route path="/booking/floor/×" element={(<Unit/>)}/>
                             <Route path="/booking/edit-floor" element={(<EditFloor/>)}/>
-                            <Route path="/booking/unit" element={(<Unit/>)}/>
+                            <Route path="/booking/unit/×" element={(<Room/>)}/>
                             <Route path="/booking/edit-unit" element={(<EditUnit/>)}/>
-                            <Route path="/booking/room" element={(<Room/>)}/>
+                            <Route path="/booking/room/×" element={(<Bed/>)}/>
                             <Route path="/booking/edit-room" element={(<EditRoom/>)}/>
-                            <Route path="/booking/bed" element={(<Bed/>)}/>
                             <Route path="/booking/edit-bed" element={(<EditBed/>)}/>
                         </Routes>
                     </BuildingContext.Provider>
