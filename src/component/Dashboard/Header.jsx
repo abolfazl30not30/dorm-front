@@ -76,6 +76,7 @@ class Header extends Component {
                                 textAlign: "right",
                                 borderRadius: "20px",
                                 border: "none",
+
                                 padding: "12px",
                                 boxShadow: "0px 0px 4px 0px #0000004d"
                             }}>
