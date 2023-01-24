@@ -1,9 +1,6 @@
 import React, { Component } from 'react'
 import "../../../../../style/registerPage.css"
 import BuildingContext from "../../../../../contexts/Building";
-import SimpleTextInput from "../../../../CustomInputs/SimpleTextInput";
-import Form from "react-bootstrap/Form";
-import {BiSearch} from "react-icons/bi";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import ToggleButton from "@mui/material/ToggleButton";
 import {BsPersonCircle} from "react-icons/bs";

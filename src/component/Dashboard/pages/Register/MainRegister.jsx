@@ -641,6 +641,7 @@ class MainRegister extends Component {
 
             case "familyGuest" : {
                 let newCharacteristic = {...this.context.familyGuestInformation,...this.context.familyGuestInformationFurther};
+                newCharacteristic.personType = 'familyGuest'
 
                 const profileImg = this.context.familyGuestUploadPage.find(({name}) => name === "personnelImg");
 
@@ -764,7 +765,7 @@ class MainRegister extends Component {
 
             case  "otherGuest" : {
                 let newCharacteristic = {...this.context.otherGuestInformation,...this.context.otherGuestInformationFurther};
-                console.log(newCharacteristic)
+                newCharacteristic.personType = 'otherGuest'
                 const profileImg = this.context.otherGuestUploadPage.find(({name}) => name === "personnelImg");
                 if(profileImg !== undefined){
                     newCharacteristic.profileId = profileImg.fileId;
