@@ -113,11 +113,6 @@ class EditRoom extends Component {
 
                     <div className="text">
                         <h4>ثبت و ویرایش اتاق</h4>
-                        <p>
-                            در این بخش ابتدا تمام طبقات به همراه واحد های موجود در هر طبقه را با نام مدنظر خود وارد
-                            نمایید و پس از اتمام
-                            این مرحله در بخش بعدی اتاق ها و تخت های واقع در هر واحد را وارد می نمایید.
-                        </p>
                     </div>
 
                     <h2 className='unit-name d-flex align-items-center'>
@@ -149,8 +144,8 @@ class EditRoom extends Component {
                             </div>
                         ))}
                         <div className="col-md-3 col-sm-4 col-xs-12">
-                            <div className={"room-box"}>
-                                <button className='bed-add-btn' onClick={() => {
+                            <div className={"d-flex justify-content-center room-box"} >
+                                <button className='room-add-btn' onClick={() => {
                                     this.addRoom()
                                 }}><div className={"d-flex align-items-center"} style={{color: "#296d9a", fontSize: "1.5rem"}}>
                                     افزودن اتاق<AiOutlinePlus size={25} className={"mx-2"}/>
@@ -263,7 +258,7 @@ class EditRoom extends Component {
 
 //room
     addRoom = async () => {
-        const count = this.state.floor.units.length + 1
+        const count = this.state.rooms.length + 1
         await axios.post('https://api.saadatportal.com/api/v1/supervisor/room', {unitId: this.state.unit.id, number: count, empty: "true"}, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
             .then((data) => {
                 return data

@@ -85,20 +85,23 @@ class Unit extends Component {
             <>
                 <div className='floorAndUnit'>
                     <div className="back-btn">
-                        <Link to="/dashboard/booking/floor">
+                        <button onClick={() => {
+                            window.history.back()
+                        }}>
                             بازگشت
-                            <i class="bi bi-caret-left-fill"/>
-                        </Link>
+                            <i className="bi bi-caret-left-fill"/>
+                        </button>
                     </div>
                     <div className="text">
-                        <h4>طبقه {this.state.floor.name}</h4>
+                        <h4>انتخاب واحد</h4>
                         <p>
-                            برای انتخاب تخت ابتدا می بایست طبقه و سپس واحد مورد نظر خود را انتخاب نمایید و در مراحل بعدی
-                            می توانید
-                            جایگاه تخت خود را برگزینید
+                            واحد مورد نظر خود را انتخاب کنید
                         </p>
                     </div>
-
+                    <h2 className='unit-name'>
+                        <TbBuilding className="mt-2" color='#555' fontSize="1.8rem"/>
+                        <span className="unit-title" style={{fontSize:"1.5rem",color:"#555"}}>طبقه {this.state.floor.name}</span>
+                    </h2>
                     <div>
                         <div className={`d-flex justify-content-end ${this.state.isFullUnit ? "edit-btn-container" : "register-btn-container"}`}>
                             <Link to={`/dashboard/booking/edit-unit/${this.state.floor.id}`}

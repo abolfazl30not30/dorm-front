@@ -15,11 +15,11 @@ import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import ToggleButton from "@mui/material/ToggleButton";
 import axios from "axios";
 import {FiEdit2} from "react-icons/fi";
+import  {BsFillDoorOpenFill} from  "react-icons/bs"
 
 class Bed extends Component {
     static contextType = BuildingContext;
     state = {
-
         isLoading: false,
         beds: [],
         room:{},
@@ -47,7 +47,6 @@ class Bed extends Component {
         searchInput: "",
         searchType: "fullName",
         peopleFound: [],
-
     }
 
     async componentDidMount() {
@@ -96,7 +95,6 @@ class Bed extends Component {
                     })
             }
         })
-
 
         axios.get(`https://api.saadatportal.com/api/v1/supervisor/room/${roomId}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
             .then((data) => this.setState({room: data, isLoading: false}, () => {
@@ -415,19 +413,21 @@ class Bed extends Component {
             <>
                 <div className='unitContainer'>
                     <div className="back-btn">
-                        <Link to="/dashboard/booking/floor">
+                        <button onClick={()=>{
+                            window.history.back()
+                        }}>
                             بازگشت
                             <i class="bi bi-caret-left-fill"/>
-                        </Link>
+                        </button>
                     </div>
                     <div className="text">
                         <h4>انتخاب تخت</h4>
                         <p>
-                            در این قسمت تخت مدنظر خود را انتخاب نمایید تا وارد مرحله ی نهایی ثبت نام شوید.
+                            تخت را انتخاب کنید و شخص مورد نظر خود را به آن بیافزاید
                         </p>
                     </div>
                     <h2 className='unit-name'>
-                        <TbBuilding className="mt-2" color='#555' fontSize="1.8rem"/>
+                        <BsFillDoorOpenFill className="mt-2" color='#555' fontSize="1.8rem"/>
                         <span className="unit-title">اتاق {this.state.room.number}</span>
                     </h2>
                     <div className={`d-flex justify-content-end ${this.state.isFull ? "edit-btn-container" : "register-btn-container"}`}>

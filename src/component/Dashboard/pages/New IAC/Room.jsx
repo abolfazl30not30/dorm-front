@@ -16,6 +16,7 @@ import ToggleButton from "@mui/material/ToggleButton";
 import axios from "axios";
 import  {BsFillDoorOpenFill} from  "react-icons/bs"
 import {FiEdit2} from "react-icons/fi";
+
 class Room extends Component {
     static contextType = BuildingContext;
     state = {
@@ -133,19 +134,21 @@ class Room extends Component {
             <>
                 <div className='unitContainer'>
                     <div className="back-btn">
-                        <Link to="/dashboard/booking/floor">
+                        <button onClick={() => {
+                            window.history.back()
+                        }}>
                             بازگشت
-                            <i class="bi bi-caret-left-fill"/>
-                        </Link>
+                            <i className="bi bi-caret-left-fill"/>
+                        </button>
                     </div>
                     <div className="text">
                         <h4>انتخاب اتاق</h4>
                         <p>
-                            در این قسمت تخت مدنظر خود را انتخاب نمایید تا وارد مرحله ی نهایی ثبت نام شوید.
+                            اتاق مورد نظر خود را انتخاب کنید
                         </p>
                     </div>
                     <h2 className='unit-name'>
-                        <TbBuilding className="mt-2" color='#555' fontSize="1.8rem"/>
+                        <MdOutlineMeetingRoom className="mt-2" color='#555' fontSize="1.8rem"/>
                         <span className="unit-title">واحد {this.state.unit.number}</span>
                     </h2>
                     <div className={`d-flex justify-content-end ${this.state.isFull ? "edit-btn-container" : "register-btn-container"}`}>

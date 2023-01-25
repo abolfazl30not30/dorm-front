@@ -4,9 +4,11 @@
     padding-top: .6rem;
 }
 
-.back-btn a {
+.back-btn button {
     text-decoration: none;
     color: #676767;
+    background-color: transparent;
+    border: none;
 }
 
 .text {

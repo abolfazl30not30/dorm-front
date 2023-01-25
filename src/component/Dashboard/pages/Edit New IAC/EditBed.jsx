@@ -57,7 +57,6 @@ class EditBed extends Component {
             }
         })
 
-
         axios.get(`https://api.saadatportal.com/api/v1/supervisor/room/${roomId}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
             .then((data) => this.setState({room: data}))
             .catch(() => {
@@ -94,7 +93,7 @@ class EditBed extends Component {
                 <div className="RoomAndBed">
 
                     <div className="back-btn">
-                        <Link to={`/dashboard/floor/unit/room/${this.state.room.id}`}>
+                        <Link to={`/dashboard/booking/floor/unit/room/${this.state.room.id}`}>
                             بازگشت
                             <i class="bi bi-caret-left-fill"></i>
                         </Link>
@@ -102,11 +101,6 @@ class EditBed extends Component {
 
                     <div className="text">
                         <h4>ثبت و ویرایش تخت</h4>
-                        <p>
-                            در این بخش ابتدا تمام طبقات به همراه واحد های موجود در هر طبقه را با نام مدنظر خود وارد
-                            نمایید و پس از اتمام
-                            این مرحله در بخش بعدی اتاق ها و تخت های واقع در هر واحد را وارد می نمایید.
-                        </p>
                     </div>
 
                     <h2 className='unit-name d-flex align-items-center'>
@@ -148,13 +142,18 @@ class EditBed extends Component {
                                 </div>
                             </div>
                         ))}
-                        <div className='col-md-3 col-sm-4 col-xs-12'>
-                            <button className='bed-add-btn' onClick={() => {
-                                this.addBed()
-                            }}><div className={"d-flex align-items-center"} style={{color: "#296d9a", fontSize: "1rem"}}>افزودن تخت<AiOutlinePlus size={20} className={"mx-2"}/></div></button>
+                        <div className="col-md-3 col-sm-4 col-xs-12">
+                            <div className={"d-flex justify-content-center room-box"} >
+                                <button className='room-add-btn' onClick={() => {
+                                    this.addRoom()
+                                }}><div className={"d-flex align-items-center"} style={{color: "#296d9a", fontSize: "1.5rem"}}>
+                                    افزودن تخت<AiOutlinePlus size={25} className={"mx-2"}/>
+                                </div>
+                                </button>
+                            </div>
                         </div>
                     </div>
-                    <div className="register">
+                    <div className="register mt-5">
                         <Link to={`/dashboard/booking/floor/unit/room/${this.state.room.id}`} className="register-btn-room">ثـبـت</Link>
                     </div>
                 </div>
@@ -210,7 +209,7 @@ class EditBed extends Component {
 
     //bed
     addBed = async () => {
-        const count = (this.state.floor.units.length + 1).toString()
+        const count = (this.state.beds.length + 1).toString()
         await axios.post('https://api.saadatportal.com/api/v1/supervisor/bed', {name:count, empty: "true", roomId: this.state.room.id}, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
             .then((data) => {
                 return data

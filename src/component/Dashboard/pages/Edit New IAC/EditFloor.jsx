@@ -78,10 +78,6 @@ class EditFloor extends Component {
                     </div>
                     <div className="text">
                         <h4>ویرایش و ثبت طبقه</h4>
-                        <p>
-                            در این بخش ابتدا تمام طبقات به همراه واحد های موجود در هر طبقه را با نام مدنظر خود وارد نمایید و پس از اتمام
-                            این مرحله در بخش بعدی اتاق ها و تخت های واقع در هر واحد را وارد می نمایید.
-                        </p>
                     </div>
                     <div className="floor-container row">
                         {this.state.floor.map((f, i) => (

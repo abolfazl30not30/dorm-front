@@ -73,18 +73,13 @@ class EditUnit extends Component {
                 <div className="p5">
 
                     <div className="back-btn">
-                        <Link to="/dashboard/booking/floor">
+                        <Link to={`/dashboard/booking/floor/${this.state.floor.id}`}>
                             بازگشت
                             <i class="bi bi-caret-left-fill"/>
                         </Link>
                     </div>
                     <div className="text">
                         <h4>ویرایش و ثبت واحد</h4>
-                        <p>
-                            در این بخش ابتدا تمام طبقات به همراه واحد های موجود در هر طبقه را با نام مدنظر خود وارد
-                            نمایید و پس از اتمام
-                            این مرحله در بخش بعدی اتاق ها و تخت های واقع در هر واحد را وارد می نمایید.
-                        </p>
                     </div>
                     <div className="floor-container row">
                         {this.state.floor.units.map((unit) => (

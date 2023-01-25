@@ -81,14 +81,16 @@ class Floor extends Component {
         return (
             <>
                 <div className='floorAndUnit'>
+
                     <div className="back-btn">
                         <Link to="/dashboard">
                             بازگشت
                             <i class="bi bi-caret-left-fill"/>
                         </Link>
                     </div>
+
                     <div className="text">
-                        <h4>طبقه ها</h4>
+                        <h4>انتخاب طبقه</h4>
                         <p>
                             طبقه مورد نظر خود را انتخاب کنید
                         </p>

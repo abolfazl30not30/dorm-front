@@ -9,9 +9,11 @@
 
 }
 
-.unitContainer .back-btn a {
+.unitContainer .back-btn button {
     text-decoration: none;
     color: #676767;
+    background-color: transparent;
+    border: none;
 }
 
 .unitContainer .text {
