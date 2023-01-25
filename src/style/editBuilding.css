@@ -10,7 +10,10 @@
     background-color: transparent;
     border: none;
 }
-
+.back-btn a {
+    text-decoration: none;
+    color: #676767;
+}
 .text {
     margin-top: 2.4rem;
 }

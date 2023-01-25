@@ -15,7 +15,7 @@ class RoomLog extends Component {
         return (
             <div className="payment-history">
                 <div className="back-btn">
-                    <Link to="/dashboard/booking">
+                    <Link to="/dashboard/booking/floor">
                         بازگشت
                         <i className="bi bi-caret-left-fill"/>
                     </Link>
