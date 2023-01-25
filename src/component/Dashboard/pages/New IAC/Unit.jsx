@@ -155,7 +155,8 @@ class Unit extends Component {
                             </table>
                         </div>
                     </Modal.Body>
-                </Modal>            </>
+                </Modal>
+            </>
         );
     }
 
