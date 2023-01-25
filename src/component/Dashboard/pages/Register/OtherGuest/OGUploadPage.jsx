@@ -655,7 +655,7 @@ class OGUploadPage extends Component {
             //     .then((result) => {
             //         console.log('Success:', result);
             //         this.setState({fileIdBirthPage1: result.message.id});
-            //         this.context.handleUploadedFile("otherGuestUploadPage", "birth-page1", result.message.id)
+            //         this.context.handleUploadedFile("otherGuestUploadPage", "birthPage1", result.message.id)
             //         this.setState({isLoadingBirthPage1: false});
             //         this.setState({isUploadBirthPage1: true})
             //         this.setState({hasErrorBirthPage1: false});
@@ -671,7 +671,7 @@ class OGUploadPage extends Component {
                 .then((result) => {
                     console.log('Success:', result);
                     this.setState({fileIdBirthPage1: result.message.id});
-                    this.context.handleUploadedFile("otherGuestUploadPage", "birth-page1", result.message.id)
+                    this.context.handleUploadedFile("otherGuestUploadPage", "birthPage1", result.message.id)
                     this.setState({isLoadingBirthPage1: false});
                     this.setState({isUploadBirthPage1: true})
                     this.setState({hasErrorBirthPage1: false});
@@ -686,7 +686,7 @@ class OGUploadPage extends Component {
                                         .then((result) => {
                                             console.log('Success:', result);
                                             this.setState({fileIdBirthPage1: result.message.id});
-                                            this.context.handleUploadedFile("otherGuestUploadPage", "birth-page1", result.message.id)
+                                            this.context.handleUploadedFile("otherGuestUploadPage", "birthPage1", result.message.id)
                                             this.setState({isLoadingBirthPage1: false});
                                             this.setState({isUploadBirthPage1: true})
                                             this.setState({hasErrorBirthPage1: false});
@@ -710,7 +710,7 @@ class OGUploadPage extends Component {
                                         .then((result) => {
                                             console.log('Success:', result);
                                             this.setState({fileIdBirthPage1: result.message.id});
-                                            this.context.handleUploadedFile("otherGuestUploadPage", "birth-page1", result.message.id)
+                                            this.context.handleUploadedFile("otherGuestUploadPage", "birthPage1", result.message.id)
                                             this.setState({isLoadingBirthPage1: false});
                                             this.setState({isUploadBirthPage1: true})
                                             this.setState({hasErrorBirthPage1: false});
@@ -781,7 +781,7 @@ class OGUploadPage extends Component {
             //     .then((result) => {
             //         console.log('Success:', result);
             //         this.setState({fileIdBirthPage2: result.message.id});
-            //         this.context.handleUploadedFile("otherGuestUploadPage", "birth-page2", result.message.id);
+            //         this.context.handleUploadedFile("otherGuestUploadPage", "birthPage2", result.message.id);
             //         this.setState({isLoadingBirthPage2: false});
             //         this.setState({isUploadBirthPage2: true})
             //         this.setState({hasErrorBirthPage2: false});
@@ -797,7 +797,7 @@ class OGUploadPage extends Component {
                 .then((result) => {
                     console.log('Success:', result);
                     this.setState({fileIdBirthPage2: result.message.id});
-                    this.context.handleUploadedFile("otherGuestUploadPage", "birth-page2", result.message.id);
+                    this.context.handleUploadedFile("otherGuestUploadPage", "birthPage2", result.message.id);
                     this.setState({isLoadingBirthPage2: false});
                     this.setState({isUploadBirthPage2: true})
                     this.setState({hasErrorBirthPage2: false});
@@ -812,7 +812,7 @@ class OGUploadPage extends Component {
                                         .then((result) => {
                                             console.log('Success:', result);
                                             this.setState({fileIdBirthPage2: result.message.id});
-                                            this.context.handleUploadedFile("otherGuestUploadPage", "birth-page2", result.message.id);
+                                            this.context.handleUploadedFile("otherGuestUploadPage", "birthPage2", result.message.id);
                                             this.setState({isLoadingBirthPage2: false});
                                             this.setState({isUploadBirthPage2: true})
                                             this.setState({hasErrorBirthPage2: false});
@@ -836,7 +836,7 @@ class OGUploadPage extends Component {
                                         .then((result) => {
                                             console.log('Success:', result);
                                             this.setState({fileIdBirthPage2: result.message.id});
-                                            this.context.handleUploadedFile("otherGuestUploadPage", "birth-page2", result.message.id);
+                                            this.context.handleUploadedFile("otherGuestUploadPage", "birthPage2", result.message.id);
                                             this.setState({isLoadingBirthPage2: false});
                                             this.setState({isUploadBirthPage2: true})
                                             this.setState({hasErrorBirthPage2: false});
@@ -905,7 +905,7 @@ class OGUploadPage extends Component {
             //     .then((result) => {
             //         console.log('Success:', result);
             //         this.setState({fileIdBirthPage3: result.message.id});
-            //         this.context.handleUploadedFile("otherGuestUploadPage", "birth-page3", result.message.id);
+            //         this.context.handleUploadedFile("otherGuestUploadPage", "birthPage3", result.message.id);
             //         this.setState({isLoadingBirthPage3: false});
             //         this.setState({isUploadBirthPage3: true})
             //         this.setState({hasErrorBirthPage3: false});
@@ -921,7 +921,7 @@ class OGUploadPage extends Component {
                 .then((result) => {
                     console.log('Success:', result);
                     this.setState({fileIdBirthPage3: result.message.id});
-                    this.context.handleUploadedFile("otherGuestUploadPage", "birth-page3", result.message.id);
+                    this.context.handleUploadedFile("otherGuestUploadPage", "birthPage3", result.message.id);
                     this.setState({isLoadingBirthPage3: false});
                     this.setState({isUploadBirthPage3: true})
                     this.setState({hasErrorBirthPage3: false});
@@ -936,7 +936,7 @@ class OGUploadPage extends Component {
                                         .then((result) => {
                                             console.log('Success:', result);
                                             this.setState({fileIdBirthPage3: result.message.id});
-                                            this.context.handleUploadedFile("otherGuestUploadPage", "birth-page3", result.message.id);
+                                            this.context.handleUploadedFile("otherGuestUploadPage", "birthPage3", result.message.id);
                                             this.setState({isLoadingBirthPage3: false});
                                             this.setState({isUploadBirthPage3: true})
                                             this.setState({hasErrorBirthPage3: false});
@@ -960,7 +960,7 @@ class OGUploadPage extends Component {
                                         .then((result) => {
                                             console.log('Success:', result);
                                             this.setState({fileIdBirthPage3: result.message.id});
-                                            this.context.handleUploadedFile("otherGuestUploadPage", "birth-page3", result.message.id);
+                                            this.context.handleUploadedFile("otherGuestUploadPage", "birthPage3", result.message.id);
                                             this.setState({isLoadingBirthPage3: false});
                                             this.setState({isUploadBirthPage3: true})
                                             this.setState({hasErrorBirthPage3: false});
@@ -1029,7 +1029,7 @@ class OGUploadPage extends Component {
             //     .then((result) => {
             //         console.log('Success:', result);
             //         this.setState({fileIdBirthPage4: result.message.id});
-            //         this.context.handleUploadedFile("otherGuestUploadPage", "birth-page4", result.message.id);
+            //         this.context.handleUploadedFile("otherGuestUploadPage", "birthPage4", result.message.id);
             //         this.setState({isLoadingBirthPage4: false});
             //         this.setState({isUploadBirthPage4: true})
             //         this.setState({hasErrorBirthPage4: false});
@@ -1045,7 +1045,7 @@ class OGUploadPage extends Component {
                 .then((result) => {
                     console.log('Success:', result);
                     this.setState({fileIdBirthPage4: result.message.id});
-                    this.context.handleUploadedFile("otherGuestUploadPage", "birth-page4", result.message.id);
+                    this.context.handleUploadedFile("otherGuestUploadPage", "birthPage4", result.message.id);
                     this.setState({isLoadingBirthPage4: false});
                     this.setState({isUploadBirthPage4: true})
                     this.setState({hasErrorBirthPage4: false});
@@ -1060,7 +1060,7 @@ class OGUploadPage extends Component {
                                         .then((result) => {
                                             console.log('Success:', result);
                                             this.setState({fileIdBirthPage4: result.message.id});
-                                            this.context.handleUploadedFile("otherGuestUploadPage", "birth-page4", result.message.id);
+                                            this.context.handleUploadedFile("otherGuestUploadPage", "birthPage4", result.message.id);
                                             this.setState({isLoadingBirthPage4: false});
                                             this.setState({isUploadBirthPage4: true})
                                             this.setState({hasErrorBirthPage4: false});
@@ -1084,7 +1084,7 @@ class OGUploadPage extends Component {
                                         .then((result) => {
                                             console.log('Success:', result);
                                             this.setState({fileIdBirthPage4: result.message.id});
-                                            this.context.handleUploadedFile("otherGuestUploadPage", "birth-page4", result.message.id);
+                                            this.context.handleUploadedFile("otherGuestUploadPage", "birthPage4", result.message.id);
                                             this.setState({isLoadingBirthPage4: false});
                                             this.setState({isUploadBirthPage4: true})
                                             this.setState({hasErrorBirthPage4: false});
@@ -1153,7 +1153,7 @@ class OGUploadPage extends Component {
             //     .then((result) => {
             //         console.log('Success:', result);
             //         this.setState({fileIdBirthAllPage: result.message.id});
-            //         this.context.handleUploadedFile("otherGuestUploadPage", "birth-AllPage", result.message.id);
+            //         this.context.handleUploadedFile("otherGuestUploadPage", "birthAllPage", result.message.id);
             //         this.setState({isLoadingBirthAllPage: false});
             //         this.setState({isUploadBirthAllPage: true})
             //         this.setState({hasErrorBirthAllPage: false});
@@ -1169,7 +1169,7 @@ class OGUploadPage extends Component {
                 .then((result) => {
                     console.log('Success:', result);
                     this.setState({fileIdBirthAllPage: result.message.id});
-                    this.context.handleUploadedFile("otherGuestUploadPage", "birth-AllPage", result.message.id);
+                    this.context.handleUploadedFile("otherGuestUploadPage", "birthAllPage", result.message.id);
                     this.setState({isLoadingBirthAllPage: false});
                     this.setState({isUploadBirthAllPage: true})
                     this.setState({hasErrorBirthAllPage: false});
@@ -1184,7 +1184,7 @@ class OGUploadPage extends Component {
                                         .then((result) => {
                                             console.log('Success:', result);
                                             this.setState({fileIdBirthAllPage: result.message.id});
-                                            this.context.handleUploadedFile("otherGuestUploadPage", "birth-AllPage", result.message.id);
+                                            this.context.handleUploadedFile("otherGuestUploadPage", "birthAllPage", result.message.id);
                                             this.setState({isLoadingBirthAllPage: false});
                                             this.setState({isUploadBirthAllPage: true})
                                             this.setState({hasErrorBirthAllPage: false});
@@ -1208,7 +1208,7 @@ class OGUploadPage extends Component {
                                         .then((result) => {
                                             console.log('Success:', result);
                                             this.setState({fileIdBirthAllPage: result.message.id});
-                                            this.context.handleUploadedFile("otherGuestUploadPage", "birth-AllPage", result.message.id);
+                                            this.context.handleUploadedFile("otherGuestUploadPage", "birthAllPage", result.message.id);
                                             this.setState({isLoadingBirthAllPage: false});
                                             this.setState({isUploadBirthAllPage: true})
                                             this.setState({hasErrorBirthAllPage: false});
@@ -1277,7 +1277,7 @@ class OGUploadPage extends Component {
             //     .then((result) => {
             //         console.log('Success:', result);
             //         this.setState({fileIdCartPage1: result.message.id});
-            //         this.context.handleUploadedFile("otherGuestUploadPage", "card-page1", result.message.id);
+            //         this.context.handleUploadedFile("otherGuestUploadPage", "cardPage1", result.message.id);
             //         this.setState({isLoadingCartPage1: false});
             //         this.setState({isUploadCartPage1: true})
             //         this.setState({hasErrorCartPage1: false});
@@ -1293,7 +1293,7 @@ class OGUploadPage extends Component {
                 .then((result) => {
                     console.log('Success:', result);
                     this.setState({fileIdCartPage1: result.message.id});
-                    this.context.handleUploadedFile("otherGuestUploadPage", "card-page1", result.message.id);
+                    this.context.handleUploadedFile("otherGuestUploadPage", "cardPage1", result.message.id);
                     this.setState({isLoadingCartPage1: false});
                     this.setState({isUploadCartPage1: true})
                     this.setState({hasErrorCartPage1: false});
@@ -1308,7 +1308,7 @@ class OGUploadPage extends Component {
                                         .then((result) => {
                                             console.log('Success:', result);
                                             this.setState({fileIdCartPage1: result.message.id});
-                                            this.context.handleUploadedFile("otherGuestUploadPage", "card-page1", result.message.id);
+                                            this.context.handleUploadedFile("otherGuestUploadPage", "cardPage1", result.message.id);
                                             this.setState({isLoadingCartPage1: false});
                                             this.setState({isUploadCartPage1: true})
                                             this.setState({hasErrorCartPage1: false});
@@ -1332,7 +1332,7 @@ class OGUploadPage extends Component {
                                         .then((result) => {
                                             console.log('Success:', result);
                                             this.setState({fileIdCartPage1: result.message.id});
-                                            this.context.handleUploadedFile("otherGuestUploadPage", "card-page1", result.message.id);
+                                            this.context.handleUploadedFile("otherGuestUploadPage", "cardPage1", result.message.id);
                                             this.setState({isLoadingCartPage1: false});
                                             this.setState({isUploadCartPage1: true})
                                             this.setState({hasErrorCartPage1: false});
@@ -1401,7 +1401,7 @@ class OGUploadPage extends Component {
             //     .then((result) => {
             //         console.log('Success:', result);
             //         this.setState({fileIdCartPage2: result.message.id});
-            //         this.context.handleUploadedFile("otherGuestUploadPage", "card-page2", result.message.id);
+            //         this.context.handleUploadedFile("otherGuestUploadPage", "cardPage2", result.message.id);
             //         this.setState({isLoadingCartPage2: false});
             //         this.setState({isUploadCartPage2: true})
             //         this.setState({hasErrorCartPage2: false});
@@ -1417,7 +1417,7 @@ class OGUploadPage extends Component {
                 .then((result) => {
                     console.log('Success:', result);
                     this.setState({fileIdCartPage2: result.message.id});
-                    this.context.handleUploadedFile("otherGuestUploadPage", "card-page2", result.message.id);
+                    this.context.handleUploadedFile("otherGuestUploadPage", "cardPage2", result.message.id);
                     this.setState({isLoadingCartPage2: false});
                     this.setState({isUploadCartPage2: true})
                     this.setState({hasErrorCartPage2: false});
@@ -1432,7 +1432,7 @@ class OGUploadPage extends Component {
                                         .then((result) => {
                                             console.log('Success:', result);
                                             this.setState({fileIdCartPage2: result.message.id});
-                                            this.context.handleUploadedFile("otherGuestUploadPage", "card-page2", result.message.id);
+                                            this.context.handleUploadedFile("otherGuestUploadPage", "cardPage2", result.message.id);
                                             this.setState({isLoadingCartPage2: false});
                                             this.setState({isUploadCartPage2: true})
                                             this.setState({hasErrorCartPage2: false});
@@ -1456,7 +1456,7 @@ class OGUploadPage extends Component {
                                         .then((result) => {
                                             console.log('Success:', result);
                                             this.setState({fileIdCartPage2: result.message.id});
-                                            this.context.handleUploadedFile("otherGuestUploadPage", "card-page2", result.message.id);
+                                            this.context.handleUploadedFile("otherGuestUploadPage", "cardPage2", result.message.id);
                                             this.setState({isLoadingCartPage2: false});
                                             this.setState({isUploadCartPage2: true})
                                             this.setState({hasErrorCartPage2: false});
@@ -1525,7 +1525,7 @@ class OGUploadPage extends Component {
             //     .then((result) => {
             //         console.log('Success:', result);
             //         this.setState({fileIdCartAllPage: result.message.id});
-            //         this.context.handleUploadedFile("otherGuestUploadPage", "card-AllPage", result.message.id);
+            //         this.context.handleUploadedFile("otherGuestUploadPage", "cardAllPage", result.message.id);
             //         this.setState({isLoadingCartAllPage: false});
             //         this.setState({isUploadCartAllPage: true})
             //         this.setState({hasErrorCartAllPage: false});
@@ -1541,7 +1541,7 @@ class OGUploadPage extends Component {
                 .then((result) => {
                     console.log('Success:', result);
                     this.setState({fileIdCartAllPage: result.message.id});
-                    this.context.handleUploadedFile("otherGuestUploadPage", "card-AllPage", result.message.id);
+                    this.context.handleUploadedFile("otherGuestUploadPage", "cardAllPage", result.message.id);
                     this.setState({isLoadingCartAllPage: false});
                     this.setState({isUploadCartAllPage: true})
                     this.setState({hasErrorCartAllPage: false});
@@ -1556,7 +1556,7 @@ class OGUploadPage extends Component {
                                         .then((result) => {
                                             console.log('Success:', result);
                                             this.setState({fileIdCartAllPage: result.message.id});
-                                            this.context.handleUploadedFile("otherGuestUploadPage", "card-AllPage", result.message.id);
+                                            this.context.handleUploadedFile("otherGuestUploadPage", "cardAllPage", result.message.id);
                                             this.setState({isLoadingCartAllPage: false});
                                             this.setState({isUploadCartAllPage: true})
                                             this.setState({hasErrorCartAllPage: false});
@@ -1580,7 +1580,7 @@ class OGUploadPage extends Component {
                                         .then((result) => {
                                             console.log('Success:', result);
                                             this.setState({fileIdCartAllPage: result.message.id});
-                                            this.context.handleUploadedFile("otherGuestUploadPage", "card-AllPage", result.message.id);
+                                            this.context.handleUploadedFile("otherGuestUploadPage", "cardAllPage", result.message.id);
                                             this.setState({isLoadingCartAllPage: false});
                                             this.setState({isUploadCartAllPage: true})
                                             this.setState({hasErrorCartAllPage: false});
