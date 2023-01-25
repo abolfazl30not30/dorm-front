@@ -155,13 +155,12 @@ class Bed extends Component {
             empty: false
         }, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
             .then((data) => {
-                let updateState = [...this.state.rooms];
-                let roomIndex = this.state.rooms.indexOf(this.state.roomAccessory);
-
-                let bedIndex = this.state.rooms[roomIndex].beds.indexOf(this.state.bedOpen);
-                updateState[roomIndex].beds[bedIndex].empty = false;
-                updateState[roomIndex].beds[bedIndex].person = this.state.selectedPeople;
-                this.setState({rooms: updateState});
+                console.log("sup")
+                let updateState = [...this.state.beds];
+                let bedIndex = this.state.beds.indexOf(this.state.bedOpen);
+                updateState[bedIndex].empty = false;
+                updateState[bedIndex].person = this.state.selectedPeople;
+                this.setState({beds: updateState});
             }).catch(() => {
             if (localStorage.getItem('role') === 'MANAGER') {
                 axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
@@ -171,15 +170,14 @@ class Bed extends Component {
                             axios.put(`https://api.saadatportal.com/api/v1/supervisor/bed/${this.state.bedOpen.id}`, {
                                 personId: this.state.selectedPeople,
                                 empty: false
-                            }, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                            },{headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                 .then((result) => {
-                                    let updateState = [...this.state.rooms];
-                                    let roomIndex = this.state.rooms.indexOf(this.state.roomAccessory);
-
-                                    let bedIndex = this.state.rooms[roomIndex].beds.indexOf(this.state.bedOpen);
-                                    updateState[roomIndex].beds[bedIndex].empty = false;
-                                    updateState[roomIndex].beds[bedIndex].person = this.state.selectedPeople;
-                                    this.setState({rooms: updateState});
+                                    console.log("sup1")
+                                    let updateState = [...this.state.beds];
+                                    let bedIndex = this.state.beds.indexOf(this.state.bedOpen);
+                                    updateState[bedIndex].empty = false;
+                                    updateState[bedIndex].person = this.state.selectedPeople;
+                                    this.setState({beds: updateState});
                                 }).catch((error) => {
                                 console.log(error)
                             })
@@ -197,13 +195,11 @@ class Bed extends Component {
                                 empty: false
                             }, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                 .then((result) => {
-                                    let updateState = [...this.state.rooms];
-                                    let roomIndex = this.state.rooms.indexOf(this.state.roomAccessory);
-
-                                    let bedIndex = this.state.rooms[roomIndex].beds.indexOf(this.state.bedOpen);
-                                    updateState[roomIndex].beds[bedIndex].empty = false;
-                                    updateState[roomIndex].beds[bedIndex].person = this.state.selectedPeople;
-                                    this.setState({rooms: updateState});
+                                    let updateState = [...this.state.beds];
+                                    let bedIndex = this.state.beds.indexOf(this.state.bedOpen);
+                                    updateState[bedIndex].empty = false;
+                                    updateState[bedIndex].person = this.state.selectedPeople;
+                                    this.setState({beds: updateState});
                                 }).catch((error) => {
                                 console.log(error)
                             })
@@ -464,8 +460,8 @@ class Bed extends Component {
                                                 color="success"
                                                 onChange={this.handleChange}
                                                 aria-label="text alignment"
-                                                style={{width: "100%"}}
-                                            >
+                                                style={{width: "100%"}}>
+
                                                 <ToggleButton value={poeple.parentId} style={{display: "block"}}>
                                                     <div className="row">
                                                         <div
