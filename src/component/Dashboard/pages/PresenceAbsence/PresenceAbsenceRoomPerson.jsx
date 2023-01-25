@@ -255,6 +255,7 @@ class PresenceAbsenceRoomPerson extends Component {
     }
 
     handleGetStatus = async (checked, id) => {
+
         let today = new Date().toLocaleDateString('fa-IR-u-nu-latn', {
             year: 'numeric',
             month: '2-digit',
@@ -268,6 +269,7 @@ class PresenceAbsenceRoomPerson extends Component {
             "personId": id,
             "checkCleaning": checked
         }
+
         axios.post('https://api.saadatportal.com/api/v1/supervisor/record', report, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
             .then((data) => this.setState({
                 loading: false

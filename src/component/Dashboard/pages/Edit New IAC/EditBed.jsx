@@ -145,7 +145,7 @@ class EditBed extends Component {
                         <div className="col-md-3 col-sm-4 col-xs-12">
                             <div className={"d-flex justify-content-center room-box"} >
                                 <button className='room-add-btn' onClick={() => {
-                                    this.addRoom()
+                                    this.addBed()
                                 }}><div className={"d-flex align-items-center"} style={{color: "#296d9a", fontSize: "1.5rem"}}>
                                     افزودن تخت<AiOutlinePlus size={25} className={"mx-2"}/>
                                 </div>
