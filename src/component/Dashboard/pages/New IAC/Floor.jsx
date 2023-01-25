@@ -99,7 +99,7 @@ class Floor extends Component {
                     <div>
                         <div className={`d-flex justify-content-between ${this.state.isFullFloor ? "edit-btn-container" : "register-btn-container"}`}>
                             <div>
-                                <Link to="room_log">
+                                <Link to="/dashboard/booking/room_log">
                                     <button className={'btn btn-success'}>
                                         گزارش گیری
                                     </button>
