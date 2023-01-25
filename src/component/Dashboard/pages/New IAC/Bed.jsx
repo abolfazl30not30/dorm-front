@@ -48,7 +48,7 @@ class Bed extends Component {
     }
 
     async componentDidMount() {
-        axios.get(`https://api.saadatportal.com/api/v1/supervisor/room/getBeds/8c9dce62bf714323bc883902d66a841a`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+        axios.get(`https://api.saadatportal.com/api/v1/supervisor/room/getBeds/f7ccaadfce3f473b80e7460518a4ab3f`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
             .then((data) => this.setState({beds: data, isLoading: false}, () => {
                 if (data.length === 0) {
                     this.setState({isFull: false})
@@ -61,7 +61,7 @@ class Bed extends Component {
                     .then((response) => {
                         if (response.headers["accesstoken"]) {
                             localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                            axios.get(`https://api.saadatportal.com/api/v1/supervisor/room/getBeds/8c9dce62bf714323bc883902d66a841a`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                            axios.get(`https://api.saadatportal.com/api/v1/supervisor/room/getBeds/f7ccaadfce3f473b80e7460518a4ab3f`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                 .then((data) => this.setState({beds: data, isLoading: false}, () => {
                                     if (data.length === 0) {
                                         this.setState({isFull: false})
@@ -361,7 +361,6 @@ class Bed extends Component {
                         )
                     }
                 </div>
-
                 <Modal size="lg" centered show={this.state.show} onHide={() => {
                     this.handleClose()
                 }}>
