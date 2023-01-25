@@ -448,6 +448,7 @@ class PaymentHistory extends Component {
                         }
                     })
             }})
+        this.setState({loading: false, searchLoading: false})
     }
 
     downloadFile = async (file) => {
