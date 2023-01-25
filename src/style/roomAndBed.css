@@ -31,35 +31,39 @@
     color: #676767;
 }
 
-.unitContainer .edit-btn-container {
+.edit-btn-container {
     display: flex;
-    padding-left: .6rem;
+    padding-left: .8rem;
     margin-top: 3rem;
     justify-content: end;
 }
 
-.unitContainer .register-btn-container {
+.register-btn-container {
     display: flex;
     padding-left: .8rem;
     margin-top: 3rem;
-    justify-content: center;
+    justify-content: end;
 }
 
-.unitContainer .edit-btn-container .edit-btn {
+.edit-btn-container .edit-btn {
     text-decoration: none;
     color: #000;
     background: #f1c40f;
-    padding: .8rem 2rem;
-    border-radius: 12px;
+    padding: .5rem 1rem;
+    border-radius: .5rem;
 }
 
 
-.unitContainer .register-btn-container .register-btn {
+.register-btn-container .register-btn {
     text-decoration: none;
     color: #000;
     background: #2ecc71;
-    padding: 1rem 2.5rem;
-    border-radius: .7rem;
+    padding: 15px 44px;
+    border-radius: 12px;
+}
+
+.edit-btn-container h6 {
+    margin: 0;
 }
 
 .unitContainer .unit-name {

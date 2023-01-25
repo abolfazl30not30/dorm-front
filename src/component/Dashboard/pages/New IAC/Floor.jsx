@@ -103,13 +103,10 @@ class Floor extends Component {
                                     <button className={'btn btn-success'}>
                                         گزارش گیری
                                     </button>
-                                    {/*<Button variant="contained">*/}
-                                    {/*    گزارش گیری*/}
-                                    {/*</Button>*/}
                                 </Link>
                             </div>
                             <Link to="/dashboard/booking/edit-floor"
-                                  className={this.state.isFullFloor ? "edit-btn" : "register-btn"}>
+                                  className={this.state.isFullFloor ? "edit-btn" : "btn btn-success"}>
                                 {this.state.isFullFloor ? (<h6><FiEdit2 className='ms-1' />ویرایش</h6>) : (<h6> ثبت طبقه</h6>)}
                             </Link>
                         </div>

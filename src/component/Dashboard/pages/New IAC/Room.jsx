@@ -15,6 +15,7 @@ import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import ToggleButton from "@mui/material/ToggleButton";
 import axios from "axios";
 import  {BsFillDoorOpenFill} from  "react-icons/bs"
+import {FiEdit2} from "react-icons/fi";
 class Room extends Component {
     static contextType = BuildingContext;
     state = {
@@ -132,7 +133,7 @@ class Room extends Component {
             <>
                 <div className='unitContainer'>
                     <div className="back-btn">
-                        <Link to="/dashboard/booking">
+                        <Link to="/dashboard/booking/floor">
                             بازگشت
                             <i class="bi bi-caret-left-fill"/>
                         </Link>
@@ -147,6 +148,13 @@ class Room extends Component {
                         <TbBuilding className="mt-2" color='#555' fontSize="1.8rem"/>
                         <span className="unit-title">واحد {this.state.unit.number}</span>
                     </h2>
+                    <div className={`d-flex justify-content-end ${this.state.isFull ? "edit-btn-container" : "register-btn-container"}`}>
+                        <Link to={`/dashboard/booking/edit-room/${this.state.unit.id}`}
+                              className={this.state.isFull ? "edit-btn" : "btn btn-success"}>
+                            {this.state.isFull ? (<h6><FiEdit2 className='ms-1' />ویرایش</h6>) : (<h6> ثبت اتاق</h6>)}
+                        </Link>
+                    </div>
+
                     {
                         this.state.isLoading ? (
                             <div className='row' style={{marginTop: "60px"}}>
@@ -154,12 +162,6 @@ class Room extends Component {
                             </div>
                         ) : (
                             <div>
-                                <div className={this.state.isFull ? "edit-btn-container" : "register-btn-container"}>
-                                    <Link to="edit-room-and-bed"
-                                          className={this.state.isFull ? "edit-btn" : "register-btn"}>
-                                        {this.state.isFull ? (<h6>ویرایش</h6>) : (<h6> ثبت اتاق</h6>)}
-                                    </Link>
-                                </div>
                                 <div className="d-flex flex-wrap row">
                                     {
                                         this.state.rooms.map(

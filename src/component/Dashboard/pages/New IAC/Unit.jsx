@@ -85,7 +85,7 @@ class Unit extends Component {
             <>
                 <div className='floorAndUnit'>
                     <div className="back-btn">
-                        <Link to="/dashboard">
+                        <Link to="/dashboard/booking/floor">
                             بازگشت
                             <i class="bi bi-caret-left-fill"/>
                         </Link>
@@ -100,19 +100,9 @@ class Unit extends Component {
                     </div>
 
                     <div>
-                        <div className={`d-flex justify-content-between ${this.state.isFullUnit ? "edit-btn-container" : "register-btn-container"}`}>
-                            <div>
-                                <Link to="room_log">
-                                    <button className={'btn btn-success'}>
-                                        گزارش گیری
-                                    </button>
-                                    {/*<Button variant="contained">*/}
-                                    {/*    گزارش گیری*/}
-                                    {/*</Button>*/}
-                                </Link>
-                            </div>
+                        <div className={`d-flex justify-content-end ${this.state.isFullUnit ? "edit-btn-container" : "register-btn-container"}`}>
                             <Link to={`/dashboard/booking/edit-unit/${this.state.floor.id}`}
-                                  className={this.state.isFullUnit ? "edit-btn" : "register-btn"}>
+                                  className={this.state.isFullUnit ? "edit-btn" : "btn btn-success"}>
                                 {this.state.isFullUnit ? (<h6><FiEdit2 className='ms-1' />ویرایش</h6>) : (<h6>ثبت واحد</h6>)}
                             </Link>
                         </div>
