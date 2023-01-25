@@ -15,7 +15,6 @@ import {Box, CircularProgress} from "@mui/material";
 import {green, red} from "@mui/material/colors";
 import axios from "axios";
 import {IoMdMore} from "react-icons/io";
-import floor from "../New IAC/floor";
 
 
 class EditFloor extends Component {

@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import './../../../../style/roomAndBed.css'
 import {BiBed} from 'react-icons/bi'
 import {TbBuilding} from 'react-icons/tb'
-import {MdDateRange} from 'react-icons/md'
+import {MdDateRange, MdOutlineMeetingRoom} from 'react-icons/md'
 import {AiOutlineNumber} from 'react-icons/ai'
 import {AiOutlineUser} from 'react-icons/ai'
 import {IoMdMore} from "react-icons/io";
@@ -32,11 +32,13 @@ class Room extends Component {
         },
         tempRoom: {
             accessories: []
-        }
+        },
+        unit : {},
     }
 
     async componentDidMount() {
-        axios.get(`https://api.saadatportal.com/api/v1/supervisor/unit/room/7164dd1a1444416baa82f7ef50cbe47d`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+        const unitId = window.location.href.slice(-32)
+        axios.get(`https://api.saadatportal.com/api/v1/supervisor/unit/room/${unitId}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
             .then((data) => this.setState({rooms: data, isLoading: false}, () => {
                 if (data.length === 0) {
                     this.setState({isFull: false})
@@ -49,7 +51,7 @@ class Room extends Component {
                     .then((response) => {
                         if (response.headers["accesstoken"]) {
                             localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                            axios.get(`https://api.saadatportal.com/api/v1/supervisor/unit/room/7164dd1a1444416baa82f7ef50cbe47d`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                            axios.get(`https://api.saadatportal.com/api/v1/supervisor/unit/room/${unitId}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                 .then((data) => this.setState({rooms: data, isLoading: false}, () => {
                                     if (data.length === 0) {
                                         this.setState({isFull: false})
@@ -66,7 +68,7 @@ class Room extends Component {
                     .then((response) => {
                         if (response.headers["accesstoken"]) {
                             localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                            axios.get(`https://api.saadatportal.com/api/v1/supervisor/unit/room/7164dd1a1444416baa82f7ef50cbe47d`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                            axios.get(`https://api.saadatportal.com/api/v1/supervisor/unit/room/${unitId}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                 .then((data) => this.setState({rooms: data, isLoading: false}, () => {
                                     if (data.length === 0) {
                                         this.setState({isFull: false})
@@ -81,32 +83,32 @@ class Room extends Component {
             }
         })
 
-        // axios.get(`https://api.saadatportal.com/api/v1/supervisor/unit/${this.context.unitId}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
-        //     .then((data) => this.setState({unit: data, isLoading: false}))
-        //     .catch(() => {
-        //         if (localStorage.getItem('role') === 'MANAGER') {
-        //             axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
-        //                 .then((response) => {
-        //                     if (response.headers["accesstoken"]) {
-        //                         localStorage.setItem("accessToken", response.headers["accesstoken"]);
-        //                         axios.get(`https://api.saadatportal.com/api/v1/supervisor/unit/${this.context.unitId}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
-        //                             .then((data) => this.setState({unit: data, isLoading: false}))
-        //                     } else {
-        //                         window.location = '/'
-        //                     }
-        //                 })
-        //         } else if (localStorage.getItem('role') === 'SUPERVISOR') {
-        //             axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
-        //                 .then((response) => {
-        //                     if (response.headers["accesstoken"]) {
-        //                         localStorage.setItem("accessToken", response.headers["accesstoken"]);
-        //                         axios.get(`https://api.saadatportal.com/api/v1/supervisor/unit/${this.context.unitId}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
-        //                             .then((data) => this.setState({unit: data, isLoading: false}))
-        //                     } else {
-        //                         window.location = '/'
-        //                     }
-        //                 })
-        //         }})
+        axios.get(`https://api.saadatportal.com/api/v1/supervisor/unit/${unitId}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+            .then((data) => this.setState({unit: data, isLoading: false}))
+            .catch(() => {
+                if (localStorage.getItem('role') === 'MANAGER') {
+                    axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        .then((response) => {
+                            if (response.headers["accesstoken"]) {
+                                localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                                axios.get(`https://api.saadatportal.com/api/v1/supervisor/unit/${unitId}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                    .then((data) => this.setState({unit: data, isLoading: false}))
+                            } else {
+                                window.location = '/'
+                            }
+                        })
+                } else if (localStorage.getItem('role') === 'SUPERVISOR') {
+                    axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        .then((response) => {
+                            if (response.headers["accesstoken"]) {
+                                localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                                axios.get(`https://api.saadatportal.com/api/v1/supervisor/unit/${unitId}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                    .then((data) => this.setState({unit: data, isLoading: false}))
+                            } else {
+                                window.location = '/'
+                            }
+                        })
+                }})
     }
 
 
@@ -143,7 +145,7 @@ class Room extends Component {
                     </div>
                     <h2 className='unit-name'>
                         <TbBuilding className="mt-2" color='#555' fontSize="1.8rem"/>
-                        <span className="unit-title">واحد {}</span>
+                        <span className="unit-title">واحد {this.state.unit.number}</span>
                     </h2>
                     {
                         this.state.isLoading ? (
@@ -164,10 +166,12 @@ class Room extends Component {
                                             (room) => (
                                                 <div className="col-md-3 col-sm-4 col-xs-12">
                                                     <div className="room-box d-flex flex-column justify-content-center">
-                                                        <div className="icon mt-3 mb-3 d-flex justify-content-center">
-                                                            <BsFillDoorOpenFill fontSize="30px" color=""/>
-                                                        </div>
-                                                        <div className="title mt-1">اتاق {room.number}</div>
+                                                        <Link to={`/dashboard/booking/floor/unit/room/${room.id}`} style={{textDecoration: "none"}}>
+                                                            <div className="icon mt-3 mb-3 d-flex justify-content-center">
+                                                                <BsFillDoorOpenFill fontSize="30px" color=""/>
+                                                            </div>
+                                                            <div className="title mt-1">اتاق {room.number}</div>
+                                                        </Link>
                                                         <div className="mt-2 mb-3 d-flex justify-content-center">
                                                             <button className="btn show-acc-btn" onClick={() => {
                                                                 this.handleShowRoomAcc(room)

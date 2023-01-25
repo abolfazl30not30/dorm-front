@@ -132,6 +132,7 @@ class RoomAndBed extends Component {
                         }
                     })
             }})
+
     }
 
     handleClose = () => {

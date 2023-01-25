@@ -29,13 +29,13 @@ import RoomLog from "./pages/Inventory and capacity/RoomLog";
 import Setting from "./pages/Setting/Setting";
 import Log from "./pages/log/log"
 import Floor from "./pages/New IAC/Floor"
-import EditFloor from "./pages/Edit New IAC/editFloor"
+import EditFloor from "./pages/Edit New IAC/EditFloor"
 import Unit from "./pages/New IAC/Unit"
-import EditUnit from "./pages/Edit New IAC/editUnit"
+import EditUnit from "./pages/Edit New IAC/EditUnit"
 import Room from "./pages/New IAC/Room"
-import EditRoom from "./pages/Edit New IAC/editRoom"
+import EditRoom from "./pages/Edit New IAC/EditRoom"
 import Bed from "./pages/New IAC/Bed"
-import EditBed from "./pages/Edit New IAC/editBed"
+import EditBed from "./pages/Edit New IAC/EditBed"
 
 
 class MainPage extends Component {

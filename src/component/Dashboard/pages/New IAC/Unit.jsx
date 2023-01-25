@@ -10,7 +10,6 @@ import "../../../../style/paymentHistory.css"
 import Modal from "react-bootstrap/Modal"
 import axios from "axios";
 import {MdOutlineMeetingRoom} from "react-icons/md";
-import floor from "./floor";
 
 class Unit extends Component {
 
@@ -121,7 +120,7 @@ class Unit extends Component {
                             {this.state.floor.units.map((unit) => (
                                 <div className="mb-4 col-md-3 col-sm-4 col-xs-12">
                                     <div className="floor-box d-flex flex-column justify-content-center">
-                                        <Link to={`/dashboard/booking/room/${unit.id}`} style={{textDecoration: "none"}}>
+                                        <Link to={`/dashboard/booking/floor/unit/${unit.id}`} style={{textDecoration: "none"}}>
                                             <div className="icon mt-3 mb-3 d-flex justify-content-center">
                                                 <MdOutlineMeetingRoom fontSize="30px" color="green"/>
                                             </div>
