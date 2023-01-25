@@ -15,28 +15,22 @@ import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import ToggleButton from "@mui/material/ToggleButton";
 import axios from "axios";
 
-class Room extends Component {
+class Bed extends Component {
     static contextType = BuildingContext;
     state = {
 
         isLoading: false,
+        beds: [],
         isFull: false,
-        rooms: [],
         show: false,
-        showAccessory: false,
-        showRoomAccessory: false,
         selectedPeople: "",
-        unit: {
-            accessories: []
-        },
-
         bedOpen:
             {
                 id: '', name: '', empty: false,
-                personId:"",
+                personId: "",
             },
 
-        tempPerson:{
+        tempPerson: {
             id: '',
             firstName: '',
             lastName: '',
@@ -47,23 +41,15 @@ class Room extends Component {
             },
             image: 'https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png'
         },
-        roomAccessory: {
-            accessories: [
-                {name: 'یخچال', count: 1},
-                {name: 'چوب لباسی', count: 4}
-            ]
-        },
-        tempRoom: {
-            accessories: []
-        },
-        searchInput:"",
-        searchType:"fullName",
-        peopleFound:[],
+
+        searchInput: "",
+        searchType: "fullName",
+        peopleFound: [],
     }
 
     async componentDidMount() {
-        axios.get(`https://api.saadatportal.com/api/v1/supervisor/unit/room/${this.context.unitId}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
-            .then((data) => this.setState({rooms: data, isLoading: false},()=>{
+        axios.get(`https://api.saadatportal.com/api/v1/supervisor/room/getBeds/f7ccaadfce3f473b80e7460518a4ab3f`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+            .then((data) => this.setState({beds: data, isLoading: false}, () => {
                 if (data.length === 0) {
                     this.setState({isFull: false})
                 } else {
@@ -75,8 +61,8 @@ class Room extends Component {
                     .then((response) => {
                         if (response.headers["accesstoken"]) {
                             localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                            axios.get(`https://api.saadatportal.com/api/v1/supervisor/unit/room/${this.context.unitId}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
-                                .then((data) => this.setState({rooms: data, isLoading: false},()=>{
+                            axios.get(`https://api.saadatportal.com/api/v1/supervisor/room/getBeds/f7ccaadfce3f473b80e7460518a4ab3f`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                .then((data) => this.setState({beds: data, isLoading: false}, () => {
                                     if (data.length === 0) {
                                         this.setState({isFull: false})
                                     } else {
@@ -93,7 +79,7 @@ class Room extends Component {
                         if (response.headers["accesstoken"]) {
                             localStorage.setItem("accessToken", response.headers["accesstoken"]);
                             axios.get(`https://api.saadatportal.com/api/v1/supervisor/unit/room/${this.context.unitId}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
-                                .then((data) => this.setState({rooms: data, isLoading: false},()=>{
+                                .then((data) => this.setState({rooms: data, isLoading: false}, () => {
                                     if (data.length === 0) {
                                         this.setState({isFull: false})
                                     } else {
@@ -104,66 +90,47 @@ class Room extends Component {
                             window.location = '/'
                         }
                     })
-            }})
+            }
+        })
 
-        axios.get(`https://api.saadatportal.com/api/v1/supervisor/unit/${this.context.unitId}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
-            .then((data) => this.setState({unit: data, isLoading: false}))
-            .catch(() => {
-                if (localStorage.getItem('role') === 'MANAGER') {
-                    axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
-                        .then((response) => {
-                            if (response.headers["accesstoken"]) {
-                                localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                axios.get(`https://api.saadatportal.com/api/v1/supervisor/unit/${this.context.unitId}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
-                                    .then((data) => this.setState({unit: data, isLoading: false}))
-                            } else {
-                                window.location = '/'
-                            }
-                        })
-                } else if (localStorage.getItem('role') === 'SUPERVISOR') {
-                    axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
-                        .then((response) => {
-                            if (response.headers["accesstoken"]) {
-                                localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                axios.get(`https://api.saadatportal.com/api/v1/supervisor/unit/${this.context.unitId}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
-                                    .then((data) => this.setState({unit: data, isLoading: false}))
-                            } else {
-                                window.location = '/'
-                            }
-                        })
-                }})
     }
 
     handleClose = () => {
         this.setState({show: false})
     };
 
-    handleSubmit = async () =>{
-        axios.put(`https://api.saadatportal.com/api/v1/supervisor/bed/${this.state.bedOpen.id}`, {personId : this.state.selectedPeople , empty :  false}, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
-            .then((data)=>{
+    handleSubmit = async () => {
+        axios.put(`https://api.saadatportal.com/api/v1/supervisor/bed/${this.state.bedOpen.id}`, {
+            personId: this.state.selectedPeople,
+            empty: false
+        }, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+            .then((data) => {
                 let updateState = [...this.state.rooms];
                 let roomIndex = this.state.rooms.indexOf(this.state.roomAccessory);
 
-                let bedIndex =  this.state.rooms[roomIndex].beds.indexOf(this.state.bedOpen);
+                let bedIndex = this.state.rooms[roomIndex].beds.indexOf(this.state.bedOpen);
                 updateState[roomIndex].beds[bedIndex].empty = false;
                 updateState[roomIndex].beds[bedIndex].person = this.state.selectedPeople;
-                this.setState({rooms:updateState});
+                this.setState({rooms: updateState});
             }).catch(() => {
             if (localStorage.getItem('role') === 'MANAGER') {
                 axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                     .then((response) => {
                         if (response.headers["accesstoken"]) {
                             localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                            axios.put(`https://api.saadatportal.com/api/v1/supervisor/bed/${this.state.bedOpen.id}`, {personId : this.state.selectedPeople , empty :  false}, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
-                                .then((result)=>{
+                            axios.put(`https://api.saadatportal.com/api/v1/supervisor/bed/${this.state.bedOpen.id}`, {
+                                personId: this.state.selectedPeople,
+                                empty: false
+                            }, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                .then((result) => {
                                     let updateState = [...this.state.rooms];
                                     let roomIndex = this.state.rooms.indexOf(this.state.roomAccessory);
 
-                                    let bedIndex =  this.state.rooms[roomIndex].beds.indexOf(this.state.bedOpen);
+                                    let bedIndex = this.state.rooms[roomIndex].beds.indexOf(this.state.bedOpen);
                                     updateState[roomIndex].beds[bedIndex].empty = false;
                                     updateState[roomIndex].beds[bedIndex].person = this.state.selectedPeople;
-                                    this.setState({rooms:updateState});
-                                }).catch((error)=>{
+                                    this.setState({rooms: updateState});
+                                }).catch((error) => {
                                 console.log(error)
                             })
                         } else {
@@ -175,31 +142,34 @@ class Room extends Component {
                     .then((response) => {
                         if (response.headers["accesstoken"]) {
                             localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                            axios.put(`https://api.saadatportal.com/api/v1/supervisor/bed/${this.state.bedOpen.id}`, {personId : this.state.selectedPeople , empty :  false}, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
-                                .then((result)=>{
+                            axios.put(`https://api.saadatportal.com/api/v1/supervisor/bed/${this.state.bedOpen.id}`, {
+                                personId: this.state.selectedPeople,
+                                empty: false
+                            }, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                .then((result) => {
                                     let updateState = [...this.state.rooms];
                                     let roomIndex = this.state.rooms.indexOf(this.state.roomAccessory);
 
-                                    let bedIndex =  this.state.rooms[roomIndex].beds.indexOf(this.state.bedOpen);
+                                    let bedIndex = this.state.rooms[roomIndex].beds.indexOf(this.state.bedOpen);
                                     updateState[roomIndex].beds[bedIndex].empty = false;
                                     updateState[roomIndex].beds[bedIndex].person = this.state.selectedPeople;
-                                    this.setState({rooms:updateState});
-                                }).catch((error)=>{
+                                    this.setState({rooms: updateState});
+                                }).catch((error) => {
                                 console.log(error)
                             })
                         } else {
                             window.location = '/'
                         }
                     })
-            }})
+            }
+        })
 
         this.handleClose();
     }
 
-    handleShow = async (bed, room) => {
-        this.setState({roomAccessory: room})
+    handleShow = async (bed) => {
         this.setState({bedOpen: bed})
-        if(bed.empty === false){
+        if (bed.empty === false) {
             let person = {}
             console.log("bed")
             console.log(bed)
@@ -237,7 +207,8 @@ class Room extends Component {
                                     window.location = '/'
                                 }
                             })
-                    }})
+                    }
+                })
 
             console.log("person")
             console.log(person)
@@ -246,7 +217,7 @@ class Room extends Component {
             //     .then((data) => this.setState({tempPerson : data}));
 
             await axios.get(`https://api.saadatportal.com/api/v1/supervisor/characteristic/${person.characteristicId}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
-                .then((data) => this.setState({tempPerson : data}))
+                .then((data) => this.setState({tempPerson: data}))
                 .catch(() => {
                     if (localStorage.getItem('role') === 'MANAGER') {
                         axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
@@ -254,7 +225,7 @@ class Room extends Component {
                                 if (response.headers["accesstoken"]) {
                                     localStorage.setItem("accessToken", response.headers["accesstoken"]);
                                     axios.get(`https://api.saadatportal.com/api/v1/supervisor/characteristic/${person.characteristicId}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
-                                        .then((data) => this.setState({tempPerson : data}))
+                                        .then((data) => this.setState({tempPerson: data}))
                                 } else {
                                     window.location = '/'
                                 }
@@ -265,12 +236,13 @@ class Room extends Component {
                                 if (response.headers["accesstoken"]) {
                                     localStorage.setItem("accessToken", response.headers["accesstoken"]);
                                     axios.get(`https://api.saadatportal.com/api/v1/supervisor/characteristic/${person.characteristicId}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
-                                        .then((data) => this.setState({tempPerson : data}))
+                                        .then((data) => this.setState({tempPerson: data}))
                                 } else {
                                     window.location = '/'
                                 }
                             })
-                    }})
+                    }
+                })
         }
         this.setState({show: true})
     };
@@ -295,9 +267,9 @@ class Room extends Component {
     }
 
     //search
-    handleSearchInput = async (e) =>{
+    handleSearchInput = async (e) => {
         const value = e.target.value;
-        this.setState({searchInput:value});
+        this.setState({searchInput: value});
         // await fetch(`https://api.saadatportal.com/api/v1/supervisor/characteristic/search?parentType=Person&${this.state.searchType}=${e.target.value}`).then((response) => response.json())
         //     .then((data) => this.setState({peopleFound: data}));
 
@@ -326,7 +298,8 @@ class Room extends Component {
                                 window.location = '/'
                             }
                         })
-                }})
+                }
+            })
     }
 
     render() {
@@ -340,7 +313,7 @@ class Room extends Component {
                         </Link>
                     </div>
                     <div className="text">
-                        <h4>انتخاب اتاق</h4>
+                        <h4>انتخاب تخت</h4>
                         <p>
                             در این قسمت تخت مدنظر خود را انتخاب نمایید تا وارد مرحله ی نهایی ثبت نام شوید.
                         </p>
@@ -366,37 +339,18 @@ class Room extends Component {
                                         {this.state.isFull ? (<h6>ویرایش</h6>) : (<h6> ثبت اتاق و تخت</h6>)}
                                     </Link>
                                 </div>
-                                <div className="d-flex flex-wrap row">
+                                <div className="mt-4 d-flex flex-wrap row justify-content-center">
                                     {
-                                        this.state.rooms.map(
-                                            (room) => (
-                                                <div className="col-md-4 col-sm-6 col-xs-12">
-                                                    <div className="room-box ">
-                                                        <div className="row">
-                                                            <div className="col-7 title">اتاق {room.number}</div>
-                                                            <div className="col-5">
-                                                                <button className="btn show-acc-btn" onClick={() => {
-                                                                    this.handleShowRoomAcc(room)
-                                                                }}><IoMdMore/> امکانات
-                                                                    اتاق
-                                                                </button>
-                                                            </div>
-                                                        </div>
-                                                        <div className='d-flex flex-wrap justify-content-around'>
-                                                            {room.beds.map((bed) => (
-                                                                <div className="col-4 p-1">
-                                                                    <div
-                                                                        className={`bed-box ${bed.empty ? "empty" : "full"}`}>
-                                                                        <Button onClick={() => {
-                                                                            this.handleShow(bed, room)
-                                                                        }}>
-                                                                            <BiBed fontSize="2rem"/>
-                                                                            <div className="title">{bed.name}</div>
-                                                                        </Button>
-                                                                    </div>
-                                                                </div>
-                                                            ))}
-                                                        </div>
+                                        this.state.beds.map(
+                                            (bed) => (
+                                                <div className="col-md-3 col-sm-4 col-xs-12">
+                                                    <div className={`bed-box ${bed.empty ? "empty" : "full"}`}>
+                                                        <Button onClick={() => {
+                                                            this.handleShow(bed)
+                                                        }}>
+                                                            <BiBed fontSize="2rem"/>
+                                                            <div className="title">{bed.name}</div>
+                                                        </Button>
                                                     </div>
                                                 </div>
                                             )
@@ -407,7 +361,6 @@ class Room extends Component {
                         )
                     }
                 </div>
-
                 <Modal size="lg" centered show={this.state.show} onHide={() => {
                     this.handleClose()
                 }}>
@@ -421,7 +374,8 @@ class Room extends Component {
                                     <div className='profile-box'>
                                         <img className="profile-img"
                                              src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="profile"/>
-                                        <div className="name">{this.state.tempPerson.firstName} {this.state.tempPerson.lastName}</div>
+                                        <div
+                                            className="name">{this.state.tempPerson.firstName} {this.state.tempPerson.lastName}</div>
                                         <div className='profile-item'><AiOutlineNumber className='ms-2'/>کد
                                             ملی: {this.state.tempPerson.nationalCode}</div>
                                         <div className='profile-item'><MdDateRange className='ms-2'/>شروع
@@ -437,7 +391,9 @@ class Room extends Component {
                                             <div className="form-floating">
                                                 <select className="form-select" id="floatingSelect"
                                                         aria-label="Floating label select example"
-                                                        value={this.state.searchType} onChange={(e)=>{this.setState({searchType:e.target.value})}}>
+                                                        value={this.state.searchType} onChange={(e) => {
+                                                    this.setState({searchType: e.target.value})
+                                                }}>
                                                     <option value="fullName">نام و نام خانوادگی</option>
                                                     <option value="nationalCode">کد ملی</option>
                                                 </select>
@@ -446,12 +402,14 @@ class Room extends Component {
                                             <input type="text"
                                                    id="inputSearch"
                                                    placeholder="جسـتجـو..."
-                                                   onChange={(e)=>{this.handleSearchInput(e)}}/>
+                                                   onChange={(e) => {
+                                                       this.handleSearchInput(e)
+                                                   }}/>
                                             <div className="search-icon"><i className="bi bi-search"></i></div>
                                         </div>
                                     </div>
                                     <div className="people-container mt-4">
-                                        {this.state.peopleFound.map((poeple)=>(
+                                        {this.state.peopleFound.map((poeple) => (
                                             <ToggleButtonGroup
                                                 orientation="vertical"
                                                 value={this.state.selectedPeople}
@@ -511,72 +469,10 @@ class Room extends Component {
                         </Modal.Footer>) : (<></>)
                     }
                 </Modal>
-
-                <Modal centered show={this.state.showAccessory} onClick={() => {
-                    this.handleCloseAccessory()
-                }}>
-                    <Modal.Header closeButton>
-                        <Modal.Title>امکانات واحد</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        <div className="table-box">
-                            <table className="table">
-                                <thead>
-                                <tr>
-                                    <th>نام</th>
-                                    <th>تعداد</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                {
-                                    this.state.unit.accessories.map((acc) => (
-                                        <tr>
-                                            <td>{acc.name}</td>
-                                            <td>{acc.count}</td>
-                                        </tr>
-                                    ))
-                                }
-                                </tbody>
-                            </table>
-                        </div>
-                    </Modal.Body>
-                </Modal>
-
-
-                <Modal centered show={this.state.showRoomAccessory} onClick={() => {
-                    this.handleCloseRoomAcc()
-                }}>
-                    <Modal.Header closeButton>
-                        <Modal.Title>امکانات اتاق</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        <div className="table-box">
-                            <table className="table">
-                                <thead>
-                                <tr>
-                                    <th>نام</th>
-                                    <th>تعداد</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                {
-                                    this.state.tempRoom.accessories.map((acc) => (
-                                        <tr>
-                                            <td>{acc.name}</td>
-                                            <td>{acc.count}</td>
-                                        </tr>
-                                    ))
-                                }
-                                </tbody>
-                            </table>
-                        </div>
-                    </Modal.Body>
-                </Modal>
-
             </>
         );
     }
 
 }
 
-export default Room;
+export default Bed;
