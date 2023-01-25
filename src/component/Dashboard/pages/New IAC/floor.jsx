@@ -7,6 +7,7 @@ import {IoMdMore} from "react-icons/io";
 import 'react-edit-text/dist/index.css';
 import { FiEdit2 } from 'react-icons/fi'
 import "../../../../style/paymentHistory.css"
+import Modal from "react-bootstrap/Modal"
 import axios from "axios";
 
 class Floor extends Component {
@@ -15,7 +16,7 @@ class Floor extends Component {
 
     state = {
         isLoading: true,
-        isFullUnit: false,
+        isFullFloor: false,
         floor: [],
         showFloorAccessory: false,
         tempFloor: {
@@ -26,12 +27,11 @@ class Floor extends Component {
     async componentDidMount() {
         axios.get('https://api.saadatportal.com/api/v1/supervisor/floor/search?sort=name', {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
             .then((data) => {
-                console.log(data)
                 this.setState({floor: data, isLoading: false},()=>{
                     if (data.length === 0) {
-                        this.setState({isFullUnit: false})
+                        this.setState({isFullFloor: false})
                     } else {
-                        this.setState({isFullUnit: true})
+                        this.setState({isFullFloor: true})
                     }
                 })
             }).catch(() => {
@@ -44,9 +44,9 @@ class Floor extends Component {
                                 .then((data) => {
                                     this.setState({floor: data, isLoading: false},()=>{
                                         if (data.length === 0) {
-                                            this.setState({isFullUnit: false})
+                                            this.setState({isFullFloor: false})
                                         } else {
-                                            this.setState({isFullUnit: true})
+                                            this.setState({isFullFloor: true})
                                         }
                                     })
                                 })
@@ -63,9 +63,9 @@ class Floor extends Component {
                                 .then((data) => {
                                     this.setState({floor: data, isLoading: false},()=>{
                                         if (data.length === 0) {
-                                            this.setState({isFullUnit: false})
+                                            this.setState({isFullFloor: false})
                                         } else {
-                                            this.setState({isFullUnit: true})
+                                            this.setState({isFullFloor: true})
                                         }
                                     })
                                 })
@@ -88,7 +88,7 @@ class Floor extends Component {
                         </Link>
                     </div>
                     <div className="text">
-                        <h4>طبقه</h4>
+                        <h4>طبقه ها</h4>
                         <p>
                             برای انتخاب تخت ابتدا می بایست طبقه و سپس واحد مورد نظر خود را انتخاب نمایید و در مراحل بعدی
                             می توانید
@@ -97,7 +97,7 @@ class Floor extends Component {
                     </div>
 
                     <div>
-                        <div className={`d-flex justify-content-between ${this.state.isFullUnit ? "edit-btn-container" : "register-btn-container"}`}>
+                        <div className={`d-flex justify-content-between ${this.state.isFullFloor ? "edit-btn-container" : "register-btn-container"}`}>
                             <div>
                                 <Link to="room_log">
                                     <button className={'btn btn-success'}>
@@ -108,62 +108,63 @@ class Floor extends Component {
                                     {/*</Button>*/}
                                 </Link>
                             </div>
-                            <Link to="edit-floor"
-                                  className={this.state.isFullUnit ? "edit-btn" : "register-btn"}>
-                                {this.state.isFullUnit ? (<h6><FiEdit2 className='ms-1' />ویرایش</h6>) : (<h6> ثبت طبقه</h6>)}
+                            <Link to="/dashboard/booking/edit-floor"
+                                  className={this.state.isFullFloor ? "edit-btn" : "register-btn"}>
+                                {this.state.isFullFloor ? (<h6><FiEdit2 className='ms-1' />ویرایش</h6>) : (<h6> ثبت طبقه</h6>)}
                             </Link>
                         </div>
                         <div className="floor-container row">
                             {this.state.floor.map((f) => (
-                                <Link to={`/dashboard/floor/${f.id}`}>
-                                    <div className="col-md-4 col-sm-6 col-xs-12 p-0">
-                                        <div className='floor'>
-                                            <div className="floor-title row ">
-                                                <div className="col-7"><h3 className='floor-name'>{f.name}</h3></div>
-                                                <div className="col-5 ">
-                                                    <button className="btn show-acc-btn" onClick={() => {
-                                                        this.handleShowFloorAcc(f)
-                                                    }}><IoMdMore/> امکانات طبقه
-                                                    </button>
-                                                </div>
+                                <div className="mt-3 col-md-3 col-sm-4 col-xs-12">
+                                    <div className="floor-box d-flex flex-column justify-content-center">
+                                        <Link to={`/dashboard/booking/floor/${f.id}`} style={{textDecoration: "none"}}>
+                                            <div className="icon mt-3 mb-3 d-flex justify-content-center">
+                                                <TbBuilding fontSize="30px" color="green"/>
                                             </div>
+                                            <div className="title mt-1 text-success">طبقه {f.name}</div>
+                                        </Link>
+                                        <div className="mt-4 d-flex justify-content-center">
+                                            <button className="btn show-acc-btn" onClick={() => {
+                                                this.handleShowFloorAcc(f)
+                                            }}><IoMdMore/> امکانات طبقه
+                                            </button>
                                         </div>
                                     </div>
-                                </Link>
+                                </div>
                             ))}
                         </div>
                     </div>
                 </div>
 
-                {/*<Modal centered show={this.state.showFloorAccessory} onClick={() => {*/}
-                {/*    this.handleCloseFloorAcc()*/}
-                {/*}}>*/}
-                {/*    <Modal.Header closeButton>*/}
-                {/*        <Modal.Title>امکانات طبقه</Modal.Title>*/}
-                {/*    </Modal.Header>*/}
-                {/*    <Modal.Body>*/}
-                {/*        <div className="table-box">*/}
-                {/*            <table className="table">*/}
-                {/*                <thead>*/}
-                {/*                <tr>*/}
-                {/*                    <th>نام</th>*/}
-                {/*                    <th>تعداد</th>*/}
-                {/*                </tr>*/}
-                {/*                </thead>*/}
-                {/*                <tbody>*/}
-                {/*                {*/}
-                {/*                    this.state.tempFloor.accessories.map((acc) => (*/}
-                {/*                        <tr>*/}
-                {/*                            <td>{acc.name}</td>*/}
-                {/*                            <td>{acc.count}</td>*/}
-                {/*                        </tr>*/}
-                {/*                    ))*/}
-                {/*                }*/}
-                {/*                </tbody>*/}
-                {/*            </table>*/}
-                {/*        </div>*/}
-                {/*    </Modal.Body>*/}
-                {/*</Modal>*/}
+                <Modal centered show={this.state.showFloorAccessory} onClick={() => {
+                    this.handleCloseFloorAcc()
+                }}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>امکانات طبقه</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <div className="table-box">
+                            <table className="table">
+                                <thead>
+                                <tr>
+                                    <th>نام</th>
+                                    <th>تعداد</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {
+                                    this.state.tempFloor.accessories.map((acc) => (
+                                        <tr>
+                                            <td>{acc.name}</td>
+                                            <td>{acc.count}</td>
+                                        </tr>
+                                    ))
+                                }
+                                </tbody>
+                            </table>
+                        </div>
+                    </Modal.Body>
+                </Modal>
             </>
         );
     }

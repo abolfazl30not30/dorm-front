@@ -488,10 +488,10 @@ class MainPage extends Component {
                     >
                         <Routes>
                             <Route path="/" element={(<Home/>)}/>
-                            <Route path="/booking" element={(<FloorAndUnit/>)}/>
-                            <Route path="/booking/edit-floor-and-unit" element={(<EditFloorAndUnit/>)}/>
-                            <Route path="/RoomAndBed" element={(<RoomAndBed/>)}/>
-                            <Route path='/RoomAndBed/edit-room-and-bed' element={(<EditRoomAndBed/>)}/>
+                            {/*<Route path="/booking" element={(<FloorAndUnit/>)}/>*/}
+                            {/*<Route path="/booking/edit-floor-and-unit" element={(<EditFloorAndUnit/>)}/>*/}
+                            {/*<Route path="/RoomAndBed" element={(<RoomAndBed/>)}/>*/}
+                            {/*<Route path='/RoomAndBed/edit-room-and-bed' element={(<EditRoomAndBed/>)}/>*/}
                             <Route path="/people" element={(<SearchAccount/>)}/>
                             <Route path="/people/*" element={(<ProfilePage/>)}/>
                             <Route path="/personnel" element={(<SearchPersonnel/>)}/>
@@ -513,14 +513,14 @@ class MainPage extends Component {
                             <Route path="/PresenceAbsence" element={(<PresenceAbsence/>)}/>
                             <Route path="/PresenceAbsencePage2" element={(<PresenceAbsenceRoomPerson/>)}/>
                             <Route path="/setting" element={(<Setting/>)}/>
-                            <Route path="booking/room_log" element={(<RoomLog/>)}/>
                             <Route path="/log" element={(<Log/>)}/>
+                            <Route path="/booking/room_log" element={(<RoomLog/>)}/>
 
                             <Route path="/booking/floor" element={(<Floor/>)}/>
-                            <Route path="/booking/floor/×" element={(<Unit/>)}/>
+                            <Route path="/booking/floor/*" element={(<Unit/>)}/>
                             <Route path="/booking/edit-floor" element={(<EditFloor/>)}/>
                             <Route path="/booking/unit/×" element={(<Room/>)}/>
-                            <Route path="/booking/edit-unit" element={(<EditUnit/>)}/>
+                            <Route path="/booking/edit-unit/*" element={(<EditUnit/>)}/>
                             <Route path="/booking/room/×" element={(<Bed/>)}/>
                             <Route path="/booking/edit-room" element={(<EditRoom/>)}/>
                             <Route path="/booking/edit-bed" element={(<EditBed/>)}/>

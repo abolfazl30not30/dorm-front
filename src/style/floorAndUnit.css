@@ -87,14 +87,25 @@
     margin-top: 10px;
 }
 
-.floorAndUnit .floor-container .floor .show-acc-btn {
-    border: none;
+.floor-box{
+    box-shadow: 0px 0px 3px 0px #00000021;
+    cursor: pointer;
+    color: #0e8c46;
+}
+.floor-box:hover{
+    box-shadow: 0px 0px 3px 0px #00000069;
+
+}
+.floor-box .show-acc-btn {
+    border: solid 1px #3498db;
     font-size: .8rem;
     color: #3498db;
 }
 
-.floorAndUnit .floor-container .floor .show-acc-btn:hover {
-    color: #2980b9;
+.floor-box .show-acc-btn:hover {
+    color: #2980b9 !important;
+    border: solid 1px #3498db !important;
+    box-shadow: 0 0px 2px 0px #00000069;
 }
 
 .floorAndUnit .floor-container .floor .unit-container {

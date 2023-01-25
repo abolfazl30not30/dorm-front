@@ -51,7 +51,7 @@ class Header extends Component {
                                 </NavLink>
                             </li>
                             <li className='navbar-item'>
-                                <NavLink activeClassName='active-header' to="/dashboard/booking"
+                                <NavLink activeClassName='active-header' to="/dashboard/booking/floor"
                                          className='sidenav-link'>
                                     <MdOutlineInventory style={{paddingLeft: "7px"}} font-size="20px"/>
                                     موجودی و ظرفیت
