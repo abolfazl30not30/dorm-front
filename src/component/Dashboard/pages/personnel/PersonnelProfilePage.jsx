@@ -774,28 +774,28 @@ class PersonnelProfilePage extends Component {
     }
 
     existDocFile = (docFile) => {
-        if (docFile.hasOwnProperty('birth-page1')) {
+        if (docFile.hasOwnProperty('birthPage1')) {
             this.setState({hasBirthPage1: true});
         }
-        if (docFile.hasOwnProperty('birth-page2')) {
+        if (docFile.hasOwnProperty('birthPage2')) {
             this.setState({hasBirthPage2: true});
         }
-        if (docFile.hasOwnProperty('birth-page3')) {
+        if (docFile.hasOwnProperty('birthPage3')) {
             this.setState({hasBirthPage3: true});
         }
-        if (docFile.hasOwnProperty('birth-page4')) {
+        if (docFile.hasOwnProperty('birthPage4')) {
             this.setState({hasBirthPage4: true});
         }
-        if (docFile.hasOwnProperty('birth-AllPage')) {
+        if (docFile.hasOwnProperty('birthAllPage')) {
             this.setState({hasBirthAllPage: true});
         }
-        if (docFile.hasOwnProperty('card-page1')) {
+        if (docFile.hasOwnProperty('cardPage1')) {
             this.setState({hasCartPage1: true});
         }
-        if (docFile.hasOwnProperty('card-page2')) {
+        if (docFile.hasOwnProperty('cardPage2')) {
             this.setState({hasCartPage2: true});
         }
-        if (docFile.hasOwnProperty('card-AllPage')) {
+        if (docFile.hasOwnProperty('cardAllPage')) {
             this.setState({hasCartAllPage: true});
         }
         if (docFile.hasOwnProperty('personnelImg')) {
