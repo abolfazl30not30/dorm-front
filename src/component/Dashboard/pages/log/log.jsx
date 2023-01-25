@@ -1,73 +1,22 @@
 import React, {Component} from "react";
 import '../../../../style/log.css';
 import {Link} from "react-router-dom";
-import {DatePicker} from 'react-persian-datepicker';
+import persian from "react-date-object/calendars/persian";
+import persian_fa from "react-date-object/locales/persian_fa";
+import DatePicker from "react-multi-date-picker";
 import axios from "axios";
+import {Button, FormControl, MenuItem, Select} from "@mui/material";
 
 
 class log extends Component {
     state = {
         logs: [],
-        logsTest: [
-            {
-                "id": "bvjhsdbvdvjksdbvkjdsbvs",
-                "url": "/api/v1/floor",
-                "doer": "Fazel Gheibi",
-                "action": "POST",
-                "date": "2022/09/04",
-                "hour": "12:10:05"
-            },
-            {
-                "id": "bvjhsdbvdvjksdbvkjdsbvs",
-                "url": "/api/v1/floor",
-                "doer": "Fazel Gheibi",
-                "action": "POST",
-                "date": "2022/09/04",
-                "hour": "12:10:05"
-            },
-            {
-                "id": "bvjhsdbvdvjksdbvkjdsbvs",
-                "url": "/api/v1/floor",
-                "doer": "Fazel Gheibi",
-                "action": "POST",
-                "date": "2022/09/04",
-                "hour": "12:10:05"
-            },
-            {
-                "id": "bvjhsdbvdvjksdbvkjdsbvs",
-                "url": "/api/v1/floor",
-                "doer": "Fazel Gheibi",
-                "action": "POST",
-                "date": "2022/09/04",
-                "hour": "12:10:05"
-            },
-            {
-                "id": "bvjhsdbvdvjksdbvkjdsbvs",
-                "url": "/api/v1/floor",
-                "doer": "Fazel Gheibi",
-                "action": "POST",
-                "date": "2022/09/04",
-                "hour": "12:10:05"
-            },
-        ],
-        styles: {
-            searchLoading: true,
-            calendarContainer: "calendarContainer",
-            dayPickerContainer: "dayPickerContainer",
-            monthsList: "monthsList",
-            daysOfWeek: "daysOfWeek",
-            dayWrapper: "dayWrapper",
-            selected: "selected",
-            heading: "heading",
-            next: "next",
-            prev: "prev",
-            title: "title",
-        },
-        dataPicker: null,
+        searchBase: "date",
+        searchContent: "",
+        dataPicker: '',
     }
     constructor(props) {
         super(props);
-        console.log(1)
         if (localStorage.getItem('role') !== 'MANAGER') {window.location = "/dashboard"}
     }
 
@@ -106,23 +55,95 @@ class log extends Component {
                     <div className="title">
                         <h4>مدیریت کارها</h4>
                     </div>
-                    <div className="input-group-register col-md-4 col-12 date-container">
-                        <DatePicker calendarStyles={this.state.styles}
-                                    value={this.state.dataPicker}
-                                    className='input form-control'
-                                    onChange={value => {
-                                        this.valueInputDate(value)
-                                    }}
-                        />
-                        <label className="placeholder"
-                               style={{
-                                   top: '-8px',
-                                   backgroundColor: '#fff',
-                                   color: '#2a2e32b3',
-                                   padding: '0 0.4rem',
-                                   opacity: '1',
-                               }}>جستجو بر اساس تاریخ</label>
+                    <div style={{backgroundColor: "#fff"}} className="search-box justify-content-center align-items-center mt-4">
+                        <div className="form-floating">
+                            <FormControl className={"w-100"} style={{border: "none"}}>
+                                <Select
+                                    sx={{ height: 50, borderRadius: "0.5rem", minWidth: '10rem', backgroundColor: "#fff"}}
+                                    id="select-field"
+                                    value={this.state.searchBase}
+                                    onChange={(value) => {
+                                        this.setState({searchBase: value.target.value})
+                                        if (value.target.value === "all") {
+                                            this.componentDidMount()
+                                        }
+                                    }}>
+                                    <MenuItem value={"all"}>همه</MenuItem>
+                                    <MenuItem value={"doer"}>انجام دهنده</MenuItem>
+                                    <MenuItem value={"date"}>تاریخ</MenuItem>
+                                </Select>
+                                <label className="placeholder" style={{
+                                    top: '-10px',
+                                    backgroundColor: '#fff',
+                                    color: '#2a2e32b3',
+                                    margin: '-0.2rem 0',
+                                    padding: '0 .4rem -0.4rem',
+                                    opacity: '1',
+                                }}>بر اساس</label>
+                            </FormControl>
+                        </div>
+                        <div hidden={this.state.searchBase !== "date"} className="input-group-register date-container" style={{marginLeft: "-.4rem", marginRight: "-.4rem"}}>
+                            <DatePicker
+                                containerClassName={"trello-date-container"}
+                                calendarPosition={`top`}
+                                digits={['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']}
+                                format={`YYYY/MM/DD`}
+                                inputClass={`input`}
+                                value={this.state.dataPicker}
+                                onChange={this.handleDateInput}
+                                mapDays={({ date }) => {
+                                    let props = {}
+                                    let isWeekend = [6].includes(date.weekDay.index)
+
+                                    if (isWeekend)
+                                        props.className = "highlight highlight-red";
+
+                                    return props
+                                }}
+
+                                weekDays={
+                                    [
+                                        ["شنبه", "Sat"],
+                                        ["یکشنبه", "Sun"],
+                                        ["دوشنبه", "Mon"],
+                                        ["سه شنبه", "Tue"],
+                                        ["چهارشنبه", "Wed"],
+                                        ["پنجشنبه", "Thu"],
+                                        ["جمعه", "Fri"],
+                                    ]
+                                }
+
+                                calendar={persian}
+                                locale={persian_fa}
+
+                            >
+                                <Button
+                                    onClick={() => {
+                                        this.setState({dataPicker: {}})
+                                    }
+                                    }
+                                >
+                                    ریست
+                                </Button>
+                            </DatePicker>
+                            <label className="placeholder" style={{
+                                top: '-8px',
+                                backgroundColor: '#fff',
+                                color: '#2a2e32b3',
+                                margin: '0.3rem 0.4rem',
+                                padding: '0 0.4rem',
+                                opacity: '1',
+                            }}>تاریخ</label>
+                        </div>
+                        <input type="text"
+                               hidden={this.state.searchBase === "date" || this.state.searchBase === "all"}
+                               id="inputSearch"
+                               placeholder="جسـتجـو..."
+                               onChange={this.handleSearchInput}
+                               style={{height: 50}}/>
+                        <div style={this.state.searchBase === "all" ? {height: 50, backgroundColor: "#f6f6f6"} : {height: 50}} hidden={this.state.searchBase === "date" || this.state.searchBase === "all"} className="search-icon"><i className="bi bi-search"></i></div>
                     </div>
+
                     <div className="table-box">
                         <table className='table'>
                             <thead>
@@ -167,11 +188,33 @@ class log extends Component {
         );
     }
 
-    valueInputDate = (value) => {
-        this.setState({dataPicker: value});
-        let date = new Date(value._d);
-        let convertDate = date.getFullYear() + "/" + date.getMonth() + "/" + date.getDate() + " " + "00:" + "00:" + "00";
-        this.setState({date: convertDate})
+    handleDateInput = (value) => {
+        let month = value.month < 10 ? ('0' + value.month) : value.month;
+        let day = value.day < 10 ? ('0' + value.day) : value.day;
+        let convertDate = value.year  + '/' + month + '/' + day;
+        this.handleSearch(convertDate)
+    }
+    handleSearch = async (e) => {
+        axios.get(`https://api.saadatportal.com/api/v1/logHistory/search?${this.state.searchBase}=${e}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+            .then((data) => this.setState({
+                logs: data,
+            })).catch(() => {
+                axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                    .then((response) => {
+                        if (response.headers["accesstoken"]) {
+                            localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                            axios.get(`https://api.saadatportal.com/api/v1/logHistory/search?${this.state.searchBase}=${e}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                .then((data) => this.setState({
+                                    logs: data,
+                                }))
+                        } else {
+                            window.location = '/'
+                        }
+                    })
+            })
+    }
+    handleSearchInput = (value) => {
+        this.handleSearch(value.target.value)
     }
 }
 
