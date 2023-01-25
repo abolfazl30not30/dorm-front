@@ -302,6 +302,7 @@ class PersonnelRegister extends Component {
             })
 
         this.setState({showDoneModal:true})
+        this.context.handleReset();
     }
 
 }

@@ -1821,6 +1821,7 @@ class ProfilePage extends Component {
                                                     }}
                                                     value={this.state.dateValues.violationTime}
                                                     onChange={(value) => {
+                                                        console.log(value)
                                                         let updatedDateValues = {...this.state};
                                                         updatedDateValues.dateValues.violationTime = value;
                                                         this.setState({updatedDateValues})
@@ -2228,13 +2229,13 @@ class ProfilePage extends Component {
                     await axios.post('https://api.saadatportal.com/api/v1/supervisor/record', result, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                         .then((data) => {
                             this.setState({registerLoading: false});
-                            const newReports = this.state.report.concat(result);
+                            const newReports = this.state.report.concat(data);
                             this.setState({report: newReports});
                             this.setState({show: false});
                         })
-                        .catch((error) => {
-                            this.setState({registerLoading: false})
-                        })
+                        // .catch((error) => {
+                        //     this.setState({registerLoading: false})
+                        // })
                         .catch(() => {
                         if (localStorage.getItem('role') === 'MANAGER') {
                             axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
@@ -2244,13 +2245,13 @@ class ProfilePage extends Component {
                                         axios.post('https://api.saadatportal.com/api/v1/supervisor/record', result, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                             .then((data) => {
                                                 this.setState({registerLoading: false});
-                                                const newReports = this.state.report.concat(result);
+                                                const newReports = this.state.report.concat(data);
                                                 this.setState({report: newReports});
                                                 this.setState({show: false});
                                             })
-                                            .catch((error) => {
-                                                this.setState({registerLoading: false})
-                                            })
+                                            // .catch((error) => {
+                                            //     this.setState({registerLoading: false})
+                                            // })
                                     } else {
                                         window.location = '/'
                                     }
@@ -2263,13 +2264,13 @@ class ProfilePage extends Component {
                                         axios.post('https://api.saadatportal.com/api/v1/supervisor/record', result, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                             .then((data) => {
                                                 this.setState({registerLoading: false});
-                                                const newReports = this.state.report.concat(result);
+                                                const newReports = this.state.report.concat(data);
                                                 this.setState({report: newReports});
                                                 this.setState({show: false});
                                             })
-                                            .catch((error) => {
-                                                this.setState({registerLoading: false})
-                                            })
+                                            // .catch((error) => {
+                                            //     this.setState({registerLoading: false})
+                                            // })
                                     } else {
                                         window.location = '/'
                                     }
@@ -2294,13 +2295,13 @@ class ProfilePage extends Component {
                     await axios.post('https://api.saadatportal.com/api/v1/supervisor/record', result, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                         .then((data) => {
                             this.setState({registerLoading: false});
-                            const newReports = this.state.report.concat(result);
+                            const newReports = this.state.report.concat(data);
                             this.setState({report: newReports});
                             this.setState({show: false});
                         })
-                        .catch((error) => {
-                            this.setState({registerLoading: false})
-                        })
+                        // .catch((error) => {
+                        //     this.setState({registerLoading: false})
+                        // })
                         .catch(() => {
                             if (localStorage.getItem('role') === 'MANAGER') {
                                 axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
@@ -2310,13 +2311,13 @@ class ProfilePage extends Component {
                                             axios.post('https://api.saadatportal.com/api/v1/supervisor/record', result, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                                 .then((data) => {
                                                     this.setState({registerLoading: false});
-                                                    const newReports = this.state.report.concat(result);
+                                                    const newReports = this.state.report.concat(data);
                                                     this.setState({report: newReports});
                                                     this.setState({show: false});
                                                 })
-                                                .catch((error) => {
-                                                    this.setState({registerLoading: false})
-                                                })
+                                                // .catch((error) => {
+                                                //     this.setState({registerLoading: false})
+                                                // })
                                         } else {
                                             window.location = '/'
                                         }
@@ -2329,13 +2330,13 @@ class ProfilePage extends Component {
                                             axios.post('https://api.saadatportal.com/api/v1/supervisor/record', result, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                                 .then((data) => {
                                                     this.setState({registerLoading: false});
-                                                    const newReports = this.state.report.concat(result);
+                                                    const newReports = this.state.report.concat(data);
                                                     this.setState({report: newReports});
                                                     this.setState({show: false});
                                                 })
-                                                .catch((error) => {
-                                                    this.setState({registerLoading: false})
-                                                })
+                                                // .catch((error) => {
+                                                //     this.setState({registerLoading: false})
+                                                // })
                                         } else {
                                             window.location = '/'
                                         }
@@ -2366,13 +2367,13 @@ class ProfilePage extends Component {
                     await axios.post('https://api.saadatportal.com/api/v1/supervisor/record', result, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                         .then((data) => {
                             this.setState({registerLoading: false});
-                            const newReports = this.state.report.concat(result);
+                            const newReports = this.state.report.concat(data);
                             this.setState({report: newReports});
                             this.setState({show: false});
                         })
-                        .catch((error) => {
-                            this.setState({registerLoading: false})
-                        })
+                        // .catch((error) => {
+                        //     this.setState({registerLoading: false})
+                        // })
                         .catch(() => {
                             if (localStorage.getItem('role') === 'MANAGER') {
                                 axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
@@ -2382,13 +2383,13 @@ class ProfilePage extends Component {
                                             axios.post('https://api.saadatportal.com/api/v1/supervisor/record', result, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                                 .then((data) => {
                                                     this.setState({registerLoading: false});
-                                                    const newReports = this.state.report.concat(result);
+                                                    const newReports = this.state.report.concat(data);
                                                     this.setState({report: newReports});
                                                     this.setState({show: false});
                                                 })
-                                                .catch((error) => {
-                                                    this.setState({registerLoading: false})
-                                                })
+                                                // .catch((error) => {
+                                                //     this.setState({registerLoading: false})
+                                                // })
                                         } else {
                                             window.location = '/'
                                         }
@@ -2401,13 +2402,13 @@ class ProfilePage extends Component {
                                             axios.post('https://api.saadatportal.com/api/v1/supervisor/record', result, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                                 .then((data) => {
                                                     this.setState({registerLoading: false});
-                                                    const newReports = this.state.report.concat(result);
+                                                    const newReports = this.state.report.concat(data);
                                                     this.setState({report: newReports});
                                                     this.setState({show: false});
                                                 })
-                                                .catch((error) => {
-                                                    this.setState({registerLoading: false})
-                                                })
+                                                // .catch((error) => {
+                                                //     this.setState({registerLoading: false})
+                                                // })
                                         } else {
                                             window.location = '/'
                                         }
@@ -2437,13 +2438,13 @@ class ProfilePage extends Component {
                     await axios.post('https://api.saadatportal.com/api/v1/supervisor/record', result, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                         .then((data) => {
                             this.setState({registerLoading: false});
-                            const newReports = this.state.report.concat(result);
+                            const newReports = this.state.report.concat(data);
                             this.setState({report: newReports});
                             this.setState({show: false});
                         })
-                        .catch((error) => {
-                            this.setState({registerLoading: false})
-                        })
+                        // .catch((error) => {
+                        //     this.setState({registerLoading: false})
+                        // })
                         .catch(() => {
                             if (localStorage.getItem('role') === 'MANAGER') {
                                 axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
@@ -2453,13 +2454,13 @@ class ProfilePage extends Component {
                                             axios.post('https://api.saadatportal.com/api/v1/supervisor/record', result, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                                 .then((data) => {
                                                     this.setState({registerLoading: false});
-                                                    const newReports = this.state.report.concat(result);
+                                                    const newReports = this.state.report.concat(data);
                                                     this.setState({report: newReports});
                                                     this.setState({show: false});
                                                 })
-                                                .catch((error) => {
-                                                    this.setState({registerLoading: false})
-                                                })
+                                                // .catch((error) => {
+                                                //     this.setState({registerLoading: false})
+                                                // })
                                         } else {
                                             window.location = '/'
                                         }
@@ -2472,13 +2473,13 @@ class ProfilePage extends Component {
                                             axios.post('https://api.saadatportal.com/api/v1/supervisor/record', result, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                                 .then((data) => {
                                                     this.setState({registerLoading: false});
-                                                    const newReports = this.state.report.concat(result);
+                                                    const newReports = this.state.report.concat(data);
                                                     this.setState({report: newReports});
                                                     this.setState({show: false});
                                                 })
-                                                .catch((error) => {
-                                                    this.setState({registerLoading: false})
-                                                })
+                                                // .catch((error) => {
+                                                //     this.setState({registerLoading: false})
+                                                // })
                                         } else {
                                             window.location = '/'
                                         }
@@ -2503,13 +2504,13 @@ class ProfilePage extends Component {
                     await axios.post('https://api.saadatportal.com/api/v1/supervisor/record', result, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                         .then((data) => {
                             this.setState({registerLoading: false});
-                            const newReports = this.state.report.concat(result);
+                            const newReports = this.state.report.concat(data);
                             this.setState({report: newReports});
                             this.setState({show: false});
                         })
-                        .catch((error) => {
-                            this.setState({registerLoading: false})
-                        })
+                        // .catch((error) => {
+                        //     this.setState({registerLoading: false})
+                        // })
                         .catch(() => {
                             if (localStorage.getItem('role') === 'MANAGER') {
                                 axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
@@ -2519,13 +2520,13 @@ class ProfilePage extends Component {
                                             axios.post('https://api.saadatportal.com/api/v1/supervisor/record', result, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                                 .then((data) => {
                                                     this.setState({registerLoading: false});
-                                                    const newReports = this.state.report.concat(result);
+                                                    const newReports = this.state.report.concat(data);
                                                     this.setState({report: newReports});
                                                     this.setState({show: false});
                                                 })
-                                                .catch((error) => {
-                                                    this.setState({registerLoading: false})
-                                                })
+                                                // .catch((error) => {
+                                                //     this.setState({registerLoading: false})
+                                                // })
                                         } else {
                                             window.location = '/'
                                         }
@@ -2538,13 +2539,13 @@ class ProfilePage extends Component {
                                             axios.post('https://api.saadatportal.com/api/v1/supervisor/record', result, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                                 .then((data) => {
                                                     this.setState({registerLoading: false});
-                                                    const newReports = this.state.report.concat(result);
+                                                    const newReports = this.state.report.concat(data);
                                                     this.setState({report: newReports});
                                                     this.setState({show: false});
                                                 })
-                                                .catch((error) => {
-                                                    this.setState({registerLoading: false})
-                                                })
+                                                // .catch((error) => {
+                                                //     this.setState({registerLoading: false})
+                                                // })
                                         } else {
                                             window.location = '/'
                                         }
@@ -2580,13 +2581,13 @@ class ProfilePage extends Component {
                    await axios.post('https://api.saadatportal.com/api/v1/supervisor/record', result, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                         .then((data) => {
                             this.setState({registerLoading: false});
-                            const newReports = this.state.report.concat(result);
+                            const newReports = this.state.report.concat(data);
                             this.setState({report: newReports});
                             this.setState({show: false});
                         })
-                        .catch((error) => {
-                            this.setState({registerLoading: false})
-                        })
+                        // .catch((error) => {
+                        //     this.setState({registerLoading: false})
+                        // })
                         .catch(() => {
                             if (localStorage.getItem('role') === 'MANAGER') {
                                 axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
@@ -2596,13 +2597,13 @@ class ProfilePage extends Component {
                                             axios.post('https://api.saadatportal.com/api/v1/supervisor/record', result, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                                 .then((data) => {
                                                     this.setState({registerLoading: false});
-                                                    const newReports = this.state.report.concat(result);
+                                                    const newReports = this.state.report.concat(data);
                                                     this.setState({report: newReports});
                                                     this.setState({show: false});
                                                 })
-                                                .catch((error) => {
-                                                    this.setState({registerLoading: false})
-                                                })
+                                                // .catch((error) => {
+                                                //     this.setState({registerLoading: false})
+                                                // })
                                         } else {
                                             window.location = '/'
                                         }
@@ -2615,13 +2616,13 @@ class ProfilePage extends Component {
                                             axios.post('https://api.saadatportal.com/api/v1/supervisor/record', result, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                                 .then((data) => {
                                                     this.setState({registerLoading: false});
-                                                    const newReports = this.state.report.concat(result);
+                                                    const newReports = this.state.report.concat(data);
                                                     this.setState({report: newReports});
                                                     this.setState({show: false});
                                                 })
-                                                .catch((error) => {
-                                                    this.setState({registerLoading: false})
-                                                })
+                                                // .catch((error) => {
+                                                //     this.setState({registerLoading: false})
+                                                // })
                                         } else {
                                             window.location = '/'
                                         }
@@ -2649,13 +2650,13 @@ class ProfilePage extends Component {
                     await axios.post('https://api.saadatportal.com/api/v1/supervisor/record', result, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                         .then((data) => {
                             this.setState({registerLoading: false});
-                            const newReports = this.state.report.concat(result);
+                            const newReports = this.state.report.concat(data);
                             this.setState({report: newReports});
                             this.setState({show: false});
                         })
-                        .catch((error) => {
-                            this.setState({registerLoading: false})
-                        })
+                        // .catch((error) => {
+                        //     this.setState({registerLoading: false})
+                        // })
                         .catch(() => {
                             if (localStorage.getItem('role') === 'MANAGER') {
                                 axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
@@ -2665,13 +2666,13 @@ class ProfilePage extends Component {
                                             axios.post('https://api.saadatportal.com/api/v1/supervisor/record', result, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                                 .then((data) => {
                                                     this.setState({registerLoading: false});
-                                                    const newReports = this.state.report.concat(result);
+                                                    const newReports = this.state.report.concat(data);
                                                     this.setState({report: newReports});
                                                     this.setState({show: false});
                                                 })
-                                                .catch((error) => {
-                                                    this.setState({registerLoading: false})
-                                                })
+                                                // .catch((error) => {
+                                                //     this.setState({registerLoading: false})
+                                                // })
                                         } else {
                                             window.location = '/'
                                         }
@@ -2684,13 +2685,13 @@ class ProfilePage extends Component {
                                             axios.post('https://api.saadatportal.com/api/v1/supervisor/record', result, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                                 .then((data) => {
                                                     this.setState({registerLoading: false});
-                                                    const newReports = this.state.report.concat(result);
+                                                    const newReports = this.state.report.concat(data);
                                                     this.setState({report: newReports});
                                                     this.setState({show: false});
                                                 })
-                                                .catch((error) => {
-                                                    this.setState({registerLoading: false})
-                                                })
+                                                // .catch((error) => {
+                                                //     this.setState({registerLoading: false})
+                                                // })
                                         } else {
                                             window.location = '/'
                                         }
@@ -2702,13 +2703,14 @@ class ProfilePage extends Component {
     handleOpenModalReport = (c) => {
         this.setState({showDeleteModalReport: true});
         this.setState({reportTemp: c});
-
+        console.log(c)
     }
     handleCloseModalReport = () => {
         this.setState({showDeleteModalReport: false});
     }
 
     handleDeleteReport = async () => {
+        console.log(this.state.reportTemp)
         await axios.delete(`https://api.saadatportal.com/api/v1/supervisor/record/${this.state.reportTemp.id}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
             .then((data) => {
                 let index = this.state.report.indexOf(this.state.reportTemp)
@@ -2717,10 +2719,10 @@ class ProfilePage extends Component {
                 this.setState({report: updatedReport});
                 this.setState({showDeleteModalReport: false})
             })
-            .catch((error) => {
-                console.log(error);
-                this.setState({showDeleteModalReport: false})
-            })
+            // .catch((error) => {
+            //     console.log(error);
+            //     this.setState({showDeleteModalReport: false})
+            // })
             .catch(() => {
                 if (localStorage.getItem('role') === 'MANAGER') {
                     axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
@@ -2735,10 +2737,10 @@ class ProfilePage extends Component {
                                         this.setState({report: updatedReport});
                                         this.setState({showDeleteModalReport: false})
                                     })
-                                    .catch((error) => {
-                                        console.log(error);
-                                        this.setState({showDeleteModalReport: false})
-                                    })
+                                    // .catch((error) => {
+                                    //     console.log(error);
+                                    //     this.setState({showDeleteModalReport: false})
+                                    // })
                             } else {
                                 window.location = '/'
                             }
@@ -2756,10 +2758,10 @@ class ProfilePage extends Component {
                                         this.setState({report: updatedReport});
                                         this.setState({showDeleteModalReport: false})
                                     })
-                                    .catch((error) => {
-                                        console.log(error);
-                                        this.setState({showDeleteModalReport: false})
-                                    })
+                                    // .catch((error) => {
+                                    //     console.log(error);
+                                    //     this.setState({showDeleteModalReport: false})
+                                    // })
                             } else {
                                 window.location = '/'
                             }

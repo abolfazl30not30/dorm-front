@@ -554,13 +554,56 @@ class MainPage extends Component {
                 endDate: '',
                 paymentDate: '',
             },
+            personnel: {
+                birthDate: '',
+                startDate: '',
+                endDate: '',
 
-            ...this.state.valueOfDates.personnel,
+            },
+
+            // ...this.state.valueOfDates.personnel,
         };
 
         let resetFields = {
-            ...this.state.fields.personnelFields,
-
+            // ...this.state.fields.personnelFields,
+            personnelFields: {
+                id: '',
+                firstName: '',
+                lastName: '',
+                fatherName: '',
+                nationalCode: '',
+                placeOfIssue: '',
+                certificateNumber: '',
+                phoneNumber: '',
+                address: '',
+                telephoneNumber: '',
+                emergencyNumber: '',
+                birthPlace: '',
+                birthDate: '', //
+                education: '',
+                postalCode: '',
+                email: '',
+                nationality: '',
+                maritalStatus: 'single', // default value
+                religion: 'islam', // default value
+                subReligion: '',
+                healthyStatus: '',
+                health: 'false',
+                alias: '',
+                university: '', //
+                major: '',
+                spouseFullName: '',
+                spouseJob: '', //
+                bankAccountOwnerName: '',
+                bankAccountShabaNumber: '',
+                fullName: '',//
+                parentType: 'Personnel',
+                gender: 'male',
+                startDate: '',
+                endDate: '',
+                type: '',
+                profileId: '',
+            },
             //MAIN REGISTER
             //############################################################################## first page
             // ----------------------- <CInformationPage /> information

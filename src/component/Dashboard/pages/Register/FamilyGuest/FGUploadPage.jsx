@@ -737,23 +737,23 @@ class FGUploadPage extends Component {
         //     .then(res => console.log(res));
 
         await axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdBirthPage1}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
-            .catch(() => {
+            .catch(async () => {
                 if (localStorage.getItem('role') === 'MANAGER') {
-                    axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
-                        .then((response) => {
+                    await axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        .then(async (response) => {
                             if (response.headers["accesstoken"]) {
                                 localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdBirthPage1}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                await axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdBirthPage1}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                             } else {
                                 window.location = '/'
                             }
                         })
                 } else if (localStorage.getItem('role') === 'SUPERVISOR') {
-                    axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
-                        .then((response) => {
+                    await axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        .then(async (response) => {
                             if (response.headers["accesstoken"]) {
                                 localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdBirthPage1}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                await axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdBirthPage1}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                             } else {
                                 window.location = '/'
                             }
@@ -858,29 +858,29 @@ class FGUploadPage extends Component {
 
     handleDeleteBirthPage2 = async () => {
         // await fetch(`https://api.saadatportal.com/api/v1/file/${this.state.fileIdBirthPage2}`, {
-        //     method: 'DELETE',
+        //     method: 'await ',
         // })
         //     .then(res => res.text())
         //     .then(res => console.log(res));
 
         await axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdBirthPage2}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
-            .catch(() => {
+            .catch(async () => {
                 if (localStorage.getItem('role') === 'MANAGER') {
-                    axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
-                        .then((response) => {
+                    await axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        .then(async (response) => {
                             if (response.headers["accesstoken"]) {
                                 localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdBirthPage2}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                await axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdBirthPage2}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                             } else {
                                 window.location = '/'
                             }
                         })
                 } else if (localStorage.getItem('role') === 'SUPERVISOR') {
-                    axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
-                        .then((response) => {
+                    await axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        .then(async (response) => {
                             if (response.headers["accesstoken"]) {
                                 localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdBirthPage2}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                await axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdBirthPage2}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                             } else {
                                 window.location = '/'
                             }
@@ -988,23 +988,23 @@ class FGUploadPage extends Component {
         //     .then(res => console.log(res));
 
         await axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdBirthPage3}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
-            .catch(() => {
+            .catch(async () => {
                 if (localStorage.getItem('role') === 'MANAGER') {
-                    axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
-                        .then((response) => {
+                    await axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        .then(async (response) => {
                             if (response.headers["accesstoken"]) {
                                 localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdBirthPage3}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                await axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdBirthPage3}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                             } else {
                                 window.location = '/'
                             }
                         })
                 } else if (localStorage.getItem('role') === 'SUPERVISOR') {
-                    axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
-                        .then((response) => {
+                    await axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        .then(async (response) => {
                             if (response.headers["accesstoken"]) {
                                 localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdBirthPage3}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                await axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdBirthPage3}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                             } else {
                                 window.location = '/'
                             }
@@ -1106,29 +1106,29 @@ class FGUploadPage extends Component {
 
     handleDeleteBirthPage4 = async () => {
         // await fetch(`https://api.saadatportal.com/api/v1/file/${this.state.fileIdBirthPage4}`, {
-        //     method: 'DELETE',
+        //     method: 'await ',
         // })
         //     .then(res => res.text())
         //     .then(res => console.log(res));
 
         await axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdBirthPage4}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
-            .catch(() => {
+            .catch(async () => {
                 if (localStorage.getItem('role') === 'MANAGER') {
-                    axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
-                        .then((response) => {
+                    await axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        .then(async (response) => {
                             if (response.headers["accesstoken"]) {
                                 localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdBirthPage4}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                await axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdBirthPage4}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                             } else {
                                 window.location = '/'
                             }
                         })
                 } else if (localStorage.getItem('role') === 'SUPERVISOR') {
-                    axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
-                        .then((response) => {
+                    await axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        .then(async (response) => {
                             if (response.headers["accesstoken"]) {
                                 localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdBirthPage4}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                await axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdBirthPage4}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                             } else {
                                 window.location = '/'
                             }
@@ -1230,29 +1230,29 @@ class FGUploadPage extends Component {
 
     handleDeleteBirthAllPage = async () => {
         // await fetch(`https://api.saadatportal.com/api/v1/file/${this.state.fileIdBirthAllPage}`, {
-        //     method: 'DELETE',
+        //     method: 'async ',
         // })
         //     .then(res => res.text())
         //     .then(res => console.log(res));
 
         await axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdBirthAllPage}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
-            .catch(() => {
+            .catch(async () => {
                 if (localStorage.getItem('role') === 'MANAGER') {
-                    axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
-                        .then((response) => {
+                    await axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        .then(async (response) => {
                             if (response.headers["accesstoken"]) {
                                 localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdBirthAllPage}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                await axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdBirthAllPage}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                             } else {
                                 window.location = '/'
                             }
                         })
                 } else if (localStorage.getItem('role') === 'SUPERVISOR') {
-                    axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
-                        .then((response) => {
+                    await axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        .then(async (response) => {
                             if (response.headers["accesstoken"]) {
                                 localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdBirthAllPage}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                await axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdBirthAllPage}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                             } else {
                                 window.location = '/'
                             }
@@ -1354,29 +1354,29 @@ class FGUploadPage extends Component {
 
     handleDeleteCartPage1 = async () => {
         // await fetch(`https://api.saadatportal.com/api/v1/file/${this.state.fileIdCartPage1}`, {
-        //     method: 'DELETE',
+        //     method: 'async ',
         // })
         //     .then(res => res.text())
         //     .then(res => console.log(res));
 
         await axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdCartPage1}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
-            .catch(() => {
+            .catch(async () => {
                 if (localStorage.getItem('role') === 'MANAGER') {
-                    axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
-                        .then((response) => {
+                    await axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        .then(async (response) => {
                             if (response.headers["accesstoken"]) {
                                 localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdCartPage1}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                await axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdCartPage1}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                             } else {
                                 window.location = '/'
                             }
                         })
                 } else if (localStorage.getItem('role') === 'SUPERVISOR') {
-                    axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
-                        .then((response) => {
+                    await axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        .then(async (response) => {
                             if (response.headers["accesstoken"]) {
                                 localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdCartPage1}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                await axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdCartPage1}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                             } else {
                                 window.location = '/'
                             }
@@ -1478,29 +1478,29 @@ class FGUploadPage extends Component {
 
     handleDeleteCartPage2 = async () => {
         // await fetch(`https://api.saadatportal.com/api/v1/file/${this.state.fileIdCartPage2}`, {
-        //     method: 'DELETE',
+        //     method: 'async ',
         // })
         //     .then(res => res.text())
         //     .then(res => console.log(res));
 
         await axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdCartPage2}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
-            .catch(() => {
+            .catch(async () => {
                 if (localStorage.getItem('role') === 'MANAGER') {
-                    axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
-                        .then((response) => {
+                    await axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        .then(async (response) => {
                             if (response.headers["accesstoken"]) {
                                 localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdCartPage2}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                await axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdCartPage2}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                             } else {
                                 window.location = '/'
                             }
                         })
                 } else if (localStorage.getItem('role') === 'SUPERVISOR') {
-                    axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
-                        .then((response) => {
+                    await axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        .then(async (response) => {
                             if (response.headers["accesstoken"]) {
                                 localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdCartPage2}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                await axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdCartPage2}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                             } else {
                                 window.location = '/'
                             }
@@ -1603,29 +1603,29 @@ class FGUploadPage extends Component {
 
     handleDeleteCartAllPage = async () => {
         // await fetch(`https://api.saadatportal.com/api/v1/file/${this.state.fileIdCartAllPage}`, {
-        //     method: 'DELETE',
+        //     method: 'async ',
         // })
         //     .then(res => res.text())
         //     .then(res => console.log(res));
 
         await axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdCartAllPage}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
-            .catch(() => {
+            .catch(async () => {
                 if (localStorage.getItem('role') === 'MANAGER') {
-                    axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
-                        .then((response) => {
+                    await axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        .then(async (response) => {
                             if (response.headers["accesstoken"]) {
                                 localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdCartAllPage}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                await axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdCartAllPage}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                             } else {
                                 window.location = '/'
                             }
                         })
                 } else if (localStorage.getItem('role') === 'SUPERVISOR') {
-                    axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
-                        .then((response) => {
+                    await axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        .then(async (response) => {
                             if (response.headers["accesstoken"]) {
                                 localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdCartAllPage}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                await axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdCartAllPage}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                             } else {
                                 window.location = '/'
                             }
@@ -1728,23 +1728,23 @@ class FGUploadPage extends Component {
 
     handleDeletePersonnelImg = async () => {
         await axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdPersonnelImg}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
-            .catch(() => {
+            .catch(async () => {
                 if (localStorage.getItem('role') === 'MANAGER') {
-                    axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
-                        .then((response) => {
+                    await axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        .then(async (response) => {
                             if (response.headers["accesstoken"]) {
                                 localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdPersonnelImg}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                await axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdPersonnelImg}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                             } else {
                                 window.location = '/'
                             }
                         })
                 } else if (localStorage.getItem('role') === 'SUPERVISOR') {
-                    axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
-                        .then((response) => {
+                    await axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        .then(async (response) => {
                             if (response.headers["accesstoken"]) {
                                 localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdPersonnelImg}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                await axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdPersonnelImg}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                             } else {
                                 window.location = '/'
                             }
@@ -1827,23 +1827,23 @@ class FGUploadPage extends Component {
 
     handleDeleteRegister = async () => {
         await axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdRegister}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
-            .catch(() => {
+            .catch(async () => {
                 if (localStorage.getItem('role') === 'MANAGER') {
-                    axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
-                        .then((response) => {
+                    await axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        .then(async (response) => {
                             if (response.headers["accesstoken"]) {
                                 localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdRegister}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                await axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdRegister}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                             } else {
                                 window.location = '/'
                             }
                         })
                 } else if (localStorage.getItem('role') === 'SUPERVISOR') {
-                    axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
-                        .then((response) => {
+                    await axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        .then(async (response) => {
                             if (response.headers["accesstoken"]) {
                                 localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdRegister}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                await axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdRegister}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                             } else {
                                 window.location = '/'
                             }
@@ -1929,23 +1929,23 @@ class FGUploadPage extends Component {
     handleDeleteRegisterUni = async () => {
 
         await axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdRegisterUni}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
-            .catch(() => {
+            .catch(async () => {
                 if (localStorage.getItem('role') === 'MANAGER') {
-                    axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
-                        .then((response) => {
+                    await axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        .then(async (response) => {
                             if (response.headers["accesstoken"]) {
                                 localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdRegisterUni}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                await axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdRegisterUni}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                             } else {
                                 window.location = '/'
                             }
                         })
                 } else if (localStorage.getItem('role') === 'SUPERVISOR') {
-                    axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
-                        .then((response) => {
+                    await axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        .then(async (response) => {
                             if (response.headers["accesstoken"]) {
                                 localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdRegisterUni}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                await axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdRegisterUni}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                             } else {
                                 window.location = '/'
                             }
