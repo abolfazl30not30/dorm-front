@@ -832,25 +832,6 @@ class CUploadPage extends Component {
             formData.append('file', e.target.files[0]);
             this.setState({nameBirthPage3: e.target.files[0].name})
 
-            // await fetch('https://api.saadatportal.com/api/v1/file', {
-            //     method: 'POST',
-            //     body: formData
-            // }).then((response) => response.json())
-            //     .then((result) => {
-            //         console.log('Success:', result);
-            //         this.setState({fileIdBirthPage3: result.message.id});
-            //         this.context.handleUploadedFile("personnelUploadPage", "birth-page3", result.message.id);
-            //         this.setState({isLoadingBirthPage3: false});
-            //         this.setState({isUploadBirthPage3: true})
-            //         this.setState({hasErrorBirthPage3: false});
-            //     })
-            //     .catch((error) => {
-            //         console.error('Error:', error);
-            //         this.setState({isLoadingBirthPage3: false});
-            //         this.setState({isUploadBirthPage3: true})
-            //         this.setState({hasErrorBirthPage3: true});
-            //     });
-
             await axios.post('https://api.saadatportal.com/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                 .then((result) => {
                     console.log('Success:', result);
@@ -914,12 +895,6 @@ class CUploadPage extends Component {
     }
 
     handleDeleteBirthPage3 = async () => {
-        // await fetch(`https://api.saadatportal.com/api/v1/file/${this.state.fileIdBirthPage3}`, {
-        //     method: 'DELETE',
-        // })
-        //     .then(res => res.text())
-        //     .then(res => console.log(res));
-
         await axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdBirthPage3}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
             .catch(() => {
                 if (localStorage.getItem('role') === 'MANAGER') {
@@ -955,25 +930,6 @@ class CUploadPage extends Component {
             let formData = new FormData();
             formData.append('file', e.target.files[0]);
             this.setState({nameBirthPage4: e.target.files[0].name})
-
-            // await fetch('https://api.saadatportal.com/api/v1/file', {
-            //     method: 'POST',
-            //     body: formData
-            // }).then((response) => response.json())
-            //     .then((result) => {
-            //         console.log('Success:', result);
-            //         this.setState({fileIdBirthPage4: result.message.id});
-            //         this.context.handleUploadedFile("personnelUploadPage", "birth-page4", result.message.id);
-            //         this.setState({isLoadingBirthPage4: false});
-            //         this.setState({isUploadBirthPage4: true})
-            //         this.setState({hasErrorBirthPage4: false});
-            //     })
-            //     .catch((error) => {
-            //         console.error('Error:', error);
-            //         this.setState({isLoadingBirthPage4: false});
-            //         this.setState({isUploadBirthPage4: true})
-            //         this.setState({hasErrorBirthPage4: true});
-            //     });
 
             await axios.post('https://api.saadatportal.com/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                 .then((result) => {

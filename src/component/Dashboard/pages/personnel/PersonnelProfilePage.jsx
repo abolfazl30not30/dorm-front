@@ -488,7 +488,7 @@ class PersonnelProfilePage extends Component {
                                 <Tab eventKey="documents" title="مدارک" className='records'
                                      style={{backgroundColor: "transparent"}}>
                                     <div className="tabs-content">
-                                        <Accordion defaultActiveKey="0">
+                                        <Accordion>
                                             <Accordion.Item eventKey="0">
                                                 <Accordion.Header>شناسنامه</Accordion.Header>
                                                 <Accordion.Body>
@@ -504,7 +504,10 @@ class PersonnelProfilePage extends Component {
                                                                     }
                                                                 >
                                                                     <div className="record-item"
-                                                                         onClick={() => this.downloadFile(this.state.docFile.birthPage1)}>
+                                                                         onClick={() => {
+                                                                             this.downloadFile(this.state.docFile.birthPage1)
+                                                                             console.log(this.state.docFile)
+                                                                         }}>
                                                                         <div className='ms-2'>صفحه اول</div>
                                                                         <RiDownloadCloud2Fill/>
                                                                     </div>
@@ -704,12 +707,11 @@ class PersonnelProfilePage extends Component {
         );
     }
 
-    downloadFile = async (fileId) => {
-        console.log(fileId)
-        const file = this.state.fileDetails.find(({fileId}) => fileId === fileId);
+    downloadFile = async (fId) => {
+        const file = this.state.fileDetails.find(({fileId}) => fId === fileId);
         var filename = file.originalName;
 
-        axios.get(`https://api.saadatportal.com/api/v1/supervisor/file/${fileId}`, {responseType: 'blob', headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+        axios.get(`https://api.saadatportal.com/api/v1/supervisor/file/${fId}`, {responseType: 'blob', headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
             .then((blob) => {
 
                 console.log('blob')
@@ -730,7 +732,7 @@ class PersonnelProfilePage extends Component {
                     .then((response) => {
                         if (response.headers["accesstoken"]) {
                             localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                            axios.get(`https://api.saadatportal.com/api/v1/supervisor/file/${fileId}`, {responseType: 'blob', headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                            axios.get(`https://api.saadatportal.com/api/v1/supervisor/file/${fId}`, {responseType: 'blob', headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                 .then((blob) => {
                                     if (blob !== null) {
                                         var url = window.URL.createObjectURL(blob);
@@ -751,7 +753,7 @@ class PersonnelProfilePage extends Component {
                     .then((response) => {
                         if (response.headers["accesstoken"]) {
                             localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                            axios.get(`https://api.saadatportal.com/api/v1/supervisor/file/${fileId}`, {responseType: 'blob', headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                            axios.get(`https://api.saadatportal.com/api/v1/supervisor/file/${fId}`, {responseType: 'blob', headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                 .then((blob) => {
                                     if (blob !== null) {
                                         var url = window.URL.createObjectURL(blob);
@@ -801,9 +803,6 @@ class PersonnelProfilePage extends Component {
         }
         if (docFile.hasOwnProperty('register')) {
             this.setState({hasRegister: true});
-        }
-        if (docFile.hasOwnProperty('registerUni')) {
-            this.setState({hasRegisterUni: true});
         }
     }
 }
