@@ -11,6 +11,11 @@ import axios from "axios";
 class PersonnelRegister extends Component {
     static contextType = BuildingContext;
 
+    constructor(props) {
+        super(props);
+        if (localStorage.getItem('role') !== 'MANAGER') {window.location = "/dashboard"}
+    }
+
     personnelBasicInformation = () => {
         let requiredReg = /^\s*$/;
         let numberReg = /^\s*[0-9]*\s*$/;

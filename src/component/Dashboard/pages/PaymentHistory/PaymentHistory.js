@@ -11,6 +11,12 @@ import FormControl from "@mui/material/FormControl";
 import axios from "axios";
 
 class PaymentHistory extends Component {
+
+    constructor(props) {
+        super(props);
+        if (localStorage.getItem('role') !== 'MANAGER') {window.location = "/dashboard"}
+    }
+
     state = {
         searchLoading: true,
         loading: false,

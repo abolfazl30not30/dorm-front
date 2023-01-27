@@ -478,7 +478,8 @@ class PersonnelProfilePage extends Component {
                                                 <div className="more-info-item">
                                                     <i className="bi bi-caret-left ms-1"></i>
                                                     <label> نوع :</label>
-                                                    {this.state.personnel.type}
+                                                    {this.state.personnel.parentType === "Personnel" ? "سرپرست"
+                                                    : this.state.personnel.parentType}
                                                 </div>
                                             </div>
 
