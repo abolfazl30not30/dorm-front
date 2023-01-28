@@ -420,7 +420,7 @@ class MainPage extends Component {
     render() {
         return (
             <>
-                <div className='d-flex flex-column pt-4 px-3' style={{marginBottom: "200px"}}>
+                <div className='d-flex flex-column pt-4 px-3'>
                     <BuildingContext.Provider value={{
                         slider: this.state.fields.slider,
                         personnelFields: this.state.fields.personnelFields,

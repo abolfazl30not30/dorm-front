@@ -11,7 +11,7 @@ class CInformationFurtherPage extends Component {
     render() {
         return (
             <>
-                <div className="register-step-box">
+                <div className="register-step-box" style={{marginBottom: "200px"}}>
                     <h2>مشخصات تکمیلی</h2>
                     <div className='d-flex flex-wrap justify-content-start'>
                         <div className="input-group-register col-md-4 col-12">
