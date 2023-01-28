@@ -168,7 +168,8 @@
     width: 85%;
   }
   .container-login .right-side{
-    width: 100%;
+      display: none;
+    /*width: 100%;*/
   }
   .container-login .left-side{
     width: 100%;
@@ -181,10 +182,11 @@
     width: 95%;
   }
   .container-login .right-side{
-    width: 100%;
+      display: none;
+    /*width: 100%;*/
   }
   .container-login .left-side{
     width: 100%;
   }
 }
-  
+

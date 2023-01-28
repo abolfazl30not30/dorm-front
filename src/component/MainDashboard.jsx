@@ -8,16 +8,8 @@ import MainPage from './Dashboard/MainPage';
 
 class MainDashboard extends Component {
     state = {
-        activeMenu: false,
+        activeMenu: window.innerWidth < 1024,
         widthWindow: 0,
-    }
-
-    componentWillUnmount() {
-        this.setState({activeMenu: true})
-    }
-
-    componentDidMount() {
-
     }
 
     render() {

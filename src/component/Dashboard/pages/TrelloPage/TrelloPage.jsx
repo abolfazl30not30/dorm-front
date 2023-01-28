@@ -727,35 +727,6 @@ class TrelloPage extends Component {
                                     </label>
                                 </div>
 
-                                {/* Time Log field */}
-                                <div className={"text-center d-flex justify-content-center"} style={{flexDirection: "column"}}>
-                                    <div className={"mt-3"}>زمان صرف شده</div>
-                                    <div className={"d-flex justify-content-center mt-1"}>
-                                        <div className={"text-center w-25"} style={{marginLeft: "10px"}}>
-                                            <label>ساعت</label>
-                                            <NumberPicker
-                                                value={this.state.tempHourTimeLog}
-                                                min={0}
-                                                precision={1}
-                                                defaultValue={1}
-                                                step={1}
-                                                onChange={this.handleHourTimeLog}
-                                                />
-                                        </div>
-                                        <div className={"text-center w-25"}>
-                                            <label>دقیقه</label>
-                                            <NumberPicker
-                                                value={this.state.tempMinuteTimeLog}
-                                                min={0}
-                                                precision={1}
-                                                defaultValue={0}
-                                                step={1}
-                                                onChange={this.handleMinuteTimeLog}
-                                                />
-                                        </div>
-                                    </div>
-                                </div>
-
                                 <div className={'input-group-register input-group-filter my-4 px-2'}>
                                     {/* Date picker component */}
                                     <DatePicker

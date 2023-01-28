@@ -2,11 +2,15 @@ import React, { Component } from "react";
 import "../style/loginStyle.css";
 import '../style/registerPage.css';
 import logo from "../img/sadat logo-png.png";
+import {AiOutlineEye, AiOutlineEyeInvisible} from "react-icons/ai"
 import * as yup from 'yup'
 import {Link} from "react-router-dom"
 import axios from "axios";
+import {Box, Button, CircularProgress} from "@mui/material";
+import {blue} from "@material-ui/core/colors";
 class Login extends Component {
   state = {
+    showPassword: false,
     response: '',
     loading: false,
     account: {
@@ -55,7 +59,7 @@ class Login extends Component {
                   </div>
                   <div className="form-group mb-4" style={{width: "80%"}}>
                     <input
-                        type="password"
+                        type={this.state.showPassword ? "text" : "password"}
                         name="password"
                         value={password}
                         onChange={this.handleChange}
@@ -63,6 +67,14 @@ class Login extends Component {
                         style={{border: this.state.validation.passwordRequiredReg === false ? '1px solid red' : ''}}
                         placeholder="گذرواژه"
                     />
+                    <div className="mx-2 d-flex align-item-center">
+                      <div className={"chk-show d-flex align-items-center justify-content-center"} onClick={
+                        () => this.setState({showPassword: !this.state.showPassword})
+                      }>
+                        <input type="checkbox" checked={this.state.showPassword}/>
+                      </div>
+                      <label htmlFor="chk-show" className={"m-2"} style={{fontSize: "0.7rem", userSelect: 'none'}}>نمایش گذرواژه</label>
+                    </div>
                     {
                       this.state.validation.passwordRequiredReg === false
                           ? <small className="form-text text-danger" style={{fontSize: "10px"}}>لطفا رمز را وارد کنید!</small>
@@ -82,11 +94,35 @@ class Login extends Component {
                         <small className="text-danger mb-2" style={{fontSize: "10px"}}>نام کاربری یا رمز عبور صحیح نیست!</small>
                         : null
                   }
-                  <button
-                      // disabled={this.state.loading}
-                      className="btn-login"
-                       onClick={() => this.handleSubmit()}
-                  >ورود</button>
+                  <Box className={"w-75"} sx={{ m: 1, position: 'relative' }}>
+                    <Button
+                        variant="contained"
+                        className={"btn-login w-100"}
+                        disabled={this.state.loading}
+                        onClick={this.handleSubmit}
+                    >
+                      ورود
+                    </Button>
+                    {this.state.loading && (
+                        <CircularProgress
+                            size={24}
+                            sx={{
+                              color: "#fff",
+                              position: 'absolute',
+                              top: '50%',
+                              left: '50%',
+                              marginTop: '-12px',
+                              marginLeft: '-12px',
+                            }}
+                        />
+                    )}
+                  </Box>
+
+                  {/*<button*/}
+                  {/*    // disabled={this.state.loading}*/}
+                  {/*    className="btn-login"*/}
+                  {/*     onClick={() => this.handleSubmit()}*/}
+                  {/*>ورود</button>*/}
                   <div className="option-row mt-4 mb-2">
                     <div className="remember d-flex align-item-center">
                       <input
@@ -158,7 +194,8 @@ class Login extends Component {
     // const result = this.validate();
     // let getValue = await result;
 
-    // this.setState({loading: true})
+    this.setState({loading: true})
+    console.log(123)
     this.setState({response: ''})
     let res = this.validation();
 
@@ -183,14 +220,13 @@ class Login extends Component {
             localStorage.setItem("role", response.headers["role"]);
             localStorage.setItem("username", this.state.account.user);
             localStorage.setItem("id", response.headers["id"])
-            this.setState({loading: false})
             window.location = "/dashboard"
           }).catch(err => {
-        this.setState({loading: false})
         // this.setState({errors: ['نام کاربری یا پسورد صحیح نمی باشد']})
         this.setState({response: err})
       })
     }
+    this.setState({loading: false})
   }
 }
 export default Login;
