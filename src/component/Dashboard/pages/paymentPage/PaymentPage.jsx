@@ -427,12 +427,12 @@ class PaymentPage extends Component {
                     this.handleCloseType()
                 }}>
                     <Modal.Header closeButton>
-                        <Modal.Title>افزودن نوع جدید</Modal.Title>
+                        <Modal.Title>افزودن دسته بندی</Modal.Title>
                     </Modal.Header>
                     <Modal.Body className="justify-content-center">
                         <input type='text'
                                className='form-control mt-3 mb-3 input'
-                               onChange={(e) => this.handleInputChange(e)} placeholder="نوع جدید"/>
+                               onChange={(e) => this.handleInputChange(e)} placeholder="دسته بندی جدید"/>
                     </Modal.Body>
                     <Modal.Footer className="justify-content-center">
                         <button className="btn btn-success" onClick={(event) => {

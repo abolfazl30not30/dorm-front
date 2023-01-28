@@ -311,7 +311,7 @@ class inventory extends Component {
                                 <input type='text' className='input form-control' onChange={(e) => {
                                     this.getValueInputName(e.target.value)
                                 }}/>
-                                <label className="placeholder" style={{right: '12px'}}>نام</label>
+                                <label className="placeholder" style={{right: '12px'}}>نام کالا</label>
                             </div>
 
                             <div className='input-group-register col-4 mb-3'>
@@ -354,12 +354,12 @@ class inventory extends Component {
                     this.handleCloseCategory()
                 }}>
                     <Modal.Header closeButton>
-                        <Modal.Title>افزودن نوع جدید</Modal.Title>
+                        <Modal.Title>افزودن دسته بندی</Modal.Title>
                     </Modal.Header>
                     <Modal.Body className="justify-content-center">
                         <input type='text'
                                className='form-control mt-3 mb-3 input'
-                               onChange={(e) => this.handleInputCategoryChange(e)} placeholder="نوع جدید"/>
+                               onChange={(e) => this.handleInputCategoryChange(e)} placeholder="دسته بندی جدید"/>
                     </Modal.Body>
                     <Modal.Footer className="justify-content-start">
                         <button className="btn-done" onClick={(event) => {

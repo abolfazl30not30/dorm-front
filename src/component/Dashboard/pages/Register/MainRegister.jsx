@@ -22,6 +22,7 @@ import BuildingContext from '../../../../contexts/Building'
 import {Modal} from "react-bootstrap";
 import {Link} from "react-router-dom";
 import axios from "axios";
+import {FormControl, MenuItem, Select} from "@mui/material";
 
 
 class MainRegister extends Component {
@@ -115,7 +116,7 @@ class MainRegister extends Component {
     }
     componentDidMount() {
         let typeOfResident = <div className='typeofResident'>
-            <div className="mt-2">
+            <div className="mt-2 w-100 mx-3">
                 <h5 className="mb-5">نوع اقامتگر</h5>
                 <div className="constant-container">
                     <label className="radio-container">
@@ -127,28 +128,31 @@ class MainRegister extends Component {
                         <span className="checkmark"></span>
                     </label>
                 </div>
-                <div className="guest-container mt-4">
-                    <label className="guest-text mb-3">مهمان : </label>
-                    <div className="mx-4 my-1">
-                        <label className="radio-container">
-                            بستگان درجه یک
-                            <input type="radio"  name="register-radio" value="familyGuest"
-                                   checked={this.state.familyGuestCheck}
-                                   onChange={(e) => { this.checked(e); this.context.handleTypeofResident('familyGuest')}}
+                <div className="guest-container d-flex align-items-center w-100 mt-4">
+                        <label className="radio-container mt-2">
+                            مهمان :
+                            <input type="radio"  name="register-radio" value={this.state.typeofGuest}
+                                   checked={!this.state.constantCheck}
+                                   onChange={(e) => {
+                                       this.checked(e)
+                                   }}
                             />
                             <span className="checkmark"></span>
                         </label>
-                    </div>
-                    <div className="mx-4 my-1">
-                        <label className="radio-container">
-                            متفرقه
-                            <input type="radio"  name="register-radio" value="otherGuest"
-                                   checked={this.state.otherGuestCheck}
-                                   onChange={(e) => { this.checked(e); this.context.handleTypeofResident('otherGuest')}}
-                            />
-                            <span className="checkmark"></span>
-                        </label>
-                    </div>
+                    <FormControl className={"mx-3"} style={window.innerWidth <= 768 ? {width: "50%"} : {width: "30%"}}>
+                        <Select
+                            disabled={this.state.constantCheck}
+                            sx={{ height: 40, borderRadius: 2}}
+                            id="select-field"
+                            value={this.state.typeofGuest}
+                            onChange={(e) => {
+                                this.checked(e)
+                            }}
+                        >
+                            <MenuItem value={"familyGuest"}>بستگان درجه یک</MenuItem>
+                            <MenuItem value={"otherGuest"}>متفرقه</MenuItem>
+                        </Select>
+                    </FormControl>
                 </div>
             </div>
         </div>
@@ -157,42 +161,66 @@ class MainRegister extends Component {
         this.setState({step:updatedState})
     }
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if(prevState.constantCheck != this.state.constantCheck || prevState.otherGuestCheck != this.state.otherGuestCheck || prevState.familyGuestCheck != this.state.familyGuestCheck){
+        if(prevState.constantCheck !== this.state.constantCheck || prevState.otherGuestCheck !== this.state.otherGuestCheck || prevState.familyGuestCheck !== this.state.familyGuestCheck){
             let typeOfResident = <div className='typeofResident'>
-                <div className="mt-2">
+                <div className="mt-2 w-100 mx-3">
                     <h5 className="mb-5">نوع اقامتگر</h5>
                     <div className="constant-container">
                         <label className="radio-container">
                             اقامتگر ثابت
                             <input type="radio"  name="register-radio" value="constant"
                                    checked={this.state.constantCheck}
-                                   onChange={(e) => { this.checked(e); this.context.handleTypeofResident('constant')}}
+                                   onChange={(e) => {this.checked(e); this.context.handleTypeofResident('constant')}}
                             />
                             <span className="checkmark"></span>
                         </label>
                     </div>
-                    <div className="guest-container mt-4">
-                        <label className="guest-text mb-3">مهمان : </label>
-                        <div className="mx-4 my-1">
-                            <label className="radio-container">
-                                بستگان درجه یک
-                                <input type="radio"  name="register-radio" value="familyGuest"
-                                       checked={this.state.familyGuestCheck}
-                                       onChange={(e) => { this.checked(e); this.context.handleTypeofResident('familyGuest')}}
-                                />
+                    <div className="guest-container d-flex align-items-center w-100 mt-4">
+                            <label className="radio-container mt-2">
+                                مهمان :
+                                <input type="radio"  name="register-radio" value={this.state.typeofGuest}
+                                       checked={!this.state.constantCheck}
+                                       onChange={(e) => {
+                                           this.checked(e)
+                                       }}
+                               />
                                 <span className="checkmark"></span>
                             </label>
-                        </div>
-                        <div className="mx-4 my-1">
-                            <label className="radio-container">
-                                متفرقه
-                                <input type="radio"  name="register-radio" value="otherGuest"
-                                       checked={this.state.otherGuestCheck}
-                                       onChange={(e) => { this.checked(e); this.context.handleTypeofResident('otherGuest')}}
-                                />
-                                <span className="checkmark"></span>
-                            </label>
-                        </div>
+                        <FormControl className={"mx-3"} style={window.innerWidth <= 768 ? {width: "50%"} : {width: "30%"}}>
+                            <Select
+                                disabled={this.state.constantCheck}
+                                sx={{ height: 40, borderRadius: 2}}
+                                id="select-field"
+                                value={this.state.typeofGuest
+                                }
+                                onChange={(e) => {
+                                    this.checked(e)
+                                }}
+                            >
+                                <MenuItem value={"familyGuest"}>بستگان درجه یک</MenuItem>
+                                <MenuItem value={"otherGuest"}>متفرقه</MenuItem>
+                            </Select>
+                        </FormControl>
+                        {/*<div className="mx-4 my-1">*/}
+                        {/*    <label className="radio-container">*/}
+                        {/*        بستگان درجه یک*/}
+                        {/*        <input type="radio"  name="register-radio" value="familyGuest"*/}
+                        {/*               checked={this.state.familyGuestCheck}*/}
+                        {/*               onChange={(e) => { this.checked(e); this.context.handleTypeofResident('familyGuest')}}*/}
+                        {/*        />*/}
+                        {/*        <span className="checkmark"></span>*/}
+                        {/*    </label>*/}
+                        {/*</div>*/}
+                        {/*<div className="mx-4 my-1">*/}
+                        {/*    <label className="radio-container">*/}
+                        {/*        متفرقه*/}
+                        {/*        <input type="radio"  name="register-radio" value="otherGuest"*/}
+                        {/*               checked={this.state.otherGuestCheck}*/}
+                        {/*               onChange={(e) => { this.checked(e); this.context.handleTypeofResident('otherGuest')}}*/}
+                        {/*        />*/}
+                        {/*        <span className="checkmark"></span>*/}
+                        {/*    </label>*/}
+                        {/*</div>*/}
                     </div>
                 </div>
             </div>
@@ -398,6 +426,7 @@ class MainRegister extends Component {
         constantCheck : true,
         otherGuestCheck: false,
         familyGuestCheck : false,
+        typeofGuest : "familyGuest",
         typeofResident : "constant",
         showDoneModal: false,
         personId: ''
@@ -411,7 +440,6 @@ class MainRegister extends Component {
             case 'constant': {
                 let updatedState = [...this.state.steps];
                 this.setState({constantCheck:true,otherGuestCheck:false,familyGuestCheck:false});
-                console.log(this.constantCheck.current)
 
                 updatedState[3].label = "مشخصات بستگان"
                 updatedState[1].content = <CInformationPage />;
@@ -433,8 +461,6 @@ class MainRegister extends Component {
 
                 this.setState({constantCheck:false,otherGuestCheck:true,familyGuestCheck:false});
 
-                console.log(this.otherGuestCheck.current);
-
                 updatedState[3].label = "انتخاب میزبان"
                 updatedState[1].content = <OGInformationPage />;
                 updatedState[2].content = <OGInformationFurtherPage />;
@@ -445,14 +471,14 @@ class MainRegister extends Component {
                 updatedState[2].validator = this.ogInformationFurtherPageValidation;
                 updatedState[3].validator = this.fgThirdPage();
 
-                this.setState({ steps: updatedState })
+                this.setState({ steps: updatedState, typeofGuest: type })
+                this.context.handleTypeofResident(type)
                 break;
             }
 
             case 'familyGuest': {
                 let updatedState = [...this.state.steps];
                 this.setState({constantCheck:false,otherGuestCheck:false,familyGuestCheck:true});
-                console.log(this.familyGuestCheck.current)
 
                 updatedState[3].label = "انتخاب میزبان"
 
@@ -465,7 +491,8 @@ class MainRegister extends Component {
                 updatedState[2].validator = this.fgInformationFurtherPageValidation;
                 updatedState[3].validator = this.ogThirdPage();
 
-                this.setState({ steps: updatedState })
+                this.setState({ steps: updatedState, typeofGuest: type })
+                this.context.handleTypeofResident(type)
                 break;
             }
         }
