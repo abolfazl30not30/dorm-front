@@ -704,6 +704,12 @@ class CUploadPage extends Component {
                                     window.location = '/'
                                 }
                             })
+                            .catch((error) => {
+                                console.error('Error:', error);
+                                this.setState({isLoadingBirthPage1: false});
+                                this.setState({isUploadBirthPage1: true})
+                                this.setState({hasErrorBirthPage1: true});
+                            })
                     } else if (localStorage.getItem('role') === 'SUPERVISOR') {
                         axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                             .then((response) => {
@@ -727,6 +733,12 @@ class CUploadPage extends Component {
                                 } else {
                                     window.location = '/'
                                 }
+                            })
+                            .catch((error) => {
+                                console.error('Error:', error);
+                                this.setState({isLoadingBirthPage1: false});
+                                this.setState({isUploadBirthPage1: true})
+                                this.setState({hasErrorBirthPage1: true});
                             })
                     }})
         }
@@ -832,6 +844,12 @@ class CUploadPage extends Component {
                                     window.location = '/'
                                 }
                             })
+                            .catch((error) => {
+                                console.error('Error:', error);
+                                this.setState({isLoadingBirthPage2: false});
+                                this.setState({isUploadBirthPage2: true})
+                                this.setState({hasErrorBirthPage2: true});
+                            })
                     } else if (localStorage.getItem('role') === 'SUPERVISOR') {
                         axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                             .then((response) => {
@@ -855,6 +873,12 @@ class CUploadPage extends Component {
                                 } else {
                                     window.location = '/'
                                 }
+                            })
+                            .catch((error) => {
+                                console.error('Error:', error);
+                                this.setState({isLoadingBirthPage2: false});
+                                this.setState({isUploadBirthPage2: true})
+                                this.setState({hasErrorBirthPage2: true});
                             })
                     }})
         }
@@ -957,6 +981,12 @@ class CUploadPage extends Component {
                                     window.location = '/'
                                 }
                             })
+                            .catch((error) => {
+                                console.error('Error:', error);
+                                this.setState({isLoadingBirthPage3: false});
+                                this.setState({isUploadBirthPage3: true})
+                                this.setState({hasErrorBirthPage3: true});
+                            })
                     } else if (localStorage.getItem('role') === 'SUPERVISOR') {
                         axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                             .then((response) => {
@@ -980,6 +1010,12 @@ class CUploadPage extends Component {
                                 } else {
                                     window.location = '/'
                                 }
+                            })
+                            .catch((error) => {
+                                console.error('Error:', error);
+                                this.setState({isLoadingBirthPage3: false});
+                                this.setState({isUploadBirthPage3: true})
+                                this.setState({hasErrorBirthPage3: true});
                             })
                     }})
         }
@@ -1082,6 +1118,12 @@ class CUploadPage extends Component {
                                     window.location = '/'
                                 }
                             })
+                            .catch((error) => {
+                                console.error('Error:', error);
+                                this.setState({isLoadingBirthPage4: false});
+                                this.setState({isUploadBirthPage4: true})
+                                this.setState({hasErrorBirthPage4: true});
+                            })
                     } else if (localStorage.getItem('role') === 'SUPERVISOR') {
                         axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                             .then((response) => {
@@ -1105,6 +1147,12 @@ class CUploadPage extends Component {
                                 } else {
                                     window.location = '/'
                                 }
+                            })
+                            .catch((error) => {
+                                console.error('Error:', error);
+                                this.setState({isLoadingBirthPage4: false});
+                                this.setState({isUploadBirthPage4: true})
+                                this.setState({hasErrorBirthPage4: true});
                             })
                     }})
         }
@@ -1207,6 +1255,12 @@ class CUploadPage extends Component {
                                     window.location = '/'
                                 }
                             })
+                            .catch((error) => {
+                                console.error('Error:', error);
+                                this.setState({isLoadingBirthAllPage: false});
+                                this.setState({isUploadBirthAllPage: true})
+                                this.setState({hasErrorBirthAllPage: true});
+                            })
                     } else if (localStorage.getItem('role') === 'SUPERVISOR') {
                         axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                             .then((response) => {
@@ -1230,6 +1284,12 @@ class CUploadPage extends Component {
                                 } else {
                                     window.location = '/'
                                 }
+                            })
+                            .catch((error) => {
+                                console.error('Error:', error);
+                                this.setState({isLoadingBirthAllPage: false});
+                                this.setState({isUploadBirthAllPage: true})
+                                this.setState({hasErrorBirthAllPage: true});
                             })
                     }})
         }
@@ -1331,6 +1391,12 @@ class CUploadPage extends Component {
                                     window.location = '/'
                                 }
                             })
+                            .catch((error) => {
+                                console.error('Error:', error);
+                                this.setState({isLoadingCartPage1: false});
+                                this.setState({isUploadCartPage1: true})
+                                this.setState({hasErrorCartPage1: true});
+                            })
                     } else if (localStorage.getItem('role') === 'SUPERVISOR') {
                         axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                             .then((response) => {
@@ -1354,6 +1420,12 @@ class CUploadPage extends Component {
                                 } else {
                                     window.location = '/'
                                 }
+                            })
+                            .catch((error) => {
+                                console.error('Error:', error);
+                                this.setState({isLoadingCartPage1: false});
+                                this.setState({isUploadCartPage1: true})
+                                this.setState({hasErrorCartPage1: true});
                             })
                     }})
         }
@@ -1456,6 +1528,12 @@ class CUploadPage extends Component {
                                     window.location = '/'
                                 }
                             })
+                            .catch((error) => {
+                                console.error('Error:', error);
+                                this.setState({isLoadingCartPage2: false});
+                                this.setState({isUploadCartPage2: true})
+                                this.setState({hasErrorCartPage2: true});
+                            })
                     } else if (localStorage.getItem('role') === 'SUPERVISOR') {
                         axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                             .then((response) => {
@@ -1479,6 +1557,12 @@ class CUploadPage extends Component {
                                 } else {
                                     window.location = '/'
                                 }
+                            })
+                            .catch((error) => {
+                                console.error('Error:', error);
+                                this.setState({isLoadingCartPage2: false});
+                                this.setState({isUploadCartPage2: true})
+                                this.setState({hasErrorCartPage2: true});
                             })
                     }})
         }
@@ -1581,6 +1665,12 @@ class CUploadPage extends Component {
                                     window.location = '/'
                                 }
                             })
+                            .catch((error) => {
+                                console.error('Error:', error);
+                                this.setState({isLoadingCartAllPage: false});
+                                this.setState({isUploadCartAllPage: true})
+                                this.setState({hasErrorCartAllPage: true});
+                            })
                     } else if (localStorage.getItem('role') === 'SUPERVISOR') {
                         axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                             .then((response) => {
@@ -1604,6 +1694,12 @@ class CUploadPage extends Component {
                                 } else {
                                     window.location = '/'
                                 }
+                            })
+                            .catch((error) => {
+                                console.error('Error:', error);
+                                this.setState({isLoadingCartAllPage: false});
+                                this.setState({isUploadCartAllPage: true})
+                                this.setState({hasErrorCartAllPage: true});
                             })
                     }})
         }
@@ -1687,6 +1783,12 @@ class CUploadPage extends Component {
                                     window.location = '/'
                                 }
                             })
+                            .catch((error) => {
+                                console.error('Error:', error);
+                                this.setState({isLoadingPersonnelImg: false});
+                                this.setState({isUploadPersonnelImg: true})
+                                this.setState({hasErrorPersonnelImg: true});
+                            })
                     } else if (localStorage.getItem('role') === 'SUPERVISOR') {
                         axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                             .then((response) => {
@@ -1710,6 +1812,12 @@ class CUploadPage extends Component {
                                 } else {
                                     window.location = '/'
                                 }
+                            })
+                            .catch((error) => {
+                                console.error('Error:', error);
+                                this.setState({isLoadingPersonnelImg: false});
+                                this.setState({isUploadPersonnelImg: true})
+                                this.setState({hasErrorPersonnelImg: true});
                             })
                     }})
         }
@@ -1812,6 +1920,12 @@ class CUploadPage extends Component {
                                     window.location = '/'
                                 }
                             })
+                            .catch((error) => {
+                                console.error('Error:', error);
+                                this.setState({isLoadingRegister: false});
+                                this.setState({isUploadRegister: true})
+                                this.setState({hasErrorRegister: true});
+                            })
                     } else if (localStorage.getItem('role') === 'SUPERVISOR') {
                         axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                             .then((response) => {
@@ -1835,6 +1949,12 @@ class CUploadPage extends Component {
                                 } else {
                                     window.location = '/'
                                 }
+                            })
+                            .catch((error) => {
+                                console.error('Error:', error);
+                                this.setState({isLoadingRegister: false});
+                                this.setState({isUploadRegister: true})
+                                this.setState({hasErrorRegister: true});
                             })
                     }})
         }
@@ -1933,6 +2053,12 @@ class CUploadPage extends Component {
                                     window.location = '/'
                                 }
                             })
+                            .catch((error) => {
+                                console.error('Error:', error);
+                                this.setState({isLoadingRegisterUni: false});
+                                this.setState({isUploadRegisterUni: true})
+                                this.setState({hasErrorRegisterUni: true});
+                            })
                     } else if (localStorage.getItem('role') === 'SUPERVISOR') {
                         axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                             .then((response) => {
@@ -1958,6 +2084,12 @@ class CUploadPage extends Component {
                                 } else {
                                     window.location = '/'
                                 }
+                            })
+                            .catch((error) => {
+                                console.error('Error:', error);
+                                this.setState({isLoadingRegisterUni: false});
+                                this.setState({isUploadRegisterUni: true})
+                                this.setState({hasErrorRegisterUni: true});
                             })
                     }})
         }
