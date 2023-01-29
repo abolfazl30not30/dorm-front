@@ -205,6 +205,8 @@ class PersonnelRegister extends Component {
         this.setState({showDoneModal:false})
     }
     handleSubmit = async () => {
+        document.getElementsByClassName("_2pGos _hsN1w next-btn")[0].style.pointerEvents = "none"
+
         let newCharacteristic = {...this.context.personnelFields}
 
         const profileImg = this.context.personnelUploadPage.find(({name}) => name === "personnelImg");
