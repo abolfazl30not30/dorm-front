@@ -393,10 +393,8 @@ class EventPage extends Component {
             month: '2-digit',
             day: '2-digit'
         });
-        console.log(today)
 
         for (let i = 0; i < this.state.customEvents.length; i++) {
-            console.log(2)
             if (this.state.customEvents[i].date === today) {
                 toast(<div>
                         <h4>{this.state.customEvents[i].eventName}</h4>

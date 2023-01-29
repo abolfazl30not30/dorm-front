@@ -1,4 +1,4 @@
-import {Component} from "react";
+import React, {Component} from "react";
 import StepProgressBar from "react-step-progress";
 import BasicInformation from "./BasicInformation";
 import AdditionalInformation from "./AdditionalInformation";
@@ -7,6 +7,8 @@ import BuildingContext from "../../../../contexts/Building";
 import {Modal} from "react-bootstrap";
 import {Link} from "react-router-dom";
 import axios from "axios";
+import {toast, ToastContainer} from "react-toastify";
+import {BsCheckCircleFill} from "react-icons/bs";
 
 class PersonnelRegister extends Component {
     static contextType = BuildingContext;
@@ -163,24 +165,34 @@ class PersonnelRegister extends Component {
                         onSubmit={this.handleSubmit}
                     />
                 </div>
-                <Modal centered show={this.state.showDoneModal} className='modal-done'>
+                <Modal centered show={this.state.showDoneModal} className='w-25' style={{marginLeft: "50%", translate: "-50%"}}>
+                    <Modal.Header className={"bg-success text-cente d-flex justify-content-center"}>
+                        <BsCheckCircleFill style={{color: "#fff"}} size={60}/>
+                    </Modal.Header>
                     <Modal.Body className="px-4">
-                        <div className="d-flex flex-column">
-                            <div className="d-flex flex-column">
-                                <div className="icon">
-                                    <span className="glyphicon glyphicon-ok"></span>
-                                </div>
-                                <div className="title-modal-done">
-                                    موفق!
-                                </div>
-                            </div>
-                            <div className="d-flex flex-row justify-content-between my-3">
-                                <Link to={`/dashboard/personnel/${this.state.personnelId}`}  className='btn button-show' onClick={() =>{this.handleGoToShow()}}>نمایش</Link>
-                                <Link to="" className='btn button-close' onClick={() =>{this.handleCloseModal()}}>بستن</Link>
-                            </div>
+                        <div className="d-flex justify-content-center text-success" style={{fontSize: "2.5rem"}}>
+                            موفق!
                         </div>
                     </Modal.Body>
+                    <Modal.Footer>
+                        <div className="d-flex flex-row justify-content-center">
+                            <Link to={`/dashboard/people/${this.state.personnelId}`} className='btn mx-3 btn-sm px-5 btn-success' onClick={() =>{this.handleGoToShow()}}>نمایش</Link>
+                            <Link to="" className='btn btn-sm mx-3 px-5 btn-secondary' onClick={() =>{this.handleCloseModal()}}>بستن</Link>
+                        </div>
+                    </Modal.Footer>
                 </Modal>
+                <ToastContainer
+                    position="top-right"
+                    autoClose={5000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={true}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                    theme="light"
+                />
             </>
         );
     }
@@ -307,6 +319,20 @@ class PersonnelRegister extends Component {
             })
 
         this.setState({showDoneModal:true})
+        toast(<div>
+                <h4>پرسنل با موفقیت ثبت شد</h4>
+            </div>, {
+                position: "bottom-right",
+                autoClose: 3000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: true,
+                progress: undefined,
+                // theme: "colored",
+                className: "bg-success text-light",
+            }
+        )
         this.context.handleReset();
     }
 
