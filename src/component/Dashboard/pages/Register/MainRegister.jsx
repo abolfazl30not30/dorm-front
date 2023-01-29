@@ -495,7 +495,7 @@ class MainRegister extends Component {
                         onSubmit={this.handleSubmit}
                     />
                 </div>
-                <Modal centered show={this.state.showDoneModal} className='w-25' style={{marginLeft: "50%", translate: "-50%"}}>
+                <Modal centered show={this.state.showDoneModal} style={window.innerWidth > 768 ? {width: "25%", marginLeft: "50%", translate: "-50%"} : {width: "100%"}}>
                     <Modal.Header className={"bg-success text-cente d-flex justify-content-center"}>
                         <BsCheckCircleFill style={{color: "#fff"}} size={60}/>
                     </Modal.Header>
@@ -505,7 +505,7 @@ class MainRegister extends Component {
                                 </div>
                     </Modal.Body>
                     <Modal.Footer>
-                        <div className="d-flex flex-row justify-content-center">
+                        <div className="d-flex flex-row justify-content-center flex-column flex-md-row">
                             <Link to={`/dashboard/people/${this.state.personId}`} className='btn mx-3 btn-sm px-5 btn-success' onClick={() =>{this.handleGoToShow()}}>نمایش</Link>
                             <Link to="" className='btn btn-sm mx-3 px-5 btn-secondary' onClick={() =>{this.handleCloseModal()}}>بستن</Link>
                         </div>

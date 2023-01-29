@@ -13,18 +13,22 @@ import {green} from "@mui/material/colors";
 import axios from "axios";
 
 class EventPage extends Component {
-
+    today = new Date().toLocaleDateString('fa-IR-u-nu-latn', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit'
+    })
     state = {
         loading: false,
-        year: 'default', // number format
-        month: 'default', // number format
-        day: 'default', // number format
+        year: this.today.slice(0,4), // number format
+        month: this.today.slice(5,7), // number format
+        day: this.today.slice(8,), // number format
 
         tempEventName: '',
         tempEventDescription: '',
         showType: false, // for Modal
 
-        value: 'default',
+        value: new Date(),
         dayOfYear: 'default',
 
         isHoliday: '',
@@ -146,7 +150,6 @@ class EventPage extends Component {
                                             className={' btn btn-lg'}
                                             onClick={() => {
                                                 this.setState({value: new Date()});
-                                                console.log(this.state.value)
                                             }}
                                         >
                                             برو به امروز
@@ -358,7 +361,7 @@ class EventPage extends Component {
                 }})
         }
 
-        this.componentDidMount();
+        await this.componentDidMount();
         this.setState({showType: false});
 
     }
@@ -416,31 +419,42 @@ class EventPage extends Component {
 
     componentDidMount = async () => {
 
-        axios.get('https://api.saadatportal.com/api/v1/supervisor/notification', {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
-            .then((data) => this.setState({customEvents: data}, () => this.handleNotif())).catch(() => {
-            if (localStorage.getItem('role') === 'MANAGER') {
-                axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
-                    .then((response) => {
-                        if (response.headers["accesstoken"]) {
-                            localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                            axios.get('https://api.saadatportal.com/api/v1/supervisor/notification', {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
-                                .then((data) => this.setState({customEvents: data}, () => this.handleNotif()))
-                        } else {
-                            window.location = '/'
-                        }
-                    })
-            } else if (localStorage.getItem('role') === 'SUPERVISOR') {
-                axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
-                    .then((response) => {
-                        if (response.headers["accesstoken"]) {
-                            localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                            axios.get('https://api.saadatportal.com/api/v1/supervisor/notification', {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
-                                .then((data) => this.setState({customEvents: data}, () => this.handleNotif()))
-                        } else {
-                            window.location = '/'
-                        }
-                    })
-            }})
+        await axios.get('https://api.saadatportal.com/api/v1/supervisor/notification', {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+            .then((data) => this.setState({customEvents: data}, () => this.handleNotif())).catch(async () => {
+                if (localStorage.getItem('role') === 'MANAGER') {
+                    await axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        .then(async (response) => {
+                            if (response.headers["accesstoken"]) {
+                                localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                                await axios.get('https://api.saadatportal.com/api/v1/supervisor/notification', {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                    .then((data) => this.setState({customEvents: data}, () => this.handleNotif()))
+                            } else {
+                                window.location = '/'
+                            }
+                        })
+                } else if (localStorage.getItem('role') === 'SUPERVISOR') {
+                    await axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        .then(async (response) => {
+                            if (response.headers["accesstoken"]) {
+                                localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                                await axios.get('https://api.saadatportal.com/api/v1/supervisor/notification', {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                    .then((data) => this.setState({customEvents: data}, () => this.handleNotif()))
+                            } else {
+                                window.location = '/'
+                            }
+                        })
+                }
+            })
+        let today = new Date().toLocaleDateString('fa-IR-u-nu-latn', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit'
+        });
+        await fetch(`https://persiancalapi.ir/jalali/${today.slice(0,4)}/${today.slice(5,7)}/${today.slice(8,)}`).then((response) => response.json())
+            .then((data) => {
+                this.setState({eventsFromAPI: data.events});
+                this.setState({isHoliday: data.is_holiday});
+            });
     }
 
     handleHolidaysFromAPI = async (year, month, day) => {
