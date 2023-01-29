@@ -1,8 +1,8 @@
 import React, {Component} from 'react'
 import '../../../../style/searchAccount.css'
-import {AiOutlineBarcode, AiOutlineUser,AiOutlineArrowLeft} from "react-icons/ai";
+import {AiOutlineBarcode, AiOutlineUser, AiOutlineArrowLeft, AiOutlinePlus} from "react-icons/ai";
 import {BsTelephone} from "react-icons/bs";
-import {Link} from "react-router-dom"
+import {Link, NavLink} from "react-router-dom"
 import BuildingContext from "../../../../contexts/Building";
 import Skeleton from "react-loading-skeleton";
 import FormControl from "@mui/material/FormControl";
@@ -74,7 +74,18 @@ class SearchPersonnel extends Component {
                         </Link>
                     </div>
                 </div>
-                <div className="search-box justify-content-center">
+
+                {
+                    localStorage.getItem('role') === 'MANAGER'
+                        ? <div className={"d-flex justify-content-start mb-3"}>
+                            <NavLink to={'/dashboard/PersonnelRegister'} className='btn-done d-flex align-items-center justify-content-center my-0' onClick={() => {
+                            }}><AiOutlinePlus className='ms-2'/>افزودن پرسنل
+                            </NavLink>
+                        </div>
+                        : null
+                }
+
+                <div className="search-box justify-content-center flex-column flex-sm-row flex-md-row">
                     <div className="form-floating">
                         <FormControl className={"w-100"}>
                             <Select
@@ -97,11 +108,13 @@ class SearchPersonnel extends Component {
                             }}>براساس</label>
                         </FormControl>
                     </div>
-                    <input type="text"
-                           id="inputSearch"
-                           placeholder="جسـتجـو..."
-                           onChange={this.handleSearchInput}/>
-                    <div className="search-icon"><i className="bi bi-search"></i></div>
+                    <div className={"d-flex flex-row"}>
+                        <input type="text"
+                               id="inputSearch"
+                               placeholder="جسـتجـو..."
+                               onChange={this.handleSearchInput}/>
+                        <div className="search-icon"><i className="bi bi-search"></i></div>
+                    </div>
                 </div>
                 <div className='result'>
                     {

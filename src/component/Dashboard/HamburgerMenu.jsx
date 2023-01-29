@@ -116,16 +116,16 @@ class HamburgerMenu extends Component {
                         </NavLink>
                     </li>
 
-                    {
-                        localStorage.getItem('role') === 'MANAGER'
-                            ? <li className='sidenav-item'>
-                                <NavLink to="/dashboard/PersonnelRegister" className='sidenav-link' onClick={window.innerWidth <= 768 && this.context.handleSidebar}>
-                                    <i className="bi bi-file-earmark-text" />
-                                    ثبت پرسنل
-                                </NavLink>
-                            </li>
-                            : null
-                    }
+                    {/*{*/}
+                    {/*    localStorage.getItem('role') === 'MANAGER'*/}
+                    {/*        ? <li className='sidenav-item'>*/}
+                    {/*            <NavLink to="/dashboard/PersonnelRegister" className='sidenav-link' onClick={window.innerWidth <= 768 && this.context.handleSidebar}>*/}
+                    {/*                <i className="bi bi-file-earmark-text" />*/}
+                    {/*                ثبت پرسنل*/}
+                    {/*            </NavLink>*/}
+                    {/*        </li>*/}
+                    {/*        : null*/}
+                    {/*}*/}
 
                     <li className="sidenav-item">
                         <NavLink activeClassName='active-sidebar' to="/dashboard/PresenceAbsence" className='sidenav-link'
