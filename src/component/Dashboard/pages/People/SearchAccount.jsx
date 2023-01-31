@@ -1,30 +1,29 @@
 import React, {Component} from 'react'
 import '../../../../style/searchAccount.css'
-import {Accordion} from "react-bootstrap";
-import png_icon from "../../../../img/png_icon.png";
-import pdf_icon from "../../../../img/pdf_icon.png";
-import {IoIosSearch} from "react-icons/io";
-import {FiUser} from "react-icons/fi";
 import {AiOutlineBarcode, AiOutlineUser,AiOutlineArrowLeft} from "react-icons/ai";
 import {BsTelephone} from "react-icons/bs";
 import {Link} from "react-router-dom"
-import Form from "react-bootstrap/Form";
-import {BiSearch} from "react-icons/bi";
 import BuildingContext from "../../../../contexts/Building";
 import Skeleton from "react-loading-skeleton";
 import FormControl from "@mui/material/FormControl";
-import {MenuItem, Select} from "@mui/material";
+import {Box, Button, CircularProgress, MenuItem, Select} from "@mui/material";
 import axios from "axios";
+import Modal from "react-bootstrap/Modal";
+import {red} from "@mui/material/colors";
+import {MdOutlineDeleteOutline, MdOutlineModeEditOutline} from "react-icons/md";
 
 class SearchAccount extends Component {
     static contextType = BuildingContext;
 
     state = {
         searchLoading: true,
+        deleteLoading: false,
         placeholder: '',
-        accountFound: [],
+        accountsFound: [],
         searchInput: "",
         searchType: "fullName",
+        selectedAccount: {},
+        showDeleteModal: false,
     }
 
     async componentDidMount() {
@@ -138,59 +137,119 @@ class SearchAccount extends Component {
                                         </div>
                                     </div>
                                 ))
-                            :
-                            this.state.accountFound.map(accountFound => (
-                        <Link to={accountFound.id} className='account-found-link' onClick={() => {
-                            this.context.handlePersonId(accountFound.parentId, accountFound.id)
-                        }}>
+                        :
+                        this.state.accountFound.map(accountFound => (
                             <div className="peoples-found d-flex flex-md-row flex-column justify-content-between align-items-center">
-                                <div className="people-image my-2">
-                                    <img
-                                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBnUckFxDVe5FOT5vuVfWCvWWY1pUrOPBOFPu9CNZYpABJSYPCigxy9rEc32E6mBamw3c&usqp=CAU"
-                                    />
-                                </div>
-                                <div className="d-flex flex-row align-items-center my-2">
-                                    <div className="people-item">
-                                        <AiOutlineUser className='ms-2'/>
-                                        نام و نام خانوادگی:
+                                <Link to={accountFound.id} className='account-found-link peoples-found d-flex flex-md-row flex-column justify-content-between align-items-center w-100' onClick={() => {
+                                    this.context.handlePersonId(accountFound.parentId, accountFound.id)
+                                }}>
+                                    <div className="people-image my-2">
+                                        <img
+                                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBnUckFxDVe5FOT5vuVfWCvWWY1pUrOPBOFPu9CNZYpABJSYPCigxy9rEc32E6mBamw3c&usqp=CAU"
+                                        />
                                     </div>
-                                    {accountFound.fullName}
-                                </div>
-                                <div className="d-flex flex-row align-items-center my-2">
-                                    <div className="people-item">
-                                        <BsTelephone className='ms-2'/>
-                                        شماره تلفن:
+                                    <div className="d-flex flex-row align-items-center my-2">
+                                        <div className="people-item">
+                                            <AiOutlineUser className='ms-2'/>
+                                            نام و نام خانوادگی:
+                                        </div>
+                                        {accountFound.fullName}
                                     </div>
-                                    {accountFound.phoneNumber}
-                                </div>
-                                <div className="d-flex flex-row align-items-center my-2">
-                                    <div className="people-item">
-                                        <AiOutlineBarcode className='ms-2'/>
-                                        کد ملی:
+                                    <div className="d-flex flex-row align-items-center my-2">
+                                        <div className="people-item">
+                                            <BsTelephone className='ms-2'/>
+                                            شماره تلفن:
+                                        </div>
+                                        {accountFound.phoneNumber}
                                     </div>
-                                    {accountFound.nationalCode}
-                                </div>
-                                <div className="d-flex flex-row align-items-center my-2">
-                                    <div className="people-item">
-                                        <AiOutlineArrowLeft className='ms-2'/>
-                                        نوع اقامتگر:
+                                    <div className="d-flex flex-row align-items-center my-2">
+                                        <div className="people-item">
+                                            <AiOutlineBarcode className='ms-2'/>
+                                            کد ملی:
+                                        </div>
+                                        {accountFound.nationalCode}
                                     </div>
-                                    {(() => {
-                                        switch (accountFound.personType) {
-                                            case 'constant':
-                                                return 'اقامتگر ثابت';
-                                            case 'familyGuest':
-                                                return 'بستگان درجه یک';
-                                            case 'otherGuest':
-                                                return 'متفرقه';
-                                        }
-                                    })()}
-                                </div>
+                                    <div className="d-flex flex-row align-items-center my-2">
+                                        <div className="people-item">
+                                            <AiOutlineArrowLeft className='ms-2'/>
+                                            نوع اقامتگر:
+                                        </div>
+                                        {(() => {
+                                            switch (accountFound.personType) {
+                                                case 'constant':
+                                                    return 'اقامتگر ثابت';
+                                                case 'familyGuest':
+                                                    return 'بستگان درجه یک';
+                                                case 'otherGuest':
+                                                    return 'متفرقه';
+                                            }
+                                        })()}
+                                    </div>
+                                </Link>
+
+                                {
+                                    localStorage.getItem('role') === "MANAGER" ?
+                                        <div className="d-flex flex-column align-items-center justify-content-center mx-2 my-2">
+                                            <button className={"btn btn-sm btn-danger mb-2 w-100"} onClick={() => {
+                                                this.setState({selectedAccount: accountFound, showDeleteModal: true})
+                                            }}>
+                                                <MdOutlineDeleteOutline color={red} size={15}/>
+                                            </button>
+                                        </div>
+                                        : null
+                                }
                             </div>
-                        </Link>
                     ))}
                     &nbsp;
                 </div>
+                <Modal
+                    style={{left: "50%", translate: "-50%"}}
+                    className={"w-25"}
+                    centered={true}
+                    show={this.state.showDeleteModal}
+                    size={'xl'}
+                    onHide={() => this.setState({showDeleteModal : false})}
+                >
+                    <Modal.Header closeButton={true}>
+                        <Modal.Title>حذف شخض</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>آیا از حذف شخض {this.state.selectedAccount.fullName} مطمئن هستید؟</Modal.Body>
+                    <Modal.Footer>
+                        {/* Cancel button for delete account modal */}
+                        <button disabled={this.state.deleteLoading} className="btn btn-light" onClick={() => {this.setState({showDeleteModal: false})}}>لغو</button>
+
+                        {/* Confirm button for deleting account */}
+                        <Box sx={{ m: 1, position: 'relative' }}>
+                            <Button
+                                variant="contained"
+                                sx={{
+                                    backgroundColor: "#dc3545",
+                                    color: "black",
+                                    ":hover": {backgroundColor: "#a52834", color: "white"}
+                                }}
+                                disabled={this.state.deleteLoading}
+                                onClick={() => {
+                                    this.handleDelete(this.state.selectedAccount.id);
+                                }}
+                            >
+                                حذف
+                            </Button>
+                            {this.state.deleteLoading && (
+                                <CircularProgress
+                                    size={24}
+                                    sx={{
+                                        color: red[500],
+                                        position: 'absolute',
+                                        top: '50%',
+                                        left: '50%',
+                                        marginTop: '-12px',
+                                        marginLeft: '-12px',
+                                    }}
+                                />
+                            )}
+                        </Box>
+                    </Modal.Footer>
+                </Modal>
             </>
         );
     }
@@ -235,6 +294,64 @@ class SearchAccount extends Component {
                         }
                     })
             }})
+    }
+    async handleDelete(charId) {
+        this.setState({deleteLoading: true})
+
+        let respondChar = ''
+        await axios.get(`https://api.saadatportal.com/api/v1/supervisor/characteristic/${charId}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+            .then((data) => {
+                respondChar = data
+            }).catch(async () => {
+                if (localStorage.getItem('role') === 'MANAGER') {
+                    await axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        .then(async (response) => {
+                            if (response.headers["accesstoken"]) {
+                                localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                                await axios.get(`https://api.saadatportal.com/api/v1/supervisor/characteristic/${charId}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                    .then((data) => {
+                                        respondChar = data
+                                    })
+                            } else {
+                                window.location = '/'
+                            }
+                        })
+                }
+            })
+
+
+        await axios.delete(`https://api.saadatportal.com/api/v1/supervisor/characteristic/${charId}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+            .catch(() => {
+                if (localStorage.getItem('role') === 'MANAGER') {
+                    axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        .then((response) => {
+                            if (response.headers["accesstoken"]) {
+                                localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                                axios.delete(`https://api.saadatportal.com/api/v1/supervisor/characteristic/${charId}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                            } else {
+                                window.location = '/'
+                            }
+                        })
+                }
+            })
+
+        await axios.delete(`https://api.saadatportal.com/api/v1/supervisor/person/${respondChar.parentId}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+            .catch(() => {
+                if (localStorage.getItem('role') === 'MANAGER') {
+                    axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        .then((response) => {
+                            if (response.headers["accesstoken"]) {
+                                localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                                axios.delete(`https://api.saadatportal.com/api/v1/supervisor/person/${respondChar.parentId}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                            } else {
+                                window.location = '/'
+                            }
+                        })
+                }
+            })
+
+        this.setState({deleteLoading: false, showDeleteModal: false})
+        this.componentDidMount()
     }
 
 }

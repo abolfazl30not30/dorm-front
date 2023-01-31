@@ -1,16 +1,20 @@
 import React, {Component} from "react";
 import '../../../../style/log.css';
+import '../../../../style/logPagination.css';
 import {Link} from "react-router-dom";
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
 import DatePicker from "react-multi-date-picker";
 import axios from "axios";
 import {Button, FormControl, MenuItem, Select} from "@mui/material";
+import LogPagination from "../../../CustomInputs/LogPagination";
 
 
 class log extends Component {
     state = {
+        currentPageNumber: 0,
         logs: [],
+        totalPages: null,
         searchBase: "date",
         searchContent: "",
         dataPicker: '',
@@ -22,19 +26,21 @@ class log extends Component {
 
     async componentDidMount() {
         this.setState({searchLoading: true})
-        axios.get('https://api.saadatportal.com/api/v1/logHistory', {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+        axios.get('https://api.saadatportal.com/api/v1/logHistory?page=0&size=20', {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
             .then((data) => this.setState({
-                logs: data,
-                searchLoading: false
+                logs: data.content,
+                searchLoading: false,
+                totalPages: data.totalPages
             })).catch(() => {
                 axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                     .then((response) => {
                         if (response.headers["accesstoken"]) {
                             localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                            axios.get('https://api.saadatportal.com/api/v1/logHistory', {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                            axios.get('https://api.saadatportal.com/api/v1/logHistory?page=0&size=20', {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                 .then((data) => this.setState({
-                                    logs: data,
-                                    searchLoading: false
+                                    logs: data.content,
+                                    searchLoading: false,
+                                    totalPages: data.totalPages
                                 }))
                         } else {
                             window.location = '/'
@@ -148,7 +154,7 @@ class log extends Component {
                         <table className='table'>
                             <thead>
                             <tr>
-                                <th>آدرس</th>
+                                <th>صفحه</th>
                                 <th>انجام دهنده</th>
                                 <th>عمل</th>
                                 <th>تاریخ</th>
@@ -159,7 +165,7 @@ class log extends Component {
                             {
                                 this.state.logs.map((log) => (
                                     <tr>
-                                        <td>{log.url}</td>
+                                        <td>{log.category}</td>
                                         <td>{log.doer}</td>
                                         <td>
                                             {(() => {
@@ -183,6 +189,9 @@ class log extends Component {
                             </tbody>
                         </table>
                     </div>
+                    <div className={"d-flex justify-content-center align-items-center"}>
+                        <LogPagination totalPages={this.state.totalPages} onNewPage={this.handleNewPage}/>
+                    </div>
                 </div>
             </>
         );
@@ -195,17 +204,23 @@ class log extends Component {
         this.handleSearch(convertDate)
     }
     handleSearch = async (e) => {
-        axios.get(`https://api.saadatportal.com/api/v1/logHistory/search?${this.state.searchBase}=${e}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+        const pageNumber = this.state.currentPageNumber
+        axios.get(`https://api.saadatportal.com/api/v1/logHistory?page=${pageNumber}&size=20/search?${this.state.searchBase}=${e}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
             .then((data) => this.setState({
-                logs: data,
+                logs: data.content,
+                searchLoading: false,
+                totalPages: data.totalPages
             })).catch(() => {
                 axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
-                    .then((response) => {
+                    .then((response
+                    ) => {
                         if (response.headers["accesstoken"]) {
                             localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                            axios.get(`https://api.saadatportal.com/api/v1/logHistory/search?${this.state.searchBase}=${e}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                            axios.get(`https://api.saadatportal.com/api/v1/logHistory?page=${pageNumber}&size=20/search?${this.state.searchBase}=${e}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                 .then((data) => this.setState({
-                                    logs: data,
+                                    logs: data.content,
+                                    searchLoading: false,
+                                    totalPages: data.totalPages
                                 }))
                         } else {
                             window.location = '/'
@@ -215,6 +230,30 @@ class log extends Component {
     }
     handleSearchInput = (value) => {
         this.handleSearch(value.target.value)
+    }
+    handleNewPage = (pageNumber) => {
+        this.setState({searchLoading: true, currentPageNumber: pageNumber - 1})
+        axios.get(`https://api.saadatportal.com/api/v1/logHistory?page=${pageNumber-1}&size=20`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+            .then((data) => this.setState({
+                logs: data.content,
+                searchLoading: false,
+                totalPages: data.totalPages
+            })).catch(() => {
+            axios.get(`https://api.saadatportal.com/api/v1/manager/token/refresh`, {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                .then((response) => {
+                    if (response.headers["accesstoken"]) {
+                        localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                        axios.get(`https://api.saadatportal.com/api/v1/logHistory?page=${pageNumber-1}&size=20`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                            .then((data) => this.setState({
+                                logs: data.content,
+                                searchLoading: false,
+                                totalPages: data.totalPages
+                            }))
+                    } else {
+                        window.location = '/'
+                    }
+                })})
+
     }
 }
 

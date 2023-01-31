@@ -1,23 +1,40 @@
 import React, {Component} from 'react'
 import '../../../../style/searchAccount.css'
-import {AiOutlineBarcode, AiOutlineUser, AiOutlineArrowLeft, AiOutlinePlus} from "react-icons/ai";
+import {AiOutlineBarcode, AiOutlineUser, AiOutlinePlus} from "react-icons/ai";
+import {MdOutlineDeleteOutline, MdOutlineModeEditOutline} from "react-icons/md"
 import {BsTelephone} from "react-icons/bs";
 import {Link, NavLink} from "react-router-dom"
 import BuildingContext from "../../../../contexts/Building";
 import Skeleton from "react-loading-skeleton";
 import FormControl from "@mui/material/FormControl";
-import {MenuItem, Select} from "@mui/material";
+import {Box, Button, CircularProgress, MenuItem, Select} from "@mui/material";
 import axios from "axios";
+import Modal from "react-bootstrap/Modal";
+import {green, red} from "@mui/material/colors";
+import Radio from "@mui/material/Radio";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import RadioGroup from "@mui/material/RadioGroup";
 
 class SearchPersonnel extends Component {
     static contextType = BuildingContext;
 
     state = {
         searchLoading: true,
+        deleteLoading: false,
         placeholder: '',
-        accountFound: [],
+        accountsFound: [],
         searchInput: "",
         searchType: "fullName",
+        selectedAccount: {},
+        showDeleteModal: false,
+        currentPassword: "",
+        newPassword: "",
+        confirmNewPassword: "",
+        newEmail: '',
+        showEditModal: false,
+        showCurrentPassword: false,
+        showNewPassword: false,
+        editField: "password"
     }
 
     async componentDidMount() {
@@ -110,6 +127,7 @@ class SearchPersonnel extends Component {
                     </div>
                     <div className={"d-flex flex-row"}>
                         <input type="text"
+                               disabled={this.state.showEditModal}
                                id="inputSearch"
                                placeholder="جسـتجـو..."
                                onChange={this.handleSearchInput}/>
@@ -138,42 +156,240 @@ class SearchPersonnel extends Component {
                                 ))
                             :
                             this.state.accountFound.map(accountFound => (
-                        <Link to={accountFound.id} className='account-found-link' onClick={() => {
-                            this.context.handlePersonId(accountFound.parentId, accountFound.id)
-                        }}>
                             <div className="peoples-found d-flex flex-md-row flex-column justify-content-between align-items-center">
-
-                                <div className="people-image my-2">
-                                    <img
-                                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBnUckFxDVe5FOT5vuVfWCvWWY1pUrOPBOFPu9CNZYpABJSYPCigxy9rEc32E6mBamw3c&usqp=CAU"
-                                    />
-                                </div>
-                                <div className="d-flex flex-row align-items-center my-2">
-                                    <div className="people-item">
-                                        <AiOutlineUser className='ms-2'/>
-                                        نام و نام خانوادگی:
+                                <Link to={accountFound.id} className='account-found-link peoples-found d-flex flex-md-row flex-column justify-content-between align-items-center w-100' onClick={() => {
+                                    this.context.handlePersonId(accountFound.parentId, accountFound.id)
+                                }}>
+                                    <div className="people-image my-2">
+                                        <img
+                                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBnUckFxDVe5FOT5vuVfWCvWWY1pUrOPBOFPu9CNZYpABJSYPCigxy9rEc32E6mBamw3c&usqp=CAU"
+                                        />
                                     </div>
-                                    {accountFound.fullName}
-                                </div>
-                                <div className="d-flex flex-row align-items-center my-2">
-                                    <div className="people-item">
-                                        <BsTelephone className='ms-2'/>
-                                        شماره تلفن:
+                                    <div className="d-flex flex-row align-items-center my-2">
+                                        <div className="people-item">
+                                            <AiOutlineUser className='ms-2'/>
+                                            نام و نام خانوادگی:
+                                        </div>
+                                        {accountFound.fullName}
                                     </div>
-                                    {accountFound.phoneNumber}
-                                </div>
-                                <div className="d-flex flex-row align-items-center my-2">
-                                    <div className="people-item">
-                                        <AiOutlineBarcode className='ms-2'/>
-                                        کد ملی:
+                                    <div className="d-flex flex-row align-items-center my-2">
+                                        <div className="people-item">
+                                            <BsTelephone className='ms-2'/>
+                                            شماره تلفن:
+                                        </div>
+                                        {accountFound.phoneNumber}
                                     </div>
-                                    {accountFound.nationalCode}
-                                </div>
+                                    <div className="d-flex flex-row align-items-center my-2">
+                                        <div className="people-item">
+                                            <AiOutlineBarcode className='ms-2'/>
+                                            کد ملی:
+                                        </div>
+                                        {accountFound.nationalCode}
+                                    </div>
+                                </Link>
+                                {
+                                    localStorage.getItem('role') === "MANAGER" ?
+                                    <div className="d-flex flex-column align-items-center justify-content-center mx-2 my-2">
+                                        <button className={"btn btn-sm btn-danger mb-2 w-100"} onClick={() => {
+                                            this.setState({selectedAccount: accountFound, showDeleteModal: true})
+                                        }}>
+                                            <MdOutlineDeleteOutline color={red} size={15}/>
+                                        </button>
+                                        <button className={"btn-sm btn btn-warning w-100"} onClick={() => {
+                                            this.setState({selectedAccount: accountFound, showEditModal: true})
+                                        }}>
+                                            <MdOutlineModeEditOutline color={"#ffffff"} size={15}/>
+                                        </button>
+                                    </div>
+                                        : null
+                                }
                             </div>
-                        </Link>
                         ))}
                     &nbsp;
                 </div>
+                <Modal
+                    style={{left: "50%", translate: "-50%"}}
+                    className={"w-25"}
+                    centered={true}
+                    show={this.state.showDeleteModal}
+                    size={'xl'}
+                    onHide={() => this.setState({showDeleteModal : false})}
+                >
+                    <Modal.Header closeButton={true}>
+                        <Modal.Title>حذف پرسنل</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>آیا از حذف پرسنل {this.state.selectedAccount.fullName} مطمئن هستید؟</Modal.Body>
+                    <Modal.Footer>
+                        {/* Cancel button for delete account modal */}
+                        <button disabled={this.state.deleteLoading} className="btn btn-light" onClick={() => {this.setState({showDeleteModal: false})}}>لغو</button>
+
+                        {/* Confirm button for deleting account */}
+                        <Box sx={{ m: 1, position: 'relative' }}>
+                            <Button
+                                variant="contained"
+                                sx={{
+                                    backgroundColor: "#dc3545",
+                                    color: "black",
+                                    ":hover": {backgroundColor: "#a52834", color: "white"}
+                                }}
+                                disabled={this.state.deleteLoading}
+                                onClick={() => {
+                                    this.handleDelete(this.state.selectedAccount.id);
+                                }}
+                            >
+                                حذف
+                            </Button>
+                            {this.state.deleteLoading && (
+                                <CircularProgress
+                                    size={24}
+                                    sx={{
+                                        color: red[500],
+                                        position: 'absolute',
+                                        top: '50%',
+                                        left: '50%',
+                                        marginTop: '-12px',
+                                        marginLeft: '-12px',
+                                    }}
+                                />
+                            )}
+                        </Box>
+                    </Modal.Footer>
+                </Modal>
+                <Modal
+                    show={this.state.showEditModal}
+                    onHide={() => this.setState({showEditModal: false})}
+                    centered={true}
+                >
+                    <Modal.Header closeButton={true}>
+                        <h4>تغییر اطلاعات{this.state.selectedAccount.fullName}</h4>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <FormControl>
+                            {/*<FormLabel id="demo-controlled-radio-buttons-group">Gender</FormLabel>*/}
+                            <RadioGroup
+                                aria-labelledby="demo-controlled-radio-buttons-group"
+                                name="controlled-radio-buttons-group"
+                                value={this.state.editField}
+                                onChange={(e) => {
+                                    this.setState({editField: e.target.value})
+                                }}
+                            >
+                                <FormControlLabel value="password" control={<Radio />} label="تغییر گذرواژه" />
+                                <FormControlLabel value="email" control={<Radio />} label="تغییر ایمیل" />
+                            </RadioGroup>
+                        </FormControl>
+                        {
+                            this.state.editField === "password" ?
+                                <>
+                                    <div className="input-group-register col-md-4 col-12 mt-4"
+                                         style={{width: '100%'}}
+                                    >
+                                        <input type={this.state.showCurrentPassword ? "text" : "password"}
+                                               className={`input form-control`}
+                                               value={this.state.currentPassword}
+                                               onChange={(e) => this.setState({currentPassword: e.target.value})}
+                                               placeholder=" "
+                                        />
+                                        <label className="placeholder">
+                                            گذرواژه فعلی
+                                        </label>
+                                    </div>
+                                    <div className="mx-4 d-flex align-item-center">
+                                        <div className={"chk-show d-flex align-items-center justify-content-center"} onClick={
+                                            () => this.setState({showCurrentPassword: !this.state.showCurrentPassword})
+                                        }>
+                                            <input type="checkbox" checked={this.state.showCurrentPassword}/>
+                                        </div>
+                                        <label htmlFor="chk-show" className={"m-2"} style={{fontSize: "0.7rem", userSelect: 'none'}}>نمایش گذرواژه فعلی</label>
+                                    </div>
+                                    <div className="input-group-register col-md-4 col-12 mt-4"
+                                         style={{width: '100%'}}
+                                    >
+                                        <input type={this.state.showNewPassword ? "text" : "password"}
+                                               className={`input form-control`}
+                                               value={this.state.newPassword}
+                                               onChange={(e) => this.setState({newPassword: e.target.value})}
+                                               placeholder=" "
+                                        />
+                                        <label className="placeholder">
+                                            گذرواژه جدید
+                                        </label>
+                                    </div>
+                                    <div className="input-group-register col-md-4 col-12 mt-2"
+                                         style={{width: '100%'}}
+                                    >
+                                        <input type={this.state.showNewPassword ? "text" : "password"}
+                                               className={`input form-control`}
+                                               value={this.state.confirmNewPassword}
+                                               onChange={(e) => this.setState({confirmNewPassword: e.target.value})}
+                                               placeholder=" "
+                                        />
+                                        <label className="placeholder">
+                                            تکرار گذرواژه جدید
+                                        </label>
+                                    </div>
+                                    <div className="mx-4 d-flex align-item-center">
+                                        <div className={"chk-show d-flex align-items-center justify-content-center"} onClick={
+                                            () => this.setState({showNewPassword: !this.state.showNewPassword})
+                                        }>
+                                            <input type="checkbox" checked={this.state.showNewPassword}/>
+                                        </div>
+                                        <label htmlFor="chk-show" className={"m-2"} style={{fontSize: "0.7rem", userSelect: 'none'}}>نمایش گذرواژه جدید</label>
+                                    </div>
+
+                                </>
+                                :
+                                <div className="input-group-register col-md-4 col-12 mt-4"
+                                     style={{width: '100%'}}
+                                >
+                                    <input type={"text"}
+                                           className={`input form-control`}
+                                           value={this.state.newEmail}
+                                           onChange={(e) => this.setState({newEmail: e.target.value})}
+                                           placeholder=" "
+                                    />
+                                    <label className="placeholder">
+                                        ایمیل جدید
+                                    </label>
+                                </div>
+
+                        }
+                            </Modal.Body>
+                    <Modal.Footer>
+                        {/* Submit button for edit detail modal */}
+                        <Box sx={{ m: 1, position: 'relative' }}>
+                            <Button
+                                variant="contained"
+                                sx={{
+                                    backgroundColor: "#20d489",
+                                    color: "black",
+                                    ":hover": {backgroundColor: "#198754", color: "white"}
+                                }}
+                                disabled={this.state.deleteLoading}
+                                onClick={() => this.changeDetail()}
+                            >
+                                ثبت
+                            </Button>
+                            {this.state.deleteLoading && (
+                                <CircularProgress
+                                    size={24}
+                                    sx={{
+                                        color: green[500],
+                                        position: 'absolute',
+                                        top: '50%',
+                                        left: '50%',
+                                        marginTop: '-12px',
+                                        marginLeft: '-12px',
+                                    }}
+                                />
+                            )}
+                        </Box>
+
+                        {/* Close button for submitting edit detail */}
+                        <button disabled={this.state.deleteLoading} className="btn btn-light" onClick={() => this.setState({showEditModal : false})}>بستن</button>
+                    </Modal.Footer>
+                </Modal>
+
             </>
         );
     }
@@ -227,6 +443,115 @@ class SearchPersonnel extends Component {
                         }
                     })
             }})
+    }
+    async handleDelete(charId) {
+        this.setState({deleteLoading: true})
+
+        let respondChar = ''
+        await axios.get(`https://api.saadatportal.com/api/v1/supervisor/characteristic/${charId}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+            .then((data) => {
+                respondChar = data
+            }).catch(async () => {
+                if (localStorage.getItem('role') === 'MANAGER') {
+                    await axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        .then(async (response) => {
+                            if (response.headers["accesstoken"]) {
+                                localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                                await axios.get(`https://api.saadatportal.com/api/v1/supervisor/characteristic/${charId}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                    .then((data) => {
+                                        respondChar = data
+                                    })
+                            } else {
+                                window.location = '/'
+                            }
+                        })
+                }
+            })
+
+
+        await axios.delete(`https://api.saadatportal.com/api/v1/supervisor/characteristic/${charId}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+            .catch(() => {
+                if (localStorage.getItem('role') === 'MANAGER') {
+                    axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        .then((response) => {
+                            if (response.headers["accesstoken"]) {
+                                localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                                axios.delete(`https://api.saadatportal.com/api/v1/supervisor/characteristic/${charId}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                            } else {
+                                window.location = '/'
+                            }
+                        })
+                }
+            })
+
+        await axios.delete(`https://api.saadatportal.com/api/v1/supervisor/personnel/${respondChar.parentId}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+            .catch(() => {
+                if (localStorage.getItem('role') === 'MANAGER') {
+                    axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        .then((response) => {
+                            if (response.headers["accesstoken"]) {
+                                localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                                axios.delete(`https://api.saadatportal.com/api/v1/supervisor/personnel/${respondChar.parentId}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                            } else {
+                                window.location = '/'
+                            }
+                        })
+                }
+            })
+
+        this.setState({deleteLoading: false, showDeleteModal: false})
+        this.componentDidMount()
+    }
+
+    async changeDetail() {
+        this.setState({deleteLoading: true})
+        console.log(123)
+        if (this.state.editField === "password") {
+            console.log(345)
+            const body = {
+                username: this.state.selectedAccount.fullName,
+                oldPassword: this.state.currentPassword,
+                newPassword: this.state.newPassword,
+                role: "SUPERVISOR"
+            }
+            await axios.post(`https://api.saadatportal.com/api/v1/changePassword`, body, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                .catch(() => {
+                        if (localStorage.getItem('role') === 'MANAGER') {
+                            axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                                .then((response) => {
+                                    if (response.headers["accesstoken"]) {
+                                        localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                                        axios.post(`https://api.saadatportal.com/api/v1/changePassword`, body, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                    } else {
+                                        window.location = '/'
+                                    }
+                                })
+                        }
+                    }
+                )
+        } else {
+            const body = {
+                username: this.state.selectedAccount.fullName,
+                email: this.state.newEmail,
+                role: "SUPERVISOR"
+            }
+            await axios.post(`https://api.saadatportal.com/api/v1/changePassword`, body, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                .catch(() => {
+                        if (localStorage.getItem('role') === 'MANAGER') {
+                            axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                                .then((response) => {
+                                    if (response.headers["accesstoken"]) {
+                                        localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                                        axios.post(`https://api.saadatportal.com/api/v1/changePassword`, body, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                    } else {
+                                        window.location = '/'
+                                    }
+                                })
+                        }
+                    }
+                )
+        }
+        this.setState({deleteLoading: false})
     }
 }
 

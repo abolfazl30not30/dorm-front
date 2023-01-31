@@ -1,19 +1,35 @@
 import React, {Component} from 'react';
-import HamburgerMenu from './HamburgerMenu.jsx';
 import "../../style/header.css";
 import MainContext from '../../contexts/ContextProvider';
 import Dropdown from 'react-bootstrap/Dropdown';
-import {BsFillPersonFill, BsPerson, BsPersonPlus} from "react-icons/bs"
+import {BsPerson, BsPersonPlus} from "react-icons/bs"
 import {IoMdExit} from "react-icons/io"
 import {GoTasklist} from "react-icons/go"
 import {AiOutlineHome} from "react-icons/ai";
 import {MdSettings} from "react-icons/md";
-import {MdOutlineInventory} from "react-icons/md"
+import {MdOutlineInventory, MdOutlineModeEditOutline} from "react-icons/md"
 import {NavLink, Link} from "react-router-dom";
+import Modal from "react-bootstrap/Modal";
+import FormControl from "@mui/material/FormControl";
+import RadioGroup from "@mui/material/RadioGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Radio from "@mui/material/Radio";
+import {Box, Button, CircularProgress} from "@mui/material";
+import {green} from "@mui/material/colors";
+import axios from "axios";
 
 class Header extends Component {
     static contextType = MainContext;
     state = {
+        editLoading: false,
+        currentPassword: "",
+        newPassword: "",
+        confirmNewPassword: "",
+        newEmail: '',
+        showEditModal: false,
+        showCurrentPassword: false,
+        showNewPassword: false,
+        editField: "password",
         activeStyle: {
             textDecoration: "underline",
         },
@@ -97,13 +113,13 @@ class Header extends Component {
                                                 </h6>
                                                 {
                                                     localStorage.getItem('role') === "SUPERVISOR"
-                                                    ?
+                                                        ?
                                                         <p onClick={() => {
                                                             window.location = `/personnel/${localStorage.getItem('id')}`
                                                         }}>
                                                             مشاهده پروفایل
                                                         </p>
-                                                    :
+                                                        :
                                                         null
                                                 }
                                             </div>
@@ -122,6 +138,18 @@ class Header extends Component {
                                         <span>تنظیمات</span>
                                     </Link>
                                 </div>
+                                {
+                                    localStorage.getItem('role') === "MANAGER"
+                                        ?
+                                        <div className={"dropdown-items"} onClick={() => {
+                                            this.setState({showEditModal: true})
+                                        }}>
+                                            <MdOutlineModeEditOutline/>
+                                            <span>تغییر اطلاعات</span>
+                                        </div>
+                                        :
+                                        null
+                                }
                                 <div className="dropdown-items">
                                     <Link to="/" onClick={() => {
                                         localStorage.removeItem('role')
@@ -138,8 +166,202 @@ class Header extends Component {
                         </Dropdown>
                     </div>
                 </div>
+                <Modal
+                    show={this.state.showEditModal}
+                    onHide={() => this.setState({showEditModal: false})}
+                    centered={true}
+                >
+                    <Modal.Header closeButton={true}>
+                        <h4>تغییر اطلاعات مدیر</h4>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <FormControl>
+                            {/*<FormLabel id="demo-controlled-radio-buttons-group">Gender</FormLabel>*/}
+                            <RadioGroup
+                                aria-labelledby="demo-controlled-radio-buttons-group"
+                                name="controlled-radio-buttons-group"
+                                value={this.state.editField}
+                                onChange={(e) => {
+                                    this.setState({editField: e.target.value})
+                                }}
+                            >
+                                <FormControlLabel value="password" control={<Radio />} label="تغییر گذرواژه" />
+                                <FormControlLabel value="email" control={<Radio />} label="تغییر ایمیل" />
+                            </RadioGroup>
+                        </FormControl>
+                        {
+                            this.state.editField === "password" ?
+                                <>
+                                    <div className="input-group-register col-md-4 col-12 mt-4"
+                                         style={{width: '100%'}}
+                                    >
+                                        <input type={this.state.showCurrentPassword ? "text" : "password"}
+                                               className={`input form-control`}
+                                               value={this.state.currentPassword}
+                                               onChange={(e) => this.setState({currentPassword: e.target.value})}
+                                               placeholder=" "
+                                        />
+                                        <label className="placeholder">
+                                            گذرواژه فعلی
+                                        </label>
+                                    </div>
+                                    <div className="mx-4 d-flex align-item-center">
+                                        <div className={"chk-show d-flex align-items-center justify-content-center"} onClick={
+                                            () => this.setState({showCurrentPassword: !this.state.showCurrentPassword})
+                                        }>
+                                            <input type="checkbox" checked={this.state.showCurrentPassword}/>
+                                        </div>
+                                        <label htmlFor="chk-show" className={"m-2"} style={{fontSize: "0.7rem", userSelect: 'none'}}>نمایش گذرواژه فعلی</label>
+                                    </div>
+                                    <div className="input-group-register col-md-4 col-12 mt-4"
+                                         style={{width: '100%'}}
+                                    >
+                                        <input type={this.state.showNewPassword ? "text" : "password"}
+                                               className={`input form-control`}
+                                               value={this.state.newPassword}
+                                               onChange={(e) => this.setState({newPassword: e.target.value})}
+                                               placeholder=" "
+                                        />
+                                        <label className="placeholder">
+                                            گذرواژه جدید
+                                        </label>
+                                    </div>
+                                    <div className="input-group-register col-md-4 col-12 mt-2"
+                                         style={{width: '100%'}}
+                                    >
+                                        <input type={this.state.showNewPassword ? "text" : "password"}
+                                               className={`input form-control`}
+                                               value={this.state.confirmNewPassword}
+                                               onChange={(e) => this.setState({confirmNewPassword: e.target.value})}
+                                               placeholder=" "
+                                        />
+                                        <label className="placeholder">
+                                            تکرار گذرواژه جدید
+                                        </label>
+                                    </div>
+                                    <div className="mx-4 d-flex align-item-center">
+                                        <div className={"chk-show d-flex align-items-center justify-content-center"} onClick={
+                                            () => this.setState({showNewPassword: !this.state.showNewPassword})
+                                        }>
+                                            <input type="checkbox" checked={this.state.showNewPassword}/>
+                                        </div>
+                                        <label htmlFor="chk-show" className={"m-2"} style={{fontSize: "0.7rem", userSelect: 'none'}}>نمایش گذرواژه جدید</label>
+                                    </div>
+
+                                </>
+                                :
+                                <div className="input-group-register col-md-4 col-12 mt-4"
+                                     style={{width: '100%'}}
+                                >
+                                    <input type={"text"}
+                                           className={`input form-control`}
+                                           value={this.state.newEmail}
+                                           onChange={(e) => this.setState({newEmail: e.target.value})}
+                                           placeholder=" "
+                                    />
+                                    <label className="placeholder">
+                                        ایمیل جدید
+                                    </label>
+                                </div>
+
+                        }
+                    </Modal.Body>
+                    <Modal.Footer>
+                        {/* Submit button for edit detail modal */}
+                        <Box sx={{ m: 1, position: 'relative' }}>
+                            <Button
+                                variant="contained"
+                                sx={{
+                                    backgroundColor: "#20d489",
+                                    color: "black",
+                                    ":hover": {backgroundColor: "#198754", color: "white"}
+                                }}
+                                disabled={this.state.editLoading}
+                                onClick={() => this.changeDetail()}
+                            >
+                                ثبت
+                            </Button>
+                            {this.state.deleteLoading && (
+                                <CircularProgress
+                                    size={24}
+                                    sx={{
+                                        color: green[500],
+                                        position: 'absolute',
+                                        top: '50%',
+                                        left: '50%',
+                                        marginTop: '-12px',
+                                        marginLeft: '-12px',
+                                    }}
+                                />
+                            )}
+                        </Box>
+
+                        {/* Close button for submitting edit detail */}
+                        <button disabled={this.state.editLoading} className="btn btn-light" onClick={() => this.setState({showEditModal : false})}>بستن</button>
+                    </Modal.Footer>
+                </Modal>
             </>
         );
+    }
+    async changeDetail() {
+        this.setState({editLoading: true})
+        console.log(123)
+        if (this.state.editField === "password") {
+            console.log(345)
+            const body = {
+                username: localStorage.getItem('username'),
+                oldPassword: this.state.currentPassword,
+                newPassword: this.state.newPassword,
+                role: "MANAGER"
+            }
+            await axios.post(`https://api.saadatportal.com/api/v1/changePassword`, body, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                .catch(() => {
+                        if (localStorage.getItem('role') === 'MANAGER') {
+                            axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                                .then((response) => {
+                                    if (response.headers["accesstoken"]) {
+                                        localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                                        axios.post(`https://api.saadatportal.com/api/v1/changePassword`, body, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                    } else {
+                                        window.location = '/'
+                                    }
+                                })
+                        }
+                    }
+                )
+        } else {
+            const body = {
+                username: localStorage.getItem('username'),
+                email: this.state.newEmail,
+                role: "MANAGER"
+            }
+            await axios.post(`https://api.saadatportal.com/api/v1/changePassword`, body, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                .catch(() => {
+                        if (localStorage.getItem('role') === 'MANAGER') {
+                            axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                                .then((response) => {
+                                    if (response.headers["accesstoken"]) {
+                                        localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                                        axios.post(`https://api.saadatportal.com/api/v1/changePassword`, body, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                    } else {
+                                        window.location = '/'
+                                    }
+                                })
+                        }
+                    }
+                )
+        }
+        this.setState({
+            editLoading: false,
+            currentPassword: "",
+            newPassword: "",
+            confirmNewPassword: "",
+            newEmail: '',
+            showEditModal: false,
+            showCurrentPassword: false,
+            showNewPassword: false,
+            editField: "password",
+        })
     }
 
 }

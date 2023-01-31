@@ -55,6 +55,7 @@
     "react-widget": "^2.6.4",
     "react-widgets": "^5.8.4",
     "reactjs-popup": "^2.0.5",
+    "sass-loader": "^13.2.0",
     "source-map-loader": "^4.0.1",
     "web-vitals": "^2.1.4",
     "yup": "^0.32.11"

@@ -8,16 +8,19 @@ import ToggleButton from "@mui/material/ToggleButton";
 import {IoIosAddCircleOutline} from "react-icons/io";
 import './../../../../style/requestPage.css'
 import Skeleton from "react-loading-skeleton";
-import {Box, Button, CircularProgress, MenuItem, Select} from "@mui/material";
+import {Box, Button, CircularProgress, IconButton, MenuItem, Select} from "@mui/material";
 import {green} from "@mui/material/colors";
 import FormControl from "@mui/material/FormControl";
 import axios from "axios";
+import {IoAddOutline} from "react-icons/io5";
 
 class inventory extends Component {
     state = {
+        AddTypeLoading: false,
         searchLoading: true,
         loading: false,
         show: false,
+        showAddType: false,
         inventory: [],
         typeSearch: "all",
         type: "needs",
@@ -26,12 +29,15 @@ class inventory extends Component {
         count: "",
         selectedCategoryBoolean: true,
         selectedCategory: null,
+        types: [],
+        tempTypes: [],
         choices: [],
         tempChoices: [],
         showCategory: false,
         inputCategory: [],
         searchType: "name",
         searchInput: "",
+        tmpTypeInput: "",
     }
 
     async componentDidMount() {
@@ -94,6 +100,40 @@ class inventory extends Component {
                             axios.get('https://api.saadatportal.com/api/v1/supervisor/category/search?type=Inventory', {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                 .then((data) => this.setState({
                                     choices: data,
+                                    searchLoading: false
+                                }))
+                        } else {
+                            window.location = '/'
+                        }
+                    })
+            }})
+        axios.get('https://api.saadatportal.com/api/v1/supervisor/category/search?type=InventoryAccessoryType', {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+            .then((data) => this.setState({
+                types: data,
+                searchLoading: false
+            })).catch(() => {
+            if (localStorage.getItem('role') === 'MANAGER') {
+                axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                    .then((response) => {
+                        if (response.headers["accesstoken"]) {
+                            localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                            axios.get('https://api.saadatportal.com/api/v1/supervisor/category/search?type=InventoryAccessoryType', {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                .then((data) => this.setState({
+                                    types: data,
+                                    searchLoading: false
+                                }))
+                        } else {
+                            window.location = '/'
+                        }
+                    })
+            } else if (localStorage.getItem('role') === 'SUPERVISOR') {
+                axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                    .then((response) => {
+                        if (response.headers["accesstoken"]) {
+                            localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                            axios.get('https://api.saadatportal.com/api/v1/supervisor/category/search?type=InventoryAccessoryType', {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                .then((data) => this.setState({
+                                    types: data,
                                     searchLoading: false
                                 }))
                         } else {
@@ -215,15 +255,49 @@ class inventory extends Component {
                         }}><AiOutlineClose/></button>
                     </Modal.Header>
                     <Modal.Body>
-                        <div className="input-group-register mb-3">
+                        {/*<div className="input-group-register mb-3">*/}
+                        {/*    <select className='input'*/}
+                        {/*            style={{border: this.context.specificValidations.personnelFieldsValidation.type_requiredReg === false ? '2px solid red' : ''}}*/}
+                        {/*            value={this.context.personnelFields.type}*/}
+                        {/*            onChange={(e) =>  this.context.handleFields(e.target.value, 'personnelFields', 'type')}*/}
+                        {/*    >*/}
+                        {/*        <option selected="selected" value={''}/>*/}
+                        {/*        {*/}
+                        {/*            this.state.types.map((t, index) => (*/}
+                        {/*                <option value={t.name}>{t.name}</option>*/}
+                        {/*            ))*/}
+                        {/*        }*/}
+                        {/*        {*/}
+                        {/*            this.state.names.map((t, index) => (*/}
+                        {/*                <option value={t}>{t}</option>*/}
+                        {/*            ))*/}
+                        {/*        }*/}
+                        {/*    </select>*/}
+                        {/*    <label className="placeholder">*/}
+                        {/*        نوع*/}
+                        {/*        <span style={{color: 'red'}}>*</span>*/}
+                        {/*    </label>*/}
+                        {/*    {*/}
+                        {/*        this.context.specificValidations.personnelFieldsValidation.type_requiredReg === false*/}
+                        {/*            ? <small className="text-danger">لطفا نوع را انتخاب کنید!</small>*/}
+                        {/*            : null*/}
+                        {/*    }*/}
+                        {/*</div>*/}
+                        <div className="input-group-register mb-3 d-flex">
                             <FormControl className={"w-100"} style={{border: "none"}}>
                                 <Select
                                     sx={{ height: 50, borderRadius: "0.5rem", minWidth: '8rem', backgroundColor: "#fff"}}
                                     id="select-field"
                                     onChange={(e) => {this.getValueInputType(e.target.value)}}>
-                                    <MenuItem value={"needs"}>نیازمندی</MenuItem>
-                                    <MenuItem value={"deficiency"}>کاستی</MenuItem>
-                                    <MenuItem value={"onHand"}>دارایی</MenuItem>
+                                    {this.state.types.map((type) => {
+                                        <MenuItem value={type}>type</MenuItem>
+                                    })}
+                                    {this.state.tempTypes.map((type) => {
+                                        <MenuItem value={type}>type</MenuItem>
+                                    })}
+                                    {/*<MenuItem value={"needs"}>نیازمندی</MenuItem>*/}
+                                    {/*<MenuItem value={"deficiency"}>کاستی</MenuItem>*/}
+                                    {/*<MenuItem value={"onHand"}>دارایی</MenuItem>*/}
                                 </Select>
                                 <label className="placeholder" style={{
                                     top: '-10px',
@@ -235,10 +309,62 @@ class inventory extends Component {
                                     opacity: '1',
                                 }}>نوع</label>
                             </FormControl>
+                            <div className="col-md-1 col-2 d-flex align-item-center">
+                                <IconButton color="primary" onClick={() => {
+                                    this.handleOpenAddModal();
+
+                                    // console.log(this.state.names);
+                                    // this.handleAddType();
+                                }}>
+                                    <IoAddOutline size={30} width={'50%'} height={'50%'}/>
+                                </IconButton>
+                            </div>
                         </div>
                         <div>
-                            <label style={{marginRight: "33px"}}>دسته بندی: </label>
-                            <div style={{width: '100%'}}>
+                            {
+                                this.state.selectedCategoryBoolean // ifSelected condition
+                                    ? null
+                                    : <div className="d-flex justify-content-center mb-3">
+                                        <small className="text-danger">یکی از فیلدهای زیر را اتخاب
+                                            کنید!</small>
+                                    </div>
+                            }
+                            <div className="input-group-register mb-3 d-flex">
+                                <FormControl className={"w-100"} style={{border: "none"}}>
+                                    <Select
+                                        sx={{ height: 50, borderRadius: "0.5rem", minWidth: '8rem', backgroundColor: "#fff"}}
+                                        id="select-field"
+                                        onChange={(e) => {this.getValueInputType(e.target.value)}}>
+                                        {this.state.types.map((type) => {
+                                            <MenuItem value={type}>type</MenuItem>
+                                        })}
+                                        {this.state.tempTypes.map((type) => {
+                                            <MenuItem value={type}>type</MenuItem>
+                                        })}
+                                        {/*<MenuItem value={"needs"}>نیازمندی</MenuItem>*/}
+                                        {/*<MenuItem value={"deficiency"}>کاستی</MenuItem>*/}
+                                        {/*<MenuItem value={"onHand"}>دارایی</MenuItem>*/}
+                                    </Select>
+                                    <label className="placeholder" style={{
+                                        top: '-10px',
+                                        fontSize: "0.9rem",
+                                        backgroundColor: '#fff',
+                                        color: '#2a2e32b3',
+                                        margin: '-0.2rem 0',
+                                        padding: '0 .4rem -0.4rem',
+                                        opacity: '1',
+                                    }}>دسته بندی</label>
+                                </FormControl>
+                                <div className="col-md-1 col-2 d-flex align-item-center">
+                                    <IconButton color="primary" onClick={() => {
+                                        this.handleOpenAddModal();
+
+                                        // console.log(this.state.names);
+                                        // this.handleAddType();
+                                    }}>
+                                        <IoAddOutline size={30} width={'50%'} height={'50%'}/>
+                                    </IconButton>
+                                </div>
                                 <Accordion defaultActiveKey="0"
                                            style={{backgroundColor: this.state.selectedCategoryBoolean ? '' : 'rgba(255, 0, 0, 0.4)'}}
                                 >
@@ -350,6 +476,32 @@ class inventory extends Component {
                     </Modal.Body>
                 </Modal>
 
+                <Modal centered={true} show={this.state.showAddType} onHide={() => this.setState({showAddTypeModal: false})}>
+                    <Modal.Header closeButton={true}>
+                        اضافه کردن نوع
+                    </Modal.Header>
+                    <Modal.Body>
+                        <input
+                            type="text"
+                            className={`input form-control`}
+                            onChange={(e) => this.setState({tmpTypeInput : e.target.value})}
+                            placeholder='نوع'
+                        />
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <button className="btn btn-success" onClick={(event) => {
+                            if(this.handleIsValid(event)){
+                                this.handleAddType();
+                            }
+                        }}>ثبت
+                        </button>
+                        <button className="btn btn-light" onClick={() => {
+                            this.setState({showAddTypeModal: false})
+                        }}>بستن
+                        </button>
+                    </Modal.Footer>
+                </Modal>
+
                 <Modal centered show={this.state.showCategory} onHide={() => {
                     this.handleCloseCategory()
                 }}>
@@ -374,6 +526,12 @@ class inventory extends Component {
                 </Modal>
             </>
         );
+    }
+
+    handleIsValid = () => {
+        let regCheck = /^\s*$/;
+
+        return !regCheck.test(this.state.tmpTypeInput);
     }
 
     handleClose = () => {
@@ -585,7 +743,10 @@ class inventory extends Component {
                     })
             }})
     }
+    handleAddType() {
+        this.setState({AddTypeLoading: true})
 
+    }
     handleFilterType = async (e) =>{
         this.setState({typeSearch: e.target.value, searchLoading: true})
         const value = e.target.value !== "all" ? e.target.value : ""

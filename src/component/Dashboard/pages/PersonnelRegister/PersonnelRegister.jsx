@@ -166,7 +166,7 @@ class PersonnelRegister extends Component {
                     />
                 </div>
                 <Modal centered show={this.state.showDoneModal} style={window.innerWidth > 768 ? {width: "25%", marginLeft: "50%", translate: "-50%"} : {width: "100%"}}>
-                    <Modal.Header className={"bg-success text-cente d-flex justify-content-center"}>
+                    <Modal.Header className={"bg-success text-center d-flex justify-content-center"}>
                         <BsCheckCircleFill style={{color: "#fff"}} size={60}/>
                     </Modal.Header>
                     <Modal.Body className="px-4">
@@ -176,7 +176,7 @@ class PersonnelRegister extends Component {
                     </Modal.Body>
                     <Modal.Footer>
                         <div className="d-flex flex-row justify-content-center flex-column flex-md-row">
-                            <Link to={`/dashboard/people/${this.state.personnelId}`} className='btn mx-3 btn-sm px-5 btn-success' onClick={() =>{this.handleGoToShow()}}>نمایش</Link>
+                            <Link to={`/dashboard/personnel/${this.state.personnelId}`} className='btn mx-3 btn-sm px-5 btn-success' onClick={() =>{this.handleGoToShow()}}>نمایش</Link>
                             <Link to="" className='btn btn-sm mx-3 px-5 btn-secondary' onClick={() =>{this.handleCloseModal()}}>بستن</Link>
                         </div>
                     </Modal.Footer>

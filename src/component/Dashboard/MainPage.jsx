@@ -493,7 +493,6 @@ class MainPage extends Component {
                             <Route path="/people/*" element={(<ProfilePage/>)}/>
                             <Route path="/personnel" element={(<SearchPersonnel/>)}/>
                             <Route path="/personnel/*" element={(<PersonnelProfilePage/>)}/>
-                            <Route path="/ManagerPanel" element={(<ManagerPanel/>)}/>
                             <Route path='/payment' element={(<PaymentPage/>)}/>
                             <Route path='/contacts' element={(<Contacts/>)}/>
                             <Route path='/CallHistory' element={(<CallHistory/>)}/>
