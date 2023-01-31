@@ -12,129 +12,6 @@ import axios from "axios";
 class PresenceAbsenceRoomPerson extends Component {
     static contextType = BuildingContext;
     state = {
-        roomApi: [
-            {
-                "roomNumber": 12,
-                "information": [
-                    {
-                        "bedName": "A",
-                        "personName": "فاضل",
-                        "personId": "9b98c1c579674edd8df8bfcb5c0482f1",
-                        "personNationalCode": "2500533395"
-                    },
-                    {
-                        "bedName": "B",
-                        "personName": "میلاد",
-                        "personId": "9b98c1c579674edd8df8bfcb5c0482f2",
-                        "personNationalCode": "2500533395"
-                    },
-                    {
-                        "bedName": "C",
-                        "personName": "ابوالفضل",
-                        "personId": "9b98c1c579674edd8df8bfcb5c0482f3",
-                        "personNationalCode": "2500533395"
-                    }
-                ]
-            },
-            {
-                "roomNumber": 13,
-                "information": [
-                    {
-                        "bedName": "A",
-                        "personName": "امین",
-                        "personId": "9b98c1c579674edd8df8bfcb5c0482f4",
-                        "personNationalCode": "2500533394"
-                    },
-                    {
-                        "bedName": "B",
-                        "personName": "امیر",
-                        "personId": "9b98c1c579674edd8df8bfcb5c0482f5",
-                        "personNationalCode": "2500533395"
-                    },
-                    {
-                        "bedName": "C",
-                        "personName": "مهدی",
-                        "personId": "9b98c1c579674edd8df8bfcb5c0482f6",
-                        "personNationalCode": "2500533395"
-                    }
-                ]
-            }
-        ],
-        roomsFake: [
-            {
-                "id": "c065ace3afd84a818c9f563112a8a61f",
-                "number": 1,
-                "description": null,
-                "beds": [
-                    {
-                        "id": "427a4678fc5b42bca15c86c756ecbe32",
-                        "name": "تخت A",
-                        "empty": false,
-                        "room": "c065ace3afd84a818c9f563112a8a61f",
-                        "person": 'میلاد'
-                    }
-                ],
-                "empty": false,
-                "accessories": [],
-                "unit": "28579824ad914a3aae4b6e7386ee5c96",
-                "concatName": "100-1"
-            },
-            {
-                "id": "c065ace3afd84a818c9f563112a8a61f",
-                "number": 1,
-                "description": null,
-                "beds": [
-                    {
-                        "id": "427a4678fc5b42bca15c86c756ecbe32",
-                        "name": "تخت A",
-                        "empty": false,
-                        "room": "c065ace3afd84a818c9f563112a8a61f",
-                        "person": 'ابوالفضل'
-                    }
-                ],
-                "empty": false,
-                "accessories": [],
-                "unit": "28579824ad914a3aae4b6e7386ee5c96",
-                "concatName": "100-1"
-            },
-            {
-                "id": "c065ace3afd84a818c9f563112a8a61f",
-                "number": 1,
-                "description": null,
-                "beds": [
-                    {
-                        "id": "427a4678fc5b42bca15c86c756ecbe32",
-                        "name": "تخت A",
-                        "empty": true,
-                        "room": "c065ace3afd84a818c9f563112a8a61f",
-                        "person": null
-                    }
-                ],
-                "empty": true,
-                "accessories": [],
-                "unit": "28579824ad914a3aae4b6e7386ee5c96",
-                "concatName": "100-1"
-            },
-
-            {
-                "id": "c065ace3afd84a818c9f563112a8a61f",
-                "number": 1,
-                "description": null,
-                "beds": [
-                    {
-                        "id": "427a4678fc5b42bca15c86c756ecbe32",
-                        "name": "تخت A",
-                        "empty": true,
-                        "room": "c065ace3afd84a818c9f563112a8a61f",
-                        "person": null
-                    }
-                ],
-                "empty": true,
-                "accessories": [],
-                "unit": "28579824ad914a3aae4b6e7386ee5c96",
-                "concatName": "100-1"
-            }
-        ],
         rooms: [],
         unit: [],
         isLoading: false
@@ -172,13 +49,6 @@ class PresenceAbsenceRoomPerson extends Component {
                         }
                     })
             }})
-
-        /*const responseUnit = await fetch(`https://api.saadatportal.com/api/v1/unit/${this.context.unitIdPA}`).then((response) => response.json())
-            .then((data) => this.setState({unit: data, isLoading: false}));*/
-
-        /* const test = await fetch(`https://api.saadatportal.com/api/v1/unit/person/${this.context.unitIdPA}`).then((response) => response.json())
-             .then((data) => console.log(data))*/
-
     }
 
 
@@ -233,7 +103,7 @@ class PresenceAbsenceRoomPerson extends Component {
                                                                                              disabled={b.checked}
                                                                                              class='me-2'
                                                                                              onChange={(e) => {
-                                                                                                 this.handleGetStatus(e, b.personId)
+                                                                                                 this.handleGetStatus(e, r, b)
                                                                                              }}
                                                                         />
                                                                         : null
@@ -254,8 +124,8 @@ class PresenceAbsenceRoomPerson extends Component {
         );
     }
 
-    handleGetStatus = async (checked, id) => {
-
+    handleGetStatus = async (checked, room, info) => {
+        console.log(info)
         let today = new Date().toLocaleDateString('fa-IR-u-nu-latn', {
             year: 'numeric',
             month: '2-digit',
@@ -266,7 +136,7 @@ class PresenceAbsenceRoomPerson extends Component {
         const report = {
             "date": today,
             "title": "cleaning",
-            "personId": id,
+            "personId": info.personId,
             "checkCleaning": checked
         }
 
@@ -301,6 +171,11 @@ class PresenceAbsenceRoomPerson extends Component {
                         }
                     })
             }})
+        let updatedRooms = [...this.state.rooms]
+        const roomIndex = updatedRooms.indexOf(room)
+        const bedIndex = updatedRooms[roomIndex].information.indexOf(info)
+        updatedRooms[roomIndex].information[bedIndex].checked = true
+        this.setState({rooms: updatedRooms})
     }
 }
 
