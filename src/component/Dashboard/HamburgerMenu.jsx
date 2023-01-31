@@ -24,6 +24,18 @@ class HamburgerMenu extends Component {
                 <div className='logo-container'>
                     <img src={logo} className="sidenav-logo" alt="لوگو"/>
                 </div>
+                {
+                    localStorage.getItem('role') === 'MANAGER'
+                        ? <li className='sidenav-item'>
+                            <NavLink activeClassName='active-sidebar' to="/dashboard/ManagerPanel" className='sidenav-link'
+                                     onClick={window.innerWidth <= 768 && this.context.handleSidebar}>
+                                <i className="bi bi-gear"/>
+                                پنل مدیریت
+                            </NavLink>
+                        </li>
+                        : null
+                }
+
                 <ul>
                     <li className='sidenav-item'>
                         <NavLink activeClassName='active-sidebar' to="/dashboard/payment" className='sidenav-link'
@@ -39,18 +51,7 @@ class HamburgerMenu extends Component {
                             تقويم
                         </NavLink>
                     </li>
-                    {
-                        localStorage.getItem('role') === 'SUPERVISOR'
-                            ? <li className='sidenav-item'>
-                                <NavLink activeClassName='active-sidebar' to="/dashboard/Request" className='sidenav-link'
-                                         onClick={window.innerWidth <= 768 && this.context.handleSidebar}>
-                                    <i className="bi bi-person-circle"/>
-                                    درخواست
-                                </NavLink>
-                            </li>
-                            : null
-                    }
-                    {
+                     {
                         localStorage.getItem('role') === 'MANAGER'
                         ? <li className='sidenav-item'>
                                 <NavLink activeClassName='active-sidebar' to="/dashboard/Request-manager" className='sidenav-link'
@@ -97,7 +98,7 @@ class HamburgerMenu extends Component {
                     <li className='sidenav-item'>
                         <NavLink activeClassName='active-sidebar' to="/dashboard/taskManagement" className='sidenav-link'
                                  onClick={window.innerWidth <= 768 && this.context.handleSidebar}>
-                            <i className="bi bi-gear"></i>
+                            <i className="bi bi-clipboard2-check"></i>
                             مدیریت وظایف
                         </NavLink>
                     </li>

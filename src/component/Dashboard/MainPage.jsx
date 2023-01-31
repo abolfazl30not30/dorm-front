@@ -2,11 +2,8 @@ import React, {Component} from 'react';
 import Home from './pages/Home';
 
 import {Routes, Route} from 'react-router-dom';
-import FloorAndUnit from './pages/Inventory and capacity/FloorAndUnit';
-import RoomAndBed from './pages/Inventory and capacity/RoomAndBed';
 import BuildingContext from '../../contexts/Building';
 import EditFloorAndUnit from './pages/edit building/EditFloorAndUnit';
-import EditRoomAndBed from './pages/edit building/EditRoomAndBed';
 import MainRegister from './pages/Register/MainRegister';
 import ProfilePage from './pages/People/ProfilePage';
 import SearchAccount from './pages/People/SearchAccount';
@@ -18,7 +15,6 @@ import RequestPage from './pages/RequestPage/RequestPage'
 import Contacts from './pages/contacts/contacts';
 import PaymentHistory from './pages/PaymentHistory/PaymentHistory'
 import RequestPageManager from "./pages/RequestPage/RequestPageManager";
-import CameraHistoryPage from "./pages/CameraHistoryPage/CameraHistoryPage";
 import CallHistory from './pages/callHistory/callHistory';
 import TrelloPage from "./pages/TrelloPage/TrelloPage";
 import Inventory from './pages/inventory/inventory';
@@ -36,6 +32,7 @@ import Room from "./pages/New IAC/Room"
 import EditRoom from "./pages/Edit New IAC/EditRoom"
 import Bed from "./pages/New IAC/Bed"
 import EditBed from "./pages/Edit New IAC/EditBed"
+import ManagerPanel from "./pages/ManagerPanel/ManagerPanel";
 
 
 class MainPage extends Component {
@@ -496,6 +493,7 @@ class MainPage extends Component {
                             <Route path="/people/*" element={(<ProfilePage/>)}/>
                             <Route path="/personnel" element={(<SearchPersonnel/>)}/>
                             <Route path="/personnel/*" element={(<PersonnelProfilePage/>)}/>
+                            <Route path="/ManagerPanel" element={(<ManagerPanel/>)}/>
                             <Route path='/payment' element={(<PaymentPage/>)}/>
                             <Route path='/contacts' element={(<Contacts/>)}/>
                             <Route path='/CallHistory' element={(<CallHistory/>)}/>
