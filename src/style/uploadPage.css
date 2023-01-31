@@ -5,7 +5,7 @@
 .upload-container {
     background-color: #fff;
     padding: 1rem;
-    margin-top: 2rem;
+    margin-top: 2rem !important;
     border-radius: 0.5rem;
     box-shadow: 0 0 20px 0 #4c577d05;
     direction: rtl;
@@ -55,7 +55,7 @@
     /* background-color: #eee; */
     color: #444;
     cursor: pointer;
-    padding: 1.1rem;
+    padding: 0;
     width: 100%;
     text-align: left;
     border: none;

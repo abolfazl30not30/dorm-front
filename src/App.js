@@ -15,7 +15,7 @@ class App extends Component {
                         <Route exact path="/" element={(<Login/>)}/>
                         <Route exact path="/forgot-password" element={(<ForgotPassword/>)}/>
                         <Route exact path="/dashboard/*" element={(<ProtectedRoute><MainDashboard/></ProtectedRoute>)}/>
-{/*//                         <Route exact path="/dashboard/*" element={(<MainDashboard/>)}/>*/}
+                        {/*<Route exact path="/dashboard/*" element={(<MainDashboard/>)}/>*/}
                     </Routes>
                 </BrowserRouter>
             </>

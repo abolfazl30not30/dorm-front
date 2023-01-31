@@ -233,7 +233,7 @@ class CInformationPage extends Component {
                                 <></>
                             )
                         }
-                        <div className="input-group-register col-4">
+                        <div className="input-group-register col-md-4 col-12">
                             <FormControl className={"w-100"} style={{border: "none"}}>
                                 <Select
                                     sx={{ height: 50, borderRadius: "0.5rem", minWidth: '10rem', backgroundColor: "#fff"}}
