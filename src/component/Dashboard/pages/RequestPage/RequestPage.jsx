@@ -16,6 +16,10 @@ import {Box, CircularProgress, FormControl, MenuItem, Select} from "@mui/materia
 import {green} from "@mui/material/colors";
 import Skeleton from "react-loading-skeleton";
 import axios from "axios";
+import BootstrapSwitchButton from "bootstrap-switch-button-react";
+import RadioGroup from "@mui/material/RadioGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Radio from "@mui/material/Radio";
 
 class RequestPage extends Component {
 
@@ -27,10 +31,13 @@ class RequestPage extends Component {
     }
 
     state = {
+        tempDescription: "",
+        tempIsDone: "false",
+        showEditDoneModal: false,
         cardsLoading: true,
         loading: false,
         showModalForAddingType: false,
-
+        tempRequest: {},
         searchBase: 'name',
 
         failureModalShow: false,
@@ -213,10 +220,31 @@ class RequestPage extends Component {
                                                     <div className="request-item-title">دلیل:</div>
                                                     <div>{request.reason}</div>
                                                 </div>
+                                                <div className='d-flex flex-row justify-content-between align-items-baseline mb-2'>
+                                                    <div className="d-flex flex-row align-items-baseline">
+                                                        <i className="bi bi-chevron-left ms-1"/>
+                                                        <div className="request-item-title">پیگیری:</div>
+                                                        {
+                                                            !request.done
+                                                                ? (
+                                                                    <Button className={'request-accept'} onClick={() => this.setState({showEditDoneModal: true, tempRequest: request})}>انجام نشده</Button>
+                                                            )
+                                                            : <OverlayTrigger
+                                                                    placement="bottom"
+                                                                    delay={{ show: 250, hide: 400 }}
+                                                                    overlay={<Tooltip id="button-tooltip">
+                                                                        جرئیات
+                                                                    </Tooltip>
+                                                                    }
+                                                                >
+                                                                    <Button className={'request-reject'}>انجام شده</Button>
+                                                                </OverlayTrigger>
+                                                        }
+                                                    </div>
+                                                </div>
                                                 <div className='d-flex flex-row align-items-baseline mb-2'>
                                                     <i className="bi bi-chevron-left ms-1"/>
                                                     <div className="request-item-title">وضعیت:</div>
-
 
                                                     {
                                                         request.checked !== null
@@ -501,6 +529,79 @@ class RequestPage extends Component {
                         </button>
                     </Modal.Footer>
                 </Modal>
+
+                <Modal centered show={this.state.showEditDoneModal} onHide={() => {
+                    if (!this.state.loading) {this.setState({showEditDoneModal: false})}
+                }}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>وضعیت پیگیری</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body className="justify-content-center">
+                        <FormControl>
+                            <RadioGroup
+                                row
+                                aria-labelledby="demo-row-radio-buttons-group-label"
+                                name="row-radio-buttons-group"
+                                value={this.state.tempIsDone}
+                                onChange={(value) => {
+                                    this.setState({tempIsDone: value.target.value})
+                                }}
+                            >
+                                <FormControlLabel disabled={this.state.loading} labelPlacement="top" value="true" control={<Radio />} label="انجام شده" />
+                                <FormControlLabel disabled={this.state.loading} labelPlacement="top" value="false" control={<Radio />} label="انجام نشده" />
+                            </RadioGroup>
+                        </FormControl>
+                        <div style={{display: this.state.tempIsDone !== "true" ? 'none' : 'block'}}>
+                            <div className={'input-group-register'}>
+                                <input
+                                    className={'input form-control'}
+                                    placeholder={' '}
+                                    value={this.state.tempDescription}
+                                    onChange={(value) => {
+                                        this.setState({tempDescription : value.target.value});
+                                    }}
+                                />
+                                <label className={'placeholder'}>
+                                    توضیحات
+                                </label>
+                            </div>
+                        </div>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Box sx={{ m: 1, position: 'relative' }}>
+                            <Button
+                                className={"buttonDone"}
+                                variant="contained"
+                                disabled={this.state.loading}
+                                onClick={(event) => {
+                                    if (this.state.tempIsDone === "true" && this.state.tempDescription !== "") {
+                                        this.handleSubmitDone();
+                                    } else if (this.state.tempIsDone === "false") {
+                                        this.setState({showEditDoneModal: false, tempDescription: ""})
+                                    }
+                                }}>
+                                ثبت
+                            </Button>
+                            {this.state.loading && (
+                                <CircularProgress
+                                    size={24}
+                                    sx={{
+                                        color: green[500],
+                                        position: 'absolute',
+                                        top: '50%',
+                                        left: '50%',
+                                        marginTop: '-12px',
+                                        marginLeft: '-12px',
+                                    }}
+                                />
+                            )}
+                        </Box>
+                        <button className="btn btn-light" disabled={this.state.loading} onClick={() => {
+                            if (!this.state.loading) {this.setState({showEditDoneModal: false})}
+                        }}>بستن
+                        </button>
+                    </Modal.Footer>
+                </Modal>
             </>
         );
     }
@@ -641,30 +742,6 @@ class RequestPage extends Component {
         let date2 = year + "/" + month + "/" + day + " " + "00:" + "00:" + "00";
 
         this.setState({loading: true})
-        // await fetch('https://api.saadatportal.com/api/v1/supervisor/request', {
-        //     method: 'POST',
-        //     headers: {
-        //         'Accept': 'application/json',
-        //         'Content-Type': 'application/json'
-        //     },
-        //
-        //     body: JSON.stringify({
-        //         dateOfRegistration: date2,
-        //         name: this.state.tempFields.topic,
-        //         type: this.state.tempFields.type,
-        //         reason: this.state.tempFields.reason,
-        //         checked: null,
-        //         supervisorId: "6666666",
-        //         description: this.state.tempFields.description,
-        //         assignee: this.state.tempFields.name
-        //     })
-        // }).then(async (response) => {
-        //     this.setState({loading: false})
-        //     const newRequest = await response.json()
-        //     const updatedRequests = [...this.state.requests]
-        //     updatedRequests.push(newRequest)
-        //     this.setState({requests: updatedRequests})
-        // });
 
         axios.post('https://api.saadatportal.com/api/v1/supervisor/request', {
             dateOfRegistration: date2,
@@ -755,12 +832,6 @@ class RequestPage extends Component {
     handleSearchInput = async (e) =>{
         const value = e.target.value;
         this.setState({cardsLoading: true})
-        // await fetch(`https://api.saadatportal.com/api/v1/supervisor/request/search?${this.state.searchBase}=${value}`).then((response) => response.json())
-        //     .then((data) => {
-        //         this.setState({requests: data});
-        //         this.setState({cardsLoading: false})
-        //     });
-
         axios.get(`https://api.saadatportal.com/api/v1/supervisor/request/search?${this.state.searchBase}=${value}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
             .then((data) => {
                 this.setState({requests: data});
@@ -801,6 +872,12 @@ class RequestPage extends Component {
         this.setState({failureModalShow: false})
     }
 
+    handleSubmitDone = () => {
+        if (this.state.tempIsDone === "true") {
+            console.log(this.state.tempDescription)
+        }
+        this.setState({showEditDoneModal: false, tempDescription: ""})
+    }
 }
 
 export default RequestPage;

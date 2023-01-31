@@ -51,9 +51,21 @@ class HamburgerMenu extends Component {
                             تقويم
                         </NavLink>
                     </li>
-                     {
+                    {
+                        localStorage.getItem('role') === 'SUPERVISOR'
+                            ? <li className='sidenav-item'>
+                                <NavLink activeClassName='active-sidebar' to="/dashboard/Request" className='sidenav-link'
+                                         onClick={window.innerWidth <= 768 && this.context.handleSidebar}>
+                                    <i className="bi bi-person-circle"/>
+                                    درخواست
+                                </NavLink>
+                            </li>
+
+                            : null
+                    }
+                    {
                         localStorage.getItem('role') === 'MANAGER'
-                        ? <li className='sidenav-item'>
+                            ? <li className='sidenav-item'>
                                 <NavLink activeClassName='active-sidebar' to="/dashboard/Request-manager" className='sidenav-link'
                                          onClick={window.innerWidth <= 768 && this.context.handleSidebar}>
                                     <i className="bi bi-envelope"></i>

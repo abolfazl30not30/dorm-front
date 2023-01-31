@@ -166,6 +166,28 @@ class RequestPage extends Component {
                                                     <div className="request-item-title">درخواست کننده:</div>
                                                     <div>{request.assignee}</div>
                                                 </div>
+                                                <div className='d-flex flex-row justify-content-between align-items-baseline mb-2'>
+                                                    <div className="d-flex flex-row align-items-baseline">
+                                                        <i className="bi bi-chevron-left ms-1"/>
+                                                        <div className="request-item-title">پیگیری:</div>
+                                                        {
+                                                            !request.done
+                                                                ? (
+                                                                    <Button className={'request-accept'}>انجام نشده</Button>
+                                                                )
+                                                                : <OverlayTrigger
+                                                                    placement="bottom"
+                                                                    delay={{ show: 250, hide: 400 }}
+                                                                    overlay={<Tooltip id="button-tooltip">
+                                                                        جرئیات
+                                                                    </Tooltip>
+                                                                    }
+                                                                >
+                                                                    <Button className={'request-reject'}>انجام شده</Button>
+                                                                </OverlayTrigger>
+                                                        }
+                                                    </div>
+                                                </div>
                                                 <div className='d-flex flex-row mb-2'>
                                                     <i className="bi bi-chevron-left ms-1"/>
                                                     <div className="request-item-title">دلیل:</div>
@@ -507,20 +529,6 @@ class RequestPage extends Component {
         const index = updatedRequests.indexOf(this.state.tmpRequest)
         if (this.state.tmpRequestForSubmit.checked === false) {
             this.setState({loading: true})
-
-
-            // const getFailureReasonId = await fetch('https://api.saadatportal.com/api/v1/failureReason', {
-            //     method: 'POST',
-            //     headers: {
-            //         'Accept': 'application/json',
-            //         'Content-Type': 'application/json'
-            //     },
-            //     body: JSON.stringify({
-            //         name: this.state.failure.name,
-            //         type: this.state.failure.type,
-            //         reason: this.state.failure.reason
-            //     })
-            // })
 
             const getFailureReasonId = await axios.post('https://api.saadatportal.com/api/v1/supervisor/failureReason', {
                 name: this.state.failure.name,
