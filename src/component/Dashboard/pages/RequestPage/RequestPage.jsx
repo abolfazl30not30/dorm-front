@@ -12,7 +12,7 @@ import '../../../../style/registerPage.css';
 import '../../../../style/paymentPage.css';
 import '../../../../style/searchAccount.css';
 import {MdDone} from "react-icons/md";
-import {Box, CircularProgress, FormControl, MenuItem, Select} from "@mui/material";
+import {Box, CircularProgress, FormControl, IconButton, MenuItem, Select} from "@mui/material";
 import {green} from "@mui/material/colors";
 import Skeleton from "react-loading-skeleton";
 import axios from "axios";
@@ -20,6 +20,7 @@ import BootstrapSwitchButton from "bootstrap-switch-button-react";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Radio from "@mui/material/Radio";
+import {IoAddOutline} from "react-icons/io5";
 
 class RequestPage extends Component {
 
@@ -45,10 +46,8 @@ class RequestPage extends Component {
         showOverlay: false,
         showType: false,
 
-        choices: [
-            'محصولات بهداشتی',
-            'بیمه',
-        ],
+        choices: [],
+        tempChoices: [],
 
         addInputContentInModal: '',
         addButtonDisabled: false,
@@ -84,17 +83,17 @@ class RequestPage extends Component {
 
     componentDidMount = async () => {
 
-        axios.get('https://api.saadatportal.com/api/v1/supervisor/request', {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+        await axios.get('https://api.saadatportal.com/api/v1/supervisor/request', {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
             .then((data) => {
                 this.setState({requests: data});
                 this.setState({cardsLoading: false});
-            }).catch(() => {
+            }).catch(async () => {
             if (localStorage.getItem('role') === 'MANAGER') {
-                axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
-                    .then((response) => {
+                await axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                    .then(async (response) => {
                         if (response.headers["accesstoken"]) {
                             localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                            axios.get('https://api.saadatportal.com/api/v1/supervisor/request', {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                            await axios.get('https://api.saadatportal.com/api/v1/supervisor/request', {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                 .then((data) => {
                                     this.setState({requests: data});
                                     this.setState({cardsLoading: false});
@@ -104,15 +103,47 @@ class RequestPage extends Component {
                         }
                     })
             } else if (localStorage.getItem('role') === 'SUPERVISOR') {
-                axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
-                    .then((response) => {
+                await axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                    .then(async (response) => {
                         if (response.headers["accesstoken"]) {
                             localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                            axios.get('https://api.saadatportal.com/api/v1/supervisor/request', {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                            await axios.get('https://api.saadatportal.com/api/v1/supervisor/request', {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                 .then((data) => {
                                     this.setState({requests: data});
                                     this.setState({cardsLoading: false});
                                 })
+                        } else {
+                            window.location = '/'
+                        }
+                    })
+            }})
+
+        axios.get('https://api.saadatportal.com/api/v1/supervisor/category/search?type=Request', {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+            .then((data) => this.setState({
+                choices: data,
+            })).catch(() => {
+            if (localStorage.getItem('role') === 'MANAGER') {
+                axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                    .then((response) => {
+                        if (response.headers["accesstoken"]) {
+                            localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                            axios.get('https://api.saadatportal.com/api/v1/supervisor/category/search?type=Request', {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                .then((data) => this.setState({
+                                    choices: data,
+                                }))
+                        } else {
+                            window.location = '/'
+                        }
+                    })
+            } else if (localStorage.getItem('role') === 'SUPERVISOR') {
+                axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                    .then((response) => {
+                        if (response.headers["accesstoken"]) {
+                            localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                            axios.get('https://api.saadatportal.com/api/v1/supervisor/category/search?type=Request', {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                .then((data) => this.setState({
+                                    choices: data,
+                                }))
                         } else {
                             window.location = '/'
                         }
@@ -323,59 +354,115 @@ class RequestPage extends Component {
                                 }
 
                             </div>
-                            <div>
-                                <Accordion defaultActiveKey="0"
-                                           style={{backgroundColor: this.state.Validations.selectedTypeBoolean ? '' : 'rgba(255, 0, 0, 0.4)'}}
-                                           className={'p-1'}
-                                >
-                                    <Accordion.Item eventKey="0">
-                                        <Accordion.Header>
-                                            {this.state.tempFields.type}&nbsp;
-                                        </Accordion.Header>
-                                        <Accordion.Body>
-                                            <div>
-                                                <div className=' row flex-wrap'>
-                                                    {
-                                                        this.state.Validations.selectedTypeBoolean // ifSelected condition
-                                                            ? null
-                                                            : <div className="d-flex justify-content-center mb-3">
-                                                                <small className="text-danger">یکی از گزینه های زیر را
-                                                                    انتخاب
-                                                                    کنید!</small>
-                                                            </div>
-                                                    }
-                                                    <ToggleButtonGroup
-                                                        orientation="vertical"
-                                                        value={this.state.tempFields.type}
-                                                        exclusive
-                                                        onChange={this.handleAlignment}
-                                                        aria-label="text alignment"
-                                                    >
+                            <div className={'d-flex my-3 mx-2'}>
+                                <FormControl className={"w-100"} style={{border: "none"}}>
+                                    <Select
+                                        sx={{ height: 50, borderRadius: "0.5rem", minWidth: '8rem', backgroundColor: "#fff",
+                                            border: this.state.Validations.selectedTypeBoolean === false ? '1px solid red' : ''
+                                        }}
+                                        id="select-field"
+                                        defaultValue={''}
+                                        onChange={(e) => this.handleInputChange(e, 'type')}>
+                                        <MenuItem value={''}/>
+                                        {
+                                            this.state.choices.map((c) => (
+                                                <MenuItem value={c.name}>{c.name}</MenuItem>
+                                            ))
+                                        }
+                                        {
+                                            this.state.tempChoices.map((c) => (
+                                                <MenuItem value={c}>{c}</MenuItem>
+                                            ))
+                                        }
 
-                                                        {
-                                                            this.state.choices.map((c, key) =>
-                                                                <ToggleButton value={c} className='col' key={key}>
-                                                                    {c}
-                                                                </ToggleButton>
-                                                            )
-                                                        }
+                                        {/*<MenuItem value={"needs"}>نیازمندی</MenuItem>*/}
+                                        {/*<MenuItem value={"deficiency"}>کاستی</MenuItem>*/}
+                                        {/*<MenuItem value={"onHand"}>دارایی</MenuItem>*/}
+                                    </Select>
+                                    <label className="placeholder" style={{
+                                        top: '-10px',
+                                        fontSize: "0.9rem",
+                                        backgroundColor: '#fff',
+                                        color: '#2a2e32b3',
+                                        margin: '-0.2rem 0',
+                                        padding: '0 .4rem -0.4rem',
+                                        opacity: '1',
+                                    }}>دسته بندی</label>
+                                </FormControl>
+                                <div className="col-md-1 col-2 d-flex align-item-center">
+                                    <IconButton color="primary" onClick={() => {
+                                        this.setState({showModalForAddingType: true, showType: false})
+                                        this.setState({addInputContentInModal: ''});
 
-                                                        <button value="add"
-                                                                onClick={() => {
-                                                                    this.setState({showModalForAddingType: true, showType: false})
-                                                                    this.setState({addInputContentInModal: ''});
-                                                                }}
-                                                                className='col addTypeBtn'
-                                                        >
-                                                            <IoIosAddCircleOutline size={25}/>
-                                                        </button>
-                                                    </ToggleButtonGroup>
-                                                </div>
-                                            </div>
-                                        </Accordion.Body>
-                                    </Accordion.Item>
-                                </Accordion>
+                                        // console.log(this.state.names);
+                                        // this.handleAddType();
+                                    }}>
+                                        <IoAddOutline size={30} width={'50%'} height={'50%'}/>
+                                    </IconButton>
+                                </div>
                             </div>
+
+                            {
+                                this.state.Validations.selectedTypeBoolean === false
+                                ? <small className="text-danger mx-2">یکی از گزینه ها را
+                                        انتخاب
+                                        کنید!</small>
+                                    : null
+                            }
+
+                            {/*<div>*/}
+                            {/*    <Accordion defaultActiveKey="0"*/}
+                            {/*               style={{backgroundColor: this.state.Validations.selectedTypeBoolean ? '' : 'rgba(255, 0, 0, 0.4)'}}*/}
+                            {/*               className={'p-1'}*/}
+                            {/*    >*/}
+                            {/*        <Accordion.Item eventKey="0">*/}
+                            {/*            <Accordion.Header>*/}
+                            {/*                {this.state.tempFields.type}&nbsp;*/}
+                            {/*            </Accordion.Header>*/}
+                            {/*            <Accordion.Body>*/}
+                            {/*                <div>*/}
+                            {/*                    <div className=' row flex-wrap'>*/}
+                            {/*                        {*/}
+                            {/*                            this.state.Validations.selectedTypeBoolean // ifSelected condition*/}
+                            {/*                                ? null*/}
+                            {/*                                : <div className="d-flex justify-content-center mb-3">*/}
+                            {/*                                    <small className="text-danger">یکی از گزینه های زیر را*/}
+                            {/*                                        انتخاب*/}
+                            {/*                                        کنید!</small>*/}
+                            {/*                                </div>*/}
+                            {/*                        }*/}
+                            {/*                        <ToggleButtonGroup*/}
+                            {/*                            orientation="vertical"*/}
+                            {/*                            value={this.state.tempFields.type}*/}
+                            {/*                            exclusive*/}
+                            {/*                            onChange={this.handleAlignment}*/}
+                            {/*                            aria-label="text alignment"*/}
+                            {/*                        >*/}
+
+                            {/*                            {*/}
+                            {/*                                this.state.choices.map((c, key) =>*/}
+                            {/*                                    <ToggleButton value={c} className='col' key={key}>*/}
+                            {/*                                        {c}*/}
+                            {/*                                    </ToggleButton>*/}
+                            {/*                                )*/}
+                            {/*                            }*/}
+
+                            {/*                            <button value="add"*/}
+                            {/*                                    onClick={() => {*/}
+                            {/*                                        this.setState({showModalForAddingType: true, showType: false})*/}
+                            {/*                                        this.setState({addInputContentInModal: ''});*/}
+                            {/*                                    }}*/}
+                            {/*                                    className='col addTypeBtn'*/}
+                            {/*                            >*/}
+                            {/*                                <IoIosAddCircleOutline size={25}/>*/}
+                            {/*                            </button>*/}
+                            {/*                        </ToggleButtonGroup>*/}
+                            {/*                    </div>*/}
+                            {/*                </div>*/}
+                            {/*            </Accordion.Body>*/}
+                            {/*        </Accordion.Item>*/}
+                            {/*    </Accordion>*/}
+                            {/*</div>*/}
                             <div className="input-group-register">
                                 <input type='text'
                                        className={`input form-control mb-2 ${this.state.Validations.name_requireReg === false ? "is-invalid" : ""}`}
@@ -631,10 +718,10 @@ class RequestPage extends Component {
 
         if (!required.test(this.state.addInputContentInModal)) {
 
-            let updatedChoices = [...this.state.choices];
+            let updatedChoices = [...this.state.tempChoices];
             if (!updatedChoices.includes(this.state.addInputContentInModal)) {
                 updatedChoices.push(this.state.addInputContentInModal);
-                this.setState({choices: updatedChoices});
+                this.setState({tempChoices: updatedChoices});
             }
 
             this.setState({showModalForAddingType: false})
@@ -689,6 +776,7 @@ class RequestPage extends Component {
         let resetTypeOfTempFields = {...this.state.tempFields};
         resetTypeOfTempFields['type'] = null;
         resetTypeOfTempFields['name'] = '';
+        resetTypeOfTempFields['description'] = '';
         resetTypeOfTempFields['reason'] = '';
         resetTypeOfTempFields['topic'] = '';
         resetTypeOfTempFields['checked'] = null;
@@ -730,7 +818,8 @@ class RequestPage extends Component {
         let regCheck = /^\s*$/;
 
         let topic_requireReg = !regCheck.test(this.state.tempFields.topic);
-        let selectedTypeBoolean = this.state.tempFields.type !== undefined && this.state.tempFields.type !== null;
+        // let selectedTypeBoolean = this.state.tempFields.type !== undefined && this.state.tempFields.type !== null;
+        let selectedTypeBoolean = this.state.tempFields.type !== null;
         let name_requireReg = !regCheck.test(this.state.tempFields.name);
         let description_requireReg = !regCheck.test(this.state.tempFields.description);
         let reason_requireReg = !regCheck.test(this.state.tempFields.reason);
