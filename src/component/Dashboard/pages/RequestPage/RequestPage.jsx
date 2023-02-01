@@ -32,7 +32,7 @@ class RequestPage extends Component {
 
     state = {
         tempDescription: "",
-        tempIsDone: "false",
+        tempIsDone: "todo",
         showEditDoneModal: false,
         cardsLoading: true,
         loading: false,
@@ -184,98 +184,109 @@ class RequestPage extends Component {
                             {
                                 this.state.cardsLoading ?
                                     [...Array(9)].map((x, i) => (
-                                            <div className="col-12 col-md-4 p-2">
-                                                <div className={'request-item d-flex flex-column'}>
-                                                    <Skeleton className={"mt-2"} animation="wave" width={"50%"} height={30}/>
-                                                    <Skeleton className={"mt-2"} animation="wave" width={"60%"} height={30}/>
-                                                    <Skeleton className={"mt-2"} animation="wave" width={"80%"} height={30}/>
-                                                    <Skeleton className={"mt-2"} animation="wave" width={"70%"} height={30}/>
-                                                    <Skeleton className={"mt-2"} animation="wave" width={"40%"} height={30}/>
-                                                    <Skeleton className={"mt-2"} animation="wave" width={"80%"} height={30}/>
-                                                </div>
-                                            </div>
-                                        ))
-                                    :
-                                this.state.requests.map(request => (
-                                    <>
                                         <div className="col-12 col-md-4 p-2">
                                             <div className={'request-item d-flex flex-column'}>
-                                                <div className='d-flex flex-row mb-2'>
-                                                    <i className="bi bi-chevron-left ms-1"/>
-                                                    <div className="request-item-title">عنوان:</div>
-                                                    <div>{request.name}</div>
-                                                </div>
-                                                <div className='d-flex flex-row mb-2'>
-                                                    <i className="bi bi-chevron-left ms-1"/>
-                                                    <div className="request-item-title">نوع:</div>
-                                                    <div>{request.type}</div>
-                                                </div>
-                                                <div className='d-flex flex-row mb-2'>
-                                                    <i className="bi bi-chevron-left ms-1"/>
-                                                    <div className="request-item-title">درخواست کننده:</div>
-                                                    <div>{request.assignee}</div>
-                                                </div>
-                                                <div className='d-flex flex-row mb-2'>
-                                                    <i className="bi bi-chevron-left ms-1"/>
-                                                    <div className="request-item-title">دلیل:</div>
-                                                    <div>{request.reason}</div>
-                                                </div>
-                                                <div className='d-flex flex-row justify-content-between align-items-baseline mb-2'>
-                                                    <div className="d-flex flex-row align-items-baseline">
-                                                        <i className="bi bi-chevron-left ms-1"/>
-                                                        <div className="request-item-title">پیگیری:</div>
-                                                        {
-                                                            !request.done
-                                                                ? (
-                                                                    <Button className={'request-accept'} onClick={() => this.setState({showEditDoneModal: true, tempRequest: request})}>انجام نشده</Button>
-                                                            )
-                                                            : <OverlayTrigger
-                                                                    placement="bottom"
-                                                                    delay={{ show: 250, hide: 400 }}
-                                                                    overlay={<Tooltip id="button-tooltip">
-                                                                        جرئیات
-                                                                    </Tooltip>
-                                                                    }
-                                                                >
-                                                                    <Button className={'request-reject'}>انجام شده</Button>
-                                                                </OverlayTrigger>
-                                                        }
-                                                    </div>
-                                                </div>
-                                                <div className='d-flex flex-row align-items-baseline mb-2'>
-                                                    <i className="bi bi-chevron-left ms-1"/>
-                                                    <div className="request-item-title">وضعیت:</div>
-
-                                                    {
-                                                        request.checked !== null
-                                                            ? (request.checked === true
-                                                                ? <Button className={'request-accept'}>قبول شده</Button>
-                                                                : <OverlayTrigger
-                                                                    placement="bottom"
-                                                                    delay={{ show: 250, hide: 400 }}
-                                                                    overlay={<Tooltip id="button-tooltip">
-                                                                                نمایش جرئیات
-                                                                            </Tooltip>
-                                                                }
-                                                                >
-                                                                    <Button className={'request-reject'} onClick={() => {
-                                                                        this.handleOpenFailureModal(request);
-                                                                    }}>رد شده</Button>
-                                                                </OverlayTrigger>)
-                                                            : <Button className={'request-unknown'}>تعیین نشده</Button>
-                                                    }
-
-
-                                                </div>
-                                                <div className='d-flex flex-row mb-2'>
-                                                    <i className="bi bi-chevron-left ms-1"/>
-                                                    <div className="request-item-title">توضیحات:</div>
-                                                    <div>{request.description}</div>
-                                                </div>
+                                                <Skeleton className={"mt-2"} animation="wave" width={"50%"} height={30}/>
+                                                <Skeleton className={"mt-2"} animation="wave" width={"60%"} height={30}/>
+                                                <Skeleton className={"mt-2"} animation="wave" width={"80%"} height={30}/>
+                                                <Skeleton className={"mt-2"} animation="wave" width={"70%"} height={30}/>
+                                                <Skeleton className={"mt-2"} animation="wave" width={"40%"} height={30}/>
+                                                <Skeleton className={"mt-2"} animation="wave" width={"80%"} height={30}/>
                                             </div>
                                         </div>
-                                    </>
-                                ))
+                                    ))
+                                    :
+                                    this.state.requests.map(request => (
+                                        <>
+                                            <div className="col-12 col-md-4 p-2">
+                                                <div className={'request-item d-flex flex-column'}>
+                                                    <div className='d-flex flex-row mb-2'>
+                                                        <i className="bi bi-chevron-left ms-1"/>
+                                                        <div className="request-item-title">عنوان:</div>
+                                                        <div>{request.name}</div>
+                                                    </div>
+                                                    <div className='d-flex flex-row mb-2'>
+                                                        <i className="bi bi-chevron-left ms-1"/>
+                                                        <div className="request-item-title">نوع:</div>
+                                                        <div>{request.type}</div>
+                                                    </div>
+                                                    <div className='d-flex flex-row mb-2'>
+                                                        <i className="bi bi-chevron-left ms-1"/>
+                                                        <div className="request-item-title">درخواست کننده:</div>
+                                                        <div>{request.assignee}</div>
+                                                    </div>
+                                                    <div className='d-flex flex-row mb-2'>
+                                                        <i className="bi bi-chevron-left ms-1"/>
+                                                        <div className="request-item-title">دلیل:</div>
+                                                        <div>{request.reason}</div>
+                                                    </div>
+                                                    {
+                                                        request.checked === true ? (
+                                                            <>
+                                                                <div className='d-flex flex-row justify-content-between align-items-baseline mb-2'>
+                                                                    <div className="d-flex flex-row align-items-baseline">
+                                                                        <i className="bi bi-chevron-left ms-1"/>
+                                                                        <div className="request-item-title">پیگیری:</div>
+                                                                    {
+                                                                        request.status === "todo"
+                                                                            ? (
+                                                                                <Button className={'request-todo'} onClick={() => this.setState({showEditDoneModal: true, tempRequest: request})}>برای انجام</Button>
+                                                                            )
+                                                                            : request.status === "inProgress" ?
+                                                                                (
+                                                                                    <Button className={'request-inProgress'} onClick={() => this.setState({showEditDoneModal: true, tempRequest: request})}>در حال انجام</Button>
+                                                                                ) :
+                                                                                <OverlayTrigger
+                                                                                    placement="bottom"
+                                                                                    delay={{ show: 250, hide: 400 }}
+                                                                                    overlay={<Tooltip id="button-tooltip">
+                                                                                        {request.statusDescription}
+                                                                                    </Tooltip>
+                                                                                    }
+                                                                                >
+                                                                                    <Button className={'request-done'}>انجام شده</Button>
+                                                                                </OverlayTrigger>
+                                                                    }
+                                                                    </div>
+                                                                </div>
+                                                            </>
+                                                        ) :
+                                                        null
+                                                    }
+                                                    <div className='d-flex flex-row align-items-baseline mb-2'>
+                                                        <i className="bi bi-chevron-left ms-1"/>
+                                                        <div className="request-item-title">وضعیت:</div>
+
+                                                        {
+                                                            request.checked !== null
+                                                                ? (request.checked === true
+                                                                    ? <Button className={'request-accept'}>قبول شده</Button>
+                                                                    : <OverlayTrigger
+                                                                        placement="bottom"
+                                                                        delay={{ show: 250, hide: 400 }}
+                                                                        overlay={<Tooltip id="button-tooltip">
+                                                                            نمایش جرئیات
+                                                                        </Tooltip>
+                                                                        }
+                                                                    >
+                                                                        <Button className={'request-reject'} onClick={() => {
+                                                                            this.handleOpenFailureModal(request);
+                                                                        }}>رد شده</Button>
+                                                                    </OverlayTrigger>)
+                                                                : <Button className={'request-unknown'}>تعیین نشده</Button>
+                                                        }
+
+
+                                                    </div>
+                                                    <div className='d-flex flex-row mb-2'>
+                                                        <i className="bi bi-chevron-left ms-1"/>
+                                                        <div className="request-item-title">توضیحات:</div>
+                                                        <div>{request.description}</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </>
+                                    ))
                             }
                         </div>
                     </div>
@@ -547,11 +558,12 @@ class RequestPage extends Component {
                                     this.setState({tempIsDone: value.target.value})
                                 }}
                             >
-                                <FormControlLabel disabled={this.state.loading} labelPlacement="top" value="true" control={<Radio />} label="انجام شده" />
-                                <FormControlLabel disabled={this.state.loading} labelPlacement="top" value="false" control={<Radio />} label="انجام نشده" />
+                                <FormControlLabel disabled={this.state.loading} labelPlacement="top" value="todo" control={<Radio />} label="برای انجام" />
+                                <FormControlLabel disabled={this.state.loading} labelPlacement="top" value="inProgress" control={<Radio />} label="در حال انجام" />
+                                <FormControlLabel disabled={this.state.loading} labelPlacement="top" value="done" control={<Radio />} label="انجام شده" />
                             </RadioGroup>
                         </FormControl>
-                        <div style={{display: this.state.tempIsDone !== "true" ? 'none' : 'block'}}>
+                        <div style={{display: this.state.tempIsDone !== "done" ? 'none' : 'block'}}>
                             <div className={'input-group-register'}>
                                 <input
                                     className={'input form-control'}
@@ -574,11 +586,7 @@ class RequestPage extends Component {
                                 variant="contained"
                                 disabled={this.state.loading}
                                 onClick={(event) => {
-                                    if (this.state.tempIsDone === "true" && this.state.tempDescription !== "") {
-                                        this.handleSubmitDone();
-                                    } else if (this.state.tempIsDone === "false") {
-                                        this.setState({showEditDoneModal: false, tempDescription: ""})
-                                    }
+                                    this.handleSubmitDone()
                                 }}>
                                 ثبت
                             </Button>
@@ -748,6 +756,7 @@ class RequestPage extends Component {
             name: this.state.tempFields.topic,
             type: this.state.tempFields.type,
             reason: this.state.tempFields.reason,
+            status: "todo",
             checked: null,
             supervisorId: "6666666",
             description: this.state.tempFields.description,
@@ -760,33 +769,7 @@ class RequestPage extends Component {
                 updatedRequests.push(newRequest)
                 this.setState({requests: updatedRequests})
             }).catch(() => {
-            if (localStorage.getItem('role') === 'MANAGER') {
-                axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {
-                    dateOfRegistration: date2,
-                    name: this.state.tempFields.topic,
-                    type: this.state.tempFields.type,
-                    reason: this.state.tempFields.reason,
-                    checked: null,
-                    supervisorId: "6666666",
-                    description: this.state.tempFields.description,
-                    assignee: this.state.tempFields.name
-                } ,{headers: {'Authorization': localStorage.getItem('refreshToken')}})
-                    .then((response) => {
-                        if (response.headers["accesstoken"]) {
-                            localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                            axios.post('https://api.saadatportal.com/api/v1/supervisor/request', {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
-                                .then(async (data) => {
-                                    this.setState({loading: false})
-                                    const newRequest = data
-                                    const updatedRequests = [...this.state.requests]
-                                    updatedRequests.push(newRequest)
-                                    this.setState({requests: updatedRequests})
-                                })
-                        } else {
-                            window.location = '/'
-                        }
-                    })
-            } else if (localStorage.getItem('role') === 'SUPERVISOR') {
+            if (localStorage.getItem('role') === 'SUPERVISOR') {
                 axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                     .then((response) => {
                         if (response.headers["accesstoken"]) {
@@ -796,6 +779,7 @@ class RequestPage extends Component {
                                 name: this.state.tempFields.topic,
                                 type: this.state.tempFields.type,
                                 reason: this.state.tempFields.reason,
+                                status: "todo",
                                 checked: null,
                                 supervisorId: "6666666",
                                 description: this.state.tempFields.description,
@@ -873,10 +857,59 @@ class RequestPage extends Component {
     }
 
     handleSubmitDone = () => {
-        if (this.state.tempIsDone === "true") {
-            console.log(this.state.tempDescription)
+        if (this.state.tempIsDone === "done") {
+            axios.put(`https://api.saadatportal.com/api/v1/supervisor/request/${this.state.tempRequest.id}`, {
+                status: "done",
+                statusDescription: this.state.tempDescription
+            }, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                .then(async (data) => {
+                    this.setState({loading: false})
+                }).catch(() => {
+                if (localStorage.getItem('role') === 'SUPERVISOR') {
+                    axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        .then((response) => {
+                            if (response.headers["accesstoken"]) {
+                                localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                                axios.put(`https://api.saadatportal.com/api/v1/supervisor/request/${this.state.tempRequest.id}`, {
+                                    status: "done",
+                                    statusDescription: this.state.tempDescription
+                                }, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                    .then(async (data) => {
+                                        this.setState({loading: false})
+                                    })
+                            } else {
+                                window.location = '/'
+                            }
+                        })
+                }})
+            this.setState({showEditDoneModal: false, tempDescription: ""})
+        } else if (this.state.tempIsDone === "todo" || this.state.tempIsDone === "inProgress") {
+            axios.put(`https://api.saadatportal.com/api/v1/supervisor/request/${this.state.tempRequest.id}`, {
+                status: this.state.tempIsDone,
+            }, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                .then(async (data) => {
+                    this.setState({loading: false})
+                }).catch(() => {
+                if (localStorage.getItem('role') === 'SUPERVISOR') {
+                    axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        .then((response) => {
+                            if (response.headers["accesstoken"]) {
+                                localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                                axios.put(`https://api.saadatportal.com/api/v1/supervisor/request/${this.state.tempRequest.id}`, {
+                                    status: this.state.tempIsDone,
+                                }, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                    .then(async (data) => {
+                                        this.setState({loading: false})
+                                    })
+                            } else {
+                                window.location = '/'
+                            }
+                        })
+                }})
+            this.setState({showEditDoneModal: false, tempDescription: ""})
         }
         this.setState({showEditDoneModal: false, tempDescription: ""})
+        this.componentDidMount()
     }
 }
 

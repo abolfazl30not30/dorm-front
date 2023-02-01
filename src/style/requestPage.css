@@ -134,7 +134,26 @@
     padding: 0.325rem .5rem !important;
     font-size: .85rem;
 }
+.request-item .request-done {
+    background-color: #3e9141 !important;
+    color: #ffffff !important;
+    padding: 0.325rem .5rem !important;
+    font-size: .85rem;
+}
+.request-item .request-todo {
+    background-color: #f5f8fa !important;
+    color: #7e8299 !important;
+    padding: 0.325rem .5rem !important;
+    font-size: .85rem;
+    font-size: .85rem;
+}
 
+.request-item .request-inProgress {
+    background-color: #fff8dd !important;
+    color: #ffc700 !important;
+    padding: 0.325rem .5rem !important;
+    font-size: .85rem;
+}
 .request-item .request-reject {
     background-color: #fff5f8 !important;
     color: #f1416c !important;

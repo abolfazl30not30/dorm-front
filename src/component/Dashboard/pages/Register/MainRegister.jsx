@@ -109,7 +109,7 @@ class MainRegister extends Component {
                 depositPaymentAmount_numberReg, discountPaymentAmount_numberReg, nationalCode_numberReg, certificateNumber_numberReg,],
             ['firstName_requiredReg', 'lastName_requiredReg', 'nationalCode_requiredReg', 'certificateNumber_requiredReg',
                 'startDate_requiredReg', 'endDate_requiredReg', 'paymentDate_requiredReg',
-            'rentPaymentAmount_numberReg', 'depositPaymentAmount_numberReg', 'discountPaymentAmount_numberReg',
+                'rentPaymentAmount_numberReg', 'depositPaymentAmount_numberReg', 'discountPaymentAmount_numberReg',
                 'nationalCode_numberReg', 'certificateNumber_numberReg'], 'familyGuestInformationValidation');
 
         return firstName_requiredReg && lastName_requiredReg && nationalCode_requiredReg && certificateNumber_requiredReg &&
@@ -131,16 +131,16 @@ class MainRegister extends Component {
                     </label>
                 </div>
                 <div className="guest-container d-flex align-items-center w-100 mt-4">
-                        <label className="radio-container mt-2">
-                            مهمان :
-                            <input type="radio"  name="register-radio" value={this.state.typeofGuest}
-                                   checked={!this.state.constantCheck}
-                                   onChange={(e) => {
-                                       this.checked(e)
-                                   }}
-                            />
-                            <span className="checkmark"></span>
-                        </label>
+                    <label className="radio-container mt-2">
+                        مهمان :
+                        <input type="radio"  name="register-radio" value={this.state.typeofGuest}
+                               checked={!this.state.constantCheck}
+                               onChange={(e) => {
+                                   this.checked(e)
+                               }}
+                        />
+                        <span className="checkmark"></span>
+                    </label>
                     <FormControl className={"mx-3"} style={window.innerWidth <= 768 ? {width: "50%"} : {width: "30%"}}>
                         <Select
                             disabled={this.state.constantCheck}
@@ -178,16 +178,16 @@ class MainRegister extends Component {
                         </label>
                     </div>
                     <div className="guest-container d-flex align-items-center w-100 mt-4">
-                            <label className="radio-container mt-2">
-                                مهمان :
-                                <input type="radio"  name="register-radio" value={this.state.typeofGuest}
-                                       checked={!this.state.constantCheck}
-                                       onChange={(e) => {
-                                           this.checked(e)
-                                       }}
-                               />
-                                <span className="checkmark"></span>
-                            </label>
+                        <label className="radio-container mt-2">
+                            مهمان :
+                            <input type="radio"  name="register-radio" value={this.state.typeofGuest}
+                                   checked={!this.state.constantCheck}
+                                   onChange={(e) => {
+                                       this.checked(e)
+                                   }}
+                            />
+                            <span className="checkmark"></span>
+                        </label>
                         <FormControl className={"mx-3"} style={window.innerWidth <= 768 ? {width: "50%"} : {width: "30%"}}>
                             <Select
                                 disabled={this.state.constantCheck}
@@ -262,7 +262,7 @@ class MainRegister extends Component {
         let endDate_requiredReg = !requiredReg.test(this.context.constantInformationFurther.endDate);
 
         this.context.handleSpecificValidations([address_requiredReg, telephoneNumber_requiredReg, telephoneNumber_homeTelephoneReg,
-                 phoneNumber_requiredReg, phoneNumber_telephoneReg, startDate_requiredReg, endDate_requiredReg],
+                phoneNumber_requiredReg, phoneNumber_telephoneReg, startDate_requiredReg, endDate_requiredReg],
             ['address_requiredReg', 'telephoneNumber_requiredReg', 'telephoneNumber_homeTelephoneReg', 'phoneNumber_requiredReg',
                 'phoneNumber_telephoneReg', 'startDate_requiredReg', 'endDate_requiredReg'], 'constantInformationFurtherValidation');
 
@@ -500,14 +500,15 @@ class MainRegister extends Component {
                         <BsCheckCircleFill style={{color: "#fff"}} size={60}/>
                     </Modal.Header>
                     <Modal.Body className="px-4">
-                                <div className="d-flex justify-content-center text-success" style={{fontSize: "2.5rem"}}>
-                                    موفق!
-                                </div>
+                        <div className="d-flex justify-content-center text-success" style={{fontSize: "2.5rem"}}>
+                            موفق!
+                        </div>
                     </Modal.Body>
                     <Modal.Footer>
-                        <div className="d-flex flex-row justify-content-center flex-column flex-md-row">
-                            <Link to={`/dashboard/people/${this.state.personId}`} className='btn mx-3 btn-sm px-5 btn-success' onClick={() =>{this.handleGoToShow()}}>نمایش</Link>
-                            <Link to="" className='btn btn-sm mx-3 px-5 btn-secondary' onClick={() =>{this.handleCloseModal()}}>بستن</Link>
+                        <div className="d-flex flex-row justify-content-between flex-column w-100 flex-lg-row">
+                            <Link to={`/dashboard/people/${this.state.personId}`} className='btn  my-2 mx-0 btn-sm px-3 btn-success' onClick={() =>{this.handleGoToShow()}}>نمایش</Link>
+                            <Link to={`/dashboard/booking/floor`} className='btn my-2  mx-0 btn-sm px-3' style={{backgroundColor: "#d7a85b"}} onClick={() =>{this.handleGoToShow()}}>ثبت تخت</Link>
+                            <Link to="" className='btn btn-sm mx-0 my-2 px-3 btn-secondary ' onClick={() =>{this.handleCloseModal()}}>بستن</Link>
                         </div>
                     </Modal.Footer>
                 </Modal>

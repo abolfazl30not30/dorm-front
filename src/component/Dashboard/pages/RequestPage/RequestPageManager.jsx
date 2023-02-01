@@ -169,28 +169,40 @@ class RequestPage extends Component {
                                                     <div className="request-item-title">درخواست کننده:</div>
                                                     <div>{request.assignee}</div>
                                                 </div>
-                                                <div className='d-flex flex-row justify-content-between align-items-baseline mb-2'>
-                                                    <div className="d-flex flex-row align-items-baseline">
-                                                        <i className="bi bi-chevron-left ms-1"/>
-                                                        <div className="request-item-title">پیگیری:</div>
-                                                        {
-                                                            !request.done
-                                                                ? (
-                                                                    <Button className={'request-accept'}>انجام نشده</Button>
-                                                                )
-                                                                : <OverlayTrigger
-                                                                    placement="bottom"
-                                                                    delay={{ show: 250, hide: 400 }}
-                                                                    overlay={<Tooltip id="button-tooltip">
-                                                                        جرئیات
-                                                                    </Tooltip>
-                                                                    }
-                                                                >
-                                                                    <Button className={'request-reject'}>انجام شده</Button>
-                                                                </OverlayTrigger>
-                                                        }
-                                                    </div>
-                                                </div>
+                                                {
+                                                    request.checked === true ? (
+                                                            <>
+                                                                <div className='d-flex flex-row justify-content-between align-items-baseline mb-2'>
+                                                                    <div className="d-flex flex-row align-items-baseline">
+                                                                        <i className="bi bi-chevron-left ms-1"/>
+                                                                        <div className="request-item-title">پیگیری:</div>
+                                                                        {
+                                                                            request.status === "todo"
+                                                                                ? (
+                                                                                    <Button className={'request-todo'}>برای انجام</Button>
+                                                                                )
+                                                                                : request.status === "inProgress" ?
+                                                                                    (
+                                                                                        <Button className={'request-inProgress'}>در حال انجام</Button>
+                                                                                    ) :
+                                                                                    <OverlayTrigger
+                                                                                        placement="bottom"
+                                                                                        delay={{ show: 250, hide: 400 }}
+                                                                                        overlay={<Tooltip id="button-tooltip">
+                                                                                            {request.statusDescription}
+                                                                                        </Tooltip>
+                                                                                        }
+                                                                                    >
+                                                                                        <Button className={'request-done'}>انجام شده</Button>
+                                                                                    </OverlayTrigger>
+                                                                        }
+                                                                    </div>
+                                                                </div>
+                                                            </>
+                                                        ) :
+                                                        null
+                                                }
+
                                                 <div className='d-flex flex-row mb-2'>
                                                     <i className="bi bi-chevron-left ms-1"/>
                                                     <div className="request-item-title">دلیل:</div>

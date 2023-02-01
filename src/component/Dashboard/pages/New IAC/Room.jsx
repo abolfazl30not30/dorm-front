@@ -16,6 +16,8 @@ import ToggleButton from "@mui/material/ToggleButton";
 import axios from "axios";
 import  {BsFillDoorOpenFill} from  "react-icons/bs"
 import {FiEdit2} from "react-icons/fi";
+import Tooltip from "react-bootstrap/Tooltip";
+import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 
 class Room extends Component {
     static contextType = BuildingContext;
@@ -175,7 +177,16 @@ class Room extends Component {
                                                             <div className="icon mt-3 mb-3 d-flex justify-content-center">
                                                                 <BsFillDoorOpenFill fontSize="30px" color=""/>
                                                             </div>
-                                                            <div className="title mt-1">اتاق {room.number}</div>
+                                                            <OverlayTrigger
+                                                                placement="bottom"
+                                                                delay={{ show: 250, hide: 400 }}
+                                                                overlay={<Tooltip id="button-tooltip">
+                                                                    {room.description}
+                                                                </Tooltip>
+                                                                }
+                                                            >
+                                                                <div className="title mt-1">اتاق {room.number}</div>
+                                                            </OverlayTrigger>
                                                         </Link>
                                                         <div className="mt-2 mb-3 d-flex justify-content-center">
                                                             <button className="btn show-acc-btn" onClick={() => {
