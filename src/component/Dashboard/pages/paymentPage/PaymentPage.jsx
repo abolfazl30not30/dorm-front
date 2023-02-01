@@ -181,7 +181,7 @@ class PaymentPage extends Component {
                                     onChange={(e) => this.setState({selectedType: e.target.value})}>
                                     {
                                         this.state.choices.map((c) => (
-                                            <MenuItem value={c}>{c}</MenuItem>
+                                            <MenuItem value={c.name}>{c.name}</MenuItem>
                                         ))
                                     }
                                     {

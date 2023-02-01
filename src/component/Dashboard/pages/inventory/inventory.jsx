@@ -295,7 +295,7 @@ class inventory extends Component {
                                     onChange={(e) => this.setState({type: e.target.value})}>
                                     {
                                         this.state.types.map((type) => (
-                                            <MenuItem value={type}>{type}</MenuItem>
+                                            <MenuItem value={type.name}>{type.name}</MenuItem>
                                         ))
                                     }
                                     {
@@ -345,7 +345,7 @@ class inventory extends Component {
                                         onChange={(e) => this.setState({selectedCategory: e.target.value})}>
                                         {
                                             this.state.categories.map((category) => (
-                                                <MenuItem value={category}>{category}</MenuItem>
+                                                <MenuItem value={category.name}>{category.name}</MenuItem>
                                             ))
                                         }
                                         {
@@ -655,10 +655,10 @@ class inventory extends Component {
         let regCheck = /^\s*$/;
 
         if (!regCheck.test(this.state.tmpCategoryInput)) {
-            let updatedChoices = [...this.state.categories];
+            let updatedChoices = [...this.state.tempCategories];
             if (!updatedChoices.includes(this.state.tmpCategoryInput)) {
                 updatedChoices.push(this.state.tmpCategoryInput);
-                this.setState({categories: updatedChoices});
+                this.setState({tempCategories: updatedChoices});
             }
         }
 
