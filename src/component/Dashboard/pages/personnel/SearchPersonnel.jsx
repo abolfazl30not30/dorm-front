@@ -125,7 +125,7 @@ class SearchPersonnel extends Component {
                             }}>براساس</label>
                         </FormControl>
                     </div>
-                    <div className={"d-flex flex-row"}>
+                    <div className={"d-flex flex-row input-search"}>
                         <input type="text"
                                disabled={this.state.showEditModal}
                                id="inputSearch"

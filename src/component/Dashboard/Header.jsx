@@ -47,30 +47,31 @@ class Header extends Component {
                         <ul className="d-flex navbar">
                             <li className='navbar-item'>
                                 <NavLink
-                                    activeClassName='active-header' to="/dashboard" replace={true} className='sidenav-link' end>
+                                    activeClassName='active-header' to="/dashboard" replace={true} className='sidenav-link d-flex flex-row' end>
                                     <AiOutlineHome style={{paddingLeft: "7px"}} font-size="20px"/>
-                                    خانه
+                                    <div className="navbar-title">خانه</div>
                                 </NavLink>
                             </li>
                             <li className='navbar-item'>
                                 <NavLink activeClassName='active-header' to="/dashboard/Register"
-                                         className='sidenav-link'>
+                                         className='sidenav-link d-flex flex-row'>
                                     <BsPersonPlus style={{paddingLeft: "7px"}} font-size="20px"/>
-                                    پذیرش
+                                    <div className="navbar-title">پذیرش</div>
                                 </NavLink>
                             </li>
                             <li className='navbar-item'>
                                 <NavLink activeClassName='active-header' to="/dashboard/People"
-                                         className='sidenav-link'>
+                                         className='sidenav-link d-flex flex-row'>
                                     <BsPerson style={{paddingLeft: "7px"}} font-size="20px"/>
-                                    اشخاص
+                                    <div className="navbar-title">اشخاص</div>
+
                                 </NavLink>
                             </li>
                             <li className='navbar-item'>
                                 <NavLink activeClassName='active-header' to="/dashboard/booking/floor"
-                                         className='sidenav-link'>
+                                         className='sidenav-link d-flex flex-row'>
                                     <MdOutlineInventory style={{paddingLeft: "7px"}} font-size="20px"/>
-                                    موجودی و ظرفیت
+                                    <div className="navbar-title">موجودی و ظرفیت</div>
                                 </NavLink>
                             </li>
                         </ul>

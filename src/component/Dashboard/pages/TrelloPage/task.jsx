@@ -73,7 +73,6 @@ class Task extends Component {
                 </Draggable>
                 <Modal
                     style={{left: "50%", translate: "-50%"}}
-                    className={"w-25"}
                     centered={true}
                     show={this.state.showDeleteModal}
                     size={'xl'}

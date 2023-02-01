@@ -118,7 +118,7 @@ class PaymentHistory extends Component {
                         </div>
                     </div>
                     <div className="d-flex flex-row flex-wrap my-2 align-items-center">
-                        <div className='input-group-filter col-6 col-md my-2 px-2'>
+                        <div className='input-group-filter col-12 col-md-6 my-2 px-2'>
                             <FormControl className={"w-100"} style={{border: "none"}}>
                                 <Select
                                     sx={{ height: 50, borderRadius: ".5rem", minWidth: '10rem'}}
@@ -140,7 +140,7 @@ class PaymentHistory extends Component {
                                 }}>نوع تراکنش</label>
                             </FormControl>
                         </div>
-                        <div className='input-group-filter col-6 col-md my-2 px-2'>
+                        <div className='input-group-filter col-12 col-md-6 my-2 px-2'>
 
                             <DatePicker
                                 // fixMainPosition={false}
@@ -203,7 +203,7 @@ class PaymentHistory extends Component {
                                 opacity: '1',
                             }}>از تاریخ</label>
                         </div>
-                        <div className='input-group-filter col-6 col-md my-2 px-2'>
+                        <div className='input-group-filter col-12 col-md-6 my-2 px-2'>
                             {/*<DatePicker calendarStyles={this.state.calStyles}*/}
                             {/*            inputFormat="jYYYY/jM/jD"*/}
                             {/*            className='input form-control'*/}
@@ -274,7 +274,7 @@ class PaymentHistory extends Component {
                                 opacity: '1',
                             }}>تا تاریخ</label>
                         </div>
-                        <div className='input-group-filter col-6 col-md my-2 px-2'>
+                        <div className='input-group-filter col-12 col-md-6 my-2 px-2'>
                             <input type="text" className='input' ref={this.count}/>
                             <label className="placeholder" style={{
                                 fontSize: "0.8rem",

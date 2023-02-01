@@ -106,13 +106,16 @@ class SearchAccount extends Component {
                             }}>براساس</label>
                         </FormControl>
                     </div>
-                    <input type="text"
-                           id="inputSearch"
-                           placeholder="جسـتجـو..."
-                           onChange={(e) => {
-                               this.handleSearchInput(e)
-                           }}/>
-                    <div className="search-icon"><i className="bi bi-search"></i></div>
+                    <div className='d-flex flex-row input-search'>
+                        <input type="text"
+                               id="inputSearch"
+                               placeholder="جسـتجـو..."
+                               onChange={(e) => {
+                                   this.handleSearchInput(e)
+                               }}/>
+                        <div className="search-icon"><i className="bi bi-search"></i></div>
+                    </div>
+
                 </div>
                 <div className='result'>
                     {

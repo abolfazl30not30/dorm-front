@@ -114,13 +114,16 @@ class callHistory extends Component {
                                 }}>براساس</label>
                             </FormControl>
                         </div>
-                        <input type="text"
-                               id="inputSearch"
-                               placeholder="جسـتجـو..."
-                               onChange={(e) => {
-                                   this.handleSearchInput(e)
-                               }}/>
-                        <div className="search-icon"><i className="bi bi-search"/></div>
+                        <div className="d-flex flex-row input-search">
+                            <input type="text"
+                                   id="inputSearch"
+                                   placeholder="جسـتجـو..."
+                                   onChange={(e) => {
+                                       this.handleSearchInput(e)
+                                   }}/>
+                            <div className="search-icon"><i className="bi bi-search"/></div>
+                        </div>
+
                     </div>
                     <div className="table-box">
                         <table className='table'>

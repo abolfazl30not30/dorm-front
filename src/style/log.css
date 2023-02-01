@@ -42,9 +42,9 @@
     border-radius: 0.5rem 0 0 0.5rem;
 }
 @media (max-width: 350px) {
-    .search-box input {
+    /*.search-box input {
         width: fit-content;
-    }
+    }*/
 }
 @media (max-width: 1100px) {
     .category-title {
@@ -76,4 +76,20 @@
 }
 .category-title {
     font-size: 1.7rem;
+}
+@media (max-width: 520px) {
+    .search-box {
+        flex-direction: column;
+        width: 100%;
+    }
+    .input-search {
+        height: 50px;
+        margin-top: .5rem;
+    }
+    .search-box input {
+        width: 100%;
+    }
+    .form-floating {
+        margin-bottom: .5rem;
+    }
 }

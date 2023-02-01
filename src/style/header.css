@@ -101,3 +101,11 @@
     width: 42px;
     height: 42px;
 }
+@media (max-width: 520px) {
+    .navbar-title {
+        display: none;
+    }
+    .navbar-item svg {
+        font-size: 1.5rem;
+    }
+}

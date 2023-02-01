@@ -24,7 +24,8 @@ class inventory extends Component {
         inventory: [],
         typeSearch: "all",
         type: "needs",
-        category: [],
+        categories: [],
+        tempCategories: [],
         name: "",
         count: "",
         selectedCategoryBoolean: true,
@@ -34,10 +35,10 @@ class inventory extends Component {
         choices: [],
         tempChoices: [],
         showCategory: false,
-        inputCategory: [],
         searchType: "name",
         searchInput: "",
         tmpTypeInput: "",
+        tmpCategoryInput: '',
     }
 
     async componentDidMount() {
@@ -197,13 +198,16 @@ class inventory extends Component {
                                 }}>براساس</label>
                             </FormControl>
                         </div>
-                        <input type="text"
-                               id="inputSearch"
-                               placeholder="جسـتجـو..."
-                               onChange={(e) => {
-                                   this.handleSearchInput(e)
-                               }}/>
-                        <div className="search-icon"><i className="bi bi-search"></i></div>
+                        <div className="d-flex flex-row input-search">
+                            <input type="text"
+                                   id="inputSearch"
+                                   placeholder="جسـتجـو..."
+                                   onChange={(e) => {
+                                       this.handleSearchInput(e)
+                                   }}/>
+                            <div className="search-icon"><i className="bi bi-search"></i></div>
+                        </div>
+
                     </div>
                     <div className="table-box">
                         <table className='table'>
@@ -218,30 +222,30 @@ class inventory extends Component {
                             <tbody>
                             {
                                 this.state.searchLoading ?
-                                [...Array(5)].map((x, i) =>
-                                    <tr>
-                                        <td><Skeleton animation="wave" height={20} width="100%" /></td>
-                                        <td><Skeleton animation="wave" height={20} width="100%" /></td>
-                                        <td><Skeleton animation="wave" height={20} width="100%" /></td>
-                                        <td><Skeleton animation="wave" height={20} width="100%" /></td>
-                                    </tr>
-                                )
-                                :
-                                this.state.inventory.map((x, i)  => (
-                                    <tr key={i}>
-                                        <td>{this.convertTypeToPersian(x.accessoryType)}</td>
-                                        <td>{x.category}</td>
-                                        {
-                                            x.accessories.length !== 0
-                                            ?
-                                                <>
-                                                    <td>{x.accessories[0].name}</td>
-                                                    <td>{x.accessories[0].count}</td>
-                                                </>
-                                            : null
-                                        }
-                                    </tr>
-                                ))
+                                    [...Array(5)].map((x, i) =>
+                                        <tr>
+                                            <td><Skeleton animation="wave" height={20} width="100%" /></td>
+                                            <td><Skeleton animation="wave" height={20} width="100%" /></td>
+                                            <td><Skeleton animation="wave" height={20} width="100%" /></td>
+                                            <td><Skeleton animation="wave" height={20} width="100%" /></td>
+                                        </tr>
+                                    )
+                                    :
+                                    this.state.inventory.map((x, i)  => (
+                                        <tr key={i}>
+                                            <td>{x.accessoryType}</td>
+                                            <td>{x.category}</td>
+                                            {
+                                                x.accessories.length !== 0
+                                                    ?
+                                                    <>
+                                                        <td>{x.accessories[0].name}</td>
+                                                        <td>{x.accessories[0].count}</td>
+                                                    </>
+                                                    : null
+                                            }
+                                        </tr>
+                                    ))
                             }
                             </tbody>
                         </table>
@@ -288,13 +292,17 @@ class inventory extends Component {
                                 <Select
                                     sx={{ height: 50, borderRadius: "0.5rem", minWidth: '8rem', backgroundColor: "#fff"}}
                                     id="select-field"
-                                    onChange={(e) => {this.getValueInputType(e.target.value)}}>
-                                    {this.state.types.map((type) => {
-                                        <MenuItem value={type}>type</MenuItem>
-                                    })}
-                                    {this.state.tempTypes.map((type) => {
-                                        <MenuItem value={type}>type</MenuItem>
-                                    })}
+                                    onChange={(e) => this.setState({type: e.target.value})}>
+                                    {
+                                        this.state.types.map((type) => (
+                                            <MenuItem value={type}>{type}</MenuItem>
+                                        ))
+                                    }
+                                    {
+                                        this.state.tempTypes.map((type) => (
+                                            <MenuItem value={type}>{type}</MenuItem>
+                                        ))
+                                    }
                                     {/*<MenuItem value={"needs"}>نیازمندی</MenuItem>*/}
                                     {/*<MenuItem value={"deficiency"}>کاستی</MenuItem>*/}
                                     {/*<MenuItem value={"onHand"}>دارایی</MenuItem>*/}
@@ -311,7 +319,7 @@ class inventory extends Component {
                             </FormControl>
                             <div className="col-md-1 col-2 d-flex align-item-center">
                                 <IconButton color="primary" onClick={() => {
-                                    this.handleOpenAddModal();
+                                    this.handleOpenType();
 
                                     // console.log(this.state.names);
                                     // this.handleAddType();
@@ -334,13 +342,18 @@ class inventory extends Component {
                                     <Select
                                         sx={{ height: 50, borderRadius: "0.5rem", minWidth: '8rem', backgroundColor: "#fff"}}
                                         id="select-field"
-                                        onChange={(e) => {this.getValueInputType(e.target.value)}}>
-                                        {this.state.types.map((type) => {
-                                            <MenuItem value={type}>type</MenuItem>
-                                        })}
-                                        {this.state.tempTypes.map((type) => {
-                                            <MenuItem value={type}>type</MenuItem>
-                                        })}
+                                        onChange={(e) => this.setState({selectedCategory: e.target.value})}>
+                                        {
+                                            this.state.categories.map((category) => (
+                                                <MenuItem value={category}>{category}</MenuItem>
+                                            ))
+                                        }
+                                        {
+                                            this.state.tempCategories.map((category) => (
+                                                <MenuItem value={category}>{category}</MenuItem>
+                                            ))
+                                        }
+
                                         {/*<MenuItem value={"needs"}>نیازمندی</MenuItem>*/}
                                         {/*<MenuItem value={"deficiency"}>کاستی</MenuItem>*/}
                                         {/*<MenuItem value={"onHand"}>دارایی</MenuItem>*/}
@@ -357,7 +370,7 @@ class inventory extends Component {
                                 </FormControl>
                                 <div className="col-md-1 col-2 d-flex align-item-center">
                                     <IconButton color="primary" onClick={() => {
-                                        this.handleOpenAddModal();
+                                        this.handleOpenCategory();
 
                                         // console.log(this.state.names);
                                         // this.handleAddType();
@@ -365,70 +378,70 @@ class inventory extends Component {
                                         <IoAddOutline size={30} width={'50%'} height={'50%'}/>
                                     </IconButton>
                                 </div>
-                                <Accordion defaultActiveKey="0"
-                                           style={{backgroundColor: this.state.selectedCategoryBoolean ? '' : 'rgba(255, 0, 0, 0.4)'}}
-                                >
-                                    <Accordion.Item eventKey="0">
-                                        <Accordion.Header>
-                                            {this.state.selectedCategory}&nbsp;
-                                        </Accordion.Header>
-                                        <Accordion.Body>
-                                            <div>
-                                                <div className=' row flex-wrap'>
-                                                    {
-                                                        this.state.selectedCategoryBoolean // ifSelected condition
-                                                            ? null
-                                                            : <div className="d-flex justify-content-center mb-3">
-                                                                <small className="text-danger">یکی از فیلدهای زیر را اتخاب
-                                                                    کنید!</small>
-                                                            </div>
-                                                    }
-                                                    <ToggleButtonGroup
-                                                        orientation="vertical"
-                                                        value={this.state.selectedCategory}
-                                                        exclusive
-                                                        onChange={this.handleAlignment}
-                                                        aria-label="text alignment"
-                                                    >
-                                                        {
-                                                            this.state.choices.map((c) =>
-                                                                <ToggleButton value={c.name} className='col'>
-                                                                    {c.name}
-                                                                </ToggleButton>
-                                                            )
-                                                        }
-                                                        {
-                                                            this.state.tempChoices.map((type, i) =>
-                                                                <ToggleButton value={type} className='col'
-                                                                              style={{display: "block"}}>
-                                                                    <div className="d-flex justify-content-center"
-                                                                         style={{position: "relative"}}>
-                                                                        <div className="close-btn-div">
-                                                                            <button className="close-btn"
-                                                                                    onClick={() => {
-                                                                                        this.handleDeleteCategory(i)
-                                                                                    }}><AiFillCloseCircle
-                                                                                color="#F1416C"/></button>
-                                                                        </div>
-                                                                        <div className="">{type}</div>
-                                                                    </div>
-                                                                </ToggleButton>
-                                                            )
-                                                        }
-                                                        <button value="add"
-                                                                onClick={() => {
-                                                                    this.handleOpenCategory()
-                                                                }}
-                                                                className='col addTypeBtn'
-                                                        >
-                                                            <IoIosAddCircleOutline size={25}/>
-                                                        </button>
-                                                    </ToggleButtonGroup>
-                                                </div>
-                                            </div>
-                                        </Accordion.Body>
-                                    </Accordion.Item>
-                                </Accordion>
+                                {/*<Accordion defaultActiveKey="0"*/}
+                                {/*           style={{backgroundColor: this.state.selectedCategoryBoolean ? '' : 'rgba(255, 0, 0, 0.4)'}}*/}
+                                {/*>*/}
+                                {/*    <Accordion.Item eventKey="0">*/}
+                                {/*        <Accordion.Header>*/}
+                                {/*            {this.state.selectedCategory}&nbsp;*/}
+                                {/*        </Accordion.Header>*/}
+                                {/*        <Accordion.Body>*/}
+                                {/*            <div>*/}
+                                {/*                <div className=' row flex-wrap'>*/}
+                                {/*                    {*/}
+                                {/*                        this.state.selectedCategoryBoolean // ifSelected condition*/}
+                                {/*                            ? null*/}
+                                {/*                            : <div className="d-flex justify-content-center mb-3">*/}
+                                {/*                                <small className="text-danger">یکی از فیلدهای زیر را اتخاب*/}
+                                {/*                                    کنید!</small>*/}
+                                {/*                            </div>*/}
+                                {/*                    }*/}
+                                {/*                    <ToggleButtonGroup*/}
+                                {/*                        orientation="vertical"*/}
+                                {/*                        value={this.state.selectedCategory}*/}
+                                {/*                        exclusive*/}
+                                {/*                        onChange={this.handleAlignment}*/}
+                                {/*                        aria-label="text alignment"*/}
+                                {/*                    >*/}
+                                {/*                        {*/}
+                                {/*                            this.state.choices.map((c) =>*/}
+                                {/*                                <ToggleButton value={c.name} className='col'>*/}
+                                {/*                                    {c.name}*/}
+                                {/*                                </ToggleButton>*/}
+                                {/*                            )*/}
+                                {/*                        }*/}
+                                {/*                        {*/}
+                                {/*                            this.state.tempChoices.map((type, i) =>*/}
+                                {/*                                <ToggleButton value={type} className='col'*/}
+                                {/*                                              style={{display: "block"}}>*/}
+                                {/*                                    <div className="d-flex justify-content-center"*/}
+                                {/*                                         style={{position: "relative"}}>*/}
+                                {/*                                        <div className="close-btn-div">*/}
+                                {/*                                            <button className="close-btn"*/}
+                                {/*                                                    onClick={() => {*/}
+                                {/*                                                        this.handleDeleteCategory(i)*/}
+                                {/*                                                    }}><AiFillCloseCircle*/}
+                                {/*                                                color="#F1416C"/></button>*/}
+                                {/*                                        </div>*/}
+                                {/*                                        <div className="">{type}</div>*/}
+                                {/*                                    </div>*/}
+                                {/*                                </ToggleButton>*/}
+                                {/*                            )*/}
+                                {/*                        }*/}
+                                {/*                        <button value="add"*/}
+                                {/*                                onClick={() => {*/}
+                                {/*                                    this.handleOpenCategory()*/}
+                                {/*                                }}*/}
+                                {/*                                className='col addTypeBtn'*/}
+                                {/*                        >*/}
+                                {/*                            <IoIosAddCircleOutline size={25}/>*/}
+                                {/*                        </button>*/}
+                                {/*                    </ToggleButtonGroup>*/}
+                                {/*                </div>*/}
+                                {/*            </div>*/}
+                                {/*        </Accordion.Body>*/}
+                                {/*    </Accordion.Item>*/}
+                                {/*</Accordion>*/}
                             </div>
                         </div>
                         <div className='d-flex flex-row'>
@@ -476,7 +489,7 @@ class inventory extends Component {
                     </Modal.Body>
                 </Modal>
 
-                <Modal centered={true} show={this.state.showAddType} onHide={() => this.setState({showAddTypeModal: false})}>
+                <Modal centered={true} show={this.state.showAddType} onHide={this.handleCloseType}>
                     <Modal.Header closeButton={true}>
                         اضافه کردن نوع
                     </Modal.Header>
@@ -490,9 +503,7 @@ class inventory extends Component {
                     </Modal.Body>
                     <Modal.Footer>
                         <button className="btn btn-success" onClick={(event) => {
-                            if(this.handleIsValid(event)){
-                                this.handleAddType();
-                            }
+                            this.handleSubmitType(event);
                         }}>ثبت
                         </button>
                         <button className="btn btn-light" onClick={() => {
@@ -511,7 +522,7 @@ class inventory extends Component {
                     <Modal.Body className="justify-content-center">
                         <input type='text'
                                className='form-control mt-3 mb-3 input'
-                               onChange={(e) => this.handleInputCategoryChange(e)} placeholder="دسته بندی جدید"/>
+                               onChange={(e) => this.setState({tmpCategoryInput: e.target.value})} placeholder="دسته بندی جدید"/>
                     </Modal.Body>
                     <Modal.Footer className="justify-content-start">
                         <button className="btn-done" onClick={(event) => {
@@ -526,12 +537,6 @@ class inventory extends Component {
                 </Modal>
             </>
         );
-    }
-
-    handleIsValid = () => {
-        let regCheck = /^\s*$/;
-
-        return !regCheck.test(this.state.tmpTypeInput);
     }
 
     handleClose = () => {
@@ -571,24 +576,22 @@ class inventory extends Component {
                     })
             }})
     };
-    convertTypeToPersian = (type) => {
-        let value = "";
-        switch(type) {
-            case "needs":
-                value = "نیازمندی";
-                break;
-            case "deficiency":
-                value = "کاستی";
-                break;
-            case "onHand":
-                value = "دارایی";
-                break;
-        }
-        return value;
-    }
-    getValueInputType = (e) => {
-        this.setState({type: e})
-    }
+
+    // convertTypeToPersian = (type) => {
+    //     let value = "";
+    //     switch(type) {
+    //         case "needs":
+    //             value = "نیازمندی";
+    //             break;
+    //         case "deficiency":
+    //             value = "کاستی";
+    //             break;
+    //         case "onHand":
+    //             value = "دارایی";
+    //             break;
+    //     }
+    //     return value;
+    // }
 
     getValueInputName = (e) => {
         this.setState({name: e})
@@ -622,6 +625,21 @@ class inventory extends Component {
         this.setState({tempChoices: updateChoice});
     }
 
+    handleOpenType = () => {
+        this.setState({showAddType: true});
+        this.setState({show: false});
+    }
+
+    handleCloseType = () => {
+        this.setState({showAddType: false});
+        this.setState({show: true});
+    }
+
+    handleAddType() {
+        this.setState({AddTypeLoading: true})
+
+    }
+
     handleOpenCategory = () => {
         this.setState({showCategory: true});
         this.setState({show: false});
@@ -632,23 +650,35 @@ class inventory extends Component {
         this.setState({show: true});
     }
 
-    handleInputCategoryChange = (e) => {
-        this.setState({inputCategory: e.target.value});
-    }
-
     handleSubmitCategory = (e) => {
         e.preventDefault();
         let regCheck = /^\s*$/;
 
-        if (!regCheck.test(this.state.inputType)) {
-            let updatedChoices = [...this.state.tempChoices];
-            if (!updatedChoices.includes(this.state.inputCategory)) {
-                updatedChoices.push(this.state.inputCategory);
-                this.setState({tempChoices: updatedChoices});
+        if (!regCheck.test(this.state.tmpCategoryInput)) {
+            let updatedChoices = [...this.state.categories];
+            if (!updatedChoices.includes(this.state.tmpCategoryInput)) {
+                updatedChoices.push(this.state.tmpCategoryInput);
+                this.setState({categories: updatedChoices});
             }
         }
 
         this.setState({showCategory: false});
+        this.setState({show: true});
+    }
+
+    handleSubmitType = (e) => {
+        e.preventDefault();
+        let regCheck = /^\s*$/;
+
+        if (!regCheck.test(this.state.tmpTypeInput)) {
+            let updatedChoices = [...this.state.tempTypes];
+            if (!updatedChoices.includes(this.state.tmpTypeInput)) {
+                updatedChoices.push(this.state.tmpTypeInput);
+                this.setState({tempTypes: updatedChoices});
+            }
+        }
+
+        this.setState({showAddType: false});
         this.setState({show: true});
     }
 
@@ -669,33 +699,33 @@ class inventory extends Component {
             .then((data) => this.setState({
                 loading: false
             })).catch(async () => {
-            if (localStorage.getItem('role') === 'MANAGER') {
-                await axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
-                    .then(async (response) => {
-                        if (response.headers["accesstoken"]) {
-                            localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                            await axios.post('https://api.saadatportal.com/api/v1/supervisor/inventory', newInventory, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
-                                .then((data) => this.setState({
-                                    loading: false
-                                }))
-                        } else {
-                            window.location = '/'
-                        }
-                    })
-            } else if (localStorage.getItem('role') === 'SUPERVISOR') {
-                await axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
-                    .then(async (response) => {
-                        if (response.headers["accesstoken"]) {
-                            localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                            await axios.post('https://api.saadatportal.com/api/v1/supervisor/inventory', newInventory, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
-                                .then((data) => this.setState({
-                                    loading: false
-                                }))
-                        } else {
-                            window.location = '/'
-                        }
-                    })
-            }})
+                if (localStorage.getItem('role') === 'MANAGER') {
+                    await axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        .then(async (response) => {
+                            if (response.headers["accesstoken"]) {
+                                localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                                await axios.post('https://api.saadatportal.com/api/v1/supervisor/inventory', newInventory, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                    .then((data) => this.setState({
+                                        loading: false
+                                    }))
+                            } else {
+                                window.location = '/'
+                            }
+                        })
+                } else if (localStorage.getItem('role') === 'SUPERVISOR') {
+                    await axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        .then(async (response) => {
+                            if (response.headers["accesstoken"]) {
+                                localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                                await axios.post('https://api.saadatportal.com/api/v1/supervisor/inventory', newInventory, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                    .then((data) => this.setState({
+                                        loading: false
+                                    }))
+                            } else {
+                                window.location = '/'
+                            }
+                        })
+                }})
 
         this.setState({show: false})
 
@@ -743,10 +773,7 @@ class inventory extends Component {
                     })
             }})
     }
-    handleAddType() {
-        this.setState({AddTypeLoading: true})
 
-    }
     handleFilterType = async (e) =>{
         this.setState({typeSearch: e.target.value, searchLoading: true})
         const value = e.target.value !== "all" ? e.target.value : ""

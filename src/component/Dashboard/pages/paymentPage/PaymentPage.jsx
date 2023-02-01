@@ -18,9 +18,10 @@ import ReactLoading from 'react-loading';
 import Alert from 'react-bootstrap/Alert';
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
-import {Box, Button, CircularProgress, FormControl, MenuItem, Select} from "@mui/material";
+import {Box, Button, CircularProgress, FormControl, IconButton, MenuItem, Select} from "@mui/material";
 import {green} from "@mui/material/colors";
 import axios from "axios";
+import {IoAddOutline} from "react-icons/io5";
 
 
 class PaymentPage extends Component {
@@ -172,83 +173,124 @@ class PaymentPage extends Component {
                             }
 
                         </div>
-                        <div className="input-group-register col-md-6 col-12">
-                            <div>
-                                <Accordion
-                                    className='p-1'
-                                    style={{backgroundColor: this.state.Validations.selectedTypeBoolean ? '' : 'rgba(255, 0, 0, 0.4)'}}
-                                >
-                                    <Accordion.Item eventKey="0">
-                                        <Accordion.Header>
-                                            {this.state.selectedType}&nbsp;
-                                        </Accordion.Header>
-                                        <Accordion.Body>
-                                            <div>
-                                                <div className=' row flex-wrap'>
-                                                    {
-                                                        this.state.Validations.selectedTypeBoolean // ifSelected condition
-                                                            ? null
-                                                            : <div className="d-flex justify-content-center mb-3">
-                                                                <small className="text-danger">یکی از فیلدهای زیر را اتخاب
-                                                                    کنید!</small>
-                                                            </div>
-                                                    }
-                                                    <ToggleButtonGroup
-                                                        orientation="vertical"
-                                                        value={this.state.selectedType}
-                                                        exclusive
-                                                        onChange={this.handleAlignment}
-                                                        aria-label="text alignment"
-                                                    >
-                                                        {
-                                                            this.state.choices.map((c) =>
-                                                                <ToggleButton value={c.name} className='col'>
-                                                                    {c.name}
-                                                                </ToggleButton>
-                                                            )
-                                                        }
-                                                        {
-                                                            this.state.tempChoices.map((type, i) =>
-                                                                <ToggleButton value={type} className='col'
-                                                                              style={{display: "block"}}>
-                                                                    <div className="d-flex justify-content-center"
-                                                                         style={{position: "relative"}}>
-                                                                        <div className="close-btn-div">
-                                                                            <button className="close-btn"
-                                                                                    onClick={() => {
-                                                                                        this.handleDeleteType(i)
-                                                                                    }}><AiFillCloseCircle
-                                                                                color="#F1416C"/></button>
-                                                                        </div>
-                                                                        <div className="">{type}</div>
-                                                                    </div>
-                                                                </ToggleButton>
-                                                            )
-                                                        }
-                                                        <button value="add"
-                                                                onClick={() => {
-                                                                    this.handleOpenType()
-                                                                }}
-                                                                className='col addTypeBtn'
-                                                        >
-                                                            <IoIosAddCircleOutline size={25}/>
-                                                        </button>
-                                                    </ToggleButtonGroup>
-                                                </div>
-                                            </div>
-                                        </Accordion.Body>
-                                    </Accordion.Item>
-                                </Accordion>
+                        <div className="input-group-register col-md-6 col-12 d-flex">
+                            <FormControl className={"w-100"} style={{border: "none"}}>
+                                <Select
+                                    sx={{ height: 50, borderRadius: "0.5rem", minWidth: '8rem', backgroundColor: "#fff"}}
+                                    id="select-field"
+                                    onChange={(e) => this.setState({selectedType: e.target.value})}>
+                                    {
+                                        this.state.choices.map((c) => (
+                                            <MenuItem value={c}>{c}</MenuItem>
+                                        ))
+                                    }
+                                    {
+                                        this.state.tempChoices.map((c) => (
+                                            <MenuItem value={c}>{c}</MenuItem>
+                                        ))
+                                    }
+
+                                    {/*<MenuItem value={"needs"}>نیازمندی</MenuItem>*/}
+                                    {/*<MenuItem value={"deficiency"}>کاستی</MenuItem>*/}
+                                    {/*<MenuItem value={"onHand"}>دارایی</MenuItem>*/}
+                                </Select>
+                                <label className="placeholder" style={{
+                                    top: '-10px',
+                                    fontSize: "0.9rem",
+                                    backgroundColor: '#fff',
+                                    color: '#2a2e32b3',
+                                    margin: '-0.2rem 0',
+                                    padding: '0 .4rem -0.4rem',
+                                    opacity: '1',
+                                }}>دسته بندی</label>
+                            </FormControl>
+                            <div className="col-md-1 col-2 d-flex align-item-center">
+                                <IconButton color="primary" onClick={() => {
+                                    this.handleOpenType()
+
+                                    // console.log(this.state.names);
+                                    // this.handleAddType();
+                                }}>
+                                    <IoAddOutline size={30} width={'50%'} height={'50%'}/>
+                                </IconButton>
                             </div>
-                            <label className="placeholder placeholder-typePayment" style={{
-                                top: '-8px',
-                                backgroundColor: '#fff',
-                                color: '#2a2e32b3',
-                                margin: '0.3rem 0.4rem',
-                                padding: '0 .4rem',
-                                opacity: '1'
-                            }}
-                            >دسته بندی</label>
+
+                            {/*<div>*/}
+                            {/*    <Accordion*/}
+                            {/*        className='p-1'*/}
+                            {/*        style={{backgroundColor: this.state.Validations.selectedTypeBoolean ? '' : 'rgba(255, 0, 0, 0.4)'}}*/}
+                            {/*    >*/}
+                            {/*        <Accordion.Item eventKey="0">*/}
+                            {/*            <Accordion.Header>*/}
+                            {/*                {this.state.selectedType}&nbsp;*/}
+                            {/*            </Accordion.Header>*/}
+                            {/*            <Accordion.Body>*/}
+                            {/*                <div>*/}
+                            {/*                    <div className=' row flex-wrap'>*/}
+                            {/*                        {*/}
+                            {/*                            this.state.Validations.selectedTypeBoolean // ifSelected condition*/}
+                            {/*                                ? null*/}
+                            {/*                                : <div className="d-flex justify-content-center mb-3">*/}
+                            {/*                                    <small className="text-danger">یکی از فیلدهای زیر را اتخاب*/}
+                            {/*                                        کنید!</small>*/}
+                            {/*                                </div>*/}
+                            {/*                        }*/}
+                            {/*                        <ToggleButtonGroup*/}
+                            {/*                            orientation="vertical"*/}
+                            {/*                            value={this.state.selectedType}*/}
+                            {/*                            exclusive*/}
+                            {/*                            onChange={this.handleAlignment}*/}
+                            {/*                            aria-label="text alignment"*/}
+                            {/*                        >*/}
+                            {/*                            {*/}
+                            {/*                                this.state.choices.map((c) =>*/}
+                            {/*                                    <ToggleButton value={c.name} className='col'>*/}
+                            {/*                                        {c.name}*/}
+                            {/*                                    </ToggleButton>*/}
+                            {/*                                )*/}
+                            {/*                            }*/}
+                            {/*                            {*/}
+                            {/*                                this.state.tempChoices.map((type, i) =>*/}
+                            {/*                                    <ToggleButton value={type} className='col'*/}
+                            {/*                                                  style={{display: "block"}}>*/}
+                            {/*                                        <div className="d-flex justify-content-center"*/}
+                            {/*                                             style={{position: "relative"}}>*/}
+                            {/*                                            <div className="close-btn-div">*/}
+                            {/*                                                <button className="close-btn"*/}
+                            {/*                                                        onClick={() => {*/}
+                            {/*                                                            this.handleDeleteType(i)*/}
+                            {/*                                                        }}><AiFillCloseCircle*/}
+                            {/*                                                    color="#F1416C"/></button>*/}
+                            {/*                                            </div>*/}
+                            {/*                                            <div className="">{type}</div>*/}
+                            {/*                                        </div>*/}
+                            {/*                                    </ToggleButton>*/}
+                            {/*                                )*/}
+                            {/*                            }*/}
+                            {/*                            <button value="add"*/}
+                            {/*                                    onClick={() => {*/}
+                            {/*                                        this.handleOpenType()*/}
+                            {/*                                    }}*/}
+                            {/*                                    className='col addTypeBtn'*/}
+                            {/*                            >*/}
+                            {/*                                <IoIosAddCircleOutline size={25}/>*/}
+                            {/*                            </button>*/}
+                            {/*                        </ToggleButtonGroup>*/}
+                            {/*                    </div>*/}
+                            {/*                </div>*/}
+                            {/*            </Accordion.Body>*/}
+                            {/*        </Accordion.Item>*/}
+                            {/*    </Accordion>*/}
+                            {/*</div>*/}
+                            {/*<label className="placeholder placeholder-typePayment" style={{*/}
+                            {/*    top: '-8px',*/}
+                            {/*    backgroundColor: '#fff',*/}
+                            {/*    color: '#2a2e32b3',*/}
+                            {/*    margin: '0.3rem 0.4rem',*/}
+                            {/*    padding: '0 .4rem',*/}
+                            {/*    opacity: '1'*/}
+                            {/*}}*/}
+                            {/*>دسته بندی</label>*/}
                         </div>
                         <div className="input-group-register col-md-2 col-12 date-container">
                             <DatePicker
@@ -292,7 +334,7 @@ class PaymentPage extends Component {
                                 <Button
                                     onClick={() => {
                                         this.setState({dataPicker: {}})
-                                        }
+                                    }
                                     }
                                 >
                                     ریست
@@ -497,28 +539,28 @@ class PaymentPage extends Component {
         //     .then(res => res.text())
 
         axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileId}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
-          .catch(() => {
-            if (localStorage.getItem('role') === 'MANAGER') {
-                axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
-                    .then((response) => {
-                        if (response.headers["accesstoken"]) {
-                            localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                            axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileId}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
-                        } else {
-                            window.location = '/'
-                        }
-                    })
-            } else if (localStorage.getItem('role') === 'SUPERVISOR') {
-                axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
-                    .then((response) => {
-                        if (response.headers["accesstoken"]) {
-                            localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                            axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileId}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
-                        } else {
-                            window.location = '/'
-                        }
-                    })
-            }})
+            .catch(() => {
+                if (localStorage.getItem('role') === 'MANAGER') {
+                    axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        .then((response) => {
+                            if (response.headers["accesstoken"]) {
+                                localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                                axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileId}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                            } else {
+                                window.location = '/'
+                            }
+                        })
+                } else if (localStorage.getItem('role') === 'SUPERVISOR') {
+                    axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        .then((response) => {
+                            if (response.headers["accesstoken"]) {
+                                localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                                axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileId}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                            } else {
+                                window.location = '/'
+                            }
+                        })
+                }})
 
         this.setState({fileId: ""});
         this.setState({isUpload: false});
@@ -573,49 +615,49 @@ class PaymentPage extends Component {
                 uploadLoading: false
             }))
             .catch(() => {
-            if (localStorage.getItem('role') === 'MANAGER') {
-                axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
-                    .then((response) => {
-                        if (response.headers["accesstoken"]) {
-                            localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                            axios.post('https://api.saadatportal.com/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
-                                .then((data) => this.setState({
-                                    fileId: data.message.id,
-                                    isUpload: true,
-                                    hasError: false,
-                                    uploadLoading: false
-                                }))
-                                .catch((error) => {
-                                    this.setState({isUpload: true})
-                                    this.setState({hasError: true})
-                                    this.setState({uploadLoading: false});
-                                })
-                        } else {
-                            window.location = '/'
-                        }
-                    })
-            } else if (localStorage.getItem('role') === 'SUPERVISOR') {
-                axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
-                    .then((response) => {
-                        if (response.headers["accesstoken"]) {
-                            localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                            axios.post('https://api.saadatportal.com/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
-                                .then((data) => this.setState({
-                                    fileId: data.message.id,
-                                    isUpload: true,
-                                    hasError: false,
-                                    uploadLoading: false
-                                }))
-                                .catch((error) => {
-                                    this.setState({isUpload: true})
-                                    this.setState({hasError: true})
-                                    this.setState({uploadLoading: false});
-                                })
-                        } else {
-                            window.location = '/'
-                        }
-                    })
-            }})
+                if (localStorage.getItem('role') === 'MANAGER') {
+                    axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        .then((response) => {
+                            if (response.headers["accesstoken"]) {
+                                localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                                axios.post('https://api.saadatportal.com/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                    .then((data) => this.setState({
+                                        fileId: data.message.id,
+                                        isUpload: true,
+                                        hasError: false,
+                                        uploadLoading: false
+                                    }))
+                                    .catch((error) => {
+                                        this.setState({isUpload: true})
+                                        this.setState({hasError: true})
+                                        this.setState({uploadLoading: false});
+                                    })
+                            } else {
+                                window.location = '/'
+                            }
+                        })
+                } else if (localStorage.getItem('role') === 'SUPERVISOR') {
+                    axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        .then((response) => {
+                            if (response.headers["accesstoken"]) {
+                                localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                                axios.post('https://api.saadatportal.com/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                    .then((data) => this.setState({
+                                        fileId: data.message.id,
+                                        isUpload: true,
+                                        hasError: false,
+                                        uploadLoading: false
+                                    }))
+                                    .catch((error) => {
+                                        this.setState({isUpload: true})
+                                        this.setState({hasError: true})
+                                        this.setState({uploadLoading: false});
+                                    })
+                            } else {
+                                window.location = '/'
+                            }
+                        })
+                }})
     }
 
     handleValidations = () => {

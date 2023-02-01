@@ -32,7 +32,6 @@ import Room from "./pages/New IAC/Room"
 import EditRoom from "./pages/Edit New IAC/EditRoom"
 import Bed from "./pages/New IAC/Bed"
 import EditBed from "./pages/Edit New IAC/EditBed"
-import ManagerPanel from "./pages/ManagerPanel/ManagerPanel";
 
 
 class MainPage extends Component {
