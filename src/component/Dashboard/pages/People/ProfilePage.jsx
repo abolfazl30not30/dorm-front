@@ -786,7 +786,133 @@ class ProfilePage extends Component {
                                                     </>;
                                                 case 'otherGuest':
                                                     return <>
-                                                        <div>otherGuest</div>
+                                                        <div className="information d-flex flex-row flex-wrap">
+                                                            <div className='col-12 col-md-4'>
+                                                                <div className="more-info-item">
+                                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                                    <label> نام :</label>
+                                                                    {this.state.person.firstName}
+                                                                </div>
+                                                            </div>
+                                                            <div className='col-12 col-md-4'>
+                                                                <div className="more-info-item">
+                                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                                    <label> نام خانوادگی :</label>
+                                                                    {this.state.person.lastName}
+                                                                </div>
+                                                            </div>
+                                                            <div className='col-12 col-md-4'>
+                                                                <div className="more-info-item">
+                                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                                    <label> نسبت با اقامتگر :</label>
+                                                                    {(() => {
+                                                                        switch (this.state.person.relationshipWithResident) {
+                                                                            case 'father':
+                                                                                return 'پدر';
+                                                                            case 'mother':
+                                                                                return 'مادر';
+                                                                            case 'sister':
+                                                                                return 'خواهر';
+                                                                            case 'brother':
+                                                                                return 'برادر';
+                                                                            case 'other':
+                                                                                return 'غیره';
+                                                                        }
+                                                                    })()}
+                                                                </div>
+                                                            </div>
+                                                            <div className='col-12 col-md-4'>
+                                                                <div className="more-info-item">
+                                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                                    <label> کد ملی :</label>
+                                                                    {this.state.person.nationalCode}
+                                                                </div>
+                                                            </div>
+                                                            <div className='col-12 col-md-4'>
+                                                                <div className="more-info-item">
+                                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                                    <label> شماره شناسنامه :</label>
+                                                                    {this.state.person.certificateNumber}
+                                                                </div>
+                                                            </div>
+                                                            <div className='col-12 col-md-4'>
+                                                                <div className="more-info-item">
+                                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                                    <label> محل صدور :</label>
+                                                                    {this.state.person.placeOfIssue !== "" ? this.state.person.placeOfIssue : 'ثبت نشده'}
+                                                                </div>
+                                                            </div>
+                                                            <div className='col-12 col-md-4'>
+                                                                <div className="more-info-item">
+                                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                                    <label> تاریخ تولد :</label>
+                                                                    {this.state.person.birthDate !== "" ? this.state.person.birthDate.split(" ")[0] : 'ثبت نشده'}
+                                                                </div>
+                                                            </div>
+                                                            <div className='col-12 col-md-4'>
+                                                                <div className="more-info-item">
+                                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                                    <label> تاریخ شروع پذیرش :</label>
+                                                                    {this.state.person.timePeriod.startDate.split(" ")[0]}
+                                                                </div>
+                                                            </div>
+                                                            <div className='col-12 col-md-4'>
+                                                                <div className="more-info-item">
+                                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                                    <label> تاریخ اتمام پذیرش :</label>
+                                                                    {this.state.person.timePeriod.endDate.split(" ")[0]}
+                                                                </div>
+                                                            </div>
+                                                            <div className='col-12 col-md-4'>
+                                                                <div className="more-info-item">
+                                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                                    <label> تاریخ پرداخت :</label>
+                                                                    {this.state.person.paymentDate}
+                                                                </div>
+                                                            </div>
+                                                            <div className='col-12 col-md-4'>
+                                                                <div className="more-info-item">
+                                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                                    <label> مبلغ پرداخت اجاره :</label>
+                                                                    {this.state.person.depositPaymentAmount !== "" ? this.state.person.depositPaymentAmount : 'ثبت نشده'}
+                                                                </div>
+                                                            </div>
+                                                            <div className='col-12 col-md-4'>
+                                                                <div className="more-info-item">
+                                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                                    <label> مبلغ پرداخت ودیعه :</label>
+                                                                    {this.state.person.rentPaymentAmount !== "" ? this.state.person.rentPaymentAmount : 'ثبت نشده'}
+                                                                </div>
+                                                            </div>
+                                                            <div className='col-12 col-md-4'>
+                                                                <div className="more-info-item">
+                                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                                    <label> مبلغ پرداخت اجاره :</label>
+                                                                    {this.state.person.discountPaymentAmount !== "" ? this.state.person.discountPaymentAmount : 'ثبت نشده'}
+                                                                </div>
+                                                            </div>
+                                                            <div className='col-12 col-md-4'>
+                                                                <div className="more-info-item">
+                                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                                    <label> آدرس محل سکونت :</label>
+                                                                    {this.state.person.address}
+                                                                </div>
+                                                            </div>
+                                                            <div className='col-12 col-md-4'>
+                                                                <div className="more-info-item">
+                                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                                    <label> شماره همراه اقامتگر :</label>
+                                                                    {this.state.person.phoneNumber}
+                                                                </div>
+                                                            </div>
+                                                            <div className='col-12 col-md-4'>
+                                                                <div className="more-info-item">
+                                                                    <i className="bi bi-caret-left ms-1"></i>
+                                                                    <label> شماره تلفن منزل :</label>
+                                                                    {this.state.person.telephoneNumber}
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </>;
                                             }
                                         })()}
