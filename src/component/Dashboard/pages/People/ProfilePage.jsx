@@ -18,9 +18,11 @@ import persian_fa from "react-date-object/locales/persian_fa";
 import {Box, Button, CircularProgress, FormControl, MenuItem, Select} from "@mui/material";
 import {green} from "@mui/material/colors";
 import axios from "axios";
+import ReactToPrint from "react-to-print";
+import PrintInformation from "../../../PrintInformation";
+import PrintReports from "../../../PrintReports";
 
 class ProfilePage extends Component {
-
     static contextType = BuildingContext;
 
     state = {
@@ -78,6 +80,8 @@ class ProfilePage extends Component {
     refundableAmount = createRef();
     reason = createRef();
     penaltyAmount = createRef();
+    component1Ref = createRef()
+    component2Ref = createRef()
 
     async componentDidMount() {
         let parentId = ""
@@ -324,33 +328,26 @@ class ProfilePage extends Component {
                                      style={{backgroundColor: "transparent"}}>
                                     <div className="tabs-content">
                                         <div className={"d-flex justify-content-end"}>
-                                            <Box sx={{ m: 1, position: 'relative' }}>
-                                                <Button
-                                                    variant="contained"
-                                                    sx={{
-                                                        backgroundColor: "#DB9B31",
-                                                        color: "white",
-                                                        ":hover": {backgroundColor: "#DB9B31", color: "black"}
-                                                    }}
-                                                    disabled={this.state.printLoading}
-                                                    onClick={this.printInformation}
-                                                >
-                                                    چاپ اطلاعات
-                                                </Button>
-                                                {this.state.printLoading && (
-                                                    <CircularProgress
-                                                        size={24}
+                                            <ReactToPrint
+                                                trigger={() =>
+                                                    <Button
+                                                        variant="contained"
                                                         sx={{
-                                                            color: green[500],
-                                                            position: 'absolute',
-                                                            top: '50%',
-                                                            left: '50%',
-                                                            marginTop: '-12px',
-                                                            marginLeft: '-12px',
+                                                            backgroundColor: "#DB9B31",
+                                                            color: "white",
+                                                            ":hover": {backgroundColor: "#DB9B31", color: "black"}
                                                         }}
-                                                    />
-                                                )}
-                                            </Box>
+                                                        disabled={this.state.printLoading}
+                                                    >
+                                                        چاپ اطلاعات
+                                                    </Button>
+                                            }
+                                                documentTitle={this.state.person.fullName}
+                                                content={() => this.component1Ref.current}
+                                            />
+                                            <div style={{display: "none"}}>
+                                                <PrintInformation person={this.state.person} ref={this.component1Ref} />
+                                            </div>
                                         </div>
                                         {(() => {
                                             switch (this.state.person.personType) {
@@ -920,11 +917,35 @@ class ProfilePage extends Component {
                                 </Tab>
                                 <Tab eventKey="records" title="سوابق" style={{backgroundColor: "transparent"}}>
                                     <div className="tabs-content">
-                                        <button className='btn-done mx-3' onClick={() => {
-                                            this.handleShow()
-                                            this.handleResetFields();
-                                        }}>ثبت گزارش
-                                        </button>
+                                        <div className={"d-flex justify-content-between flex-sm-row flex-column-reverse"}>
+                                            <button className='btn-done mx-3' onClick={() => {
+                                                this.handleShow()
+                                                this.handleResetFields();
+                                            }}>ثبت گزارش
+                                            </button>
+                                            <ReactToPrint
+                                                trigger={() =>
+                                                    <Button
+                                                        className={"mx-3 mb-4"}
+                                                        variant="contained"
+                                                        sx={{
+                                                            height: "80%",
+                                                            backgroundColor: "#DB9B31",
+                                                            color: "white",
+                                                            ":hover": {backgroundColor: "#DB9B31", color: "black"}
+                                                        }}
+                                                        disabled={this.state.printLoading}
+                                                    >
+                                                        چاپ سوابق
+                                                    </Button>
+                                                }
+                                                documentTitle={`سوابق ${this.state.person.fullName}`}
+                                                content={() => this.component2Ref.current}
+                                            />
+                                            <div style={{display: "none"}}>
+                                                <PrintReports report={this.state.report} ref={this.component2Ref} />
+                                            </div>
+                                        </div>
                                         <Accordion>
                                             <Accordion.Item eventKey="0">
                                                 <Accordion.Header>نوبت نظافت شبانه</Accordion.Header>
@@ -2953,65 +2974,6 @@ class ProfilePage extends Component {
                         }
                     })
             }})
-    }
-
-    printInformation = async () => {
-        await axios.get(`https://api.saadatportal.com/api/v1/supervisor/characteristic/report/${window.location.href.slice(-32)}`, { responseType: 'blob', headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
-            .then((blob) => {
-                if (blob !== null) {
-                    const url = window.URL.createObjectURL(blob);
-                    const a = document.createElement('a');
-                    a.href = url;
-                    a.download = this.state.person.fullName;
-                    document.body.appendChild(a);
-                    a.click();
-                    a.remove();
-                }
-            }).catch(() => {
-            if (localStorage.getItem('role') === 'MANAGER') {
-                axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
-                    .then((response) => {
-                        if (response.headers["accesstoken"]) {
-                            localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                            axios.get(`https://api.saadatportal.com/api/v1/supervisor/characteristic/report/${window.location.href.slice(-32)}`, { responseType: 'blob', headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
-                                .then((blob) => {
-                                    if (blob !== null) {
-                                        const url = window.URL.createObjectURL(blob);
-                                        const a = document.createElement('a');
-                                        a.href = url;
-                                        a.download = this.state.person.fullName;
-                                        document.body.appendChild(a);
-                                        a.click();
-                                        a.remove();
-                                    }
-                                })
-                        } else {
-                            window.location = '/'
-                        }
-                    })
-            } else if (localStorage.getItem('role') === 'SUPERVISOR') {
-                axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
-                    .then((response) => {
-                        if (response.headers["accesstoken"]) {
-                            localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                            axios.get(`https://api.saadatportal.com/api/v1/supervisor/characteristic/report/${window.location.href.slice(-32)}`, { responseType: 'blob', headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
-                                .then((blob) => {
-                                    if (blob !== null) {
-                                        const url = window.URL.createObjectURL(blob);
-                                        const a = document.createElement('a');
-                                        a.href = url;
-                                        a.download = this.state.person.fullName;
-                                        document.body.appendChild(a);
-                                        a.click();
-                                        a.remove();
-                                    }
-                                })
-                        } else {
-                            window.location = '/'
-                        }
-                    })
-            }})
-
     }
 
     existDocFile = (docFile) => {
