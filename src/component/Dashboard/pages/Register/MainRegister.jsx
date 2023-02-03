@@ -151,7 +151,7 @@ class MainRegister extends Component {
                     <div className={"justify-content-start flex-column mx-5 mb-2 mt-0"} style={{display: this.state.constantCheck ? "none" : "flex"}}>
                         <label className="radio-container">
                             بستگان درجه یک
-                            <input type="radio"  name="register-radio" value={"familyGuest"}
+                            <input type="radio"  name="radio" value={"familyGuest"}
                                    checked={this.state.familyGuestCheck}
                                    onChange={(e) => {
                                        this.checked(e)
@@ -161,7 +161,7 @@ class MainRegister extends Component {
                         </label>
                         <label className="radio-container">
                             متفرقه
-                            <input type="radio"  name="register-radio" value={"otherGuest"}
+                            <input type="radio"  name="radio" value={"otherGuest"}
                                    checked={this.state.otherGuestCheck}
                                    onChange={(e) => {
                                        this.checked(e)
@@ -212,7 +212,7 @@ class MainRegister extends Component {
                         <div className={"justify-content-start flex-column mt-0 mx-5"} style={{display: this.state.constantCheck ? "none" : "flex"}}>
                             <label className="radio-container">
                                 بستگان درجه یک
-                                <input type="radio"  name="register-radio" value={"familyGuest"}
+                                <input type="radio"  name="radio" value={"familyGuest"}
                                        checked={this.state.familyGuestCheck}
                                        onChange={(e) => {
                                            this.checked(e)
@@ -222,7 +222,7 @@ class MainRegister extends Component {
                             </label>
                             <label className="radio-container">
                                 متفرقه
-                                <input type="radio"  name="register-radio" value={"otherGuest"}
+                                <input type="radio"  name="radio" value={"otherGuest"}
                                        checked={this.state.otherGuestCheck}
                                        onChange={(e) => {
                                            this.checked(e)
