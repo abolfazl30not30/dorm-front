@@ -181,7 +181,7 @@ class log extends Component {
                                                 }
                                             })()}
                                         </td>
-                                        <td>{new Date(log.date).toLocaleDateString('fa-IR')}</td>
+                                        <td>{log.date}</td>
                                         <td>{log.hour}</td>
                                     </tr>
                                 ))

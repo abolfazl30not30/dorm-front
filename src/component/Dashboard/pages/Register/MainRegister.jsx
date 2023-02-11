@@ -136,7 +136,7 @@ class MainRegister extends Component {
                 <div className="guest-container d-flex w-100 flex-column mt-0">
                     <div className={"d-flex mt-0"}>
                         <label className="radio-container mt-2 mb-3">
-                            مهمان :
+                            مهمان
                             <input type={"radio"} name="register-radio" value={"familyGuest"}
                                    checked={!this.state.isConstant}
                                    disabled={!this.state.constantCheck}
@@ -197,7 +197,7 @@ class MainRegister extends Component {
                     <div className="guest-container d-flex flex-column w-100 mt-0">
                         <div className={"d-flex mt-0"}>
                             <label className="radio-container mb-3 mt-2">
-                                مهمان :
+                                مهمان
                                 <input type={"radio"} name="register-radio" value={"familyGuest"}
                                        checked={!this.state.isConstant}
                                        disabled={!this.state.constantCheck}
