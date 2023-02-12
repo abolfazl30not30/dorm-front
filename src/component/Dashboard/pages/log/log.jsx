@@ -15,7 +15,7 @@ class log extends Component {
         currentPageNumber: 0,
         logs: [],
         totalPages: null,
-        searchBase: "date",
+        searchBase: "all",
         searchContent: "",
         dataPicker: '',
     }
@@ -57,7 +57,7 @@ class log extends Component {
                         <i className="bi bi-caret-left-fill"/>
                     </Link>
                 </div>
-                <div className="log-box">
+                <div className="log-box" style={{minHeight: window.innerHeight*0.5}}>
                     <div className="title">
                         <h4>مدیریت کارها</h4>
                     </div>
@@ -201,11 +201,12 @@ class log extends Component {
         let month = value.month < 10 ? ('0' + value.month) : value.month;
         let day = value.day < 10 ? ('0' + value.day) : value.day;
         let convertDate = value.year  + '/' + month + '/' + day;
+        this.setState({searchContent: convertDate})
         this.handleSearch(convertDate)
     }
     handleSearch = async (e) => {
-        const pageNumber = this.state.currentPageNumber
-        axios.get(`https://api.saadatportal.com/api/v1/logHistory?page=${pageNumber}&size=20/search?${this.state.searchBase}=${e}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+        this.setState({currentPageNumber: 0})
+        axios.get(`https://api.saadatportal.com/api/v1/logHistory/search?${this.state.searchBase}=${e}&page=0&size=20`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
             .then((data) => this.setState({
                 logs: data.content,
                 searchLoading: false,
@@ -216,7 +217,7 @@ class log extends Component {
                     ) => {
                         if (response.headers["accesstoken"]) {
                             localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                            axios.get(`https://api.saadatportal.com/api/v1/logHistory?page=${pageNumber}&size=20/search?${this.state.searchBase}=${e}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                            axios.get(`https://api.saadatportal.com/api/v1/logHistory/search?${this.state.searchBase}=${e}&page=0&size=20`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                 .then((data) => this.setState({
                                     logs: data.content,
                                     searchLoading: false,
@@ -229,30 +230,59 @@ class log extends Component {
             })
     }
     handleSearchInput = (value) => {
+        this.setState({searchContent: value.target.value, datePicker: value.target.value})
         this.handleSearch(value.target.value)
     }
+
     handleNewPage = (pageNumber) => {
         this.setState({searchLoading: true, currentPageNumber: pageNumber - 1})
-        axios.get(`https://api.saadatportal.com/api/v1/logHistory?page=${pageNumber-1}&size=20`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
-            .then((data) => this.setState({
-                logs: data.content,
-                searchLoading: false,
-                totalPages: data.totalPages
-            })).catch(() => {
-            axios.get(`https://api.saadatportal.com/api/v1/manager/token/refresh`, {headers: {'Authorization': localStorage.getItem('refreshToken')}})
-                .then((response) => {
-                    if (response.headers["accesstoken"]) {
-                        localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                        axios.get(`https://api.saadatportal.com/api/v1/logHistory?page=${pageNumber-1}&size=20`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
-                            .then((data) => this.setState({
-                                logs: data.content,
-                                searchLoading: false,
-                                totalPages: data.totalPages
-                            }))
-                    } else {
-                        window.location = '/'
-                    }
-                })})
+        if (this.state.searchBase === "all") {
+            axios.get(`https://api.saadatportal.com/api/v1/logHistory?page=${pageNumber - 1}&size=20`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                .then((data) => this.setState({
+                    logs: data.content,
+                    searchLoading: false,
+                    totalPages: data.totalPages
+                })).catch(() => {
+                axios.get(`https://api.saadatportal.com/api/v1/manager/token/refresh`, {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                    .then((response) => {
+                        if (response.headers["accesstoken"]) {
+                            localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                            axios.get(`https://api.saadatportal.com/api/v1/logHistory?page=${pageNumber - 1}&size=20`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                .then((data) => this.setState({
+                                    logs: data.content,
+                                    searchLoading: false,
+                                    totalPages: data.totalPages
+                                }))
+                        } else {
+                            window.location = '/'
+                        }
+                    })
+            })
+        } else {
+            axios.get(`https://api.saadatportal.com/api/v1/logHistory/search?${this.state.searchBase}=${this.state.searchContent}&page=${pageNumber - 1}&size=20`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                .then((data) => this.setState({
+                    logs: data.content,
+                    searchLoading: false,
+                    totalPages: data.totalPages
+                })).catch(() => {
+                axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                    .then((response
+                    ) => {
+                        if (response.headers["accesstoken"]) {
+                            localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                            axios.get(`https://api.saadatportal.com/api/v1/logHistory/search?${this.state.searchBase}=${this.state.searchContent}&page=${pageNumber - 1}&size=20`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                .then((data) => this.setState({
+                                    logs: data.content,
+                                    searchLoading: false,
+                                    totalPages: data.totalPages
+                                }))
+                        } else {
+                            window.location = '/'
+                        }
+                    })
+            })
+
+        }
 
     }
 }
