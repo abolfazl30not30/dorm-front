@@ -10,7 +10,7 @@ class ProtectedRoute extends Component {
     componentWillMount() {
         const role = localStorage.getItem('role')
         if (role === 'MANAGER') {
-            axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+            axios.get('http://localhost:8089/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                 .then((response) => {
                     if (response.headers["accesstoken"]) {
                         localStorage.setItem("accessToken", response.headers["accesstoken"]);
@@ -24,7 +24,7 @@ class ProtectedRoute extends Component {
                     }
                 })
         } else if (role === 'SUPERVISOR') {
-            axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+            axios.get('http://localhost:8089/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                 .then((response) => {
                     if (response.headers["accesstoken"]) {
                         localStorage.setItem("accessToken", response.headers["accesstoken"]);

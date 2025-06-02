@@ -651,7 +651,7 @@ class CUploadPage extends Component {
             formData.append('file', e.target.files[0]);
             this.setState({nameBirthPage1: e.target.files[0].name})
 
-            // await fetch('https://api.saadatportal.com/api/v1/file', {
+            // await fetch('http://localhost:8089/api/v1/file', {
             //     method: 'POST',
             //     body: formData
             // }).then((response) => response.json())
@@ -670,7 +670,7 @@ class CUploadPage extends Component {
             //         this.setState({hasErrorBirthPage1: true});
             //     });
 
-            await axios.post('https://api.saadatportal.com/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+            await axios.post('http://localhost:8089/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                 .then((result) => {
                     console.log('Success:', result);
                     this.setState({fileIdBirthPage1: result.message.id});
@@ -681,11 +681,11 @@ class CUploadPage extends Component {
                 })
                 .catch(() => {
                     if (localStorage.getItem('role') === 'MANAGER') {
-                        axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        axios.get('http://localhost:8089/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                             .then((response) => {
                                 if (response.headers["accesstoken"]) {
                                     localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                    axios.post('https://api.saadatportal.com/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                    axios.post('http://localhost:8089/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                         .then((result) => {
                                             console.log('Success:', result);
                                             this.setState({fileIdBirthPage1: result.message.id});
@@ -711,11 +711,11 @@ class CUploadPage extends Component {
                                 this.setState({hasErrorBirthPage1: true});
                             })
                     } else if (localStorage.getItem('role') === 'SUPERVISOR') {
-                        axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        axios.get('http://localhost:8089/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                             .then((response) => {
                                 if (response.headers["accesstoken"]) {
                                     localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                    axios.post('https://api.saadatportal.com/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                    axios.post('http://localhost:8089/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                         .then((result) => {
                                             console.log('Success:', result);
                                             this.setState({fileIdBirthPage1: result.message.id});
@@ -745,30 +745,30 @@ class CUploadPage extends Component {
     }
 
     handleDeleteBirthPage1 = async () => {
-        // await fetch(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdBirthPage1}`, {
+        // await fetch(`http://localhost:8089/api/v1/supervisor/file/${this.state.fileIdBirthPage1}`, {
         //     method: 'DELETE',
         // })
         //     .then(res => res.text())
         //     .then(res => console.log(res));
 
-        await axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdBirthPage1}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+        await axios.delete(`http://localhost:8089/api/v1/supervisor/file/${this.state.fileIdBirthPage1}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
             .catch(async () => {
                 if (localStorage.getItem('role') === 'MANAGER') {
-                    await axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                    await axios.get('http://localhost:8089/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                         .then(async (response) => {
                             if (response.headers["accesstoken"]) {
                                 localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                await  axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdBirthPage1}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                await  axios.delete(`http://localhost:8089/api/v1/supervisor/file/${this.state.fileIdBirthPage1}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                             } else {
                                 window.location = '/'
                             }
                         })
                 } else if (localStorage.getItem('role') === 'SUPERVISOR') {
-                    await  axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                    await  axios.get('http://localhost:8089/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                         .then(async (response) => {
                             if (response.headers["accesstoken"]) {
                                 localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                await   axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdBirthPage1}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                await   axios.delete(`http://localhost:8089/api/v1/supervisor/file/${this.state.fileIdBirthPage1}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                             } else {
                                 window.location = '/'
                             }
@@ -791,7 +791,7 @@ class CUploadPage extends Component {
             formData.append('file', e.target.files[0]);
             this.setState({nameBirthPage2: e.target.files[0].name})
 
-            // await fetch('https://api.saadatportal.com/api/v1/file', {
+            // await fetch('http://localhost:8089/api/v1/file', {
             //     method: 'POST',
             //     body: formData
             // }).then((response) => response.json())
@@ -810,7 +810,7 @@ class CUploadPage extends Component {
             //         this.setState({hasErrorBirthPage2: true});
             //     });
 
-            await axios.post('https://api.saadatportal.com/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+            await axios.post('http://localhost:8089/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                 .then((result) => {
                     console.log('Success:', result);
                     this.setState({fileIdBirthPage2: result.message.id});
@@ -821,11 +821,11 @@ class CUploadPage extends Component {
                 })
                 .catch(() => {
                     if (localStorage.getItem('role') === 'MANAGER') {
-                        axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        axios.get('http://localhost:8089/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                             .then((response) => {
                                 if (response.headers["accesstoken"]) {
                                     localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                    axios.post('https://api.saadatportal.com/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                    axios.post('http://localhost:8089/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                         .then((result) => {
                                             console.log('Success:', result);
                                             this.setState({fileIdBirthPage2: result.message.id});
@@ -851,11 +851,11 @@ class CUploadPage extends Component {
                                 this.setState({hasErrorBirthPage2: true});
                             })
                     } else if (localStorage.getItem('role') === 'SUPERVISOR') {
-                        axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        axios.get('http://localhost:8089/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                             .then((response) => {
                                 if (response.headers["accesstoken"]) {
                                     localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                    axios.post('https://api.saadatportal.com/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                    axios.post('http://localhost:8089/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                         .then((result) => {
                                             console.log('Success:', result);
                                             this.setState({fileIdBirthPage2: result.message.id});
@@ -885,30 +885,30 @@ class CUploadPage extends Component {
     }
 
     handleDeleteBirthPage2 = async () => {
-        // await fetch(`https://api.saadatportal.com/api/v1/file/${this.state.fileIdBirthPage2}`, {
+        // await fetch(`http://localhost:8089/api/v1/file/${this.state.fileIdBirthPage2}`, {
         //     method: 'DELETE',
         // })
         //     .then(res => res.text())
         //     .then(res => console.log(res));
 
-        await axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdBirthPage2}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+        await axios.delete(`http://localhost:8089/api/v1/supervisor/file/${this.state.fileIdBirthPage2}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
             .catch(async () => {
                 if (localStorage.getItem('role') === 'MANAGER') {
-                    await axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                    await axios.get('http://localhost:8089/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                         .then(async (response) => {
                             if (response.headers["accesstoken"]) {
                                 localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                await axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdBirthPage2}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                await axios.delete(`http://localhost:8089/api/v1/supervisor/file/${this.state.fileIdBirthPage2}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                             } else {
                                 window.location = '/'
                             }
                         })
                 } else if (localStorage.getItem('role') === 'SUPERVISOR') {
-                    await axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                    await axios.get('http://localhost:8089/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                         .then(async (response) => {
                             if (response.headers["accesstoken"]) {
                                 localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                await axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdBirthPage2}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                await axios.delete(`http://localhost:8089/api/v1/supervisor/file/${this.state.fileIdBirthPage2}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                             } else {
                                 window.location = '/'
                             }
@@ -928,7 +928,7 @@ class CUploadPage extends Component {
             formData.append('file', e.target.files[0]);
             this.setState({nameBirthPage3: e.target.files[0].name})
 
-            // await fetch('https://api.saadatportal.com/api/v1/file', {
+            // await fetch('http://localhost:8089/api/v1/file', {
             //     method: 'POST',
             //     body: formData
             // }).then((response) => response.json())
@@ -947,7 +947,7 @@ class CUploadPage extends Component {
             //         this.setState({hasErrorBirthPage3: true});
             //     });
 
-            await axios.post('https://api.saadatportal.com/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+            await axios.post('http://localhost:8089/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                 .then((result) => {
                     console.log('Success:', result);
                     this.setState({fileIdBirthPage3: result.message.id});
@@ -958,11 +958,11 @@ class CUploadPage extends Component {
                 })
                 .catch(() => {
                     if (localStorage.getItem('role') === 'MANAGER') {
-                        axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        axios.get('http://localhost:8089/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                             .then((response) => {
                                 if (response.headers["accesstoken"]) {
                                     localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                    axios.post('https://api.saadatportal.com/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                    axios.post('http://localhost:8089/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                         .then((result) => {
                                             console.log('Success:', result);
                                             this.setState({fileIdBirthPage3: result.message.id});
@@ -988,11 +988,11 @@ class CUploadPage extends Component {
                                 this.setState({hasErrorBirthPage3: true});
                             })
                     } else if (localStorage.getItem('role') === 'SUPERVISOR') {
-                        axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        axios.get('http://localhost:8089/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                             .then((response) => {
                                 if (response.headers["accesstoken"]) {
                                     localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                    axios.post('https://api.saadatportal.com/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                    axios.post('http://localhost:8089/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                         .then((result) => {
                                             console.log('Success:', result);
                                             this.setState({fileIdBirthPage3: result.message.id});
@@ -1022,30 +1022,30 @@ class CUploadPage extends Component {
     }
 
     handleDeleteBirthPage3 = async () => {
-        // await fetch(`https://api.saadatportal.com/api/v1/file/${this.state.fileIdBirthPage3}`, {
+        // await fetch(`http://localhost:8089/api/v1/file/${this.state.fileIdBirthPage3}`, {
         //     method: 'DELETE',
         // })
         //     .then(res => res.text())
         //     .then(res => console.log(res));
 
-        await axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdBirthPage3}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+        await axios.delete(`http://localhost:8089/api/v1/supervisor/file/${this.state.fileIdBirthPage3}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
             .catch(async () => {
                 if (localStorage.getItem('role') === 'MANAGER') {
-                    await  axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                    await  axios.get('http://localhost:8089/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                         .then(async (response) => {
                             if (response.headers["accesstoken"]) {
                                 localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                await   axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdBirthPage3}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                await   axios.delete(`http://localhost:8089/api/v1/supervisor/file/${this.state.fileIdBirthPage3}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                             } else {
                                 window.location = '/'
                             }
                         })
                 } else if (localStorage.getItem('role') === 'SUPERVISOR') {
-                    await axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                    await axios.get('http://localhost:8089/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                         .then(async (response) => {
                             if (response.headers["accesstoken"]) {
                                 localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                await axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdBirthPage3}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                await axios.delete(`http://localhost:8089/api/v1/supervisor/file/${this.state.fileIdBirthPage3}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                             } else {
                                 window.location = '/'
                             }
@@ -1065,7 +1065,7 @@ class CUploadPage extends Component {
             formData.append('file', e.target.files[0]);
             this.setState({nameBirthPage4: e.target.files[0].name})
 
-            // await fetch('https://api.saadatportal.com/api/v1/file', {
+            // await fetch('http://localhost:8089/api/v1/file', {
             //     method: 'POST',
             //     body: formData
             // }).then((response) => response.json())
@@ -1084,7 +1084,7 @@ class CUploadPage extends Component {
             //         this.setState({hasErrorBirthPage4: true});
             //     });
 
-            await axios.post('https://api.saadatportal.com/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+            await axios.post('http://localhost:8089/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                 .then((result) => {
                     console.log('Success:', result);
                     this.setState({fileIdBirthPage4: result.message.id});
@@ -1095,11 +1095,11 @@ class CUploadPage extends Component {
                 })
                 .catch(() => {
                     if (localStorage.getItem('role') === 'MANAGER') {
-                        axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        axios.get('http://localhost:8089/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                             .then((response) => {
                                 if (response.headers["accesstoken"]) {
                                     localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                    axios.post('https://api.saadatportal.com/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                    axios.post('http://localhost:8089/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                         .then((result) => {
                                             console.log('Success:', result);
                                             this.setState({fileIdBirthPage4: result.message.id});
@@ -1125,11 +1125,11 @@ class CUploadPage extends Component {
                                 this.setState({hasErrorBirthPage4: true});
                             })
                     } else if (localStorage.getItem('role') === 'SUPERVISOR') {
-                        axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        axios.get('http://localhost:8089/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                             .then((response) => {
                                 if (response.headers["accesstoken"]) {
                                     localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                    axios.post('https://api.saadatportal.com/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                    axios.post('http://localhost:8089/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                         .then((result) => {
                                             console.log('Success:', result);
                                             this.setState({fileIdBirthPage4: result.message.id});
@@ -1159,30 +1159,30 @@ class CUploadPage extends Component {
     }
 
     handleDeleteBirthPage4 = async () => {
-        // await fetch(`https://api.saadatportal.com/api/v1/file/${this.state.fileIdBirthPage4}`, {
+        // await fetch(`http://localhost:8089/api/v1/file/${this.state.fileIdBirthPage4}`, {
         //     method: 'DELETE',
         // })
         //     .then(res => res.text())
         //     .then(res => console.log(res));
 
-        await axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdBirthPage4}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+        await axios.delete(`http://localhost:8089/api/v1/supervisor/file/${this.state.fileIdBirthPage4}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
             .catch(async () => {
                 if (localStorage.getItem('role') === 'MANAGER') {
-                    await axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                    await axios.get('http://localhost:8089/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                         .then(async (response) => {
                             if (response.headers["accesstoken"]) {
                                 localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                await axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdBirthPage4}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                await axios.delete(`http://localhost:8089/api/v1/supervisor/file/${this.state.fileIdBirthPage4}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                             } else {
                                 window.location = '/'
                             }
                         })
                 } else if (localStorage.getItem('role') === 'SUPERVISOR') {
-                    await axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                    await axios.get('http://localhost:8089/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                         .then(async (response) => {
                             if (response.headers["accesstoken"]) {
                                 localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                await axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdBirthPage4}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                await axios.delete(`http://localhost:8089/api/v1/supervisor/file/${this.state.fileIdBirthPage4}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                             } else {
                                 window.location = '/'
                             }
@@ -1202,7 +1202,7 @@ class CUploadPage extends Component {
             formData.append('file', e.target.files[0]);
             this.setState({nameBirthAllPage: e.target.files[0].name})
 
-            // await fetch('https://api.saadatportal.com/api/v1/file', {
+            // await fetch('http://localhost:8089/api/v1/file', {
             //     method: 'POST',
             //     body: formData
             // }).then((response) => response.json())
@@ -1221,7 +1221,7 @@ class CUploadPage extends Component {
             //         this.setState({hasErrorBirthAllPage: true});
             //     });
 
-            await axios.post('https://api.saadatportal.com/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+            await axios.post('http://localhost:8089/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                 .then((result) => {
                     console.log('Success:', result);
                     this.setState({fileIdBirthAllPage: result.message.id});
@@ -1232,11 +1232,11 @@ class CUploadPage extends Component {
                 })
                 .catch(() => {
                     if (localStorage.getItem('role') === 'MANAGER') {
-                        axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        axios.get('http://localhost:8089/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                             .then((response) => {
                                 if (response.headers["accesstoken"]) {
                                     localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                    axios.post('https://api.saadatportal.com/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                    axios.post('http://localhost:8089/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                         .then((result) => {
                                             console.log('Success:', result);
                                             this.setState({fileIdBirthAllPage: result.message.id});
@@ -1262,11 +1262,11 @@ class CUploadPage extends Component {
                                 this.setState({hasErrorBirthAllPage: true});
                             })
                     } else if (localStorage.getItem('role') === 'SUPERVISOR') {
-                        axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        axios.get('http://localhost:8089/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                             .then((response) => {
                                 if (response.headers["accesstoken"]) {
                                     localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                    axios.post('https://api.saadatportal.com/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                    axios.post('http://localhost:8089/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                         .then((result) => {
                                             console.log('Success:', result);
                                             this.setState({fileIdBirthAllPage: result.message.id});
@@ -1296,30 +1296,30 @@ class CUploadPage extends Component {
     }
 
     handleDeleteBirthAllPage = async () => {
-        // await fetch(`https://api.saadatportal.com/api/v1/file/${this.state.fileIdBirthAllPage}`, {
+        // await fetch(`http://localhost:8089/api/v1/file/${this.state.fileIdBirthAllPage}`, {
         //     method: 'DELETE',
         // })
         //     .then(res => res.text())
         //     .then(res => console.log(res));
 
-        await axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdBirthAllPage}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+        await axios.delete(`http://localhost:8089/api/v1/supervisor/file/${this.state.fileIdBirthAllPage}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
             .catch(async () => {
                 if (localStorage.getItem('role') === 'MANAGER') {
-                    await axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                    await axios.get('http://localhost:8089/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                         .then(async (response) => {
                             if (response.headers["accesstoken"]) {
                                 localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                await axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdBirthAllPage}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                await axios.delete(`http://localhost:8089/api/v1/supervisor/file/${this.state.fileIdBirthAllPage}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                             } else {
                                 window.location = '/'
                             }
                         })
                 } else if (localStorage.getItem('role') === 'SUPERVISOR') {
-                    await axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                    await axios.get('http://localhost:8089/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                         .then(async (response) => {
                             if (response.headers["accesstoken"]) {
                                 localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                await axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdBirthAllPage}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                await axios.delete(`http://localhost:8089/api/v1/supervisor/file/${this.state.fileIdBirthAllPage}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                             } else {
                                 window.location = '/'
                             }
@@ -1338,7 +1338,7 @@ class CUploadPage extends Component {
             formData.append('file', e.target.files[0]);
             this.setState({nameCartPage1: e.target.files[0].name});
 
-            // await fetch('https://api.saadatportal.com/api/v1/file', {
+            // await fetch('http://localhost:8089/api/v1/file', {
             //     method: 'POST',
             //     body: formData
             // }).then((response) => response.json())
@@ -1357,7 +1357,7 @@ class CUploadPage extends Component {
             //         this.setState({hasErrorCartPage1: true});
             //     });
 
-            await axios.post('https://api.saadatportal.com/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+            await axios.post('http://localhost:8089/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                 .then((result) => {
                     console.log('Success:', result);
                     this.setState({fileIdCartPage1: result.message.id});
@@ -1368,11 +1368,11 @@ class CUploadPage extends Component {
                 })
                 .catch(() => {
                     if (localStorage.getItem('role') === 'MANAGER') {
-                        axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        axios.get('http://localhost:8089/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                             .then((response) => {
                                 if (response.headers["accesstoken"]) {
                                     localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                    axios.post('https://api.saadatportal.com/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                    axios.post('http://localhost:8089/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                         .then((result) => {
                                             console.log('Success:', result);
                                             this.setState({fileIdCartPage1: result.message.id});
@@ -1398,11 +1398,11 @@ class CUploadPage extends Component {
                                 this.setState({hasErrorCartPage1: true});
                             })
                     } else if (localStorage.getItem('role') === 'SUPERVISOR') {
-                        axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        axios.get('http://localhost:8089/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                             .then((response) => {
                                 if (response.headers["accesstoken"]) {
                                     localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                    axios.post('https://api.saadatportal.com/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                    axios.post('http://localhost:8089/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                         .then((result) => {
                                             console.log('Success:', result);
                                             this.setState({fileIdCartPage1: result.message.id});
@@ -1432,30 +1432,30 @@ class CUploadPage extends Component {
     }
 
     handleDeleteCartPage1 = async () => {
-        // await fetch(`https://api.saadatportal.com/api/v1/file/${this.state.fileIdCartPage1}`, {
+        // await fetch(`http://localhost:8089/api/v1/file/${this.state.fileIdCartPage1}`, {
         //     method: 'DELETE',
         // })
         //     .then(res => res.text())
         //     .then(res => console.log(res));
 
-        await axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdCartPage1}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+        await axios.delete(`http://localhost:8089/api/v1/supervisor/file/${this.state.fileIdCartPage1}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
             .catch(async () => {
                 if (localStorage.getItem('role') === 'MANAGER') {
-                    await axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                    await axios.get('http://localhost:8089/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                         .then(async (response) => {
                             if (response.headers["accesstoken"]) {
                                 localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                await axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdCartPage1}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                await axios.delete(`http://localhost:8089/api/v1/supervisor/file/${this.state.fileIdCartPage1}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                             } else {
                                 window.location = '/'
                             }
                         })
                 } else if (localStorage.getItem('role') === 'SUPERVISOR') {
-                    await axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                    await axios.get('http://localhost:8089/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                         .then(async (response) => {
                             if (response.headers["accesstoken"]) {
                                 localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                await axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdCartPage1}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                await axios.delete(`http://localhost:8089/api/v1/supervisor/file/${this.state.fileIdCartPage1}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                             } else {
                                 window.location = '/'
                             }
@@ -1475,7 +1475,7 @@ class CUploadPage extends Component {
             formData.append('file', e.target.files[0]);
             this.setState({nameCartPage2: e.target.files[0].name});
 
-            // await fetch('https://api.saadatportal.com/api/v1/file', {
+            // await fetch('http://localhost:8089/api/v1/file', {
             //     method: 'POST',
             //     body: formData
             // }).then((response) => response.json())
@@ -1494,7 +1494,7 @@ class CUploadPage extends Component {
             //         this.setState({hasErrorCartPage2: true});
             //     });
 
-            await axios.post('https://api.saadatportal.com/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+            await axios.post('http://localhost:8089/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                 .then((result) => {
                     console.log('Success:', result);
                     this.setState({fileIdCartPage2: result.message.id});
@@ -1505,11 +1505,11 @@ class CUploadPage extends Component {
                 })
                 .catch(() => {
                     if (localStorage.getItem('role') === 'MANAGER') {
-                        axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        axios.get('http://localhost:8089/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                             .then((response) => {
                                 if (response.headers["accesstoken"]) {
                                     localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                    axios.post('https://api.saadatportal.com/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                    axios.post('http://localhost:8089/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                         .then((result) => {
                                             console.log('Success:', result);
                                             this.setState({fileIdCartPage2: result.message.id});
@@ -1535,11 +1535,11 @@ class CUploadPage extends Component {
                                 this.setState({hasErrorCartPage2: true});
                             })
                     } else if (localStorage.getItem('role') === 'SUPERVISOR') {
-                        axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        axios.get('http://localhost:8089/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                             .then((response) => {
                                 if (response.headers["accesstoken"]) {
                                     localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                    axios.post('https://api.saadatportal.com/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                    axios.post('http://localhost:8089/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                         .then((result) => {
                                             console.log('Success:', result);
                                             this.setState({fileIdCartPage2: result.message.id});
@@ -1569,30 +1569,30 @@ class CUploadPage extends Component {
     }
 
     handleDeleteCartPage2 = async () => {
-        // await fetch(`https://api.saadatportal.com/api/v1/file/${this.state.fileIdCartPage2}`, {
+        // await fetch(`http://localhost:8089/api/v1/file/${this.state.fileIdCartPage2}`, {
         //     method: 'DELETE',
         // })
         //     .then(res => res.text())
         //     .then(res => console.log(res));
 
-        await axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdCartPage2}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+        await axios.delete(`http://localhost:8089/api/v1/supervisor/file/${this.state.fileIdCartPage2}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
             .catch(async () => {
                 if (localStorage.getItem('role') === 'MANAGER') {
-                    await axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                    await axios.get('http://localhost:8089/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                         .then(async (response) => {
                             if (response.headers["accesstoken"]) {
                                 localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                await axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdCartPage2}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                await axios.delete(`http://localhost:8089/api/v1/supervisor/file/${this.state.fileIdCartPage2}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                             } else {
                                 window.location = '/'
                             }
                         })
                 } else if (localStorage.getItem('role') === 'SUPERVISOR') {
-                    await axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                    await axios.get('http://localhost:8089/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                         .then(async (response) => {
                             if (response.headers["accesstoken"]) {
                                 localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                await axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdCartPage2}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                await axios.delete(`http://localhost:8089/api/v1/supervisor/file/${this.state.fileIdCartPage2}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                             } else {
                                 window.location = '/'
                             }
@@ -1612,7 +1612,7 @@ class CUploadPage extends Component {
             formData.append('file', e.target.files[0]);
             this.setState({nameCartAllPage: e.target.files[0].name});
 
-            // await fetch('https://api.saadatportal.com/api/v1/file', {
+            // await fetch('http://localhost:8089/api/v1/file', {
             //     method: 'POST',
             //     body: formData
             // }).then((response) => response.json())
@@ -1631,7 +1631,7 @@ class CUploadPage extends Component {
             //         this.setState({hasErrorCartAllPage: true});
             //     });
 
-            await axios.post('https://api.saadatportal.com/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+            await axios.post('http://localhost:8089/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                 .then((result) => {
                     console.log('Success:', result);
                     this.setState({fileIdCartAllPage: result.message.id});
@@ -1642,11 +1642,11 @@ class CUploadPage extends Component {
                 })
                 .catch(() => {
                     if (localStorage.getItem('role') === 'MANAGER') {
-                        axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        axios.get('http://localhost:8089/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                             .then((response) => {
                                 if (response.headers["accesstoken"]) {
                                     localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                    axios.post('https://api.saadatportal.com/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                    axios.post('http://localhost:8089/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                         .then((result) => {
                                             console.log('Success:', result);
                                             this.setState({fileIdCartAllPage: result.message.id});
@@ -1672,11 +1672,11 @@ class CUploadPage extends Component {
                                 this.setState({hasErrorCartAllPage: true});
                             })
                     } else if (localStorage.getItem('role') === 'SUPERVISOR') {
-                        axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        axios.get('http://localhost:8089/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                             .then((response) => {
                                 if (response.headers["accesstoken"]) {
                                     localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                    axios.post('https://api.saadatportal.com/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                    axios.post('http://localhost:8089/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                         .then((result) => {
                                             console.log('Success:', result);
                                             this.setState({fileIdCartAllPage: result.message.id});
@@ -1706,30 +1706,30 @@ class CUploadPage extends Component {
     }
 
     handleDeleteCartAllPage = async () => {
-        // await fetch(`https://api.saadatportal.com/api/v1/file/${this.state.fileIdCartAllPage}`, {
+        // await fetch(`http://localhost:8089/api/v1/file/${this.state.fileIdCartAllPage}`, {
         //     method: 'DELETE',
         // })
         //     .then(res => res.text())
         //     .then(res => console.log(res));
 
-        await axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdCartAllPage}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+        await axios.delete(`http://localhost:8089/api/v1/supervisor/file/${this.state.fileIdCartAllPage}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
             .catch(async () => {
                 if (localStorage.getItem('role') === 'MANAGER') {
-                    await axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                    await axios.get('http://localhost:8089/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                         .then(async (response) => {
                             if (response.headers["accesstoken"]) {
                                 localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                await axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdCartAllPage}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                await axios.delete(`http://localhost:8089/api/v1/supervisor/file/${this.state.fileIdCartAllPage}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                             } else {
                                 window.location = '/'
                             }
                         })
                 } else if (localStorage.getItem('role') === 'SUPERVISOR') {
-                    await axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                    await axios.get('http://localhost:8089/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                         .then(async (response) => {
                             if (response.headers["accesstoken"]) {
                                 localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                await axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdCartAllPage}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                await axios.delete(`http://localhost:8089/api/v1/supervisor/file/${this.state.fileIdCartAllPage}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                             } else {
                                 window.location = '/'
                             }
@@ -1749,7 +1749,7 @@ class CUploadPage extends Component {
             formData.append('file', e.target.files[0]);
             this.setState({namePersonnelImg: e.target.files[0].name});
 
-            await axios.post('https://api.saadatportal.com/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+            await axios.post('http://localhost:8089/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                 .then((result) => {
                     console.log('Success:', result);
                     this.setState({fileIdPersonnelImg: result.message.id});
@@ -1760,11 +1760,11 @@ class CUploadPage extends Component {
                 })
                 .catch(() => {
                     if (localStorage.getItem('role') === 'MANAGER') {
-                        axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        axios.get('http://localhost:8089/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                             .then((response) => {
                                 if (response.headers["accesstoken"]) {
                                     localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                    axios.post('https://api.saadatportal.com/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                    axios.post('http://localhost:8089/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                         .then((result) => {
                                             console.log('Success:', result);
                                             this.setState({fileIdPersonnelImg: result.message.id});
@@ -1790,11 +1790,11 @@ class CUploadPage extends Component {
                                 this.setState({hasErrorPersonnelImg: true});
                             })
                     } else if (localStorage.getItem('role') === 'SUPERVISOR') {
-                        axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        axios.get('http://localhost:8089/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                             .then((response) => {
                                 if (response.headers["accesstoken"]) {
                                     localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                    axios.post('https://api.saadatportal.com/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                    axios.post('http://localhost:8089/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                         .then((result) => {
                                             console.log('Success:', result);
                                             this.setState({fileIdPersonnelImg: result.message.id});
@@ -1825,30 +1825,30 @@ class CUploadPage extends Component {
     }
 
     handleDeletePersonnelImg = async () => {
-        // await fetch(`https://api.saadatportal.com/api/v1/file/${this.state.fileIdPersonnelImg}`, {
+        // await fetch(`http://localhost:8089/api/v1/file/${this.state.fileIdPersonnelImg}`, {
         //     method: 'DELETE',
         // })
         //     .then(res => res.text())
         //     .then(res => console.log(res));
 
-        await axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdPersonnelImg}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+        await axios.delete(`http://localhost:8089/api/v1/supervisor/file/${this.state.fileIdPersonnelImg}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
             .catch(async () => {
                 if (localStorage.getItem('role') === 'MANAGER') {
-                    await axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                    await axios.get('http://localhost:8089/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                         .then(async (response) => {
                             if (response.headers["accesstoken"]) {
                                 localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                await axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdPersonnelImg}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                await axios.delete(`http://localhost:8089/api/v1/supervisor/file/${this.state.fileIdPersonnelImg}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                             } else {
                                 window.location = '/'
                             }
                         })
                 } else if (localStorage.getItem('role') === 'SUPERVISOR') {
-                    await axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                    await axios.get('http://localhost:8089/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                         .then(async (response) => {
                             if (response.headers["accesstoken"]) {
                                 localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                await axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdPersonnelImg}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                await axios.delete(`http://localhost:8089/api/v1/supervisor/file/${this.state.fileIdPersonnelImg}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                             } else {
                                 window.location = '/'
                             }
@@ -1867,7 +1867,7 @@ class CUploadPage extends Component {
             formData.append('file', e.target.files[0]);
             this.setState({nameRegister: e.target.files[0].name});
 
-            // await fetch('https://api.saadatportal.com/api/v1/file', {
+            // await fetch('http://localhost:8089/api/v1/file', {
             //     method: 'POST',
             //     body: formData
             // }).then((response) => response.json())
@@ -1886,7 +1886,7 @@ class CUploadPage extends Component {
             //         this.setState({hasErrorRegister: true});
             //     });
 
-            await axios.post('https://api.saadatportal.com/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+            await axios.post('http://localhost:8089/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                 .then((result) => {
                     console.log('Success:', result);
                     this.setState({fileIdRegister: result.message.id});
@@ -1897,11 +1897,11 @@ class CUploadPage extends Component {
                 })
                 .catch(() => {
                     if (localStorage.getItem('role') === 'MANAGER') {
-                        axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        axios.get('http://localhost:8089/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                             .then((response) => {
                                 if (response.headers["accesstoken"]) {
                                     localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                    axios.post('https://api.saadatportal.com/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                    axios.post('http://localhost:8089/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                         .then((result) => {
                                             console.log('Success:', result);
                                             this.setState({fileIdRegister: result.message.id});
@@ -1927,11 +1927,11 @@ class CUploadPage extends Component {
                                 this.setState({hasErrorRegister: true});
                             })
                     } else if (localStorage.getItem('role') === 'SUPERVISOR') {
-                        axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        axios.get('http://localhost:8089/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                             .then((response) => {
                                 if (response.headers["accesstoken"]) {
                                     localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                    axios.post('https://api.saadatportal.com/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                    axios.post('http://localhost:8089/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                         .then((result) => {
                                             console.log('Success:', result);
                                             this.setState({fileIdRegister: result.message.id});
@@ -1961,24 +1961,24 @@ class CUploadPage extends Component {
     }
 
     handleDeleteRegister = async () => {
-        await axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdRegister}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+        await axios.delete(`http://localhost:8089/api/v1/supervisor/file/${this.state.fileIdRegister}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
             .catch(async () => {
                 if (localStorage.getItem('role') === 'MANAGER') {
-                    await axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                    await axios.get('http://localhost:8089/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                         .then(async (response) => {
                             if (response.headers["accesstoken"]) {
                                 localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                await axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdRegister}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                await axios.delete(`http://localhost:8089/api/v1/supervisor/file/${this.state.fileIdRegister}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                             } else {
                                 window.location = '/'
                             }
                         })
                 } else if (localStorage.getItem('role') === 'SUPERVISOR') {
-                    await axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                    await axios.get('http://localhost:8089/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                         .then(async (response) => {
                             if (response.headers["accesstoken"]) {
                                 localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                await axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdRegister}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                await axios.delete(`http://localhost:8089/api/v1/supervisor/file/${this.state.fileIdRegister}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                             } else {
                                 window.location = '/'
                             }
@@ -1998,7 +1998,7 @@ class CUploadPage extends Component {
             formData.append('file', e.target.files[0]);
             this.setState({nameRegisterUni: e.target.files[0].name});
 
-            // await fetch('https://api.saadatportal.com/api/v1/file', {
+            // await fetch('http://localhost:8089/api/v1/file', {
             //     method: 'POST',
             //     body: formData
             // }).then((response) => response.json())
@@ -2019,7 +2019,7 @@ class CUploadPage extends Component {
             //         this.setState({hasErrorRegisterUni: true});
             //     });
 
-            await axios.post('https://api.saadatportal.com/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+            await axios.post('http://localhost:8089/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                 .then((result) => {
                     console.log('Success:', result);
                     this.setState({fileIdRegisterUni: result.message.id});
@@ -2030,11 +2030,11 @@ class CUploadPage extends Component {
                 })
                 .catch(() => {
                     if (localStorage.getItem('role') === 'MANAGER') {
-                        axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        axios.get('http://localhost:8089/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                             .then((response) => {
                                 if (response.headers["accesstoken"]) {
                                     localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                    axios.post('https://api.saadatportal.com/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                    axios.post('http://localhost:8089/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                         .then((result) => {
                                             console.log('Success:', result);
                                             this.setState({fileIdRegisterUni: result.message.id});
@@ -2060,11 +2060,11 @@ class CUploadPage extends Component {
                                 this.setState({hasErrorRegisterUni: true});
                             })
                     } else if (localStorage.getItem('role') === 'SUPERVISOR') {
-                        axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        axios.get('http://localhost:8089/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                             .then((response) => {
                                 if (response.headers["accesstoken"]) {
                                     localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                    axios.post('https://api.saadatportal.com/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                    axios.post('http://localhost:8089/api/v1/supervisor/file', formData, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                         .then((result) => {
 
                                             console.log('Success:', result);
@@ -2097,30 +2097,30 @@ class CUploadPage extends Component {
     }
 
     handleDeleteRegisterUni = async () => {
-        // await fetch(`https://api.saadatportal.com/api/v1/file/${this.state.fileIdRegisterUni}`, {
+        // await fetch(`http://localhost:8089/api/v1/file/${this.state.fileIdRegisterUni}`, {
         //     method: 'DELETE',
         // })
         //     .then(res => res.text())
         //     .then(res => console.log(res));
 
-        await axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdRegisterUni}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+        await axios.delete(`http://localhost:8089/api/v1/supervisor/file/${this.state.fileIdRegisterUni}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
             .catch(async () => {
                 if (localStorage.getItem('role') === 'MANAGER') {
-                    await axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                    await axios.get('http://localhost:8089/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                         .then(async (response) => {
                             if (response.headers["accesstoken"]) {
                                 localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                await axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdRegisterUni}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                await axios.delete(`http://localhost:8089/api/v1/supervisor/file/${this.state.fileIdRegisterUni}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                             } else {
                                 window.location = '/'
                             }
                         })
                 } else if (localStorage.getItem('role') === 'SUPERVISOR') {
-                    await axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                    await axios.get('http://localhost:8089/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                         .then(async (response) => {
                             if (response.headers["accesstoken"]) {
                                 localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                await axios.delete(`https://api.saadatportal.com/api/v1/supervisor/file/${this.state.fileIdRegisterUni}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                await axios.delete(`http://localhost:8089/api/v1/supervisor/file/${this.state.fileIdRegisterUni}` , {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                             } else {
                                 window.location = '/'
                             }

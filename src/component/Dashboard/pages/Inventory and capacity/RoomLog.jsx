@@ -52,29 +52,29 @@ class RoomLog extends Component {
     }
 
     async componentDidMount() {
-        // const response2 = await fetch('https://api.saadatportal.com/api/v1/supervisor/bed/concat/empty').then((response) => response.json())
+        // const response2 = await fetch('http://localhost:8089/api/v1/supervisor/bed/concat/empty').then((response) => response.json())
         //     .then((data) => this.setState({ logData: data }));
 
-        axios.get('https://api.saadatportal.com/api/v1/supervisor/bed/concat/empty', {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+        axios.get('http://localhost:8089/api/v1/supervisor/bed/concat/empty', {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
             .then((data) => this.setState({logData: data}))
             .catch(() => {
                 if (localStorage.getItem('role') === 'MANAGER') {
-                    axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                    axios.get('http://localhost:8089/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                         .then((response) => {
                             if (response.headers["accesstoken"]) {
                                 localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                axios.get('https://api.saadatportal.com/api/v1/supervisor/bed/concat/empty', {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                axios.get('http://localhost:8089/api/v1/supervisor/bed/concat/empty', {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                     .then((data) => this.setState({logData: data}))
                             } else {
                                 window.location = '/'
                             }
                         })
                 } else if (localStorage.getItem('role') === 'SUPERVISOR') {
-                    axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                    axios.get('http://localhost:8089/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                         .then((response) => {
                             if (response.headers["accesstoken"]) {
                                 localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                axios.get('https://api.saadatportal.com/api/v1/supervisor/bed/concat/empty', {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                axios.get('http://localhost:8089/api/v1/supervisor/bed/concat/empty', {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                     .then((data) => this.setState({logData: data}))
                             } else {
                                 window.location = '/'

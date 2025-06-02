@@ -43,16 +43,16 @@ class inventory extends Component {
 
     async componentDidMount() {
         this.setState({searchLoading: true})
-        axios.get('https://api.saadatportal.com/api/v1/supervisor/inventory', {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+        axios.get('http://localhost:8089/api/v1/supervisor/inventory', {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
             .then((data) => this.setState({
                 inventory: data,
             })).catch(() => {
             if (localStorage.getItem('role') === 'MANAGER') {
-                axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                axios.get('http://localhost:8089/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                     .then((response) => {
                         if (response.headers["accesstoken"]) {
                             localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                            axios.get('https://api.saadatportal.com/api/v1/supervisor/inventory', {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                            axios.get('http://localhost:8089/api/v1/supervisor/inventory', {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                 .then((data) => this.setState({
                                     inventory: data,
                                 }))
@@ -61,11 +61,11 @@ class inventory extends Component {
                         }
                     })
             } else if (localStorage.getItem('role') === 'SUPERVISOR') {
-                axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                axios.get('http://localhost:8089/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                     .then((response) => {
                         if (response.headers["accesstoken"]) {
                             localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                            axios.get('https://api.saadatportal.com/api/v1/supervisor/inventory', {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                            axios.get('http://localhost:8089/api/v1/supervisor/inventory', {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                 .then((data) => this.setState({
                                     inventory: data,
                                 }))
@@ -74,17 +74,17 @@ class inventory extends Component {
                         }
                     })
             }})
-        axios.get('https://api.saadatportal.com/api/v1/supervisor/category/search?type=Inventory', {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+        axios.get('http://localhost:8089/api/v1/supervisor/category/search?type=InventoryAccessoryType', {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
             .then((data) => this.setState({
                 choices: data,
                 searchLoading: false
             })).catch(() => {
             if (localStorage.getItem('role') === 'MANAGER') {
-                axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                axios.get('http://localhost:8089/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                     .then((response) => {
                         if (response.headers["accesstoken"]) {
                             localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                            axios.get('https://api.saadatportal.com/api/v1/supervisor/category/search?type=Inventory', {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                            axios.get('http://localhost:8089/api/v1/supervisor/category/search?type=InventoryAccessoryType', {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                 .then((data) => this.setState({
                                     choices: data,
                                     searchLoading: false
@@ -94,11 +94,11 @@ class inventory extends Component {
                         }
                     })
             } else if (localStorage.getItem('role') === 'SUPERVISOR') {
-                axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                axios.get('http://localhost:8089/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                     .then((response) => {
                         if (response.headers["accesstoken"]) {
                             localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                            axios.get('https://api.saadatportal.com/api/v1/supervisor/category/search?type=Inventory', {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                            axios.get('http://localhost:8089/api/v1/supervisor/category/search?type=Inventory', {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                 .then((data) => this.setState({
                                     choices: data,
                                     searchLoading: false
@@ -108,17 +108,17 @@ class inventory extends Component {
                         }
                     })
             }})
-        axios.get('https://api.saadatportal.com/api/v1/supervisor/category/search?type=InventoryAccessoryType', {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+        axios.get('http://localhost:8089/api/v1/supervisor/category/search?type=Inventory', {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
             .then((data) => this.setState({
                 types: data,
                 searchLoading: false
             })).catch(() => {
             if (localStorage.getItem('role') === 'MANAGER') {
-                axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                axios.get('http://localhost:8089/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                     .then((response) => {
                         if (response.headers["accesstoken"]) {
                             localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                            axios.get('https://api.saadatportal.com/api/v1/supervisor/category/search?type=InventoryAccessoryType', {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                            axios.get('http://localhost:8089/api/v1/supervisor/category/search?type=Inventory', {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                 .then((data) => this.setState({
                                     types: data,
                                     searchLoading: false
@@ -128,11 +128,11 @@ class inventory extends Component {
                         }
                     })
             } else if (localStorage.getItem('role') === 'SUPERVISOR') {
-                axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                axios.get('http://localhost:8089/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                     .then((response) => {
                         if (response.headers["accesstoken"]) {
                             localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                            axios.get('https://api.saadatportal.com/api/v1/supervisor/category/search?type=InventoryAccessoryType', {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                            axios.get('http://localhost:8089/api/v1/supervisor/category/search?type=InventoryAccessoryType', {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                 .then((data) => this.setState({
                                     types: data,
                                     searchLoading: false
@@ -162,9 +162,9 @@ class inventory extends Component {
                                     value={this.state.typeSearch}
                                     onChange={this.handleFilterType}>
                                     <MenuItem value={"all"}>همه</MenuItem>
-                                    <MenuItem value={"needs"}>نیازمندی</MenuItem>
-                                    <MenuItem value={"deficiency"}>کاستی</MenuItem>
-                                    <MenuItem value={"onHand"}>دارایی</MenuItem>
+                                    <MenuItem value={"نیازمندی"}>نیازمندی</MenuItem>
+                                    <MenuItem value={"کاستی"}>کاستی</MenuItem>
+                                    <MenuItem value={"دارایی"}>دارایی</MenuItem>
                                 </Select>
                                 <label className="placeholder" style={{
                                     top: '-10px',
@@ -544,31 +544,66 @@ class inventory extends Component {
     };
     handleShow = async () => {
         this.setState({show: true})
-        axios.get('https://api.saadatportal.com/api/v1/supervisor/category/search?type=Inventory', {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+        axios.get('http://localhost:8089/api/v1/supervisor/category/search?type=InventoryAccessoryType', {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
             .then((data) => this.setState({
-                choices: data,
+                types: data,
             })).catch(() => {
             if (localStorage.getItem('role') === 'MANAGER') {
-                axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                axios.get('http://localhost:8089/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                     .then((response) => {
                         if (response.headers["accesstoken"]) {
                             localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                            axios.get('https://api.saadatportal.com/api/v1/supervisor/category/search?type=Inventory', {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                            axios.get('http://localhost:8089/api/v1/supervisor/category/search?type=InventoryAccessoryType', {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                 .then((data) => this.setState({
-                                    choices: data,
+                                    types: data,
                                 }))
                         } else {
                             window.location = '/'
                         }
                     })
             } else if (localStorage.getItem('role') === 'SUPERVISOR') {
-                axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                axios.get('http://localhost:8089/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                     .then((response) => {
                         if (response.headers["accesstoken"]) {
                             localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                            axios.get('https://api.saadatportal.com/api/v1/supervisor/category/search?type=Inventory', {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                            axios.get('http://localhost:8089/api/v1/supervisor/category/search?type=InventoryAccessoryType', {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                 .then((data) => this.setState({
-                                    choices: data,
+                                    types: data,
+                                }))
+                        } else {
+                            window.location = '/'
+                        }
+                    })
+            }})
+
+        axios.get('http://localhost:8089/api/v1/supervisor/category/search?type=Inventory', {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+            .then((data) => this.setState({
+                categories: data,
+                searchLoading: false
+            })).catch(() => {
+            if (localStorage.getItem('role') === 'MANAGER') {
+                axios.get('http://localhost:8089/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                    .then((response) => {
+                        if (response.headers["accesstoken"]) {
+                            localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                            axios.get('http://localhost:8089/api/v1/supervisor/category/search?type=Inventory', {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                .then((data) => this.setState({
+                                    categories: data,
+                                    searchLoading: false
+                                }))
+                        } else {
+                            window.location = '/'
+                        }
+                    })
+            } else if (localStorage.getItem('role') === 'SUPERVISOR') {
+                axios.get('http://localhost:8089/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                    .then((response) => {
+                        if (response.headers["accesstoken"]) {
+                            localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                            axios.get('http://localhost:8089/api/v1/supervisor/category/search?type=Inventory', {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                .then((data) => this.setState({
+                                    categories: data,
+                                    searchLoading: false
                                 }))
                         } else {
                             window.location = '/'
@@ -695,16 +730,16 @@ class inventory extends Component {
 
         }
         this.setState({loading: true})
-        await axios.post('https://api.saadatportal.com/api/v1/supervisor/inventory', newInventory, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+        await axios.post('http://localhost:8089/api/v1/supervisor/inventory', newInventory, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
             .then((data) => this.setState({
                 loading: false
             })).catch(async () => {
                 if (localStorage.getItem('role') === 'MANAGER') {
-                    await axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                    await axios.get('http://localhost:8089/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                         .then(async (response) => {
                             if (response.headers["accesstoken"]) {
                                 localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                await axios.post('https://api.saadatportal.com/api/v1/supervisor/inventory', newInventory, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                await axios.post('http://localhost:8089/api/v1/supervisor/inventory', newInventory, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                     .then((data) => this.setState({
                                         loading: false
                                     }))
@@ -713,11 +748,11 @@ class inventory extends Component {
                             }
                         })
                 } else if (localStorage.getItem('role') === 'SUPERVISOR') {
-                    await axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                    await axios.get('http://localhost:8089/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                         .then(async (response) => {
                             if (response.headers["accesstoken"]) {
                                 localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                await axios.post('https://api.saadatportal.com/api/v1/supervisor/inventory', newInventory, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                await axios.post('http://localhost:8089/api/v1/supervisor/inventory', newInventory, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                     .then((data) => this.setState({
                                         loading: false
                                     }))
@@ -738,17 +773,17 @@ class inventory extends Component {
     handleSearchInput = async (e) => {
         const value = e.target.value;
         this.setState({searchInput: value, searchLoading: true});
-        axios.get(`https://api.saadatportal.com/api/v1/supervisor/inventory/search?${this.state.searchType}=${e.target.value}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+        axios.get(`http://localhost:8089/api/v1/supervisor/inventory/search?${this.state.searchType}=${e.target.value}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
             .then((data) => this.setState({
                 inventory: data,
                 searchLoading: false
             })).catch(() => {
             if (localStorage.getItem('role') === 'MANAGER') {
-                axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                axios.get('http://localhost:8089/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                     .then((response) => {
                         if (response.headers["accesstoken"]) {
                             localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                            axios.get(`https://api.saadatportal.com/api/v1/supervisor/inventory/search?${this.state.searchType}=${e.target.value}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                            axios.get(`http://localhost:8089/api/v1/supervisor/inventory/search?${this.state.searchType}=${e.target.value}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                 .then((data) => this.setState({
                                     inventory: data,
                                     searchLoading: false
@@ -758,11 +793,11 @@ class inventory extends Component {
                         }
                     })
             } else if (localStorage.getItem('role') === 'SUPERVISOR') {
-                axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                axios.get('http://localhost:8089/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                     .then((response) => {
                         if (response.headers["accesstoken"]) {
                             localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                            axios.get(`https://api.saadatportal.com/api/v1/supervisor/inventory/search?${this.state.searchType}=${e.target.value}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                            axios.get(`http://localhost:8089/api/v1/supervisor/inventory/search?${this.state.searchType}=${e.target.value}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                 .then((data) => this.setState({
                                     inventory: data,
                                     searchLoading: false
@@ -777,17 +812,17 @@ class inventory extends Component {
     handleFilterType = async (e) =>{
         this.setState({typeSearch: e.target.value, searchLoading: true})
         const value = e.target.value !== "all" ? e.target.value : ""
-        axios.get(`https://api.saadatportal.com/api/v1/supervisor/inventory/search?accessoryType=${value}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+        axios.get(`http://localhost:8089/api/v1/supervisor/inventory/search?accessoryType=${value}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
             .then((data) => this.setState({
                 inventory: data,
                 searchLoading: false
             })).catch(() => {
             if (localStorage.getItem('role') === 'MANAGER') {
-                axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                axios.get('http://localhost:8089/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                     .then((response) => {
                         if (response.headers["accesstoken"]) {
                             localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                            axios.get(`https://api.saadatportal.com/api/v1/supervisor/inventory/search?accessoryType=${value}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                            axios.get(`http://localhost:8089/api/v1/supervisor/inventory/search?accessoryType=${value}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                 .then((data) => this.setState({
                                     inventory: data,
                                     searchLoading: false
@@ -797,11 +832,11 @@ class inventory extends Component {
                         }
                     })
             } else if (localStorage.getItem('role') === 'SUPERVISOR') {
-                axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                axios.get('http://localhost:8089/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                     .then((response) => {
                         if (response.headers["accesstoken"]) {
                             localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                            axios.get(`https://api.saadatportal.com/api/v1/supervisor/inventory/search?accessoryType=${value}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                            axios.get(`http://localhost:8089/api/v1/supervisor/inventory/search?accessoryType=${value}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                 .then((data) => this.setState({
                                     inventory: data,
                                     searchLoading: false

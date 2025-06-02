@@ -315,14 +315,14 @@ class Header extends Component {
                 newPassword: this.state.newPassword,
                 role: "MANAGER"
             }
-            await axios.post(`https://api.saadatportal.com/api/v1/changePassword`, body, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+            await axios.post(`http://localhost:8089/api/v1/changePassword`, body, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                 .catch(() => {
                         if (localStorage.getItem('role') === 'MANAGER') {
-                            axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                            axios.get('http://localhost:8089/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                                 .then((response) => {
                                     if (response.headers["accesstoken"]) {
                                         localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                        axios.post(`https://api.saadatportal.com/api/v1/changePassword`, body, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                        axios.post(`http://localhost:8089/api/v1/changePassword`, body, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                     } else {
                                         window.location = '/'
                                     }
@@ -336,14 +336,14 @@ class Header extends Component {
                 email: this.state.newEmail,
                 role: "MANAGER"
             }
-            await axios.post(`https://api.saadatportal.com/api/v1/changePassword`, body, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+            await axios.post(`http://localhost:8089/api/v1/changePassword`, body, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                 .catch(() => {
                         if (localStorage.getItem('role') === 'MANAGER') {
-                            axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                            axios.get('http://localhost:8089/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                                 .then((response) => {
                                     if (response.headers["accesstoken"]) {
                                         localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                        axios.post(`https://api.saadatportal.com/api/v1/changePassword`, body, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                        axios.post(`http://localhost:8089/api/v1/changePassword`, body, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                     } else {
                                         window.location = '/'
                                     }

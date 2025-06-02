@@ -29,26 +29,26 @@ class EditBed extends Component {
 
     async componentDidMount() {
         const roomId = window.location.href.slice(-32)
-        axios.get(`https://api.saadatportal.com/api/v1/supervisor/room/getBeds/${roomId}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+        axios.get(`http://localhost:8089/api/v1/supervisor/room/getBeds/${roomId}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
             .then((data) => this.setState({beds: data, loading: false}))
             .catch(() => {
             if (localStorage.getItem('role') === 'MANAGER') {
-                axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                axios.get('http://localhost:8089/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                     .then((response) => {
                         if (response.headers["accesstoken"]) {
                             localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                            axios.get(`https://api.saadatportal.com/api/v1/supervisor/room/getBeds/${roomId}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                            axios.get(`http://localhost:8089/api/v1/supervisor/room/getBeds/${roomId}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                 .then((data) => this.setState({beds: data, loading: false}))
                         } else {
                             window.location = '/'
                         }
                     })
             } else if (localStorage.getItem('role') === 'SUPERVISOR') {
-                axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                axios.get('http://localhost:8089/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                     .then((response) => {
                         if (response.headers["accesstoken"]) {
                             localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                            axios.get(`https://api.saadatportal.com/api/v1/supervisor/room/getBeds/${roomId}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                            axios.get(`http://localhost:8089/api/v1/supervisor/room/getBeds/${roomId}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                 .then((data) => this.setState({beds: data, loading: false}))
                         } else {
                             window.location = '/'
@@ -57,26 +57,26 @@ class EditBed extends Component {
             }
         })
 
-        axios.get(`https://api.saadatportal.com/api/v1/supervisor/room/${roomId}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+        axios.get(`http://localhost:8089/api/v1/supervisor/room/${roomId}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
             .then((data) => this.setState({room: data}))
             .catch(() => {
             if (localStorage.getItem('role') === 'MANAGER') {
-                axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                axios.get('http://localhost:8089/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                     .then((response) => {
                         if (response.headers["accesstoken"]) {
                             localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                            axios.get(`https://api.saadatportal.com/api/v1/supervisor/room/${roomId}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                            axios.get(`http://localhost:8089/api/v1/supervisor/room/${roomId}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                 .then((data) => this.setState({room: data}))
                         } else {
                             window.location = '/'
                         }
                     })
             } else if (localStorage.getItem('role') === 'SUPERVISOR') {
-                axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                axios.get('http://localhost:8089/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                     .then((response) => {
                         if (response.headers["accesstoken"]) {
                             localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                            axios.get(`https://api.saadatportal.com/api/v1/supervisor/room/${roomId}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                            axios.get(`http://localhost:8089/api/v1/supervisor/room/${roomId}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                 .then((data) => this.setState({room: data}))
                         } else {
                             window.location = '/'
@@ -210,26 +210,26 @@ class EditBed extends Component {
     //bed
     addBed = async () => {
         const count = (this.state.beds.length + 1).toString()
-        await axios.post('https://api.saadatportal.com/api/v1/supervisor/bed', {name:count, empty: "true", roomId: this.state.room.id}, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+        await axios.post('http://localhost:8089/api/v1/supervisor/bed', {name:count, empty: "true", roomId: this.state.room.id}, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
             .then((data) => {
                 return data
             })
             .catch(() => {
                 if (localStorage.getItem('role') === 'MANAGER') {
-                    axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                    axios.get('http://localhost:8089/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                         .then((response) => {
                             if (response.headers["accesstoken"]) {
                                 localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                axios.post('https://api.saadatportal.com/api/v1/supervisor/bed', {name: count, empty: "true", roomId: this.state.room.id}, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                axios.post('http://localhost:8089/api/v1/supervisor/bed', {name: count, empty: "true", roomId: this.state.room.id}, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                             } else {
                                 window.location = '/'
                             }})
                 } else if (localStorage.getItem('role') === 'SUPERVISOR') {
-                    axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                    axios.get('http://localhost:8089/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                         .then((response) => {
                             if (response.headers["accesstoken"]) {
                                 localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                axios.post('https://api.saadatportal.com/api/v1/supervisor/bed', {name:count, empty: "true", roomId: this.state.room.id}, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                axios.post('http://localhost:8089/api/v1/supervisor/bed', {name:count, empty: "true", roomId: this.state.room.id}, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                             } else {
                                 window.location = '/'
                             }
@@ -246,24 +246,24 @@ class EditBed extends Component {
         const updatedState = [...this.state.beds];
         const roomId = this.state.room.id;
         const bedId = updatedState[indexOfBed].id;
-        await axios.put(`https://api.saadatportal.com/api/v1/supervisor/bed/${bedId}`, {roomId: roomId, name: value, empty: "true"}, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+        await axios.put(`http://localhost:8089/api/v1/supervisor/bed/${bedId}`, {roomId: roomId, name: value, empty: "true"}, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
             .catch(() => {
                 if (localStorage.getItem('role') === 'MANAGER') {
-                    axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                    axios.get('http://localhost:8089/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                         .then((response) => {
                             if (response.headers["accesstoken"]) {
                                 localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                axios.put(`https://api.saadatportal.com/api/v1/supervisor/bed/${bedId}`, {roomId: roomId, name: value, empty: "true"}, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                axios.put(`http://localhost:8089/api/v1/supervisor/bed/${bedId}`, {roomId: roomId, name: value, empty: "true"}, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                             } else {
                                 window.location = '/'
                             }
                         })
                 } else if (localStorage.getItem('role') === 'SUPERVISOR') {
-                    axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                    axios.get('http://localhost:8089/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                         .then((response) => {
                             if (response.headers["accesstoken"]) {
                                 localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                axios.put(`https://api.saadatportal.com/api/v1/supervisor/bed/${bedId}`, {roomId: roomId, name: value, empty: "true"}, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                axios.put(`http://localhost:8089/api/v1/supervisor/bed/${bedId}`, {roomId: roomId, name: value, empty: "true"}, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                             } else {
                                 window.location = '/'
                             }
@@ -276,17 +276,17 @@ class EditBed extends Component {
 
     deleteBed = async (bed) => {
         this.setState({loading: true})
-        await axios.delete(`https://api.saadatportal.com/api/v1/supervisor/bed/${bed.id}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+        await axios.delete(`http://localhost:8089/api/v1/supervisor/bed/${bed.id}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
             .then((data) => {
                 this.setState({loading: false, showDeleteModalBed: false})
             })
             .catch(() => {
                 if (localStorage.getItem('role') === 'MANAGER') {
-                    axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                    axios.get('http://localhost:8089/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                         .then((response) => {
                             if (response.headers["accesstoken"]) {
                                 localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                axios.delete(`https://api.saadatportal.com/api/v1/supervisor/bed/${bed.id}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                axios.delete(`http://localhost:8089/api/v1/supervisor/bed/${bed.id}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                     .then((data) => {
                                         this.setState({loading: false, showDeleteModalBed: false})
                                     })
@@ -295,11 +295,11 @@ class EditBed extends Component {
                             }
                         })
                 } else if (localStorage.getItem('role') === 'SUPERVISOR') {
-                    axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                    axios.get('http://localhost:8089/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                         .then((response) => {
                             if (response.headers["accesstoken"]) {
                                 localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                axios.delete(`https://api.saadatportal.com/api/v1/supervisor/bed/${bed.id}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                axios.delete(`http://localhost:8089/api/v1/supervisor/bed/${bed.id}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                     .then((data) => {
                                         this.setState({loading: false, showDeleteModalBed: false})
                                     })

@@ -202,7 +202,7 @@ class Login extends Component {
     console.log('res: ')
 
     if (res) {
-      axios.post(`https://api.saadatportal.com/login`, null, {
+      axios.post(`http://localhost:8089/login`, null, {
             params: {
               "username": this.state.account.user,
               "password": this.state.account.password
@@ -211,7 +211,7 @@ class Login extends Component {
           {
             headers: {
               "content-type": "application/x-www-form-urlencoded",
-              "Access-Control-Allow-Origin": "https://api.saadatportal.com",
+              "Access-Control-Allow-Origin": "http://localhost:8089",
             }
           })
           .then(response => {
