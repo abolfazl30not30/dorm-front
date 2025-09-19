@@ -122,33 +122,34 @@ class TrelloPage extends Component {
             .then((data) => this.setState({
                 loading: false
             })).catch(() => {
-            if (localStorage.getItem('role') === 'MANAGER') {
-                axios.get('http://localhost:8089/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
-                    .then((response) => {
-                        if (response.headers["accesstoken"]) {
-                            localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                            axios.post('http://localhost:8089/api/v1/supervisor/task', newTask, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
-                                .then((data) => this.setState({
-                                    loading: false
-                                }))
-                        } else {
-                            window.location = '/'
-                        }
-                    })
-            } else if (localStorage.getItem('role') === 'SUPERVISOR') {
-                axios.get('http://localhost:8089/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
-                    .then((response) => {
-                        if (response.headers["accesstoken"]) {
-                            localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                            axios.post('http://localhost:8089/api/v1/supervisor/task', newTask, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
-                                .then((data) => this.setState({
-                                    loading: false
-                                }))
-                        } else {
-                            window.location = '/'
-                        }
-                    })
-            }})
+                if (localStorage.getItem('role') === 'MANAGER') {
+                    axios.get('http://localhost:8089/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        .then((response) => {
+                            if (response.headers["accesstoken"]) {
+                                localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                                axios.post('http://localhost:8089/api/v1/supervisor/task', newTask, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                    .then((data) => this.setState({
+                                        loading: false
+                                    }))
+                            } else {
+                                window.location = '/'
+                            }
+                        })
+                } else if (localStorage.getItem('role') === 'SUPERVISOR') {
+                    axios.get('http://localhost:8089/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        .then((response) => {
+                            if (response.headers["accesstoken"]) {
+                                localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                                axios.post('http://localhost:8089/api/v1/supervisor/task', newTask, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                    .then((data) => this.setState({
+                                        loading: false
+                                    }))
+                            } else {
+                                window.location = '/'
+                            }
+                        })
+                }
+            })
         this.setState({
             tempName: "",
             tempDescription: "",
@@ -156,7 +157,8 @@ class TrelloPage extends Component {
             tempHourTimeLog: 0,
             tempMinuteTimeLog: 0,
             tempPriority: "",
-            tempPersonnelId: "",})
+            tempPersonnelId: "",
+        })
         this.onClose()
         this.componentDidMount();
     };
@@ -167,7 +169,7 @@ class TrelloPage extends Component {
         const targetTask = {...this.state.tasks.find(task => task.id === id)}
         this.setState({clickedTask: targetTask, tempDueDate: targetTask.dueDate})
         const Hour = parseInt(targetTask.timeLog)
-        const Minute = Math.ceil((targetTask.timeLog - Hour)*60)
+        const Minute = Math.ceil((targetTask.timeLog - Hour) * 60)
         axios.get(`http://localhost:8089/api/v1/supervisor/characteristic/search?parentId=${targetTask.personnelId}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data).catch(() => {
             if (localStorage.getItem('role') === 'MANAGER') {
                 axios.get('http://localhost:8089/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
@@ -189,7 +191,8 @@ class TrelloPage extends Component {
                             window.location = '/'
                         }
                     })
-            }})
+            }
+        })
         this.setState({
             tempHourTimeLog: Hour,
             tempMinuteTimeLog: Minute
@@ -237,33 +240,34 @@ class TrelloPage extends Component {
             .then((data) => this.setState({
                 loading: false
             })).catch(() => {
-            if (localStorage.getItem('role') === 'MANAGER') {
-                axios.get('http://localhost:8089/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
-                    .then((response) => {
-                        if (response.headers["accesstoken"]) {
-                            localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                            axios.put(`http://localhost:8089/api/v1/supervisor/task/${this.state.clickedTask.id}`, updatedTask, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
-                                .then((data) => this.setState({
-                                    loading: false
-                                }))
-                        } else {
-                            window.location = '/'
-                        }
-                    })
-            } else if (localStorage.getItem('role') === 'SUPERVISOR') {
-                axios.get('http://localhost:8089/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
-                    .then((response) => {
-                        if (response.headers["accesstoken"]) {
-                            localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                            axios.put(`http://localhost:8089/api/v1/supervisor/task/${this.state.clickedTask.id}`, updatedTask, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
-                                .then((data) => this.setState({
-                                    loading: false
-                                }))
-                        } else {
-                            window.location = '/'
-                        }
-                    })
-            }})
+                if (localStorage.getItem('role') === 'MANAGER') {
+                    axios.get('http://localhost:8089/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        .then((response) => {
+                            if (response.headers["accesstoken"]) {
+                                localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                                axios.put(`http://localhost:8089/api/v1/supervisor/task/${this.state.clickedTask.id}`, updatedTask, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                    .then((data) => this.setState({
+                                        loading: false
+                                    }))
+                            } else {
+                                window.location = '/'
+                            }
+                        })
+                } else if (localStorage.getItem('role') === 'SUPERVISOR') {
+                    axios.get('http://localhost:8089/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        .then((response) => {
+                            if (response.headers["accesstoken"]) {
+                                localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                                axios.put(`http://localhost:8089/api/v1/supervisor/task/${this.state.clickedTask.id}`, updatedTask, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                    .then((data) => this.setState({
+                                        loading: false
+                                    }))
+                            } else {
+                                window.location = '/'
+                            }
+                        })
+                }
+            })
         this.componentDidMount()
         this.onClose()
     };
@@ -286,27 +290,28 @@ class TrelloPage extends Component {
             .then((data) => this.setState({
                 loading: false
             })).catch(() => {
-            if (localStorage.getItem('role') === 'MANAGER') {
-                axios.get('http://localhost:8089/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
-                    .then((response) => {
-                        if (response.headers["accesstoken"]) {
-                            localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                            axios.put(`http://localhost:8089/api/v1/supervisor/task/${targetTask.id}`, targetTask, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
-                        } else {
-                            window.location = '/'
-                        }
-                    })
-            } else if (localStorage.getItem('role') === 'SUPERVISOR') {
-                axios.get('http://localhost:8089/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
-                    .then((response) => {
-                        if (response.headers["accesstoken"]) {
-                            localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                            axios.put(`http://localhost:8089/api/v1/supervisor/task/${targetTask.id}`, targetTask, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
-                        } else {
-                            window.location = '/'
-                        }
-                    })
-            }})
+                if (localStorage.getItem('role') === 'MANAGER') {
+                    axios.get('http://localhost:8089/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        .then((response) => {
+                            if (response.headers["accesstoken"]) {
+                                localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                                axios.put(`http://localhost:8089/api/v1/supervisor/task/${targetTask.id}`, targetTask, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                            } else {
+                                window.location = '/'
+                            }
+                        })
+                } else if (localStorage.getItem('role') === 'SUPERVISOR') {
+                    axios.get('http://localhost:8089/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        .then((response) => {
+                            if (response.headers["accesstoken"]) {
+                                localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                                axios.put(`http://localhost:8089/api/v1/supervisor/task/${targetTask.id}`, targetTask, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                            } else {
+                                window.location = '/'
+                            }
+                        })
+                }
+            })
         this.componentDidMount()
     }
     handleDelete = async (id) => {
@@ -316,58 +321,69 @@ class TrelloPage extends Component {
                 this.setState({loading: false})
                 this.setState({forceCloseDeleteModal: true})
                 let updatedTasks = [...this.state.tasks]
-                updatedTasks = updatedTasks.filter((task) => {return task.id !== id});
+                updatedTasks = updatedTasks.filter((task) => {
+                    return task.id !== id
+                });
                 this.setState({tasks: updatedTasks})
-                this.setState({forceCloseDeleteModal: true})}).catch(() => {
-            if (localStorage.getItem('role') === 'MANAGER') {
-                axios.get('http://localhost:8089/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
-                    .then((response) => {
-                        if (response.headers["accesstoken"]) {
-                            localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                            axios.delete(`http://localhost:8089/api/v1/supervisor/task/${id}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
-                                .then(() => {
-                                    this.setState({loading: false})
-                                    this.setState({forceCloseDeleteModal: true})
-                                    let updatedTasks = [...this.state.tasks]
-                                    updatedTasks = updatedTasks.filter((task) => {return task.id !== id});
-                                    this.setState({tasks: updatedTasks})
-                                    this.setState({forceCloseDeleteModal: true})})
-                        } else {
-                            window.location = '/'
-                        }
-                    })
-            } else if (localStorage.getItem('role') === 'SUPERVISOR') {
-                axios.get('http://localhost:8089/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
-                    .then((response) => {
-                        if (response.headers["accesstoken"]) {
-                            localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                            axios.delete(`http://localhost:8089/api/v1/supervisor/task/${id}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
-                                .then(() => {
-                                    this.setState({loading: false})
-                                    this.setState({forceCloseDeleteModal: true})
-                                    let updatedTasks = [...this.state.tasks]
-                                    updatedTasks = updatedTasks.filter((task) => {return task.id !== id});
-                                    this.setState({tasks: updatedTasks})
-                                    this.setState({forceCloseDeleteModal: true})})
-                        } else {
-                            window.location = '/'
-                        }
-                    })
-            }})
+                this.setState({forceCloseDeleteModal: true})
+            }).catch(() => {
+                if (localStorage.getItem('role') === 'MANAGER') {
+                    axios.get('http://localhost:8089/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        .then((response) => {
+                            if (response.headers["accesstoken"]) {
+                                localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                                axios.delete(`http://localhost:8089/api/v1/supervisor/task/${id}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                    .then(() => {
+                                        this.setState({loading: false})
+                                        this.setState({forceCloseDeleteModal: true})
+                                        let updatedTasks = [...this.state.tasks]
+                                        updatedTasks = updatedTasks.filter((task) => {
+                                            return task.id !== id
+                                        });
+                                        this.setState({tasks: updatedTasks})
+                                        this.setState({forceCloseDeleteModal: true})
+                                    })
+                            } else {
+                                window.location = '/'
+                            }
+                        })
+                } else if (localStorage.getItem('role') === 'SUPERVISOR') {
+                    axios.get('http://localhost:8089/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        .then((response) => {
+                            if (response.headers["accesstoken"]) {
+                                localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                                axios.delete(`http://localhost:8089/api/v1/supervisor/task/${id}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                    .then(() => {
+                                        this.setState({loading: false})
+                                        this.setState({forceCloseDeleteModal: true})
+                                        let updatedTasks = [...this.state.tasks]
+                                        updatedTasks = updatedTasks.filter((task) => {
+                                            return task.id !== id
+                                        });
+                                        this.setState({tasks: updatedTasks})
+                                        this.setState({forceCloseDeleteModal: true})
+                                    })
+                            } else {
+                                window.location = '/'
+                            }
+                        })
+                }
+            })
         // await this.componentDidMount()
     }
 
     handleParentNotFound = () => {
         if (this.state.parentsFound.length === 0) {
             this.setState({parentNotFound: true})
-        }
-        else {
+        } else {
             this.setState({parentNotFound: false})
         }
     }
 
     handleSearchPersonnel = async (e) => {
-        if (!this.state.parentNotFound) {this.setState({searchLoading: true})}
+        if (!this.state.parentNotFound) {
+            this.setState({searchLoading: true})
+        }
         if (e !== "") {
             const value = e.target.value;
             this.setState({searchContent: value});
@@ -377,7 +393,8 @@ class TrelloPage extends Component {
                     this.setState({parentsFound: data}, () => {
                         this.handleParentNotFound()
                     })
-                    this.setState({loading: false})}).catch(() => {
+                    this.setState({loading: false})
+                }).catch(() => {
                 if (localStorage.getItem('role') === 'MANAGER') {
                     axios.get('http://localhost:8089/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                         .then((response) => {
@@ -389,7 +406,8 @@ class TrelloPage extends Component {
                                         this.setState({parentsFound: data}, () => {
                                             this.handleParentNotFound()
                                         })
-                                        this.setState({loading: false})})
+                                        this.setState({loading: false})
+                                    })
                             } else {
                                 window.location = '/'
                             }
@@ -405,12 +423,14 @@ class TrelloPage extends Component {
                                         this.setState({parentsFound: data}, () => {
                                             this.handleParentNotFound()
                                         })
-                                        this.setState({loading: false})})
+                                        this.setState({loading: false})
+                                    })
                             } else {
                                 window.location = '/'
                             }
                         })
-                }})
+                }
+            })
         } else {
             axios.get(`http://localhost:8089/api/v1/supervisor/characteristic/search?${this.state.searchBase}=&parentType=Personnel`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                 .then((data) => {
@@ -418,7 +438,8 @@ class TrelloPage extends Component {
                     this.setState({parentsFound: data}, () => {
                         this.handleParentNotFound()
                     })
-                    this.setState({loading: false})}).catch(() => {
+                    this.setState({loading: false})
+                }).catch(() => {
                 if (localStorage.getItem('role') === 'MANAGER') {
                     axios.get('http://localhost:8089/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                         .then((response) => {
@@ -430,7 +451,8 @@ class TrelloPage extends Component {
                                         this.setState({parentsFound: data}, () => {
                                             this.handleParentNotFound()
                                         })
-                                        this.setState({loading: false})})
+                                        this.setState({loading: false})
+                                    })
                             } else {
                                 window.location = '/'
                             }
@@ -446,12 +468,14 @@ class TrelloPage extends Component {
                                         this.setState({parentsFound: data}, () => {
                                             this.handleParentNotFound()
                                         })
-                                        this.setState({loading: false})})
+                                        this.setState({loading: false})
+                                    })
                             } else {
                                 window.location = '/'
                             }
                         })
-                }})
+                }
+            })
         }
     }
 
@@ -486,14 +510,15 @@ class TrelloPage extends Component {
                             window.location = '/'
                         }
                     })
-            }})
+            }
+        })
     }
 
 
     handleDateInput = (value) => {
         let month = value.month < 10 ? ('0' + value.month) : value.month;
         let day = value.day < 10 ? ('0' + value.day) : value.day;
-        let convertDate = value.year  + '/' + month + '/' + day;
+        let convertDate = value.year + '/' + month + '/' + day;
         this.handleSearchTask(convertDate)
     }
 
@@ -537,14 +562,15 @@ class TrelloPage extends Component {
                             window.location = '/'
                         }
                     })
-            }})
+            }
+        })
     }
 
     render() {
         return (
             <DragDropContext
-            onDragEnd={this.onDragEnd}
-            onDragUpdate={this.onDragUpdate}>
+                onDragEnd={this.onDragEnd}
+                onDragUpdate={this.onDragUpdate}>
                 <div style={{overflowX: "hidden"}}>
                     <TaskContext.Provider
                         value={{
@@ -576,7 +602,12 @@ class TrelloPage extends Component {
                             <div className="form-floating">
                                 <FormControl className={"w-100"} style={{border: "none"}}>
                                     <Select
-                                        sx={{ height: 50, borderRadius: "0.5rem", minWidth: '10rem', backgroundColor: "#fff"}}
+                                        sx={{
+                                            height: 50,
+                                            borderRadius: "0.5rem",
+                                            minWidth: '10rem',
+                                            backgroundColor: "#fff"
+                                        }}
                                         id="select-field"
                                         value={this.state.searchTaskBase}
                                         onChange={(value) => {
@@ -605,15 +636,55 @@ class TrelloPage extends Component {
                                 <FormControl className={"w-100"} style={{border: "none"}}>
                                     <Select
                                         value={this.state.clickedTask.priority}
-                                        sx={{ height: 50, borderRadius: "0.5rem", minWidth: '10rem', backgroundColor: "#fff"}}
+                                        sx={{
+                                            height: 50,
+                                            borderRadius: "0.5rem",
+                                            minWidth: '10rem',
+                                            backgroundColor: "#fff"
+                                        }}
                                         onChange={(e) => {
                                             this.handleChangeSearchPriority(e)
                                         }}
                                     >
-                                        <MenuItem value={"low"}><div className={"d-flex align-items-center"}><div className={"bg-primary m-3"} style={{borderRadius: "50%", width: "15px", height: "15px",}}></div>کم</div></MenuItem>
-                                        <MenuItem value={"medium"}><div className={"d-flex align-items-center"}><div className={"bg-warning m-3"} style={{borderRadius: "50%", width: "15px", height: "15px"}}></div>متوسط</div></MenuItem>
-                                        <MenuItem value={"high"}><div className={"d-flex align-items-center"}><div className={"m-3"} style={{backgroundColor: "#F35C2E", borderRadius: "50%", width: "15px", height: "15px"}}></div>زیاد</div></MenuItem>
-                                        <MenuItem value={"urgent"}><div className={"d-flex align-items-center"}><div className={"m-3"} style={{backgroundColor: "#88000d", borderRadius: "50%", width: "15px", height: "15px"}}></div>ضروری</div></MenuItem>
+                                        <MenuItem value={"low"}>
+                                            <div className={"d-flex align-items-center"}>
+                                                <div className={"bg-primary m-3"} style={{
+                                                    borderRadius: "50%",
+                                                    width: "15px",
+                                                    height: "15px",
+                                                }}></div>
+                                                کم
+                                            </div>
+                                        </MenuItem>
+                                        <MenuItem value={"medium"}>
+                                            <div className={"d-flex align-items-center"}>
+                                                <div className={"bg-warning m-3"}
+                                                     style={{borderRadius: "50%", width: "15px", height: "15px"}}></div>
+                                                متوسط
+                                            </div>
+                                        </MenuItem>
+                                        <MenuItem value={"high"}>
+                                            <div className={"d-flex align-items-center"}>
+                                                <div className={"m-3"} style={{
+                                                    backgroundColor: "#F35C2E",
+                                                    borderRadius: "50%",
+                                                    width: "15px",
+                                                    height: "15px"
+                                                }}></div>
+                                                زیاد
+                                            </div>
+                                        </MenuItem>
+                                        <MenuItem value={"urgent"}>
+                                            <div className={"d-flex align-items-center"}>
+                                                <div className={"m-3"} style={{
+                                                    backgroundColor: "#88000d",
+                                                    borderRadius: "50%",
+                                                    width: "15px",
+                                                    height: "15px"
+                                                }}></div>
+                                                ضروری
+                                            </div>
+                                        </MenuItem>
                                     </Select>
                                     <label className="placeholder" style={{
                                         top: '-10px',
@@ -625,7 +696,9 @@ class TrelloPage extends Component {
                                     }}>اولویت</label>
                                 </FormControl>
                             </div>
-                            <div hidden={this.state.searchTaskBase !== "dueDate"} className="input-group-register date-container" style={{marginLeft: "-.4rem", marginRight: "-.4rem"}}>
+                            <div hidden={this.state.searchTaskBase !== "dueDate"}
+                                 className="input-group-register date-container"
+                                 style={{marginLeft: "-.4rem", marginRight: "-.4rem"}}>
                                 <DatePicker
                                     containerClassName={"trello-date-container"}
                                     calendarPosition={`top`}
@@ -634,7 +707,7 @@ class TrelloPage extends Component {
                                     inputClass={`input`}
                                     value={this.state.dataPicker}
                                     onChange={this.handleDateInput}
-                                    mapDays={({ date }) => {
+                                    mapDays={({date}) => {
                                         let props = {}
                                         let isWeekend = [6].includes(date.weekDay.index)
 
@@ -683,8 +756,13 @@ class TrelloPage extends Component {
                                    id="inputSearch"
                                    placeholder="جسـتجـو..."
                                    onChange={this.handleSearchTaskInput}
-                            style={{height: 50}}/>
-                            <div style={this.state.searchTaskBase === "all" ? {height: 50, backgroundColor: "#f6f6f6"} : {height: 50}} hidden={this.state.searchTaskBase === "dueDate" || this.state.searchTaskBase === "priority" || this.state.searchTaskBase === "all"} className="search-icon"><i className="bi bi-search"></i></div>
+                                   style={{height: 50}}/>
+                            <div style={this.state.searchTaskBase === "all" ? {
+                                height: 50,
+                                backgroundColor: "#f6f6f6"
+                            } : {height: 50}}
+                                 hidden={this.state.searchTaskBase === "dueDate" || this.state.searchTaskBase === "priority" || this.state.searchTaskBase === "all"}
+                                 className="search-icon"><i className="bi bi-search"></i></div>
                         </div>
 
                         {/* 3 main categories (To Do, In Progress, Done) */}
@@ -744,7 +822,7 @@ class TrelloPage extends Component {
                                         value={this.state.tempDueDate}
                                         onChange={this.handleDueDate}
 
-                                        mapDays={({ date }) => {
+                                        mapDays={({date}) => {
                                             let props = {}
                                             let isWeekend = [6].includes(date.weekDay.index)
 
@@ -790,14 +868,15 @@ class TrelloPage extends Component {
                                 {/* Personnel section */}
                                 <div className={"m-2"}>
                                     <div className={"d-flex justify-content-start"}>
-                                        <button className={'btn-done'} onClick={() => {this.setState({
-                                            searchLoading: false,
-                                            showChangeParentModal: true,
-                                            parentNotFound: false,
-                                            parentsFound: [],
-                                            searchContent: "",
-                                            searchBase: "fullName"
-                                        });
+                                        <button className={'btn-done'} onClick={() => {
+                                            this.setState({
+                                                searchLoading: false,
+                                                showChangeParentModal: true,
+                                                parentNotFound: false,
+                                                parentsFound: [],
+                                                searchContent: "",
+                                                searchBase: "fullName"
+                                            });
                                             this.handleSearchPersonnel("")
                                         }}>
                                             <MdDone className='ms-1'/>
@@ -818,14 +897,52 @@ class TrelloPage extends Component {
                                     <FormControl className="w-50 mt-4">
                                         <Select
                                             value={this.state.tempPriority}
-                                            sx={{ height: 50, borderRadius: 2}}
+                                            sx={{height: 50, borderRadius: 2}}
                                             id="priority-field"
                                             onChange={this.handlePriority}
                                         >
-                                            <MenuItem value={"low"}><div className={"d-flex align-items-center"}><div className={"bg-primary m-3"} style={{borderRadius: "50%", width: "15px", height: "15px",}}></div>کم</div></MenuItem>
-                                            <MenuItem value={"medium"}><div className={"d-flex align-items-center"}><div className={"bg-warning m-3"} style={{borderRadius: "50%", width: "15px", height: "15px"}}></div>متوسط</div></MenuItem>
-                                            <MenuItem value={"high"}><div className={"d-flex align-items-center"}><div className={"m-3"} style={{backgroundColor: "#F35C2E", borderRadius: "50%", width: "15px", height: "15px"}}></div>زیاد</div></MenuItem>
-                                            <MenuItem value={"urgent"}><div className={"d-flex align-items-center"}><div className={"m-3"} style={{backgroundColor: "#88000d", borderRadius: "50%", width: "15px", height: "15px"}}></div>ضروری</div></MenuItem>
+                                            <MenuItem value={"low"}>
+                                                <div className={"d-flex align-items-center"}>
+                                                    <div className={"bg-primary m-3"} style={{
+                                                        borderRadius: "50%",
+                                                        width: "15px",
+                                                        height: "15px",
+                                                    }}></div>
+                                                    کم
+                                                </div>
+                                            </MenuItem>
+                                            <MenuItem value={"medium"}>
+                                                <div className={"d-flex align-items-center"}>
+                                                    <div className={"bg-warning m-3"} style={{
+                                                        borderRadius: "50%",
+                                                        width: "15px",
+                                                        height: "15px"
+                                                    }}></div>
+                                                    متوسط
+                                                </div>
+                                            </MenuItem>
+                                            <MenuItem value={"high"}>
+                                                <div className={"d-flex align-items-center"}>
+                                                    <div className={"m-3"} style={{
+                                                        backgroundColor: "#F35C2E",
+                                                        borderRadius: "50%",
+                                                        width: "15px",
+                                                        height: "15px"
+                                                    }}></div>
+                                                    زیاد
+                                                </div>
+                                            </MenuItem>
+                                            <MenuItem value={"urgent"}>
+                                                <div className={"d-flex align-items-center"}>
+                                                    <div className={"m-3"} style={{
+                                                        backgroundColor: "#88000d",
+                                                        borderRadius: "50%",
+                                                        width: "15px",
+                                                        height: "15px"
+                                                    }}></div>
+                                                    ضروری
+                                                </div>
+                                            </MenuItem>
                                         </Select>
                                         <label className="placeholder" style={{
                                             top: '-8px',
@@ -857,7 +974,7 @@ class TrelloPage extends Component {
                         <Modal.Footer>
 
                             {/* Done button for submitting new task */}
-                            <Box sx={{ m: 1, position: 'relative' }}>
+                            <Box sx={{m: 1, position: 'relative'}}>
                                 <Button
                                     variant="contained"
                                     sx={{
@@ -866,7 +983,10 @@ class TrelloPage extends Component {
                                         ":hover": {backgroundColor: "#198754", color: "white"}
                                     }}
                                     disabled={this.state.loading}
-                                    onClick={this.onDone}
+                                    onClick={(event) => {
+                                        this.onDone(event);
+                                        this.componentDidMount();
+                                    }}
                                 >
                                     ثبت
                                 </Button>
@@ -925,27 +1045,64 @@ class TrelloPage extends Component {
                                 </div>
 
                                 {/* Edit Priority selector field */}
-                                    <FormControl className="mt-4" style={{width: "30%", marginBottom: "31px"}}>
-                                        <div className={"d-flex justify-content-center"}>
-                                            <InputLabel className={"priority-input text-center"} id="priority-field">اولویت</InputLabel>
-                                        </div>
-                                        <Select
-                                            value={this.state.clickedTask.priority}
-                                            sx={{ height: 50, borderRadius: 2}}
-                                            labelId="priority-field"
-                                            label="اولویت"
-                                            onChange={this.handleChangePriority}
-                                        >
-                                            <MenuItem value={"low"}><div className={"d-flex align-items-center"}><div className={"bg-primary m-3"} style={{borderRadius: "50%", width: "15px", height: "15px",}}></div>کم</div></MenuItem>
-                                            <MenuItem value={"medium"}><div className={"d-flex align-items-center"}><div className={"bg-warning m-3"} style={{borderRadius: "50%", width: "15px", height: "15px"}}></div>متوسط</div></MenuItem>
-                                            <MenuItem value={"high"}><div className={"d-flex align-items-center"}><div className={"m-3"} style={{backgroundColor: "#F35C2E", borderRadius: "50%", width: "15px", height: "15px"}}></div>زیاد</div></MenuItem>
-                                            <MenuItem value={"urgent"}><div className={"d-flex align-items-center"}><div className={"m-3"} style={{backgroundColor: "#88000d", borderRadius: "50%", width: "15px", height: "15px"}}></div>ضروری</div></MenuItem>
-                                        </Select>
-                                    </FormControl>
+                                <FormControl className="mt-4" style={{width: "30%", marginBottom: "31px"}}>
+                                    <div className={"d-flex justify-content-center"}>
+                                        <InputLabel className={"priority-input text-center"}
+                                                    id="priority-field">اولویت</InputLabel>
+                                    </div>
+                                    <Select
+                                        value={this.state.clickedTask.priority}
+                                        sx={{height: 50, borderRadius: 2}}
+                                        labelId="priority-field"
+                                        label="اولویت"
+                                        onChange={this.handleChangePriority}
+                                    >
+                                        <MenuItem value={"low"}>
+                                            <div className={"d-flex align-items-center"}>
+                                                <div className={"bg-primary m-3"} style={{
+                                                    borderRadius: "50%",
+                                                    width: "15px",
+                                                    height: "15px",
+                                                }}></div>
+                                                کم
+                                            </div>
+                                        </MenuItem>
+                                        <MenuItem value={"medium"}>
+                                            <div className={"d-flex align-items-center"}>
+                                                <div className={"bg-warning m-3"}
+                                                     style={{borderRadius: "50%", width: "15px", height: "15px"}}></div>
+                                                متوسط
+                                            </div>
+                                        </MenuItem>
+                                        <MenuItem value={"high"}>
+                                            <div className={"d-flex align-items-center"}>
+                                                <div className={"m-3"} style={{
+                                                    backgroundColor: "#F35C2E",
+                                                    borderRadius: "50%",
+                                                    width: "15px",
+                                                    height: "15px"
+                                                }}></div>
+                                                زیاد
+                                            </div>
+                                        </MenuItem>
+                                        <MenuItem value={"urgent"}>
+                                            <div className={"d-flex align-items-center"}>
+                                                <div className={"m-3"} style={{
+                                                    backgroundColor: "#88000d",
+                                                    borderRadius: "50%",
+                                                    width: "15px",
+                                                    height: "15px"
+                                                }}></div>
+                                                ضروری
+                                            </div>
+                                        </MenuItem>
+                                    </Select>
+                                </FormControl>
                             </div>
 
                             {/* Edit Time Log field */}
-                            <div className={"text-center d-flex justify-content-center"} style={{flexDirection: "column"}}>
+                            <div className={"text-center d-flex justify-content-center"}
+                                 style={{flexDirection: "column"}}>
                                 <div className={"my-1"}>زمان صرف شده</div>
                                 <div className={"d-flex justify-content-center mt-1"}>
                                     <div className={"text-center w-25"}>
@@ -972,7 +1129,7 @@ class TrelloPage extends Component {
                                     </div>
                                 </div>
                             </div>
-                            
+
 
                             {/* Description editor field */}
                             <div className="input-group-register col-md-4 col-12 mt-4"
@@ -991,7 +1148,7 @@ class TrelloPage extends Component {
                         </Modal.Body>
                         <Modal.Footer>
                             {/* Submit button for edit task modal */}
-                            <Box sx={{ m: 1, position: 'relative' }}>
+                            <Box sx={{m: 1, position: 'relative'}}>
                                 <Button
                                     variant="contained"
                                     sx={{
@@ -1029,7 +1186,7 @@ class TrelloPage extends Component {
                     <Modal
                         centered show={this.state.showChangeParentModal}
                         size={'xl'}
-                        onHide={() => this.setState({showChangeParentModal : false})}
+                        onHide={() => this.setState({showChangeParentModal: false})}
                     >
                         <Modal.Header>انتخاب پرسنل</Modal.Header>
                         <Modal.Body>
@@ -1037,29 +1194,32 @@ class TrelloPage extends Component {
                                 <div className="col-md-1 col-sm-2 px-0"><label>براساس:</label></div>
                                 <div className="col-md-3 col-sm-6 px-0">
                                     <Form.Select aria-label="Default select example"
-                                                 style={{height:"50px",fontSize:"14px"}}
+                                                 style={{height: "50px", fontSize: "14px"}}
                                                  value={this.state.searchBase}
-                                                 onChange={(value) => this.setState({searchBase : value.target.value})}>
+                                                 onChange={(value) => this.setState({searchBase: value.target.value})}>
                                         <option value="fullName">نام پرسنل</option>
                                         <option value="nationalCode">کد ملی پرسنل</option>
                                         <option value="parentType">نوع پرسنل</option>
                                     </Form.Select>
                                 </div>
-                                <div className="input-group-register col-md-7 col-sm-11 px-0 d-flex" style={{paddingRight: "0"}}>
+                                <div className="input-group-register col-md-7 col-sm-11 px-0 d-flex"
+                                     style={{paddingRight: "0"}}>
                                     <input type="text"
                                            id="inputSearch"
                                            className="input"
                                            placeholder="جسـتوجـو"
-                                           style={{padding:"6px"}}
+                                           style={{padding: "6px"}}
 
-                                           onChange={(input) => {this.handleSearchPersonnel(input)}}/>
+                                           onChange={(input) => {
+                                               this.handleSearchPersonnel(input)
+                                           }}/>
                                     <button className="btn outline-secondary"><BiSearch fontSize="25px"/></button>
                                 </div>
                             </div>
 
                             <div>
                                 <Paper>
-                                    <TableContainer sx={{ maxHeight: 440 }}>
+                                    <TableContainer sx={{maxHeight: 440}}>
                                         <Table stickyHeader aria-label="sticky table">
                                             <TableHead>
                                                 <TableRow>
@@ -1078,27 +1238,27 @@ class TrelloPage extends Component {
                                                 </TableRow>
                                             </TableHead>
                                             <TableBody>
-                                                    {
-                                                        this.state.searchLoading ?
-                                                            <TableRow>
-                                                                <TableCell>
-                                                                    <Skeleton animation="wave" height={20} width="100%" />
-                                                                </TableCell>
-                                                                <TableCell>
-                                                                    <Skeleton animation="wave" height={20} width="100%" />
-                                                                </TableCell>
-                                                                <TableCell>
-                                                                    <Skeleton animation="wave" height={20} width="100%" />
-                                                                </TableCell>
-                                                                <TableCell>
-                                                                    <Skeleton animation="wave" height={20} width="100%" />
-                                                                </TableCell>
-                                                            </TableRow>
-                                                            :
+                                                {
+                                                    this.state.searchLoading ?
+                                                        <TableRow>
+                                                            <TableCell>
+                                                                <Skeleton animation="wave" height={20} width="100%"/>
+                                                            </TableCell>
+                                                            <TableCell>
+                                                                <Skeleton animation="wave" height={20} width="100%"/>
+                                                            </TableCell>
+                                                            <TableCell>
+                                                                <Skeleton animation="wave" height={20} width="100%"/>
+                                                            </TableCell>
+                                                            <TableCell>
+                                                                <Skeleton animation="wave" height={20} width="100%"/>
+                                                            </TableCell>
+                                                        </TableRow>
+                                                        :
                                                         this.state.parentsFound.map((parent, index) => {
                                                             return (
                                                                 <TableRow hover onClick={() => {
-                                                                    this.setState({showChangeParentModal : false});
+                                                                    this.setState({showChangeParentModal: false});
                                                                     this.setState({selectedParent: parent});
                                                                 }}
                                                                 >
@@ -1115,12 +1275,14 @@ class TrelloPage extends Component {
                                                                         {parent.phoneNumber}
                                                                     </TableCell>
                                                                 </TableRow>
-                                                            )})}
+                                                            )
+                                                        })}
                                             </TableBody>
                                         </Table>
                                     </TableContainer>
                                 </Paper>
-                                <h3 hidden={!this.state.parentNotFound} className={"mt-5 text-center text-danger"}>پرسنلی یافت نشد!</h3>
+                                <h3 hidden={!this.state.parentNotFound}
+                                    className={"mt-5 text-center text-danger"}>پرسنلی یافت نشد!</h3>
                             </div>
                         </Modal.Body>
                     </Modal>

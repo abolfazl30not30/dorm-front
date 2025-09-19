@@ -20,8 +20,8 @@ class EventPage extends Component {
     })
     state = {
         loading: false,
-        year: this.today.slice(0,4), // number format
-        month: this.today.slice(5,7), // number format
+        year: this.today.slice(0, 4), // number format
+        month: this.today.slice(5, 7), // number format
         day: this.today.slice(8,), // number format
 
         tempEventName: '',
@@ -257,7 +257,7 @@ class EventPage extends Component {
                         </div>
                     </Modal.Body>
                     <Modal.Footer className="justify-content-center">
-                        <Box sx={{ m: 1, position: 'relative' }}>
+                        <Box sx={{m: 1, position: 'relative'}}>
                             <Button
                                 className={"buttonDone"}
                                 variant="contained"
@@ -268,8 +268,10 @@ class EventPage extends Component {
                                 // }}
                                 disabled={this.state.loading}
                                 onClick={(event) => {
-                                    this.handleSubmitType(event)
-                                }}>
+                                    this.handleSubmitType(event);
+                                    this.handleCloseType();
+                                }}
+                            >
                                 ثبت
                             </Button>
                             {this.state.loading && (
@@ -332,33 +334,34 @@ class EventPage extends Component {
                 .then((data) => this.setState({
                     loading: false
                 })).catch(async () => {
-                if (localStorage.getItem('role') === 'MANAGER') {
-                    await axios.get('http://localhost:8089/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
-                        .then(async (response) => {
-                            if (response.headers["accesstoken"]) {
-                                localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                await axios.post('http://localhost:8089/api/v1/supervisor/notification', newCustomEvent, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
-                                    .then((data) => this.setState({
-                                        loading: false
-                                    }))
-                            } else {
-                                window.location = '/'
-                            }
-                        })
-                } else if (localStorage.getItem('role') === 'SUPERVISOR') {
-                    await axios.get('http://localhost:8089/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
-                        .then(async (response) => {
-                            if (response.headers["accesstoken"]) {
-                                localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                await axios.post('http://localhost:8089/api/v1/supervisor/notification', newCustomEvent, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
-                                    .then((data) => this.setState({
-                                        loading: false
-                                    }))
-                            } else {
-                                window.location = '/'
-                            }
-                        })
-                }})
+                    if (localStorage.getItem('role') === 'MANAGER') {
+                        await axios.get('http://localhost:8089/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                            .then(async (response) => {
+                                if (response.headers["accesstoken"]) {
+                                    localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                                    await axios.post('http://localhost:8089/api/v1/supervisor/notification', newCustomEvent, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                        .then((data) => this.setState({
+                                            loading: false
+                                        }))
+                                } else {
+                                    window.location = '/'
+                                }
+                            })
+                    } else if (localStorage.getItem('role') === 'SUPERVISOR') {
+                        await axios.get('http://localhost:8089/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                            .then(async (response) => {
+                                if (response.headers["accesstoken"]) {
+                                    localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                                    await axios.post('http://localhost:8089/api/v1/supervisor/notification', newCustomEvent, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                        .then((data) => this.setState({
+                                            loading: false
+                                        }))
+                                } else {
+                                    window.location = '/'
+                                }
+                            })
+                    }
+                })
         }
 
         await this.componentDidMount();
@@ -450,7 +453,7 @@ class EventPage extends Component {
             month: '2-digit',
             day: '2-digit'
         });
-        await fetch(`https://persiancalapi.ir/jalali/${today.slice(0,4)}/${today.slice(5,7)}/${today.slice(8,)}`).then((response) => response.json())
+        await fetch(`https://persiancalapi.ir/jalali/${today.slice(0, 4)}/${today.slice(5, 7)}/${today.slice(8,)}`).then((response) => response.json())
             .then((data) => {
                 this.setState({eventsFromAPI: data.events});
                 this.setState({isHoliday: data.is_holiday});

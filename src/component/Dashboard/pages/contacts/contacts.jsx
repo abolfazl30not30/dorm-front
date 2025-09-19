@@ -11,7 +11,7 @@ import axios from "axios";
 class contacts extends Component {
     state = {
         searchLoading: true,
-        loading :false,
+        loading: false,
         contacts: [],
         show: false,
         inputTelephone: [],
@@ -19,7 +19,7 @@ class contacts extends Component {
         name: [],
         telephoneNumbers: [],
         mobileNumbers: [],
-        searchType:"name",
+        searchType: "name",
     }
 
     async componentDidMount() {
@@ -56,8 +56,10 @@ class contacts extends Component {
                             window.location = '/'
                         }
                     })
-            }})
+            }
+        })
     }
+
     render() {
         return (
             <>
@@ -73,7 +75,12 @@ class contacts extends Component {
                         <div className="form-floating">
                             <FormControl className={"w-100"} style={{border: "none"}}>
                                 <Select
-                                    sx={{ height: 50, borderRadius: "0.5rem", minWidth: '10rem', backgroundColor: "#f9f9f9"}}
+                                    sx={{
+                                        height: 50,
+                                        borderRadius: "0.5rem",
+                                        minWidth: '10rem',
+                                        backgroundColor: "#f9f9f9"
+                                    }}
                                     id="select-field"
                                     value={this.state.searchType}
                                     onChange={(value) => this.setState({searchType: value.target.value})}>
@@ -113,21 +120,22 @@ class contacts extends Component {
                             <tbody>
                             {
                                 this.state.searchLoading ?
-                                [...Array(5)].map(() =>
-                                    <tr>
-                                        <td><Skeleton animation="wave" height={23} width="100%" /></td>
-                                        <td><Skeleton animation="wave" height={23} width="100%" /></td>
-                                        <td><Skeleton animation="wave" height={23} width="100%" /></td>
-                                    </tr>
-                                )
-                                :
-                                this.state.contacts.map((i) => (
-                                    <tr>
-                                        <td>{i.name}</td>
-                                        <td >{i.mobileNumbers.map((num)=>(<div className="mb-2">{num}</div>))}</td>
-                                        <td>{i.telephoneNumbers.map((num)=>(<div className="mb-2">{num}</div>))}</td>
-                                    </tr>
-                                ))
+                                    [...Array(5)].map(() =>
+                                        <tr>
+                                            <td><Skeleton animation="wave" height={23} width="100%"/></td>
+                                            <td><Skeleton animation="wave" height={23} width="100%"/></td>
+                                            <td><Skeleton animation="wave" height={23} width="100%"/></td>
+                                        </tr>
+                                    )
+                                    :
+                                    this.state.contacts.map((i) => (
+                                        <tr>
+                                            <td>{i.name}</td>
+                                            <td>{i.mobileNumbers.map((num) => (<div className="mb-2">{num}</div>))}</td>
+                                            <td>{i.telephoneNumbers.map((num) => (
+                                                <div className="mb-2">{num}</div>))}</td>
+                                        </tr>
+                                    ))
                             }
                             </tbody>
                         </table>
@@ -151,7 +159,7 @@ class contacts extends Component {
 
                         <div className='input-group-register mb-3'>
                             <input type='text' className='input form-control' onChange={(e) => {
-                                this.getValueInputTelephone(e.target.value,0)
+                                this.getValueInputTelephone(e.target.value, 0)
                             }}/>
                             <label className="placeholder" style={{right: '12px'}}>تلفن ثابت</label>
                         </div>
@@ -159,9 +167,11 @@ class contacts extends Component {
                         {
                             this.state.inputTelephone.map((telephone, index) => (
                                 <div className='input-group-register mb-3'>
-                                    <AiOutlineClose className='btn-delete-input' onClick={() => {this.deleteInputTelephone(index)}}/>
+                                    <AiOutlineClose className='btn-delete-input' onClick={() => {
+                                        this.deleteInputTelephone(index)
+                                    }}/>
                                     <input type='text' className='input form-control' onChange={(e) => {
-                                        this.getValueInputTelephone(e.target.value, index+1)
+                                        this.getValueInputTelephone(e.target.value, index + 1)
                                     }}/>
                                     <label className="placeholder" style={{right: '12px'}}>تلفن ثابت</label>
                                 </div>
@@ -174,16 +184,18 @@ class contacts extends Component {
                         </div>
                         <div className='input-group-register mb-3'>
                             <input type='text' className='input form-control' onChange={(e) => {
-                                this.getValueInputMobile(e.target.value,0)
+                                this.getValueInputMobile(e.target.value, 0)
                             }}/>
                             <label className="placeholder" style={{right: '12px'}}>تلفن همراه</label>
                         </div>
                         {
                             this.state.inputMobile.map((mobile, index) => (
                                 <div className='input-group-register mb-3'>
-                                    <AiOutlineClose className='btn-delete-input' onClick={() => {this.deleteInputMobile(index)}}/>
+                                    <AiOutlineClose className='btn-delete-input' onClick={() => {
+                                        this.deleteInputMobile(index)
+                                    }}/>
                                     <input type='text' className='input form-control' onChange={(e) => {
-                                        this.getValueInputMobile(e.target.value, index+1)
+                                        this.getValueInputMobile(e.target.value, index + 1)
                                     }}/>
                                     <label className="placeholder" style={{right: '12px'}}>تلفن همراه</label>
                                 </div>
@@ -195,12 +207,15 @@ class contacts extends Component {
                             <AiOutlinePlus className='ms-2'/>
                         </div>
 
-                        <Box sx={{ m: 1, position: 'relative' }}>
+                        <Box sx={{m: 1, position: 'relative'}}>
                             <Button
                                 className={"buttonDone w-100"}
                                 variant="contained"
                                 disabled={this.state.loading}
-                                onClick={this.handleRecordContact}
+                                onClick={(event) => {
+                                    this.handleRecordContact(event);
+                                    this.componentDidMount();
+                                }}
                             >
                                 ثبت
                             </Button>
@@ -259,7 +274,8 @@ class contacts extends Component {
                             window.location = '/'
                         }
                     })
-            }})
+            }
+        })
     }
 
     handleClose = () => {
@@ -301,20 +317,20 @@ class contacts extends Component {
 
     deleteInputTelephone = (i) => {
         const updateInputsTelephone = [...this.state.inputTelephone];
-        updateInputsTelephone.splice(i,1)
+        updateInputsTelephone.splice(i, 1)
         this.setState({inputTelephone: updateInputsTelephone});
     }
 
     deleteInputMobile = (i) => {
         const updateInputsMobile = [...this.state.inputMobile];
-        updateInputsMobile.splice(i,1);
+        updateInputsMobile.splice(i, 1);
         this.setState({inputMobile: updateInputsMobile});
     }
 
     handleRecordContact = async () => {
         const newContact = {
             name: this.state.name,
-            telephoneNumbers : this.state.telephoneNumbers,
+            telephoneNumbers: this.state.telephoneNumbers,
             mobileNumbers: this.state.mobileNumbers
         }
         this.setState({loading: true})
@@ -322,39 +338,40 @@ class contacts extends Component {
             .then((data) => this.setState({
                 loading: false
             })).catch(() => {
-            if (localStorage.getItem('role') === 'MANAGER') {
-                axios.get('http://localhost:8089/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
-                    .then((response) => {
-                        if (response.headers["accesstoken"]) {
-                            localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                            axios.post('http://localhost:8089/api/v1/supervisor/phoneBook', newContact, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
-                                .then((data) => this.setState({
-                                    loading: false
-                                }))
-                        } else {
-                            window.location = '/'
-                        }
-                    })
-            } else if (localStorage.getItem('role') === 'SUPERVISOR') {
-                axios.get('http://localhost:8089/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
-                    .then((response) => {
-                        if (response.headers["accesstoken"]) {
-                            localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                            axios.post('http://localhost:8089/api/v1/supervisor/phoneBook', newContact, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
-                                .then((data) => this.setState({
-                                    loading: false
-                                }))
-                        } else {
-                            window.location = '/'
-                        }
-                    })
-            }})
+                if (localStorage.getItem('role') === 'MANAGER') {
+                    axios.get('http://localhost:8089/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        .then((response) => {
+                            if (response.headers["accesstoken"]) {
+                                localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                                axios.post('http://localhost:8089/api/v1/supervisor/phoneBook', newContact, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                    .then((data) => this.setState({
+                                        loading: false
+                                    }))
+                            } else {
+                                window.location = '/'
+                            }
+                        })
+                } else if (localStorage.getItem('role') === 'SUPERVISOR') {
+                    axios.get('http://localhost:8089/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        .then((response) => {
+                            if (response.headers["accesstoken"]) {
+                                localStorage.setItem("accessToken", response.headers["accesstoken"]);
+                                axios.post('http://localhost:8089/api/v1/supervisor/phoneBook', newContact, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                    .then((data) => this.setState({
+                                        loading: false
+                                    }))
+                            } else {
+                                window.location = '/'
+                            }
+                        })
+                }
+            })
 
         this.setState({show: false});
-        this.setState({inputTelephone:[]});
-        this.setState({inputMobile:[]});
-        this.setState({telephoneNumbers:[]});
-        this.setState({mobileNumbers:[]});
+        this.setState({inputTelephone: []});
+        this.setState({inputMobile: []});
+        this.setState({telephoneNumbers: []});
+        this.setState({mobileNumbers: []});
 
         this.componentDidMount()
     }

@@ -467,7 +467,7 @@ class inventory extends Component {
                                 variant="contained"
                                 disabled={this.state.loading}
                                 onClick={() => {
-                                    this.handleRecordInventory().then(r => {})
+                                    this.handleRecordInventory().then(r => {});
                                 }}
                             >
                                 ثبت
@@ -762,11 +762,24 @@ class inventory extends Component {
                         })
                 }})
 
-        this.setState({show: false})
+        // ✅ reset UI + clear temps to avoid duplicates
+        this.setState({
+            loading: false,
+            show: false,
+            type: 'needs',
+            selectedCategory: null,
+            selectedCategoryBoolean: true,
+            tempCategories: [],
+            tempChoices: [],
+            tmpCategoryInput: '',
+            tmpTypeInput: '',
+            types: [],
+            tempTypes: [],
+            choices: [],
+        });
 
-        this.setState({type:"needs",tempChoices:[],selectedCategory:null,selectedCategoryBoolean: true});
-
-        this.componentDidMount()
+        // refresh lists from backend
+        this.componentDidMount();
 
     }
 
