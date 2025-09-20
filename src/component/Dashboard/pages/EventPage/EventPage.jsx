@@ -330,16 +330,16 @@ class EventPage extends Component {
             this.setState({customEvents: updatedCustomEvents});
             this.setState({loading: true})
 
-            await axios.post('http://localhost:8089/api/v1/supervisor/notification', newCustomEvent, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+            await axios.post('https://api.saadatportal.com/api/v1/supervisor/notification', newCustomEvent, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                 .then((data) => this.setState({
                     loading: false
                 })).catch(async () => {
                     if (localStorage.getItem('role') === 'MANAGER') {
-                        await axios.get('http://localhost:8089/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        await axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                             .then(async (response) => {
                                 if (response.headers["accesstoken"]) {
                                     localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                    await axios.post('http://localhost:8089/api/v1/supervisor/notification', newCustomEvent, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                    await axios.post('https://api.saadatportal.com/api/v1/supervisor/notification', newCustomEvent, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                         .then((data) => this.setState({
                                             loading: false
                                         }))
@@ -348,11 +348,11 @@ class EventPage extends Component {
                                 }
                             })
                     } else if (localStorage.getItem('role') === 'SUPERVISOR') {
-                        await axios.get('http://localhost:8089/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        await axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                             .then(async (response) => {
                                 if (response.headers["accesstoken"]) {
                                     localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                    await axios.post('http://localhost:8089/api/v1/supervisor/notification', newCustomEvent, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                    await axios.post('https://api.saadatportal.com/api/v1/supervisor/notification', newCustomEvent, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                         .then((data) => this.setState({
                                             loading: false
                                         }))
@@ -422,25 +422,25 @@ class EventPage extends Component {
 
     componentDidMount = async () => {
 
-        await axios.get('http://localhost:8089/api/v1/supervisor/notification', {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+        await axios.get('https://api.saadatportal.com/api/v1/supervisor/notification', {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
             .then((data) => this.setState({customEvents: data}, () => this.handleNotif())).catch(async () => {
                 if (localStorage.getItem('role') === 'MANAGER') {
-                    await axios.get('http://localhost:8089/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                    await axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                         .then(async (response) => {
                             if (response.headers["accesstoken"]) {
                                 localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                await axios.get('http://localhost:8089/api/v1/supervisor/notification', {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                await axios.get('https://api.saadatportal.com/api/v1/supervisor/notification', {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                     .then((data) => this.setState({customEvents: data}, () => this.handleNotif()))
                             } else {
                                 window.location = '/'
                             }
                         })
                 } else if (localStorage.getItem('role') === 'SUPERVISOR') {
-                    await axios.get('http://localhost:8089/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                    await axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                         .then(async (response) => {
                             if (response.headers["accesstoken"]) {
                                 localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                await axios.get('http://localhost:8089/api/v1/supervisor/notification', {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                await axios.get('https://api.saadatportal.com/api/v1/supervisor/notification', {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                     .then((data) => this.setState({customEvents: data}, () => this.handleNotif()))
                             } else {
                                 window.location = '/'

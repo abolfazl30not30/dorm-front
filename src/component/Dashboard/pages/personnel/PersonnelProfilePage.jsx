@@ -50,7 +50,7 @@ class PersonnelProfilePage extends Component {
         let parentId = ""
         let profileId = ""
         const personnelId = window.location.href.slice(-32)
-        await axios.get(`http://localhost:8089/api/v1/supervisor/characteristic/${personnelId}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+        await axios.get(`https://api.saadatportal.com/api/v1/supervisor/characteristic/${personnelId}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
             .then((data) => {
                 this.setState({
                     personnel: data,
@@ -59,11 +59,11 @@ class PersonnelProfilePage extends Component {
                 profileId = data.profileId
             }).catch(async () => {
                 if (localStorage.getItem('role') === 'MANAGER') {
-                    await axios.get('http://localhost:8089/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                    await axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                         .then(async (response) => {
                             if (response.headers["accesstoken"]) {
                                 localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                await axios.get(`http://localhost:8089/api/v1/supervisor/characteristic/${personnelId}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                await axios.get(`https://api.saadatportal.com/api/v1/supervisor/characteristic/${personnelId}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                     .then((data) => {
                                         this.setState({
                                             personnel: data,
@@ -76,11 +76,11 @@ class PersonnelProfilePage extends Component {
                             }
                         })
                 } else if (localStorage.getItem('role') === 'SUPERVISOR') {
-                    await axios.get('http://localhost:8089/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                    await axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                         .then(async (response) => {
                             if (response.headers["accesstoken"]) {
                                 localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                await axios.get(`http://localhost:8089/api/v1/supervisor/characteristic/${personnelId}`,
+                                await axios.get(`https://api.saadatportal.com/api/v1/supervisor/characteristic/${personnelId}`,
                                     {
                                         headers: {
                                             'Authorization': localStorage.getItem('accessToken'),
@@ -101,16 +101,16 @@ class PersonnelProfilePage extends Component {
                 }
             })
 
-        await axios.get(`http://localhost:8089/api/v1/supervisor/personnel/${parentId}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+        await axios.get(`https://api.saadatportal.com/api/v1/supervisor/personnel/${parentId}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
             .then((data) => this.setState({
                 personnelObject: data,
             })).catch(async () => {
                 if (localStorage.getItem('role') === 'MANAGER') {
-                    await axios.get('http://localhost:8089/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                    await axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                         .then(async (response) => {
                             if (response.headers["accesstoken"]) {
                                 localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                await axios.get(`http://localhost:8089/api/v1/supervisor/personnel/${parentId}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                await axios.get(`https://api.saadatportal.com/api/v1/supervisor/personnel/${parentId}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                     .then((data) => this.setState({
                                         personnelObject: data,
                                     }))
@@ -119,11 +119,11 @@ class PersonnelProfilePage extends Component {
                             }
                         })
                 } else if (localStorage.getItem('role') === 'SUPERVISOR') {
-                    await axios.get('http://localhost:8089/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                    await axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                         .then(async (response) => {
                             if (response.headers["accesstoken"]) {
                                 localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                await axios.get(`http://localhost:8089/api/v1/supervisor/personnel/${parentId}`,
+                                await axios.get(`https://api.saadatportal.com/api/v1/supervisor/personnel/${parentId}`,
                                     {
                                         headers: {
                                             'Authorization': localStorage.getItem('accessToken'),
@@ -141,17 +141,17 @@ class PersonnelProfilePage extends Component {
             })
 
         if (this.state.personnel.profileId !== null) {
-            await axios.get(`http://localhost:8089/api/v1/supervisor/file/${profileId}`, {responseType: 'blob', headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+            await axios.get(`https://api.saadatportal.com/api/v1/supervisor/file/${profileId}`, {responseType: 'blob', headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                 .then((data) => {
                 const objectUrl = URL.createObjectURL(data);
                 this.setState({profileImgUrl: objectUrl})
             }).catch(async () => {
                     if (localStorage.getItem('role') === 'MANAGER') {
-                        await axios.get('http://localhost:8089/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        await axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                             .then(async (response) => {
                                 if (response.headers["accesstoken"]) {
                                     localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                    await axios.get(`http://localhost:8089/api/v1/supervisor/file/${profileId}`, {
+                                    await axios.get(`https://api.saadatportal.com/api/v1/supervisor/file/${profileId}`, {
                                         responseType: 'blob',
                                         headers: {'Authorization': localStorage.getItem('accessToken')}
                                     }).then(response => response.data)
@@ -164,11 +164,11 @@ class PersonnelProfilePage extends Component {
                                 }
                             })
                     } else if (localStorage.getItem('role') === 'SUPERVISOR') {
-                        await axios.get('http://localhost:8089/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                        await axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                             .then(async (response) => {
                                 if (response.headers["accesstoken"]) {
                                     localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                    await axios.get(`http://localhost:8089/api/v1/supervisor/file/${profileId}`, {
+                                    await axios.get(`https://api.saadatportal.com/api/v1/supervisor/file/${profileId}`, {
                                         responseType: 'blob',
                                         headers: {'Authorization': localStorage.getItem('accessToken')}
                                     }).then(response => response.data)
@@ -185,7 +185,7 @@ class PersonnelProfilePage extends Component {
         }
 
 
-        await axios.get(`http://localhost:8089/api/v1/supervisor/responseFile/search?parentType=Personnel&parentId=${parentId}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+        await axios.get(`https://api.saadatportal.com/api/v1/supervisor/responseFile/search?parentType=Personnel&parentId=${parentId}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
             .then((data) => this.setState({fileDetails: data}, () => {
                 this.setState({docFile: this.state.personnelObject.files, report: this.state.personnelObject.record}, () => {
                     this.existDocFile(this.state.personnelObject.files);
@@ -193,11 +193,11 @@ class PersonnelProfilePage extends Component {
             }))
             .catch(async () => {
                 if (localStorage.getItem('role') === 'MANAGER') {
-                    await axios.get('http://localhost:8089/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                    await axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                         .then(async (response) => {
                             if (response.headers["accesstoken"]) {
                                 localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                await axios.get(`http://localhost:8089/api/v1/supervisor/responseFile/search?parentType=Personnel&parentId=${parentId}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                await axios.get(`https://api.saadatportal.com/api/v1/supervisor/responseFile/search?parentType=Personnel&parentId=${parentId}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                     .then((data) => this.setState({fileDetails: data}, () => {
                                         this.setState({
                                             docFile: this.state.personnelObject.files,
@@ -212,11 +212,11 @@ class PersonnelProfilePage extends Component {
                             }
                         })
                 } else if (localStorage.getItem('role') === 'SUPERVISOR') {
-                    await axios.get('http://localhost:8089/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                    await axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                         .then(async (response) => {
                             if (response.headers["accesstoken"]) {
                                 localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                                await axios.get(`http://localhost:8089/api/v1/supervisor/responseFile/search?parentType=Personnel&parentId=${parentId}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                                await axios.get(`https://api.saadatportal.com/api/v1/supervisor/responseFile/search?parentType=Personnel&parentId=${parentId}`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                     .then((data) => this.setState({fileDetails: data}, () => {
                                         this.setState({
                                             docFile: this.state.personnelObject.files,
@@ -710,7 +710,7 @@ class PersonnelProfilePage extends Component {
         const file = this.state.fileDetails.find(({fileId}) => fId === fileId);
         var filename = file.originalName;
 
-        axios.get(`http://localhost:8089/api/v1/supervisor/file/${fId}`, {responseType: 'blob', headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+        axios.get(`https://api.saadatportal.com/api/v1/supervisor/file/${fId}`, {responseType: 'blob', headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
             .then((blob) => {
 
                 console.log('blob')
@@ -727,11 +727,11 @@ class PersonnelProfilePage extends Component {
                 }
             }).catch(() => {
             if (localStorage.getItem('role') === 'MANAGER') {
-                axios.get('http://localhost:8089/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                     .then((response) => {
                         if (response.headers["accesstoken"]) {
                             localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                            axios.get(`http://localhost:8089/api/v1/supervisor/file/${fId}`, {responseType: 'blob', headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                            axios.get(`https://api.saadatportal.com/api/v1/supervisor/file/${fId}`, {responseType: 'blob', headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                 .then((blob) => {
                                     if (blob !== null) {
                                         var url = window.URL.createObjectURL(blob);
@@ -748,11 +748,11 @@ class PersonnelProfilePage extends Component {
                         }
                     })
             } else if (localStorage.getItem('role') === 'SUPERVISOR') {
-                axios.get('http://localhost:8089/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                axios.get('https://api.saadatportal.com/api/v1/supervisor/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                     .then((response) => {
                         if (response.headers["accesstoken"]) {
                             localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                            axios.get(`http://localhost:8089/api/v1/supervisor/file/${fId}`, {responseType: 'blob', headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                            axios.get(`https://api.saadatportal.com/api/v1/supervisor/file/${fId}`, {responseType: 'blob', headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                 .then((blob) => {
                                     if (blob !== null) {
                                         var url = window.URL.createObjectURL(blob);
