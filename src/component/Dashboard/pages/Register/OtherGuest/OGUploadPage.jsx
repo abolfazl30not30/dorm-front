@@ -648,7 +648,7 @@ class OGUploadPage extends Component {
             formData.append('file', e.target.files[0]);
             this.setState({nameBirthPage1: e.target.files[0].name})
 
-            // await fetch('http://localhost:8089/api/v1/file', {
+            // await fetch('https://api.saadatportal.com/api/v1/file', {
             //     method: 'POST',
             //     body: formData
             // }).then((response) => response.json())

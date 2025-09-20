@@ -579,7 +579,7 @@ class MainRegister extends Component {
                     newCharacteristic.profileId = profileImg.fileId;
                 }
                 let respondChar = ''
-                await axios.post('http://localhost:8089/api/v1/supervisor/characteristic', newCharacteristic, {headers: {'Authorization': localStorage.getItem('accessToken')}})
+                await axios.post('https://api.saadatportal.com/api/v1/supervisor/characteristic', newCharacteristic, {headers: {'Authorization': localStorage.getItem('accessToken')}})
                     .then(response => response.data)
                     .then((data) => {
                         respondChar = data

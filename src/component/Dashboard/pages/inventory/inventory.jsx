@@ -43,7 +43,7 @@ class inventory extends Component {
 
     async componentDidMount() {
         this.setState({searchLoading: true})
-        axios.get('http://localhost:8089/api/v1/supervisor/inventory', {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+        axios.get('https://api.saadatportal.com/api/v1/supervisor/inventory', {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
             .then((data) => this.setState({
                 inventory: data,
             })).catch(() => {

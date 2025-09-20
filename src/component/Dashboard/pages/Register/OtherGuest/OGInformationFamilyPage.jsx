@@ -98,19 +98,19 @@ class OGInformationFamilyPage extends Component {
     }
 
     async componentDidMount() {
-        // await fetch(`http://localhost:8089/api/v1/characteristic/search?parentType=Person`).then((response) => response.json())
+        // await fetch(`https://api.saadatportal.com/api/v1/characteristic/search?parentType=Person`).then((response) => response.json())
         //     .then((data) => this.setState({peopleFound: data}));
 
-        axios.get(`http://localhost:8089/api/v1/supervisor/characteristic/search?parentType=Person`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+        axios.get(`https://api.saadatportal.com/api/v1/supervisor/characteristic/search?parentType=Person`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
             .then((data) => this.setState({
                 peopleFound: data
             })).catch(() => {
             if (localStorage.getItem('role') === 'MANAGER') {
-                axios.get('http://localhost:8089/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
+                axios.get('https://api.saadatportal.com/api/v1/manager/token/refresh', {headers: {'Authorization': localStorage.getItem('refreshToken')}})
                     .then((response) => {
                         if (response.headers["accesstoken"]) {
                             localStorage.setItem("accessToken", response.headers["accesstoken"]);
-                            axios.get(`http://localhost:8089/api/v1/supervisor/characteristic/search?parentType=Person`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
+                            axios.get(`https://api.saadatportal.com/api/v1/supervisor/characteristic/search?parentType=Person`, {headers: {'Authorization': localStorage.getItem('accessToken')}}).then(response => response.data)
                                 .then((data) => this.setState({
                                     peopleFound: data
                                 }))
