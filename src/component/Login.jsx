@@ -220,7 +220,7 @@ class Login extends Component {
             localStorage.setItem("role", response.headers["role"]);
             localStorage.setItem("username", this.state.account.user);
             localStorage.setItem("id", response.headers["id"])
-            window.location = "/dashboard"
+            window.location = "/dashboard/Register"
           }).catch(err => {
         // this.setState({errors: ['نام کاربری یا پسورد صحیح نمی باشد']})
         this.setState({response: err})

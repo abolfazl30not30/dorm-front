@@ -46,13 +46,6 @@ class Header extends Component {
                         }}><i className="bi bi-list"></i></button>
                         <ul className="d-flex navbar">
                             <li className='navbar-item'>
-                                <NavLink
-                                    activeClassName='active-header' to="/dashboard" replace={true} className='sidenav-link d-flex flex-row' end>
-                                    <AiOutlineHome style={{paddingLeft: "7px"}} font-size="20px"/>
-                                    <div className="navbar-title">خانه</div>
-                                </NavLink>
-                            </li>
-                            <li className='navbar-item'>
                                 <NavLink activeClassName='active-header' to="/dashboard/Register"
                                          className='sidenav-link d-flex flex-row'>
                                     <BsPersonPlus style={{paddingLeft: "7px"}} font-size="20px"/>
@@ -98,7 +91,7 @@ class Header extends Component {
                                 boxShadow: "0px 0px 4px 0px #0000004d"
                             }}>
                                 <div className="dropdown-items">
-                                    <Link to="/dashboard">
+                                    <Link to="/dashboard/Register">
                                         <div className="d-flex align-items-center px-3 py-1 sidebar-profile">
                                             <div className="sidebar-profile-img">
                                                 <img className="profile-img"

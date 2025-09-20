@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import Home from './pages/Home';
 
 import {Routes, Route} from 'react-router-dom';
 import BuildingContext from '../../contexts/Building';
@@ -483,7 +482,7 @@ class MainPage extends Component {
                     }}
                     >
                         <Routes>
-                            <Route path="/" element={(<Home/>)}/>
+                            {/*<Route path="/" element={(<Home/>)}/>*/}
                             {/*<Route path="/booking" element={(<FloorAndUnit/>)}/>*/}
                             {/*<Route path="/booking/edit-floor-and-unit" element={(<EditFloorAndUnit/>)}/>*/}
                             {/*<Route path="/RoomAndBed" element={(<RoomAndBed/>)}/>*/}
